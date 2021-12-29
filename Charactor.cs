@@ -43,7 +43,7 @@ public class Charactor
         exp = 0;
         lv++;
         ClassSwitch(()=>{str+=2;}, ()=>{dex+=2;}, ()=>{wis+=2;});
-        Console.WriteLine("Level up!");
+        Console.WriteLine("\nLevel up!");
     }
     public void ClassSwitch(Action warrior, Action assassin, Action mage)
     {
