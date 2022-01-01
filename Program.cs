@@ -21,7 +21,7 @@ PromptAction();
 
 void PromptAction()
 {
-    int action = selas(new string[] { "(R)est" }, new Action[] { () => Rest()});
+    selas(new string[] { "(R)est" }, new Action[] { () => Rest()});
 }
 
 void Rest()
@@ -29,25 +29,11 @@ void Rest()
     IO.pr("Resting a turn.");
     IO.pr("You've found an card.");
     charactor.Draw();
-    selas(new string[] {"(C)ontinue", "Change Card (S)tance"}, new Action[] {()=>PromptAction(), ()=>SwitchStance()});
+    
+    selas(new string[] {"(C)ontinue", "Change Card (S)tance"}, new Action[] {()=>PromptAction(), ()=>charactor.StanceShift()});
 }
 
-void SwitchStance()
-{
-    charactor.StanceShift();
-    // IO.pr(charactor.Hands);
-    // string index = Console.ReadKey().KeyChar.ToString();
-    // if (int.TryParse(index, out int x))
-    // {
-    //     charactor.FlipStanceAt(x - 1);
-    // }
-    // else
-    // {
-    //     SwitchStance();
-    // }
-    // IO.pr(charactor.Hands);
-}
-
+//select to actions
 //selas(new string[] {}, new Action[] {});
 int selas(string[] options, Action[] actions)
 {

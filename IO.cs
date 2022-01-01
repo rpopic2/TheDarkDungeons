@@ -4,6 +4,7 @@ public static class IO
     {
         Console.WriteLine(x);
     }
+
     public static int sel(string[] options)
     {
         string printResult = "/";

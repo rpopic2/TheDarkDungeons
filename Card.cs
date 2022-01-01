@@ -1,42 +1,44 @@
 using System.Numerics;
-public enum Stance
-{
-    attack, defence, star
-}
-public class Card
+
+public class Card : IMass
 {
     Stance stance;
-    int str;
-    int dex;
-    int wis;
+    public int sol {get; set;}
+    public int lun {get; set;}
+    public int con {get; set;}
     public Card(int str, int dex)
     {
-        this.str = str;
-        this.dex = dex;
+        this.sol = str;
+        this.lun = dex;
     }
-    public void FlipStance()
+    public void StanceShift()
     {
         if (stance == Stance.star) return;
         stance = stance == Stance.attack ? Stance.defence : Stance.attack;
     }
     public void ReplaceToStar(int wis)
     {
-        this.wis = wis;
+        this.con = wis;
         stance = Stance.star;
     }
     public override string ToString()
     {
         if (stance == Stance.attack)
         {
-            return $"[({str})/{dex}]";
+            return $"[({sol})/{lun}]";
         }
         else if (stance == Stance.defence)
         {
-            return $"[{dex}/({str})]";
+            return $"[{lun}/({sol})]";
         }
         else
         {
-            return $"[{wis}*]";
+            return $"[{con}*]";
         }
     }
+}
+
+public enum Stance
+{
+    attack, defence, star
 }

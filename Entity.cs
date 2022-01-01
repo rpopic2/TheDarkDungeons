@@ -1,17 +1,17 @@
-class Entity
+class Entity : IMass
 {
     public int lv;
     public int cap = 3;
-    public Card[] hand;
+    public Hand hand;
     public int maxHp = 1;
     public int curHp = 1;
-    public int sol = 2;
-    public int lun = 2;
-    public int con = 2;
+    public int sol {get; set;}
+    public int lun {get; set;}
+    public int con {get; set;}
 
     public Entity()
     {
-        hand = new Card[cap];
+        hand = new Hand(cap);
         curHp = maxHp;
     }
 }

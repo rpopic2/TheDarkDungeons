@@ -1,16 +1,8 @@
-using System.Collections.Generic;
-using System.Numerics;
-public enum ClassName
-{
-    Warrrior, Assassin, Mage
-}
 class Charactor : Entity
 {
-
     public string charName = "Michael";
     public ClassName charClass;
-    Random rnd = new Random();
-    public int hp = 10;
+    private Random rnd = new Random();
     int exp = 0;
     const float lvCurve = 1.25f;
     const int lvMultiplier = 10;
@@ -19,18 +11,10 @@ class Charactor : Entity
     {
         get { return (int)MathF.Floor(lv * lvMultiplier * lvCurve); }
     }
-    public string Hands
-    {
-        get
-        {
-            string result = string.Join(' ', hand.ToList());
-            return "\nHand : " + result ?? "Empty";
-        }
-    }
 
     public void PrintStats()
     {
-        string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {lv}\tExperience : {exp}\nHp : {hp}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
+        string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {lv}\tExperience : {exp}\nHp : {maxHp}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
         Console.WriteLine(result);
     }
     public void GainExp(int exp)
@@ -54,26 +38,13 @@ class Charactor : Entity
     {
         Card card = new Card(rnd.Next(sol), rnd.Next(lun));
         IO.pr(card);
-        PickUp(card);
+        hand.Pickup(card);
         return card;
     }
 
-    public void PickUp(Card item)
-    {
-        int index = selh();
-        AddToHand(item, index);
-        Console.WriteLine(Hands);
-    }
-    public void StanceShift()
-    {
-        int index = selc();
-        hand[index].FlipStance();
-        IO.pr(Hands);
-
-    }
     public int selh()
     {
-        IO.pr(Hands);
+        IO.pr(hand);
         string[] options = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
         string[] curOptions = new string[cap];
         for (int i = 0; i < cap; i++)
@@ -82,11 +53,19 @@ class Charactor : Entity
         }
         return IO.sel(curOptions);
     }
+    public void StanceShift()
+    {
+        int index = selc();
+        hand.StanceShift();
+        IO.pr(hand);
+        
+    }
+    
     public int selc()
     {
-        IO.pr(Hands);
+        IO.pr(hand);
         string[] options = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
-        int cardCount = hand.Count(card => card != null);
+        int cardCount = hand.Count;
         string[] curOptions = new string[cardCount];
         for (int i = 0; i < cardCount; i++)
         {
@@ -95,14 +74,11 @@ class Charactor : Entity
         return IO.sel(curOptions);
     }
 
-    public void AddToHand(Card item, int index)
-    {
-        hand[index] = item;
-    }
+   
 
     public void FlipStanceAt(int index)
     {
-        hand[index].FlipStance();
+        hand.StanceShift();
     }
 
 
