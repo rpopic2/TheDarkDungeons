@@ -24,8 +24,9 @@ public static class IO
             string tempItem = item;
             printResult += $" {tempItem} /";
         }
+        pr("Select From :");
         pr(printResult);
-        char key = Console.ReadKey().KeyChar;
+        char key = Console.ReadKey(true).KeyChar;
         int indexOf = (Array.IndexOf<char>(keys, Char.ToLower(key)));
         if (indexOf != -1)
         {

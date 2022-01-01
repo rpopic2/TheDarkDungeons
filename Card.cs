@@ -24,6 +24,7 @@ public class Card : IMass
     }
     public override string ToString()
     {
+        if(this == null) return "[     ]";
         if (stance == Stance.attack)
         {
             return $"[({sol})/{lun}]";

@@ -36,6 +36,7 @@ class Charactor : Entity
     public Card Draw()
     {
         Card card = new Card(rnd.Next(sol), rnd.Next(lun));
+        IO.pr("You've found a card." + card);
         return card;
     }
 

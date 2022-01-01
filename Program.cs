@@ -20,17 +20,15 @@ PromptAction();
 ///
 void PromptAction()
 {
-    sela(new string[] { "(R)est" }, new Action[] { () => Rest()});
+    sela(new string[] { "(R)est" }, new Action[] { () => Rest() });
 }
 
 void Rest()
 {
     IO.pr("Resting a turn.");
-    IO.pr("You've found a card.");
-    Card card = charactor.Draw();
-    charactor.hand.Pickup(card);
+    charactor.hand.Pickup(charactor.Draw());
 
-    sela(new string[] {"(C)ontinue", "Change Card (S)tance"}, new Action[] {()=>PromptAction(), ()=>charactor.hand.StanceShift()});
+    sela(new string[] { "(C)ontinue", "Change Card (S)tance" }, new Action[] { () => PromptAction(), () => charactor.hand.StanceShift() });
 }
 
 ///<summary>select to actions
