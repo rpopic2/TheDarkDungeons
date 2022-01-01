@@ -34,7 +34,7 @@ public static class IO
         return sel(options);
     }
 
-    ///<summary>Select from hand</summary>
+    ///<summary>Select from hand caps</summary>
     public static int selh(this Hand hand)
     {
         pr(hand.ToString());
@@ -46,7 +46,7 @@ public static class IO
         }
         return sel(curOptions);
     }
-    ///<summary>Select from cards of hand</summary>
+    ///<summary>Select a cards from hand</summary>
     public static int selc(this Hand hand)
     {
         pr(hand.ToString());

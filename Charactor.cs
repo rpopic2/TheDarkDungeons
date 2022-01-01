@@ -38,13 +38,6 @@ class Charactor : Entity
         Card card = new Card(rnd.Next(sol), rnd.Next(lun));
         return card;
     }
-    public void StanceShift()
-    {
-        hand.StanceShift();
-    }
-
-    
-
 
     public void FlipStanceAt(int index)
     {

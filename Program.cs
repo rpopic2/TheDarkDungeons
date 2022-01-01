@@ -14,29 +14,28 @@ charactor.charClass = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin"
 charactor.GainExp(1);
 charactor.PrintStats();
 
-IO.pr("Your adventure begins...");
+IO.pr("\nYour adventure begins...\n");
 PromptAction();
 
 ///
-
 void PromptAction()
 {
-    selas(new string[] { "(R)est" }, new Action[] { () => Rest()});
+    sela(new string[] { "(R)est" }, new Action[] { () => Rest()});
 }
 
 void Rest()
 {
     IO.pr("Resting a turn.");
-    IO.pr("You've found an card.");
+    IO.pr("You've found a card.");
     Card card = charactor.Draw();
     charactor.hand.Pickup(card);
 
-    selas(new string[] {"(C)ontinue", "Change Card (S)tance"}, new Action[] {()=>PromptAction(), ()=>charactor.StanceShift()});
+    sela(new string[] {"(C)ontinue", "Change Card (S)tance"}, new Action[] {()=>PromptAction(), ()=>charactor.hand.StanceShift()});
 }
 
-//select to actions
-//selas(new string[] {}, new Action[] {});
-int selas(string[] options, Action[] actions)
+///<summary>select to actions
+///selas(new string[] {}, new Action[] {});</summary>
+int sela(string[] options, Action[] actions)
 {
     int result = IO.sel(options);
     actions[result]();

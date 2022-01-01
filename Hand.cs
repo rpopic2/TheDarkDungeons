@@ -28,9 +28,14 @@ public class Hand
     {
         Pickup(this.selh(), card, silent);
     }
-    public void StanceShift()
+    public void StanceShift(int index, bool silent = false)
     {
-        content[this.selc()].StanceShift();
+        content[index].StanceShift();
+        if (!silent) IO.pr(ToString());
+    }
+    public void StanceShift(bool silent = false)
+    {
+        StanceShift(this.selc(), silent);
     }
 
     public override string ToString()
