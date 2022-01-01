@@ -3,13 +3,14 @@ using System.Numerics;
 public class Card : IMass
 {
     Stance stance;
-    public int sol {get; set;}
-    public int lun {get; set;}
-    public int con {get; set;}
-    public Card(int str, int dex)
+    public int sol { get; set; }
+    public int lun { get; set; }
+    public int con { get; set; }
+    public Card(int str, int dex, bool silent = false)
     {
         this.sol = str;
         this.lun = dex;
+        if (!silent) IO.pr(ToString());
     }
     public void StanceShift()
     {

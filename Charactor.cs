@@ -33,48 +33,18 @@ class Charactor : Entity
         ClassSwitch(() => { sol += 2; }, () => { lun += 2; }, () => { con += 2; });
         Console.WriteLine("\nLevel up!");
     }
-
     public Card Draw()
     {
         Card card = new Card(rnd.Next(sol), rnd.Next(lun));
-        IO.pr(card);
-        hand.Pickup(card);
         return card;
-    }
-
-    public int selh()
-    {
-        IO.pr(hand);
-        string[] options = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
-        string[] curOptions = new string[cap];
-        for (int i = 0; i < cap; i++)
-        {
-            curOptions[i] = options[i];
-        }
-        return IO.sel(curOptions);
     }
     public void StanceShift()
     {
-        int index = selc();
         hand.StanceShift();
-        IO.pr(hand);
-        
-    }
-    
-    public int selc()
-    {
-        IO.pr(hand);
-        string[] options = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
-        int cardCount = hand.Count;
-        string[] curOptions = new string[cardCount];
-        for (int i = 0; i < cardCount; i++)
-        {
-            curOptions[i] = options[i];
-        }
-        return IO.sel(curOptions);
     }
 
-   
+    
+
 
     public void FlipStanceAt(int index)
     {

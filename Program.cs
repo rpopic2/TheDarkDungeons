@@ -28,8 +28,9 @@ void Rest()
 {
     IO.pr("Resting a turn.");
     IO.pr("You've found an card.");
-    charactor.Draw();
-    
+    Card card = charactor.Draw();
+    charactor.hand.Pickup(card);
+
     selas(new string[] {"(C)ontinue", "Change Card (S)tance"}, new Action[] {()=>PromptAction(), ()=>charactor.StanceShift()});
 }
 
