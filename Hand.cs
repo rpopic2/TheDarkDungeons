@@ -1,4 +1,4 @@
-public class Hand
+public struct Hand
 {
     private int cap;
     private Card[] content;
