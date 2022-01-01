@@ -16,10 +16,8 @@ public class Card
     }
     public void FlipStance()
     {
-        if (stance == Stance.attack)
-        {
-            stance = Stance.defence;
-        }
+        if (stance == Stance.star) return;
+        stance = stance == Stance.attack ? Stance.defence : Stance.attack;
     }
     public void ReplaceToStar(int wis)
     {
@@ -35,7 +33,9 @@ public class Card
         else if (stance == Stance.defence)
         {
             return $"[{dex}/({str})]";
-        }else{
+        }
+        else
+        {
             return $"[{wis}*]";
         }
     }

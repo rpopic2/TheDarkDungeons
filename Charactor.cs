@@ -4,21 +4,16 @@ public enum ClassName
 {
     Warrrior, Assassin, Mage
 }
-public class Charactor
+class Charactor : Entity
 {
 
     public string charName = "Michael";
     public ClassName charClass;
-    List<Card> hand = new List<Card>();
     Random rnd = new Random();
     public int hp = 10;
-    int lv = 0;
     int exp = 0;
     const float lvCurve = 1.25f;
     const int lvMultiplier = 10;
-    public int str = 4;
-    public int dex = 4;
-    public int wis = 4;
 
     public int MaxExp
     {
@@ -28,17 +23,16 @@ public class Charactor
     {
         get
         {
-            string result = String.Join(' ', hand);
+            string result = string.Join(' ', hand.ToList());
             return "\nHand : " + result ?? "Empty";
         }
     }
 
     public void PrintStats()
     {
-        string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {lv}\tExperience : {exp}\nHp : {hp}\tStrength : {str}\tDexterity : {dex}\tWisdom : {wis}";
+        string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {lv}\tExperience : {exp}\nHp : {hp}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
         Console.WriteLine(result);
     }
-
     public void GainExp(int exp)
     {
         this.exp += exp;
@@ -48,25 +42,70 @@ public class Charactor
             LvUp();
         }
     }
+    void LvUp()
+    {
+        exp = 0;
+        lv++;
+        ClassSwitch(() => { sol += 2; }, () => { lun += 2; }, () => { con += 2; });
+        Console.WriteLine("\nLevel up!");
+    }
 
     public Card Draw()
     {
-        Card card = new Card(rnd.Next(str), rnd.Next(dex));
-        hand.Add(card);
+        Card card = new Card(rnd.Next(sol), rnd.Next(lun));
+        IO.pr(card);
+        PickUp(card);
         return card;
     }
+
+    public void PickUp(Card item)
+    {
+        int index = selh();
+        AddToHand(item, index);
+        Console.WriteLine(Hands);
+    }
+    public void StanceShift()
+    {
+        int index = selc();
+        hand[index].FlipStance();
+        IO.pr(Hands);
+
+    }
+    public int selh()
+    {
+        IO.pr(Hands);
+        string[] options = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+        string[] curOptions = new string[cap];
+        for (int i = 0; i < cap; i++)
+        {
+            curOptions[i] = options[i];
+        }
+        return IO.sel(curOptions);
+    }
+    public int selc()
+    {
+        IO.pr(Hands);
+        string[] options = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+        int cardCount = hand.Count(card => card != null);
+        string[] curOptions = new string[cardCount];
+        for (int i = 0; i < cardCount; i++)
+        {
+            curOptions[i] = options[i];
+        }
+        return IO.sel(curOptions);
+    }
+
+    public void AddToHand(Card item, int index)
+    {
+        hand[index] = item;
+    }
+
     public void FlipStanceAt(int index)
     {
         hand[index].FlipStance();
     }
 
-    void LvUp()
-    {
-        exp = 0;
-        lv++;
-        ClassSwitch(() => { str += 2; }, () => { dex += 2; }, () => { wis += 2; });
-        Console.WriteLine("\nLevel up!");
-    }
+
     public void ClassSwitch(Action warrior, Action assassin, Action mage)
     {
         switch (charClass)
