@@ -8,7 +8,7 @@ public static class IO
         Console.WriteLine(x);
     }
     ///<summary>Select from options.</summary>
-    public static int sel(string[] options)
+    public static int sel(string[] options, bool retryOnFalldown = true)
     {
         string printResult = "/";
         char[] keys = new char[options.Length];
@@ -28,11 +28,8 @@ public static class IO
         pr(printResult);
         char key = Console.ReadKey(true).KeyChar;
         int indexOf = (Array.IndexOf<char>(keys, Char.ToLower(key)));
-        if (indexOf != -1)
-        {
-            return indexOf;
-        }
-        return sel(options);
+        if (indexOf == -1 && retryOnFalldown) return sel(options);
+        return indexOf;
     }
 
     ///<summary>Select from hand caps</summary>

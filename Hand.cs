@@ -33,7 +33,7 @@ public class Hand
         content[index].StanceShift();
         if (!silent) IO.pr(ToString());
     }
-    public void StanceShift(bool silent = false)
+    public void StanceShiftSelc(bool silent = false)
     {
         StanceShift(this.selc(), silent);
     }

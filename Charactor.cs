@@ -40,12 +40,6 @@ class Charactor : Entity
         return card;
     }
 
-    public void FlipStanceAt(int index)
-    {
-        hand.StanceShift();
-    }
-
-
     public void ClassSwitch(Action warrior, Action assassin, Action mage)
     {
         switch (charClass)
