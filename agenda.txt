@@ -1,1 +1,7 @@
+when resting, can stanceshift more than 1 card
 program:32, sela 할떄마다 새로운 객체 만들지 말고 dictionary에 저장?
+hand to struct
+card to struct
+hp to struct
+draw to entity.cs
+draw does not draw 0

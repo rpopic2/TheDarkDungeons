@@ -40,7 +40,18 @@ public class Hand
 
     public override string ToString()
     {
-        string result = string.Join(' ', content.ToList());
-        return result == string.Empty ? "Empty" : result;
+        string result = "";
+        foreach (var item in content)
+        {
+            if (item == null)
+            {
+                result += "[     ]";
+            }
+            else
+            {
+                result += item.ToString();
+            }
+        }
+        return result;
     }
 }
