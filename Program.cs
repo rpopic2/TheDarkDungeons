@@ -32,9 +32,9 @@ void Rest()
 
 void StanceShift()
 {
-    int result = sela(new string[] { "(C)ontinue / num to stanceshift." }, new Action[] { () => {PromptAction(); return;} }, false);
-    player.hand.StanceShiftSelc();
-    StanceShift();
+    int result = sela(new string[] { "(C)ontinue", "(S)tanceshift" }, new Action[] { () => {PromptAction(); return;}, ()=>{player.hand.StanceShiftSelc();
+    StanceShift();} });
+
 }
 
 ///<summary>select to actions
@@ -42,7 +42,7 @@ void StanceShift()
 int sela(string[] options, Action[] actions, bool retryOnFalldown = true)
 {
     int result = IO.sel(options, retryOnFalldown);
-    if(!retryOnFalldown) return result;
+    if (!retryOnFalldown) return result;
     actions[result]();
     PromptAction();
     return result;
