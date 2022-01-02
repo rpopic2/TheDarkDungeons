@@ -24,12 +24,12 @@ public struct Hand
     }
     public void StanceShift(int index, bool silent = false)
     {
-        content[index].StanceShift();
+        content[index]?.StanceShift();
         if (!silent) IO.pr(ToString());
     }
     public void StanceShift(bool silent = false)
     {
-        StanceShift(this.selc(), silent);
+        StanceShift(this.selh(), silent);
     }
 
     public override string ToString()
