@@ -1,23 +1,19 @@
 public class Charactor : Entity
 {
-    public string charName = "Michael";
-    public ClassName charClass;
     public Exp exp;
-    public Charactor()
+    public Charactor() : base()
     {
         exp = new Exp(this);
     }
-
-    public void PrintStats()
+    public new string Stats
     {
-        string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {Lv}\tExperience : {exp}\nHp : {Hp.Max}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
-        Console.WriteLine(result);
+        get => base.Stats + $"\tExp : {exp}";
     }
     public void OnLvUp()
     {
         Lv++;
-        ClassSwitch(() => { sol += 2; }, () => { lun += 2; }, () => { con += 2; });
         Console.WriteLine("\nLevel up!");
+        //ClassSwitch(() => { sol += 2; }, () => { lun += 2; }, () => { con += 2; });
     }
     public override Card Draw()
     {
@@ -26,19 +22,19 @@ public class Charactor : Entity
         return card;
     }
 
-    public void ClassSwitch(Action warrior, Action assassin, Action mage)
-    {
-        switch (charClass)
-        {
-            case ClassName.Warrrior:
-                warrior();
-                break;
-            case ClassName.Assassin:
-                assassin();
-                break;
-            case ClassName.Mage:
-                mage();
-                break;
-        }
-    }
+    // public void ClassSwitch(Action warrior, Action assassin, Action mage)
+    // {
+    //     switch (charClass)
+    //     {
+    //         case ClassName.Warrrior:
+    //             warrior();
+    //             break;
+    //         case ClassName.Assassin:
+    //             assassin();
+    //             break;
+    //         case ClassName.Mage:
+    //             mage();
+    //             break;
+    //     }
+    // }
 }

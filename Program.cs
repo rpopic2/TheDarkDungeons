@@ -6,13 +6,13 @@ Console.Clear();
 Charactor player = new Charactor();
 
 IO.pr("Choose charactor`s name...");
-player.charName = Console.ReadLine() ?? "Michael";
+player.entityName = Console.ReadLine() ?? "Michael";
 
 IO.pr("Choose your class...");
-player.charClass = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
+player.entityClass = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
 
 player.exp.Gain(1);
-player.PrintStats();
+IO.pr(player.Stats);
 
 IO.pr("\nYour adventure begins...\n");
 PromptAction();
