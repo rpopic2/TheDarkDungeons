@@ -11,7 +11,7 @@ player.charName = Console.ReadLine() ?? "Michael";
 IO.pr("Choose your class...");
 player.charClass = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
 
-player.GainExp(1);
+player.exp.Gain(1);
 player.PrintStats();
 
 IO.pr("\nYour adventure begins...\n");

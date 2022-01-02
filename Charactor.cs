@@ -1,15 +1,12 @@
-class Charactor : Entity
+public class Charactor : Entity
 {
     public string charName = "Michael";
     public ClassName charClass;
     private Random rnd = new Random();
-    int exp = 0;
-    const float lvCurve = 1.25f;
-    const int lvMultiplier = 10;
-
-    public int MaxExp
+    public Exp exp;
+    public Charactor()
     {
-        get { return (int)MathF.Floor(lv * lvMultiplier * lvCurve); }
+        exp = new Exp(this);
     }
 
     public void PrintStats()
@@ -17,18 +14,8 @@ class Charactor : Entity
         string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {lv}\tExperience : {exp}\nHp : {hp.Max}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
         Console.WriteLine(result);
     }
-    public void GainExp(int exp)
+    public void OnLvUp()
     {
-        this.exp += exp;
-        if (exp >= MaxExp)
-        {
-            exp -= MaxExp;
-            LvUp();
-        }
-    }
-    void LvUp()
-    {
-        exp = 0;
         lv++;
         ClassSwitch(() => { sol += 2; }, () => { lun += 2; }, () => { con += 2; });
         Console.WriteLine("\nLevel up!");

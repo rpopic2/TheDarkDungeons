@@ -13,7 +13,7 @@ public class Entity : IMass
         hand = new Hand(cap);
         hp = new Hp(this, 5);
     }
-    public void Death()
+    public void OnDeath()
     {
 
     }
