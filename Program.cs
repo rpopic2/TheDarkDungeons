@@ -3,7 +3,8 @@
     public static Program? main;
     bool skip = true;
     public Charactor player;
-    private CommandTuple basicActions = new CommandTuple();
+    private CmdTuple basic = new CmdTuple();
+    private CmdTuple stanceShift = new CmdTuple();
 
     public static void Main()
     {
@@ -16,13 +17,23 @@
         player.exp.Gain(1);
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...\n");
-        basicActions.Add("(R)est", () => Rest());
-        basicActions.Add("(T)est", () => Test());
-        PromptAction();
+        InitActions();
+        Prompt(basic);
+    }
+    private void InitActions()
+    {
+        basic.Add("(R)est", () => Rest());
+        basic.Add("(T)est", () => Test());
+
+        stanceShift.Add("(C)ontinue", ()=> Prompt(basic));
+        stanceShift.Add("(S)tanceshift", ()=> {
+            PromptCards();
+            Prompt(stanceShift);
+            });
     }
     private void Intro()
     {
-        if (skip) PromptAction();
+        if (skip) Prompt(basic);
         IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
         Console.ReadKey();
 
@@ -37,42 +48,28 @@
 
         player = new Charactor(name, className);
     }
-    void PromptAction()
+    public static void Prompt(CmdTuple action)
     {
-        IO.prfo(basicActions.Names.ToArray());
-        ReadKey();
+        IO.prfo(action.Names);
+        IO.selr(action);
     }
-    void ReadKey()
+    public void PromptCards()
     {
-        char key = IO.rkc();
-        if (!basicActions.InvokeIfHasKey(key)) ReadKey();
+        player.Hand.prh();
+        Card card = IO.selcard(IO.numericKeys.ToList(), player.Hand);
+        card.StanceShift();
+        IO.pr(player.Hand);
+        
     }
     void Rest()
     {
         IO.pr("Resting a turn.");
         player.Hand.Pickup(player.Draw());
-        StanceShift();
+        Prompt(stanceShift);
     }
     void Test()
     {
         IO.pr("Test!");
-        PromptAction();
-    }
-
-    void StanceShift()
-    {
-        int result = sela(new string[] { "(C)ontinue", "(S)tanceshift" }, new Action[] { () => {PromptAction(); return;}, ()=>{player.Hand.StanceShift();
-    StanceShift();} });
-
-    }
-
-    ///<summary>select to actions
-    ///selas(new string[] {}, new Action[] {});</summary>
-    int sela(string[] options, Action[] actions)
-    {
-        int result = IO.sel(options);
-        actions[result]();
-        PromptAction();
-        return result;
+        Prompt(basic);
     }
 }

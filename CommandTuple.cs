@@ -1,9 +1,9 @@
-public struct CommandTuple
+public struct CmdTuple : ICmdTuple
 {
-    public List<string> Names {get; private set;}
-    public List<char> Keys {get; private set;}
-    public List<Action> Acts {get; private set;}
-    public CommandTuple()
+    public List<string> Names { get; private set; }
+    public List<char> Keys { get; private set; }
+    public List<Action> Acts { get; private set; }
+    public CmdTuple()
     {
         Names = new List<string>();
         Keys = new List<char>();
@@ -26,7 +26,23 @@ public struct CommandTuple
     public bool InvokeIfHasKey(char key)
     {
         bool result = HasKey(key);
-        if(result) Invoke(key);
+        if (result) Invoke(key);
+        return result;
+    }
+
+    
+}
+public static class Extension
+{
+    public static char ParseKey(this string option)
+        => Char.ToLower(option[option.IndexOf('(') + 1]);
+    public static List<char> ParseKeys(this string[] options)
+    {
+        List<char> result = new List<char>();
+        foreach (string item in options)
+        {
+            result.Add(item.ParseKey());
+        }
         return result;
     }
 }

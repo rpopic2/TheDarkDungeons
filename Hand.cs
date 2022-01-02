@@ -22,6 +22,10 @@ public struct Hand
     {
         Pickup(this.selh(), card, silent);
     }
+    public Card GetAt(int index)
+    {
+        return content[index];
+    }
     public void StanceShift(int index, bool silent = false)
     {
         content[index]?.StanceShift();

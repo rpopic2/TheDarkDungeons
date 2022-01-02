@@ -1,6 +1,8 @@
 public static class IO
 {
-    private static readonly string[] handOptions = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+    public static readonly string[] handOptions = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+    public static readonly char[] numericKeys = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object x)
@@ -11,7 +13,7 @@ public static class IO
     public static int sel(string[] options)
     {
         prfo(options);
-        List<char> keys = ParseKeys(options);
+        List<char> keys = options.ParseKeys();
 
         char key = rkc();
         int indexOf = keys.IndexOf(key);
@@ -31,6 +33,17 @@ public static class IO
         }
         return sel(curOptions);
     }
+    public static void prh(this Hand hand)
+    {
+        pr(hand.ToString());
+        int cap = hand.Cap;
+        string[] curOptions = new string[cap];
+        for (int i = 0; i < cap; i++)
+        {
+            curOptions[i] = handOptions[i];
+        }
+        prfo(curOptions);
+    }
     ///<summary>Print Formated Options</summary>
     public static void prfo(string[] options)
     {
@@ -41,31 +54,31 @@ public static class IO
         }
         pr(printResult);
     }
-    public static List<char> ParseKeys(this string[] options)
+    ///<summary>Print Formated Options</summary>
+    public static void prfo(List<string> options)
     {
-        List<char> result = new List<char>();
+        string printResult = "Select...\n/";
         foreach (string item in options)
         {
-            result.Add(item.ParseKey());
+            printResult += $" {item} /";
         }
-        return result;
+        pr(printResult);
     }
-    public static char ParseKey(this string option)
-        => Char.ToLower(option[option.IndexOf('(') + 1]);
+    ///<summary>Select and run</summary>
+    public static void selr(CmdTuple cmd)
+    {
+        char key = rkc();
+        if (!cmd.InvokeIfHasKey(key)) selr(cmd);
+    }
+    public static Card selcard(List<char> keys, Hand hand)
+    {
+        char key = rkc();
+        if (keys.IndexOf(key) == -1) return selcard(keys, hand);
+        else return hand.GetAt(keys.IndexOf(key));
+    }
 
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
-    // ///<summary>Select a cards from hand</summary>
-    // public static int selc(this Hand hand)
-    // {
-    //     pr(hand.ToString());
-    //     int cardCount = hand.Count;
-    //     string[] curOptions = new string[cardCount];
-    //     for (int i = 0; i < cardCount; i++)
-    //     {
-    //         curOptions[i] = handOptions[i];
-    //     }
-    //     return sel(curOptions);
-    // }
+
 }
