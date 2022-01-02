@@ -10,7 +10,7 @@ public static class IO
     ///<summary>Select from options.</summary>
     public static int sel(string[] options)
     {
-        pr(FormatOptions(options));
+        prfo(options);
         List<char> keys = ParseKeys(options);
 
         char key = rkc();
@@ -31,28 +31,30 @@ public static class IO
         }
         return sel(curOptions);
     }
-    private static string FormatOptions(string[] options)
+    ///<summary>Print Formated Options</summary>
+    public static void prfo(string[] options)
     {
         string printResult = "Select...\n/";
         foreach (string item in options)
         {
             printResult += $" {item} /";
         }
-        return printResult;
+        pr(printResult);
     }
-    private static List<char> ParseKeys(string[] options)
+    public static List<char> ParseKeys(this string[] options)
     {
         List<char> result = new List<char>();
         foreach (string item in options)
         {
-            int keyIndex = item.IndexOf('(') + 1;
-            char key = item[keyIndex];
-            result.Add(Char.ToLower(key));
+            result.Add(item.ParseKey());
         }
         return result;
     }
+    public static char ParseKey(this string option)
+        => Char.ToLower(option[option.IndexOf('(') + 1]);
+
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
-    private static char rkc()
+    public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
     // ///<summary>Select a cards from hand</summary>
     // public static int selc(this Hand hand)

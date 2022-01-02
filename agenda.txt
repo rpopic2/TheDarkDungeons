@@ -1,5 +1,5 @@
 selc selh refactor?
-while resting add \t.
+while resting add \t. (indect)
 sel family;needs to be improved.
 refactor IO.cs
 program:32, sela 할떄마다 새로운 객체 만들지 말고 dictionary에 저장?
