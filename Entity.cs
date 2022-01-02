@@ -12,7 +12,6 @@ public class Entity : IMass
 
     public Entity(string name, ClassName className)
     {
-        
         Name = name;
         ClassName = className;
         IO.pr("created an entity");

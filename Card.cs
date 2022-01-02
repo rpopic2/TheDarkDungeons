@@ -14,29 +14,20 @@ public class Card : IMass
     }
     public void StanceShift()
     {
-        if (stance == Stance.star) return;
-        stance = stance == Stance.attack ? Stance.defence : Stance.attack;
+        if (stance == Stance.Star) return;
+        stance = stance == Stance.Attack ? Stance.Defence : Stance.Attack;
     }
     public void ReplaceToStar(int wis)
     {
         this.con = wis;
-        stance = Stance.star;
+        stance = Stance.Star;
     }
     public override string ToString()
     {
         if(this == null) return "[     ]";
-        if (stance == Stance.attack)
-        {
-            return $"[({sol})/{lun}]";
-        }
-        else if (stance == Stance.defence)
-        {
-            return $"[{lun}/({sol})]";
-        }
-        else
-        {
-            return $"[{con}*]";
-        }
+        if (stance == Stance.Attack) return $"[({sol})/{lun}]";
+        else if (stance == Stance.Defence) return $"[{lun}/({sol})]";
+        else return $"[{con}*]";
     }
     public Card Draw()
     {
@@ -46,5 +37,5 @@ public class Card : IMass
 
 public enum Stance
 {
-    attack, defence, star
+    Attack, Defence, Star
 }
