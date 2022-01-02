@@ -16,9 +16,13 @@ public class Entity : IMass
         ClassName = className;
         Hand = new Hand(3);
         Hp = new Hp(this, 5);
+        sol = 1;
+        lun = 1;
+        con = 1;
+        Lv = 0;
     }
     public virtual Card Draw()
-        => new Card(rnd.Next(sol), rnd.Next(lun));
+        => new Card(rnd.Next(sol, 1), rnd.Next(lun, 1));
     public void OnDeath()
     {
         IO.pr($"{Name} died.");

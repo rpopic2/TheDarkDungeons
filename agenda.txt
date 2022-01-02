@@ -1,7 +1,7 @@
-
+selc할떄 가운데가 비어있고 빈칸고르면 문제생김!
 !falldown 도저히 구현이안됨!
-sel family;needs to be improveds
+sel family;needs to be improved.
+refactor IO.cs
 program:32, sela 할떄마다 새로운 객체 만들지 말고 dictionary에 저장?
 card to struct
-draw to entity.cs
 draw does not draw 0
