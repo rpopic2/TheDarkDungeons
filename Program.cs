@@ -3,13 +3,14 @@ Console.ReadKey();
 
 Console.Clear();
 
-Charactor player = new Charactor();
 
 IO.pr("Choose charactor`s name...");
-player.entityName = Console.ReadLine() ?? "Michael";
+string name = Console.ReadLine() ?? "";
 
 IO.pr("Choose your class...");
-player.entityClass = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
+ClassName className = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
+
+Charactor player = new Charactor(name, className);
 
 player.exp.Gain(1);
 IO.pr(player.Stats);

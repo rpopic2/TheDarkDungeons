@@ -1,7 +1,7 @@
 public class Charactor : Entity
 {
     public Exp exp;
-    public Charactor() : base()
+    public Charactor(string name, ClassName className) : base(name, className)
     {
         exp = new Exp(this);
     }
@@ -9,7 +9,7 @@ public class Charactor : Entity
     {
         get => base.Stats + $"\tExp : {exp}";
     }
-    public void OnLvUp()
+    public void LvUp()
     {
         Lv++;
         Console.WriteLine("\nLevel up!");
