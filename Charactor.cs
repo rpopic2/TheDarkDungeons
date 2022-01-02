@@ -14,7 +14,7 @@ class Charactor : Entity
 
     public void PrintStats()
     {
-        string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {lv}\tExperience : {exp}\nHp : {maxHp}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
+        string result = $"Name : {charName}\tClass : {charClass.ToString()}\tLevel : {lv}\tExperience : {exp}\nHp : {hp.Max}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
         Console.WriteLine(result);
     }
     public void GainExp(int exp)

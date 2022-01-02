@@ -1,10 +1,9 @@
-class Entity : IMass
+public class Entity : IMass
 {
-    public int lv;
+    public int lv = 0;
     public int cap = 3;
     public Hand hand;
-    public int maxHp = 1;
-    public int curHp = 1;
+    public Hp hp;
     public int sol {get; set;}
     public int lun {get; set;}
     public int con {get; set;}
@@ -12,6 +11,10 @@ class Entity : IMass
     public Entity()
     {
         hand = new Hand(cap);
-        curHp = maxHp;
+        hp = new Hp(this, 5);
+    }
+    public void Death()
+    {
+
     }
 }
