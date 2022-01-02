@@ -8,31 +8,18 @@ public static class IO
         Console.WriteLine(x);
     }
     ///<summary>Select from options.</summary>
-    public static int sel(string[] options, bool retryOnFalldown = true)
+    public static int sel(string[] options)
     {
-        string printResult = "/";
-        char[] keys = new char[options.Length];
+        pr(FormatOptions(options));
+        List<char> keys = ParseKeys(options);
 
-        for (int i = 0; i < options.Length; i++)
-        {
-            int beforeIndex = options[i].IndexOf('(');
-            keys[i] = Char.ToLower(options[i][beforeIndex + 1]);
-        }
-
-        foreach (string item in options)
-        {
-            string tempItem = item;
-            printResult += $" {tempItem} /";
-        }
-        pr("Select...");
-        pr(printResult);
-        char key = Console.ReadKey(true).KeyChar;
-        int indexOf = (Array.IndexOf<char>(keys, Char.ToLower(key)));
-        if (indexOf == -1 && retryOnFalldown) return sel(options);
+        char key = rkc();
+        int indexOf = keys.IndexOf(key);
+        if (indexOf == -1) return sel(options);
         return indexOf;
     }
 
-    ///<summary>Select from hand caps</summary>
+    ///<summary>Select from hand</summary>
     public static int selh(this Hand hand)
     {
         pr(hand.ToString());
@@ -44,16 +31,39 @@ public static class IO
         }
         return sel(curOptions);
     }
-    ///<summary>Select a cards from hand</summary>
-    public static int selc(this Hand hand)
+    private static string FormatOptions(string[] options)
     {
-        pr(hand.ToString());
-        int cardCount = hand.Count;
-        string[] curOptions = new string[cardCount];
-        for (int i = 0; i < cardCount; i++)
+        string printResult = "Select...\n/";
+        foreach (string item in options)
         {
-            curOptions[i] = handOptions[i];
+            printResult += $" {item} /";
         }
-        return sel(curOptions);
+        return printResult;
     }
+    private static List<char> ParseKeys(string[] options)
+    {
+        List<char> result = new List<char>();
+        foreach (string item in options)
+        {
+            int keyIndex = item.IndexOf('(') + 1;
+            char key = item[keyIndex];
+            result.Add(Char.ToLower(key));
+        }
+        return result;
+    }
+    ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
+    private static char rkc()
+       => Char.ToLower(Console.ReadKey(true).KeyChar);
+    // ///<summary>Select a cards from hand</summary>
+    // public static int selc(this Hand hand)
+    // {
+    //     pr(hand.ToString());
+    //     int cardCount = hand.Count;
+    //     string[] curOptions = new string[cardCount];
+    //     for (int i = 0; i < cardCount; i++)
+    //     {
+    //         curOptions[i] = handOptions[i];
+    //     }
+    //     return sel(curOptions);
+    // }
 }

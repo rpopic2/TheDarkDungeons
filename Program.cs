@@ -40,10 +40,9 @@ void StanceShift()
 
 ///<summary>select to actions
 ///selas(new string[] {}, new Action[] {});</summary>
-int sela(string[] options, Action[] actions, bool retryOnFalldown = true)
+int sela(string[] options, Action[] actions)
 {
-    int result = IO.sel(options, retryOnFalldown);
-    if (!retryOnFalldown) return result;
+    int result = IO.sel(options);
     actions[result]();
     PromptAction();
     return result;
