@@ -1,23 +1,17 @@
 public struct Hand
 {
-    private int cap;
     private Card[] content;
+    public int Cap { get; private set; }
     public int Count
     {
-        get
-        {
-            return content.Count(card => card != null);
-        }
+        get => content.Count(card => card != null);
     }
-
-    public int Cap { get => cap; }
 
     public Hand(int cap = 3)
     {
-        this.cap = cap;
+        Cap = cap;
         content = new Card[cap];
     }
-
     public void Pickup(int index, Card card, bool silent = false)
     {
         content[index] = card;
@@ -33,7 +27,7 @@ public struct Hand
         content[index].StanceShift();
         if (!silent) IO.pr(ToString());
     }
-    public void StanceShiftSelc(bool silent = false)
+    public void StanceShift(bool silent = false)
     {
         StanceShift(this.selc(), silent);
     }

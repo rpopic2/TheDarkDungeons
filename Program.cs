@@ -33,7 +33,7 @@ void Rest()
 
 void StanceShift()
 {
-    int result = sela(new string[] { "(C)ontinue", "(S)tanceshift" }, new Action[] { () => {PromptAction(); return;}, ()=>{player.Hand.StanceShiftSelc();
+    int result = sela(new string[] { "(C)ontinue", "(S)tanceshift" }, new Action[] { () => {PromptAction(); return;}, ()=>{player.Hand.StanceShift();
     StanceShift();} });
 
 }
