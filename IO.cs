@@ -1,7 +1,7 @@
 public static class IO
 {
     public static readonly string[] handOptions = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
-    public static readonly char[] numericKeys = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+    public static readonly char[] NUMERICKEYS = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
@@ -68,13 +68,16 @@ public static class IO
     public static void selr(CmdTuple cmd)
     {
         char key = rkc();
-        if (!cmd.InvokeIfHasKey(key)) selr(cmd);
+        if (cmd.HasKey(key)) cmd.Invoke(key);
+        else selr(cmd);
     }
-    public static Card selcard(List<char> keys, Hand hand)
+    public static void selcard(List<char> keys, Hand hand, Action<Card> act)
     {
         char key = rkc();
-        if (keys.IndexOf(key) == -1) return selcard(keys, hand);
-        else return hand.GetAt(keys.IndexOf(key));
+        int index = keys.IndexOf(key);
+        Card target = hand[index];
+        if (index == -1 || target == null) selcard(keys, hand, act);
+        else act(target);
     }
 
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>

@@ -1,4 +1,4 @@
-public struct CmdTuple : ICmdTuple
+public struct CmdTuple
 {
     public List<string> Names { get; private set; }
     public List<char> Keys { get; private set; }
@@ -23,12 +23,12 @@ public struct CmdTuple : ICmdTuple
     public void Invoke(char key)
         => Acts[Keys.IndexOf(key)]();
 
-    public bool InvokeIfHasKey(char key)
-    {
-        bool result = HasKey(key);
-        if (result) Invoke(key);
-        return result;
-    }
+    // public bool InvokeIfHasKey(char key)
+    // {
+    //     bool result = HasKey(key);
+    //     if (result) Invoke(key);
+    //     return result;
+    // }
 
     
 }

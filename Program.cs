@@ -25,11 +25,12 @@
         basic.Add("(R)est", () => Rest());
         basic.Add("(T)est", () => Test());
 
-        stanceShift.Add("(C)ontinue", ()=> Prompt(basic));
-        stanceShift.Add("(S)tanceshift", ()=> {
+        stanceShift.Add("(C)ontinue", () => Prompt(basic));
+        stanceShift.Add("(S)tanceshift", () =>
+        {
             PromptCards();
             Prompt(stanceShift);
-            });
+        });
     }
     private void Intro()
     {
@@ -56,10 +57,9 @@
     public void PromptCards()
     {
         player.Hand.prh();
-        Card card = IO.selcard(IO.numericKeys.ToList(), player.Hand);
-        card.StanceShift();
+        IO.selcard(IO.NUMERICKEYS.ToList(), player.Hand, (card) => card.StanceShift());
         IO.pr(player.Hand);
-        
+
     }
     void Rest()
     {

@@ -22,9 +22,9 @@ public struct Hand
     {
         Pickup(this.selh(), card, silent);
     }
-    public Card GetAt(int index)
+    public Card this[int index]
     {
-        return content[index];
+        get { return content[index]; }
     }
     public void StanceShift(int index, bool silent = false)
     {
