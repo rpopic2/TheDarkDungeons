@@ -1,18 +1,14 @@
 public struct Hp
 {
-    private int max;
     private int cur;
 
-    public int Max { get => max; }
+    public int Max { get; private set;}
     public int Cur
     {
-        get
-        {
-            return cur;
-        }
+        get => cur;
         set
         {
-            if (cur > max) cur = max;
+            if (cur > Max) cur = Max;
             if (cur < 0) cur = 0;
             else cur = value;
         }
@@ -20,6 +16,6 @@ public struct Hp
 
     public Hp(Entity owner, int max)
     {
-        this.max = this.cur = max;
+        Max = this.cur = max;
     }
 }
