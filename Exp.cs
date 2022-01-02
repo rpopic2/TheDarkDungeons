@@ -1,31 +1,31 @@
 public struct Exp
 {
-    const float lvCurve = 1.25f;
-    const int lvMultiplier = 10;
+    private const float lvCurve = 1.25f;
+    private const int lvMultiplier = 10;
     const float lvIncrement = lvCurve * lvMultiplier;
-    Charactor owner;
+    private Charactor owner;
     private int cur = 0;
-    private int max = 1;
     public int Cur
     {
         get => cur;
         private set
         {
             cur = value;
-            if (cur >= max)
+            if (cur >= Max)
             {
-                cur -= max;
+                cur -= Max;
                 owner.LvUp();
-                max = UpdateMax();
+                Max = UpdateMax();
             }
         }
     }
-    public int Max { get => max; }
+    public int Max { get; private set; }
 
     public Exp(Charactor owner)
     {
         this.owner = owner;
-        max = UpdateMax();
+        Max = 0;
+        Max = UpdateMax();
     }
     
     private int UpdateMax()
@@ -38,6 +38,6 @@ public struct Exp
     
     public override string ToString()
     {
-        return $"{cur}/{max}";
+        return $"{Cur}/{Max}";
     }
 }

@@ -14,7 +14,6 @@ public class Entity : IMass
     {
         Name = name;
         ClassName = className;
-        IO.pr("created an entity");
         Hand = new Hand(3);
         Hp = new Hp(this, 5);
     }
