@@ -29,7 +29,7 @@ public struct Exp
     }
     
     private int UpdateMax()
-    => (int)MathF.Floor(owner.lv * lvIncrement);
+    => (int)MathF.Floor(owner.Lv * lvIncrement);
 
     public void Gain(int amount)
     {

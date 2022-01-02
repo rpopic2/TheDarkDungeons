@@ -26,13 +26,13 @@ void PromptAction()
 void Rest()
 {
     IO.pr("Resting a turn.");
-    player.hand.Pickup(player.Draw());
+    player.Hand.Pickup(player.Draw());
     StanceShift();
 }
 
 void StanceShift()
 {
-    int result = sela(new string[] { "(C)ontinue", "(S)tanceshift" }, new Action[] { () => {PromptAction(); return;}, ()=>{player.hand.StanceShiftSelc();
+    int result = sela(new string[] { "(C)ontinue", "(S)tanceshift" }, new Action[] { () => {PromptAction(); return;}, ()=>{player.Hand.StanceShiftSelc();
     StanceShift();} });
 
 }

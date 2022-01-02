@@ -38,6 +38,10 @@ public class Card : IMass
             return $"[{con}*]";
         }
     }
+    public Card Draw()
+    {
+        throw new Exception("Cannot draw card from a card.");
+    }
 }
 
 public enum Stance
