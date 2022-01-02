@@ -15,7 +15,7 @@ public struct Exp
             if (cur >= max)
             {
                 cur -= max;
-                owner.OnLvUp();
+                owner.LvUp();
                 max = UpdateMax();
             }
         }

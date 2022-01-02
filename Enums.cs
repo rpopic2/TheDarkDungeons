@@ -1,4 +1,4 @@
 public enum ClassName
 {
-    Warrrior, Assassin, Mage
+    Warrior, Assassin, Mage
 }
