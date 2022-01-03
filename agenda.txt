@@ -1,4 +1,3 @@
-make all sel family implement sel.
 rm cmdtuple card?
 sel할떄 없는 선택지 고르면 무한루프가 되기 때문에 메모리 잡아먹을수도? -> 대신에 반복문 사용 가능. while. or dowhile
 call stack 보니까 함수가 종료가 안되서 메모리 누수 있는듯
