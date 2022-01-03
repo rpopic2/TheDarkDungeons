@@ -6,12 +6,12 @@ public static class IO
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
     ///<summary>Select from provided keys.</summary>
-    public static void sel(char[] keys, out int resultIndex)
+    public static char sel(char[] keys, out int resultIndex)
     {
         char key = rkc();
         int index = Array.IndexOf(keys, key);
-        if (index == -1) sel(keys, out resultIndex);
-        else resultIndex = index;
+        if (index == -1) return sel(keys, out resultIndex);
+        else resultIndex = index; return key;
     }
     ///<summary>Select a card and run</summary>
     public static void selc(out Card card)
@@ -29,12 +29,10 @@ public static class IO
     }
 
     ///<summary>Select and run</summary>
-    public static void cmdsel(CmdTuple cmd)
+    public static void selcmd(CmdTuple cmd)
     {
-        char key = rkc();
-        int index = Array.IndexOf(cmd.Keys.ToArray(), key);
-        if (index == -1) cmdsel(cmd);
-        else cmd.Invoke(key);
+        char key = sel(cmd.Keys.ToArray(), out int index);
+        cmd.Invoke(key);
     }
 
 

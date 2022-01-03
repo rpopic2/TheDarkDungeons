@@ -50,7 +50,7 @@
     private static void Prompt(CmdTuple action)
     {
         IO.prfo(action.Names.ToArray());
-        IO.cmdsel(action);
+        IO.selcmd(action);
     }
     private void PromptCards(Action<Card> action)
     {
