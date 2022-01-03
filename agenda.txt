@@ -1,5 +1,4 @@
-selc selh refactor?
+new pickup
+selr selcard refactor?
 while resting add \t. (indect)
-sel family;needs to be improved.
-refactor IO.cs
-program:32, sela 할떄마다 새로운 객체 만들지 말고 dictionary에 저장?
+선택하면 선택지 뺴고 다 지워지기

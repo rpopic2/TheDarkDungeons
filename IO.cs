@@ -71,12 +71,12 @@ public static class IO
         if (cmd.HasKey(key)) cmd.Invoke(key);
         else selr(cmd);
     }
-    public static void selcard(List<char> keys, Hand hand, Action<Card> act)
+    public static void selcard(Action<Card> act)
     {
         char key = rkc();
-        int index = keys.IndexOf(key);
-        Card target = hand[index];
-        if (index == -1 || target == null) selcard(keys, hand, act);
+        int index = Array.IndexOf(NUMERICKEYS, key);
+        Card target = Program.player.Hand[index];
+        if (index == -1 || target == null) selcard(act);
         else act(target);
     }
 

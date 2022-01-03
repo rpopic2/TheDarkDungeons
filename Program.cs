@@ -2,7 +2,7 @@
 {
     public static Program? main;
     bool skip = true;
-    public Charactor player;
+    public static Charactor player = new Charactor("Michael", ClassName.Assassin);
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
 
@@ -13,7 +13,6 @@
     private Program()
     {
         if (!skip) Intro();
-        player = new Charactor("Michael", ClassName.Assassin);
         player.exp.Gain(1);
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...\n");
@@ -28,7 +27,7 @@
         stanceShift.Add("(C)ontinue", () => Prompt(basic));
         stanceShift.Add("(S)tanceshift", () =>
         {
-            PromptCards();
+            PromptCards((card) => card.StanceShift());
             Prompt(stanceShift);
         });
     }
@@ -54,12 +53,11 @@
         IO.prfo(action.Names);
         IO.selr(action);
     }
-    public void PromptCards()
+    public void PromptCards(Action<Card> action)
     {
         player.Hand.prh();
-        IO.selcard(IO.NUMERICKEYS.ToList(), player.Hand, (card) => card.StanceShift());
+        IO.selcard(action);
         IO.pr(player.Hand);
-
     }
     void Rest()
     {

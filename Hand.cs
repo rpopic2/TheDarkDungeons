@@ -31,11 +31,6 @@ public struct Hand
         content[index]?.StanceShift();
         if (!silent) IO.pr(ToString());
     }
-    public void StanceShift(bool silent = false)
-    {
-        StanceShift(this.selh(), silent);
-    }
-
     public override string ToString()
     {
         string result = "";
