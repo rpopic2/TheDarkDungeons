@@ -32,7 +32,7 @@ public struct Hand
     public void Pickup(Card card, bool silent = false)
     {
         this.prh();
-        IO.sel(Hand.PlayerCur, out int index);
+        IO.sel(Hand.PlayerCur, out int index, out char key);
         Pickup(index, card, silent);
     }
     public Card this[int index]
