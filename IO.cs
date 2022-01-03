@@ -35,19 +35,19 @@ public static class IO
     }
     public static void prh(this Hand hand)
     {
-        pr(hand.ToString());
+        pr("Hand : " + hand.ToString());
         int cap = hand.Cap;
         string[] curOptions = new string[cap];
         for (int i = 0; i < cap; i++)
         {
             curOptions[i] = handOptions[i];
         }
-        prfo(curOptions);
+        prfo(curOptions, "Select Index :");
     }
     ///<summary>Print Formated Options</summary>
-    public static void prfo(string[] options)
+    public static void prfo(string[] options, string comment = "Select :")
     {
-        string printResult = "Select...\n/";
+        string printResult = comment + " /";
         foreach (string item in options)
         {
             printResult += $" {item} /";
@@ -55,14 +55,9 @@ public static class IO
         pr(printResult);
     }
     ///<summary>Print Formated Options</summary>
-    public static void prfo(List<string> options)
+    public static void prfo(List<string> options, string comment = "Select :")
     {
-        string printResult = "Select...\n/";
-        foreach (string item in options)
-        {
-            printResult += $" {item} /";
-        }
-        pr(printResult);
+        prfo(options.ToArray(), comment);
     }
     ///<summary>Select and run</summary>
     public static void selr(CmdTuple cmd)

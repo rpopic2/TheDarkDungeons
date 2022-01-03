@@ -38,7 +38,7 @@ public struct Hand
         {
             if (item == null)
             {
-                result += "[     ]";
+                result += "[EMPTY]";
             }
             else
             {

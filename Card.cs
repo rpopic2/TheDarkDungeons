@@ -6,7 +6,7 @@ public class Card : IMass
     public int sol { get; set; }
     public int lun { get; set; }
     public int con { get; set; }
-    public Card(int str, int dex, bool silent = false)
+    public Card(int str, int dex, bool silent = true)
     {
         this.sol = str;
         this.lun = dex;
