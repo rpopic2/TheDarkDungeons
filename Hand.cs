@@ -20,7 +20,9 @@ public struct Hand
 
     public void Pickup(Card card, bool silent = false)
     {
-        Pickup(this.selh(), card, silent);
+        this.prh();
+        IO.selci(out int index);
+        Pickup(index, card, silent);
     }
     public Card this[int index]
     {
@@ -33,7 +35,7 @@ public struct Hand
     }
     public override string ToString()
     {
-        string result = "";
+        string result = "Hand : ";
         foreach (var item in content)
         {
             if (item == null)

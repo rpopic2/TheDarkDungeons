@@ -1,4 +1,5 @@
-new pickup
+make pickup not to use selh. selh is depreciated
 selr selcard refactor?
 while resting add \t. (indect)
 선택하면 선택지 뺴고 다 지워지기
+rm cmdtuple card?

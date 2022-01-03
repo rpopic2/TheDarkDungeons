@@ -41,7 +41,8 @@
         IO.pr("Choose charactor`s name...");
         string name = Console.ReadLine() ?? "";
         IO.pr("Choose your class...");
-        ClassName className = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
+        IO.selsa(new string[] { "(W)arrior", "(A)ssassin", "(M)age" }, out int selection);
+        ClassName className = (ClassName) selection;
         player = new Charactor(name, className);
     }
     private static void Prompt(CmdTuple action)
@@ -52,7 +53,7 @@
     private void PromptCards(Action<Card> action)
     {
         player.Hand.prh();
-        IO.selcard(action);
+        IO.selc(action);
         IO.pr(player.Hand);
     }
     private void Rest()

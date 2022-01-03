@@ -1,6 +1,5 @@
 public static class IO
 {
-    public static readonly string[] handOptions = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
     public static readonly char[] NUMERICKEYS = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
 
     ///<summary>Print.
@@ -9,38 +8,36 @@ public static class IO
     {
         Console.WriteLine(x);
     }
-    ///<summary>Select from options.</summary>
-    public static int sel(string[] options)
+    ///<summary>Select from string array.</summary>
+    public static void selsa(string[] options, out int resultIndex)
     {
         prfo(options);
-        List<char> keys = options.ParseKeys();
-
-        char key = rkc();
-        int indexOf = keys.IndexOf(key);
-        if (indexOf == -1) return sel(options);
-        return indexOf;
+        char[] keys = options.ParseKeys2();
+        sel(keys, out resultIndex);
+    }
+    ///<summary>Select a card index.</summary>
+    public static void selci(out int resultIndex)
+    {
+        sel(NUMERICKEYS, out resultIndex);
     }
 
-    ///<summary>Select from hand</summary>
-    public static int selh(this Hand hand)
+    ///<summary>Select from provided keys.</summary>
+    public static void sel(char[] keys, out int resultIndex)
+    {
+        char key = rkc();
+        int index = Array.IndexOf(keys, key);
+        if (index == -1) sel(keys, out resultIndex);
+        else resultIndex = index;
+    }
+    ///<summary>Print hand</summary>
+    public static void prh(this Hand hand)
     {
         pr(hand.ToString());
         int cap = hand.Cap;
         string[] curOptions = new string[cap];
         for (int i = 0; i < cap; i++)
         {
-            curOptions[i] = handOptions[i];
-        }
-        return sel(curOptions);
-    }
-    public static void prh(this Hand hand)
-    {
-        pr("Hand : " + hand.ToString());
-        int cap = hand.Cap;
-        string[] curOptions = new string[cap];
-        for (int i = 0; i < cap; i++)
-        {
-            curOptions[i] = handOptions[i];
+            curOptions[i] = NUMERICKEYS[i].ToString();
         }
         prfo(curOptions, "Select Index :");
     }
@@ -66,15 +63,14 @@ public static class IO
         if (cmd.HasKey(key)) cmd.Invoke(key);
         else selr(cmd);
     }
-    public static void selcard(Action<Card> act)
+    public static void selc(Action<Card> act)
     {
         char key = rkc();
         int index = Array.IndexOf(NUMERICKEYS, key);
         Card target = Program.player.Hand[index];
-        if (index == -1 || target == null) selcard(act);
+        if (index == -1 || target == null) selc(act);
         else act(target);
     }
-
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
