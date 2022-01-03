@@ -8,10 +8,15 @@ public static class IO
     ///<summary>Select from provided keys.</summary>
     public static char sel(char[] keys, out int resultIndex)
     {
-        char key = rkc();
-        int index = Array.IndexOf(keys, key);
-        if (index == -1) return sel(keys, out resultIndex);
-        else resultIndex = index; return key;
+        char key;
+        int index;
+        do
+        {
+            key = rkc();
+            index = Array.IndexOf(keys, key);
+        } while (index == -1);
+        resultIndex = index;
+        return key;
     }
     ///<summary>Select a card and run</summary>
     public static void selc(out Card card)
