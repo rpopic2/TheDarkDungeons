@@ -1,49 +1,74 @@
-﻿IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
-Console.ReadKey();
-
-Console.Clear();
-
-
-IO.pr("Choose charactor`s name...");
-string name = Console.ReadLine() ?? "";
-
-IO.pr("Choose your class...");
-ClassName className = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
-
-Charactor player = new Charactor(name, className);
-
-player.exp.Gain(1);
-IO.pr(player.Stats);
-
-IO.pr("\nYour adventure begins...\n");
-PromptAction();
-
-///
-void PromptAction()
+﻿public class Program
 {
-    sela(new string[] { "(R)est" }, new Action[] { () => Rest() });
-}
+    public static Program? main;
+    private bool skip = true;
+    public static Charactor player = new Charactor("Michael", ClassName.Assassin);
+    public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
+    private CmdTuple basic = new CmdTuple();
+    private CmdTuple stanceShift = new CmdTuple();
 
-void Rest()
-{
-    IO.pr("Resting a turn.");
-    player.Hand.Pickup(player.Draw());
-    StanceShift();
-}
+    public static void Main()
+    {
+        main = new Program();
+    }
+    private Program()
+    {
+        if (!skip) Intro();
+        player.exp.Gain(1);
+        IO.pr(player.Stats);
+        IO.pr("\nYour adventure begins...\n");
+        InitActions();
+        Prompt(basic);
+    }
+    private void InitActions()
+    {
+        basic.Add("(R)est", () => Rest());
+        basic.Add("(T)est", () => Test());
 
-void StanceShift()
-{
-    int result = sela(new string[] { "(C)ontinue", "(S)tanceshift" }, new Action[] { () => {PromptAction(); return;}, ()=>{player.Hand.StanceShift();
-    StanceShift();} });
+        stanceShift.Add("(C)ontinue", () => Prompt(basic));
+        stanceShift.Add("(S)tanceshift", () =>
+        {
+            PromptCards((card) => card.StanceShift());
+            Prompt(stanceShift);
+        });
+    }
+    private void Intro()
+    {
+        if (skip) Prompt(basic);
+        IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
+        Console.ReadKey();
+        Console.Clear();
 
-}
-
-///<summary>select to actions
-///selas(new string[] {}, new Action[] {});</summary>
-int sela(string[] options, Action[] actions)
-{
-    int result = IO.sel(options);
-    actions[result]();
-    PromptAction();
-    return result;
+        IO.pr("Choose charactor`s name...");
+        string name = Console.ReadLine() ?? "";
+        IO.pr("Choose your class...");
+        IO.prfo(classes);
+        IO.selsa(classes, out int selection);
+        ClassName className = (ClassName) selection;
+        player = new Charactor(name, className);
+    }
+    private static void Prompt(CmdTuple action)
+    {
+        IO.prfo(action.Names.ToArray());
+        IO.cmdsel(action);
+    }
+    private void PromptCards(Action<Card> action)
+    {
+        player.Hand.prh();
+        IO.selc(out Card card);
+        action(card);
+        // IO.selcr(action);
+        IO.pr(player.Hand);
+    }
+    private void Rest()
+    {
+        IO.pr("Resting a turn.");
+        player.Hand.Pickup(player.Draw());
+        Prompt(stanceShift);
+    }
+    private void Test()
+    {
+        IO.pr("Test!");
+        Prompt(basic);
+    }
 }

@@ -1,5 +1,16 @@
 public struct Hand
 {
+    public static Hand Player = Program.player.Hand;
+    public static char[] PlayerCur = Program.player.Hand.CurOption;
+    public char[] CurOption
+    {
+        get
+        {
+            char[] curOptions = new char[Cap];
+            Array.Copy(IO.NUMERICKEYS, curOptions, Cap);
+            return curOptions;
+        }
+    }
     private Card[] content;
     public int Cap { get; private set; }
     public int Count
@@ -20,26 +31,27 @@ public struct Hand
 
     public void Pickup(Card card, bool silent = false)
     {
-        Pickup(this.selh(), card, silent);
+        this.prh();
+        IO.sel(Hand.PlayerCur, out int index);
+        Pickup(index, card, silent);
+    }
+    public Card this[int index]
+    {
+        get { return content[index]; }
     }
     public void StanceShift(int index, bool silent = false)
     {
         content[index]?.StanceShift();
         if (!silent) IO.pr(ToString());
     }
-    public void StanceShift(bool silent = false)
-    {
-        StanceShift(this.selh(), silent);
-    }
-
     public override string ToString()
     {
-        string result = "";
+        string result = "Hand : ";
         foreach (var item in content)
         {
             if (item == null)
             {
-                result += "[     ]";
+                result += "[EMPTY]";
             }
             else
             {
