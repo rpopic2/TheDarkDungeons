@@ -14,12 +14,14 @@ public static class IO
             index = Array.IndexOf(keys, key);
         } while (index == -1);
     }
-    ///<summary>Select a card and run</summary>
-    public static void selc(out Card card)
+    ///<summary>Select a card</summary>
+    public static void selc(out Card card, out int index)
     {
-        sel(Hand.PlayerCur, out int index, out char key);
-        if (Hand.Player[index] == null) selc(out card);
-        else card = Hand.Player[index];
+        do
+        {
+            sel(Hand.PlayerCur, out index, out char key);
+        } while (Hand.Player[index] == null);
+        card = Hand.Player[index];
     }
 
     ///<summary>Select from string array.</summary>
