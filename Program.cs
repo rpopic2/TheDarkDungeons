@@ -1,7 +1,7 @@
 ﻿public class Program
 {
     public static Program? main;
-    bool skip = true;
+    private bool skip = true;
     public static Charactor player = new Charactor("Michael", ClassName.Assassin);
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
@@ -36,36 +36,32 @@
         if (skip) Prompt(basic);
         IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
         Console.ReadKey();
-
         Console.Clear();
-
 
         IO.pr("Choose charactor`s name...");
         string name = Console.ReadLine() ?? "";
-
         IO.pr("Choose your class...");
         ClassName className = (ClassName)IO.sel(new string[] { "(W)arrior", "(A)ssassin", "(M)age" });
-
         player = new Charactor(name, className);
     }
-    public static void Prompt(CmdTuple action)
+    private static void Prompt(CmdTuple action)
     {
         IO.prfo(action.Names);
         IO.selr(action);
     }
-    public void PromptCards(Action<Card> action)
+    private void PromptCards(Action<Card> action)
     {
         player.Hand.prh();
         IO.selcard(action);
         IO.pr(player.Hand);
     }
-    void Rest()
+    private void Rest()
     {
         IO.pr("Resting a turn.");
         player.Hand.Pickup(player.Draw());
         Prompt(stanceShift);
     }
-    void Test()
+    private void Test()
     {
         IO.pr("Test!");
         Prompt(basic);
