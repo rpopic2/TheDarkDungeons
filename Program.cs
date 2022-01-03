@@ -53,7 +53,7 @@
     private void PromptCards(Action<Card> action)
     {
         player.Hand.prh();
-        IO.selc(action);
+        IO.selcr(action);
         IO.pr(player.Hand);
     }
     private void Rest()
