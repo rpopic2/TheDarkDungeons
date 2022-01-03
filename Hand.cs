@@ -1,5 +1,16 @@
 public struct Hand
 {
+    public static Hand Player = Program.player.Hand;
+    public static char[] PlayerCur = Program.player.Hand.CurOption;
+    public char[] CurOption
+    {
+        get
+        {
+            char[] curOptions = new char[Cap];
+            Array.Copy(IO.NUMERICKEYS, curOptions, Cap);
+            return curOptions;
+        }
+    }
     private Card[] content;
     public int Cap { get; private set; }
     public int Count
@@ -21,7 +32,7 @@ public struct Hand
     public void Pickup(Card card, bool silent = false)
     {
         this.prh();
-        IO.selci(out int index);
+        IO.sel(Hand.PlayerCur, out int index);
         Pickup(index, card, silent);
     }
     public Card this[int index]

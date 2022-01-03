@@ -1,4 +1,10 @@
-선택하면 선택지 뺴고 다 지워지기
-while resting add \t. (indect)
-rm cmdtuple card?
 make all sel family implement sel.
+rm cmdtuple card?
+sel할떄 없는 선택지 고르면 무한루프가 되기 때문에 메모리 잡아먹을수도? -> 대신에 반복문 사용 가능. while. or dowhile
+call stack 보니까 함수가 종료가 안되서 메모리 누수 있는듯
+while resting add \t. (indect)
+선택하면 선택지 뺴고 다 지워지기
+hand.player보다는 player.hand
+IO의 셀프리커시브 모두 리팩토링가능할듯
+pr과 sel 합칠수있을듯. pr안에서 sel돌리면됨.
+cmdtuple이 꼭 필요할까?

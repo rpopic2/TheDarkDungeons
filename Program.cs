@@ -3,6 +3,7 @@
     public static Program? main;
     private bool skip = true;
     public static Charactor player = new Charactor("Michael", ClassName.Assassin);
+    public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
 
@@ -41,19 +42,22 @@
         IO.pr("Choose charactor`s name...");
         string name = Console.ReadLine() ?? "";
         IO.pr("Choose your class...");
-        IO.selsa(new string[] { "(W)arrior", "(A)ssassin", "(M)age" }, out int selection);
+        IO.prfo(classes);
+        IO.selsa(classes, out int selection);
         ClassName className = (ClassName) selection;
         player = new Charactor(name, className);
     }
     private static void Prompt(CmdTuple action)
     {
-        IO.prfo(action.Names);
-        IO.selr(action);
+        IO.prfo(action.Names.ToArray());
+        IO.cmdsel(action);
     }
     private void PromptCards(Action<Card> action)
     {
         player.Hand.prh();
-        IO.selcr(action);
+        IO.selc(out Card card);
+        action(card);
+        // IO.selcr(action);
         IO.pr(player.Hand);
     }
     private void Rest()
