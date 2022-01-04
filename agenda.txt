@@ -1,4 +1,2 @@
-    보류. pr과 sel 합칠수있을듯. pr안에서 sel돌리면됨.
-
-    while resting add \t. (indect)
-선택하면 선택지 뺴고 다 지워지기. eraseline같은 메서드.
+q to cancel select.
+now w command!

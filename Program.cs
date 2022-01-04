@@ -16,8 +16,9 @@
         Console.Clear();
         if (!skip) Intro();
         player.exp.Gain(1);
+        IO.del();
         IO.pr(player.Stats);
-        IO.pr("\nYour adventure begins...\n");
+        IO.pr("\nYour adventure begins...");
         InitActions();
 
         do
@@ -28,7 +29,7 @@
     private void InitActions()
     {
         basic.Add("(R)est", () => Rest());
-        basic.Add("(T)est", () => Test());
+        basic.Add("Use Card(W)", () => UseCard());
 
         stanceShift.Add("(C)ontinue", () => stanceShiftFlag = false);
         stanceShift.Add("(S)tanceshift", () => PromptCards((card) => StanceShift(card)));
@@ -74,9 +75,10 @@
             Prompt(stanceShift);
         } while (stanceShiftFlag);
     }
-    private void Test()
+    private void UseCard()
     {
-        IO.pr("Test!");
+        //IO.prh(Hand.Player);
+        //IO.selc(out Card card, out int index);
     }
     private void StanceShift(Card card)
     {
