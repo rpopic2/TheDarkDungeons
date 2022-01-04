@@ -13,12 +13,13 @@
     }
     private Program()
     {
+        Console.Clear();
         if (!skip) Intro();
         player.exp.Gain(1);
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...\n");
         InitActions();
-        
+
         do
         {
             BasicPrompt();
@@ -30,13 +31,12 @@
         basic.Add("(T)est", () => Test());
 
         stanceShift.Add("(C)ontinue", () => stanceShiftFlag = false);
-        stanceShift.Add("(S)tanceshift", () => PromptCards((card) => card.StanceShift()));
+        stanceShift.Add("(S)tanceshift", () => PromptCards((card) => StanceShift(card)));
     }
     private void Intro()
     {
         IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
         Console.ReadKey();
-        Console.Clear();
 
         IO.pr("Choose charactor`s name...");
         string name = Console.ReadLine() ?? "";
@@ -61,12 +61,13 @@
         IO.selc(out Card card, out int index);
         action(card);
         // IO.selcr(action);
-        IO.pr(player.Hand);
     }
     private void Rest()
     {
         IO.pr("Resting a turn.");
         player.Hand.Pickup(player.Draw());
+        IO.del();
+        IO.del();
         stanceShiftFlag = true;
         do
         {
@@ -76,5 +77,10 @@
     private void Test()
     {
         IO.pr("Test!");
+    }
+    private void StanceShift(Card card)
+    {
+        card.StanceShift();
+        IO.del();
     }
 }

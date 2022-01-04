@@ -13,6 +13,7 @@ public static class IO
             key = rkc();
             index = Array.IndexOf(keys, key);
         } while (index == -1);
+        del();
     }
     ///<summary>Select a card</summary>
     public static void selc(out Card card, out int index)
@@ -66,6 +67,13 @@ public static class IO
     {
         pr(hand.ToString());
         prfo(hand.CurOption, "Select Index :");
+    }
+
+    public static void del()
+    {
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        pr("                                                  ");
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
     }
 
 }
