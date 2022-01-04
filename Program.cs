@@ -6,7 +6,7 @@
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
-
+    private bool stanceShiftFlag = false;
     public static void Main()
     {
         main = new Program();
@@ -18,14 +18,17 @@
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...\n");
         InitActions();
-        Prompt(basic);
+        do
+        {
+            BasicPrompt();
+        } while (player.Hp.Cur > 0);
     }
     private void InitActions()
     {
         basic.Add("(R)est", () => Rest());
         basic.Add("(T)est", () => Test());
 
-        stanceShift.Add("(C)ontinue", () => Prompt(basic));
+        stanceShift.Add("(C)ontinue", () => {});
         stanceShift.Add("(S)tanceshift", () =>
         {
             PromptCards((card) => card.StanceShift());
@@ -34,7 +37,6 @@
     }
     private void Intro()
     {
-        if (skip) Prompt(basic);
         IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
         Console.ReadKey();
         Console.Clear();
@@ -44,13 +46,17 @@
         IO.pr("Choose your class...");
         IO.prfo(classes);
         IO.selsa(classes, out int selection);
-        ClassName className = (ClassName) selection;
+        ClassName className = (ClassName)selection;
         player = new Charactor(name, className);
     }
     private static void Prompt(CmdTuple cmd)
     {
         IO.prfo(cmd.Names.ToArray());
         IO.selcmd(cmd);
+    }
+    private void BasicPrompt()
+    {
+        Prompt(basic);
     }
     private void PromptCards(Action<Card> action)
     {
@@ -69,6 +75,5 @@
     private void Test()
     {
         IO.pr("Test!");
-        Prompt(basic);
     }
 }
