@@ -28,12 +28,8 @@
         basic.Add("(R)est", () => Rest());
         basic.Add("(T)est", () => Test());
 
-        stanceShift.Add("(C)ontinue", () => {});
-        stanceShift.Add("(S)tanceshift", () =>
-        {
-            PromptCards((card) => card.StanceShift());
-            Prompt(stanceShift);
-        });
+        stanceShift.Add("(C)ontinue", () => stanceShiftFlag = false);
+        stanceShift.Add("(S)tanceshift", () => PromptCards((card) => card.StanceShift()));
     }
     private void Intro()
     {
@@ -70,7 +66,11 @@
     {
         IO.pr("Resting a turn.");
         player.Hand.Pickup(player.Draw());
-        Prompt(stanceShift);
+        stanceShiftFlag = true;
+        do
+        {
+            Prompt(stanceShift);
+        } while (stanceShiftFlag);
     }
     private void Test()
     {
