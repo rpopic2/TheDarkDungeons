@@ -6,35 +6,37 @@ public static class IO
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
     ///<summary>Select from provided keys.</summary>
-    public static void sel(char[] keys, out int resultIndex)
+    public static void sel(char[] keys, out int index, out char key)
     {
-        char key = rkc();
-        int index = Array.IndexOf(keys, key);
-        if (index == -1) sel(keys, out resultIndex);
-        else resultIndex = index;
+        do
+        {
+            key = rkc();
+            index = Array.IndexOf(keys, key);
+        } while (index == -1);
     }
-    ///<summary>Select a card and run</summary>
-    public static void selc(out Card card)
+    ///<summary>Select a card</summary>
+    public static void selc(out Card card, out int index)
     {
-        sel(Hand.PlayerCur, out int index);
-        if (Hand.Player[index] == null) selc(out card);
-        else card = Hand.Player[index];
+        do
+        {
+            sel(Hand.PlayerCur, out index, out char key);
+        } while (Hand.Player[index] == null);
+        card = Hand.Player[index];
     }
 
     ///<summary>Select from string array.</summary>
     public static void selsa(string[] options, out int resultIndex)
     {
         char[] keys = options.ParseKeys2();
-        sel(keys, out resultIndex);
+        sel(keys, out int index, out char key);
+        resultIndex = index;
     }
 
     ///<summary>Select and run</summary>
-    public static void cmdsel(CmdTuple cmd)
+    public static void selcmd(CmdTuple cmd)
     {
-        char key = rkc();
-        int index = Array.IndexOf(cmd.Keys.ToArray(), key);
-        if (index == -1) cmdsel(cmd);
-        else cmd.Invoke(key);
+        sel(cmd.Keys.ToArray(), out int index, out char key);
+        cmd.Invoke(key);
     }
 
 

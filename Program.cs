@@ -47,15 +47,15 @@
         ClassName className = (ClassName) selection;
         player = new Charactor(name, className);
     }
-    private static void Prompt(CmdTuple action)
+    private static void Prompt(CmdTuple cmd)
     {
-        IO.prfo(action.Names.ToArray());
-        IO.cmdsel(action);
+        IO.prfo(cmd.Names.ToArray());
+        IO.selcmd(cmd);
     }
     private void PromptCards(Action<Card> action)
     {
         player.Hand.prh();
-        IO.selc(out Card card);
+        IO.selc(out Card card, out int index);
         action(card);
         // IO.selcr(action);
         IO.pr(player.Hand);
