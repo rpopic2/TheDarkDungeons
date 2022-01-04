@@ -18,6 +18,7 @@
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...\n");
         InitActions();
+        
         do
         {
             BasicPrompt();

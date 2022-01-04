@@ -27,7 +27,7 @@ public static class IO
     ///<summary>Select from string array.</summary>
     public static void selsa(string[] options, out int resultIndex)
     {
-        char[] keys = options.ParseKeys2();
+        char[] keys = options.ParseKeys();
         sel(keys, out int index, out char key);
         resultIndex = index;
     }

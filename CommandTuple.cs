@@ -15,10 +15,6 @@ public struct CmdTuple
         Keys.Add(name.ParseKey());
         Acts.Add(act);
     }
-    public bool HasKey(char key)
-    {
-        return Keys.Contains(key);
-    }
 
     public void Invoke(char key)
         => Acts[Keys.IndexOf(key)]();
@@ -30,29 +26,12 @@ public struct CmdTuple
     //     return result;
     // }
 
-    
+
 }
 public static class Extension
 {
     public static char ParseKey(this string option)
         => Char.ToLower(option[option.IndexOf('(') + 1]);
-    public static List<char> ParseKeys(this string[] options)
-    {
-        List<char> result = new List<char>();
-        foreach (string item in options)
-        {
-            result.Add(item.ParseKey());
-        }
-        return result;
-    }
-    public static char[] ParseKeys2(this string[] options)
-    {
-        int len = options.Length;
-        char[] result = new char[len];
-        for (int i = 0; i < len; i++)
-        {
-            result[i] = options[i].ParseKey();
-        }
-        return result;
-    }
+    public static char[] ParseKeys(this string[] options)
+        => Array.ConvertAll(options, new Converter<string, char>(ParseKey));
 }
