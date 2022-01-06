@@ -6,28 +6,30 @@ public static class IO
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
     ///<summary>Select from provided keys.</summary>
-    public static void sel(char[] keys, out int index, out char key)
+    public static void sel(char[] keys, out int index, out char key, bool doDel = true)
     {
         do
         {
             key = rkc();
             index = Array.IndexOf(keys, key);
         } while (index == -1);
+        if(doDel) del();
     }
     ///<summary>Select a card</summary>
     public static void selc(out Card card, out int index)
     {
         do
         {
-            sel(Hand.PlayerCur, out index, out char key);
+            sel(Hand.PlayerCur, out index, out char key, false);
         } while (Hand.Player[index] == null);
         card = Hand.Player[index];
+        del();
     }
 
     ///<summary>Select from string array.</summary>
     public static void selsa(string[] options, out int resultIndex)
     {
-        char[] keys = options.ParseKeys2();
+        char[] keys = options.ParseKeys();
         sel(keys, out int index, out char key);
         resultIndex = index;
     }
@@ -66,6 +68,13 @@ public static class IO
     {
         pr(hand.ToString());
         prfo(hand.CurOption, "Select Index :");
+    }
+
+    public static void del()
+    {
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        pr("                                                  ");
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
     }
 
 }

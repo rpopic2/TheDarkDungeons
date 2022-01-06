@@ -35,6 +35,11 @@ public struct Hand
         IO.sel(Hand.PlayerCur, out int index, out char key);
         Pickup(index, card, silent);
     }
+    public void Delete(Card card)
+    {
+        int index = Array.IndexOf(content, card);
+        content[index] = null;
+    }
     public Card this[int index]
     {
         get { return content[index]; }
