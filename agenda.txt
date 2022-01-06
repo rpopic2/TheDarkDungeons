@@ -1,3 +1,4 @@
 q to cancel select.
-now w command!
+monster ondeath
 mobs constructor data should be in a data file.
+immutable hp? why does exp work??

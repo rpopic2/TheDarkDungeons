@@ -19,4 +19,9 @@ public class Monster : Entity
         Hp.Cur -= x;
         IO.pr($"{Name} takes {x} damage. {Hp.Cur}/{Hp.Max}");
     }
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        Program.player.exp.Gain(3);
+    }
 }
