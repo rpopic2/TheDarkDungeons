@@ -77,8 +77,10 @@
     }
     private void UseCard()
     {
-        //IO.prh(Hand.Player);
-        //IO.selc(out Card card, out int index);
+        IO.prh(Hand.Player);
+        IO.selc(out Card card, out int index);
+        IO.del();
+        Hand.Player.Delete(card);
     }
     private void StanceShift(Card card)
     {
