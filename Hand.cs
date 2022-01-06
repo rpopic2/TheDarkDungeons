@@ -11,7 +11,7 @@ public struct Hand
             return curOptions;
         }
     }
-    private Card[] content;
+    private Card?[] content;
     public int Cap { get; private set; }
     public int Count
     {
@@ -40,7 +40,7 @@ public struct Hand
         int index = Array.IndexOf(content, card);
         content[index] = null;
     }
-    public Card this[int index]
+    public Card? this[int index]
     {
         get { return content[index]; }
     }

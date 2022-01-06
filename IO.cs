@@ -22,7 +22,7 @@ public static class IO
         {
             sel(Hand.PlayerCur, out index, out char key, false);
         } while (Hand.Player[index] == null);
-        card = Hand.Player[index];
+        card = Hand.Player[index]!;
         del();
     }
 
