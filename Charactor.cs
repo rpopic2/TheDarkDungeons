@@ -1,17 +1,19 @@
 public class Charactor : Entity
 {
     public Exp exp;
-    public Charactor(string name, ClassName className) : base(name, className)
+
+    public Charactor(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
         exp = new Exp(this);
     }
+
     public new string Stats
     {
         get => base.Stats + $"\tExp : {exp}";
     }
     public void LvUp()
     {
-        Lv++;
+        lv++;
         Console.WriteLine("\nLevel up!");
         //ClassSwitch(() => { sol += 2; }, () => { lun += 2; }, () => { con += 2; });
     }

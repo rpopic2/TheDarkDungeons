@@ -1,2 +1,3 @@
 q to cancel select.
 now w command!
+mobs constructor data should be in a data file.

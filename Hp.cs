@@ -1,4 +1,4 @@
-public struct Hp
+public class Hp
 {
     private int cur;
 

@@ -2,11 +2,13 @@
 {
     public static Program? main;
     private bool skip = true;
-    public static Charactor player = new Charactor("Michael", ClassName.Assassin);
+    public static Charactor player =  new Charactor("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
     private bool stanceShiftFlag = false;
+    private Monster monster;
+
     public static void Main()
     {
         main = new Program();
@@ -20,7 +22,7 @@
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...");
         InitActions();
-
+        monster = new Monster("Bat", ClassName.Warrior, 3, 3, 1, 2, 1, 2); //Test!
         do
         {
             BasicPrompt();
@@ -45,7 +47,7 @@
         IO.prfo(classes);
         IO.selsa(classes, out int selection);
         ClassName className = (ClassName)selection;
-        player = new Charactor(name, className);
+        player = new Charactor(name, className, 3, 5, 0, 2, 2, 2);
     }
     private static void Prompt(CmdTuple cmd)
     {
@@ -81,6 +83,7 @@
         IO.selc(out Card card, out int index);
         IO.del();
         Hand.Player.Delete(card);
+        monster.TakeDamge(card.sol);
     }
     private void StanceShift(Card card)
     {
