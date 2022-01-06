@@ -1,5 +1,3 @@
-using System.Numerics;
-
 public class Card : IMass
 {
     Stance stance;
