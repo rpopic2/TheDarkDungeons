@@ -1,6 +1,6 @@
 public class Card : IMass
 {
-    Stance stance;
+    private Stance stance;
     public int sol { get; set; }
     public int lun { get; set; }
     public int con { get; set; }
