@@ -17,7 +17,7 @@ public class Hp
             if (value <= 0)
             {
                 cur = 0;
-                OnRaiseDeathEvent(new DeathEventArgs());
+                OnRaiseDeathEvent(new EventArgs());
                 return;
             }
             int damage = cur - value;
@@ -33,18 +33,10 @@ public class Hp
     {
         Cur -= x;
     }
-    public event EventHandler<DeathEventArgs>? RaiseDeathEvent;
-    protected virtual void OnRaiseDeathEvent(DeathEventArgs e)
+    public event EventHandler<EventArgs>? RaiseDeathEvent;
+    protected virtual void OnRaiseDeathEvent(EventArgs e)
     {
-        EventHandler<DeathEventArgs> deathEvent = RaiseDeathEvent!;
+        EventHandler<EventArgs> deathEvent = RaiseDeathEvent!;
         if(deathEvent != null) deathEvent(this, e);
-    }
-}
-
-public class DeathEventArgs : EventArgs
-{
-    public DeathEventArgs()
-    {
-
     }
 }

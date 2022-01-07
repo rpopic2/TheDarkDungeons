@@ -24,7 +24,7 @@ public class Entity : IMass
     }
     public virtual Card Draw()
         => new Card(rnd.Next(1, sol + 1), rnd.Next(1, lun + 1));
-    protected virtual void OnDeath(object sender, DeathEventArgs e)
+    protected virtual void OnDeath(object sender, EventArgs e)
     {
         IO.pr($"{Name} died.");
     }

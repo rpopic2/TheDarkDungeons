@@ -13,7 +13,7 @@ public class Monster : Entity
     {
         return base.ToString();
     }
-    protected override void OnDeath(object sender, DeathEventArgs e)
+    protected override void OnDeath(object sender, EventArgs e)
     {
         base.OnDeath(sender, e);
         Player.exp.Gain(3);
