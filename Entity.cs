@@ -16,7 +16,7 @@ public class Entity : IMass
         ClassName = className;
         Hand = new Hand(cap);
         Hp = new Hp(this, maxHp);
-        Hp.RaiseDeathEvent += OnDeath;
+        Hp.RaiseDeathEvent += OnDeath!;
         this.sol = sol;
         this.lun = lun;
         this.con = con;

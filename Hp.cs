@@ -33,10 +33,10 @@ public class Hp
     {
         Cur -= x;
     }
-    public event EventHandler<DeathEventArgs> RaiseDeathEvent;
+    public event EventHandler<DeathEventArgs>? RaiseDeathEvent;
     protected virtual void OnRaiseDeathEvent(DeathEventArgs e)
     {
-        EventHandler<DeathEventArgs> deathEvent = RaiseDeathEvent;
+        EventHandler<DeathEventArgs> deathEvent = RaiseDeathEvent!;
         if(deathEvent != null) deathEvent(this, e);
     }
 }
