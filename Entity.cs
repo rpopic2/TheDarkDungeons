@@ -31,7 +31,7 @@ public class Entity : IMass
     public void TakeDamage(int x)
     {
         Hp.TakeDamage(x);
-        IO.pr($"{Name} takes {x} damage. {Hp.Cur}/{Hp.Max}");
+        if (Hp.Cur > 0) IO.pr($"{Name} takes {x} damage. {Hp.Cur}/{Hp.Max}");
     }
     public string Stats
     {
