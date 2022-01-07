@@ -64,9 +64,7 @@
         Player.hand.prh();
         IO.selc(out Card card, out int index);
         action(card);
-        // IO.selcr(action);
-    }
-    
+    }    
     private void StanceShift(Card card)
     {
         card.StanceShift();
