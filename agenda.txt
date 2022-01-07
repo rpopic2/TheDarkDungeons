@@ -1,5 +1,7 @@
+xp 먹으면 현재와 최대 보여주기
+q to cancel select.->
+s to print stats
 immutable hp? why does exp work??
-q to cancel select.
 monster can attacke
 monster ondeath => give player a card.
 monster ondeath=>spawn new moster. 

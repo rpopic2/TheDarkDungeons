@@ -34,7 +34,7 @@ public struct Exp
     public void Gain(int amount)
     {
         Cur += amount;
-        IO.pr($"You gained {amount} xp.");
+        IO.pr($"You gained {amount} xp. {ToString()}");
     }
     
     public override string ToString()
