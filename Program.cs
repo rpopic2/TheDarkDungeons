@@ -2,7 +2,7 @@
 {
     public static Program? main;
     private bool skip = true;
-    public static Player player;
+    public static Player player = new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
@@ -66,12 +66,17 @@
         action(card);
         // IO.selcr(action);
     }
+    
+    private void StanceShift(Card card)
+    {
+        card.StanceShift();
+        IO.del();
+    }
+    //-------------------------
     private void Rest()
     {
         IO.pr("Resting a turn.");
         Player.hand.Pickup(player.Draw());
-        IO.del();
-        IO.del();
         stanceShiftFlag = true;
         do
         {
@@ -86,10 +91,5 @@
         Player.hand.Delete(card);
         monster.TakeDamage(card.sol);
         player.TakeDamage(monster.Draw().sol);
-    }
-    private void StanceShift(Card card)
-    {
-        card.StanceShift();
-        IO.del();
     }
 }

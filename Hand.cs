@@ -33,6 +33,8 @@ public struct Hand
         this.prh();
         IO.sel(Player.hand.Cur, out int index, out char key);
         _Pickup(index, card, silent);
+        IO.del();
+        IO.del();
     }
     public void Delete(Card card)
     {

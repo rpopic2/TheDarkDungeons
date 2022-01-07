@@ -1,9 +1,7 @@
-xp 먹으면 현재와 최대 보여주기
+몹 잡으면 몹이 나를 안때리게
 q to cancel select.->
 s to print stats
 immutable hp? why does exp work??
-monster can attacke
-monster ondeath => give player a card.
 monster ondeath=>spawn new moster. 
 defense system.
 mobs constructor data should be in a data file.
