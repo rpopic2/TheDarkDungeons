@@ -7,17 +7,16 @@ public class Player : Entity
     {
         exp = new Exp(this);
         Player.hand = base.Hand;
+        exp.OnLvUp = () =>
+        {
+            lv++;
+            Console.WriteLine("\nLevel up!");
+        };
     }
 
     public new string Stats
     {
         get => base.Stats + $"\tExp : {exp}";
-    }
-    public void LvUp()
-    {
-        lv++;
-        Console.WriteLine("\nLevel up!");
-        //ClassSwitch(() => { sol += 2; }, () => { lun += 2; }, () => { con += 2; });
     }
     public override Card Draw()
     {
