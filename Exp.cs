@@ -2,7 +2,7 @@ public struct Exp
 {
     private const float lvCurve = 1.25f;
     private const int lvMultiplier = 10;
-    const float lvIncrement = lvCurve * lvMultiplier;
+    private const float lvIncrement = lvCurve * lvMultiplier;
     private Player owner;
     private int cur = 0;
     public int Cur

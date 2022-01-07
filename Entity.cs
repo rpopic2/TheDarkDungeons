@@ -16,6 +16,7 @@ public class Entity : IMass
         ClassName = className;
         Hand = new Hand(cap);
         Hp = new Hp(this, maxHp);
+        Hp.RaiseDeathEvent += OnDeath;
         this.sol = sol;
         this.lun = lun;
         this.con = con;
@@ -23,13 +24,14 @@ public class Entity : IMass
     }
     public virtual Card Draw()
         => new Card(rnd.Next(1, sol + 1), rnd.Next(1, lun + 1));
-    public virtual void OnDeath()
+    protected virtual void OnDeath(object sender, DeathEventArgs e)
     {
         IO.pr($"{Name} died.");
     }
     public void TakeDamage(int x)
     {
-        Hp.Cur -= x;
+        Hp.TakeDamage(x);
+        IO.pr($"{Name} takes {x} damage. {Hp.Cur}/{Hp.Max}");
     }
     public string Stats
     {

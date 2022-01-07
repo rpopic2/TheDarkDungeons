@@ -32,8 +32,3 @@ public class Card : IMass
         throw new Exception("Cannot draw card from a card.");
     }
 }
-
-public enum Stance
-{
-    Attack, Defence, Star
-}

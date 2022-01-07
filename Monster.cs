@@ -13,9 +13,9 @@ public class Monster : Entity
     {
         return base.ToString();
     }
-    public override void OnDeath()
+    protected override void OnDeath(object sender, DeathEventArgs e)
     {
-        base.OnDeath();
+        base.OnDeath(sender, e);
         Player.exp.Gain(3);
         Player.hand.Pickup(Draw());
     }
