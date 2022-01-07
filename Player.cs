@@ -1,10 +1,12 @@
 public class Player : Entity
 {
-    public Exp exp;
+    public static Hand hand;
+    public static Exp exp;
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
         exp = new Exp(this);
+        Player.hand = base.Hand;
     }
 
     public new string Stats

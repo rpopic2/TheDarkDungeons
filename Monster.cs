@@ -16,7 +16,7 @@ public class Monster : Entity
     public override void OnDeath()
     {
         base.OnDeath();
-        Program.player.exp.Gain(3);
-        Program.player.Hand.Pickup(Draw());
+        Player.exp.Gain(3);
+        Player.hand.Pickup(Draw());
     }
 }

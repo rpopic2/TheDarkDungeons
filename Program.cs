@@ -2,7 +2,7 @@
 {
     public static Program? main;
     private bool skip = true;
-    public static Player player =  new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
+    public static Player player;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
@@ -17,7 +17,8 @@
     {
         Console.Clear();
         if (!skip) Intro();
-        player.exp.Gain(1);
+        player = new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
+        Player.exp.Gain(1);
         IO.del();
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...");
@@ -60,7 +61,7 @@
     }
     private void PromptCards(Action<Card> action)
     {
-        player.Hand.prh();
+        Player.hand.prh();
         IO.selc(out Card card, out int index);
         action(card);
         // IO.selcr(action);
@@ -68,7 +69,7 @@
     private void Rest()
     {
         IO.pr("Resting a turn.");
-        player.Hand.Pickup(player.Draw());
+        Player.hand.Pickup(player.Draw());
         IO.del();
         IO.del();
         stanceShiftFlag = true;
@@ -79,10 +80,10 @@
     }
     private void UseCard()
     {
-        IO.prh(Hand.Player);
+        IO.prh(Player.hand);
         IO.selc(out Card card, out int index);
         IO.del();
-        Hand.Player.Delete(card);
+        Player.hand.Delete(card);
         monster.TakeDamage(card.sol);
         player.TakeDamage(monster.Draw().sol);
     }

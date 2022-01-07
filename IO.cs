@@ -20,9 +20,9 @@ public static class IO
     {
         do
         {
-            sel(Hand.PlayerCur, out index, out char key, false);
-        } while (Hand.Player[index] == null);
-        card = Hand.Player[index]!;
+            sel(Player.hand.Cur, out index, out char key, false);
+        } while (Player.hand[index] == null);
+        card = Player.hand[index]!;
         del();
     }
 
@@ -67,7 +67,7 @@ public static class IO
     public static void prh(this Hand hand)
     {
         pr(hand.ToString());
-        prfo(hand.CurOption, "Select Index :");
+        prfo(hand.Cur, "Select Index :");
     }
 
     public static void del()

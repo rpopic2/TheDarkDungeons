@@ -1,8 +1,6 @@
 public struct Hand
 {
-    public static Hand Player = Program.player.Hand;
-    public static char[] PlayerCur = Program.player.Hand.CurOption;
-    public char[] CurOption
+    public char[] Cur
     {
         get
         {
@@ -33,7 +31,7 @@ public struct Hand
     {
         IO.pr("You've found a card." + card);
         this.prh();
-        IO.sel(Hand.PlayerCur, out int index, out char key);
+        IO.sel(Player.hand.Cur, out int index, out char key);
         _Pickup(index, card, silent);
     }
     public void Delete(Card card)
