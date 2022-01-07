@@ -27,6 +27,10 @@ public class Entity : IMass
     {
         IO.pr($"{Name} died.");
     }
+    public void TakeDamage(int x)
+    {
+        Hp.Cur -= x;
+    }
     public string Stats
     {
         get => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.Max}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";

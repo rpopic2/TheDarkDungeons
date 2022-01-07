@@ -1,4 +1,8 @@
-q to cancel select.
-monster ondeath=>spawn new moster. give player a card.
-mobs constructor data should be in a data file.
 immutable hp? why does exp work??
+q to cancel select.
+monster can attacke
+monster ondeath => give player a card.
+monster ondeath=>spawn new moster. 
+defense system.
+mobs constructor data should be in a data file.
+선제공격 개념 필요할지도

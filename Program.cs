@@ -83,7 +83,8 @@
         IO.selc(out Card card, out int index);
         IO.del();
         Hand.Player.Delete(card);
-        monster.TakeDamge(card.sol);
+        monster.TakeDamage(card.sol);
+        player.TakeDamage(monster.Draw().sol);
     }
     private void StanceShift(Card card)
     {

@@ -23,7 +23,7 @@ public struct Hand
         Cap = cap;
         content = new Card[cap];
     }
-    public void Pickup(int index, Card card, bool silent = false)
+    private void _Pickup(int index, Card card, bool silent = false)
     {
         content[index] = card;
         if (!silent) IO.pr(ToString());
@@ -31,9 +31,10 @@ public struct Hand
 
     public void Pickup(Card card, bool silent = false)
     {
+        IO.pr("You've found a card." + card);
         this.prh();
         IO.sel(Hand.PlayerCur, out int index, out char key);
-        Pickup(index, card, silent);
+        _Pickup(index, card, silent);
     }
     public void Delete(Card card)
     {

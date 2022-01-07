@@ -9,16 +9,22 @@ public class Hp
         get => cur;
         set
         {
-            if (cur > Max) cur = Max;
-            if (cur <= 0)
+            if (value > Max)
+            {
+                cur = Max;
+                return;
+            }
+            if (value <= 0)
             {
                 cur = 0;
                 owner.OnDeath();
+                return;
             }
-            else cur = value;
+            int damage = cur - value;
+            cur = value;
+            IO.pr($"{owner.Name} takes {damage} damage. {Cur}/{Max}");
         }
     }
-
     public Hp(Entity owner, int max)
     {
         this.owner = owner;

@@ -13,15 +13,10 @@ public class Monster : Entity
     {
         return base.ToString();
     }
-
-    public void TakeDamge(int x)
-    {
-        Hp.Cur -= x;
-        IO.pr($"{Name} takes {x} damage. {Hp.Cur}/{Hp.Max}");
-    }
     public override void OnDeath()
     {
         base.OnDeath();
         Program.player.exp.Gain(3);
+        Program.player.Hand.Pickup(Draw());
     }
 }

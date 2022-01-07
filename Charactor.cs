@@ -20,7 +20,6 @@ public class Charactor : Entity
     public override Card Draw()
     {
         Card card = base.Draw();
-        IO.pr("You've found a card." + card);
         return card;
     }
 
