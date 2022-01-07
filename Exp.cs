@@ -3,7 +3,7 @@ public struct Exp
     private const float lvCurve = 1.25f;
     private const int lvMultiplier = 10;
     const float lvIncrement = lvCurve * lvMultiplier;
-    private Charactor owner;
+    private Player owner;
     private int cur = 0;
     public int Cur
     {
@@ -21,7 +21,7 @@ public struct Exp
     }
     public int Max { get; private set; }
 
-    public Exp(Charactor owner)
+    public Exp(Player owner)
     {
         this.owner = owner;
         Max = 0;

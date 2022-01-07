@@ -1,8 +1,8 @@
-public class Charactor : Entity
+public class Player : Entity
 {
     public Exp exp;
 
-    public Charactor(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
+    public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
         exp = new Exp(this);
     }
