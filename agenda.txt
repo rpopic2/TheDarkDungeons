@@ -1,5 +1,3 @@
-sel과 pr의 통합
-
 rest -> q does not properly del.
 
 exp and hp onlvup ondeath event or action +=? => action my be better
