@@ -37,6 +37,8 @@ public class Hp
     protected virtual void OnRaiseDeathEvent(EventArgs e)
     {
         EventHandler<EventArgs> deathEvent = RaiseDeathEvent!;
-        if(deathEvent != null) deathEvent(this, e);
+        if (deathEvent != null) deathEvent(this, e);
     }
+    public bool IsAlive
+        => Cur > 0;
 }

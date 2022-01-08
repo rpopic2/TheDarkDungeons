@@ -64,7 +64,7 @@
         Player.hand.prh();
         IO.selc(out Card card, out int index);
         action(card);
-    }    
+    }
     private void StanceShift(Card card)
     {
         card.StanceShift();
@@ -86,8 +86,7 @@
         IO.prh(Player.hand);
         IO.selc(out Card card, out int index);
         IO.del();
-        
         player.Attack(card, monster);
-        monster.Attack(monster.Draw(), player);
+        if (monster.Hp.IsAlive) monster.Attack(monster.Draw(), player);
     }
 }

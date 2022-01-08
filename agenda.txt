@@ -1,5 +1,3 @@
-몹 잡으면 몹이 나를 안때리게
-IMass -> class? stats are public.
 q to cancel select.->
 s to print stats
 immutable hp? why does exp work??
