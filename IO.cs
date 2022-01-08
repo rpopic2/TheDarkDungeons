@@ -6,7 +6,7 @@ public static class IO
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
     ///<summary>Select from provided keys. Returns cancel.</summary>
-    public static bool sel(char[] keys, out int index, out char key, bool doDel = true)
+    public static bool sel(char[] keys, out int index, out char key)
     {
         do
         {
@@ -14,11 +14,11 @@ public static class IO
             if(key == 'q') goto Cancel;
             index = Array.IndexOf(keys, key);
         } while (index == -1);
-        if(doDel) del();
+        del();
         return false;
         Cancel :
             index = -1;
-            if(doDel) del();
+            del();
             return true;
     }
     ///<summary>Select a card. Returns cancel.</summary>
@@ -26,11 +26,10 @@ public static class IO
     {
         do
         {
-            bool cancel = sel(Player.hand.Cur, out index, out char key, false);
+            bool cancel = sel(Player.hand.Cur, out index, out char key);
             if(cancel) goto Cancel;
         } while (Player.hand[index] == null);
         card = Player.hand[index]!;
-        del();
         return false;
         Cancel :
             card = null;
