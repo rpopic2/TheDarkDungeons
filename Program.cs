@@ -34,7 +34,7 @@
         basic.Add("(R)est", () => Rest());
         basic.Add("Use Card(W)", () => UseCard());
 
-        stanceShift.Add("(C)ontinue", () => stanceShiftFlag = false);
+        stanceShift.Add("Continue(Q)", () => stanceShiftFlag = false);
         stanceShift.Add("(S)tanceshift", () => PromptCards((card) => StanceShift(card)));
     }
     private void Intro()
@@ -86,8 +86,8 @@
         IO.prh(Player.hand);
         IO.selc(out Card card, out int index);
         IO.del();
-        Player.hand.Delete(card);
-        monster.TakeDamage(card.sol);
-        player.TakeDamage(monster.Draw().sol);
+        
+        player.Attack(card, monster);
+        monster.Attack(monster.Draw(), player);
     }
 }

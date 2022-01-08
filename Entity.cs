@@ -1,12 +1,9 @@
-public class Entity : IMass
+public class Entity : Mass
 {
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
     public Hp Hp { get; private set; }
-    public int sol { get; set; }
-    public int lun { get; set; }
-    public int con { get; set; }
     public int lv { get; protected set; }
     private Random rnd = new Random();
 
@@ -22,7 +19,7 @@ public class Entity : IMass
         this.con = con;
         this.lv = lv;
     }
-    public virtual Card Draw()
+    public override Card Draw()
         => new Card(rnd.Next(1, sol + 1), rnd.Next(1, lun + 1));
     protected virtual void OnDeath(object sender, EventArgs e)
     {
@@ -32,6 +29,11 @@ public class Entity : IMass
     {
         Hp.TakeDamage(x);
         if (Hp.Cur > 0) IO.pr($"{Name} takes {x} damage. {Hp.Cur}/{Hp.Max}");
+    }
+
+    public virtual void Attack(Card card, Entity target)
+    {
+        target.TakeDamage(card.sol);
     }
     public string Stats
     {

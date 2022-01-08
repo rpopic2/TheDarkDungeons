@@ -23,6 +23,11 @@ public class Player : Entity
         Card card = base.Draw();
         return card;
     }
+    public override void Attack(Card card, Entity target)
+    {
+        hand.Delete(card);
+        base.Attack(card, target);
+    }
 
     // public void ClassSwitch(Action warrior, Action assassin, Action mage)
     // {

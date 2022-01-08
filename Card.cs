@@ -1,9 +1,6 @@
-public class Card : IMass
+public class Card : Mass
 {
     private Stance stance;
-    public int sol { get; set; }
-    public int lun { get; set; }
-    public int con { get; set; }
     public Card(int str, int dex, bool silent = true)
     {
         this.sol = str;
@@ -27,7 +24,7 @@ public class Card : IMass
         else if (stance == Stance.Defence) return $"[{lun}/({sol})]";
         else return $"[{con}*]";
     }
-    public Card Draw()
+    public override Card Draw()
     {
         throw new Exception("Cannot draw card from a card.");
     }
