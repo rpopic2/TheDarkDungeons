@@ -16,9 +16,7 @@
         Console.Clear();
         if (!skip) Intro();
         player = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
-        //Player.exp.Gain(1);
-        IO.pr(player.Stats);
-        IO.pr("\nYour adventure begins...");
+        IO.pr("\nYour adventure begins...\n");
         InitActions();
         monster = new Monster("Bat", ClassName.Warrior, 3, 3, 1, 2, 1, 2); //Test!
         player.curTarget = monster;
@@ -32,10 +30,11 @@
     {
         basic.Add("(R)est", () => Rest());
         basic.Add("Use Card(W)", () => UseCard());
+        basic.Add("(S)tats", () => ShowStats());
 
-        //stanceShift.Add("Continue(Q)", () => stanceShiftFlag = false);
         stanceShift.Add("(S)tanceshift", () => PromptCards((card) => StanceShift(card)));
     }
+
     private void Intro()
     {
         IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
@@ -60,13 +59,13 @@
     {
         Player.hand.prh();
         IO.selc(out Card? card, out int index);
+        IO.del();
         if (card == null) return;
         action(card);
     }
     private void StanceShift(Card card)
     {
         card.StanceShift();
-        IO.del();
     }
     //-------------------------
     private void Rest()
@@ -86,11 +85,18 @@
         IO.del();
         if (card == null)
         {
-            IO.del();
+            IO.del(2);
             return;
         }
         player.UseCard(card);
 
         monster.Attack(monster.Draw(), player);
+    }
+    
+    private void ShowStats()
+    {
+        IO.pr(player.Stats);
+        IO.rkc();
+        IO.del(3);
     }
 }

@@ -13,6 +13,10 @@ cancel -> out bool cancel
 
 sel stanceshift nokori.
 
+mob defences
+
+mob has hand.
+
 mobs constructor data should be in a data file.
 선제공격 개념 필요할지도
 

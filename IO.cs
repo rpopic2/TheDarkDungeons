@@ -18,6 +18,7 @@ public static class IO
         return false;
         Cancel :
             index = -1;
+            if(doDel) del();
             return true;
     }
     ///<summary>Select a card. Returns cancel.</summary>
@@ -89,6 +90,13 @@ public static class IO
         Console.SetCursorPosition(0, Console.CursorTop - 1);
         pr("                                                  ");
         Console.SetCursorPosition(0, Console.CursorTop - 1);
+    }
+    public static void del(int lines)
+    {
+        for (int i = 0; i < lines; i++)
+        {
+            del();
+        }
     }
 
 }
