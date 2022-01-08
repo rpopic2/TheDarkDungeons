@@ -1,4 +1,3 @@
-q to cancel select.->
 s to print stats
 immutable hp? why does exp work??
 monster ondeath=>spawn new moster. 

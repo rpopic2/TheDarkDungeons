@@ -25,15 +25,12 @@ public class Entity : Mass
     {
         IO.pr($"{Name} died.");
     }
-    public void TakeDamage(int x)
-    {
-        Hp.TakeDamage(x);
-        if (Hp.Cur > 0) IO.pr($"{Name} takes {x} damage. {Hp.Cur}/{Hp.Max}");
-    }
 
     public virtual void Attack(Card card, Entity target)
     {
-        target.TakeDamage(card.sol);
+        Hp.TakeDamage(card.sol);
+        IO.pr($"{Name} attacks {target.Name}.");
+        if (Hp.Cur > 0) IO.pr($"{target.Name} takes {card.sol} damage. {Hp.Cur}/{Hp.Max}");
     }
     public string Stats
     {
