@@ -1,5 +1,5 @@
 player의 static과 non-static사용이 뒤섞임.
-exp and hp posssibly merge-able?
+exp and hp posssibly merge-able? into struct?
 card가 진짜 struct아닌가?
 
 

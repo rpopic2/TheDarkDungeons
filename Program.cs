@@ -1,5 +1,6 @@
 ﻿public class Program
 {
+    public const string version = "0.1";
     public static Player player = Player.instance;
     public static Program? main;
     private bool skip = true;
@@ -14,9 +15,9 @@
     private Program()
     {
         Console.Clear();
+        IO.pr("The Dark Dungeon " + version);
         if (!skip) Intro();
-        player = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
-        IO.pr("\nYour adventure begins...\n");
+        IO.pr("Your adventure begins...\n");
         InitActions();
         monster = new Monster("Bat", ClassName.Warrior, 3, 3, 1, 2, 1, 2); //Test!
         player.curTarget = monster;
@@ -40,7 +41,7 @@
 
     private void Intro()
     {
-        IO.pr("The Dark Dungeon ver 0.1\nPress any key to start...");
+        IO.pr("Press any key to start...");
         Console.ReadKey();
 
         IO.pr("Choose charactor`s name...");
