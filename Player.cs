@@ -1,11 +1,12 @@
 public class Player : Entity
 {
+    public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
     public static Hand hand;
-    public static Exp exp;
+    public static Exp exp = new Exp(instance);
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
-        exp = new Exp(this);
+        Player.exp = new Exp(this);
         Player.hand = base.Hand;
         exp.OnLvUp = () =>
         {

@@ -1,8 +1,8 @@
 ﻿public class Program
 {
+    public static Player player = Player.instance;
     public static Program? main;
     private bool skip = true;
-    public static Player player = new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
