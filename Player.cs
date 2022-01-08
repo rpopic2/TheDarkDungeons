@@ -19,7 +19,7 @@ public class Player : Entity
 
     public new string Stats
     {
-        get => base.Stats + $"\tExp : {exp}";
+        get => base.Stats + $"\nExp : {exp}";
     }
     public override Card Draw()
     {

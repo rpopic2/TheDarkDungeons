@@ -97,6 +97,6 @@
     {
         IO.pr(player.Stats);
         IO.rkc();
-        IO.del(3);
+        IO.del(4);
     }
 }
