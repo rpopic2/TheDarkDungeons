@@ -24,7 +24,7 @@
         monster = new Monster("Bat", ClassName.Warrior, 3, 3, 1, 2, 1, 2); //Test!
         do
         {
-            BasicPrompt();
+            Prompt(basic);
         } while (player.Hp.Cur > 0);
     }
     private void InitActions()
@@ -54,10 +54,6 @@
         IO.prfo(cmd.Names.ToArray());
         bool cancel = IO.selcmd(cmd);
         return cancel;
-    }
-    private void BasicPrompt()
-    {
-        Prompt(basic);
     }
     private void PromptCards(Action<Card> action)
     {

@@ -1,6 +1,7 @@
 public class Card : Mass
 {
-    private Stance stance;
+    public Stance Stance { get; private set; }
+
     public Card(int str, int dex, bool silent = true)
     {
         this.sol = str;
@@ -9,19 +10,19 @@ public class Card : Mass
     }
     public void StanceShift()
     {
-        if (stance == Stance.Star) return;
-        stance = stance == Stance.Attack ? Stance.Defence : Stance.Attack;
+        if (Stance == Stance.Star) return;
+        Stance = Stance == Stance.Attack ? Stance.Defence : Stance.Attack;
     }
     public void ReplaceToStar(int wis)
     {
         this.con = wis;
-        stance = Stance.Star;
+        Stance = Stance.Star;
     }
     public override string ToString()
     {
         if(this == null) return "[     ]";
-        if (stance == Stance.Attack) return $"[({sol})/{lun}]";
-        else if (stance == Stance.Defence) return $"[{lun}/({sol})]";
+        if (Stance == Stance.Attack) return $"[({sol})/{lun}]";
+        else if (Stance == Stance.Defence) return $"[{lun}/({sol})]";
         else return $"[{con}*]";
     }
     public override Card Draw()

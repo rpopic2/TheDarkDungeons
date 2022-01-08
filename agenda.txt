@@ -2,13 +2,13 @@ s to print stats
 
 block q on basic.
 
-immutable hp? why does exp work??
-exp and hp to class or struct? -> class may be better?
-exp and hp onlvup ondeath event or action +=?
+exp and hp onlvup ondeath event or action +=? => action my be better
 exp and hp posssibly merge-able?
 
-monster ondeath=>spawn new moster. 
+card가 진짜 struct아닌가?
+
 defense system.
+
 mobs constructor data should be in a data file.
 선제공격 개념 필요할지도
 
