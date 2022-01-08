@@ -5,40 +5,53 @@ public static class IO
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
-    ///<summary>Select from provided keys.</summary>
-    public static void sel(char[] keys, out int index, out char key, bool doDel = true)
+    ///<summary>Select from provided keys. Returns cancel.</summary>
+    public static bool sel(char[] keys, out int index, out char key, bool doDel = true)
     {
         do
         {
             key = rkc();
+            if(key == 'q') goto Cancel;
             index = Array.IndexOf(keys, key);
         } while (index == -1);
         if(doDel) del();
+        return false;
+        Cancel :
+            index = -1;
+            return true;
     }
-    ///<summary>Select a card</summary>
-    public static void selc(out Card card, out int index)
+    ///<summary>Select a card. Returns cancel.</summary>
+    public static bool selc(out Card? card, out int index)
     {
         do
         {
-            sel(Player.hand.Cur, out index, out char key, false);
+            bool cancel = sel(Player.hand.Cur, out index, out char key, false);
+            if(cancel) goto Cancel;
         } while (Player.hand[index] == null);
         card = Player.hand[index]!;
         del();
+        return false;
+        Cancel :
+            card = null;
+            return true;
     }
 
     ///<summary>Select from string array.</summary>
-    public static void selsa(string[] options, out int resultIndex)
+    public static bool selsa(string[] options, out int resultIndex)
     {
         char[] keys = options.ParseKeys();
-        sel(keys, out int index, out char key);
-        resultIndex = index;
+        bool cancel = sel(keys, out int index, out char key);
+        if(!cancel) resultIndex = index;
+        else resultIndex = -1;
+        return cancel;
     }
 
     ///<summary>Select and run</summary>
-    public static void selcmd(CmdTuple cmd)
+    public static bool selcmd(CmdTuple cmd)
     {
-        sel(cmd.Keys.ToArray(), out int index, out char key);
-        cmd.Invoke(key);
+        bool cancel = sel(cmd.Keys.ToArray(), out int index, out char key);
+        if(!cancel) cmd.Invoke(key);
+        return cancel;
     }
 
 

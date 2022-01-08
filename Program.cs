@@ -6,7 +6,6 @@
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
-    private bool stanceShiftFlag = false;
     private Monster monster;
 
     public static void Main()
@@ -34,7 +33,7 @@
         basic.Add("(R)est", () => Rest());
         basic.Add("Use Card(W)", () => UseCard());
 
-        stanceShift.Add("Continue(Q)", () => stanceShiftFlag = false);
+        //stanceShift.Add("Continue(Q)", () => stanceShiftFlag = false);
         stanceShift.Add("(S)tanceshift", () => PromptCards((card) => StanceShift(card)));
     }
     private void Intro()
@@ -47,13 +46,15 @@
         IO.pr("Choose your class...");
         IO.prfo(classes);
         IO.selsa(classes, out int selection);
+        if (selection == -1) selection = 0;
         ClassName className = (ClassName)selection;
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
-    private static void Prompt(CmdTuple cmd)
+    private static bool Prompt(CmdTuple cmd)
     {
         IO.prfo(cmd.Names.ToArray());
-        IO.selcmd(cmd);
+        bool cancel = IO.selcmd(cmd);
+        return cancel;
     }
     private void BasicPrompt()
     {
@@ -62,7 +63,8 @@
     private void PromptCards(Action<Card> action)
     {
         Player.hand.prh();
-        IO.selc(out Card card, out int index);
+        IO.selc(out Card? card, out int index);
+        if (card == null) return;
         action(card);
     }
     private void StanceShift(Card card)
@@ -75,17 +77,22 @@
     {
         IO.pr("Resting a turn.");
         Player.hand.Pickup(player.Draw());
-        stanceShiftFlag = true;
+        bool cancel = false;
         do
         {
-            Prompt(stanceShift);
-        } while (stanceShiftFlag);
+            cancel = Prompt(stanceShift);
+        } while (!cancel);
     }
     private void UseCard()
     {
         IO.prh(Player.hand);
-        IO.selc(out Card card, out int index);
+        IO.selc(out Card? card, out int index);
         IO.del();
+        if (card == null)
+        {
+            IO.del();
+            return;
+        }
         player.Attack(card, monster);
         if (monster.Hp.IsAlive) monster.Attack(monster.Draw(), player);
     }
