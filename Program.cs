@@ -32,7 +32,10 @@
         basic.Add("Use Card(W)", () => UseCard());
         basic.Add("(S)tats", () => ShowStats());
 
-        stanceShift.Add("(S)tanceshift", () => PromptCards((card) => StanceShift(card)));
+        stanceShift.Add("(S)tanceshift", () => {
+            IO.SelectPlayerCard(out Card? card);
+            card?.StanceShift();
+        });
     }
 
     private void Intro()
@@ -48,16 +51,6 @@
         if (cancel) selection = 0;
         ClassName className = (ClassName)selection;
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
-    }
-    private void PromptCards(Action<Card> action)
-    {
-        IO.SelectPlayerCard(out Card? card);
-        if (card is null) return;
-        action(card);
-    }
-    private void StanceShift(Card card)
-    {
-        card.StanceShift();
     }
     //-------------------------
     private void Rest()
