@@ -31,7 +31,7 @@ public struct Hand
     {
         IO.pr("You've found a card." + card);
         this.prh();
-        bool cancel = IO.sel(Player.hand.Cur, out int index, out char key);
+        IO.sel(Player.hand.Cur, out int index, out char key, out bool cancel);
         if(cancel) return;
         _Pickup(index, card, silent);
         IO.del(3);

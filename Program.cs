@@ -85,7 +85,7 @@
         IO.del();
         if (card == null)
         {
-            IO.del(2);
+            IO.del();
             return;
         }
         player.UseCard(card);

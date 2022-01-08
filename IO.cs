@@ -6,7 +6,7 @@ public static class IO
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
     ///<summary>Select from provided keys. Returns cancel.</summary>
-    public static bool sel(char[] keys, out int index, out char key)
+    public static void sel(char[] keys, out int index, out char key, out bool cancel)
     {
         do
         {
@@ -15,17 +15,18 @@ public static class IO
             if(key == 'q') goto Cancel;
         } while (index == -1);
         del();
-        return false;
+        cancel = false;
+        return;
         Cancel :
             del();
-            return true;
+            cancel = true;
     }
     ///<summary>Select a card. Returns cancel.</summary>
     public static bool selc(out Card? card, out int index)
     {
         do
         {
-            bool cancel = sel(Player.hand.Cur, out index, out char key);
+            sel(Player.hand.Cur, out index, out char key, out bool cancel);
             if(cancel) goto Cancel;
         } while (Player.hand[index] == null);
         card = Player.hand[index]!;
@@ -39,7 +40,7 @@ public static class IO
     public static bool selsa(string[] options, out int resultIndex)
     {
         char[] keys = options.ParseKeys();
-        bool cancel = sel(keys, out int index, out char key);
+        sel(keys, out int index, out char key, out bool cancel);
         if(!cancel) resultIndex = index;
         else resultIndex = -1;
         return cancel;
@@ -48,7 +49,7 @@ public static class IO
     ///<summary>Select and run</summary>
     public static bool selcmd(CmdTuple cmd)
     {
-        bool cancel = sel(cmd.Keys.ToArray(), out int index, out char key);
+        sel(cmd.Keys.ToArray(), out int index, out char key, out bool cancel);
         if(!cancel) cmd.Invoke(key);
         return cancel;
     }
