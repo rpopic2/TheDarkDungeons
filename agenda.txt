@@ -1,7 +1,6 @@
 s to print stats
 
 block q on basic.
-xp bug on lvup
 
 immutable hp? why does exp work??
 exp and hp to class or struct? -> class may be better?

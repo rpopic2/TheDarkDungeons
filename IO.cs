@@ -85,6 +85,7 @@ public static class IO
 
     public static void del()
     {
+        if(Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
         pr("                                                  ");
         Console.SetCursorPosition(0, Console.CursorTop - 1);
