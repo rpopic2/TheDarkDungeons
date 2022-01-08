@@ -83,7 +83,7 @@
         IO.prh(Player.hand);
         IO.selc(out Card? card, out int index);
         IO.del();
-        if (card == null)
+        if (card is null)
         {
             IO.del();
             return;
