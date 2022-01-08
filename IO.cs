@@ -11,13 +11,12 @@ public static class IO
         do
         {
             key = rkc();
-            if(key == 'q') goto Cancel;
             index = Array.IndexOf(keys, key);
+            if(key == 'q') goto Cancel;
         } while (index == -1);
         del();
         return false;
         Cancel :
-            index = -1;
             del();
             return true;
     }
