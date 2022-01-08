@@ -100,4 +100,9 @@ public static class IO
         selc(out card, out int index, out bool cancel);
         del();
     }
+    public static void Prompt(CmdTuple cmd, out bool cancel)
+    {
+        IO.prfo(cmd.Names.ToArray());
+        IO.selcmd(cmd, out cancel);
+    }
 }
