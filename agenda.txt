@@ -1,6 +1,16 @@
 s to print stats
+
+block q on basic.
+xp bug on lvup
+
 immutable hp? why does exp work??
+exp and hp to class or struct? -> class may be better?
+exp and hp onlvup ondeath event or action +=?
+exp and hp posssibly merge-able?
+
 monster ondeath=>spawn new moster. 
 defense system.
 mobs constructor data should be in a data file.
 선제공격 개념 필요할지도
+
+study tdd

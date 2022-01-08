@@ -93,7 +93,8 @@
             IO.del();
             return;
         }
-        player.Attack(card, monster);
+        if (monster.Hp.IsAlive) player.Attack(card, monster);
+        else IO.pr("No enemy ahead.");
         if (monster.Hp.IsAlive) monster.Attack(monster.Draw(), player);
     }
 }

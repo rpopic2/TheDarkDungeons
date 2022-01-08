@@ -32,6 +32,7 @@ public class Hp
     public void TakeDamage(int x)
     {
         Cur -= x;
+        if (IsAlive) IO.pr($"{owner.Name} takes {x} damage. {Cur}/{Max}");
     }
     public event EventHandler<EventArgs>? RaiseDeathEvent;
     protected virtual void OnRaiseDeathEvent(EventArgs e)
