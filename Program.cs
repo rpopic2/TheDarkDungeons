@@ -16,9 +16,8 @@
     {
         Console.Clear();
         if (!skip) Intro();
-        player = new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
-        Player.exp.Gain(1);
-        IO.del();
+        player = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
+        //Player.exp.Gain(1);
         IO.pr(player.Stats);
         IO.pr("\nYour adventure begins...");
         InitActions();

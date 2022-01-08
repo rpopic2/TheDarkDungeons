@@ -8,11 +8,12 @@ public class Player : Entity
     {
         Player.exp = new Exp(this);
         Player.hand = base.Hand;
-        exp.OnLvUp = () =>
-        {
-            lv++;
-            Console.WriteLine("\nLevel up!");
-        };
+        exp.OnLvUp = () => OnLvUp();
+    }
+    public void OnLvUp()
+    {
+        lv++;
+        Console.WriteLine("\nLevel up!");
     }
 
     public new string Stats

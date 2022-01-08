@@ -11,13 +11,13 @@ public class Exp
         get => cur;
         private set
         {
-            cur = value;
-            if (cur >= Max)
+            if (value >= Max)
             {
-                cur -= Max;
+                value -= Max;
                 OnLvUp();
                 Max = UpdateMax();
             }
+            cur = value;
         }
     }
     public int Max { get; private set; }
