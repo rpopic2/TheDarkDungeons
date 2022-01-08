@@ -22,7 +22,7 @@
         player.curTarget = monster;
         do
         {
-            bool cancel = Prompt(basic);
+            Prompt(basic, out bool cancel);
             if(!cancel) EventListener.OnTurnEnd();
         } while (player.Hp.Cur > 0);
     }
@@ -44,16 +44,15 @@
         string name = Console.ReadLine() ?? "";
         IO.pr("Choose your class...");
         IO.prfo(classes);
-        IO.selsa(classes, out int selection);
-        if (selection == -1) selection = 0;
+        IO.selsa(classes, out int selection, out bool cancel);
+        if (cancel) selection = 0;
         ClassName className = (ClassName)selection;
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
-    private static bool Prompt(CmdTuple cmd)
+    private static void Prompt(CmdTuple cmd, out bool cancel)
     {
         IO.prfo(cmd.Names.ToArray());
-        bool cancel = IO.selcmd(cmd);
-        return cancel;
+        IO.selcmd(cmd, out cancel);
     }
     private void PromptCards(Action<Card> action)
     {
@@ -73,7 +72,7 @@
         bool cancel = false;
         do
         {
-            cancel = Prompt(stanceShift);
+            Prompt(stanceShift, out cancel);
         } while (!cancel);
     }
     private void UseCard()

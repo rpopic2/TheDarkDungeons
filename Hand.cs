@@ -34,7 +34,7 @@ public struct Hand
         IO.sel(Player.hand.Cur, out int index, out char key, out bool cancel);
         if(cancel) return;
         _Pickup(index, card, silent);
-        IO.del(3);
+        IO.del(2);
     }
     public void Delete(Card card)
     {

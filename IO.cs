@@ -22,36 +22,33 @@ public static class IO
             cancel = true;
     }
     ///<summary>Select a card. Returns cancel.</summary>
-    public static bool selc(out Card? card, out int index)
+    public static void selc(out Card? card, out int index, out bool cancel)
     {
         do
         {
-            sel(Player.hand.Cur, out index, out char key, out bool cancel);
+            sel(Player.hand.Cur, out index, out char key, out cancel);
             if(cancel) goto Cancel;
         } while (Player.hand[index] == null);
         card = Player.hand[index]!;
-        return false;
+        return;
         Cancel :
             card = null;
-            return true;
     }
 
     ///<summary>Select from string array.</summary>
-    public static bool selsa(string[] options, out int resultIndex)
+    public static void selsa(string[] options, out int resultIndex, out bool cancel)
     {
         char[] keys = options.ParseKeys();
-        sel(keys, out int index, out char key, out bool cancel);
+        sel(keys, out int index, out char key, out cancel);
         if(!cancel) resultIndex = index;
         else resultIndex = -1;
-        return cancel;
     }
 
     ///<summary>Select and run</summary>
-    public static bool selcmd(CmdTuple cmd)
+    public static void selcmd(CmdTuple cmd, out bool cancel)
     {
-        sel(cmd.Keys.ToArray(), out int index, out char key, out bool cancel);
+        sel(cmd.Keys.ToArray(), out int index, out char key, out cancel);
         if(!cancel) cmd.Invoke(key);
-        return cancel;
     }
 
 
@@ -100,7 +97,7 @@ public static class IO
     public static void SelectPlayerCard(out Card? card)
     {
         prh(Player.hand);
-        selc(out card, out int index);
+        selc(out card, out int index, out bool cancel);
         del();
     }
 }
