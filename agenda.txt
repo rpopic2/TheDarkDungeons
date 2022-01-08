@@ -1,6 +1,6 @@
-cancel -> out bool cancel
-
 sel과 pr의 통합
+
+rest -> q does not properly del.
 
 exp and hp onlvup ondeath event or action +=? => action my be better
 exp and hp posssibly merge-able?
@@ -8,7 +8,3 @@ exp and hp posssibly merge-able?
 card가 진짜 struct아닌가?
 
 player의 static과 non-static사용이 뒤섞임.
-
-mob defences
-
-mob has hand.
