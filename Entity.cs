@@ -24,11 +24,12 @@ public class Entity : Mass
     protected virtual void OnDeath(object sender, EventArgs e)
     {
         IO.pr($"{Name} died.");
+        Player.instance.curTarget = null;
     }
 
     public virtual void Attack(Card card, Entity target)
     {
-        IO.pr($"{Name} attacks {target.Name}.");
+        IO.pr($"{Name} attacks {target.Name} with {card.sol} damage.");
         target.Hp.TakeDamage(card.sol);
     }
     public string Stats

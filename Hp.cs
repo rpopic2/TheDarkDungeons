@@ -24,13 +24,21 @@ public class Hp
             cur = value;
         }
     }
+    private int def;
     public Hp(Entity owner, int max)
     {
         this.owner = owner;
         Max = this.cur = max;
+        EventListener.OnTurnEnd += () => OnTurnEnd();
     }
     public void TakeDamage(int x)
     {
+        if (def != 0)
+        {
+            x -= def;
+            IO.pr($"{owner.Name} defences {def} damage.");
+        }
+        if (x < 0) x = 0;
         Cur -= x;
         if (IsAlive) IO.pr($"{owner.Name} takes {x} damage. {Cur}/{Max}");
     }
@@ -40,6 +48,16 @@ public class Hp
         EventHandler<EventArgs> deathEvent = RaiseDeathEvent!;
         if (deathEvent != null) deathEvent(this, e);
     }
+    private void OnTurnEnd()
+    {
+        def = 0;
+    }
+
+    internal void Defence(int x)
+    {
+        def = x;
+    }
+
     public bool IsAlive
         => Cur > 0;
 }

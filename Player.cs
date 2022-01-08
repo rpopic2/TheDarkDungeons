@@ -3,6 +3,7 @@ public class Player : Entity
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
     public static Hand hand;
     public static Exp exp = new Exp(instance);
+    public Monster? curTarget;
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
@@ -27,8 +28,27 @@ public class Player : Entity
     }
     public override void Attack(Card card, Entity target)
     {
-        hand.Delete(card);
         base.Attack(card, target);
+    }
+
+    public void Defence(Card card)
+    {
+        Hp.Defence(card.lun);
+    }
+
+    internal void UseCard(Card card)
+    {
+        if(curTarget is null) return;
+        hand.Delete(card);
+        switch (card.Stance)
+        {
+            case Stance.Attack:
+                Attack(card, curTarget);
+                break;
+            case Stance.Defence:
+                Defence(card);
+                break;
+        }
     }
 
     // public void ClassSwitch(Action warrior, Action assassin, Action mage)

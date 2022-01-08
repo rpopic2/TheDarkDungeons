@@ -7,7 +7,6 @@
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
     private Monster monster;
-
     public static void Main()
     {
         main = new Program();
@@ -22,9 +21,11 @@
         IO.pr("\nYour adventure begins...");
         InitActions();
         monster = new Monster("Bat", ClassName.Warrior, 3, 3, 1, 2, 1, 2); //Test!
+        player.curTarget = monster;
         do
         {
-            Prompt(basic);
+            bool cancel = Prompt(basic);
+            if(!cancel) EventListener.OnTurnEnd();
         } while (player.Hp.Cur > 0);
     }
     private void InitActions()
@@ -88,8 +89,8 @@
             IO.del();
             return;
         }
-        if (monster.Hp.IsAlive) player.Attack(card, monster);
-        else IO.pr("No enemy ahead.");
-        if (monster.Hp.IsAlive) monster.Attack(monster.Draw(), player);
+        player.UseCard(card);
+
+        monster.Attack(monster.Draw(), player);
     }
 }

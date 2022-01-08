@@ -7,7 +7,11 @@ exp and hp posssibly merge-able?
 
 card가 진짜 struct아닌가?
 
-defense system.
+player의 static과 non-static사용이 뒤섞임.
+
+cancel -> out bool cancel
+
+sel stanceshift nokori.
 
 mobs constructor data should be in a data file.
 선제공격 개념 필요할지도
