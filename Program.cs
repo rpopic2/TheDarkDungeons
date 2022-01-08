@@ -57,10 +57,8 @@
     }
     private void PromptCards(Action<Card> action)
     {
-        IO.prh(Player.hand);
-        IO.selc(out Card? card, out int index);
-        IO.del();
-        if (card == null) return;
+        IO.SelectPlayerCard(out Card? card);
+        if (card is null) return;
         action(card);
     }
     private void StanceShift(Card card)
@@ -80,9 +78,7 @@
     }
     private void UseCard()
     {
-        IO.prh(Player.hand);
-        IO.selc(out Card? card, out int index);
-        IO.del();
+        IO.SelectPlayerCard(out Card? card);
         if (card is null)
         {
             IO.del();

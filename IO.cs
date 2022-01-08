@@ -97,5 +97,10 @@ public static class IO
             del();
         }
     }
-
+    public static void SelectPlayerCard(out Card? card)
+    {
+        prh(Player.hand);
+        selc(out card, out int index);
+        del();
+    }
 }
