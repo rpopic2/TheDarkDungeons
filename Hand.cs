@@ -1,5 +1,6 @@
 public struct Hand
 {
+    private Entity owner;
     public char[] Cur
     {
         get
@@ -10,16 +11,16 @@ public struct Hand
         }
     }
     private Card?[] content;
-    public int Cap { get; private set; }
+    public int Cap { get => owner.Cap; }
     public int Count
     {
         get => content.Count(card => card != null);
     }
 
-    public Hand(int cap = 3)
+    public Hand(Entity owner)
     {
-        Cap = cap;
-        content = new Card[cap];
+        this.owner = owner;
+        content = new Card[owner.Cap];
     }
     private void _Pickup(int index, Card card, bool silent = false)
     {
@@ -27,11 +28,12 @@ public struct Hand
         if (!silent) IO.pr(ToString());
     }
 
-    public void Pickup(Card card, bool silent = false)
+    public void PlayerPickup(Card card, bool silent = false)
     {
+        if(owner is not Player) throw new Exception("Target is not player.");
         IO.pr("You've found a card." + card);
         IO.pr(this);
-        IO.sel(Player.instance.Hand.Cur, out int index, out char key, out bool cancel);
+        IO.sel(owner.Hand.Cur, out int index, out char key, out bool cancel);
         if (cancel)
         {
             IO.del();

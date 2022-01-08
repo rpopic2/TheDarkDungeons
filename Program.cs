@@ -57,7 +57,7 @@
     private void Rest()
     {
         IO.pr("Resting a turn.");
-        player.Hand.Pickup(player.Draw());
+        player.Hand.PlayerPickup(player.Draw());
         bool cancel = false;
         do
         {

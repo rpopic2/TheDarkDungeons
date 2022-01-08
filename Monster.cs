@@ -18,6 +18,6 @@ public class Monster : Entity
     {
         base.OnDeath();
         Player.exp.Gain(3);
-        player.Hand.Pickup(Draw());
+        player.Hand.PlayerPickup(Draw());
     }
 }

@@ -3,6 +3,7 @@ public class Entity : Mass
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
+    public int Cap { get; private set; }
     public Hp Hp { get; private set; }
     public int lv { get; protected set; }
     private Random rnd = new Random();
@@ -11,7 +12,8 @@ public class Entity : Mass
     {
         Name = name;
         ClassName = className;
-        Hand = new Hand(cap);
+        Cap = cap;
+        Hand = new Hand(this);
         Hp = new Hp(this, maxHp);
         Hp.OnDeath += () => OnDeath();
         this.sol = sol;
