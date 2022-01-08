@@ -57,7 +57,7 @@
     }
     private void PromptCards(Action<Card> action)
     {
-        Player.hand.prh();
+        IO.prh(Player.hand);
         IO.selc(out Card? card, out int index);
         IO.del();
         if (card == null) return;

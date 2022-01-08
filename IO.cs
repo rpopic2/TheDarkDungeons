@@ -77,7 +77,7 @@ public static class IO
         pr(printResult);
     }
     ///<summary>Print hand</summary>
-    public static void prh(this Hand hand)
+    public static void prh(Hand hand)
     {
         pr(hand.ToString());
         prfo(hand.Cur, "Select Index :");

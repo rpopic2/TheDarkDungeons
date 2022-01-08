@@ -30,7 +30,7 @@ public struct Hand
     public void Pickup(Card card, bool silent = false)
     {
         IO.pr("You've found a card." + card);
-        this.prh();
+        IO.pr(this);
         IO.sel(Player.hand.Cur, out int index, out char key, out bool cancel);
         if(cancel) return;
         _Pickup(index, card, silent);
