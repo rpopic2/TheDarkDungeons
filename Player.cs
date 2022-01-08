@@ -1,14 +1,12 @@
 public class Player : Entity
 {
-    public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 0, 2, 2, 2);
-    public static Hand hand;
+    public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public static Exp exp = new Exp(instance);
     public Monster? curTarget;
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
         Player.exp = new Exp(this);
-        Player.hand = base.Hand;
         exp.OnLvUp = () => OnLvUp();
     }
     public void OnLvUp()
@@ -39,7 +37,7 @@ public class Player : Entity
     internal void UseCard(Card card)
     {
         if(curTarget is null) return;
-        hand.Delete(card);
+        Hand.Delete(card);
         switch (card.Stance)
         {
             case Stance.Attack:

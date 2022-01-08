@@ -1,6 +1,8 @@
 public static class IO
 {
     public static readonly char[] NUMERICKEYS = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+    private static readonly Player player = Player.instance;
+    private static readonly Hand playerHand = player.Hand;
 
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
@@ -26,10 +28,10 @@ public static class IO
     {
         do
         {
-            sel(Player.hand.Cur, out index, out char key, out cancel);
+            sel(playerHand.Cur, out index, out char key, out cancel);
             if(cancel) goto Cancel;
-        } while (Player.hand[index] == null);
-        card = Player.hand[index]!;
+        } while (playerHand[index] == null);
+        card = playerHand[index]!;
         return;
         Cancel :
             card = null;
@@ -96,7 +98,7 @@ public static class IO
     }
     public static void SelectPlayerCard(out Card? card)
     {
-        prh(Player.hand);
+        prh(playerHand);
         selc(out card, out int index, out bool cancel);
         del();
     }

@@ -1,5 +1,6 @@
 public class Monster : Entity
 {
+    private static readonly Player player = Player.instance;
     public Monster(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
     }
@@ -17,6 +18,6 @@ public class Monster : Entity
     {
         base.OnDeath();
         Player.exp.Gain(3);
-        Player.hand.Pickup(Draw());
+        player.Hand.Pickup(Draw());
     }
 }
