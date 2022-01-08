@@ -2,6 +2,7 @@ public class Hp
 {
     private Entity owner;
     private int cur;
+    public Action OnDeath = () => {};
 
     public int Max { get; private set; }
     public int Cur
@@ -17,7 +18,7 @@ public class Hp
             if (value <= 0)
             {
                 cur = 0;
-                OnRaiseDeathEvent(new EventArgs());
+                OnDeath();
                 return;
             }
             int damage = cur - value;
@@ -42,12 +43,7 @@ public class Hp
         Cur -= x;
         if (IsAlive) IO.pr($"{owner.Name} takes {x} damage. {Cur}/{Max}");
     }
-    public event EventHandler<EventArgs>? RaiseDeathEvent;
-    protected virtual void OnRaiseDeathEvent(EventArgs e)
-    {
-        EventHandler<EventArgs> deathEvent = RaiseDeathEvent!;
-        if (deathEvent != null) deathEvent(this, e);
-    }
+
     private void OnTurnEnd()
     {
         def = 0;

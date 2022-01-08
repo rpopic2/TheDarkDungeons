@@ -13,7 +13,7 @@ public class Entity : Mass
         ClassName = className;
         Hand = new Hand(cap);
         Hp = new Hp(this, maxHp);
-        Hp.RaiseDeathEvent += OnDeath!;
+        Hp.OnDeath += () => OnDeath();
         this.sol = sol;
         this.lun = lun;
         this.con = con;
@@ -21,7 +21,7 @@ public class Entity : Mass
     }
     public override Card Draw()
         => new Card(rnd.Next(1, sol + 1), rnd.Next(1, lun + 1));
-    protected virtual void OnDeath(object sender, EventArgs e)
+    protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");
         Player.instance.curTarget = null;
