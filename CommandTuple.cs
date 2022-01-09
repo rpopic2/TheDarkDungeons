@@ -15,18 +15,8 @@ public struct CmdTuple
         Keys.Add(name.ParseKey());
         Acts.Add(act);
     }
-
     public void Invoke(char key)
         => Acts[Keys.IndexOf(key)]();
-
-    // public bool InvokeIfHasKey(char key)
-    // {
-    //     bool result = HasKey(key);
-    //     if (result) Invoke(key);
-    //     return result;
-    // }
-
-
 }
 public static class Extension
 {

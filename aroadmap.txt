@@ -1,0 +1,11 @@
+mob defences
+mob has hand.
+플레이어가 행동시 몹도 행동.
+지금 죽은 박쥐와 싸움.
+별뽑기와 크릿
+맵과 이동
+스킬드롭 랜덤
+mobs constructor data should be in a data file.
+선제공격 개념 필요할지도
+
+study tdd!

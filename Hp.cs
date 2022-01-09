@@ -1,21 +1,17 @@
 public struct Hp
 {
-    private int cur;
-
-    public int Max { get; private set;}
-    public int Cur
+    private Entity owner;
+    public GamePoint point;
+    public Hp(Entity owner, int max, Action onDeath)
     {
-        get => cur;
-        set
-        {
-            if (cur > Max) cur = Max;
-            if (cur < 0) cur = 0;
-            else cur = value;
-        }
+        this.owner = owner;
+        point = new GamePoint(max, GamePointOption.Reserving, onDeath);
+    }
+    public void TakeDamage(int x)
+    {
+        point -= x;
     }
 
-    public Hp(Entity owner, int max)
-    {
-        Max = this.cur = max;
-    }
+    public bool IsAlive
+        => point.Cur > 0;
 }

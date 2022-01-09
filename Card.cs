@@ -1,41 +1,33 @@
-using System.Numerics;
-
-public class Card : IMass
+public struct Card : IMass
 {
-    Stance stance;
-    public int sol { get; set; }
-    public int lun { get; set; }
-    public int con { get; set; }
-    public Card(int str, int dex, bool silent = true)
+    public Stance Stance { get; private set; }
+
+    public int sol { get; private set; }
+    public int lun { get; private set; }
+    public int con { get; private set; } = 0;
+
+    public Card(int str, int dex, int con, Stance stance)
     {
         this.sol = str;
         this.lun = dex;
-        if (!silent) IO.pr(ToString());
+        this.con = con;
+        this.Stance = stance;
     }
-    public void StanceShift()
+    public Card StanceShift()
     {
-        if (stance == Stance.Star) return;
-        stance = stance == Stance.Attack ? Stance.Defence : Stance.Attack;
+        if (Stance == Stance.Star) return this;
+        Stance = Stance == Stance.Attack ? Stance.Defence : Stance.Attack;
+        return this;
     }
     public void ReplaceToStar(int wis)
     {
         this.con = wis;
-        stance = Stance.Star;
+        Stance = Stance.Star;
     }
     public override string ToString()
     {
-        if(this == null) return "[     ]";
-        if (stance == Stance.Attack) return $"[({sol})/{lun}]";
-        else if (stance == Stance.Defence) return $"[{lun}/({sol})]";
+        if (Stance == Stance.Attack) return $"<({sol})/{lun}>";
+        else if (Stance == Stance.Defence) return $"[({lun})/{sol}]";
         else return $"[{con}*]";
     }
-    public Card Draw()
-    {
-        throw new Exception("Cannot draw card from a card.");
-    }
-}
-
-public enum Stance
-{
-    Attack, Defence, Star
 }

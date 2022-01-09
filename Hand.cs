@@ -1,8 +1,7 @@
 public struct Hand
 {
-    public static Hand Player = Program.player.Hand;
-    public static char[] PlayerCur = Program.player.Hand.CurOption;
-    public char[] CurOption
+    private Entity owner;
+    public char[] Cur
     {
         get
         {
@@ -11,43 +10,51 @@ public struct Hand
             return curOptions;
         }
     }
-    private Card[] content;
-    public int Cap { get; private set; }
+    private Card?[] content;
+    public int Cap { get => owner.Cap; }
     public int Count
     {
         get => content.Count(card => card != null);
     }
 
-    public Hand(int cap = 3)
+    public Hand(Entity owner)
     {
-        Cap = cap;
-        content = new Card[cap];
+        this.owner = owner;
+        content = new Card?[owner.Cap];
     }
-    public void Pickup(int index, Card card, bool silent = false)
+    private void _Pickup(int index, Card card, bool silent = false)
     {
         content[index] = card;
         if (!silent) IO.pr(ToString());
     }
 
-    public void Pickup(Card card, bool silent = false)
+    public void PlayerPickup(Card card, bool silent = false)
     {
-        this.prh();
-        IO.sel(Hand.PlayerCur, out int index, out char key);
-        Pickup(index, card, silent);
+        if(owner is not Player) throw new Exception("Target is not player.");
+        IO.pr("You've found a card." + card);
+        IO.pr(this);
+        IO.sel(owner.Hand.Cur, out int index, out char key, out bool cancel);
+        if (cancel)
+        {
+            IO.del();
+            return;
+        }
+        _Pickup(index, card, silent);
+        IO.del(2);
     }
     public void Delete(Card card)
     {
         int index = Array.IndexOf(content, card);
         content[index] = null;
     }
-    public Card this[int index]
+    public Card? this[int index]
     {
         get { return content[index]; }
     }
-    public void StanceShift(int index, bool silent = false)
+    public void StanceShift(int index)
     {
-        content[index]?.StanceShift();
-        if (!silent) IO.pr(ToString());
+        Card? card = content[index];
+        content[index] = card?.StanceShift();
     }
     public override string ToString()
     {
@@ -56,7 +63,7 @@ public struct Hand
         {
             if (item == null)
             {
-                result += "[EMPTY]";
+                result += "{EMPTY}";
             }
             else
             {

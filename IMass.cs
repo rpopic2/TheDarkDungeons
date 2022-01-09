@@ -1,7 +1,6 @@
-public interface IMass
+interface IMass
 {
-    int sol {get; set;}
-    int lun {get; set;}
-    int con {get; set;}
-    Card Draw();
+    int sol { get; }
+    int lun { get; }
+    int con { get; }
 }
