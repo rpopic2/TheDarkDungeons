@@ -13,6 +13,19 @@ public class Player : Entity
         exp.UpdateMax();
         Console.WriteLine("Level up!");
     }
+    public void Pickup(Card card)
+    {
+        IO.pr("You've found a card." + card);
+        IO.pr(Hand);
+        IO.sel(Hand.Cur, out int index, out char key, out bool cancel);
+        if (cancel)
+        {
+            IO.del();
+            return;
+        }
+        Hand.SetAt(index, card);
+        IO.del(2);
+    }
 
     public new string Stats
     {
