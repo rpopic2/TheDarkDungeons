@@ -1,2 +1,1 @@
-player.usecard가 index를 인수로 받아야 보호됨.
 card.draw할떄 랜덤에 액세스하는데 리팩가능할듯
