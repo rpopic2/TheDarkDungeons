@@ -80,7 +80,8 @@
         }
         player.UseCard(x);
         //monster.SetAttack(monster.Draw());//temp.make ai later.
-        monster.SetDefence(monster.Draw());
+        //monster.SetDefence(monster.Draw());
+        monster.UseCard();
         Entity.Battle(player, monster);
     }
 

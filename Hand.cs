@@ -26,6 +26,8 @@ public struct Hand
     {
         content[index] = card;
     }
+    public Card GetFirst()
+        => content.First(card => card != null) ?? throw new Exception();
     public void Delete(Card card)
     {
         int index = Array.IndexOf(content, card);
