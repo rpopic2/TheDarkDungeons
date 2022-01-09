@@ -4,7 +4,7 @@ public struct Card : IMass
 
     public int sol { get; private set; }
     public int lun { get; private set; }
-    public int con { get; private set; } = 0;
+    public int con { get; private set; }
 
     public Card(int sol, int lun, int con, Stance stance)
     {
