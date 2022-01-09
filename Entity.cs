@@ -7,13 +7,16 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int lv { get; protected set; }
     private Random rnd = new Random();
+    public Entity? target;
     public int atk { get; private set; }
     public int def { get; private set; }
+    public bool rest { get; set; }
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
         Name = name;
         ClassName = className;
+        if (cap <= 0) throw new ArgumentException("cap cannot be equal or less than 0.");
         Cap = cap;
         Hand = new Hand(this);
         Hp = new Hp(this, maxHp, () => OnDeath());
@@ -23,44 +26,79 @@ public class Entity : Mass
         this.lv = lv;
     }
     public override Card Draw()
-        => new Card(GetRandomStat(sol), GetRandomStat(def), GetRandomStat(con), Stance.Attack);
+        => new Card(GetRandomStat(sol), GetRandomStat(lun), GetRandomStat(con), Stance.Attack);
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");
-        Player.instance.curTarget = null;
+        Player.instance.target = null;
     }
-    public virtual void Attack(Entity target)
+    public void UseCard(int index)
     {
-        IO.pr($"{Name} attacks {target.Name} with {atk} damage.");
-        target.TakeDamage(atk);
-        atk = 0;
-        target.def = 0;
-    }
-    public void TakeDamage(int x)
-    {
-        if (x <= 0) throw new Exception($"Cannot inflict {x} damage. target : {Name}");
-        if (Defending)
+        Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
+        if (target is null)
         {
-            x -= def;
-            IO.pr($"{Name} defences {def} damage.");
+            IO.pr("No target to use card");
+            return;
         }
-        if (x < 0) x = 0;
-        Hp.TakeDamage(x);
-        if (Hp.IsAlive) IO.pr($"{Name} takes {x} damage. {Hp.point}");
+        UseCard(card);
     }
-    public void SetAttack(Card card)
+    protected void UseCard(Card card)
     {
-        atk += card.sol;
+        Hand.Delete(card);
+        switch (card.Stance)
+        {
+            case Stance.Attack:
+                atk += card.sol;
+                break;
+            case Stance.Defence:
+                def += card.lun;
+                break;
+        }
     }
-
-    public void SetDefence(Card card)
+    public int PopAttack()
     {
-        def += card.lun;
-    }
-    public void ResetAtkDef()
-    {
+        if (!Attacking) return 0;
+        int dmg = atk;
+        IO.pr($"{Name} attacks with {dmg} damage.");
         atk = 0;
+        return dmg;
+    }
+    public int PopDefence()
+    {
+        if (!Defending) return 0;
+        int block = def;
+        IO.pr($"{Name} defences {def} damage.");
         def = 0;
+        return block;
+    }
+    public bool PopResting()
+    {
+        if (!rest) return false;
+        rest = false;
+        return true;
+    }
+    public void DoBattleAction()
+    {
+        if (target is null) return;
+        int dmg = PopAttack();
+        int targetBlock = target.PopDefence();
+        bool targetResting = target.PopResting();
+        if (dmg > 0)
+        {
+            if (targetResting)
+            {
+                dmg = (int)MathF.Round(dmg * Program.vulMultiplier);
+                IO.pr($"{target.Name} is resting vulnerable, takes {Program.vulMultiplier}x damage!");
+            }
+            target.TakeDamage(dmg - targetBlock);
+        }
+        if (dmg <= 0 && targetBlock > 0) IO.pr($"But {Name} did not attack...");
+    }
+    private void TakeDamage(int damage)
+    {
+        if (damage < 0) damage = 0;
+        Hp.TakeDamage(damage);
+        if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
     }
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
@@ -69,11 +107,6 @@ public class Entity : Mass
         => atk > 0;
     public bool Defending
         => def > 0;
-    public static void Battle(Entity t1, Entity t2)
-    {
-        if (t1.Attacking) t1.Attack(t2);
-        if (t2.Attacking) t2.Attack(t1);
-    }
     public int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);
 }

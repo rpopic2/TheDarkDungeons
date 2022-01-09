@@ -6,10 +6,10 @@ public struct Card : IMass
     public int lun { get; private set; }
     public int con { get; private set; } = 0;
 
-    public Card(int str, int dex, int con, Stance stance)
+    public Card(int sol, int lun, int con, Stance stance)
     {
-        this.sol = str;
-        this.lun = dex;
+        this.sol = sol;
+        this.lun = lun;
         this.con = con;
         this.Stance = stance;
     }

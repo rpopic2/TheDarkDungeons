@@ -1,6 +1,7 @@
 ﻿public class Program
 {
     public const string version = "0.1";
+    public const float vulMultiplier = 1.3f;
     public static Player player = Player.instance;
     public static Program? main;
     private bool skip = true;
@@ -19,8 +20,8 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
-        monster = new Monster("Bat", ClassName.Warrior, 3, 3, 1, 2, 1, 2); //Test!
-        player.curTarget = monster;
+        monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
+        player.target = monster;
         do
         {
             IO.Prompt(basic, out bool cancel);
@@ -36,7 +37,7 @@
         stanceShift.Add("(S)tanceshift", () =>
         {
             IO.SelectPlayerCard(out int x, out bool cancel);
-            if(!cancel) player.Hand.StanceShift(x);
+            if (!cancel) player.Hand.StanceShift(x);
         });
     }
 
@@ -58,17 +59,20 @@
     private void Rest()
     {
         IO.pr("Resting a turn.");
-        player.Hand.PlayerPickup(player.Draw());
+        player.Pickup(player.Draw());
+        player.rest = true;
         bool cancel = false;
         do
         {
             IO.Prompt(stanceShift, out cancel);
         } while (!cancel);
+        OnPlayerAction();
     }
     private void UseCard()
     {
         IO.SelectPlayerCard(out int x, out bool cancel);
-        if(cancel) {
+        if (cancel)
+        {
             IO.del();
             return;
         }
@@ -79,8 +83,22 @@
             return;
         }
         player.UseCard(x);
-        monster.SetAttack(monster.Draw());//temp.make ai later.
-        Entity.Battle(player, monster);
+        OnPlayerAction();
+    }
+    private void OnPlayerAction()
+    {
+        monster.DoTurn();
+        if (player.lun >= monster.lun)
+        {
+            player.DoBattleAction();
+            monster.DoBattleAction();
+        }else
+        {
+            IO.pr("monster first");
+            monster.DoBattleAction();
+            player.DoBattleAction();
+        }
+
     }
 
     private void ShowStats()

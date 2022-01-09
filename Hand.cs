@@ -22,26 +22,12 @@ public struct Hand
         this.owner = owner;
         content = new Card?[owner.Cap];
     }
-    private void _Pickup(int index, Card card, bool silent = false)
+    public void SetAt(int index, Card card)
     {
         content[index] = card;
-        if (!silent) IO.pr(ToString());
     }
-
-    public void PlayerPickup(Card card, bool silent = false)
-    {
-        if(owner is not Player) throw new Exception("Target is not player.");
-        IO.pr("You've found a card." + card);
-        IO.pr(this);
-        IO.sel(owner.Hand.Cur, out int index, out char key, out bool cancel);
-        if (cancel)
-        {
-            IO.del();
-            return;
-        }
-        _Pickup(index, card, silent);
-        IO.del(2);
-    }
+    public Card GetFirst()
+        => content.First(card => card != null) ?? throw new Exception();
     public void Delete(Card card)
     {
         int index = Array.IndexOf(content, card);
