@@ -18,9 +18,11 @@ public class Monster : Entity
         base.OnDeath();
         player.exp.Gain(3);
         player.Pickup(Draw());
+        player.target = null;
     }
     public void DoTurn()
     {
+        if(Hp.IsAlive)
         if (Hand.Count > 0)
         {
             UseCard(Hand.GetFirst());

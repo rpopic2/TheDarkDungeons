@@ -33,7 +33,11 @@ public class Entity : Mass
     public void UseCard(int index)
     {
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
-        if (target is null) return;
+        if (target is null)
+        {
+            IO.pr("No target to use card");
+            return;
+        }
         UseCard(card);
     }
     protected void UseCard(Card card)

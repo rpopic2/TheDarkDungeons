@@ -19,7 +19,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
-        monster = new Monster("Bat", ClassName.Warrior, 3, 3, 1, 2, 5, 2); //Test!
+        monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2); //Test!
         player.target = monster;
         do
         {
