@@ -1,7 +1,9 @@
 
 별뽑기와 크릿
 맵과 이동
+스킬.
 스킬드롭 랜덤
+
 mobs constructor data should be in a data file.
 
 study tdd!
