@@ -86,7 +86,7 @@ public static class IO
     {
         if(Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
-        pr("                                                  ");
+        pr("                                                                 ");
         Console.SetCursorPosition(0, Console.CursorTop - 1);
     }
     public static void del(int lines)
