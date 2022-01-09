@@ -73,12 +73,10 @@
             IO.del();
             return;
         }
+        
         player.UseCard(card);
-        monster.SetAttack(monster.Draw());
-        if(player.atk > 0) player.Attack(monster);
-        if(monster.atk > 0) monster.Attack(player);
-        player.ResetAtkDef();
-        monster.ResetAtkDef();
+        monster.SetAttack(monster.Draw());//temp. make ai later.
+        Entity.Battle(player, monster);
     }
 
     private void ShowStats()

@@ -7,8 +7,8 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int lv { get; protected set; }
     private Random rnd = new Random();
-    public int atk {get; private set;}
-    public int def {get; private set;}
+    public int atk { get; private set; }
+    public int def { get; private set; }
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -33,7 +33,21 @@ public class Entity : Mass
     public virtual void Attack(Entity target)
     {
         IO.pr($"{Name} attacks {target.Name} with {atk} damage.");
-        target.Hp.TakeDamage(atk, target.def);
+        target.TakeDamage(atk);
+        atk = 0;
+        target.def = 0;
+    }
+    public void TakeDamage(int x)
+    {
+        if (x <= 0) throw new Exception($"Cannot inflict {x} damage. target : {Name}");
+        if (Defending)
+        {
+            x -= def;
+            IO.pr($"{Name} defences {def} damage.");
+        }
+        if (x < 0) x = 0;
+        Hp.point -= x;
+        if (Hp.IsAlive) IO.pr($"{Name} takes {x} damage. {Hp.point}");
     }
     public void SetAttack(Card card)
     {
@@ -50,7 +64,15 @@ public class Entity : Mass
         def = 0;
     }
     public string Stats
+        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
+
+    public bool Attacking
+        => atk > 0;
+    public bool Defending
+        => def > 0;
+    public static void Battle(Entity t1, Entity t2)
     {
-        get => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
+        if (t1.Attacking) t1.Attack(t2);
+        if (t2.Attacking) t2.Attack(t1);
     }
 }
