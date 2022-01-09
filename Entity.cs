@@ -55,6 +55,11 @@ public class Entity : Mass
                 break;
         }
     }
+    public virtual void Rest()
+    {
+        IO.pr($"{Name} is resting a turn.");
+        IsResting = true;
+    }
     private int PopAttack()
     {
         if (Atk <= 0) return 0;

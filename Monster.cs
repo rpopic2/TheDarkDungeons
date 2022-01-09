@@ -22,16 +22,20 @@ public class Monster : Entity
     }
     public void DoTurn()
     {
-        if(Hp.IsAlive)
-        if (Hand.Count > 0)
-        {
-            UseCard(Hand.GetFirst());
-        }else
-        {
-            IO.pr($"{Name} is resting a turn.");
-            IsResting = true;
-            Pickup(Draw());
-        }
+        if (Hp.IsAlive)
+            if (Hand.Count > 0)
+            {
+                UseCard(Hand.GetFirst());
+            }
+            else
+            {
+                Rest();
+            }
+    }
+    public override void Rest()
+    {
+        base.Rest();
+        Pickup(Draw());
     }
     public void UseCard()
     {

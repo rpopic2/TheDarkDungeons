@@ -30,6 +30,11 @@ public class Player : Entity
         Hand.SetAt(index, card);
         IO.del();
     }
+    public override void Rest()
+    {
+        base.Rest();
+        Pickup(Draw());
+    }
     public new string Stats
     {
         get => base.Stats + $"\nExp : {exp}";
