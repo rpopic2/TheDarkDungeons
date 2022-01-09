@@ -5,7 +5,6 @@ public struct Exp
     private const float lvIncrement = lvCurve * lvMultiplier;
     private Player owner;
     public GamePoint point;
-
     public Exp(Player owner, Action overflow)
     {
         this.owner = owner;
@@ -22,7 +21,6 @@ public struct Exp
         point += amount;
         IO.pr($"You gained {amount} xp. {ToString()}");
     }
-
     public override string ToString()
     {
         return point.ToString();

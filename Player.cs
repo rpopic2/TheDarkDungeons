@@ -30,7 +30,6 @@ public class Player : Entity
         Hand.SetAt(index, card);
         IO.del();
     }
-
     public new string Stats
     {
         get => base.Stats + $"\nExp : {exp}";

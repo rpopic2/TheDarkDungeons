@@ -33,7 +33,6 @@ public class Monster : Entity
             Pickup(Draw());
         }
     }
-
     public void UseCard()
     {
         Card? card = Hand.GetFirst();
