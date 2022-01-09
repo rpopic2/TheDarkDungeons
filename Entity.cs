@@ -67,10 +67,11 @@ public class Entity : Mass
     }
     public void DoBattleAction()
     {
-        if(target is null) return;
-        int t1dmg = PopAttack();
-        int t2block = target.PopDefence();
-        if (t1dmg > 0) target.TakeDamage(t1dmg - t2block);
+        if (target is null) return;
+        int dmg = PopAttack();
+        int targetBlock = target.PopDefence();
+        if (dmg > 0) target.TakeDamage(dmg - targetBlock);
+        if (dmg <= 0 && targetBlock > 0) IO.pr($"But {Name} did not attack...");
     }
     private void TakeDamage(int damage)
     {
