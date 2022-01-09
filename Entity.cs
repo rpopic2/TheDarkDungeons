@@ -20,13 +20,13 @@ public class Entity : Mass
         Cap = cap;
         Hand = new Hand(this);
         Hp = new Hp(this, maxHp, () => OnDeath());
-        this.sol = sol;
-        this.lun = lun;
-        this.con = con;
+        this.Sol = sol;
+        this.Lun = lun;
+        this.Con = con;
         this.lv = lv;
     }
     public override Card Draw()
-        => new Card(GetRandomStat(sol), GetRandomStat(lun), GetRandomStat(con), Stance.Attack);
+        => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");
@@ -48,10 +48,10 @@ public class Entity : Mass
         switch (card.Stance)
         {
             case Stance.Attack:
-                atk += card.sol;
+                atk += card.Sol;
                 break;
             case Stance.Defence:
-                def += card.lun;
+                def += card.Lun;
                 break;
         }
     }
@@ -101,7 +101,7 @@ public class Entity : Mass
         if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
     }
     public string Stats
-        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
+        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
 
     public bool Attacking
         => atk > 0;

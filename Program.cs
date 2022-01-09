@@ -88,7 +88,7 @@
     private void OnPlayerAction()
     {
         monster.DoTurn();
-        if (player.lun >= monster.lun)
+        if (player.Lun >= monster.Lun)
         {
             player.DoBattleAction();
             monster.DoBattleAction();
