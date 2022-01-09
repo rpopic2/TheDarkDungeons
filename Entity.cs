@@ -79,6 +79,11 @@ public class Entity : Mass
     {
         if (t1.Attacking) t1.Attack(t2);
         if (t2.Attacking) t2.Attack(t1);
+        if (t1.Defending && t2.Defending)
+        {
+            IO.pr($"{t1.Name} defences {t1.def} damage.");
+            IO.pr($"{t2.Name} defences {t2.def} damage.");
+        }
     }
     public int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);
