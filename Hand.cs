@@ -22,13 +22,12 @@ public struct Hand
         this.owner = owner;
         content = new Card?[owner.Cap];
     }
-    private void _Pickup(int index, Card card, bool silent = false)
+    private void _Pickup(int index, Card card)
     {
         content[index] = card;
-        if (!silent) IO.pr(ToString());
     }
 
-    public void PlayerPickup(Card card, bool silent = false)
+    public void PlayerPickup(Card card)
     {
         if(owner is not Player) throw new Exception("Target is not player.");
         IO.pr("You've found a card." + card);
@@ -39,7 +38,7 @@ public struct Hand
             IO.del();
             return;
         }
-        _Pickup(index, card, silent);
+        _Pickup(index, card);
         IO.del(2);
     }
     public void Delete(Card card)
