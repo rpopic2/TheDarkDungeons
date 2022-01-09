@@ -63,7 +63,7 @@ public class Hand
         {
             if (item == null)
             {
-                result += "[EMPTY]";
+                result += "{EMPTY}";
             }
             else
             {

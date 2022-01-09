@@ -26,8 +26,8 @@ public struct Card : IMass
     }
     public override string ToString()
     {
-        if (Stance == Stance.Attack) return $"[({sol})/{lun}]";
-        else if (Stance == Stance.Defence) return $"[{lun}/({sol})]";
+        if (Stance == Stance.Attack) return $"<({sol})/{lun}>";
+        else if (Stance == Stance.Defence) return $"[({lun})/{sol}]";
         else return $"[{con}*]";
     }
 }
