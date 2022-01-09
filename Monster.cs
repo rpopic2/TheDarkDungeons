@@ -26,6 +26,7 @@ public class Monster : Entity
             UseCard(Hand.GetFirst());
         }else
         {
+            IO.pr($"{Name} is resting a turn.");
             Pickup(Draw());
         }
     }
