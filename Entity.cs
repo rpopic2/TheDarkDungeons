@@ -96,8 +96,8 @@ public class Entity : Mass
     private void TakeDamage(int damage)
     {
         if (damage < 0) damage = 0;
-        if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
         Hp.TakeDamage(damage);
+        if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
     }
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";

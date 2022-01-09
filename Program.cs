@@ -20,7 +20,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
-        monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2); //Test!
+        monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
         player.target = monster;
         do
         {
@@ -88,8 +88,17 @@
     private void OnPlayerAction()
     {
         monster.DoTurn();
-        player.DoBattleAction();
-        monster.DoBattleAction();
+        if (player.lun >= monster.lun)
+        {
+            player.DoBattleAction();
+            monster.DoBattleAction();
+        }else
+        {
+            IO.pr("monster first");
+            monster.DoBattleAction();
+            player.DoBattleAction();
+        }
+
     }
 
     private void ShowStats()

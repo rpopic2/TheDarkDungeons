@@ -1,1 +1,2 @@
-resting makes entity vulnerable.
+선제공격 개념 -> lun 높은사람이 선공.
+cap이 <0이면 에러뜨게
