@@ -42,10 +42,10 @@ public class Entity : Mass
         switch (card.Stance)
         {
             case Stance.Attack:
-                SetAttack(card);
+                atk += card.sol;
                 break;
             case Stance.Defence:
-                SetDefence(card);
+                def += card.lun;
                 break;
         }
     }
@@ -56,31 +56,17 @@ public class Entity : Mass
         atk = 0;
         target.def = 0;
     }
-    public void TakeDamage(int x)
+    public void TakeDamage(int damage)
     {
-        if (x <= 0) throw new Exception($"Cannot inflict {x} damage. target : {Name}");
+        if (damage <= 0) throw new Exception($"Cannot inflict {damage} damage. target : {Name}");
         if (Defending)
         {
-            x -= def;
+            damage -= def;
             IO.pr($"{Name} defences {def} damage.");
         }
-        if (x < 0) x = 0;
-        Hp.TakeDamage(x);
-        if (Hp.IsAlive) IO.pr($"{Name} takes {x} damage. {Hp.point}");
-    }
-    public void SetAttack(Card card)
-    {
-        atk += card.sol;
-    }
-
-    public void SetDefence(Card card)
-    {
-        def += card.lun;
-    }
-    public void ResetAtkDef()
-    {
-        atk = 0;
-        def = 0;
+        if (damage < 0) damage = 0;
+        Hp.TakeDamage(damage);
+        if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
     }
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
