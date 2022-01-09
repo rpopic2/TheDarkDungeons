@@ -23,13 +23,12 @@ public class Entity : Mass
         this.lv = lv;
     }
     public override Card Draw()
-        => new Card(rnd.Next(1, sol + 1), rnd.Next(1, lun + 1), rnd.Next(1, con + 1), Stance.Attack);
+        => new Card(GetRandomStat(sol), GetRandomStat(def), GetRandomStat(con), Stance.Attack);
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");
         Player.instance.curTarget = null;
     }
-
     public virtual void Attack(Entity target)
     {
         IO.pr($"{Name} attacks {target.Name} with {atk} damage.");
@@ -75,4 +74,6 @@ public class Entity : Mass
         if (t1.Attacking) t1.Attack(t2);
         if (t2.Attacking) t2.Attack(t1);
     }
+    public int GetRandomStat(int stat)
+     => rnd.Next(1, stat + 1);
 }
