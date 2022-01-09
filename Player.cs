@@ -18,11 +18,7 @@ public class Player : Entity
     {
         get => base.Stats + $"\nExp : {exp}";
     }
-    public override Card Draw()
-    {
-        Card card = base.Draw();
-        return card;
-    }
+
     internal void UseCard(int index)
     {
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
