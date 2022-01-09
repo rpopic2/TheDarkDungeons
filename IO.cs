@@ -8,6 +8,12 @@ public static class IO
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
+    ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
+    public static KeyArrow rarw()
+    {
+        string result = Console.ReadKey(true).Key.ToString();
+        return (KeyArrow)Enum.Parse(typeof(KeyArrow), result);
+    }
     ///<summary>Select from provided keys. Returns cancel.</summary>
     public static void sel(char[] keys, out int index, out char key, out bool cancel)
     {
@@ -15,14 +21,14 @@ public static class IO
         {
             key = rkc();
             index = Array.IndexOf(keys, key);
-            if(key == 'q') goto Cancel;
+            if (key == 'q') goto Cancel;
         } while (index == -1);
         del();
         cancel = false;
         return;
-        Cancel :
-            del();
-            cancel = true;
+    Cancel:
+        del();
+        cancel = true;
     }
     ///<summary>Select a card.</summary>
     public static void selc(out Card card, out int index, out bool cancel)
@@ -30,12 +36,12 @@ public static class IO
         do
         {
             sel(playerHand.Cur, out index, out char key, out cancel);
-            if(cancel) goto Cancel;
+            if (cancel) goto Cancel;
         } while (playerHand[index] == null);
         card = playerHand[index] ?? throw new Exception();
         return;
-        Cancel :
-            card = new Card();
+    Cancel:
+        card = new Card();
     }
     ///<summary>Select a card index.</summary>
     public static void selci(out int index, out bool cancel)
@@ -43,10 +49,10 @@ public static class IO
         do
         {
             sel(playerHand.Cur, out index, out char key, out cancel);
-            if(cancel) goto Cancel;
+            if (cancel) goto Cancel;
         } while (playerHand[index] == null);
-        Cancel :
-            return;
+    Cancel:
+        return;
     }
 
     ///<summary>Select from string array.</summary>
@@ -54,7 +60,7 @@ public static class IO
     {
         char[] keys = options.ParseKeys();
         sel(keys, out int index, out char key, out cancel);
-        if(!cancel) resultIndex = index;
+        if (!cancel) resultIndex = index;
         else resultIndex = -1;
     }
 
@@ -62,7 +68,7 @@ public static class IO
     public static void selcmd(CmdTuple cmd, out bool cancel)
     {
         sel(cmd.Keys.ToArray(), out int index, out char key, out cancel);
-        if(!cancel) cmd.Invoke(key);
+        if (!cancel) cmd.Invoke(key);
     }
 
 
@@ -96,7 +102,7 @@ public static class IO
 
     public static void del()
     {
-        if(Console.CursorTop == 0) return;
+        if (Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
         pr(delString);
         Console.SetCursorPosition(0, Console.CursorTop - 1);

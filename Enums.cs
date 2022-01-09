@@ -11,3 +11,7 @@ public enum GamePointOption
 {
     Stacking, Reserving
 }
+public enum KeyArrow
+{
+    UpArrow, DownArrow, LeftArrow, RightArrow
+}
