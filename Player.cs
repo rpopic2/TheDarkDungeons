@@ -18,20 +18,4 @@ public class Player : Entity
     {
         get => base.Stats + $"\nExp : {exp}";
     }
-
-    // public void ClassSwitch(Action warrior, Action assassin, Action mage)
-    // {
-    //     switch (charClass)
-    //     {
-    //         case ClassName.Warrrior:
-    //             warrior();
-    //             break;
-    //         case ClassName.Assassin:
-    //             assassin();
-    //             break;
-    //         case ClassName.Mage:
-    //             mage();
-    //             break;
-    //     }
-    // }
 }
