@@ -7,6 +7,7 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int lv { get; protected set; }
     private Random rnd = new Random();
+    public Entity? curTarget;
     public int atk { get; private set; }
     public int def { get; private set; }
 
@@ -29,6 +30,7 @@ public class Entity : Mass
         IO.pr($"{Name} died.");
         Player.instance.curTarget = null;
     }
+    
     public virtual void Attack(Entity target)
     {
         IO.pr($"{Name} attacks {target.Name} with {atk} damage.");
@@ -76,4 +78,20 @@ public class Entity : Mass
     }
     public int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);
+
+    public void UseCard(int index)
+    {
+        Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
+        if (curTarget is null) return;
+        Hand.Delete(card);
+        switch (card.Stance)
+        {
+            case Stance.Attack:
+                SetAttack(card);
+                break;
+            case Stance.Defence:
+                SetDefence(card);
+                break;
+        }
+    }
 }

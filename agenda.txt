@@ -1,1 +1,3 @@
-mob has hand. (cap)
+mob uses cards in its hand. 
+if hand has zero card, rest.
+둘다 방어시 프린트는 해줘야.

@@ -1,4 +1,4 @@
-
+resting makes entity vulnerable.
 플레이어가 행동시 몹도 행동.
 지금 죽은 박쥐와 싸움.
 별뽑기와 크릿
