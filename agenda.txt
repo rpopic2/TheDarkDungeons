@@ -1,0 +1,2 @@
+mob spawns.
+mobs constructor data should be in a data file.
