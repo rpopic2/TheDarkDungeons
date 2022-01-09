@@ -23,16 +23,6 @@ public class Player : Entity
         Card card = base.Draw();
         return card;
     }
-    public override void Attack(Card card, Entity target)
-    {
-        base.Attack(card, target);
-    }
-
-    public void Defence(Card card)
-    {
-        Hp.Defence(card.lun);
-    }
-
     internal void UseCard(Card card)
     {
         if (curTarget is null) return;
@@ -40,10 +30,11 @@ public class Player : Entity
         switch (card.Stance)
         {
             case Stance.Attack:
-                Attack(card, curTarget);
+                //Attack(card, curTarget);
+                SetAttack(card);
                 break;
             case Stance.Defence:
-                Defence(card);
+                SetDefence(card);
                 break;
         }
     }

@@ -24,7 +24,7 @@
         do
         {
             IO.Prompt(basic, out bool cancel);
-            if (!cancel) EventListener.OnTurnEnd();
+            if (!cancel) IO.pr("");
         } while (player.Hp.point.Cur > 0);
     }
     private void InitActions()
@@ -74,8 +74,11 @@
             return;
         }
         player.UseCard(card);
-
-        monster.Attack(monster.Draw(), player);
+        monster.SetAttack(monster.Draw());
+        if(player.atk > 0) player.Attack(monster);
+        if(monster.atk > 0) monster.Attack(player);
+        player.ResetAtkDef();
+        monster.ResetAtkDef();
     }
 
     private void ShowStats()

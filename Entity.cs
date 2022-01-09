@@ -7,6 +7,8 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int lv { get; protected set; }
     private Random rnd = new Random();
+    public int atk {get; private set;}
+    public int def {get; private set;}
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -28,10 +30,24 @@ public class Entity : Mass
         Player.instance.curTarget = null;
     }
 
-    public virtual void Attack(Card card, Entity target)
+    public virtual void Attack(Entity target)
     {
-        IO.pr($"{Name} attacks {target.Name} with {card.sol} damage.");
-        target.Hp.TakeDamage(card.sol);
+        IO.pr($"{Name} attacks {target.Name} with {atk} damage.");
+        target.Hp.TakeDamage(atk, target.def);
+    }
+    public void SetAttack(Card card)
+    {
+        atk += card.sol;
+    }
+
+    public void SetDefence(Card card)
+    {
+        def += card.lun;
+    }
+    public void ResetAtkDef()
+    {
+        atk = 0;
+        def = 0;
     }
     public string Stats
     {

@@ -1,2 +1,3 @@
-exp, hp -> struct
+new defence system
+hp -> struct
 card -> struct
