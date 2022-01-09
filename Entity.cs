@@ -46,7 +46,7 @@ public class Entity : Mass
             IO.pr($"{Name} defences {def} damage.");
         }
         if (x < 0) x = 0;
-        Hp.point -= x;
+        Hp.TakeDamage(x);
         if (Hp.IsAlive) IO.pr($"{Name} takes {x} damage. {Hp.point}");
     }
     public void SetAttack(Card card)

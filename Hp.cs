@@ -1,4 +1,4 @@
-public class Hp
+public struct Hp
 {
     private Entity owner;
     public GamePoint point;
@@ -6,6 +6,10 @@ public class Hp
     {
         this.owner = owner;
         point = new GamePoint(max, GamePointOption.Reserving, onDeath);
+    }
+    public void TakeDamage(int x)
+    {
+        point -= x;
     }
 
     public bool IsAlive

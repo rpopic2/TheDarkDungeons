@@ -1,5 +1,5 @@
-new defence system
 hp -> struct
 card -> struct
+player.usecard가 index를 인수로 받아야 보호됨.
 del 지금 정해진 자리수만 지워서 다 지우는 방법 필요. cursorleft활용
 카드에 지금 스탠스쉬프트 된 곳에 ()
