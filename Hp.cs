@@ -14,4 +14,5 @@ public struct Hp
 
     public bool IsAlive
         => point.Cur > 0;
+    
 }

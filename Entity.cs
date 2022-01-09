@@ -10,6 +10,7 @@ public class Entity : Mass
     public Entity? target;
     public int atk { get; private set; }
     public int def { get; private set; }
+    public bool rest { get; set; }
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -69,19 +70,34 @@ public class Entity : Mass
         def = 0;
         return block;
     }
+    public bool PopResting()
+    {
+        if (!rest) return false;
+        rest = false;
+        return true;
+    }
     public void DoBattleAction()
     {
         if (target is null) return;
         int dmg = PopAttack();
         int targetBlock = target.PopDefence();
-        if (dmg > 0) target.TakeDamage(dmg - targetBlock);
+        bool targetResting = target.PopResting();
+        if (dmg > 0)
+        {
+            if (targetResting)
+            {
+                dmg = (int)MathF.Floor(dmg * 1.2f);
+                IO.pr($"{target.Name} is resting vulnerable, takes 1.2x damage!");
+            }
+            target.TakeDamage(dmg - targetBlock);
+        }
         if (dmg <= 0 && targetBlock > 0) IO.pr($"But {Name} did not attack...");
     }
     private void TakeDamage(int damage)
     {
         if (damage < 0) damage = 0;
-        Hp.TakeDamage(damage);
         if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
+        Hp.TakeDamage(damage);
     }
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";

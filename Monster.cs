@@ -29,6 +29,7 @@ public class Monster : Entity
         }else
         {
             IO.pr($"{Name} is resting a turn.");
+            rest = true;
             Pickup(Draw());
         }
     }

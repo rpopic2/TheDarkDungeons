@@ -1,5 +1,3 @@
-지금 죽은 박쥐와 싸움.
-resting makes entity vulnerable.
 
 별뽑기와 크릿
 맵과 이동
