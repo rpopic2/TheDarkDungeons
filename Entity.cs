@@ -16,6 +16,7 @@ public class Entity : Mass
     {
         Name = name;
         ClassName = className;
+        if (cap <= 0) throw new ArgumentException("cap cannot be equal or less than 0.");
         Cap = cap;
         Hand = new Hand(this);
         Hp = new Hp(this, maxHp, () => OnDeath());
