@@ -25,7 +25,7 @@ public class Monster : Entity
         if (Hp.IsAlive)
             if (Hand.Count > 0)
             {
-                UseCard(Hand.GetFirst());
+                _UseCard(Hand.GetFirst());
             }
             else
             {

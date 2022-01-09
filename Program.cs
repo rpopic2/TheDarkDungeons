@@ -6,8 +6,6 @@
     public static Program? main;
     private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
-    private CmdTuple basic = new CmdTuple();
-    private CmdTuple stanceShift = new CmdTuple();
     private Monster monster;
     public static void Main()
     {
@@ -22,25 +20,25 @@
         InitActions();
         monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
         player.target = monster;
-        do
-        {
-            IO.Prompt(basic, out bool cancel);
-            if (!cancel) IO.pr("");
-        } while (player.Hp.point.Cur > 0);
+        BasicPrompt();
     }
+    private CmdTuple basic = new CmdTuple();
+    private CmdTuple stanceShift = new CmdTuple();
+    private CmdTuple exile = new CmdTuple();
     private void InitActions()
     {
-        basic.Add("(R)est", () => Rest());
         basic.Add("Use Card(W)", () => UseCard());
+        basic.Add("(R)est", () => Rest());
         basic.Add("(S)tats", () => ShowStats());
 
         stanceShift.Add("(S)tanceshift", () =>
         {
-            IO.SelectPlayerCard(out int x, out bool cancel);
+            IO.SelectCardIndex(out int x, out bool cancel);
             if (!cancel) player.Hand.StanceShift(x);
         });
-    }
 
+        exile.Add("Card(W)", () => ExileCard());
+    }
     private void Intro()
     {
         IO.pr("Press any key to start...");
@@ -56,6 +54,15 @@
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
     //-------------------------
+    private void BasicPrompt()
+    {
+        do
+        {
+            IO.Prompt(basic, out bool cancel);
+            if (!cancel) IO.pr("");
+            else IO.Prompt(exile, out bool cancel2);
+        } while (player.Hp.point.Cur > 0);
+    }
     private void Rest()
     {
         player.Rest();
@@ -68,7 +75,7 @@
     }
     private void UseCard()
     {
-        IO.SelectPlayerCard(out int x, out bool cancel);
+        IO.SelectCardIndex(out int x, out bool cancel);
         if (cancel)
         {
             IO.del();
@@ -80,9 +87,30 @@
             IO.del();
             return;
         }
-        player.UseCard(x);
-        OnPlayerAction();
+        player.UseCard(x, out bool star);
+        if (!star) OnPlayerAction();
     }
+    private void ExileCard()
+    {
+        int index;
+        Card card;
+        do
+        {
+            IO.prh(player.Hand);
+            IO.selc(out card, out index, out bool cancel);
+            IO.del();
+            if (cancel) return;
+        } while (card.Stance == Stance.Star);
+        player.Hand.Exile(index);
+    }
+
+    private void ShowStats()
+    {
+        IO.pr(player.Stats);
+        IO.rkc();
+        IO.del(4);
+    }
+    //
     private void OnPlayerAction()
     {
         monster.DoTurn();
@@ -90,17 +118,11 @@
         {
             player.DoBattleAction();
             monster.DoBattleAction();
-        }else
+        }
+        else
         {
             monster.DoBattleAction();
             player.DoBattleAction();
         }
-
-    }
-    private void ShowStats()
-    {
-        IO.pr(player.Stats);
-        IO.rkc();
-        IO.del(4);
     }
 }

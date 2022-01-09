@@ -10,6 +10,7 @@ public class Entity : Mass
     public Entity? target;
     public int Atk { get; private set; }
     public int Def { get; private set; }
+    public int Star { get; private set; }
     public bool IsResting { get; set; }
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
@@ -32,17 +33,19 @@ public class Entity : Mass
         IO.pr($"{Name} died.");
         Player.instance.target = null;
     }
-    public void UseCard(int index)
+    public void UseCard(int index, out bool star)
     {
+        star = false;
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
         if (target is null)
         {
             IO.pr("No target to use card");
             return;
         }
-        UseCard(card);
+        if (card.Stance == Stance.Star) star = true;
+        _UseCard(card);
     }
-    protected void UseCard(Card card)
+    protected void _UseCard(Card card)
     {
         Hand.Delete(card);
         switch (card.Stance)
@@ -52,6 +55,9 @@ public class Entity : Mass
                 break;
             case Stance.Defence:
                 Def += card.Lun;
+                break;
+            case Stance.Star:
+                Star = card.Con;
                 break;
         }
     }
@@ -66,7 +72,7 @@ public class Entity : Mass
         int dmg = Atk;
         IO.pr($"{Name} attacks with {dmg} damage.");
         Atk = 0;
-        return dmg;
+        return dmg + PopStar();
     }
     private int PopDefence()
     {
@@ -74,13 +80,21 @@ public class Entity : Mass
         int block = Def;
         IO.pr($"{Name} defences {Def} damage.");
         Def = 0;
-        return block;
+        return block + PopStar();
     }
     private bool PopResting()
     {
         if (!IsResting) return false;
         IsResting = false;
         return true;
+    }
+    private int PopStar()
+    {
+        if (Star <= 0) return 0;
+        int star = Star;
+        IO.pr($"...and {Star} more damage!");
+        Star = 0;
+        return star;
     }
     public void DoBattleAction()
     {

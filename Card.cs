@@ -18,15 +18,18 @@ public struct Card : IMass
         Stance = Stance == Stance.Attack ? Stance.Defence : Stance.Attack;
         return this;
     }
-    public void ReplaceToStar(int wis)
+
+    internal Card Exile()
     {
-        this.Con = wis;
         Stance = Stance.Star;
+        return this;
     }
+
     public override string ToString()
     {
         if (Stance == Stance.Attack) return $"<({Sol})/{Lun}>";
         else if (Stance == Stance.Defence) return $"[({Lun})/{Sol}]";
         else return $"[{Con}*]";
     }
+
 }

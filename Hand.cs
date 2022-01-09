@@ -26,6 +26,10 @@ public struct Hand
     {
         content[index] = card;
     }
+    public readonly Card GetAt(int index)
+    {
+        return content[index] ?? throw new Exception();
+    }
     public Card GetFirst()
         => content.First(card => card != null) ?? throw new Exception();
     public void Delete(Card card)
@@ -41,6 +45,11 @@ public struct Hand
     {
         Card? card = content[index];
         content[index] = card?.StanceShift();
+    }
+    public void Exile(int index)
+    {
+        Card? card = content[index];
+        content[index] = card?.Exile();
     }
     public override string ToString()
     {

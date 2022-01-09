@@ -24,19 +24,20 @@ public static class IO
             del();
             cancel = true;
     }
-    ///<summary>Select a card. Returns cancel.</summary>
-    public static void selc(out Card? card, out int index, out bool cancel)
+    ///<summary>Select a card.</summary>
+    public static void selc(out Card card, out int index, out bool cancel)
     {
         do
         {
             sel(playerHand.Cur, out index, out char key, out cancel);
             if(cancel) goto Cancel;
         } while (playerHand[index] == null);
-        card = playerHand[index]!;
+        card = playerHand[index] ?? throw new Exception();
         return;
         Cancel :
-            card = null;
+            card = new Card();
     }
+    ///<summary>Select a card index.</summary>
     public static void selci(out int index, out bool cancel)
     {
         do
@@ -107,11 +108,15 @@ public static class IO
             del();
         }
     }
-    public static void SelectPlayerCard(out int index, out bool cancel)
+    public static void SelectCardIndex(out int index, out bool cancel)
     {
         prh(playerHand);
         selci(out index, out cancel);
         del();
+    }
+    public static void SelectCardUse()
+    {
+        prh(playerHand);
     }
     public static void Prompt(CmdTuple cmd, out bool cancel)
     {
