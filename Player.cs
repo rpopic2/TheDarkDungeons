@@ -24,7 +24,7 @@ public class Player : Entity
             return;
         }
         Hand.SetAt(index, card);
-        IO.del(2);
+        IO.del();
     }
 
     public new string Stats
