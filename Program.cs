@@ -79,7 +79,8 @@
             return;
         }
         player.UseCard(x);
-        monster.SetAttack(monster.Draw());//temp.make ai later.
+        //monster.SetAttack(monster.Draw());//temp.make ai later.
+        monster.SetDefence(monster.Draw());
         Entity.Battle(player, monster);
     }
 
