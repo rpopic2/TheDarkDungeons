@@ -7,6 +7,9 @@
     private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private Monster monster;
+    //public Map map;
+    public Map map;
+    
     public static void Main()
     {
         main = new Program();
@@ -18,6 +21,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
+        map = new Map(6);
         monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
         player.target = monster;
         BasicPrompt();
@@ -30,6 +34,7 @@
         basic.Add("Use Card(W)", () => UseCard());
         basic.Add("(R)est", () => Rest());
         basic.Add("(S)tats", () => ShowStats());
+        basic.Add("Mo(v)e", () => Move());
 
         stanceShift.Add("(S)tanceshift", () =>
         {
@@ -39,6 +44,7 @@
 
         exile.Add("Card(W)", () => ExileCard());
     }
+
     private void Intro()
     {
         IO.pr("Press any key to start...");
@@ -103,7 +109,18 @@
         } while (card.Stance == Stance.Star);
         player.Hand.Exile(index);
     }
-
+    private void Move()
+    {
+        IO.pr(map);
+        // switch (IO.rarw())
+        // {
+        //     case KeyArrow.DownArrow:
+        //     case KeyArrow.UpArrow:
+        //     case KeyArrow.LeftArrow:
+        //     case KeyArrow.RightArrow:
+                
+        // }
+    }
     private void ShowStats()
     {
         IO.pr(player.Stats);

@@ -21,7 +21,7 @@ public static class IO
         {
             key = rkc();
             index = Array.IndexOf(keys, key);
-            if (key == 'q') goto Cancel;
+            if (key == 'q' || key == 'c') goto Cancel;
         } while (index == -1);
         del();
         cancel = false;
