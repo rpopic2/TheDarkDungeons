@@ -13,7 +13,7 @@
     {
         main = new Program();
     }
-    private Program()
+    public Program()
     {
         Console.Clear();
         IO.pr("The Dark Dungeon " + version);
@@ -58,9 +58,7 @@
     //-------------------------
     private void Rest()
     {
-        IO.pr("Resting a turn.");
-        player.Pickup(player.Draw());
-        player.rest = true;
+        player.Rest();
         bool cancel = false;
         do
         {
@@ -88,19 +86,17 @@
     private void OnPlayerAction()
     {
         monster.DoTurn();
-        if (player.lun >= monster.lun)
+        if (player.Lun >= monster.Lun)
         {
             player.DoBattleAction();
             monster.DoBattleAction();
         }else
         {
-            IO.pr("monster first");
             monster.DoBattleAction();
             player.DoBattleAction();
         }
 
     }
-
     private void ShowStats()
     {
         IO.pr(player.Stats);

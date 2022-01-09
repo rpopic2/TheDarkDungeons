@@ -1,17 +1,16 @@
 public struct Card : IMass
 {
     public Stance Stance { get; private set; }
-
-    public int sol { get; private set; }
-    public int lun { get; private set; }
-    public int con { get; private set; } = 0;
+    public int Sol { get; private set; }
+    public int Lun { get; private set; }
+    public int Con { get; private set; }
 
     public Card(int sol, int lun, int con, Stance stance)
     {
-        this.sol = sol;
-        this.lun = lun;
-        this.con = con;
-        this.Stance = stance;
+        Sol = sol;
+        Lun = lun;
+        Con = con;
+        Stance = stance;
     }
     public Card StanceShift()
     {
@@ -21,13 +20,13 @@ public struct Card : IMass
     }
     public void ReplaceToStar(int wis)
     {
-        this.con = wis;
+        this.Con = wis;
         Stance = Stance.Star;
     }
     public override string ToString()
     {
-        if (Stance == Stance.Attack) return $"<({sol})/{lun}>";
-        else if (Stance == Stance.Defence) return $"[({lun})/{sol}]";
-        else return $"[{con}*]";
+        if (Stance == Stance.Attack) return $"<({Sol})/{Lun}>";
+        else if (Stance == Stance.Defence) return $"[({Lun})/{Sol}]";
+        else return $"[{Con}*]";
     }
 }

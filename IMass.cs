@@ -1,6 +1,6 @@
 interface IMass
 {
-    int sol { get; }
-    int lun { get; }
-    int con { get; }
+    int Sol { get; }
+    int Lun { get; }
+    int Con { get; }
 }

@@ -37,6 +37,16 @@ public static class IO
         Cancel :
             card = null;
     }
+    public static void selci(out int index, out bool cancel)
+    {
+        do
+        {
+            sel(playerHand.Cur, out index, out char key, out cancel);
+            if(cancel) goto Cancel;
+        } while (playerHand[index] == null);
+        Cancel :
+            return;
+    }
 
     ///<summary>Select from string array.</summary>
     public static void selsa(string[] options, out int resultIndex, out bool cancel)
@@ -100,7 +110,7 @@ public static class IO
     public static void SelectPlayerCard(out int index, out bool cancel)
     {
         prh(playerHand);
-        selc(out Card? card, out index, out cancel);
+        selci(out index, out cancel);
         del();
     }
     public static void Prompt(CmdTuple cmd, out bool cancel)

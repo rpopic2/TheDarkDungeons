@@ -5,12 +5,12 @@ public class Entity : Mass
     public Hand Hand { get; private set; }
     public int Cap { get; private set; }
     public Hp Hp { get; private set; }
-    public virtual int lv { get; protected set; }
+    public virtual int Lv { get; protected set; }
     private Random rnd = new Random();
     public Entity? target;
-    public int atk { get; private set; }
-    public int def { get; private set; }
-    public bool rest { get; set; }
+    public int Atk { get; private set; }
+    public int Def { get; private set; }
+    public bool IsResting { get; set; }
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -20,13 +20,13 @@ public class Entity : Mass
         Cap = cap;
         Hand = new Hand(this);
         Hp = new Hp(this, maxHp, () => OnDeath());
-        this.sol = sol;
-        this.lun = lun;
-        this.con = con;
-        this.lv = lv;
+        Sol = sol;
+        Lun = lun;
+        Con = con;
+        Lv = lv;
     }
     public override Card Draw()
-        => new Card(GetRandomStat(sol), GetRandomStat(lun), GetRandomStat(con), Stance.Attack);
+        => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");
@@ -48,33 +48,38 @@ public class Entity : Mass
         switch (card.Stance)
         {
             case Stance.Attack:
-                atk += card.sol;
+                Atk += card.Sol;
                 break;
             case Stance.Defence:
-                def += card.lun;
+                Def += card.Lun;
                 break;
         }
     }
-    public int PopAttack()
+    public virtual void Rest()
     {
-        if (!Attacking) return 0;
-        int dmg = atk;
+        IO.pr($"{Name} is resting a turn.");
+        IsResting = true;
+    }
+    private int PopAttack()
+    {
+        if (Atk <= 0) return 0;
+        int dmg = Atk;
         IO.pr($"{Name} attacks with {dmg} damage.");
-        atk = 0;
+        Atk = 0;
         return dmg;
     }
-    public int PopDefence()
+    private int PopDefence()
     {
-        if (!Defending) return 0;
-        int block = def;
-        IO.pr($"{Name} defences {def} damage.");
-        def = 0;
+        if (Def <= 0) return 0;
+        int block = Def;
+        IO.pr($"{Name} defences {Def} damage.");
+        Def = 0;
         return block;
     }
-    public bool PopResting()
+    private bool PopResting()
     {
-        if (!rest) return false;
-        rest = false;
+        if (!IsResting) return false;
+        IsResting = false;
         return true;
     }
     public void DoBattleAction()
@@ -101,12 +106,7 @@ public class Entity : Mass
         if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
     }
     public string Stats
-        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
-
-    public bool Attacking
-        => atk > 0;
-    public bool Defending
-        => def > 0;
-    public int GetRandomStat(int stat)
+        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Lv}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
+    private int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);
 }
