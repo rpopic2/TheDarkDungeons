@@ -1,6 +1,7 @@
 ﻿public class Program
 {
     public const string version = "0.1";
+    public const float vulMultiplier = 1.3f;
     public static Player player = Player.instance;
     public static Program? main;
     private bool skip = true;
