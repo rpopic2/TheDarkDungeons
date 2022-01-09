@@ -49,12 +49,32 @@ public class Entity : Mass
                 break;
         }
     }
-    public virtual void Attack(Entity target)
+    public int Attack(Entity target)
     {
-        IO.pr($"{Name} attacks {target.Name} with {atk} damage.");
-        target.TakeDamage(atk);
+        int dmg = atk;
         atk = 0;
-        target.def = 0;
+        IO.pr($"{Name} attacks with {dmg} damage.");
+        return dmg;
+    }
+    public int PopAttack()
+    {
+        if (!Attacking) return 0;
+        int dmg = atk;
+        IO.pr($"{Name} attacks with {dmg} damage.");
+        atk = 0;
+        return dmg;
+    }
+    public int PopDefence()
+    {
+        if (!Defending) return 0;
+        int block = def;
+        IO.pr($"{Name} defences {def} damage.");
+        def = 0;
+        return block;
+    }
+    public void PrDefend()
+    {
+        IO.pr($"{Name} defences {def} damage.");
     }
     public void TakeDamage(int damage)
     {
@@ -62,8 +82,14 @@ public class Entity : Mass
         if (Defending)
         {
             damage -= def;
-            IO.pr($"{Name} defences {def} damage.");
+            PrDefend();
         }
+        if (damage < 0) damage = 0;
+        Hp.TakeDamage(damage);
+        if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
+    }
+    private void NewTakeDamage(int damage)
+    {
         if (damage < 0) damage = 0;
         Hp.TakeDamage(damage);
         if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
@@ -77,13 +103,13 @@ public class Entity : Mass
         => def > 0;
     public static void Battle(Entity t1, Entity t2)
     {
-        if (t1.Attacking) t1.Attack(t2);
-        if (t2.Attacking) t2.Attack(t1);
-        if (t1.Defending && t2.Defending)
-        {
-            IO.pr($"{t1.Name} defences {t1.def} damage.");
-            IO.pr($"{t2.Name} defences {t2.def} damage.");
-        }
+        int t1dmg = t1.PopAttack();
+        int t2block = t2.PopDefence();
+        if (t1dmg > 0) t2.NewTakeDamage(t1dmg - t2block);
+
+        int t2dmg = t2.PopAttack();
+        int t1block = t1.PopDefence();
+        if (t2dmg > 0) t1.NewTakeDamage(t1dmg - t2block);
     }
     public int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);
