@@ -13,7 +13,7 @@ public class Player : Entity
     }
     private void OnLvUp()
     {
-        lv++;
+        Lv++;
         exp.UpdateMax();
         Console.WriteLine("Level up!");
     }

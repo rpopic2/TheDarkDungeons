@@ -60,7 +60,7 @@
     {
         IO.pr("Resting a turn.");
         player.Pickup(player.Draw());
-        player.rest = true;
+        player.IsResting = true;
         bool cancel = false;
         do
         {
