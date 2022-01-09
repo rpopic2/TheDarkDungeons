@@ -7,7 +7,7 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int lv { get; protected set; }
     private Random rnd = new Random();
-    public Entity? curTarget;
+    public Entity? target;
     public int atk { get; private set; }
     public int def { get; private set; }
 
@@ -28,12 +28,12 @@ public class Entity : Mass
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");
-        Player.instance.curTarget = null;
+        Player.instance.target = null;
     }
     public void UseCard(int index)
     {
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
-        if (curTarget is null) return;
+        if (target is null) return;
         UseCard(card);
     }
     protected void UseCard(Card card)
@@ -48,13 +48,6 @@ public class Entity : Mass
                 def += card.lun;
                 break;
         }
-    }
-    public int Attack(Entity target)
-    {
-        int dmg = atk;
-        atk = 0;
-        IO.pr($"{Name} attacks with {dmg} damage.");
-        return dmg;
     }
     public int PopAttack()
     {
@@ -72,23 +65,14 @@ public class Entity : Mass
         def = 0;
         return block;
     }
-    public void PrDefend()
+    private void DoBattleAction()
     {
-        IO.pr($"{Name} defences {def} damage.");
+        if(target is null) return;
+        int t1dmg = PopAttack();
+        int t2block = target.PopDefence();
+        if (t1dmg > 0) target.TakeDamage(t1dmg - t2block);
     }
-    public void TakeDamage(int damage)
-    {
-        if (damage <= 0) throw new Exception($"Cannot inflict {damage} damage. target : {Name}");
-        if (Defending)
-        {
-            damage -= def;
-            PrDefend();
-        }
-        if (damage < 0) damage = 0;
-        Hp.TakeDamage(damage);
-        if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
-    }
-    private void NewTakeDamage(int damage)
+    private void TakeDamage(int damage)
     {
         if (damage < 0) damage = 0;
         Hp.TakeDamage(damage);
@@ -103,13 +87,8 @@ public class Entity : Mass
         => def > 0;
     public static void Battle(Entity t1, Entity t2)
     {
-        int t1dmg = t1.PopAttack();
-        int t2block = t2.PopDefence();
-        if (t1dmg > 0) t2.NewTakeDamage(t1dmg - t2block);
-
-        int t2dmg = t2.PopAttack();
-        int t1block = t1.PopDefence();
-        if (t2dmg > 0) t1.NewTakeDamage(t1dmg - t2block);
+        t1.DoBattleAction();
+        t2.DoBattleAction();
     }
     public int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);

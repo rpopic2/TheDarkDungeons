@@ -7,6 +7,7 @@ public class Monster : Entity
         {
             Pickup(Draw().StanceShift());
         }
+        target = player;//temp
     }
     public void Pickup(Card card)
     {
