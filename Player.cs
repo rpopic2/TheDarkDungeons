@@ -23,14 +23,14 @@ public class Player : Entity
         Card card = base.Draw();
         return card;
     }
-    internal void UseCard(Card card)
+    internal void UseCard(int index)
     {
+        Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
         if (curTarget is null) return;
         Hand.Delete(card);
         switch (card.Stance)
         {
             case Stance.Attack:
-                //Attack(card, curTarget);
                 SetAttack(card);
                 break;
             case Stance.Defence:

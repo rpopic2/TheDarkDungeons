@@ -78,7 +78,7 @@
             IO.del();
             return;
         }
-        player.UseCard((Card)card);
+        player.UseCard(x);
         monster.SetAttack(monster.Draw());//temp.make ai later.
         Entity.Battle(player, monster);
     }
