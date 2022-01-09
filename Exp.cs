@@ -4,42 +4,29 @@ public class Exp
     private const int lvMultiplier = 10;
     private const float lvIncrement = lvCurve * lvMultiplier;
     private Player owner;
-    public Action OnLvUp = () => { };
-    private int cur = 0;
-    public int Cur
-    {
-        get => cur;
-        private set
-        {
-            if (value >= Max)
-            {
-                value -= Max;
-                OnLvUp();
-                Max = UpdateMax();
-            }
-            cur = value;
-        }
-    }
-    public int Max { get; private set; }
+    public GamePoint point;
 
-    public Exp(Player owner)
+    public Exp(Player owner, Action overflow)
     {
         this.owner = owner;
-        Max = 0;
-        Max = UpdateMax();
+        point = new GamePoint(GetMax(owner.lv), GamePointOption.Stacking, overflow);
     }
 
-    private int UpdateMax()
-    => (int)MathF.Floor(owner.lv * lvIncrement);
+    public static int GetMax(int lv)
+    => (int)MathF.Floor(lv * lvIncrement);
 
     public void Gain(int amount)
     {
-        Cur += amount;
+        point += amount;
         IO.pr($"You gained {amount} xp. {ToString()}");
     }
 
     public override string ToString()
     {
-        return $"{Cur}/{Max}";
+        return point.ToString();
+    }
+    public void SetExp(GamePoint newPoint)
+    {
+        point = newPoint;
     }
 }

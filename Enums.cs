@@ -7,3 +7,7 @@ public enum Stance
 {
     Attack, Defence, Star
 }
+public enum GamePointOption
+{
+    Stacking, Reserving
+}

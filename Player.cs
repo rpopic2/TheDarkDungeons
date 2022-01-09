@@ -1,18 +1,21 @@
 public class Player : Entity
 {
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
-    public static Exp exp = new Exp(instance);
+    public Exp exp;
     public Monster? curTarget;
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
-        Player.exp = new Exp(this);
-        exp.OnLvUp = () => OnLvUp();
+        exp = new Exp(this, () => OnLvUp());
+        exp.point += 16;
+        //IO.pr(exp.point.Max);
     }
-    public void OnLvUp()
+    private void OnLvUp()
     {
         lv++;
-        Console.WriteLine("\nLevel up!");
+        Console.WriteLine("Level up!");
+        exp.point.Max = Exp.GetMax(lv);
+        exp.point += 1;
     }
 
     public new string Stats
@@ -36,7 +39,7 @@ public class Player : Entity
 
     internal void UseCard(Card card)
     {
-        if(curTarget is null) return;
+        if (curTarget is null) return;
         Hand.Delete(card);
         switch (card.Stance)
         {

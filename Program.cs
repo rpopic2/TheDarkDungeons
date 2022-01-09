@@ -24,7 +24,7 @@
         do
         {
             IO.Prompt(basic, out bool cancel);
-            if(!cancel) EventListener.OnTurnEnd();
+            if (!cancel) EventListener.OnTurnEnd();
         } while (player.Hp.Cur > 0);
     }
     private void InitActions()
@@ -33,7 +33,8 @@
         basic.Add("Use Card(W)", () => UseCard());
         basic.Add("(S)tats", () => ShowStats());
 
-        stanceShift.Add("(S)tanceshift", () => {
+        stanceShift.Add("(S)tanceshift", () =>
+        {
             IO.SelectPlayerCard(out Card? card);
             card?.StanceShift();
         });
@@ -76,7 +77,7 @@
 
         monster.Attack(monster.Draw(), player);
     }
-    
+
     private void ShowStats()
     {
         IO.pr(player.Stats);

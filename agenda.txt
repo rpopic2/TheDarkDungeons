@@ -1,5 +1,8 @@
-player의 static과 non-static사용이 뒤섞임.
 exp and hp posssibly merge-able? into struct?
-card가 진짜 struct아닌가?
+player static exp del
+exp.getmax to static something
+exp should be not static
 
-
+gamepoint -> class
+exp, hp -> struct
+card -> struct
