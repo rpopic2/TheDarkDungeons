@@ -5,7 +5,7 @@ public class Monster : Entity
     {
         for (int i = 0; i < cap; i++)
         {
-            Pickup(Draw());
+            Pickup(Draw().StanceShift());
         }
     }
     public void Pickup(Card card)
@@ -18,9 +18,19 @@ public class Monster : Entity
         player.exp.Gain(3);
         player.Pickup(Draw());
     }
+    public void DoTurn()
+    {
+        if (Hand.Count > 0)
+        {
+            UseCard(Hand.GetFirst());
+        }else
+        {
+            Pickup(Draw());
+        }
+    }
 
     public void UseCard()
     {
-        UseCard(Hand.GetFirst());
+        Card? card = Hand.GetFirst();
     }
 }

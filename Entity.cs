@@ -24,7 +24,7 @@ public class Entity : Mass
         this.lv = lv;
     }
     public override Card Draw()
-        => new Card(GetRandomStat(sol), GetRandomStat(def), GetRandomStat(con), Stance.Attack);
+        => new Card(GetRandomStat(sol), GetRandomStat(lun), GetRandomStat(con), Stance.Attack);
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");

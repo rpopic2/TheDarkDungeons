@@ -1,3 +1,4 @@
 if hand has zero card, rest.
 둘다 방어시 프린트는 해줘야.
 setattack setdefence reset atkdef unness
+card dex -> lun
