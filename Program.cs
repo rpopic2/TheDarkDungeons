@@ -86,7 +86,8 @@
     private void OnPlayerAction()
     {
         monster.DoTurn();
-        Entity.Battle(player, monster);
+        player.DoBattleAction();
+        monster.DoBattleAction();
     }
 
     private void ShowStats()

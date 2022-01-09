@@ -65,7 +65,7 @@ public class Entity : Mass
         def = 0;
         return block;
     }
-    private void DoBattleAction()
+    public void DoBattleAction()
     {
         if(target is null) return;
         int t1dmg = PopAttack();
@@ -85,11 +85,6 @@ public class Entity : Mass
         => atk > 0;
     public bool Defending
         => def > 0;
-    public static void Battle(Entity t1, Entity t2)
-    {
-        t1.DoBattleAction();
-        t2.DoBattleAction();
-    }
     public int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);
 }
