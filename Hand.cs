@@ -1,4 +1,4 @@
-public struct Hand
+public class Hand
 {
     private Entity owner;
     public char[] Cur
@@ -20,7 +20,7 @@ public struct Hand
     public Hand(Entity owner)
     {
         this.owner = owner;
-        content = new Card[owner.Cap];
+        content = new Card?[owner.Cap];
     }
     private void _Pickup(int index, Card card, bool silent = false)
     {
@@ -51,10 +51,10 @@ public struct Hand
     {
         get { return content[index]; }
     }
-    public void StanceShift(int index, bool silent = false)
+    public void StanceShift(int index)
     {
-        content[index]?.StanceShift();
-        if (!silent) IO.pr(ToString());
+        Card? card = content[index];
+        content[index] = card?.StanceShift();
     }
     public override string ToString()
     {

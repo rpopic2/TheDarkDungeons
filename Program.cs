@@ -35,8 +35,8 @@
 
         stanceShift.Add("(S)tanceshift", () =>
         {
-            IO.SelectPlayerCard(out Card? card);
-            card?.StanceShift();
+            IO.SelectPlayerCard(out int x, out bool cancel);
+            if(!cancel) player.Hand.StanceShift(x);
         });
     }
 
@@ -67,15 +67,19 @@
     }
     private void UseCard()
     {
-        IO.SelectPlayerCard(out Card? card);
+        IO.SelectPlayerCard(out int x, out bool cancel);
+        if(cancel) {
+            IO.del();
+            return;
+        }
+        Card? card = player.Hand[x];
         if (card is null)
         {
             IO.del();
             return;
         }
-        
-        player.UseCard(card);
-        monster.SetAttack(monster.Draw());//temp. make ai later.
+        player.UseCard((Card)card);
+        monster.SetAttack(monster.Draw());//temp.make ai later.
         Entity.Battle(player, monster);
     }
 

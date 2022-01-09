@@ -1,17 +1,23 @@
-public class Card : Mass
+public struct Card : IMass
 {
     public Stance Stance { get; private set; }
 
-    public Card(int str, int dex, bool silent = true)
+    public int sol { get; private set; }
+    public int lun { get; private set; }
+    public int con { get; private set; } = 0;
+
+    public Card(int str, int dex, int con, Stance stance)
     {
         this.sol = str;
         this.lun = dex;
-        if (!silent) IO.pr(ToString());
+        this.con = con;
+        this.Stance = stance;
     }
-    public void StanceShift()
+    public Card StanceShift()
     {
-        if (Stance == Stance.Star) return;
+        if (Stance == Stance.Star) return this;
         Stance = Stance == Stance.Attack ? Stance.Defence : Stance.Attack;
+        return this;
     }
     public void ReplaceToStar(int wis)
     {
@@ -20,13 +26,8 @@ public class Card : Mass
     }
     public override string ToString()
     {
-        if(this == null) return "[     ]";
         if (Stance == Stance.Attack) return $"[({sol})/{lun}]";
         else if (Stance == Stance.Defence) return $"[{lun}/({sol})]";
         else return $"[{con}*]";
-    }
-    public override Card Draw()
-    {
-        throw new Exception("Cannot draw card from a card.");
     }
 }

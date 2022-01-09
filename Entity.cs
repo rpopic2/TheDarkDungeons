@@ -23,7 +23,7 @@ public class Entity : Mass
         this.lv = lv;
     }
     public override Card Draw()
-        => new Card(rnd.Next(1, sol + 1), rnd.Next(1, lun + 1));
+        => new Card(rnd.Next(1, sol + 1), rnd.Next(1, lun + 1), rnd.Next(1, con + 1), Stance.Attack);
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");

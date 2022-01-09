@@ -96,10 +96,10 @@ public static class IO
             del();
         }
     }
-    public static void SelectPlayerCard(out Card? card)
+    public static void SelectPlayerCard(out int index, out bool cancel)
     {
         prh(playerHand);
-        selc(out card, out int index, out bool cancel);
+        selc(out Card? card, out index, out cancel);
         del();
     }
     public static void Prompt(CmdTuple cmd, out bool cancel)
