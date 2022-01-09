@@ -1,4 +1,2 @@
-
-gamepoint -> class
 exp, hp -> struct
 card -> struct

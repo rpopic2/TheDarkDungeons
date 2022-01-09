@@ -1,4 +1,4 @@
-public class Exp
+public struct Exp
 {
     private const float lvCurve = 1.25f;
     private const int lvMultiplier = 10;
@@ -9,7 +9,8 @@ public class Exp
     public Exp(Player owner, Action overflow)
     {
         this.owner = owner;
-        point = new GamePoint(GetMax(), GamePointOption.Stacking, overflow);
+        point = new GamePoint(1, GamePointOption.Stacking, overflow);
+        UpdateMax();
     }
     public void UpdateMax()
         => point.Max = GetMax();

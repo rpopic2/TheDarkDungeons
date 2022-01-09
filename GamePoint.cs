@@ -8,25 +8,21 @@ public class GamePoint
         {
             if (value >= Max)
             {
-                if (Option == GamePointOption.Stacking)
-                {
-                    cur = value - Max;
-                    OnOverflow();
-                    return;
-                }
-                value = Max;
-            }
-            if (value <= Min)
-            {
                 if (Option == GamePointOption.Reserving)
                 {
-                    OnOverflow();
-                    cur = Min;
+                    cur = Max;
                     return;
                 }
-                value = Min;
+                cur = value - Max;
+                OnOverflow();
             }
-            cur = value;
+            else if (value <= Min)
+            {
+                cur = Min;
+                if (Option == GamePointOption.Stacking) return;
+                OnOverflow();
+            }
+            else cur = value;
         }
     }
     public int Max { get; set; }
