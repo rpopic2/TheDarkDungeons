@@ -13,7 +13,7 @@
     {
         main = new Program();
     }
-    private Program()
+    public Program()
     {
         Console.Clear();
         IO.pr("The Dark Dungeon " + version);
@@ -94,13 +94,11 @@
             monster.DoBattleAction();
         }else
         {
-            IO.pr("monster first");
             monster.DoBattleAction();
             player.DoBattleAction();
         }
 
     }
-
     private void ShowStats()
     {
         IO.pr(player.Stats);
