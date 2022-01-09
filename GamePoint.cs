@@ -32,7 +32,7 @@ public class GamePoint
     public GamePoint(int max, GamePointOption option, Action overFlow)
     {
         Max = max;
-        this.OnOverflow = overFlow;
+        OnOverflow = overFlow + OnOverflow;
         Option = option;
         if (option == GamePointOption.Reserving) cur = Max;
     }

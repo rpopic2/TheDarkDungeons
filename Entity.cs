@@ -5,7 +5,7 @@ public class Entity : Mass
     public Hand Hand { get; private set; }
     public int Cap { get; private set; }
     public Hp Hp { get; private set; }
-    public int lv { get; protected set; }
+    public virtual int lv { get; protected set; }
     private Random rnd = new Random();
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)

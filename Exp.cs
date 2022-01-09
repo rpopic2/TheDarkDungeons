@@ -9,11 +9,12 @@ public class Exp
     public Exp(Player owner, Action overflow)
     {
         this.owner = owner;
-        point = new GamePoint(GetMax(owner.lv), GamePointOption.Stacking, overflow);
+        point = new GamePoint(GetMax(), GamePointOption.Stacking, overflow);
     }
-
-    public static int GetMax(int lv)
-    => (int)MathF.Floor(lv * lvIncrement);
+    public void UpdateMax()
+        => point.Max = GetMax();
+    private int GetMax()
+    => (int)MathF.Floor(owner.lv * lvIncrement);
 
     public void Gain(int amount)
     {
@@ -24,9 +25,5 @@ public class Exp
     public override string ToString()
     {
         return point.ToString();
-    }
-    public void SetExp(GamePoint newPoint)
-    {
-        point = newPoint;
     }
 }
