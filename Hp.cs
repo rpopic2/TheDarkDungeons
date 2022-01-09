@@ -1,35 +1,12 @@
 public class Hp
 {
     private Entity owner;
-    private int cur;
-    public Action OnDeath = () => {};
-
-    public int Max { get; private set; }
-    public int Cur
-    {
-        get => cur;
-        private set
-        {
-            if (value > Max)
-            {
-                cur = Max;
-                return;
-            }
-            if (value <= 0)
-            {
-                cur = 0;
-                OnDeath();
-                return;
-            }
-            int damage = cur - value;
-            cur = value;
-        }
-    }
+    public GamePoint point;
     private int def;
-    public Hp(Entity owner, int max)
+    public Hp(Entity owner, int max, Action onDeath)
     {
         this.owner = owner;
-        Max = this.cur = max;
+        point = new GamePoint(max, GamePointOption.Reserving, onDeath);
         EventListener.OnTurnEnd += () => OnTurnEnd();
     }
     public void TakeDamage(int x)
@@ -40,8 +17,8 @@ public class Hp
             IO.pr($"{owner.Name} defences {def} damage.");
         }
         if (x < 0) x = 0;
-        Cur -= x;
-        if (IsAlive) IO.pr($"{owner.Name} takes {x} damage. {Cur}/{Max}");
+        point -= x;
+        if (IsAlive) IO.pr($"{owner.Name} takes {x} damage. {point}");
     }
 
     private void OnTurnEnd()
@@ -55,5 +32,5 @@ public class Hp
     }
 
     public bool IsAlive
-        => Cur > 0;
+        => point.Cur > 0;
 }

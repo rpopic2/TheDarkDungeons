@@ -14,8 +14,7 @@ public class Entity : Mass
         ClassName = className;
         Cap = cap;
         Hand = new Hand(this);
-        Hp = new Hp(this, maxHp);
-        Hp.OnDeath += () => OnDeath();
+        Hp = new Hp(this, maxHp, () => OnDeath());
         this.sol = sol;
         this.lun = lun;
         this.con = con;
@@ -36,6 +35,6 @@ public class Entity : Mass
     }
     public string Stats
     {
-        get => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.Max}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
+        get => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {lv}\nHp : {Hp.point}\tStrength : {sol}\tDexterity : {lun}\tWisdom : {con}";
     }
 }

@@ -25,7 +25,7 @@
         {
             IO.Prompt(basic, out bool cancel);
             if (!cancel) EventListener.OnTurnEnd();
-        } while (player.Hp.Cur > 0);
+        } while (player.Hp.point.Cur > 0);
     }
     private void InitActions()
     {

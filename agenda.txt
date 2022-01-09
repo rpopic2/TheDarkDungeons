@@ -1,7 +1,3 @@
-exp and hp posssibly merge-able? into struct?
-player static exp del
-exp.getmax to static something
-exp should be not static
 
 gamepoint -> class
 exp, hp -> struct
