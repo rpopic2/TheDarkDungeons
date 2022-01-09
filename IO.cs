@@ -3,6 +3,7 @@ public static class IO
     public static readonly char[] NUMERICKEYS = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
     private static readonly Player player = Player.instance;
     private static readonly Hand playerHand = player.Hand;
+    private static readonly string delString = "                                                                 ";
 
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
@@ -86,7 +87,7 @@ public static class IO
     {
         if(Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
-        pr("                                                                 ");
+        pr(delString);
         Console.SetCursorPosition(0, Console.CursorTop - 1);
     }
     public static void del(int lines)
