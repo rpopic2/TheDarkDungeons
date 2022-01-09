@@ -74,6 +74,6 @@ public class Entity : Mass
         if (t1.Attacking) t1.Attack(t2);
         if (t2.Attacking) t2.Attack(t1);
     }
-    public int GetRandomStat(int stat)
+    public int GetRandomStat(this int stat)
      => rnd.Next(1, stat + 1);
 }
