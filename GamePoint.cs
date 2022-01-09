@@ -14,11 +14,16 @@ public class GamePoint
                     OnOverflow();
                     return;
                 }
-                else value = Max;
+                value = Max;
             }
             if (value <= Min)
             {
-                if (Option == GamePointOption.Reserving) OnOverflow();
+                if (Option == GamePointOption.Reserving)
+                {
+                    OnOverflow();
+                    cur = Min;
+                    return;
+                }
                 value = Min;
             }
             cur = value;
