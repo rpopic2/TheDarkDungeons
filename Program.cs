@@ -21,7 +21,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
-        map = new Map(6);
+        map = new Map();
         monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
         player.target = monster;
         BasicPrompt();
@@ -111,7 +111,6 @@
     }
     private void Move()
     {
-        IO.pr(map);
         // switch (IO.rarw())
         // {
         //     case KeyArrow.DownArrow:
