@@ -7,7 +7,7 @@ public class Monster : Entity
         {
             Pickup(Draw().StanceShift());
         }
-        target = player;//temp
+        //target = player;//temp
     }
     public void Pickup(Card card)
     {
@@ -22,7 +22,7 @@ public class Monster : Entity
     }
     public void DoTurn()
     {
-        if (Hp.IsAlive)
+        if (Hp.IsAlive && target is not null)
             if (Hand.Count > 0)
             {
                 _UseCard(Hand.GetFirst());
@@ -40,5 +40,10 @@ public class Monster : Entity
     public void UseCard()
     {
         Card? card = Hand.GetFirst();
+    }
+    public override string ToString()
+    {
+        if (Hp.IsAlive) return Name[0].ToString();
+        return Map.emptyString;
     }
 }

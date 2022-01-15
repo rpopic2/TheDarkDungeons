@@ -1,33 +1,40 @@
 public class Map
 {
+    public static Map? Current;
     private Program instance;
     private Random rnd;
-    private object?[] content;
-    private const string roadString = "·";
-    private const string blankString = "-";
-    private const string nextMapString = "+";
+    private object[] content;
+    public const string roadString = "·";
+    public const string deadString = "_";
+    public const string emptyString = "-";
+    public const string nextMapString = "+";
     private bool isMovingFoward = true;
     private int playerPos;
     private Map? nextMap;
     public Map(int length, Program instance)
     {
-        rnd = new Random();
-        content = new object[length];
-        playerPos = 0;
-        content[length - 1] = nextMapString;
+        Current = this;
         this.instance = instance;
-        //content[3] = instance.
+        rnd = new Random();
+        playerPos = 0;
+        content = new object[length];
+        for (int i = 0; i < content.Length; i++)
+        {
+            content[i] = emptyString;
+        }
+        content[length - 1] = nextMapString;
+        content[2] = instance.monster;
     }
     private string ParseBlank(object? x)
-        => blankString;
+        => emptyString;
 
-    private string ParseVisible(object? x)
+    private string ParseVisible(object x)
     {
         if (x is Map)
         {
             return nextMapString;
         }
-        if (x is null)
+        if (x.ToString() == emptyString)
         {
             return roadString;
         }
@@ -36,7 +43,7 @@ public class Map
     }
     public override string ToString()
     {
-        string[] result = Array.ConvertAll(content, new Converter<object?, string>(ParseBlank));
+        string[] result = Array.ConvertAll(content, new Converter<object, string>(ParseBlank));
         if (isMovingFoward && isAtRightEnd) goto result;
         if (!isMovingFoward && isAtLeftEnd) goto result;
         result[FowardIndex] = ParseVisible(content[FowardIndex]);
@@ -48,24 +55,26 @@ public class Map
     public void MoveUp()
     {
         if (isAtRightEnd) return;
+        isMovingFoward = true;
+        if (content[FowardIndex]?.ToString() != emptyString) return;
         playerPos++;
         CheckStepping();
         CheckFoward();
-        isMovingFoward = true;
     }
 
     public void MoveDown()
     {
         if (isAtLeftEnd) return;
+        isMovingFoward = false;
+        if (content[FowardIndex]?.ToString() != emptyString) return;
         playerPos--;
         CheckStepping();
         CheckFoward();
 
-        isMovingFoward = false;
     }
-    public void CheckStepping()
+    private void CheckStepping()
     {
-        object? stepping = content[playerPos];
+        object stepping = content[playerPos];
         switch (stepping)
         {
             case (object)nextMapString:
@@ -76,12 +85,15 @@ public class Map
         }
 
     }
-    public void CheckFoward()
+    private void CheckFoward()
     {
-        if(isAtLeftEnd || isAtRightEnd) return;
+        if (isAtLeftEnd || isAtRightEnd) return;
         object? foward = content[FowardIndex];
-        if (foward is Monster)
+        if (foward is Monster && ((Monster)foward).Hp.IsAlive)
+        {
             Entity.SetCurrentTarget((Entity)foward, Player.instance);
+            IO.pr("HI");
+        }
     }
 
     private void NextMap()

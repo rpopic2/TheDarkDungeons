@@ -13,8 +13,9 @@ public static class IO
     public static KeyArrow rarw()
     {
         string result = Console.ReadKey(true).Key.ToString();
-        if(result.ToLower()[0] == CANCELKEY) return KeyArrow.Cancel;
-        return (KeyArrow)Enum.Parse(typeof(KeyArrow), result);
+        bool success = Enum.TryParse(typeof(KeyArrow), result, out object? arrow);
+        if (success) return (KeyArrow)arrow!;
+        return KeyArrow.Cancel;
     }
     ///<summary>Select from provided keys. Returns cancel.</summary>
     public static void sel(char[] keys, out int index, out char key, out bool cancel)

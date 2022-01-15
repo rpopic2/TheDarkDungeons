@@ -6,7 +6,7 @@
     public static Program? instance;
     private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
-    private Monster monster;
+    public Monster monster;
     //public Map map;
     public Map currentMap;
 
@@ -22,10 +22,8 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
-        currentMap = new Map(6, this);
         monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
-        player.target = monster;
-
+        currentMap = new Map(6, this);
         BasicPrompt();
     }
     private CmdTuple basic = new CmdTuple();
