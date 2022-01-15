@@ -19,7 +19,7 @@ public class Map
             content[i] = MapSymb.empty;
         }
         content[length - 1] = MapSymb.next;
-        instance.monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2, 3); //Test!
+        instance.monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3); //Test!
         content[rnd.Next(2, length - 2)] = instance.monster;
     }
     private string ParseBlank(object? x)
