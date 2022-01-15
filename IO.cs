@@ -1,9 +1,10 @@
 public static class IO
 {
-    public static readonly char[] NUMERICKEYS = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+    public static readonly char[] NUMERICKEYS = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+    private const char CANCELKEY = 'q';
+    private const string delString = "                                                                 ";
     private static readonly Player player = Player.instance;
     private static readonly Hand playerHand = player.Hand;
-    private static readonly string delString = "                                                                 ";
 
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
@@ -12,6 +13,7 @@ public static class IO
     public static KeyArrow rarw()
     {
         string result = Console.ReadKey(true).Key.ToString();
+        if(result.ToLower()[0] == CANCELKEY) return KeyArrow.Cancel;
         return (KeyArrow)Enum.Parse(typeof(KeyArrow), result);
     }
     ///<summary>Select from provided keys. Returns cancel.</summary>
@@ -21,7 +23,7 @@ public static class IO
         {
             key = rkc();
             index = Array.IndexOf(keys, key);
-            if (key == 'q' || key == 'c') goto Cancel;
+            if (key == CANCELKEY) goto Cancel;
         } while (index == -1);
         del();
         cancel = false;

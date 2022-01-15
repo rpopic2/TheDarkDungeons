@@ -13,5 +13,5 @@ public enum GamePointOption
 }
 public enum KeyArrow
 {
-    UpArrow, DownArrow, LeftArrow, RightArrow
+    Cancel, UpArrow, DownArrow, LeftArrow, RightArrow
 }

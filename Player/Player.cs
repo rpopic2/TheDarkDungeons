@@ -39,4 +39,8 @@ public class Player : Entity
     {
         get => base.Stats + $"\nExp : {exp}";
     }
+    public override string ToString()
+    {
+        return "@";
+    }
 }

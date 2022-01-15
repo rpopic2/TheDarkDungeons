@@ -9,7 +9,7 @@
     private Monster monster;
     //public Map map;
     public Map map;
-    
+
     public static void Main()
     {
         main = new Program();
@@ -17,6 +17,7 @@
     public Program()
     {
         Console.Clear();
+
         IO.pr("The Dark Dungeon " + version);
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
@@ -24,6 +25,7 @@
         map = new Map();
         monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
         player.target = monster;
+
         BasicPrompt();
     }
     private CmdTuple basic = new CmdTuple();
@@ -111,14 +113,26 @@
     }
     private void Move()
     {
-        // switch (IO.rarw())
-        // {
-        //     case KeyArrow.DownArrow:
-        //     case KeyArrow.UpArrow:
-        //     case KeyArrow.LeftArrow:
-        //     case KeyArrow.RightArrow:
-                
-        // }
+        IO.pr(map);
+        do
+        {
+            KeyArrow arw = IO.rarw();
+            switch (arw)
+            {
+                case KeyArrow.DownArrow:
+                case KeyArrow.UpArrow:
+                case KeyArrow.LeftArrow:
+                case KeyArrow.RightArrow:
+                    IO.del();
+                    map.MoveUp();
+                    IO.pr(map);
+                    break;
+                case KeyArrow.Cancel:
+                    IO.del();
+                    return;
+            }
+        } while (true);
+
     }
     private void ShowStats()
     {
