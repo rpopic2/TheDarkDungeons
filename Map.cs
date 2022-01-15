@@ -1,44 +1,42 @@
 public class Map
 {
+
     public static Map? Current;
-    private Program instance;
+    private Program program;
     public static Random rnd = new Random();
     private object[] content;
-    public const string roadString = "·";
-    public const string emptyString = "-";
-    public const string nextMapString = "+";
     private bool isMovingUpward = true;
     private int playerPos;
     private Map? nextMap;
     public Map(int length, Program instance)
     {
         Current = this;
-        this.instance = instance;
+        this.program = instance;
         playerPos = 0;
         content = new object[length];
         for (int i = 0; i < content.Length; i++)
         {
-            content[i] = emptyString;
+            content[i] = MapSymb.empty;
         }
-        content[length - 1] = nextMapString;
-        instance.monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
+        content[length - 1] = MapSymb.next;
+        instance.monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2, 3); //Test!
         content[rnd.Next(2, length - 2)] = instance.monster;
     }
     private string ParseBlank(object? x)
-        => emptyString;
+        => MapSymb.empty;
 
     private string ParseVisible(object x)
     {
         if (x is Map)
         {
-            return nextMapString;
+            return MapSymb.next;
         }
-        if (x.ToString() == emptyString)
+        if (x.ToString() == MapSymb.empty)
         {
-            return roadString;
+            return MapSymb.road;
         }
 
-        return x.ToString() ?? roadString;
+        return x.ToString() ?? MapSymb.road;
     }
     public override string ToString()
     {
@@ -59,35 +57,29 @@ public class Map
         CheckStepping();
         CheckFoward();
         IO.del(2);
-        instance.ElaspeTurn();
+        program.ElaspeTurn();
     }
     private void CheckStepping()
     {
-        object stepping = content[playerPos];
-        switch (stepping)
+        if (content[playerPos] == (object)MapSymb.next)
         {
-            case (object)nextMapString:
-                NextMap();
-                break;
-            default:
-                break;
+            InitMap(nextMap, program);
         }
-
     }
     private void CheckFoward()
     {
         if (isAtLeftEnd || isAtRightEnd) return;
-        object? foward = content[FowardIndex];
-        if (foward is Monster && ((Monster)foward).Hp.IsAlive)
+        object fowardObject = content[FowardIndex];
+        if (fowardObject is Monster && ((Monster)fowardObject).IsAlive)
         {
-            Entity.SetCurrentTarget((Entity)foward, Player.instance);
+            Entity.SetCurrentTarget((Entity)fowardObject, Player.instance);
         }
     }
 
-    private void NextMap()
+    public static void InitMap(Map? map, Program prog)
     {
-        nextMap = new Map(rnd.Next(4, 10), instance);
-        instance.currentMap = nextMap;
+        map = new Map(rnd.Next(4, 10), prog);
+        prog.currentMap = map;
     }
     private bool isAtLeftEnd
         => playerPos <= 0;
@@ -100,8 +92,16 @@ public class Map
         get
         {
             object fowardContent = content[FowardIndex];
-            return fowardContent.ToString() != nextMapString && fowardContent.ToString() != emptyString;
+            return fowardContent.ToString() != MapSymb.next && fowardContent.ToString() != MapSymb.empty;
         }
 
     }
+}
+
+public static class MapSymb
+{
+    public const string road = "·";
+    public const string empty = "-";
+    public const string next = "+";
+    public const string player = "+";
 }

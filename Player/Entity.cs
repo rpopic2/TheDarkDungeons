@@ -106,8 +106,8 @@ public class Entity : Mass
         {
             if (targetResting)
             {
-                dmg = (int)MathF.Round(dmg * Program.vulMultiplier);
-                IO.pr($"{target.Name} is resting vulnerable, takes {Program.vulMultiplier}x damage!");
+                dmg = (int)MathF.Round(dmg * Rules.vulMulp);
+                IO.pr($"{target.Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
             }
             target.TakeDamage(dmg - targetBlock);
         }
@@ -122,7 +122,9 @@ public class Entity : Mass
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Lv}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat)
-     => rnd.Next(1, stat + 1);
+        => rnd.Next(1, stat + 1);
+    public bool IsAlive
+        => Hp.IsAlive;
     public static void SetCurrentTarget(Entity p1, Entity p2)
     {
         p1.target = p2;

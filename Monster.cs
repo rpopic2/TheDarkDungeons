@@ -1,13 +1,14 @@
 public class Monster : Entity
 {
+    private int expOnKill;
     private static readonly Player player = Player.instance;
-    public Monster(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
+    public Monster(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con, int expOnKill) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
+        this.expOnKill = expOnKill;
         for (int i = 0; i < cap; i++)
         {
             Pickup(Draw().StanceShift());
         }
-        //target = player;//temp
     }
     public void Pickup(Card card)
     {
@@ -16,7 +17,7 @@ public class Monster : Entity
     protected override void OnDeath()
     {
         base.OnDeath();
-        player.exp.Gain(3);
+        player.exp.Gain(expOnKill);
         player.Pickup(Draw());
         player.target = null;
     }
@@ -43,7 +44,7 @@ public class Monster : Entity
     }
     public override string ToString()
     {
-        if (Hp.IsAlive) return Name[0].ToString();
-        return Map.emptyString;
+        if (Hp.IsAlive) return Name[0].ToString().ToLower();
+        return MapSymb.empty;
     }
 }

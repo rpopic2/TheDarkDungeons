@@ -1,6 +1,4 @@
-맵과 이동
 
-mob spawns.
 mobs constructor data should be in a data file.
 
 스킬.
