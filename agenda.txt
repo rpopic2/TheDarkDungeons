@@ -1,4 +1,5 @@
 program.monster?needs to be moved
+content -> string array? or char array?
 몹 밖으로 못나가게
 내가 움직이면 몸도 움직이게
 target의 세팅 방법이 문제인듯.

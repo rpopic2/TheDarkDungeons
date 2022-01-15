@@ -45,6 +45,6 @@ public class Monster : Entity
     public override string ToString()
     {
         if (IsAlive) return Name[0].ToString().ToLower();
-        return MapSymb.empty;
+        return MapSymb.invisible;
     }
 }
