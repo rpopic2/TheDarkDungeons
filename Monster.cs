@@ -19,7 +19,7 @@ public class Monster : Entity
         base.OnDeath();
         player.exp.Gain(expOnKill);
         player.Pickup(Draw());
-        player.target = null;
+        Entity.LoseTarget(this, target!);
     }
     public void DoTurn()
     {

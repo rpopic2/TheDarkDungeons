@@ -7,7 +7,7 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int Lv { get; protected set; }
     private Random rnd = new Random();
-    public Entity? target;
+    public Entity? target {get; private set;}
     public int Atk { get; private set; }
     public int Def { get; private set; }
     public int Star { get; private set; }
@@ -130,5 +130,10 @@ public class Entity : Mass
     {
         p1.target = p2;
         p2.target = p1;
+    }
+    public static void LoseTarget(Entity p1, Entity p2)
+    {
+        p1.target = null;
+        p2.target = null;
     }
 }
