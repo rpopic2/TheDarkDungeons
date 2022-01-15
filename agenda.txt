@@ -1,2 +1,3 @@
 program.turn
 no end of map
+empty hand erases .

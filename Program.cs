@@ -3,6 +3,7 @@
     public const string version = "0.1";
     public const float vulMultiplier = 1.3f;
     public static Player player = Player.instance;
+    public static int turn { get; private set; }
     public static Program? instance;
     private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
@@ -22,6 +23,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
+        ElaspeTurn();
         currentMap = new Map(Map.rnd.Next(4, 10), this);
         BasicPrompt();
     }
@@ -59,13 +61,17 @@
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
     //-------------------------
+    public void ElaspeTurn()
+    {
+        turn++;
+        IO.pr("\nTurn : " + turn);
+    }
     private void BasicPrompt()
     {
         do
         {
             IO.Prompt(basic, out bool cancel);
-            if (!cancel) IO.pr("");
-            else IO.Prompt(exile, out bool cancel2);
+            if (cancel) IO.Prompt(exile, out bool cancel2);
         } while (player.Hp.point.Cur > 0);
     }
     private void Rest()
@@ -77,6 +83,7 @@
             IO.Prompt(stanceShift, out cancel);
         } while (!cancel);
         OnPlayerAction();
+        ElaspeTurn();
     }
     private void UseCard()
     {
@@ -94,6 +101,7 @@
         }
         player.UseCard(x, out bool star);
         if (!star) OnPlayerAction();
+        ElaspeTurn();
     }
     private void ExileCard()
     {
@@ -107,6 +115,7 @@
             if (cancel) return;
         } while (card.Stance == Stance.Star);
         player.Hand.Exile(index);
+        ElaspeTurn();
     }
     private void Move()
     {
@@ -119,13 +128,13 @@
                 case KeyArrow.UpArrow:
                 case KeyArrow.RightArrow:
                     IO.del();
-                    currentMap.MoveUp();
+                    currentMap.Move(1);
                     IO.pr(currentMap);
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
                     IO.del();
-                    currentMap.MoveDown();
+                    currentMap.Move(-1);
                     IO.pr(currentMap);
                     break;
                 case KeyArrow.Cancel:

@@ -5,10 +5,9 @@ public class Map
     public static Random rnd = new Random();
     private object[] content;
     public const string roadString = "·";
-    public const string deadString = "_";
     public const string emptyString = "-";
     public const string nextMapString = "+";
-    private bool isMovingFoward = true;
+    private bool isMovingUpward = true;
     private int playerPos;
     private Map? nextMap;
     public Map(int length, Program instance)
@@ -44,33 +43,22 @@ public class Map
     public override string ToString()
     {
         string[] result = Array.ConvertAll(content, new Converter<object, string>(ParseBlank));
-        if (isMovingFoward && isAtRightEnd) goto result;
-        if (!isMovingFoward && isAtLeftEnd) goto result;
+        if (isMovingUpward && isAtRightEnd) goto result;
+        if (!isMovingUpward && isAtLeftEnd) goto result;
         result[FowardIndex] = ParseVisible(content[FowardIndex]);
     result:
         result[playerPos] = "@";
         return string.Join(" ", result);
     }
-
-    public void MoveUp()
+    public void Move(int x)
     {
+        isMovingUpward = x < 0 ? false : true;
         if (isAtRightEnd) return;
-        isMovingFoward = true;
         if (CantMoveFoward) return;
-        playerPos++;
+        playerPos += x;
         CheckStepping();
         CheckFoward();
-    }
-
-    public void MoveDown()
-    {
-        if (isAtLeftEnd) return;
-        isMovingFoward = false;
-        if (CantMoveFoward) return;
-        playerPos--;
-        CheckStepping();
-        CheckFoward();
-
+        instance.ElaspeTurn();
     }
     private void CheckStepping()
     {
@@ -105,7 +93,7 @@ public class Map
     private bool isAtRightEnd
         => playerPos >= content.Length - 1;
     private int FowardIndex
-        => isMovingFoward ? playerPos + 1 : playerPos - 1;
+        => isMovingUpward ? playerPos + 1 : playerPos - 1;
     private bool CantMoveFoward
     {
         get

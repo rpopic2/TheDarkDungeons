@@ -18,7 +18,7 @@ public static class IO
         return KeyArrow.Cancel;
     }
     ///<summary>Select from provided keys. Returns cancel.</summary>
-    public static void sel(char[] keys, out int index, out char key, out bool cancel)
+    public static void sel(char[] keys, out int index, out char key, out bool cancel, bool doDel = true)
     {
         do
         {
@@ -26,7 +26,7 @@ public static class IO
             index = Array.IndexOf(keys, key);
             if (key == CANCELKEY) goto Cancel;
         } while (index == -1);
-        del();
+        if (doDel) del();
         cancel = false;
         return;
     Cancel:
@@ -51,9 +51,10 @@ public static class IO
     {
         do
         {
-            sel(playerHand.Cur, out index, out char key, out cancel);
+            sel(playerHand.Cur, out index, out char key, out cancel, false);
             if (cancel) goto Cancel;
         } while (playerHand[index] == null);
+        del();
     Cancel:
         return;
     }
@@ -121,7 +122,7 @@ public static class IO
     {
         prh(playerHand);
         selci(out index, out cancel);
-        del();
+        if (!cancel )del();
     }
     public static void SelectCardUse()
     {

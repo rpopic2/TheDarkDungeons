@@ -37,7 +37,7 @@ public class Player : Entity
     }
     public new string Stats
     {
-        get => base.Stats + $"\nExp : {exp}";
+        get => base.Stats + $"\nExp : {exp}\tTurn : {Program.turn}";
     }
     public override string ToString()
     {
