@@ -56,7 +56,7 @@ public class Map
     {
         if (isAtRightEnd) return;
         isMovingFoward = true;
-        if (content[FowardIndex]?.ToString() != emptyString) return;
+        if (CantMoveFoward) return;
         playerPos++;
         CheckStepping();
         CheckFoward();
@@ -66,7 +66,7 @@ public class Map
     {
         if (isAtLeftEnd) return;
         isMovingFoward = false;
-        if (content[FowardIndex]?.ToString() != emptyString) return;
+        if (CantMoveFoward) return;
         playerPos--;
         CheckStepping();
         CheckFoward();
@@ -107,4 +107,13 @@ public class Map
         => playerPos >= content.Length - 1;
     private int FowardIndex
         => isMovingFoward ? playerPos + 1 : playerPos - 1;
+    private bool CantMoveFoward
+    {
+        get
+        {
+            object fowardContent = content[FowardIndex];
+            return fowardContent.ToString() != nextMapString && fowardContent.ToString() != emptyString;
+        }
+
+    }
 }
