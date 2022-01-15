@@ -16,7 +16,7 @@
         Console.Clear();
         IO.pr("The Dark Dungeon " + Rules.version);
         if (!skip) Intro();
-        IO.pr("Your adventure begins...\n");
+        IO.pr("Your adventure begins...");
         InitActions();
         ElaspeTurn();
         Map.InitMap();

@@ -107,7 +107,7 @@ public class Entity : Mass
             if (targetResting)
             {
                 dmg = (int)MathF.Round(dmg * Rules.vulMulp);
-                IO.pr($"{target.Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
+                IO.pr($"{target.Name} is resting vulnerable, takes {Rules.vulMulp}x damage! ({dmg})");
             }
             target.TakeDamage(dmg - targetBlock);
         }
@@ -117,8 +117,9 @@ public class Entity : Mass
     {
         if (damage < 0) damage = 0;
         Hp.TakeDamage(damage);
-        if (Hp.IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
+        if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
     }
+    
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Lv}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat)

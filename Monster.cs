@@ -23,7 +23,7 @@ public class Monster : Entity
     }
     public void DoTurn()
     {
-        if (Hp.IsAlive && target is not null)
+        if (IsAlive && target is not null)
             if (Hand.Count > 0)
             {
                 _UseCard(Hand.GetFirst());
@@ -44,7 +44,7 @@ public class Monster : Entity
     }
     public override string ToString()
     {
-        if (Hp.IsAlive) return Name[0].ToString().ToLower();
+        if (IsAlive) return Name[0].ToString().ToLower();
         return MapSymb.empty;
     }
 }
