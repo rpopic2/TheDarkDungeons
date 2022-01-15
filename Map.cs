@@ -1,76 +1,90 @@
 public class Map
 {
-
     public static Map Current = default!;
-    //private static Program program;
     public static Random rnd = new Random();
+
     private object[] content;
-    private bool isMovingUpward = true;
-    private int playerPos;
+    public readonly int length;
+    private bool isMovingUpward = true;//to entity
+    private int playerPos;//to entity
+    private int mobPos;//to entity
     public Map(int length)
     {
         Current = this;
-        playerPos = 0;
-        content = new object[length];
-        for (int i = 0; i < content.Length; i++)
-        {
-            content[i] = MapSymb.empty;
-        }
-        content[length - 1] = MapSymb.next;
-        Program.instance.monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3); //Test!
-        content[rnd.Next(2, length - 2)] = Program.instance.monster;
+        this.length = length;
+        content = NewEmptyArray(length);
+
+        content[length - 1] = MapSymb.portal;
+
+        Program.instance.monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3);
+        //mobPos = rnd.Next(2, length - 2);
     }
-    private string ParseBlank(object? x)
-        => MapSymb.empty;
-
-    private string ParseVisible(object x)
+    public static string[] NewEmptyArray(int length)
     {
-        if (x is Map)
+        string[] result = new string[length];
+        for (int i = 0; i < length; i++)
         {
-            return MapSymb.next;
+            result[i] = MapSymb.empty;
         }
-        if (x.ToString() == MapSymb.empty)
-        {
-            return MapSymb.road;
-        }
-
-        return x.ToString() ?? MapSymb.road;
+        return result;
     }
     public override string ToString()
     {
-        string[] result = Array.ConvertAll(content, new Converter<object, string>(ParseBlank));
-        if (isMovingUpward && isAtRightEnd) goto result;
-        if (!isMovingUpward && isAtLeftEnd) goto result;
-        result[FowardIndex] = ParseVisible(content[FowardIndex]);
-    result:
+        string[] result = NewEmptyArray(length);
+        bool success = TryGet(FrontIndex, out object? obj);
+        if (success) result[FrontIndex] = ParseVisible(FrontObject);
+
         result[playerPos] = "@";
+        if (Program.instance.monster is not null)
+            result[mobPos] = Program.instance.monster.ToString();
+
         return string.Join(" ", result);
+    }
+    private string ParseVisible(object x)
+    {
+        if (x is Map) return MapSymb.portal;
+        if (x.ToString() == MapSymb.empty) return MapSymb.road;
+        return x.ToString() ?? MapSymb.road;
     }
     public void Move(int x)
     {
         isMovingUpward = x < 0 ? false : true;
-        if (isAtRightEnd) return;
+        if (isAtFrontEnd) return;
         if (CantMoveFoward) return;
         playerPos += x;
         CheckStepping();
-        CheckFoward();
+        CheckAround();
+        //MoveMob();
         IO.del(2);
         Program.instance.ElaspeTurn();
     }
     private void CheckStepping()
     {
-        if (content[playerPos] == (object)MapSymb.next)
+        if (content[playerPos] == (object)MapSymb.portal)
         {
             InitMap();
         }
     }
-    private void CheckFoward()
+    private void MoveMob()
     {
-        if (isAtLeftEnd || isAtRightEnd) return;
-        object fowardObject = content[FowardIndex];
-        if (fowardObject is Monster && ((Monster)fowardObject).IsAlive)
+        if (rnd.Next(2) == 1) mobPos--;
+        else mobPos++;
+    }
+
+    private void CheckAround()
+    {
+        MonsterCheck(this[BackIndex]);
+        MonsterCheck(this[FrontIndex]);
+    }
+    private void MonsterCheck(object? checkObject)
+    {
+        if (checkObject is Monster && ((Monster)checkObject).IsAlive)
         {
-            Entity.SetCurrentTarget((Entity)fowardObject, Player.instance);
+            Entity.SetCurrentTarget((Entity)checkObject, Player.instance);
+        }
+        else if (Player.instance.target is not null)
+        {
+            Entity.LoseTarget(Player.instance, Player.instance.target);
         }
     }
 
@@ -78,20 +92,42 @@ public class Map
     {
         Current = new Map(rnd.Next(4, 10));
     }
-    private bool isAtLeftEnd
+    private bool isAtBackEnd
         => playerPos <= 0;
-    private bool isAtRightEnd
+    private bool isAtFrontEnd
         => playerPos >= content.Length - 1;
-    private int FowardIndex
+    private int FrontIndex
         => isMovingUpward ? playerPos + 1 : playerPos - 1;
+    private int BackIndex
+    => isMovingUpward ? playerPos - 1 : playerPos + 1;
+    private object FrontObject
+        => content[FrontIndex];
     private bool CantMoveFoward
     {
         get
         {
-            object fowardContent = content[FowardIndex];
-            return fowardContent.ToString() != MapSymb.next && fowardContent.ToString() != MapSymb.empty;
+            object frontObject = FrontObject;
+            return frontObject.ToString() != MapSymb.portal && frontObject.ToString() != MapSymb.empty;
         }
 
+    }
+    public object? this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= content.Length) return null;
+            else return content[index];
+        }
+    }
+    public bool TryGet(int index, out object? obj)
+    {
+        obj = null;
+        if (index < 0 || index >= content.Length) return false;
+        else
+        {
+            obj = content[index];
+            return true;
+        }
     }
 }
 
@@ -99,6 +135,6 @@ public static class MapSymb
 {
     public const string road = "·";
     public const string empty = "-";
-    public const string next = "+";
+    public const string portal = "+";
     public const string player = "+";
 }
