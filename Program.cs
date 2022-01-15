@@ -3,16 +3,16 @@
     public const string version = "0.1";
     public const float vulMultiplier = 1.3f;
     public static Player player = Player.instance;
-    public static Program? main;
+    public static Program? instance;
     private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     private Monster monster;
     //public Map map;
-    public Map map;
+    public Map currentMap;
 
     public static void Main()
     {
-        main = new Program();
+        instance = new Program();
     }
     public Program()
     {
@@ -22,7 +22,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
-        map = new Map();
+        currentMap = new Map(6, this);
         monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
         player.target = monster;
 
@@ -113,7 +113,7 @@
     }
     private void Move()
     {
-        IO.pr(map);
+        IO.pr(currentMap);
         do
         {
             KeyArrow arw = IO.rarw();
@@ -122,14 +122,14 @@
                 case KeyArrow.UpArrow:
                 case KeyArrow.RightArrow:
                     IO.del();
-                    map.MoveUp();
-                    IO.pr(map);
+                    currentMap.MoveUp();
+                    IO.pr(currentMap);
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
                     IO.del();
-                    map.MoveDown();
-                    IO.pr(map);
+                    currentMap.MoveDown();
+                    IO.pr(currentMap);
                     break;
                 case KeyArrow.Cancel:
                     IO.del();

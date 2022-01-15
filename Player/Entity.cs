@@ -123,4 +123,9 @@ public class Entity : Mass
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Lv}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat)
      => rnd.Next(1, stat + 1);
+    public static void SetCurrentTarget(Entity p1, Entity p2)
+    {
+        p1.target = p2;
+        p2.target = p1;
+    }
 }
