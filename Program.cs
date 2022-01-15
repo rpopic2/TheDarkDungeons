@@ -6,7 +6,7 @@
     public static Program? instance;
     private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
-    public Monster monster;
+    public Monster? monster;
     //public Map map;
     public Map currentMap;
 
@@ -22,8 +22,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
-        monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
-        currentMap = new Map(6, this);
+        currentMap = new Map(Map.rnd.Next(4, 10), this);
         BasicPrompt();
     }
     private CmdTuple basic = new CmdTuple();
@@ -145,15 +144,15 @@
     //
     private void OnPlayerAction()
     {
-        monster.DoTurn();
-        if (player.Lun >= monster.Lun)
+        monster?.DoTurn();
+        if (player.Lun >= monster?.Lun)
         {
             player.DoBattleAction();
             monster.DoBattleAction();
         }
         else
         {
-            monster.DoBattleAction();
+            monster?.DoBattleAction();
             player.DoBattleAction();
         }
     }

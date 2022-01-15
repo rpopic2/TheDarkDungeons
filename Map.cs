@@ -2,7 +2,7 @@ public class Map
 {
     public static Map? Current;
     private Program instance;
-    private Random rnd;
+    public static Random rnd = new Random();
     private object[] content;
     public const string roadString = "·";
     public const string deadString = "_";
@@ -15,7 +15,6 @@ public class Map
     {
         Current = this;
         this.instance = instance;
-        rnd = new Random();
         playerPos = 0;
         content = new object[length];
         for (int i = 0; i < content.Length; i++)
@@ -23,7 +22,8 @@ public class Map
             content[i] = emptyString;
         }
         content[length - 1] = nextMapString;
-        content[2] = instance.monster;
+        instance.monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
+        content[rnd.Next(2, length - 2)] = instance.monster;
     }
     private string ParseBlank(object? x)
         => emptyString;
@@ -92,7 +92,6 @@ public class Map
         if (foward is Monster && ((Monster)foward).Hp.IsAlive)
         {
             Entity.SetCurrentTarget((Entity)foward, Player.instance);
-            IO.pr("HI");
         }
     }
 
