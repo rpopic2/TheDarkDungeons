@@ -3,6 +3,7 @@ public class Map
     private object?[] content;
     private const string roadString = "#";
     private const string blankString = " ";
+    private bool isMovingFoward = true;
     private int playerPos;
     public Map()
     {
@@ -29,7 +30,8 @@ public class Map
     public override string ToString()
     {
         string[] array = Array.ConvertAll(content, new Converter<object?, string>(ParseBlank));
-        if (playerPos < content.Length - 1) array[playerPos + 1] = ParseVisible(content[playerPos + 1]);
+        int visible = isMovingFoward ? playerPos + 1 : playerPos - 1;
+        if (playerPos < content.Length - 1 && playerPos > 0) array[visible] = ParseVisible(content[visible]);
         return string.Join(" ", array);
     }
 
@@ -38,6 +40,7 @@ public class Map
         if (playerPos >= content.Length - 1) return;
         content[playerPos] = null;
         content[++playerPos] = Player.instance;
+        isMovingFoward = true;
     }
 
     public void MoveDown()
@@ -45,5 +48,6 @@ public class Map
         if (playerPos <= 0) return;
         content[playerPos] = null;
         content[--playerPos] = Player.instance;
+        isMovingFoward = false;
     }
 }
