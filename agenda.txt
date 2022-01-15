@@ -1,3 +1,1 @@
-program.turn
-no end of map
-empty hand erases .
+몹 잡았을때 좀더 간단하게 

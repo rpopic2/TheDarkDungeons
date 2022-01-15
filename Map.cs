@@ -58,6 +58,7 @@ public class Map
         playerPos += x;
         CheckStepping();
         CheckFoward();
+        IO.del(2);
         instance.ElaspeTurn();
     }
     private void CheckStepping()
