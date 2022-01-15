@@ -1,17 +1,15 @@
 public class Map
 {
 
-    public static Map? Current;
-    private Program program;
+    public static Map Current = default!;
+    //private static Program program;
     public static Random rnd = new Random();
     private object[] content;
     private bool isMovingUpward = true;
     private int playerPos;
-    private Map? nextMap;
-    public Map(int length, Program instance)
+    public Map(int length)
     {
         Current = this;
-        this.program = instance;
         playerPos = 0;
         content = new object[length];
         for (int i = 0; i < content.Length; i++)
@@ -19,8 +17,8 @@ public class Map
             content[i] = MapSymb.empty;
         }
         content[length - 1] = MapSymb.next;
-        instance.monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3); //Test!
-        content[rnd.Next(2, length - 2)] = instance.monster;
+        Program.instance.monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3); //Test!
+        content[rnd.Next(2, length - 2)] = Program.instance.monster;
     }
     private string ParseBlank(object? x)
         => MapSymb.empty;
@@ -57,13 +55,13 @@ public class Map
         CheckStepping();
         CheckFoward();
         IO.del(2);
-        program.ElaspeTurn();
+        Program.instance.ElaspeTurn();
     }
     private void CheckStepping()
     {
         if (content[playerPos] == (object)MapSymb.next)
         {
-            InitMap(nextMap, program);
+            InitMap();
         }
     }
     private void CheckFoward()
@@ -76,10 +74,9 @@ public class Map
         }
     }
 
-    public static void InitMap(Map? map, Program prog)
+    public static void InitMap()
     {
-        map = new Map(rnd.Next(4, 10), prog);
-        prog.currentMap = map;
+        Current = new Map(rnd.Next(4, 10));
     }
     private bool isAtLeftEnd
         => playerPos <= 0;

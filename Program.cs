@@ -2,27 +2,24 @@
 {
     public static Player player = Player.instance;
     public static int turn { get; private set; }
-    public static Program? instance;
+    public static Program instance = default!;
     private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     public Monster? monster;
-    //public Map map;
-    public Map currentMap;
-
     public static void Main()
     {
         instance = new Program();
     }
     public Program()
     {
+        instance = this;
         Console.Clear();
-
         IO.pr("The Dark Dungeon " + Rules.version);
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
         ElaspeTurn();
-        currentMap = new Map(Map.rnd.Next(4, 10), this);
+        Map.InitMap();
         BasicPrompt();
     }
     private CmdTuple basic = new CmdTuple();
@@ -117,7 +114,7 @@
     }
     private void Move()
     {
-        IO.pr(currentMap);
+        IO.pr(Map.Current);
         do
         {
             KeyArrow arw = IO.rarw();
@@ -126,14 +123,14 @@
                 case KeyArrow.UpArrow:
                 case KeyArrow.RightArrow:
                     IO.del();
-                    currentMap.Move(1);
-                    IO.pr(currentMap);
+                    Map.Current.Move(1);
+                    IO.pr(Map.Current);
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
                     IO.del();
-                    currentMap.Move(-1);
-                    IO.pr(currentMap);
+                    Map.Current.Move(-1);
+                    IO.pr(Map.Current);
                     break;
                 case KeyArrow.Cancel:
                     IO.del();
