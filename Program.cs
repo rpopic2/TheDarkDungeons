@@ -119,12 +119,16 @@
             KeyArrow arw = IO.rarw();
             switch (arw)
             {
-                case KeyArrow.DownArrow:
                 case KeyArrow.UpArrow:
-                case KeyArrow.LeftArrow:
                 case KeyArrow.RightArrow:
                     IO.del();
                     map.MoveUp();
+                    IO.pr(map);
+                    break;
+                case KeyArrow.DownArrow:
+                case KeyArrow.LeftArrow:
+                    IO.del();
+                    map.MoveDown();
                     IO.pr(map);
                     break;
                 case KeyArrow.Cancel:

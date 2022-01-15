@@ -10,7 +10,7 @@ public class Map
         playerPos = 0;
         content[playerPos] = Player.instance;
     }
-    private string Parse(object? x)
+    private string ParseBlank(object? x)
     {
         if (x is null)
         {
@@ -18,7 +18,7 @@ public class Map
         }
         return x.ToString() ?? blankString;
     }
-    private string Parse2(object? x)
+    private string ParseVisible(object? x)
     {
         if (x is null)
         {
@@ -28,15 +28,22 @@ public class Map
     }
     public override string ToString()
     {
-        string[] array = Array.ConvertAll(content, new Converter<object?, string>(Parse));
-        array[playerPos + 1] = Parse2(content[playerPos + 1]);
+        string[] array = Array.ConvertAll(content, new Converter<object?, string>(ParseBlank));
+        if (playerPos < content.Length - 1) array[playerPos + 1] = ParseVisible(content[playerPos + 1]);
         return string.Join(" ", array);
     }
 
     public void MoveUp()
     {
+        if (playerPos >= content.Length - 1) return;
         content[playerPos] = null;
-        playerPos++;
-        content[playerPos] = Player.instance;
+        content[++playerPos] = Player.instance;
+    }
+
+    public void MoveDown()
+    {
+        if (playerPos <= 0) return;
+        content[playerPos] = null;
+        content[--playerPos] = Player.instance;
     }
 }
