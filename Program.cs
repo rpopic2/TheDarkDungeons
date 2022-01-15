@@ -19,7 +19,7 @@
         IO.pr("Your adventure begins...");
         InitActions();
         ElaspeTurn();
-        Map.InitMap();
+        Map.NewMap();
         BasicPrompt();
     }
     private CmdTuple basic = new CmdTuple();
@@ -122,14 +122,16 @@
             {
                 case KeyArrow.UpArrow:
                 case KeyArrow.RightArrow:
+                    //Map.Current.Move(1);
                     IO.del();
-                    Map.Current.Move(1);
+                    player.movement.Move(1);
                     IO.pr(Map.Current);
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
+                    //IO.del();
                     IO.del();
-                    Map.Current.Move(-1);
+                    player.movement.Move(-1);
                     IO.pr(Map.Current);
                     break;
                 case KeyArrow.Cancel:
