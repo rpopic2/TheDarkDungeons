@@ -17,7 +17,7 @@
     {
         Console.Clear();
 
-        IO.pr("The Dark Dungeon " + version);
+        IO.pr("The Dark Dungeon " + Rules.version);
         if (!skip) Intro();
         IO.pr("Your adventure begins...\n");
         InitActions();
