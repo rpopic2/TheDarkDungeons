@@ -77,7 +77,7 @@
         {
             IO.Prompt(stanceShift, out cancel);
         } while (!cancel);
-        OnPlayerAction();
+        OnCombat();
         ElaspeTurn();
     }
     private void UseCard()
@@ -95,7 +95,7 @@
             return;
         }
         player.UseCard(x, out bool star);
-        if (!star) OnPlayerAction();
+        if (!star) OnCombat();
         ElaspeTurn();
     }
     private void ExileCard()
@@ -146,7 +146,7 @@
         IO.del(4);
     }
     //
-    private void OnPlayerAction()
+    private void OnCombat()
     {
         monster?.DoTurn();
         if (player.Lun >= monster?.Lun)
