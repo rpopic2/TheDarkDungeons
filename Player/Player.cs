@@ -37,7 +37,7 @@ public class Player : Moveable
     }
     public override void Move(int x)
     {
-        bool success = _Move(x, out string? obj);
+        bool success = _Move(x, out char obj);
         if (!success) return;
         if (obj == MapSymb.portal)
         {
@@ -51,8 +51,8 @@ public class Player : Moveable
     {
         get => base.Stats + $"\nExp : {exp}\tTurn : {Program.turn}";
     }
-    public override string ToString()
+    public override char ToChar()
     {
-        return "@";
+        return '@';
     }
 }

@@ -126,6 +126,7 @@
                     IO.del();
                     player.Move(1);
                     IO.pr(Map.Current);
+                    Map.Current.MoveMob();
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
@@ -133,6 +134,7 @@
                     IO.del();
                     player.Move(-1);
                     IO.pr(Map.Current);
+                    Map.Current.MoveMob();
                     break;
                 case KeyArrow.Cancel:
                     IO.del();

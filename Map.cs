@@ -2,8 +2,8 @@ public class Map
 {
     public static Map Current = default!;
     public static Random rnd = new Random();
-    private string[] tiles;
-    public ref readonly string[] Tiles
+    private char[] tiles;
+    public ref readonly char[] Tiles
         => ref tiles;
     private Moveable?[] moveables;
     public readonly int length;
@@ -17,34 +17,32 @@ public class Map
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
-        //Spawn(Player.instance);
         Program.instance.monster = monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3);
-        //Spawn(monster);
         //mobPos = rnd.Next(2, length - 2);
     }
     public void UpdateMoveable(Moveable mov)
     {
         Position pos = mov.position;
-        moveables[pos.oldX] = null;
+        if (moveables[pos.oldX] == mov) moveables[pos.oldX] = null;
         moveables[pos.x] = mov;
     }
     public override string ToString()
     {
         Moveable mov = Player.instance;
         int front = mov.position.Front;
-        string[] result = NewEmptyArray(length, MapSymb.invisible);
-        bool success2 = tiles.TryGet(front, out string? obj2);
+        char[] result = NewEmptyArray(length, MapSymb.invisible);
+        bool success2 = tiles.TryGet(front, out char obj2);
         if (success2) result[front] = obj2!;
 
         bool success = moveables.TryGet(front, out Moveable? obj);
-        if (success) result[front] = obj!.ToString()!;
+        if (success) result[front] = obj!.ToChar()!;
 
-        result[mov.position.x] = Player.instance.ToString();
-        //result[monster.Position] = monster.ToString();
+        result[monster.position.x] = monster.ToChar();
+        result[mov.position.x] = Player.instance.ToChar();
         return string.Join(" ", result);
     }
 
-    private void MoveMob()
+    public void MoveMob()
     {
         if (rnd.Next(2) == 1) monster.Move(-1);
         else monster.Move(1);
@@ -66,9 +64,9 @@ public class Map
         Current = new Map(rnd.Next(4, 10));
     }
 
-    public static string[] NewEmptyArray(int length, string fill)
+    public static char[] NewEmptyArray(int length, char fill)
     {
-        string[] result = new string[length];
+        char[] result = new char[length];
         for (int i = 0; i < length; i++)
         {
             result[i] = fill;
@@ -79,7 +77,7 @@ public class Map
 
 public static class MapSymb
 {
-    public const string road = "·";
-    public const string invisible = "-";
-    public const string portal = "+";
+    public const char road = '·';
+    public const char invisible = '-';
+    public const char portal = '+';
 }

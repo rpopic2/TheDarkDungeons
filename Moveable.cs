@@ -8,10 +8,10 @@ public class Moveable : Entity
     }
     public virtual void Move(int x)
     {
-        _Move(x, out string? obj);
+        _Move(x, out char obj);
     }
 
-    protected virtual bool _Move(int x, out string? obj)
+    protected virtual bool _Move(int x, out char obj)
     {
         Map current = Map.Current;
         Position newPos = position + x;

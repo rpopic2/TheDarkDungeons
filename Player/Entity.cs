@@ -7,7 +7,7 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int Lv { get; protected set; }
     protected Random rnd = new Random();
-    public Entity? target {get; private set;}
+    public Entity? target { get; private set; }
     public int Atk { get; private set; }
     public int Def { get; private set; }
     public int Star { get; private set; }
@@ -119,13 +119,18 @@ public class Entity : Mass
         Hp.TakeDamage(damage);
         if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
     }
-    
+
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Lv}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat)
         => rnd.Next(1, stat + 1);
     public bool IsAlive
         => Hp.IsAlive;
+    public virtual char ToChar()
+    {
+        if (IsAlive) return Name.ToLower()[0];
+        return MapSymb.invisible;
+    }
     public static void SetCurrentTarget(Entity p1, Entity p2)
     {
         p1.target = p2;
@@ -136,4 +141,5 @@ public class Entity : Mass
         p1.target = null;
         p2.target = null;
     }
+
 }

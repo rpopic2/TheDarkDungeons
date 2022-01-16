@@ -43,9 +43,4 @@ public class Monster : Moveable
     {
         Card? card = Hand.GetFirst();
     }
-    public override string ToString()
-    {
-        if (IsAlive) return Name[0].ToString().ToLower();
-        return MapSymb.invisible;
-    }
 }
