@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "rXKiIk5ogL7RSrCzZ7XNTuiriXry5Mt3zf4oZ4U2zUE5ceZkpwRMI03nELz+sYcQ4Z79DebT8U5TLL3f+jimGA==",
+  "dgSpecHash": "mF082K+hpJWaCpK7mdJ65G4hjKKMh+ePON1Nh6YpfZrwm4XqmByj16NFD8rwjqHt7g/pNnVHoIEiPPQh8zP4OA==",
   "success": true,
   "projectFilePath": "/workspace/TheDarkDungeons/TheDarkDungeons.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/gitpod/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/6.0.1/microsoft.netcore.app.runtime.linux-x64.6.0.1.nupkg.sha512",
+    "/home/gitpod/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/6.0.1/microsoft.aspnetcore.app.runtime.linux-x64.6.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

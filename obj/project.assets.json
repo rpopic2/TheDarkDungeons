@@ -1,7 +1,8 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {},
+    "net6.0/linux-x64": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
@@ -53,12 +54,27 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
+            "version": "[6.0.1, 6.0.1]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Runtime.linux-x64",
+            "version": "[6.0.1, 6.0.1]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
         "runtimeIdentifierGraphPath": "/home/gitpod/dotnet/sdk/6.0.101/RuntimeIdentifierGraph.json"
+      }
+    },
+    "runtimes": {
+      "linux-x64": {
+        "#import": []
       }
     }
   }
