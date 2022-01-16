@@ -1,8 +1,5 @@
-movebale.move portal to player.cs
-program.monster?needs to be moved
-content -> string array? or char array?
-monster turns
-
+monster gets its turn (w/moving)
+monster and player targets
 몹 잡았을때 좀더 간단하게 
 respawning mobs
 vertical movements?
