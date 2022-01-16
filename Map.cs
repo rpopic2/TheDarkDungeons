@@ -77,7 +77,8 @@ public class Map
     public static void NewMap()
     {
         level++;
-        Current = new Map(rnd.Next(Rules.MapLengthMin, Rules.MapLengthMax));
+        int addMapWidth = level.FloorMult(0.5f);
+        Current = new Map(rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth));
         Player.instance.UpdateTarget();
         Current.monster.UpdateTarget();
     }

@@ -76,6 +76,31 @@
         turn++;
         IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }
+    private void Move()
+    {
+        IO.pr(Map.Current);
+        do
+        {
+            KeyArrow arw = IO.rarw();
+            IO.del();
+            switch (arw)
+            {
+                case KeyArrow.UpArrow:
+                case KeyArrow.RightArrow:
+                    player.Move(1);
+                    break;
+                case KeyArrow.DownArrow:
+                case KeyArrow.LeftArrow:
+                    player.Move(-1);
+                    break;
+                case KeyArrow.Cancel:
+                    BasicPrompt();
+                    break;
+            }
+            IO.pr(Map.Current);
+
+        } while (player.IsAlive);
+    }
     private void BasicPrompt()
     {
         IO.Prompt(basic, out bool cancel);
@@ -121,32 +146,6 @@
         } while (card.Stance == Stance.Star);
         player.Hand.Exile(index);
         ElaspeTurn();
-    }
-    private void Move()
-    {
-        IO.pr(Map.Current);
-        do
-        {
-            KeyArrow arw = IO.rarw();
-            IO.del();
-            switch (arw)
-            {
-                case KeyArrow.UpArrow:
-                case KeyArrow.RightArrow:
-                    player.Move(1);
-                    break;
-                case KeyArrow.DownArrow:
-                case KeyArrow.LeftArrow:
-                    player.Move(-1);
-                    break;
-                case KeyArrow.Cancel:
-                    BasicPrompt();
-                    break;
-            }
-            IO.pr(Map.Current);
-
-        } while (player.IsAlive);
-
     }
     private void ShowStats()
     {
