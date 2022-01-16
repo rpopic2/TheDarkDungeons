@@ -28,8 +28,8 @@
     {
         basic.Add("Use Card(W)", () => UseCard());
         basic.Add("(R)est", () => Rest());
+        basic.Add("E(x)ile", () => IO.Prompt(exile, out bool cancel2));
         basic.Add("(S)tats", () => ShowStats());
-        basic.Add("Mo(v)e", () => Move());
 
         stanceShift.Add("(S)tanceshift", () =>
         {
@@ -160,6 +160,6 @@
     {
         IO.pr(player.Stats);
         IO.rkc();
-        IO.del(4);
+        IO.del(3);
     }
 }
