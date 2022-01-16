@@ -1,3 +1,4 @@
+movebale.move portal to player.cs
 program.monster?needs to be moved
 content -> string array? or char array?
 몹 밖으로 못나가게

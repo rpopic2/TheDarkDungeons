@@ -10,12 +10,11 @@ public class Moveable : Entity
     public virtual bool Move(int x)
     {
         Map? current = Map.Current;
-        Facing newFacing = x < 0 ? Facing.Back : Facing.Front;
-        Position newPos = new Position(position.x, newFacing);
-        bool success = current.Tiles.TryGet(newPos.Front, out string? obj);
+        Position newPos = position + x;
+        bool success = current.Tiles.TryGet(newPos.x, out string? obj);
         if (!success) return false;
         current.moveables[position.x] = null;
-        position = new Position(position.x + x, newFacing);
+        position = newPos;
         current.moveables[position.x] = this;
         if (obj == MapSymb.portal)
         {
