@@ -44,4 +44,13 @@ public class Moveable : Entity
         Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
         Target = mov;
     }
+    // public override Moveable? Target
+    // {
+    //     get
+    //     {
+    //         Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
+    //         return mov;
+    //     }
+    // }
+
 }

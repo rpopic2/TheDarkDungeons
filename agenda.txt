@@ -5,3 +5,6 @@ static map?
 
 moveable -> entity
 entity -> fightable
+
+updateTarget의 문제점 
+Target의 문제점 : 몹에 붙기만 해도 몹이 떄림.
