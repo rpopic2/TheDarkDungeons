@@ -42,7 +42,11 @@ public class Entity : Mass
             elaspeTurn = false;
             return;
         }
-        if (card.Stance == Stance.Star) elaspeTurn = false;
+        if (card.Stance == Stance.Star)
+        {
+            elaspeTurn = false;
+            IO.pr("Next move will be reinforced.");
+        }
         _UseCard(card);
     }
     protected void _UseCard(Card card)
@@ -63,7 +67,8 @@ public class Entity : Mass
     }
     public virtual void Rest()
     {
-        /*if(Map.Current.IsVisible((Moveable)this))*/ IO.pr($"{Name} is resting a turn.");
+        /*if(Map.Current.IsVisible((Moveable)this))*/
+        IO.pr($"{Name} is resting a turn.");
         IsResting = true;
     }
     public void UnRest()
@@ -76,7 +81,9 @@ public class Entity : Mass
         int dmg = Atk;
         IO.pr($"{Name} attacks with {dmg} damage.");
         Atk = 0;
-        return dmg + PopStar();
+        int poppedStar = PopStar();
+        if(poppedStar > 0) IO.pr($"...and {poppedStar} more damage! ({dmg + poppedStar})");
+        return dmg + poppedStar;
     }
     private int PopDefence()
     {
@@ -96,13 +103,12 @@ public class Entity : Mass
     {
         if (Star <= 0) return 0;
         int star = Star;
-        IO.pr($"...and {Star} more damage!");
         Star = 0;
         return star;
     }
     public void TryBattle()
     {
-        if(!IsAlive) return;
+        if (!IsAlive) return;
         if (Target is null) return;
         int dmg = PopAttack();
         int targetBlock = Target.PopDefence();
