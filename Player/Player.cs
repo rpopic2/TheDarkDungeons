@@ -15,12 +15,12 @@ public class Player : Moveable
     private void OnLvUp()
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
-        Level++;
+        level++;
         exp.UpdateMax();
-        Console.WriteLine("Level up! : " + Level);
-        Sol += 1;
-        Cap = 3 + Level.FloorMult(0.2f);
-        Hp = new Hp(this, Hp.point.Max + 1, () => OnDeath());
+        Console.WriteLine("Level up! : " + level);
+        Sol += level.FloorMult(Rules.solByLevel);
+        Cap = Rules.capBasic + level.FloorMult(Rules.capByLevel);
+        Hp = new Hp(this, Hp.point.Max + level.FloorMult(Rules.hpByLevel), () => OnDeath());
         Hp.RestoreFull();
     }
     protected override void OnDeath()
@@ -35,7 +35,7 @@ public class Player : Moveable
         IO.sel(Hand.Cur, out int index, out char key, out bool cancel);
         if (cancel)
         {
-            if(card.Stance != Stance.Star)
+            if (card.Stance != Stance.Star)
             {
                 Pickup(card.Exile());
             }

@@ -14,7 +14,7 @@ public struct Exp
     public void UpdateMax()
         => point.Max = GetMax();
     private int GetMax()
-    => (int)MathF.Floor(owner.Level * lvIncrement);
+    => (int)MathF.Floor(owner.level * lvIncrement);
 
     public void Gain(int amount)
     {

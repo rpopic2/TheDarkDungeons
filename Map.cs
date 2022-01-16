@@ -25,11 +25,12 @@ public class Map
     }
     public void SpawnMob()
     {
-        int hp = level.RoundMult(0.8f);
-        int expOnKill = 3 + level.RoundMult(0.3f);
-        int sol = Program.turn.FloorMult(0.02f);
-        int lun = Program.turn.FloorMult(0.015f);
-        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, sol, lun, 2, expOnKill);
+        int hp = level.RoundMult(Rules.mhpByLevel);
+        int expOnKill = 3 + level.RoundMult(Rules.mexpByLevel);
+        int sol = 2 + Program.turn.FloorMult(Rules.msolByTurn);
+        int lun = 3 + Program.turn.FloorMult(Rules.mlunByTurn);
+        int cap = 1 + Program.turn.FloorMult(Rules.mcapByLevel);
+        monster = new Monster("Bat", ClassName.Warrior, cap, hp, level, sol, lun, 2, expOnKill);
         if (IsVisible(monster)) monster.Move(2);
         UpdateMoveable(monster);
     }
@@ -77,7 +78,7 @@ public class Map
     public static void NewMap()
     {
         level++;
-        int addMapWidth = level.FloorMult(0.5f);
+        int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
         Current = new Map(rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth));
         Player.instance.UpdateTarget();
         Current.monster.UpdateTarget();

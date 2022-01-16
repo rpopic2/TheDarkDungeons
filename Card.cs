@@ -1,7 +1,7 @@
 public struct Card : IMass
 {
     public Stance Stance { get; private set; }
-    public readonly int Level { get; }
+    public readonly int level { get; }
     public readonly int Sol { get; }
     public readonly int Lun { get; }
     public readonly int Con { get; }
@@ -11,7 +11,7 @@ public struct Card : IMass
         Sol = sol;
         Lun = lun;
         Con = con;
-        Level = (sol + lun + con) / 3;
+        level = (sol + lun + con) / 3;
         Stance = stance;
     }
     public Card StanceShift()

@@ -23,7 +23,7 @@ public class Entity : Mass
         Sol = sol;
         Lun = lun;
         Con = con;
-        Level = lv;
+        level = lv;
     }
     public override Card Draw()
         => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);
@@ -131,7 +131,7 @@ public class Entity : Mass
     }
 
     public string Stats
-        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
+        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat)
         => rnd.Next(1, stat + 1);
     public bool IsAlive
