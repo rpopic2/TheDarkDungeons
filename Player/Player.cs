@@ -35,15 +35,17 @@ public class Player : Moveable
         base.Rest();
         Pickup(Draw());
     }
-    public override bool Move(int x)
+    public override void Move(int x)
     {
-        bool success = base.Move(x);
-        if (success)
+        bool success = _Move(x, out string? obj);
+        if (!success) return;
+        if (obj == MapSymb.portal)
         {
-            IO.del(2);
-            Program.instance.ElaspeTurn();
+            Map.NewMap();
+            position = new Position();
         }
-        return success;
+        IO.del(2);
+        Program.instance.ElaspeTurn();
     }
     public new string Stats
     {
