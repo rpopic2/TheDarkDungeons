@@ -54,6 +54,7 @@ public class Map
 
         if (Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
         result[player.Pos.x] = Player.instance.ToChar();
+        IO.pr($"Level : {level}");
         return string.Join(" ", result);
     }
     public bool IsVisible(Moveable mov)
