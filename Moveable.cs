@@ -1,25 +1,28 @@
-public class Movement
+public class Moveable : Entity
 {
     public int Position { get; private set; }
     private Facing facing;
-    public void Move(int x)
+
+    public Moveable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
+    {
+    }
+
+    public virtual bool Move(int x)
     {
         Map? current = Map.Current;
-        facing = x < 0 ? Facing.Back : Facing.Front;
         bool success = current.Content.TryGet(FrontPosition, out string? obj);
-        if (!success) return;
+        if (!success) return false;
+        facing = x < 0 ? Facing.Back : Facing.Front;
         current.entityContent[Position] = null;
         Position += x;
-        current.entityContent[Position] = Player.instance;
+        current.entityContent[Position] = this;
         if (obj == MapSymb.portal)
         {
             current = null; //is this working?
             Map.NewMap();
             Position = 0;
         }
-        IO.del(2);
-        Program.instance.ElaspeTurn();
-
+        return true;
     }
     public int FrontPosition
         => facing == Facing.Front ? Position + 1 : Position - 1;

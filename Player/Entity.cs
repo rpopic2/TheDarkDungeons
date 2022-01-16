@@ -12,7 +12,6 @@ public class Entity : Mass
     public int Def { get; private set; }
     public int Star { get; private set; }
     public bool IsResting { get; set; }
-    public Movement movement;
 
     public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -26,7 +25,6 @@ public class Entity : Mass
         Lun = lun;
         Con = con;
         Lv = lv;
-        movement = new Movement();
     }
     public override Card Draw()
         => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);

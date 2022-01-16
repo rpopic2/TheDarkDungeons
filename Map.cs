@@ -6,9 +6,7 @@ public class Map
     public ref readonly string[] Content
         => ref content;
     public readonly int length;
-    private bool isMovingUpward = true;//to entity
     public Entity?[] entityContent;
-    public int playerPos;//to entity
     private int mobPos;//to entity
     private Monster monster;
     public Map(int length)
@@ -25,7 +23,7 @@ public class Map
     }
     public override string ToString()
     {
-        Movement mov = Player.instance.movement;
+        Moveable mov = Player.instance;
         int front = mov.FrontPosition;
         string[] result = NewEmptyArray(length, MapSymb.invisible);
         bool success2 = content.TryGet(front, out string? obj2);

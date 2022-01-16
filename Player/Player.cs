@@ -1,4 +1,4 @@
-public class Player : Entity
+public class Player : Moveable
 {
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
@@ -34,6 +34,16 @@ public class Player : Entity
     {
         base.Rest();
         Pickup(Draw());
+    }
+    public override bool Move(int x)
+    {
+        bool success = base.Move(x);
+        if (success)
+        {
+            IO.del(2);
+            Program.instance.ElaspeTurn();
+        }
+        return success;
     }
     public new string Stats
     {

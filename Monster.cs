@@ -1,4 +1,4 @@
-public class Monster : Entity
+public class Monster : Moveable
 {
     private int expOnKill;
     private static readonly Player player = Player.instance;

@@ -124,14 +124,14 @@
                 case KeyArrow.RightArrow:
                     //Map.Current.Move(1);
                     IO.del();
-                    player.movement.Move(1);
+                    player.Move(1);
                     IO.pr(Map.Current);
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
                     //IO.del();
                     IO.del();
-                    player.movement.Move(-1);
+                    player.Move(-1);
                     IO.pr(Map.Current);
                     break;
                 case KeyArrow.Cancel:
