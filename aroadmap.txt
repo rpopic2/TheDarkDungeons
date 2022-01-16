@@ -4,5 +4,6 @@ mobs constructor data should be in a data file.
 스킬.
 스킬드롭 랜덤
 
+움직이는게 더 바깥으로?
 
 study tdd!

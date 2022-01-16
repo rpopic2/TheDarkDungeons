@@ -30,7 +30,7 @@ public class Entity : Mass
         => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);
     protected virtual void OnDeath()
     {
-        IO.pr($"{Name} died.");
+        IO.pr($"\n{Name} died. {Hp}");
     }
     public void UseCard(int index, out bool elaspeTurn)
     {
@@ -107,7 +107,7 @@ public class Entity : Mass
             if (targetResting)
             {
                 dmg = (int)MathF.Round(dmg * Rules.vulMulp);
-                IO.pr($"{Target.Name} is resting vulnerable, takes {Rules.vulMulp}x damage! ({dmg})");
+                IO.pr($"{Target.Name} is resting vulnerable, takes {dmg}x damage!");
             }
             Target.TakeDamage(dmg - targetBlock);
         }

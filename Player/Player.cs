@@ -1,5 +1,6 @@
 public class Player : Moveable
 {
+    private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
 
@@ -19,7 +20,7 @@ public class Player : Moveable
     }
     public void Pickup(Card card)
     {
-        IO.pr("You've found a card." + card);
+        IO.pr("Found a card." + card);
         IO.pr(Hand);
         IO.sel(Hand.Cur, out int index, out char key, out bool cancel);
         if (cancel)
@@ -29,6 +30,11 @@ public class Player : Moveable
         }
         Hand.SetAt(index, card);
         IO.del();
+    }
+    public void Loot(int expGain, Card card)
+    {
+        exp.Gain(expGain);
+        Pickup(card);
     }
     public override void Rest()
     {
@@ -49,10 +55,10 @@ public class Player : Moveable
     }
     public new string Stats
     {
-        get => base.Stats + $"\nExp : {exp}\tTurn : {Program.turn}";
+        get => base.Stats + $"\nExp : {exp}";
     }
     public override char ToChar()
     {
-        return '@';
+        return PlayerChar;
     }
 }

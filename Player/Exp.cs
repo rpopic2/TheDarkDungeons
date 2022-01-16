@@ -19,7 +19,7 @@ public struct Exp
     public void Gain(int amount)
     {
         point += amount;
-        IO.pr($"You gained {amount} xp. {ToString()}");
+        IO.pr($"Gained {amount} xp.");
     }
     public override string ToString()
     {

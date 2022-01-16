@@ -122,7 +122,7 @@ public static class IO
     {
         prh(playerHand);
         selci(out index, out cancel);
-        if (!cancel )del();
+        if (!cancel) del();
     }
     public static void SelectCardUse()
     {

@@ -14,5 +14,10 @@ public struct Hp
 
     public bool IsAlive
         => point.Cur > 0;
+
+    public override string ToString()
+    {
+        return point.ToString();
+    }
     
 }

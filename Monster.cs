@@ -18,8 +18,7 @@ public class Monster : Moveable
     protected override void OnDeath()
     {
         base.OnDeath();
-        player.exp.Gain(expOnKill);
-        player.Pickup(Draw());
+        player.Loot(expOnKill, Draw());
     }
     public void DoTurn()
     {
