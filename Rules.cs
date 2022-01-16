@@ -7,7 +7,7 @@ public static class Rules
     
     //player
     public const int capBasic = 3;
-    public const float capByLevel = 0.2f;
+    public const float capByLevel = 0.4f;
     public const float solByLevel = 1f;
     public const float hpByLevel = 1f;
 
@@ -20,6 +20,6 @@ public static class Rules
     public const float mhpByLevel = 0.8f;
     public const float mexpByLevel = 0.3f;
     public const float msolByTurn = 0.015f;
-    public const float mlunByTurn = 0.02f;
-    public const float mcapByLevel = 1f;
+    public const float mlunByTurn = 0.005f;
+    public const float mcapByLevel = 0.3f;
 }

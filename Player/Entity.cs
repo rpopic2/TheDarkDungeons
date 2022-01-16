@@ -16,7 +16,7 @@ public class Entity : Mass
     {
         Name = name;
         ClassName = className;
-        if (cap <= 0) throw new ArgumentException("cap cannot be equal or less than 0.");
+        if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
         Cap = cap;
         Hand = new Hand(this);
         Hp = new Hp(this, maxHp, () => OnDeath());
@@ -143,7 +143,6 @@ public class Entity : Mass
     }
     public virtual void OnTurnEnd()
     {
-        TryBattle();
         UnRest();
     }
 }

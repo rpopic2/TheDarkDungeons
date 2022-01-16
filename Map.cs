@@ -29,7 +29,7 @@ public class Map
         int expOnKill = 3 + level.RoundMult(Rules.mexpByLevel);
         int sol = 2 + Program.turn.FloorMult(Rules.msolByTurn);
         int lun = 3 + Program.turn.FloorMult(Rules.mlunByTurn);
-        int cap = 1 + Program.turn.FloorMult(Rules.mcapByLevel);
+        int cap = 1 + level.FloorMult(Rules.mcapByLevel);
         monster = new Monster("Bat", ClassName.Warrior, cap, hp, level, sol, lun, 2, expOnKill);
         if (IsVisible(monster)) monster.Move(2);
         UpdateMoveable(monster);
