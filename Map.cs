@@ -5,7 +5,7 @@ public class Map
     private string[] tiles;
     public ref readonly string[] Tiles
         => ref tiles;
-    public Moveable?[] moveables;
+    private Moveable?[] moveables;
     public readonly int length;
     private Monster monster;
     public Map(int length)
@@ -22,9 +22,11 @@ public class Map
         //Spawn(monster);
         //mobPos = rnd.Next(2, length - 2);
     }
-    public void Spawn(Moveable spawn)
+    public void UpdateMoveable(Moveable mov)
     {
-        moveables[spawn.position.x] = spawn;
+        Position pos = mov.position;
+        moveables[pos.oldX] = null;
+        moveables[pos.x] = mov;
     }
     public override string ToString()
     {
