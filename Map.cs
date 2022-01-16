@@ -6,6 +6,8 @@ public class Map
     public ref readonly char[] Tiles
         => ref tiles;
     private Moveable?[] moveables;
+    public ref readonly Moveable?[] Moveables
+    => ref moveables;
     public readonly int length;
     private Monster monster;
     public Map(int length)
@@ -40,12 +42,6 @@ public class Map
         result[monster.position.x] = monster.ToChar();
         result[mov.position.x] = Player.instance.ToChar();
         return string.Join(" ", result);
-    }
-
-    public void MoveMob()
-    {
-        if (rnd.Next(2) == 1) monster.Move(-1);
-        else monster.Move(1);
     }
 
     private void MonsterCheck(object? checkObject)

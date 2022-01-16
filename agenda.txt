@@ -1,5 +1,6 @@
-monster gets its turn (w/moving)
+monster and player should not overlap.
 monster and player targets
+monster not in sight should not be visible
 몹 잡았을때 좀더 간단하게 
 respawning mobs
 vertical movements?

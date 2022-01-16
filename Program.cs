@@ -58,6 +58,18 @@
     //-------------------------
     public void ElaspeTurn()
     {
+        monster?.DoTurn();
+        // if (player.Lun >= monster?.Lun)
+        // {
+        //     player.DoBattleAction();
+        //     monster.DoBattleAction();
+        // }
+        // else
+        // {
+        //     monster?.DoBattleAction();
+        //     player.DoBattleAction();
+        // }
+
         turn++;
         IO.pr("\nTurn : " + turn);
     }
@@ -77,7 +89,6 @@
         {
             IO.Prompt(stanceShift, out cancel);
         } while (!cancel);
-        OnCombat();
         ElaspeTurn();
     }
     private void UseCard()
@@ -95,8 +106,7 @@
             return;
         }
         player.UseCard(x, out bool star);
-        if (!star) OnCombat();
-        ElaspeTurn();
+        if (!star) ElaspeTurn();
     }
     private void ExileCard()
     {
@@ -126,7 +136,6 @@
                     IO.del();
                     player.Move(1);
                     IO.pr(Map.Current);
-                    Map.Current.MoveMob();
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
@@ -134,7 +143,6 @@
                     IO.del();
                     player.Move(-1);
                     IO.pr(Map.Current);
-                    Map.Current.MoveMob();
                     break;
                 case KeyArrow.Cancel:
                     IO.del();
@@ -148,20 +156,5 @@
         IO.pr(player.Stats);
         IO.rkc();
         IO.del(4);
-    }
-    //
-    private void OnCombat()
-    {
-        monster?.DoTurn();
-        if (player.Lun >= monster?.Lun)
-        {
-            player.DoBattleAction();
-            monster.DoBattleAction();
-        }
-        else
-        {
-            monster?.DoBattleAction();
-            player.DoBattleAction();
-        }
     }
 }

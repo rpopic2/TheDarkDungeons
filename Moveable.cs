@@ -16,12 +16,14 @@ public class Moveable : Entity
         Map current = Map.Current;
         Position newPos = position + x;
         bool success = current.Tiles.TryGet(newPos.x, out obj);
-        if (success)
+        bool fail = current.Moveables.TryGet(newPos.x, out Moveable? mov);
+        bool result = success && !fail;
+        if (result)
         {
             position = newPos;
             current.UpdateMoveable(this);
         }
-        return success;
+        return result;
     }
 
 }

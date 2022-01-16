@@ -24,7 +24,9 @@ public class Monster : Moveable
     }
     public void DoTurn()
     {
-        if (IsAlive && target is not null)
+        if (!IsAlive) return;
+        if (target is not null)
+        {
             if (Hand.Count > 0)
             {
                 _UseCard(Hand.GetFirst());
@@ -33,6 +35,12 @@ public class Monster : Moveable
             {
                 Rest();
             }
+        }
+        else
+        {
+            if (rnd.Next(2) == 1) Move(-1);
+            else Move(1);
+        }
     }
     public override void Rest()
     {
