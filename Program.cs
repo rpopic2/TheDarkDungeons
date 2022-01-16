@@ -35,6 +35,7 @@
         {
             IO.SelectCardIndex(out int x, out bool cancel);
             if (!cancel) player.Hand.StanceShift(x);
+            else IO.del();
         });
 
         exile.Add("Card(W)", () => ExileCard());
@@ -68,7 +69,7 @@
 
         p1?.TryBattle();
         p2?.TryBattle();
-        
+
         p1?.OnTurnEnd();
         p2?.OnTurnEnd();
 
