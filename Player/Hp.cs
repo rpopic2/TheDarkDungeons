@@ -19,5 +19,9 @@ public struct Hp
     {
         return point.ToString();
     }
-    
+
+    public void RestoreFull()
+    {
+        point += point.Max;
+    }
 }

@@ -17,6 +17,8 @@ public class Player : Moveable
         Lv++;
         exp.UpdateMax();
         Console.WriteLine("Level up!");
+        Sol += 1;
+        Hp.RestoreFull();
     }
     public void Pickup(Card card)
     {

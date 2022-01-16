@@ -102,6 +102,7 @@ public class Entity : Mass
     }
     public void TryBattle()
     {
+        if(!IsAlive) return;
         if (Target is null) return;
         int dmg = PopAttack();
         int targetBlock = Target.PopDefence();

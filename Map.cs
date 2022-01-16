@@ -2,6 +2,7 @@ public class Map
 {
     public static Map Current = default!;
     public static Random rnd = new Random();
+    public static int level = 0;
     private char[] tiles;
     public ref readonly char[] Tiles
         => ref tiles;
@@ -9,7 +10,7 @@ public class Map
     public ref readonly Moveable?[] Moveables
     => ref moveables;
     public readonly int length;
-    public Monster monster {get; private set;} = default!;
+    public Monster monster { get; private set; } = default!;
     public Map(int length)
     {
         Current = this;
@@ -23,7 +24,10 @@ public class Map
     }
     public void SpawnMob()
     {
-        monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3);
+        int hp = (int)MathF.Round(level * 0.8f);
+        int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
+        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, 2, 1, 2, expOnKill);
+        if(IsVisible(monster)) monster.Move(2);
         UpdateMoveable(monster);
     }
     public void UpdateMoveable(Moveable mov)
@@ -63,6 +67,7 @@ public class Map
     }
     public static void NewMap()
     {
+        level++;
         Current = new Map(rnd.Next(Rules.MapLengthMin, Rules.MapLengthMax));
         Player.instance.UpdateTarget();
         Current.monster.UpdateTarget();

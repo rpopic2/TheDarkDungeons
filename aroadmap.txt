@@ -1,5 +1,6 @@
-vertical movements?
-
+//vertical movements?
+맵에 레벨표시
+score
 mobs constructor data should be in a data file.
 
 lvup
