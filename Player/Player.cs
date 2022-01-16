@@ -22,16 +22,16 @@ public class Player : Moveable
     }
     public void Pickup(Card card)
     {
-        IO.pr("Found a card." + card);
+        IO.pr("\nFound a card." + card);
         IO.pr(Hand);
         IO.sel(Hand.Cur, out int index, out char key, out bool cancel);
         if (cancel)
         {
-            IO.del();
+            IO.del(2);
             return;
         }
         Hand.SetAt(index, card);
-        IO.del();
+        IO.del(2);
     }
     public void Loot(int expGain, Card card)
     {

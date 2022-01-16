@@ -16,8 +16,8 @@
         if (!Rules.SkipIntro) Intro();
         IO.pr("Your adventure begins...");
         InitActions();
-        NewTurn();
         Map.NewMap();
+        NewTurn();
         Move();
         //BasicPrompt();
     }
@@ -79,15 +79,12 @@
     public void NewTurn()
     {
         turn++;
-        IO.pr("\nTurn : " + turn);
+        IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }
     private void BasicPrompt()
     {
-        do
-        {
-            IO.Prompt(basic, out bool cancel);
-            if (cancel) return;//IO.Prompt(exile, out bool cancel2);
-        } while (player.IsAlive);
+        IO.Prompt(basic, out bool cancel);
+        if (cancel) return;
     }
     private void Rest()
     {

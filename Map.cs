@@ -2,7 +2,7 @@ public class Map
 {
     public static Map Current = default!;
     public static Random rnd = new Random();
-    public static int level = 0;
+    public static int level;
     private char[] tiles;
     public ref readonly char[] Tiles
         => ref tiles;
@@ -54,7 +54,6 @@ public class Map
 
         if (Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
         result[player.Pos.x] = Player.instance.ToChar();
-        IO.pr($"Level : {level}");
         return string.Join(" ", result);
     }
     public bool IsVisible(Moveable mov)
