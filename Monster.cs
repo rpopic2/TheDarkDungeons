@@ -2,14 +2,14 @@ public class Monster : Moveable
 {
     private int expOnKill;
     private static readonly Player player = Player.instance;
-    public Monster(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con, int expOnKill) : base(name, className, cap, maxHp, lv, sol, lun, con)
+    public Monster(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con, int expOnKill, Position spawnPoint) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
         this.expOnKill = expOnKill;
         for (int i = 0; i < cap; i++)
         {
             Pickup(Draw().StanceShift());
         }
-        Pos = new Position(rnd.Next(1, Map.Current.length - 2), 0, Facing.Back);
+        Pos = spawnPoint;
     }
     public void Pickup(Card card)
     {
