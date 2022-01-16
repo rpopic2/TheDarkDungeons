@@ -1,6 +1,8 @@
 
 mobs constructor data should be in a data file.
 
+lvup
+
 스킬.
 스킬드롭 랜덤
 

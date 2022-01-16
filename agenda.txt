@@ -1,5 +1,3 @@
-몹 잡았을때 좀더 간단하게 
-크리 간단하게?
 respawning mobs
 vertical movements?
 static map?

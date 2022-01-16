@@ -107,7 +107,7 @@ public class Entity : Mass
             if (targetResting)
             {
                 dmg = (int)MathF.Round(dmg * Rules.vulMulp);
-                IO.pr($"{Target.Name} is resting vulnerable, takes {dmg}x damage!");
+                IO.pr($"{Target.Name} is resting vulnerable, takes {Rules.vulMulp}x ({dmg}) damage!");
             }
             Target.TakeDamage(dmg - targetBlock);
         }
