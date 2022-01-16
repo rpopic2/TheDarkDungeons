@@ -1,8 +1,1 @@
-
-moveable -> entity
-entity -> fightable
-
-나갔다 들어온게 아니라 맵 안에서 맞으면 로그가 이상함
-
-
 move가 기본이고 프롬프트가 옵션. x가 엑자일 q가 무브.

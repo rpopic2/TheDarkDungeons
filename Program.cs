@@ -18,7 +18,8 @@
         InitActions();
         NewTurn();
         Map.NewMap();
-        BasicPrompt();
+        Move();
+        //BasicPrompt();
     }
     private CmdTuple basic = new CmdTuple();
     private CmdTuple stanceShift = new CmdTuple();
@@ -57,7 +58,8 @@
     public void ElaspeTurn()
     {
         Monster monster = Map.Current.monster;
-        monster?.DoTurn();
+        monster.DoTurn();
+        if (player.Target is null && monster.Target is null && !player.IsResting && !monster.IsResting) IO.del(2);
 
         Moveable? p1 = player;
         Moveable? p2 = monster;
@@ -84,7 +86,7 @@
         do
         {
             IO.Prompt(basic, out bool cancel);
-            if (cancel) IO.Prompt(exile, out bool cancel2);
+            if (cancel) return;//IO.Prompt(exile, out bool cancel2);
         } while (player.IsAlive);
     }
     private void Rest()
@@ -134,26 +136,23 @@
         do
         {
             KeyArrow arw = IO.rarw();
+            IO.del();
             switch (arw)
             {
                 case KeyArrow.UpArrow:
                 case KeyArrow.RightArrow:
-                    //Map.Current.Move(1);
-                    IO.del();
                     player.Move(1);
-                    IO.pr(Map.Current);
                     break;
                 case KeyArrow.DownArrow:
                 case KeyArrow.LeftArrow:
-                    //IO.del();
-                    IO.del();
                     player.Move(-1);
-                    IO.pr(Map.Current);
                     break;
                 case KeyArrow.Cancel:
-                    IO.del();
-                    return;
+                    BasicPrompt();
+                    break;
             }
+            IO.pr(Map.Current);
+
         } while (player.IsAlive);
 
     }

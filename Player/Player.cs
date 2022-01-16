@@ -52,7 +52,6 @@ public class Player : Moveable
             Map.NewMap();
             Pos = new Position();
         }
-        IO.del(2);
         Program.instance.ElaspeTurn();
     }
     public new string Stats

@@ -3,7 +3,12 @@
 score
 mobs constructor data should be in a data file.
 
+turn = maplevel = difficulty
+
 lvup
+
+moveable -> entity
+entity -> fightable
 
 스킬.
 스킬드롭 랜덤
