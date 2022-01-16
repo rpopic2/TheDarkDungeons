@@ -35,4 +35,9 @@ public static class Extensions
     }
     public static Facing Flip(this Facing facing)
         => facing == Facing.Front ? Facing.Back : Facing.Front;
+        
+    public static int RoundMult(this int @base, float mult)
+    => (int)MathF.Round(@base * mult);
+    public static int FloorMult(this int @base, float mult)
+    => (int)MathF.Floor(@base * mult);
 }

@@ -1,5 +1,6 @@
 //vertical movements?
 맵에서 단축키 누르면 바로 명령실행?
+
 turn = maplevel = difficulty
 
 shift+num = stanceshift?

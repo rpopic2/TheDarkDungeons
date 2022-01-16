@@ -19,7 +19,7 @@ public class Player : Moveable
         exp.UpdateMax();
         Console.WriteLine("Level up! : " + Lv);
         Sol += 1;
-        if (Lv % 5 == 0) Cap++;
+        Cap = 3 + Lv.FloorMult(0.2f);
         Hp = new Hp(this, Hp.point.Max + 1, () => OnDeath());
         Hp.RestoreFull();
     }

@@ -25,9 +25,11 @@ public class Map
     }
     public void SpawnMob()
     {
-        int hp = (int)MathF.Round(level * 0.8f);
-        int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
-        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, 2, 1, 2, expOnKill);
+        int hp = level.RoundMult(0.8f);
+        int expOnKill = 3 + level.RoundMult(0.3f);
+        int sol = Program.turn.FloorMult(0.02f);
+        int lun = Program.turn.FloorMult(0.015f);
+        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, sol, lun, 2, expOnKill);
         if (IsVisible(monster)) monster.Move(2);
         UpdateMoveable(monster);
     }
