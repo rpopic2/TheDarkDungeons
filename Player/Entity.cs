@@ -63,7 +63,7 @@ public class Entity : Mass
     }
     public virtual void Rest()
     {
-        IO.pr($"{Name} is resting a turn.");
+        if(Map.Current.IsVisible((Moveable)this)) IO.pr($"{Name} is resting a turn.");
         IsResting = true;
     }
     private int PopAttack()

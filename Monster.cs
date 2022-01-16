@@ -24,21 +24,22 @@ public class Monster : Moveable
     public void DoTurn()
     {
         if (!IsAlive) return;
-        if (Target is not null)
+
+        if (Hand.Count > 0)
         {
-            if (Hand.Count > 0)
+            if (Target is null)
             {
-                _UseCard(Hand.GetFirst());
+                int moveX = rnd.Next(2) == 1 ? 1 : -1;
+                bool success = _Move(moveX, out char obj);
             }
             else
             {
-                Rest();
+                _UseCard(Hand.GetFirst());
             }
         }
         else
         {
-            if (rnd.Next(2) == 1) Move(-1);
-            else Move(1);
+            Rest();
         }
     }
     public override void Rest()

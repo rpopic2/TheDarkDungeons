@@ -43,9 +43,18 @@ public class Map
         bool success = moveables.TryGet(front, out Moveable? obj);
         if (success) result[front] = obj!.ToChar();
 
-        if(Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
+        if (Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
         result[player.Pos.x] = Player.instance.ToChar();
         return string.Join(" ", result);
+    }
+    public bool IsVisible(Moveable mov)
+    {
+        Position playerPos = Player.instance.Pos;
+        int distance = mov.Pos.x - playerPos.x;
+        if (distance > 0 && playerPos.facing == Facing.Front) return true;
+        else if (distance < 0 && playerPos.facing == Facing.Back) return true;
+        else if (distance == 0) return true;
+        return false;
     }
     public static void NewMap()
     {
