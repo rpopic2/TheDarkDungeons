@@ -5,7 +5,6 @@ public class Entity : Mass
     public Hand Hand { get; private set; }
     public int Cap { get; protected set; }
     public Hp Hp { get; protected set; }
-    public virtual int Lv { get; protected set; }
     protected Random rnd = new Random();
     public virtual Entity? Target { get; protected set; }
     public int Atk { get; private set; }
@@ -24,7 +23,7 @@ public class Entity : Mass
         Sol = sol;
         Lun = lun;
         Con = con;
-        Lv = lv;
+        Level = lv;
     }
     public override Card Draw()
         => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);
@@ -132,7 +131,7 @@ public class Entity : Mass
     }
 
     public string Stats
-        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Lv}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
+        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat)
         => rnd.Next(1, stat + 1);
     public bool IsAlive

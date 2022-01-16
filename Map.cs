@@ -91,6 +91,7 @@ public class Map
         }
         return result;
     }
+
     public bool NothingToPrint
     => player.Target is null && monster.Target is null && !player.IsResting && !monster.IsResting;
 }
