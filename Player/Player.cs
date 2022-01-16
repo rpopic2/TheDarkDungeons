@@ -42,7 +42,7 @@ public class Player : Moveable
         if (obj == MapSymb.portal)
         {
             Map.NewMap();
-            position = new Position();
+            Pos = new Position();
         }
         IO.del(2);
         Program.instance.ElaspeTurn();

@@ -1,10 +1,10 @@
 public class Moveable : Entity
 {
-    public Position position { get; protected set; }
+    public Position Pos { get; protected set; }
 
     public Moveable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
-        position = new Position();
+        Pos = new Position();
     }
     public virtual void Move(int x)
     {
@@ -14,16 +14,22 @@ public class Moveable : Entity
     protected virtual bool _Move(int x, out char obj)
     {
         Map current = Map.Current;
-        Position newPos = position + x;
+        Position newPos = Pos + x;
         bool success = current.Tiles.TryGet(newPos.x, out obj);
         bool fail = current.Moveables.TryGet(newPos.x, out Moveable? mov);
         bool result = success && !fail;
         if (result)
         {
-            position = newPos;
+            Pos = newPos;
             current.UpdateMoveable(this);
+            CheckFrontTarget();
         }
         return result;
     }
 
+    private void CheckFrontTarget()
+    {
+        Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
+        target = mov;
+    }
 }

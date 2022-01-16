@@ -1,6 +1,6 @@
-monster and player should not overlap.
-monster and player targets
-monster not in sight should not be visible
+몹이 끝에 걸리면 타겟설정이 안됨(벽을 보고있어서)
+monster not in sight should be invisible
+
 몹 잡았을때 좀더 간단하게 
 respawning mobs
 vertical movements?
