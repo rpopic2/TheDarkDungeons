@@ -3,7 +3,6 @@
     public static Player player = Player.instance;
     public static int turn { get; private set; }
     public static Program instance = default!;
-    private bool skip = true;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     public Monster? monster;
     public static void Main()
@@ -15,7 +14,7 @@
         instance = this;
         Console.Clear();
         IO.pr("The Dark Dungeon " + Rules.version);
-        if (!skip) Intro();
+        if (!Rules.SkipIntro) Intro();
         IO.pr("Your adventure begins...");
         InitActions();
         NewTurn();
@@ -84,7 +83,7 @@
         {
             IO.Prompt(basic, out bool cancel);
             if (cancel) IO.Prompt(exile, out bool cancel2);
-        } while (player.Hp.point.Cur > 0);
+        } while (player.IsAlive);
     }
     private void Rest()
     {
@@ -110,8 +109,8 @@
             IO.del();
             return;
         }
-        player.UseCard(x, out bool star);
-        if (!star) ElaspeTurn();
+        player.UseCard(x, out bool elaspe);
+        if (elaspe) ElaspeTurn();
     }
     private void ExileCard()
     {
@@ -153,7 +152,7 @@
                     IO.del();
                     return;
             }
-        } while (true);
+        } while (player.IsAlive);
 
     }
     private void ShowStats()

@@ -43,7 +43,7 @@ public class Map
         bool success = moveables.TryGet(front, out Moveable? obj);
         if (success) result[front] = obj!.ToChar();
 
-        result[monster.Pos.x] = monster.ToChar();
+        if(Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
         result[player.Pos.x] = Player.instance.ToChar();
         return string.Join(" ", result);
     }

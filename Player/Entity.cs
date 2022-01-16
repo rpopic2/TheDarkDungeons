@@ -32,16 +32,17 @@ public class Entity : Mass
     {
         IO.pr($"{Name} died.");
     }
-    public void UseCard(int index, out bool star)
+    public void UseCard(int index, out bool elaspeTurn)
     {
-        star = false;
+        elaspeTurn = true;
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
         if (Target is null)
         {
-            IO.pr("No target to use card");
+            //IO.pr("No target to use card");
+            elaspeTurn = false;
             return;
         }
-        if (card.Stance == Stance.Star) star = true;
+        if (card.Stance == Stance.Star) elaspeTurn = false;
         _UseCard(card);
     }
     protected void _UseCard(Card card)
