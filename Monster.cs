@@ -9,6 +9,7 @@ public class Monster : Moveable
         {
             Pickup(Draw().StanceShift());
         }
+        position = new Position(rnd.Next(2, Map.Current.length - 2));
     }
     public void Pickup(Card card)
     {

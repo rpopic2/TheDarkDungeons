@@ -6,7 +6,7 @@ public class Entity : Mass
     public int Cap { get; private set; }
     public Hp Hp { get; private set; }
     public virtual int Lv { get; protected set; }
-    private Random rnd = new Random();
+    protected Random rnd = new Random();
     public Entity? target {get; private set;}
     public int Atk { get; private set; }
     public int Def { get; private set; }
