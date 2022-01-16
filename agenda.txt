@@ -2,12 +2,7 @@
 moveable -> entity
 entity -> fightable
 
-updateTarget의 문제점 맵에 처음 들어오자마자 몹이랑 붙으면 업데이트안됨
-Target의 문제점 : 몹에 붙기만 해도 몹이 떄림.
-
-
 나갔다 들어온게 아니라 맵 안에서 맞으면 로그가 이상함
 
-전투에 일단 버그가 좀 많은듯
 
 move가 기본이고 프롬프트가 옵션. x가 엑자일 q가 무브.
