@@ -1,5 +1,7 @@
 respawning mobs
 vertical movements?
 static map?
+
+
 moveable -> entity
 entity -> fightable

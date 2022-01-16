@@ -9,7 +9,7 @@ public class Map
     public ref readonly Moveable?[] Moveables
     => ref moveables;
     public readonly int length;
-    private Monster monster;
+    public Monster monster {get; private set;} = default!;
     public Map(int length)
     {
         Current = this;
@@ -19,7 +19,11 @@ public class Map
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
-        Program.instance.monster = monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3);
+        SpawnMob();
+    }
+    public void SpawnMob()
+    {
+        monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3);
     }
     public void UpdateMoveable(Moveable mov)
     {

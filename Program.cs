@@ -4,7 +4,6 @@
     public static int turn { get; private set; }
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
-    public Monster? monster;
     public static void Main()
     {
         instance = new Program();
@@ -57,6 +56,7 @@
     //-------------------------
     public void ElaspeTurn()
     {
+        Monster monster = Map.Current.monster;
         monster?.DoTurn();
 
         Moveable? p1 = player;
