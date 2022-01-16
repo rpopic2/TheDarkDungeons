@@ -4,4 +4,6 @@ public static class Rules
     public static readonly bool MapDebug = true;
     public static readonly bool SkipIntro = true;
     public const float vulMulp = 1.3f;
+    public const int MapLengthMin = 4;
+    public const int MapLengthMax = 10;
 }

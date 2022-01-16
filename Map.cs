@@ -63,7 +63,7 @@ public class Map
     }
     public static void NewMap()
     {
-        Current = new Map(4);//rnd.Next(4, 10)
+        Current = new Map(rnd.Next(Rules.MapLengthMin, Rules.MapLengthMax));
         Player.instance.UpdateTarget();
         Current.monster.UpdateTarget();
     }

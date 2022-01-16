@@ -9,7 +9,7 @@ public class Monster : Moveable
         {
             Pickup(Draw().StanceShift());
         }
-        Pos = new Position(1, 0 ,Facing.Back);//rnd.Next(1, Map.Current.length - 2)
+        Pos = new Position(rnd.Next(1, Map.Current.length - 2), 0 ,Facing.Back);
     }
     public void Pickup(Card card)
     {
@@ -50,5 +50,9 @@ public class Monster : Moveable
     public void UseCard()
     {
         Card? card = Hand.GetFirst();
+    }
+    public override char ToChar()
+    {
+        return Pos.facing == Facing.Front ? 'b' : 'd';
     }
 }
