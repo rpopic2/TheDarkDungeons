@@ -82,7 +82,7 @@ public class Entity : Mass
         IO.pr($"{Name} attacks with {dmg} damage.");
         Atk = 0;
         int poppedStar = PopStar();
-        if(poppedStar > 0) IO.pr($"...and {poppedStar} more damage! ({dmg + poppedStar})");
+        if(poppedStar > 0) IO.pr($"...and {poppedStar} more damage! (total {dmg + poppedStar})");
         return dmg + poppedStar;
     }
     private int PopDefence()
