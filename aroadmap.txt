@@ -1,10 +1,13 @@
 //vertical movements?
-
-mobs constructor data should be in a data file.
-
+맵에서 단축키 누르면 바로 명령실행?
 turn = maplevel = difficulty
 
-맵에서 단축키 누르면 바로 명령실행?
+shift+num = stanceshift?
+어려울수록 긴 던젼?
+어려울수록 스폰이 빡세짐?
+
+
+mobs constructor data should be in a data file.
 
 스킬.
 스킬드롭 랜덤

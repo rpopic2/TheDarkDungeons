@@ -17,11 +17,16 @@ public class Player : Moveable
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
         Lv++;
         exp.UpdateMax();
-        Console.WriteLine("Level up!");
+        Console.WriteLine("Level up! : " + Lv);
         Sol += 1;
-        if (Lv % 5 == 0) Cap ++;
-        Hp = new Hp(this, Hp.point.Max+1,() => OnDeath());
+        if (Lv % 5 == 0) Cap++;
+        Hp = new Hp(this, Hp.point.Max + 1, () => OnDeath());
         Hp.RestoreFull();
+    }
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        IO.pr(Stats);
     }
     public void Pickup(Card card)
     {
@@ -30,6 +35,10 @@ public class Player : Moveable
         IO.sel(Hand.Cur, out int index, out char key, out bool cancel);
         if (cancel)
         {
+            if(card.Stance != Stance.Star)
+            {
+                Pickup(card.Exile());
+            }
             IO.del(2);
             return;
         }
