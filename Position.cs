@@ -1,14 +1,19 @@
 public readonly struct Position
 {
-    public readonly int val;
+    public readonly int x;
     public readonly Facing facing;
 
-    public Position(int val = default, Facing facing = default)
+    public Position(int val, Facing facing = default)
     {
-        this.val = val;
+        this.x = val;
         this.facing = facing;
     }
-    public int FrontVal
-      => facing == Facing.Front ? val + 1 : val - 1;
+    public int Front
+      => facing == Facing.Front ? x + 1 : x - 1;
+
+    public static Position operator +(Position original, int newX)
+    {
+        return new Position(original.x + newX);
+    } 
 
 }

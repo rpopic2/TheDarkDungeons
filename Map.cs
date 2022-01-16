@@ -24,12 +24,12 @@ public class Map
     }
     public void Spawn(Moveable spawn)
     {
-        moveables[spawn.position.val] = spawn;
+        moveables[spawn.position.x] = spawn;
     }
     public override string ToString()
     {
         Moveable mov = Player.instance;
-        int front = mov.position.FrontVal;
+        int front = mov.position.Front;
         string[] result = NewEmptyArray(length, MapSymb.invisible);
         bool success2 = tiles.TryGet(front, out string? obj2);
         if (success2) result[front] = obj2!;
@@ -37,7 +37,7 @@ public class Map
         bool success = moveables.TryGet(front, out Moveable? obj);
         if (success) result[front] = obj!.ToString()!;
 
-        result[mov.position.val] = Player.instance.ToString();
+        result[mov.position.x] = Player.instance.ToString();
         //result[monster.Position] = monster.ToString();
         return string.Join(" ", result);
     }
