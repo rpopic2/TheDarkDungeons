@@ -20,7 +20,6 @@ public class Map
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
         Program.instance.monster = monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3);
-        //mobPos = rnd.Next(2, length - 2);
     }
     public void UpdateMoveable(Moveable mov)
     {
@@ -35,8 +34,8 @@ public class Map
     }
     public override string ToString()
     {
-        Moveable mov = Player.instance;
-        int front = mov.Pos.Front;
+        Moveable player = Player.instance;
+        int front = player.Pos.Front;
         char[] result = NewEmptyMap(length, MapSymb.invisible);
         bool success2 = tiles.TryGet(front, out char obj2);
         if (success2) result[front] = obj2!;
@@ -44,7 +43,8 @@ public class Map
         bool success = moveables.TryGet(front, out Moveable? obj);
         if (success) result[front] = obj!.ToChar();
 
-    result[mov.Pos.x] = Player.instance.ToChar();
+        result[monster.Pos.x] = monster.ToChar();
+        result[player.Pos.x] = Player.instance.ToChar();
         return string.Join(" ", result);
     }
     public static void NewMap()

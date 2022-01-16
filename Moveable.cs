@@ -22,7 +22,14 @@ public class Moveable : Entity
         {
             Pos = newPos;
             current.UpdateMoveable(this);
-            //UpdateTarget();
+        }
+        else
+        {
+            if (newPos.facing != Pos.facing)
+            {
+                Pos = !Pos;
+                return true;
+            }
         }
         return result;
     }
@@ -32,13 +39,9 @@ public class Moveable : Entity
         base.OnDeath();
         Map.Current.UpdateMoveable(this);
     }
-
-    public override Moveable? Target
+    public void UpdateTarget()
     {
-        get
-        {
-            Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
-            return mov;
-        }
+        Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
+        Target = mov;
     }
 }

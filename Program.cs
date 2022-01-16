@@ -60,8 +60,8 @@
     {
         monster?.DoTurn();
 
-        Entity? p1 = player;
-        Entity? p2 = monster;
+        Moveable? p1 = player;
+        Moveable? p2 = monster;
         if (player.Lun < monster?.Lun)
         {
             p2 = player;
@@ -69,6 +69,8 @@
         }
         p1?.TryBattle();
         p2?.TryBattle();
+        p1?.UpdateTarget();
+        p2?.UpdateTarget();
         NewTurn();
     }
     public void NewTurn()
