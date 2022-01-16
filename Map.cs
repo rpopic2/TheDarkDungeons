@@ -24,6 +24,7 @@ public class Map
     public void SpawnMob()
     {
         monster = new Monster("Bat", ClassName.Warrior, 1, 1, 1, 2, 1, 2, 3);
+        UpdateMoveable(monster);
     }
     public void UpdateMoveable(Moveable mov)
     {
@@ -62,7 +63,9 @@ public class Map
     }
     public static void NewMap()
     {
-        Current = new Map(rnd.Next(4, 10));
+        Current = new Map(4);//rnd.Next(4, 10)
+        Player.instance.UpdateTarget();
+        Current.monster.UpdateTarget();
     }
 
     private static char[] NewEmptyMap(int length, char fill)

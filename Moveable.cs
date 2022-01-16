@@ -38,6 +38,7 @@ public class Moveable : Entity
     {
         base.OnDeath();
         Map.Current.UpdateMoveable(this);
+        Map.Current.UpdateMoveable(this);
     }
     public void UpdateTarget()
     {

@@ -9,7 +9,7 @@ public class Monster : Moveable
         {
             Pickup(Draw().StanceShift());
         }
-        Pos = new Position(rnd.Next(1, Map.Current.length - 2));
+        Pos = new Position(1, 0 ,Facing.Back);//rnd.Next(1, Map.Current.length - 2)
     }
     public void Pickup(Card card)
     {

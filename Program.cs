@@ -70,6 +70,8 @@
         p2?.TryBattle();
         p1?.UpdateTarget();
         p2?.UpdateTarget();
+        p1?.UnRest();
+        p2?.UnRest();
         NewTurn();
     }
     public void NewTurn()
