@@ -1,6 +1,4 @@
-
-vertical movements?
-mobs constructor data should be in a data file.
+read data // mobs constructor data should be in a data file.
 
 스킬.
 스킬드롭 랜덤
