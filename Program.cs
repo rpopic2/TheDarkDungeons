@@ -57,23 +57,18 @@
     //-------------------------
     public void ElaspeTurn()
     {
-        Monster monster = Map.Current.monster;
+        Map current = Map.Current;
+        Monster monster = current.monster;
         monster.DoTurn();
-        if (player.Target is null && monster.Target is null && !player.IsResting && !monster.IsResting) IO.del(2);
+        if (current.NothingToPrint) IO.del(2);
 
-        Moveable? p1 = player;
-        Moveable? p2 = monster;
-        if (player.Lun < monster?.Lun)
-        {
-            p2 = player;
-            p1 = monster;
-        }
-        p1?.TryBattle();
-        p2?.TryBattle();
-        p1?.UpdateTarget();
-        p2?.UpdateTarget();
-        p1?.UnRest();
-        p2?.UnRest();
+        bool playerFirst = player.Lun >= monster?.Lun;
+        Moveable? p1 = playerFirst ? player : monster;
+        Moveable? p2 = playerFirst ? monster : player;
+
+        p1?.OnTurnEnd();
+        p2?.OnTurnEnd();
+
         NewTurn();
     }
     public void NewTurn()

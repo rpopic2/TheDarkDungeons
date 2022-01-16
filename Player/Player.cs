@@ -14,10 +14,13 @@ public class Player : Moveable
     }
     private void OnLvUp()
     {
+        //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
         Lv++;
         exp.UpdateMax();
         Console.WriteLine("Level up!");
         Sol += 1;
+        if (Lv % 5 == 0) Cap ++;
+        Hp = new Hp(this, Hp.point.Max+1,() => OnDeath());
         Hp.RestoreFull();
     }
     public void Pickup(Card card)

@@ -1,14 +1,10 @@
 //vertical movements?
-맵에 레벨표시
-score
+
 mobs constructor data should be in a data file.
 
 turn = maplevel = difficulty
 
-lvup
-
-moveable -> entity
-entity -> fightable
+맵에서 단축키 누르면 바로 명령실행?
 
 스킬.
 스킬드롭 랜덤

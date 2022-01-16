@@ -3,8 +3,8 @@ public class Entity : Mass
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
-    public int Cap { get; private set; }
-    public Hp Hp { get; private set; }
+    public int Cap { get; protected set; }
+    public Hp Hp { get; protected set; }
     public virtual int Lv { get; protected set; }
     protected Random rnd = new Random();
     public virtual Entity? Target { get; protected set; }
@@ -135,5 +135,10 @@ public class Entity : Mass
     {
         if (IsAlive) return Name.ToLower()[0];
         return MapSymb.invisible;
+    }
+    public virtual void OnTurnEnd()
+    {
+        TryBattle();
+        UnRest();
     }
 }

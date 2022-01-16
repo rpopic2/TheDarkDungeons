@@ -9,7 +9,7 @@ public class Monster : Moveable
         {
             Pickup(Draw().StanceShift());
         }
-        Pos = new Position(rnd.Next(1, Map.Current.length - 2), 0 ,Facing.Back);
+        Pos = new Position(rnd.Next(1, Map.Current.length - 2), 0, Facing.Back);
     }
     public void Pickup(Card card)
     {
@@ -30,7 +30,9 @@ public class Monster : Moveable
             if (Target is null)
             {
                 int moveX = rnd.Next(2) == 1 ? 1 : -1;
-                bool success = _Move(moveX, out char obj);
+                int direction = Pos.facing == Facing.Front ? -1 : 1;
+                if (Map.Current.IsAtEnd(Pos.x)) _Move(direction, out char obj);
+                else _Move(moveX, out char obj);
             }
             else
             {

@@ -1,5 +1,6 @@
 public class Map
 {
+    private static Player player = Player.instance;
     public static Map Current = default!;
     public static Random rnd = new Random();
     public static int level;
@@ -27,9 +28,10 @@ public class Map
         int hp = (int)MathF.Round(level * 0.8f);
         int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
         monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, 2, 1, 2, expOnKill);
-        if(IsVisible(monster)) monster.Move(2);
+        if (IsVisible(monster)) monster.Move(2);
         UpdateMoveable(monster);
     }
+
     public void UpdateMoveable(Moveable mov)
     {
         Position pos = mov.Pos;
@@ -65,6 +67,11 @@ public class Map
         else if (distance == 0) return true;
         return false;
     }
+    internal bool IsAtEnd(int index)
+    {
+        if (index <= 0 || index >= length - 1) return true;
+        return false;
+    }
     public static void NewMap()
     {
         level++;
@@ -82,6 +89,8 @@ public class Map
         }
         return result;
     }
+    public bool NothingToPrint
+    => player.Target is null && monster.Target is null && !player.IsResting && !monster.IsResting;
 }
 
 public static class MapSymb

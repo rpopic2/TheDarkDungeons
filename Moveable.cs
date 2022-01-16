@@ -34,6 +34,12 @@ public class Moveable : Entity
         return result;
     }
 
+    public override void OnTurnEnd()
+    {
+        base.OnTurnEnd();
+        UpdateTarget();
+    }
+
     protected override void OnDeath()
     {
         base.OnDeath();
