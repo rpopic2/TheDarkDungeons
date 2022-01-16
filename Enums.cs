@@ -33,4 +33,6 @@ public static class Extensions
             return true;
         }
     }
+    public static Facing Flip(this Facing facing)
+        => facing == Facing.Front ? Facing.Back : Facing.Front;
 }

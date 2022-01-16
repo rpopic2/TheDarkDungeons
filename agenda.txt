@@ -1,6 +1,6 @@
-monster not in sight should be invisible
 몹 뒤에 플레이어가오면 몹이 뒤돌아봐야함.
 계속 도망가면 못떄림..내가 뒤를 보고있기때문에
+target없으면 del해서 간격없애기
 
 몹 잡았을때 좀더 간단하게 
 respawning mobs

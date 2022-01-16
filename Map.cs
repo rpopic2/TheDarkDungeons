@@ -44,7 +44,7 @@ public class Map
         bool success = moveables.TryGet(front, out Moveable? obj);
         if (success) result[front] = obj!.ToChar();
 
-        result[mov.Pos.x] = Player.instance.ToChar();
+    result[mov.Pos.x] = Player.instance.ToChar();
         return string.Join(" ", result);
     }
     public static void NewMap()

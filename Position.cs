@@ -1,8 +1,8 @@
-public readonly struct Position
+public struct Position
 {
-    public readonly int oldX;
-    public readonly int x;
-    public readonly Facing facing;
+    public int oldX;
+    public int x;
+    public Facing facing;
 
     public Position(int x, int oldX = default, Facing facing = default)
     {
@@ -13,12 +13,16 @@ public readonly struct Position
     public int Front
       => facing == Facing.Front ? x + 1 : x - 1;
 
-    public static Position operator +(Position original, int val)
+    public static Position operator +(Position target, int val)
     {
-        int originalX = original.x;
-        Facing newFacing = val < 0 ? Facing.Back : Facing.Front;
-        Position newPos = new Position(originalX + val, originalX, newFacing);
-        return newPos;
+        target.oldX = target.x;
+        target.x += val;
+        target.facing = val < 0 ? Facing.Back : Facing.Front;
+        return target;
     } 
-
+    public static Position operator !(Position original)
+    {
+        original.facing = original.facing.Flip();
+        return original;
+    }
 }
