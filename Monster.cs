@@ -20,12 +20,11 @@ public class Monster : Moveable
         base.OnDeath();
         player.exp.Gain(expOnKill);
         player.Pickup(Draw());
-        Entity.LoseTarget(this, target!);
     }
     public void DoTurn()
     {
         if (!IsAlive) return;
-        if (target is not null)
+        if (Target is not null)
         {
             if (Hand.Count > 0)
             {

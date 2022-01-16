@@ -18,7 +18,7 @@
         if (!skip) Intro();
         IO.pr("Your adventure begins...");
         InitActions();
-        ElaspeTurn();
+        NewTurn();
         Map.NewMap();
         BasicPrompt();
     }
@@ -59,17 +59,20 @@
     public void ElaspeTurn()
     {
         monster?.DoTurn();
-        // if (player.Lun >= monster?.Lun)
-        // {
-        //     player.DoBattleAction();
-        //     monster.DoBattleAction();
-        // }
-        // else
-        // {
-        //     monster?.DoBattleAction();
-        //     player.DoBattleAction();
-        // }
 
+        Entity? p1 = player;
+        Entity? p2 = monster;
+        if (player.Lun < monster?.Lun)
+        {
+            p2 = player;
+            p1 = monster;
+        }
+        p1?.TryBattle();
+        p2?.TryBattle();
+        NewTurn();
+    }
+    public void NewTurn()
+    {
         turn++;
         IO.pr("\nTurn : " + turn);
     }

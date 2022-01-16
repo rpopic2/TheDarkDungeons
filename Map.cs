@@ -25,6 +25,11 @@ public class Map
     public void UpdateMoveable(Moveable mov)
     {
         Position pos = mov.Pos;
+        if (!mov.IsAlive)
+        {
+            moveables[pos.x] = null;
+            return;
+        }
         if (moveables[pos.oldX] == mov) moveables[pos.oldX] = null;
         moveables[pos.x] = mov;
     }

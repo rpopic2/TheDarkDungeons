@@ -7,7 +7,7 @@ public class Entity : Mass
     public Hp Hp { get; private set; }
     public virtual int Lv { get; protected set; }
     protected Random rnd = new Random();
-    public Entity? target { get; protected set; }
+    public virtual Entity? Target { get; protected set; }
     public int Atk { get; private set; }
     public int Def { get; private set; }
     public int Star { get; private set; }
@@ -31,13 +31,12 @@ public class Entity : Mass
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died.");
-        Player.instance.target = null;
     }
     public void UseCard(int index, out bool star)
     {
         star = false;
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
-        if (target is null)
+        if (Target is null)
         {
             IO.pr("No target to use card");
             return;
@@ -96,20 +95,20 @@ public class Entity : Mass
         Star = 0;
         return star;
     }
-    public void DoBattleAction()
+    public void TryBattle()
     {
-        if (target is null) return;
+        if (Target is null) return;
         int dmg = PopAttack();
-        int targetBlock = target.PopDefence();
-        bool targetResting = target.PopResting();
+        int targetBlock = Target.PopDefence();
+        bool targetResting = Target.PopResting();
         if (dmg > 0)
         {
             if (targetResting)
             {
                 dmg = (int)MathF.Round(dmg * Rules.vulMulp);
-                IO.pr($"{target.Name} is resting vulnerable, takes {Rules.vulMulp}x damage! ({dmg})");
+                IO.pr($"{Target.Name} is resting vulnerable, takes {Rules.vulMulp}x damage! ({dmg})");
             }
-            target.TakeDamage(dmg - targetBlock);
+            Target.TakeDamage(dmg - targetBlock);
         }
         if (dmg <= 0 && targetBlock > 0) IO.pr($"But {Name} did not attack...");
     }
@@ -131,15 +130,4 @@ public class Entity : Mass
         if (IsAlive) return Name.ToLower()[0];
         return MapSymb.invisible;
     }
-    public static void SetCurrentTarget(Entity p1, Entity p2)
-    {
-        p1.target = p2;
-        p2.target = p1;
-    }
-    public static void LoseTarget(Entity p1, Entity p2)
-    {
-        p1.target = null;
-        p2.target = null;
-    }
-
 }

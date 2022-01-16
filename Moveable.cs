@@ -22,14 +22,23 @@ public class Moveable : Entity
         {
             Pos = newPos;
             current.UpdateMoveable(this);
-            CheckFrontTarget();
+            //UpdateTarget();
         }
         return result;
     }
 
-    private void CheckFrontTarget()
+    protected override void OnDeath()
     {
-        Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
-        target = mov;
+        base.OnDeath();
+        Map.Current.UpdateMoveable(this);
+    }
+
+    public override Moveable? Target
+    {
+        get
+        {
+            Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
+            return mov;
+        }
     }
 }
