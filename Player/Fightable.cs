@@ -56,7 +56,7 @@ public class Fightable : Mass
             case Stance.Attack:
                 tempAtk += card.Sol;
                 break;
-            case Stance.Defence:
+            case Stance.Dodge:
                 tempDef += card.Lun;
                 break;
             case Stance.Star:
@@ -93,7 +93,7 @@ public class Fightable : Mass
         }
         else if (tempDef > 0)
         {
-            string tempStr = $"{Name} defences {tempDef} damage.";
+            string tempStr = $"{Name} dodges {tempDef} damage.";
             if (tempStar > 0)
             {
                 int tempStar = this.tempStar;

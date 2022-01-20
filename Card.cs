@@ -17,7 +17,7 @@ public struct Card : IMass
     public Card StanceShift()
     {
         if (Stance == Stance.Star) return this;
-        Stance = Stance == Stance.Attack ? Stance.Defence : Stance.Attack;
+        Stance = Stance == Stance.Attack ? Stance.Dodge : Stance.Attack;
         return this;
     }
 
@@ -30,7 +30,7 @@ public struct Card : IMass
     public override string ToString()
     {
         if (Stance == Stance.Attack) return $"<({Sol})/{Lun}>";
-        else if (Stance == Stance.Defence) return $"[({Lun})/{Sol}]";
+        else if (Stance == Stance.Dodge) return $"[({Lun})/{Sol}]";
         else return $"[{Con}*]";
     }
 

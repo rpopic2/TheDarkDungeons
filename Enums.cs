@@ -5,7 +5,7 @@ public enum ClassName
 
 public enum Stance
 {
-    Attack, Defence, Star
+    Attack, Dodge, Star
 }
 public enum GamePointOption
 {
