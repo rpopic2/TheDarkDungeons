@@ -68,27 +68,60 @@ public class Fightable : Mass
     {
         if (!IsAlive) return;
         if (Target is null) return;
-        int dmg = PopAttack();
-        int targetBlock = Target.PopDefence();
-        bool targetResting = Target.PopResting();
 
-        
-        if (dmg > 0)
+        string atkString;
+        int tempDmg = Atk;
+        if (tempDmg > 0)
         {
-            if (targetResting)
+            atkString = $"{Name} attacks with {tempDmg} damage.";
+            if (Star > 0)
             {
-                dmg = (int)MathF.Round(dmg * Rules.vulMulp);
-                IO.pr($"{Target.Name} is resting vulnerable, takes {Rules.vulMulp}x ({dmg}) damage!");
+                int tempStar = Star;
+                Star = 0;
+                tempDmg += tempStar;
+                atkString += $"..and {tempStar} more damage! (total {tempDmg})";
             }
-            Target.TakeDamage(dmg - targetBlock);
+            IO.pr(atkString);
         }
-        if (dmg <= 0 && targetBlock > 0) IO.pr($"But {Name} did not attack...");
+
+        if (tempDmg > 0)
+        {
+            Target.TakeDamage(tempDmg);
+        }
+        if (tempDmg <= 0 && Target.Def > 0) IO.pr($"But {Name} did not attack...");
+        Atk = 0;
     }
     private void TakeDamage(int damage)
     {
-        if (damage < 0) damage = 0;
+        int tempBlock = Def;
+        if (IsResting)
+        {
+            string tempStr;
+            damage = (int)MathF.Round(damage * Rules.vulMulp);
+            tempStr = $"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!";
+            IO.pr(tempStr);
+        }
+        else if (tempBlock > 0)
+        {
+            string tempStr;
+            tempStr = $"{Name} defences {tempBlock} damage.";
+            if (Star > 0)
+            {
+                int tempStar = Star;
+                Star = 0;
+                tempBlock += tempStar;
+                tempStr += $"..and {tempStar} more damage! (total {tempBlock})";
+            }
+            IO.pr(tempStr);
+        }
+        damage -= tempBlock;
+
+
+        string tempStr2;
+        tempStr2 = $"{Name} takes {damage} damage. {Hp.point}";
+        IO.pr(tempStr2);
         Hp.TakeDamage(damage);
-        if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
+        Def = 0;
     }
     public virtual void Rest()
     {
@@ -96,37 +129,7 @@ public class Fightable : Mass
         IO.pr($"{Name} is resting a turn.");
         IsResting = true;
     }
-    private int PopAttack()
-    {
-        if (Atk <= 0) return 0;
-        int dmg = Atk;
-        IO.pr($"{Name} attacks with {dmg} damage.");
-        Atk = 0;
-        int poppedStar = PopStar();
-        if (poppedStar > 0) IO.pr($"...and {poppedStar} more damage! (total {dmg + poppedStar})");
-        return dmg + poppedStar;
-    }
-    private int PopDefence()
-    {
-        if (Def <= 0) return 0;
-        int block = Def;
-        IO.pr($"{Name} defences {Def} damage.");
-        Def = 0;
-        return block + PopStar();
-    }
-    private bool PopResting()
-    {
-        if (!IsResting) return false;
-        IsResting = false;
-        return true;
-    }
-    private int PopStar()
-    {
-        if (Star <= 0) return 0;
-        int star = Star;
-        Star = 0;
-        return star;
-    }
+
     public virtual void OnTurnEnd()
     {
         IsResting = false;
