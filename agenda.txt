@@ -12,6 +12,8 @@ bats never defend?
 
 IO refactor -> To enable new action input.
 
-가끔 박쥐 카드 안썼는데 쉼
 
 io 강조 메세지 (starts with =>)
+
+
+가끔 박쥐 카드 안썼는데 쉼 -> 다음맵 가자마자 코앞에서 만나면 그러는듯.

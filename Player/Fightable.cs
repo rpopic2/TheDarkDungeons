@@ -69,46 +69,43 @@ public class Fightable : Mass
         if (!IsAlive) return;
         if (Target is null) return;
 
-        int tempDmg = Atk;
-        if (tempDmg > 0)
+        if (Atk > 0)
         {
-            string atkString = $"{Name} attacks with {tempDmg} damage.";
+            string atkString = $"{Name} attacks with {Atk} damage.";
             if (Star > 0)
             {
                 int tempStar = Star;
-                tempDmg += tempStar;
-                atkString += $"..and {tempStar} more damage! (total {tempDmg})";
+                Atk += tempStar;
+                atkString += $"..and {tempStar} more damage! (total {Atk})";
             }
             IO.pr(atkString);
         }
 
-        if (tempDmg > 0)
+        if (Atk > 0)
         {
-            Target.TakeDamage(tempDmg);
+            Target.TakeDamage(Atk);
         }
-        if (tempDmg <= 0 && Target.Def > 0) IO.pr($"But {Target.Name} did not attack...");
+        if (Atk <= 0 && Target.Def > 0) IO.pr($"But {Target.Name} did not attack...");
     }
     private void TakeDamage(int damage)
     {
-        int tempBlock = Def;
-
         if (IsResting)
         {
             damage = (int)MathF.Round(damage * Rules.vulMulp);
             IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
         }
-        else if (tempBlock > 0)
+        else if (Def > 0)
         {
-            string tempStr = $"{Name} defences {tempBlock} damage.";
+            string tempStr = $"{Name} defences {Def} damage.";
             if (Star > 0)
             {
                 int tempStar = Star;
-                tempBlock += tempStar;
-                tempStr += $"..and {tempStar} more damage! (total {tempBlock})";
+                Def += tempStar;
+                tempStr += $"..and {tempStar} more damage! (total {Def})";
             }
             IO.pr(tempStr);
         }
-        damage -= tempBlock;
+        damage -= Def;
 
         Hp.Take(damage);
         if (IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp.point}");
@@ -127,7 +124,6 @@ public class Fightable : Mass
         Atk = 0;
         Def = 0;
         Star = 0;
-
     }
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
