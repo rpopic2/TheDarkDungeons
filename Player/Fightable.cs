@@ -64,15 +64,37 @@ public class Fightable : Mass
                 break;
         }
     }
+    public void TryBattle()
+    {
+        if (!IsAlive) return;
+        if (Target is null) return;
+        int dmg = PopAttack();
+        int targetBlock = Target.PopDefence();
+        bool targetResting = Target.PopResting();
+
+        
+        if (dmg > 0)
+        {
+            if (targetResting)
+            {
+                dmg = (int)MathF.Round(dmg * Rules.vulMulp);
+                IO.pr($"{Target.Name} is resting vulnerable, takes {Rules.vulMulp}x ({dmg}) damage!");
+            }
+            Target.TakeDamage(dmg - targetBlock);
+        }
+        if (dmg <= 0 && targetBlock > 0) IO.pr($"But {Name} did not attack...");
+    }
+    private void TakeDamage(int damage)
+    {
+        if (damage < 0) damage = 0;
+        Hp.TakeDamage(damage);
+        if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
+    }
     public virtual void Rest()
     {
         /*if(Map.Current.IsVisible((Moveable)this))*/
         IO.pr($"{Name} is resting a turn.");
         IsResting = true;
-    }
-    public void UnRest()
-    {
-        IsResting = false;
     }
     private int PopAttack()
     {
@@ -81,7 +103,7 @@ public class Fightable : Mass
         IO.pr($"{Name} attacks with {dmg} damage.");
         Atk = 0;
         int poppedStar = PopStar();
-        if(poppedStar > 0) IO.pr($"...and {poppedStar} more damage! (total {dmg + poppedStar})");
+        if (poppedStar > 0) IO.pr($"...and {poppedStar} more damage! (total {dmg + poppedStar})");
         return dmg + poppedStar;
     }
     private int PopDefence()
@@ -105,31 +127,10 @@ public class Fightable : Mass
         Star = 0;
         return star;
     }
-    public void TryBattle()
+    public virtual void OnTurnEnd()
     {
-        if (!IsAlive) return;
-        if (Target is null) return;
-        int dmg = PopAttack();
-        int targetBlock = Target.PopDefence();
-        bool targetResting = Target.PopResting();
-        if (dmg > 0)
-        {
-            if (targetResting)
-            {
-                dmg = (int)MathF.Round(dmg * Rules.vulMulp);
-                IO.pr($"{Target.Name} is resting vulnerable, takes {Rules.vulMulp}x ({dmg}) damage!");
-            }
-            Target.TakeDamage(dmg - targetBlock);
-        }
-        if (dmg <= 0 && targetBlock > 0) IO.pr($"But {Name} did not attack...");
+        IsResting = false;
     }
-    private void TakeDamage(int damage)
-    {
-        if (damage < 0) damage = 0;
-        Hp.TakeDamage(damage);
-        if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp.point}");
-    }
-
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat)
@@ -141,8 +142,5 @@ public class Fightable : Mass
         if (IsAlive) return Name.ToLower()[0];
         return MapSymb.invisible;
     }
-    public virtual void OnTurnEnd()
-    {
-        UnRest();
-    }
+
 }
