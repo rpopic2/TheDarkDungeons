@@ -88,10 +88,12 @@
             {
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.RightArrow:
+                case ConsoleKey.H:
                     player.Move(1);
                     break;
                 case ConsoleKey.DownArrow:
                 case ConsoleKey.LeftArrow:
+                case ConsoleKey.L:
                     player.Move(-1);
                     break;
                 case ConsoleKey.Q:
