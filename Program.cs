@@ -98,6 +98,18 @@
                 case ConsoleKey.Escape:
                     BasicPrompt();
                     break;
+                case ConsoleKey.W:
+                    UseCard();
+                    break;
+                case ConsoleKey.R:
+                    Rest();
+                    break;
+                case ConsoleKey.S:
+                    ShowStats();
+                    break;
+                case ConsoleKey.X:
+                    ExileCard();
+                    break;
             }
 
         } while (player.IsAlive);
