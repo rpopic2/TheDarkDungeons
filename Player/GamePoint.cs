@@ -1,10 +1,10 @@
 public class GamePoint
 {
     private int cur = 0;
-    public int Cur
+    private int Cur
     {
         get => cur;
-        private set
+        set
         {
             if (value >= Max)
             {
@@ -47,6 +47,7 @@ public class GamePoint
         x.Cur -= amount;
         return x;
     }
+    public bool IsNotMin => Cur == Min;
     public override string ToString()
     {
         return $"{Cur}/{Max}";

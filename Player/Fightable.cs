@@ -4,7 +4,7 @@ public class Fightable : Mass
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
     public int Cap { get; protected set; }
-    public Hp Hp { get; protected set; }
+    public GamePoint Hp { get; protected set; }
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
     private int tempAtk;
@@ -19,7 +19,7 @@ public class Fightable : Mass
         if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
         Cap = cap;
         Hand = new Hand(this);
-        Hp = new Hp(this, maxHp, () => OnDeath());
+        Hp = new GamePoint(maxHp, GamePointOption.Reserving, () => OnDeath());
         Sol = sol;
         Lun = lun;
         Con = con;
@@ -104,8 +104,8 @@ public class Fightable : Mass
         }
         damage -= tempDef;
 
-        Hp.Take(damage);
-        if (IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp.point}");
+        Hp -= damage;
+        if (IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp}");
     }
     public virtual void Rest()
     {
@@ -123,11 +123,11 @@ public class Fightable : Mass
         tempStar = 0;
     }
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat) =>
         rnd.Next(1, stat + 1);
-    public bool IsAlive =>
-        Hp.IsAlive;
+    public bool IsAlive => Hp.IsNotMin;
+
     public virtual char ToChar()
     {
         if (IsAlive) return Name.ToLower()[0];

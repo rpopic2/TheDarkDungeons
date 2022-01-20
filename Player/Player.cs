@@ -20,8 +20,8 @@ public class Player : Moveable
         Console.WriteLine("Level up! : " + level);
         Sol += level.FloorMult(Rules.solByLevel);
         Cap = Rules.capBasic + level.FloorMult(Rules.capByLevel);
-        Hp = new Hp(this, Hp.point.Max + level.FloorMult(Rules.hpByLevel), () => OnDeath());
-        Hp.RestoreFull();
+        Hp.Max += level.FloorMult(Rules.hpByLevel);
+        Hp += Hp.Max;
     }
     protected override void OnDeath()
     {
