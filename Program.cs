@@ -79,9 +79,9 @@
     }
     private void Move()
     {
-        IO.pr(Map.Current);
         do
         {
+            IO.pr(Map.Current);
             KeyArrow arw = IO.rarw();
             IO.del();
             switch (arw)
@@ -98,7 +98,6 @@
                     BasicPrompt();
                     break;
             }
-            IO.pr(Map.Current);
 
         } while (player.IsAlive);
     }
