@@ -150,7 +150,7 @@
     }
     private void ShowStats()
     {
-        IO.pr(player.Stats);
+        IO.pr(player);
         IO.rkc();
         IO.del(3);
     }

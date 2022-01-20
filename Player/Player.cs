@@ -26,7 +26,7 @@ public class Player : Moveable
     protected override void OnDeath()
     {
         base.OnDeath();
-        IO.pr(Stats);
+        IO.pr(this);
     }
     public void Pickup(Card card)
     {
@@ -66,12 +66,7 @@ public class Player : Moveable
         }
         Program.instance.ElaspeTurn();
     }
-    public new string Stats
-    {
-        get => base.Stats + $"\nExp : {exp}";
-    }
-    public override char ToChar()
-    {
-        return PlayerChar;
-    }
+    public override string ToString() =>
+        base.ToString() + $"\nExp : {exp}";
+    public override char ToChar() => PlayerChar;
 }

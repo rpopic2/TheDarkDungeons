@@ -125,12 +125,12 @@ public class Fightable : Mass
         tempDef = 0;
         tempStar = 0;
     }
-    public string Stats
-        => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
-    private int GetRandomStat(int stat)
-        => rnd.Next(1, stat + 1);
-    public bool IsAlive
-        => Hp.IsAlive;
+    public override string ToString() =>
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
+    private int GetRandomStat(int stat) =>
+        rnd.Next(1, stat + 1);
+    public bool IsAlive =>
+        Hp.IsAlive;
     public virtual char ToChar()
     {
         if (IsAlive) return Name.ToLower()[0];
