@@ -47,7 +47,7 @@ public class GamePoint
         x.Cur -= amount;
         return x;
     }
-    public bool IsNotMin => Cur == Min;
+    public bool IsMin => Cur == Min;
     public override string ToString()
     {
         return $"{Cur}/{Max}";

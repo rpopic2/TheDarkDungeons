@@ -126,7 +126,7 @@ public class Fightable : Mass
         $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
     private int GetRandomStat(int stat) =>
         rnd.Next(1, stat + 1);
-    public bool IsAlive => Hp.IsNotMin;
+    public bool IsAlive => !Hp.IsMin;
 
     public virtual char ToChar()
     {
