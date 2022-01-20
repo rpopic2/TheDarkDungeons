@@ -70,14 +70,12 @@ public class Fightable : Mass
         if (Target is null) return;
 
         int tempDmg = Atk;
-        Atk = 0;
         if (tempDmg > 0)
         {
             string atkString = $"{Name} attacks with {tempDmg} damage.";
             if (Star > 0)
             {
                 int tempStar = Star;
-                Star = 0;
                 tempDmg += tempStar;
                 atkString += $"..and {tempStar} more damage! (total {tempDmg})";
             }
@@ -93,7 +91,6 @@ public class Fightable : Mass
     private void TakeDamage(int damage)
     {
         int tempBlock = Def;
-        Def = 0;
 
         if (IsResting)
         {
@@ -106,7 +103,6 @@ public class Fightable : Mass
             if (Star > 0)
             {
                 int tempStar = Star;
-                Star = 0;
                 tempBlock += tempStar;
                 tempStr += $"..and {tempStar} more damage! (total {tempBlock})";
             }
@@ -115,7 +111,7 @@ public class Fightable : Mass
         damage -= tempBlock;
 
         Hp.Take(damage);
-        if(IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp.point}");
+        if (IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp.point}");
     }
     public virtual void Rest()
     {
@@ -128,6 +124,10 @@ public class Fightable : Mass
     {
         TryAttack();
         IsResting = false;
+        Atk = 0;
+        Def = 0;
+        Star = 0;
+
     }
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";

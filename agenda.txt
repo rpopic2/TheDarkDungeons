@@ -1,13 +1,17 @@
-가끔 박쥐 카드 안썼는데 쉼
+def 을 세팅하는거부터가 문제
+fightable. takedamage shoud be called every turnend
+
+
+
+
+
+
+def -> dodge
+what's the point of hp class??
+bats never defend?
 
 IO refactor -> To enable new action input.
 
-fightable. takedamage shoud be called every turnend
+가끔 박쥐 카드 안썼는데 쉼
 
-bats never defend?
-
-
-def 을 세팅하는거부터가 문제
-
-what's the point of hp class??
-def -> dodge
+io 강조 메세지 (starts with =>)
