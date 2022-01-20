@@ -82,19 +82,20 @@
         do
         {
             IO.pr(Map.Current);
-            KeyArrow arw = IO.rarw();
+            ConsoleKey arw = IO.rk().Key;
             IO.del();
             switch (arw)
             {
-                case KeyArrow.UpArrow:
-                case KeyArrow.RightArrow:
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.RightArrow:
                     player.Move(1);
                     break;
-                case KeyArrow.DownArrow:
-                case KeyArrow.LeftArrow:
+                case ConsoleKey.DownArrow:
+                case ConsoleKey.LeftArrow:
                     player.Move(-1);
                     break;
-                case KeyArrow.Cancel:
+                case ConsoleKey.Q:
+                case ConsoleKey.Escape:
                     BasicPrompt();
                     break;
             }

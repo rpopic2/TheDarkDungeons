@@ -10,12 +10,10 @@ public static class IO
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
-    public static KeyArrow rarw()
+    public static ConsoleKeyInfo rk()
     {
-        string result = Console.ReadKey(true).Key.ToString();
-        bool success = Enum.TryParse(typeof(KeyArrow), result, out object? arrow);
-        if (success) return (KeyArrow)arrow!;
-        return KeyArrow.Cancel;
+        ConsoleKeyInfo info = Console.ReadKey(true);
+        return info;
     }
     ///<summary>Select from provided keys. Returns cancel.</summary>
     public static void sel(char[] keys, out int index, out char key, out bool cancel, bool doDel = true)
