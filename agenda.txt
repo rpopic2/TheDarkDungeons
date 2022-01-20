@@ -1,14 +1,6 @@
-def 을 세팅하는거부터가 문제 -> 그냥 
-fightable. takedamage shoud be called every turnend
-
-
-
-
-
 
 def -> dodge
 what's the point of hp class??
-bats never defend?
 
 IO refactor -> To enable new action input.
 

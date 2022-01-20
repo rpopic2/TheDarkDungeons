@@ -81,10 +81,7 @@ public class Fightable : Mass
             IO.pr(atkString);
         }
 
-        if (tempAtk > 0)
-        {
-            Target.TakeDamage(tempAtk);
-        }
+        if (tempAtk > 0) Target.TakeDamage(tempAtk);
         if (tempAtk <= 0 && Target.tempDef > 0) IO.pr($"But {Target.Name} did not attack...");
     }
     private void TakeDamage(int damage)
