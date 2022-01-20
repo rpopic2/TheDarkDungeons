@@ -21,7 +21,7 @@
         InitActions();
         Map.NewMap();
         NewTurn();
-        Move();
+        MainLoop();
         //BasicPrompt();
     }
     private void InitActions()
@@ -77,7 +77,7 @@
         turn++;
         IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }
-    private void Move()
+    private void MainLoop()
     {
         do
         {
@@ -98,25 +98,16 @@
                     break;
                 case ConsoleKey.Q:
                 case ConsoleKey.Escape:
-                    BasicPrompt();
+                    Menu();
                     break;
-                case ConsoleKey.W:
-                    UseCard();
-                    break;
-                case ConsoleKey.R:
-                    Rest();
-                    break;
-                case ConsoleKey.S:
-                    ShowStats();
-                    break;
-                case ConsoleKey.X:
-                    ExileCard();
+                default:
+                    BasicSwitch(arw);
                     break;
             }
 
         } while (player.IsAlive);
     }
-    private void BasicPrompt()
+    private void Menu()
     {
         do
         {
@@ -128,21 +119,30 @@
                 case ConsoleKey.Q:
                 case ConsoleKey.Escape:
                     return;
-                case ConsoleKey.W:
-                    UseCard();
-                    break;
-                case ConsoleKey.R:
-                    Rest();
-                    break;
-                case ConsoleKey.S:
-                    ShowStats();
-                    break;
-                case ConsoleKey.X:
-                    ExileCard();
+                default:
+                    BasicSwitch(arw);
                     break;
             }
 
         } while (player.IsAlive);
+    }
+    private void BasicSwitch(ConsoleKey key)
+    {
+        switch (key)
+        {
+            case ConsoleKey.W:
+                UseCard();
+                break;
+            case ConsoleKey.R:
+                Rest();
+                break;
+            case ConsoleKey.S:
+                ShowStats();
+                break;
+            case ConsoleKey.X:
+                ExileCard();
+                break;
+        }
     }
     private void Rest()
     {
