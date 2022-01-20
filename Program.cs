@@ -127,7 +127,7 @@
         } while (player.IsAlive);
     }
     private void DefaultSwitch(ConsoleKey key)
-    {
+        {
         switch (key)
         {
             case ConsoleKey.W:

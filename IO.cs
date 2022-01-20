@@ -2,6 +2,7 @@ public static class IO
 {
     public static readonly char[] NUMERICKEYS = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
     private const char CANCELKEY = 'q';
+    private const string Emphasis = "=>";
     private const string delString = "                                                                 ";
     private static readonly Player player = Player.instance;
     private static readonly Hand playerHand = player.Hand;
@@ -76,8 +77,9 @@ public static class IO
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object x)
+    public static void pr(object x, bool emphasis = false)
     {
+        if(emphasis) x += Emphasis;
         Console.WriteLine(x);
     }
     ///<summary>Print in Formated Options</summary>
