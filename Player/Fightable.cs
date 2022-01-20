@@ -7,9 +7,9 @@ public class Fightable : Mass
     public Hp Hp { get; protected set; }
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
-    public int Atk { get; private set; }
-    public int Def { get; private set; }
-    public int Star { get; private set; }
+    private int tempAtk;
+    private int tempDef;
+    private int tempStar;
     public bool IsResting { get; set; }
 
     public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
@@ -54,13 +54,13 @@ public class Fightable : Mass
         switch (card.Stance)
         {
             case Stance.Attack:
-                Atk += card.Sol;
+                tempAtk += card.Sol;
                 break;
             case Stance.Defence:
-                Def += card.Lun;
+                tempDef += card.Lun;
                 break;
             case Stance.Star:
-                Star = card.Con;
+                tempStar = card.Con;
                 break;
         }
     }
@@ -69,23 +69,23 @@ public class Fightable : Mass
         if (!IsAlive) return;
         if (Target is null) return;
 
-        if (Atk > 0)
+        if (tempAtk > 0)
         {
-            string atkString = $"{Name} attacks with {Atk} damage.";
-            if (Star > 0)
+            string atkString = $"{Name} attacks with {tempAtk} damage.";
+            if (tempStar > 0)
             {
-                int tempStar = Star;
-                Atk += tempStar;
-                atkString += $"..and {tempStar} more damage! (total {Atk})";
+                int tempStar = this.tempStar;
+                tempAtk += tempStar;
+                atkString += $"..and {tempStar} more damage! (total {tempAtk})";
             }
             IO.pr(atkString);
         }
 
-        if (Atk > 0)
+        if (tempAtk > 0)
         {
-            Target.TakeDamage(Atk);
+            Target.TakeDamage(tempAtk);
         }
-        if (Atk <= 0 && Target.Def > 0) IO.pr($"But {Target.Name} did not attack...");
+        if (tempAtk <= 0 && Target.tempDef > 0) IO.pr($"But {Target.Name} did not attack...");
     }
     private void TakeDamage(int damage)
     {
@@ -94,18 +94,18 @@ public class Fightable : Mass
             damage = (int)MathF.Round(damage * Rules.vulMulp);
             IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
         }
-        else if (Def > 0)
+        else if (tempDef > 0)
         {
-            string tempStr = $"{Name} defences {Def} damage.";
-            if (Star > 0)
+            string tempStr = $"{Name} defences {tempDef} damage.";
+            if (tempStar > 0)
             {
-                int tempStar = Star;
-                Def += tempStar;
-                tempStr += $"..and {tempStar} more damage! (total {Def})";
+                int tempStar = this.tempStar;
+                tempDef += tempStar;
+                tempStr += $"..and {tempStar} more damage! (total {tempDef})";
             }
             IO.pr(tempStr);
         }
-        damage -= Def;
+        damage -= tempDef;
 
         Hp.Take(damage);
         if (IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp.point}");
@@ -121,9 +121,9 @@ public class Fightable : Mass
     {
         TryAttack();
         IsResting = false;
-        Atk = 0;
-        Def = 0;
-        Star = 0;
+        tempAtk = 0;
+        tempDef = 0;
+        tempStar = 0;
     }
     public string Stats
         => $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp.point}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
