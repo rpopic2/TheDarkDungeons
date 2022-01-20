@@ -88,7 +88,7 @@ public class Fightable : Mass
         {
             Target.TakeDamage(tempDmg);
         }
-        if (tempDmg <= 0 && Target.Def > 0) IO.pr($"But {Name} did not attack...");
+        if (tempDmg <= 0 && Target.Def > 0) IO.pr($"But {Target.Name} did not attack...");
     }
     private void TakeDamage(int damage)
     {
