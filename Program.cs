@@ -3,6 +3,9 @@
     public static Player player = Player.instance;
     public static int turn { get; private set; }
     public static Program instance = default!;
+    private readonly CmdTuple basic = new CmdTuple();
+    private readonly CmdTuple stanceShift = new CmdTuple();
+    private readonly CmdTuple exile = new CmdTuple();
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
     public static void Main()
     {
@@ -21,9 +24,6 @@
         Move();
         //BasicPrompt();
     }
-    private CmdTuple basic = new CmdTuple();
-    private CmdTuple stanceShift = new CmdTuple();
-    private CmdTuple exile = new CmdTuple();
     private void InitActions()
     {
         basic.Add("Use Card(W)", () => UseCard());
