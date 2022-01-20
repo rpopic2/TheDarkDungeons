@@ -1,8 +1,8 @@
 public struct Hp
 {
-    private Entity owner;
+    private Fightable owner;
     public GamePoint point;
-    public Hp(Entity owner, int max, Action onDeath)
+    public Hp(Fightable owner, int max, Action onDeath)
     {
         this.owner = owner;
         point = new GamePoint(max, GamePointOption.Reserving, onDeath);

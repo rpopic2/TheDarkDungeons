@@ -1,6 +1,6 @@
 public struct Hand
 {
-    private Entity owner;
+    private Fightable owner;
     public char[] Cur
     {
         get
@@ -17,7 +17,7 @@ public struct Hand
         get => content.Count(card => card != null);
     }
 
-    public Hand(Entity owner)
+    public Hand(Fightable owner)
     {
         this.owner = owner;
         content = new Card?[owner.Cap];

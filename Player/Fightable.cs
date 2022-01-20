@@ -1,4 +1,4 @@
-public class Entity : Mass
+public class Fightable : Mass
 {
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
@@ -6,13 +6,13 @@ public class Entity : Mass
     public int Cap { get; protected set; }
     public Hp Hp { get; protected set; }
     protected Random rnd = new Random();
-    public virtual Entity? Target { get; protected set; }
+    public virtual Fightable? Target { get; protected set; }
     public int Atk { get; private set; }
     public int Def { get; private set; }
     public int Star { get; private set; }
     public bool IsResting { get; set; }
 
-    public Entity(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
+    public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
         Name = name;
         ClassName = className;

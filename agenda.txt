@@ -1,1 +1,4 @@
 가끔 박쥐 카드 안썼는데 쉼
+
+Entity refactor
+IO refactor -> To enable new action input.

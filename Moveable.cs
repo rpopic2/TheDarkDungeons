@@ -1,4 +1,4 @@
-public class Moveable : Entity
+public class Moveable : Fightable
 {
     public Position Pos { get; protected set; }
 

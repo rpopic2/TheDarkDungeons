@@ -7,7 +7,10 @@ public class Monster : Moveable
         this.expOnKill = expOnKill;
         for (int i = 0; i < cap; i++)
         {
-            Pickup(Draw().StanceShift());
+            int attack = rnd.Next(0, 11);
+            Card card = Draw();
+            if(attack > 2) card.StanceShift();
+            Pickup(card);
         }
         Pos = spawnPoint;
     }
