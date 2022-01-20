@@ -118,8 +118,31 @@
     }
     private void BasicPrompt()
     {
-        IO.Prompt(basic, out bool cancel);
-        if (cancel) return;
+        do
+        {
+            IO.prfo(basic.Names.ToArray());
+            ConsoleKey arw = IO.rk().Key;
+            IO.del();
+            switch (arw)
+            {
+                case ConsoleKey.Q:
+                case ConsoleKey.Escape:
+                    return;
+                case ConsoleKey.W:
+                    UseCard();
+                    break;
+                case ConsoleKey.R:
+                    Rest();
+                    break;
+                case ConsoleKey.S:
+                    ShowStats();
+                    break;
+                case ConsoleKey.X:
+                    ExileCard();
+                    break;
+            }
+
+        } while (player.IsAlive);
     }
     private void Rest()
     {

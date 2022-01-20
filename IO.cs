@@ -129,6 +129,7 @@ public static class IO
     public static void Prompt(CmdTuple cmd, out bool cancel)
     {
         IO.prfo(cmd.Names.ToArray());
-        IO.selcmd(cmd, out cancel);
+        sel(cmd.Keys.ToArray(), out int index, out char key, out cancel);
+        if (!cancel) cmd.Invoke(key);
     }
 }
