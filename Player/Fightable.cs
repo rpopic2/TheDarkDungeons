@@ -126,6 +126,7 @@ public class Fightable : Mass
 
     public virtual void OnTurnEnd()
     {
+        TryAttack();
         IsResting = false;
     }
     public string Stats

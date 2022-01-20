@@ -1,16 +1,13 @@
 가끔 박쥐 카드 안썼는데 쉼
 
-Entity refactor
 IO refactor -> To enable new action input.
-
-but did not attack -> 
-
-def 을 세팅하는거부터가 문제
-
-def -> dodge
-
-what's the point of hp class??
 
 fightable. takedamage shoud be called every turnend
 
 bats never defend?
+
+
+def 을 세팅하는거부터가 문제
+
+what's the point of hp class??
+def -> dodge
