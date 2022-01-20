@@ -67,8 +67,8 @@
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
 
-        p1?.TryBattle();
-        p2?.TryBattle();
+        p1?.TryAttack();
+        p2?.TryAttack();
 
         p1?.OnTurnEnd();
         p2?.OnTurnEnd();

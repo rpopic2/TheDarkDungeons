@@ -7,7 +7,7 @@ public struct Hp
         this.owner = owner;
         point = new GamePoint(max, GamePointOption.Reserving, onDeath);
     }
-    public void TakeDamage(int x)
+    public void Take(int x)
     {
         point -= x;
     }

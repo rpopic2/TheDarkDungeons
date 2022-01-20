@@ -64,16 +64,16 @@ public class Fightable : Mass
                 break;
         }
     }
-    public void TryBattle()
+    public void TryAttack()
     {
         if (!IsAlive) return;
         if (Target is null) return;
 
-        string atkString;
         int tempDmg = Atk;
+        Atk = 0;
         if (tempDmg > 0)
         {
-            atkString = $"{Name} attacks with {tempDmg} damage.";
+            string atkString = $"{Name} attacks with {tempDmg} damage.";
             if (Star > 0)
             {
                 int tempStar = Star;
@@ -89,22 +89,20 @@ public class Fightable : Mass
             Target.TakeDamage(tempDmg);
         }
         if (tempDmg <= 0 && Target.Def > 0) IO.pr($"But {Name} did not attack...");
-        Atk = 0;
     }
     private void TakeDamage(int damage)
     {
         int tempBlock = Def;
+        Def = 0;
+
         if (IsResting)
         {
-            string tempStr;
             damage = (int)MathF.Round(damage * Rules.vulMulp);
-            tempStr = $"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!";
-            IO.pr(tempStr);
+            IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
         }
         else if (tempBlock > 0)
         {
-            string tempStr;
-            tempStr = $"{Name} defences {tempBlock} damage.";
+            string tempStr = $"{Name} defences {tempBlock} damage.";
             if (Star > 0)
             {
                 int tempStar = Star;
@@ -116,12 +114,8 @@ public class Fightable : Mass
         }
         damage -= tempBlock;
 
-
-        string tempStr2;
-        tempStr2 = $"{Name} takes {damage} damage. {Hp.point}";
-        IO.pr(tempStr2);
-        Hp.TakeDamage(damage);
-        Def = 0;
+        Hp.Take(damage);
+        if(IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp.point}");
     }
     public virtual void Rest()
     {

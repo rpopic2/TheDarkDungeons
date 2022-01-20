@@ -2,3 +2,11 @@
 
 Entity refactor
 IO refactor -> To enable new action input.
+
+but did not attack -> 
+
+def 을 세팅하는거부터가 문제
+
+def -> dodge
+
+what's the point of hp class??
