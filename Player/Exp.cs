@@ -4,7 +4,7 @@ public struct Exp
     private const int lvMultiplier = 10;
     private const float lvIncrement = lvCurve * lvMultiplier;
     private Player owner;
-    public GamePoint point;
+    private GamePoint point;
     public Exp(Player owner, Action overflow)
     {
         this.owner = owner;
