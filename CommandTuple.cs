@@ -18,10 +18,3 @@ public struct CmdTuple
     public void Invoke(char key)
         => Acts[Keys.IndexOf(key)]();
 }
-public static class Extension
-{
-    public static char ParseKey(this string option)
-        => Char.ToLower(option[option.IndexOf('(') + 1]);
-    public static char[] ParseKeys(this string[] options)
-        => Array.ConvertAll(options, new Converter<string, char>(ParseKey));
-}
