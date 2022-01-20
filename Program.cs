@@ -82,9 +82,9 @@
         do
         {
             IO.pr(Map.Current);
-            ConsoleKey arw = IO.rk().Key;
+            ConsoleKey key = IO.rk().Key;
             IO.del();
-            switch (arw)
+            switch (key)
             {
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.RightArrow:
@@ -101,7 +101,7 @@
                     Menu();
                     break;
                 default:
-                    BasicSwitch(arw);
+                    DefaultSwitch(key);
                     break;
             }
 
@@ -112,21 +112,21 @@
         do
         {
             IO.prfo(basic.Names.ToArray());
-            ConsoleKey arw = IO.rk().Key;
+            ConsoleKey key = IO.rk().Key;
             IO.del();
-            switch (arw)
+            switch (key)
             {
                 case ConsoleKey.Q:
                 case ConsoleKey.Escape:
                     return;
                 default:
-                    BasicSwitch(arw);
+                    DefaultSwitch(key);
                     break;
             }
 
         } while (player.IsAlive);
     }
-    private void BasicSwitch(ConsoleKey key)
+    private void DefaultSwitch(ConsoleKey key)
     {
         switch (key)
         {
