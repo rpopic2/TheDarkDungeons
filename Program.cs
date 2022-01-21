@@ -151,10 +151,10 @@
         bool cancel = false;
         do
         {
-            IO.pr("Review your hand | q : Exit / Alt + num : Stanceshift");
+            IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
             IO.pr(player.Hand);
-            IO.newSelh(out int index, out cancel);
-            if (!cancel) player.Hand.StanceShift(index);
+            IO.newSelh(out int index, out ConsoleModifiers mod, out cancel);
+            if (!cancel && mod == ConsoleModifiers.Alt) player.Hand.StanceShift(index);
             IO.del(2);
         } while (!cancel);
         ElaspeTurn();
