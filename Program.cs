@@ -187,6 +187,7 @@
             IO.del();
             if (cancel) return;
         } while (card.Stance == Stance.Star);
+        IO.pr("Exiled a card.");
         player.Hand.Exile(index);
         ElaspeTurn();
     }
