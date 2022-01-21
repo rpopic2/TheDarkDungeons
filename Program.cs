@@ -6,7 +6,7 @@
     private readonly CmdTuple basic = new CmdTuple();
     private readonly CmdTuple stanceShift = new CmdTuple();
     private readonly CmdTuple exile = new CmdTuple();
-    public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
+    public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
     public static void Main()
     {
         instance = new Program();
@@ -22,7 +22,6 @@
         Map.NewMap();
         NewTurn();
         MainLoop();
-        //BasicPrompt();
     }
     private void InitActions()
     {
@@ -33,7 +32,6 @@
 
         stanceShift.Add("(S)tanceshift", () =>
         {
-            //IO.SelectCardIndex(out int x, out bool cancel);
             IO.newSelh(out int index, out bool cancel);
             if (!cancel) player.Hand.StanceShift(index);
             else IO.del();
@@ -45,15 +43,15 @@
     private void Intro()
     {
         IO.pr("Press any key to start...");
-        Console.ReadKey();
+        Console.ReadKey(true);
 
         IO.pr("Choose charactor`s name...");
         string name = Console.ReadLine() ?? "";
         IO.pr("Choose your class...");
         IO.prfo(classes);
-        IO.selsa(classes, out int selection, out bool cancel);
-        if (cancel) selection = 0;
-        ClassName className = (ClassName)selection;
+        IO.newSelh(classes.Count(), out int index, out bool cancel);
+        if (cancel) index = 0;
+        ClassName className = (ClassName)index;
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
     //-------------------------

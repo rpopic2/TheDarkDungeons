@@ -63,19 +63,6 @@ public static class IO
         newSelh(Player.instance.Cap, out result, out mod, out cancel);
     }
 
-    ///<summary>Select a card index.</summary>
-    public static void selci(out int index, out bool cancel)
-    {
-        do
-        {
-            sel(playerHand.Cur, out index, out char key, out cancel, false);
-            if (cancel) goto Cancel;
-        } while (playerHand[index] == null);
-        del();
-    Cancel:
-        return;
-    }
-
     ///<summary>Select from string array.</summary>
     public static void selsa(string[] options, out int resultIndex, out bool cancel)
     {
@@ -129,18 +116,5 @@ public static class IO
         {
             del();
         }
-    }
-    public static void SelectCardIndex(out int index, out bool cancel)
-    {
-        prh(playerHand);
-        selci(out index, out cancel);
-        if (!cancel) del();
-    }
-
-    public static void Prompt(CmdTuple cmd, out bool cancel)
-    {
-        IO.prfo(cmd.Names.ToArray());
-        sel(cmd.Keys.ToArray(), out int index, out char key, out cancel);
-        if (!cancel) cmd.Invoke(key);
     }
 }
