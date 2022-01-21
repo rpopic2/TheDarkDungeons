@@ -31,10 +31,11 @@
         basic.Add("E(x)ile", () => ExileCard());
         basic.Add("(S)tats", () => ShowStats());
 
-        stanceShift.Add("(S)tanceshift?", () =>
+        stanceShift.Add("(S)tanceshift", () =>
         {
-            IO.SelectCardIndex(out int x, out bool cancel);
-            if (!cancel) player.Hand.StanceShift(x);
+            //IO.SelectCardIndex(out int x, out bool cancel);
+            IO.newSelh(out int index, out bool cancel);
+            if (!cancel) player.Hand.StanceShift(index);
             else IO.del();
         });
 
@@ -150,7 +151,11 @@
         bool cancel = false;
         do
         {
-            IO.Prompt(stanceShift, out cancel);
+            IO.pr("Review your hand | q : Exit / Alt + num : Stanceshift");
+            IO.pr(player.Hand);
+            IO.newSelh(out int index, out cancel);
+            if (!cancel) player.Hand.StanceShift(index);
+            IO.del(2);
         } while (!cancel);
         ElaspeTurn();
     }

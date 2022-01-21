@@ -54,6 +54,14 @@ public static class IO
     {
         newSelh(max, out result, out ConsoleModifiers mod, out cancel);
     }
+    public static void newSelh(out int result, out bool cancel)
+    {
+        newSelh(Player.instance.Cap, out result, out ConsoleModifiers mod, out cancel);
+    }
+    public static void newSelh(out int result, out ConsoleModifiers mod, out bool cancel)
+    {
+        newSelh(Player.instance.Cap, out result, out mod, out cancel);
+    }
     ///<summary>Select a card.</summary>
     public static void selc(out Card card, out int index, out bool cancel)
     {
