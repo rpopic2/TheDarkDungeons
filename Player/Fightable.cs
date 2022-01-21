@@ -107,7 +107,8 @@ public class Fightable : Mass
     private void TakeDamage(int damage)
     {
         Hp -= damage;
-        if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
+        if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
+        else if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
     }
     public virtual void Rest()
     {

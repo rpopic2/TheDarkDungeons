@@ -10,3 +10,6 @@ intro 스킵하면 이동버그생김
 가끔 박쥐 카드 안썼는데 쉼 -> 다음맵 가자마자 코앞에서 만나면 그러는듯?
 
 메뉴에서 행동하면 바로 리턴되서 맵이보이게
+
+gamepoint to event
+gamepoint onvalchange -> support delta
