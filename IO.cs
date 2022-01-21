@@ -34,7 +34,7 @@ public static class IO
         del();
         cancel = true;
     }
-    public static void newSeln(int max, out int index, out ConsoleModifiers mod, out bool cancel)
+    public static void newSelh(int max, out int index, out ConsoleModifiers mod, out bool cancel)
     {
         bool found;
         do
@@ -52,7 +52,7 @@ public static class IO
     }
     public static void newSelh(int max, out int result, out bool cancel)
     {
-        newSeln(max, out result, out ConsoleModifiers mod, out cancel);
+        newSelh(max, out result, out ConsoleModifiers mod, out cancel);
     }
     ///<summary>Select a card.</summary>
     public static void selc(out Card card, out int index, out bool cancel)
