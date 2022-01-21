@@ -32,9 +32,9 @@ public class Player : Moveable
     {
         IO.pr("\nFound a card." + card);
         IO.pr(Hand);
-        IO.newSelh(out int index, out ConsoleModifiers mod, out bool cancel);
+        IO.seln(out int index, out bool cancel, out ConsoleModifiers mod);
         IO.del();
-        if(mod == ConsoleModifiers.Alt) card.StanceShift();
+        if (mod == ConsoleModifiers.Alt) card.StanceShift();
         if (cancel)
         {
             if (card.Stance != Stance.Star)

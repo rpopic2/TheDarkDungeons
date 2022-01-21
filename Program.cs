@@ -32,7 +32,7 @@
 
         stanceShift.Add("(S)tanceshift", () =>
         {
-            IO.newSelh(out int index, out bool cancel);
+            IO.seln(out int index, out bool cancel);
             if (!cancel) player.Hand.StanceShift(index);
             else IO.del();
         });
@@ -49,7 +49,7 @@
         string name = Console.ReadLine() ?? "";
         IO.pr("Choose your class...");
         IO.prfo(classes);
-        IO.newSelh(classes.Count(), out int index, out bool cancel);
+        IO.seln(out int index, out bool cancel, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
@@ -151,7 +151,7 @@
         {
             IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
             IO.pr(player.Hand);
-            IO.newSelh(out int index, out ConsoleModifiers mod, out cancel);
+            IO.seln(out int index, out cancel, out ConsoleModifiers mod);
             if (!cancel && mod == ConsoleModifiers.Alt) player.Hand.StanceShift(index);
             IO.del(2);
         } while (!cancel);
@@ -160,7 +160,7 @@
     private void UseCard()
     {
         IO.pr(player.Hand);
-        IO.newSelh(out int index, out bool cancel);
+        IO.seln(out int index, out bool cancel);
         if (cancel)
         {
             IO.del();
@@ -182,7 +182,7 @@
         do
         {
             IO.pr(player.Hand);
-            IO.newSelh(out index, out bool cancel);
+            IO.seln(out index, out bool cancel);
             card = player.Hand[index] ?? throw new Exception();
             IO.del();
             if (cancel) return;

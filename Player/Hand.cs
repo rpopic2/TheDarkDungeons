@@ -1,16 +1,6 @@
 public struct Hand
 {
     private Fightable owner;
-    public char[] Cur
-    {
-        get
-        {
-            int cap = owner.Cap;
-            char[] curOptions = new char[cap];
-            Array.Copy(IO.NUMERICKEYS, curOptions, cap);
-            return curOptions;
-        }
-    }
     private Card?[] content;
     //public int Cap { get => owner.Cap; }
     public int Count

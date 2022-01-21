@@ -14,8 +14,9 @@ public static class IO
         ConsoleKeyInfo info = Console.ReadKey(true);
         return info;
     }
-    public static void newSelh(int max, out int index, out ConsoleModifiers mod, out bool cancel)
+    public static void seln(out int index, out bool cancel, out ConsoleModifiers mod, int max = -1)
     {
+        if (max == -1) max = player.Cap;
         bool found;
         do
         {
@@ -30,19 +31,10 @@ public static class IO
             found = index != -1 && index <= max - 1;
         } while (!found);
     }
-    public static void newSelh(int max, out int result, out bool cancel)
+    public static void seln(out int result, out bool cancel, int max = -1)
     {
-        newSelh(max, out result, out ConsoleModifiers mod, out cancel);
+        seln(out result, out cancel, out ConsoleModifiers mod, max);
     }
-    public static void newSelh(out int result, out bool cancel)
-    {
-        newSelh(Player.instance.Cap, out result, out ConsoleModifiers mod, out cancel);
-    }
-    public static void newSelh(out int result, out ConsoleModifiers mod, out bool cancel)
-    {
-        newSelh(Player.instance.Cap, out result, out mod, out cancel);
-    }
-
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
