@@ -5,13 +5,14 @@ public struct Hand
     {
         get
         {
-            char[] curOptions = new char[Cap];
-            Array.Copy(IO.NUMERICKEYS, curOptions, Cap);
+            int cap = owner.Cap;
+            char[] curOptions = new char[cap];
+            Array.Copy(IO.NUMERICKEYS, curOptions, cap);
             return curOptions;
         }
     }
     private Card?[] content;
-    public int Cap { get => owner.Cap; }
+    //public int Cap { get => owner.Cap; }
     public int Count
     {
         get => content.Count(card => card != null);
