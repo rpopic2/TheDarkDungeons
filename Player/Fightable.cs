@@ -105,7 +105,7 @@ public class Fightable : Mass
         damage -= tempDef;
 
         Hp -= damage;
-        if (IsAlive) IO.pr($"=> {Name} takes {damage} damage. {Hp}");
+        if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
     }
     public virtual void Rest()
     {
