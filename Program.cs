@@ -172,6 +172,7 @@
             IO.del();
             return;
         }
+        IO.del();
         player.UseCard(index, out bool elaspe);
         if (elaspe) ElaspeTurn();
     }

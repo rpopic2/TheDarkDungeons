@@ -81,10 +81,10 @@ public class Fightable : Mass
             IO.pr(atkString);
         }
 
-        if (tempAtk > 0) Target.TakeDamage(tempAtk);
-        if (tempAtk <= 0 && Target.tempDef > 0) IO.pr($"But {Target.Name} did not attack...");
+        if (tempAtk > 0) Target.TryDefence(tempAtk);
+        //if (tempAtk <= 0 && Target.tempDef > 0) IO.pr($"But {Target.Name} did not attack...");
     }
-    private void TakeDamage(int damage)
+    private void TryDefence(int damage)
     {
         if (IsResting)
         {
@@ -102,8 +102,10 @@ public class Fightable : Mass
             }
             IO.pr(tempStr);
         }
-        damage -= tempDef;
-
+        TakeDamage(damage - tempDef);
+    }
+    private void TakeDamage(int damage)
+    {
         Hp -= damage;
         if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
     }
