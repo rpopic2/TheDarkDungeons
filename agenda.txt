@@ -1,5 +1,3 @@
-exile 성공 메세지. -> NothingToPrint가 구현이 이상해서 그럼.
-
 program에있는 각종 행동들 플레이어로 옮기는게?
 
 intro 스킵하면 이동버그생김
