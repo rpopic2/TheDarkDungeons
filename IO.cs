@@ -72,7 +72,7 @@ public static class IO
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object x, bool emphasis = false)
     {
-        if(emphasis) x += Emphasis;
+        if(emphasis) x = Emphasis + x;
         Console.WriteLine(x);
     }
     ///<summary>Print in Formated Options</summary>
