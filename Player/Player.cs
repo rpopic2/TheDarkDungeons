@@ -52,6 +52,11 @@ public class Player : Moveable
         exp.Gain(expGain);
         Pickup(card);
     }
+    public void Exile(int index)
+    {
+        Hand.Exile(index);
+        stance = (FightStance.Exile, default);
+    }
     public override void Rest()
     {
         base.Rest();

@@ -60,11 +60,14 @@
         Map current = Map.Current;
         Monster monster = current.monster;
         monster.DoTurn();
-        if (current.NothingToPrint) IO.del(2);
 
         bool playerFirst = player.Lun >= monster?.Lun;
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
+
+        if (p1?.TurnStance.stance == FightStance.Move && p2?.TurnStance.stance == FightStance.Move) IO.del(2);
+
+
         p1?.TryAttack();
         p2?.TryAttack();
         p1?.OnTurnEnd();
@@ -190,7 +193,7 @@
             if (cancel) return;
         } while (card.Stance == Stance.Star);
         IO.pr("Exiled a card.");
-        player.Hand.Exile(index);
+        player.Exile(index);
         ElaspeTurn();
     }
     private void ShowStats()

@@ -8,7 +8,8 @@ public class Fightable : Mass
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
     public bool IsResting => stance.stance == FightStance.Rest;
-    private (FightStance stance, int amount) stance = (default, default);
+    protected (FightStance? stance, int amount) stance = (default, default);
+    public (FightStance? stance, int amount) TurnStance { get => stance; }
     private int star;
 
     public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
@@ -113,7 +114,7 @@ public class Fightable : Mass
     {
         /*if(Map.Current.IsVisible((Moveable)this))*/
         IO.pr($"{Name} is resting a turn.");
-        stance = (FightStance.Rest, 0);
+        stance = (FightStance.Rest, default);
     }
 
     public virtual void OnTurnEnd()

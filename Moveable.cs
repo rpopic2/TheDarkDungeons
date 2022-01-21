@@ -22,6 +22,7 @@ public class Moveable : Fightable
         {
             Pos = newPos;
             current.UpdateMoveable(this);
+            stance = (FightStance.Move, x);
         }
         else
         {
