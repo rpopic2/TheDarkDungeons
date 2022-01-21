@@ -62,19 +62,7 @@ public static class IO
     {
         newSelh(Player.instance.Cap, out result, out mod, out cancel);
     }
-    ///<summary>Select a card.</summary>
-    public static void selc(out Card card, out int index, out bool cancel)
-    {
-        do
-        {
-            sel(playerHand.Cur, out index, out char key, out cancel);
-            if (cancel) goto Cancel;
-        } while (playerHand[index] == null);
-        card = playerHand[index] ?? throw new Exception();
-        return;
-    Cancel:
-        card = new Card();
-    }
+
     ///<summary>Select a card index.</summary>
     public static void selci(out int index, out bool cancel)
     {
