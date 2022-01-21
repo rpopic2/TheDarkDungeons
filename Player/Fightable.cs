@@ -78,9 +78,9 @@ public class Fightable : Mass
                 star = 0;
             }
             IO.pr(atkString);
+            Target.TryDefence(stance.amount);
         }
-
-        Target.TryDefence(stance.stance == FightStance.Attack ? stance.amount : 0);
+        else Target.TryDefence(0);
     }
     private void TryDefence(int damage)
     {
@@ -96,13 +96,14 @@ public class Fightable : Mass
             }
             if (damage <= 0) tempStr += "..but oppenent did not attack...";
             IO.pr(tempStr);
+            damage -= stance.amount;
         }
         else if (damage > 0 && IsResting)
         {
             damage = (int)MathF.Round(damage * Rules.vulMulp);
             IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
         }
-        if (damage > 0) TakeDamage(damage - stance.amount);
+        TakeDamage(damage);
     }
     private void TakeDamage(int damage)
     {
