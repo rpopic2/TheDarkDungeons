@@ -37,16 +37,17 @@ public static class IO
     public static void newSeln(int max, out int index, out ConsoleModifiers mod, out bool cancel)
     {
         bool found;
+        max--;
         do
         {
             ConsoleKeyInfo keyInfo = rk();
             mod = keyInfo.Modifiers;
             Char key = keyInfo.KeyChar;
             index = (int)Char.GetNumericValue(key);
-            if(index == 0) index = 10;
-            index --;
+            if (index == 0) index = 10;
+            if (index != -1) index--;
             cancel = key == CANCELKEY;
-            if(cancel) return;
+            if (cancel) return;
             found = index != -1 && index <= max;
         } while (!found);
     }
