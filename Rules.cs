@@ -2,7 +2,7 @@ public static class Rules
 {
     public const string version = "0.1";
     public static readonly bool MapDebug = false;
-    public static readonly bool SkipIntro = true;
+    public static readonly bool SkipIntro = false;
     public const float vulMulp = 1.3f;
     
     //player
