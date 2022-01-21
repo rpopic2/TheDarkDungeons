@@ -88,9 +88,10 @@ public static class IO
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object x, bool emphasis = false)
+    public static void pr(object x, bool emphasis = false, bool newline = false)
     {
         if (emphasis) x = Emphasis + x;
+        if (newline) x = "\n" + x;
         Console.WriteLine(x);
     }
     ///<summary>Print in Formated Options</summary>

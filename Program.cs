@@ -161,19 +161,20 @@
     }
     private void UseCard()
     {
-        IO.SelectCardIndex(out int x, out bool cancel);
+        IO.pr(player.Hand);
+        IO.newSelh(out int index, out bool cancel);
         if (cancel)
         {
             IO.del();
             return;
         }
-        Card? card = player.Hand[x];
+        Card? card = player.Hand[index];
         if (card is null)
         {
             IO.del();
             return;
         }
-        player.UseCard(x, out bool elaspe);
+        player.UseCard(index, out bool elaspe);
         if (elaspe) ElaspeTurn();
     }
     private void ExileCard()

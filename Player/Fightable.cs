@@ -29,7 +29,7 @@ public class Fightable : Mass
         => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);
     protected virtual void OnDeath()
     {
-        IO.pr($"{Name} died. {Hp}", true);
+        IO.pr($"{Name} died. {Hp}", true, true);
     }
     public void UseCard(int index, out bool elaspeTurn)
     {
