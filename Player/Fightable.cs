@@ -8,8 +8,8 @@ public class Fightable : Mass
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
     public bool IsResting => stance.stance == FightStance.Rest;
-    public (FightStance stance, int amount) stance = (default, default);
-    public int star;
+    private (FightStance stance, int amount) stance = (default, default);
+    private int star;
 
     public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -80,7 +80,6 @@ public class Fightable : Mass
         }
 
         Target.TryDefence(stance.stance == FightStance.Attack ? stance.amount : 0);
-        //if (tempAtk <= 0 && Target.tempDef > 0) IO.pr($"But {Target.Name} did not attack...");
     }
     private void TryDefence(int damage)
     {
