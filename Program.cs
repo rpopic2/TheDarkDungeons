@@ -183,7 +183,8 @@
         do
         {
             IO.prh(player.Hand);
-            IO.selc(out card, out index, out bool cancel);
+            IO.newSelh(out index, out bool cancel);
+            card = player.Hand[index] ?? throw new Exception();
             IO.del();
             if (cancel) return;
         } while (card.Stance == Stance.Star);
