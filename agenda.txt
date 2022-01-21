@@ -1,3 +1,5 @@
+stance to struct, elaspeturn by auto
+
 program에있는 각종 행동들 플레이어로 옮기는게?
 
 intro 스킵하면 이동버그생김
@@ -8,3 +10,5 @@ intro 스킵하면 이동버그생김
 
 gamepoint to event
 gamepoint onvalchange -> support delta
+
+rm cmdtuple

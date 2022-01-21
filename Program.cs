@@ -27,7 +27,7 @@
     {
         basic.Add("Use Card(W)", () => UseCard());
         basic.Add("(R)est", () => Rest());
-        basic.Add("E(x)ile", () => ExileCard());
+        basic.Add("E(x)ile", () => player.Exile());
         basic.Add("(S)tats", () => ShowStats());
 
         stanceShift.Add("(S)tanceshift", () =>
@@ -37,7 +37,7 @@
             else IO.del();
         });
 
-        exile.Add("Card(W)", () => ExileCard());
+        exile.Add("Card(W)", () => player.Exile());
     }
 
     private void Intro()
@@ -143,7 +143,7 @@
                 ShowStats();
                 break;
             case ConsoleKey.X:
-                ExileCard();
+                player.Exile();
                 break;
         }
     }
@@ -179,22 +179,6 @@
         IO.del();
         player.UseCard(index, out bool elaspe);
         if (elaspe) ElaspeTurn();
-    }
-    private void ExileCard()
-    {
-        int index;
-        Card card;
-        do
-        {
-            IO.pr(player.Hand);
-            IO.seln(out index, out bool cancel);
-            card = player.Hand[index] ?? throw new Exception();
-            IO.del();
-            if (cancel) return;
-        } while (card.Stance == Stance.Star);
-        IO.pr("Exiled a card.");
-        player.Exile(index);
-        ElaspeTurn();
     }
     private void ShowStats()
     {

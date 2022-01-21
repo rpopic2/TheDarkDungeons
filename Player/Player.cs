@@ -47,9 +47,21 @@ public class Player : Moveable
         Hand.SetAt(index, card);
         IO.del(2);
     }
-    public void Exile(int index)
+    public void Exile()
     {
+        int index;
+        Card card;
+        do
+        {
+            IO.pr(Hand);
+            IO.seln(out index, out bool cancel);
+            card = Hand[index] ?? throw new Exception();
+            IO.del();
+            if (cancel) return;
+        } while (card.Stance == Stance.Star);
+        IO.pr("Exiled a card.");
         Hand.Exile(index);
+        Program.instance.ElaspeTurn();
         stance = (FightStance.Exile, default);
     }
     public override void Rest()
