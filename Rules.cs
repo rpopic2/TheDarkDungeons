@@ -2,9 +2,9 @@ public static class Rules
 {
     public const string version = "0.1";
     public static readonly bool MapDebug = false;
-    public static readonly bool SkipIntro = tr;
+    public static readonly bool SkipIntro = true;
     public const float vulMulp = 1.3f;
-    
+
     //player
     public const int capBasic = 3;
     public const float capByLevel = 0.4f;
