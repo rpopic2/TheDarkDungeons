@@ -181,7 +181,7 @@
         Card card;
         do
         {
-            IO.prh(player.Hand);
+            IO.pr(player.Hand);
             IO.newSelh(out index, out bool cancel);
             card = player.Hand[index] ?? throw new Exception();
             IO.del();
@@ -193,7 +193,7 @@
     private void ShowStats()
     {
         IO.pr(player);
-        IO.rkc();
+        IO.rk();
         IO.del(3);
     }
 }

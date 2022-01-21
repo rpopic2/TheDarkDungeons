@@ -5,3 +5,5 @@ exile 성공 메세지.
 eneity.cap to hand.cap
 
 program에있는 각종 행동들 플레이어로 옮기는게?
+
+intro 스킵하면 이동버그생김

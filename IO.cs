@@ -7,32 +7,12 @@ public static class IO
     private const string Emphasis = "=> ";
     private const string delString = "                                                                 ";
     private static readonly Player player = Player.instance;
-    private static readonly Hand playerHand = player.Hand;
 
-    ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
-    public static char rkc()
-       => Char.ToLower(Console.ReadKey(true).KeyChar);
-    ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
+    ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk()
     {
         ConsoleKeyInfo info = Console.ReadKey(true);
         return info;
-    }
-    ///<summary>Select from provided keys. Returns cancel.</summary>
-    public static void sel(char[] keys, out int index, out char key, out bool cancel, bool doDel = true)
-    {
-        do
-        {
-            key = rkc();
-            index = Array.IndexOf(keys, key);
-            if (key == CANCELKEY) goto Cancel;
-        } while (index == -1);
-        if (doDel) del();
-        cancel = false;
-        return;
-    Cancel:
-        del();
-        cancel = true;
     }
     public static void newSelh(int max, out int index, out ConsoleModifiers mod, out bool cancel)
     {
@@ -63,15 +43,6 @@ public static class IO
         newSelh(Player.instance.Cap, out result, out mod, out cancel);
     }
 
-    ///<summary>Select from string array.</summary>
-    public static void selsa(string[] options, out int resultIndex, out bool cancel)
-    {
-        char[] keys = options.ParseKeys();
-        sel(keys, out int index, out char key, out cancel);
-        if (!cancel) resultIndex = index;
-        else resultIndex = -1;
-    }
-
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
@@ -95,12 +66,6 @@ public static class IO
             printResult += $" {item} /";
         }
         pr(printResult);
-    }
-    ///<summary>Print hand</summary>
-    public static void prh(Hand hand)
-    {
-        pr(hand.ToString());
-        prfo(hand.Cur, "Select Index :");
     }
 
     public static void del()
