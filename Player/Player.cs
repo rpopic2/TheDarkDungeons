@@ -47,11 +47,6 @@ public class Player : Moveable
         Hand.SetAt(index, card);
         IO.del(2);
     }
-    public void Loot(int expGain, Card card)
-    {
-        exp.Gain(expGain);
-        Pickup(card);
-    }
     public void Exile(int index)
     {
         Hand.Exile(index);
