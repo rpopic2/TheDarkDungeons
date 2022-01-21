@@ -37,7 +37,6 @@ public static class IO
     public static void newSeln(int max, out int index, out ConsoleModifiers mod, out bool cancel)
     {
         bool found;
-        max--;
         do
         {
             ConsoleKeyInfo keyInfo = rk();
@@ -48,7 +47,7 @@ public static class IO
             if (index != -1) index--;
             cancel = key == CANCELKEY;
             if (cancel) return;
-            found = index != -1 && index <= max;
+            found = index != -1 && index <= max - 1;
         } while (!found);
     }
     public static void newSelh(int max, out int result, out bool cancel)
