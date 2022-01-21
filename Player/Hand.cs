@@ -1,0 +1,71 @@
+public struct Hand
+{
+    private Fightable owner;
+    public char[] Cur
+    {
+        get
+        {
+            int cap = owner.Cap;
+            char[] curOptions = new char[cap];
+            Array.Copy(IO.NUMERICKEYS, curOptions, cap);
+            return curOptions;
+        }
+    }
+    private Card?[] content;
+    //public int Cap { get => owner.Cap; }
+    public int Count
+    {
+        get => content.Count(card => card != null);
+    }
+
+    public Hand(Fightable owner)
+    {
+        this.owner = owner;
+        content = new Card?[owner.Cap];
+    }
+    public void SetAt(int index, Card card)
+    {
+        content[index] = card;
+    }
+    public readonly Card GetAt(int index)
+    {
+        return content[index] ?? throw new Exception();
+    }
+    public Card GetFirst()
+        => content.First(card => card != null) ?? throw new Exception();
+    public void Delete(Card card)
+    {
+        int index = Array.IndexOf(content, card);
+        content[index] = null;
+    }
+    public Card? this[int index]
+    {
+        get { return content[index]; }
+    }
+    public void StanceShift(int index)
+    {
+        Card? card = content[index];
+        content[index] = card?.StanceShift();
+    }
+    public void Exile(int index)
+    {
+        Card? card = content[index];
+        content[index] = card?.Exile();
+    }
+    public override string ToString()
+    {
+        string result = "Hand : ";
+        foreach (var item in content)
+        {
+            if (item == null)
+            {
+                result += "{EMPTY}";
+            }
+            else
+            {
+                result += item.ToString();
+            }
+        }
+        return result;
+    }
+}

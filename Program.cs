@@ -1,44 +1,45 @@
 ﻿public class Program
 {
-    public const string version = "0.1";
-    public const float vulMultiplier = 1.3f;
     public static Player player = Player.instance;
-    public static Program? main;
-    private bool skip = true;
+    public static int turn { get; private set; }
+    public static Program instance = default!;
+    private readonly CmdTuple basic = new CmdTuple();
+    private readonly CmdTuple stanceShift = new CmdTuple();
+    private readonly CmdTuple exile = new CmdTuple();
     public static readonly string[] classes = new string[] { "(W)arrior", "(A)ssassin", "(M)age" };
-    private CmdTuple basic = new CmdTuple();
-    private CmdTuple stanceShift = new CmdTuple();
-    private Monster monster;
     public static void Main()
     {
-        main = new Program();
+        instance = new Program();
     }
     public Program()
     {
+        instance = this;
         Console.Clear();
-        IO.pr("The Dark Dungeon " + version);
-        if (!skip) Intro();
-        IO.pr("Your adventure begins...\n");
+        IO.pr("The Dark Dungeon " + Rules.version);
+        if (!Rules.SkipIntro) Intro();
+        IO.pr("Your adventure begins...");
         InitActions();
-        monster = new Monster("Bat", ClassName.Warrior, 1, 3, 1, 2, 5, 2); //Test!
-        player.target = monster;
-        do
-        {
-            IO.Prompt(basic, out bool cancel);
-            if (!cancel) IO.pr("");
-        } while (player.Hp.point.Cur > 0);
+        Map.NewMap();
+        NewTurn();
+        MainLoop();
+        //BasicPrompt();
     }
     private void InitActions()
     {
-        basic.Add("(R)est", () => Rest());
         basic.Add("Use Card(W)", () => UseCard());
+        basic.Add("(R)est", () => Rest());
+        basic.Add("E(x)ile", () => ExileCard());
         basic.Add("(S)tats", () => ShowStats());
 
         stanceShift.Add("(S)tanceshift", () =>
         {
-            IO.SelectPlayerCard(out int x, out bool cancel);
-            if (!cancel) player.Hand.StanceShift(x);
+            //IO.SelectCardIndex(out int x, out bool cancel);
+            IO.newSelh(out int index, out bool cancel);
+            if (!cancel) player.Hand.StanceShift(index);
+            else IO.del();
         });
+
+        exile.Add("Card(W)", () => ExileCard());
     }
 
     private void Intro()
@@ -56,19 +57,111 @@
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
     //-------------------------
+    public void ElaspeTurn()
+    {
+        Map current = Map.Current;
+        Monster monster = current.monster;
+        monster.DoTurn();
+        if (current.NothingToPrint) IO.del(2);
+
+        bool playerFirst = player.Lun >= monster?.Lun;
+        Moveable? p1 = playerFirst ? player : monster;
+        Moveable? p2 = playerFirst ? monster : player;
+
+        p1?.OnTurnEnd();
+        p2?.OnTurnEnd();
+
+        NewTurn();
+    }
+    public void NewTurn()
+    {
+        turn++;
+        IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
+    }
+    private void MainLoop()
+    {
+        do
+        {
+            IO.pr(Map.Current);
+            ConsoleKey key = IO.rk().Key;
+            IO.del();
+            switch (key)
+            {
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.RightArrow:
+                case ConsoleKey.H:
+                    player.Move(1);
+                    break;
+                case ConsoleKey.DownArrow:
+                case ConsoleKey.LeftArrow:
+                case ConsoleKey.L:
+                    player.Move(-1);
+                    break;
+                case ConsoleKey.Q:
+                case ConsoleKey.Escape:
+                    Menu();
+                    break;
+                default:
+                    DefaultSwitch(key);
+                    break;
+            }
+
+        } while (player.IsAlive);
+    }
+    private void Menu()
+    {
+        do
+        {
+            IO.prfo(basic.Names.ToArray());
+            ConsoleKey key = IO.rk().Key;
+            IO.del();
+            switch (key)
+            {
+                case ConsoleKey.Q:
+                case ConsoleKey.Escape:
+                    return;
+                default:
+                    DefaultSwitch(key);
+                    break;
+            }
+
+        } while (player.IsAlive);
+    }
+    private void DefaultSwitch(ConsoleKey key)
+        {
+        switch (key)
+        {
+            case ConsoleKey.W:
+                UseCard();
+                break;
+            case ConsoleKey.R:
+                Rest();
+                break;
+            case ConsoleKey.S:
+                ShowStats();
+                break;
+            case ConsoleKey.X:
+                ExileCard();
+                break;
+        }
+    }
     private void Rest()
     {
         player.Rest();
         bool cancel = false;
         do
         {
-            IO.Prompt(stanceShift, out cancel);
+            IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
+            IO.pr(player.Hand);
+            IO.newSelh(out int index, out ConsoleModifiers mod, out cancel);
+            if (!cancel && mod == ConsoleModifiers.Alt) player.Hand.StanceShift(index);
+            IO.del(2);
         } while (!cancel);
-        OnPlayerAction();
+        ElaspeTurn();
     }
     private void UseCard()
     {
-        IO.SelectPlayerCard(out int x, out bool cancel);
+        IO.SelectCardIndex(out int x, out bool cancel);
         if (cancel)
         {
             IO.del();
@@ -80,27 +173,28 @@
             IO.del();
             return;
         }
-        player.UseCard(x);
-        OnPlayerAction();
+        player.UseCard(x, out bool elaspe);
+        if (elaspe) ElaspeTurn();
     }
-    private void OnPlayerAction()
+    private void ExileCard()
     {
-        monster.DoTurn();
-        if (player.Lun >= monster.Lun)
+        int index;
+        Card card;
+        do
         {
-            player.DoBattleAction();
-            monster.DoBattleAction();
-        }else
-        {
-            monster.DoBattleAction();
-            player.DoBattleAction();
-        }
-
+            IO.prh(player.Hand);
+            IO.newSelh(out index, out bool cancel);
+            card = player.Hand[index] ?? throw new Exception();
+            IO.del();
+            if (cancel) return;
+        } while (card.Stance == Stance.Star);
+        player.Hand.Exile(index);
+        ElaspeTurn();
     }
     private void ShowStats()
     {
-        IO.pr(player.Stats);
+        IO.pr(player);
         IO.rkc();
-        IO.del(4);
+        IO.del(3);
     }
 }

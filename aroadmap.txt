@@ -1,11 +1,7 @@
-맵과 이동
-mob spawns.
-mobs constructor data should be in a data file.
+read data // mobs constructor data should be in a data file.
 
-별뽑기와 크릿
+
+
 
 스킬.
 스킬드롭 랜덤
-
-
-study tdd!

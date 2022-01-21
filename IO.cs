@@ -1,51 +1,79 @@
+using System.Linq;
+
 public static class IO
 {
-    public static readonly char[] NUMERICKEYS = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+    public static readonly char[] NUMERICKEYS = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+    private const char CANCELKEY = 'q';
+    private const string Emphasis = "=> ";
+    private const string delString = "                                                                 ";
     private static readonly Player player = Player.instance;
     private static readonly Hand playerHand = player.Hand;
-    private static readonly string delString = "                                                                 ";
 
     ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
     public static char rkc()
        => Char.ToLower(Console.ReadKey(true).KeyChar);
+    ///<summary>ReadKey as lowercase char. Intercept is true.</summary>
+    public static ConsoleKeyInfo rk()
+    {
+        ConsoleKeyInfo info = Console.ReadKey(true);
+        return info;
+    }
     ///<summary>Select from provided keys. Returns cancel.</summary>
-    public static void sel(char[] keys, out int index, out char key, out bool cancel)
+    public static void sel(char[] keys, out int index, out char key, out bool cancel, bool doDel = true)
     {
         do
         {
             key = rkc();
             index = Array.IndexOf(keys, key);
-            if(key == 'q') goto Cancel;
+            if (key == CANCELKEY) goto Cancel;
         } while (index == -1);
-        del();
+        if (doDel) del();
         cancel = false;
         return;
-        Cancel :
-            del();
-            cancel = true;
+    Cancel:
+        del();
+        cancel = true;
     }
-    ///<summary>Select a card. Returns cancel.</summary>
-    public static void selc(out Card? card, out int index, out bool cancel)
+    public static void newSelh(int max, out int index, out ConsoleModifiers mod, out bool cancel)
     {
+        bool found;
         do
         {
-            sel(playerHand.Cur, out index, out char key, out cancel);
-            if(cancel) goto Cancel;
-        } while (playerHand[index] == null);
-        card = playerHand[index]!;
-        return;
-        Cancel :
-            card = null;
+            ConsoleKeyInfo keyInfo = rk();
+            mod = keyInfo.Modifiers;
+            Char key = keyInfo.KeyChar;
+            index = (int)Char.GetNumericValue(key);
+            if (index == 0) index = 10;
+            if (index != -1) index--;
+            cancel = key == CANCELKEY;
+            if (cancel) return;
+            found = index != -1 && index <= max - 1;
+        } while (!found);
     }
+    public static void newSelh(int max, out int result, out bool cancel)
+    {
+        newSelh(max, out result, out ConsoleModifiers mod, out cancel);
+    }
+    public static void newSelh(out int result, out bool cancel)
+    {
+        newSelh(Player.instance.Cap, out result, out ConsoleModifiers mod, out cancel);
+    }
+    public static void newSelh(out int result, out ConsoleModifiers mod, out bool cancel)
+    {
+        newSelh(Player.instance.Cap, out result, out mod, out cancel);
+    }
+
+    ///<summary>Select a card index.</summary>
     public static void selci(out int index, out bool cancel)
     {
         do
         {
-            sel(playerHand.Cur, out index, out char key, out cancel);
-            if(cancel) goto Cancel;
+            sel(playerHand.Cur, out index, out char key, out cancel, false);
+            if (cancel) goto Cancel;
         } while (playerHand[index] == null);
-        Cancel :
-            return;
+        del();
+    Cancel:
+        return;
     }
 
     ///<summary>Select from string array.</summary>
@@ -53,22 +81,16 @@ public static class IO
     {
         char[] keys = options.ParseKeys();
         sel(keys, out int index, out char key, out cancel);
-        if(!cancel) resultIndex = index;
+        if (!cancel) resultIndex = index;
         else resultIndex = -1;
-    }
-
-    ///<summary>Select and run</summary>
-    public static void selcmd(CmdTuple cmd, out bool cancel)
-    {
-        sel(cmd.Keys.ToArray(), out int index, out char key, out cancel);
-        if(!cancel) cmd.Invoke(key);
     }
 
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object x)
+    public static void pr(object x, bool emphasis = false)
     {
+        if (emphasis) x = Emphasis + x;
         Console.WriteLine(x);
     }
     ///<summary>Print in Formated Options</summary>
@@ -95,7 +117,7 @@ public static class IO
 
     public static void del()
     {
-        if(Console.CursorTop == 0) return;
+        if (Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
         pr(delString);
         Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -107,15 +129,17 @@ public static class IO
             del();
         }
     }
-    public static void SelectPlayerCard(out int index, out bool cancel)
+    public static void SelectCardIndex(out int index, out bool cancel)
     {
         prh(playerHand);
         selci(out index, out cancel);
-        del();
+        if (!cancel) del();
     }
+
     public static void Prompt(CmdTuple cmd, out bool cancel)
     {
         IO.prfo(cmd.Names.ToArray());
-        IO.selcmd(cmd, out cancel);
+        sel(cmd.Keys.ToArray(), out int index, out char key, out cancel);
+        if (!cancel) cmd.Invoke(key);
     }
 }

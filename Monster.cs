@@ -1,13 +1,18 @@
-public class Monster : Entity
+public class Monster : Moveable
 {
+    private int expOnKill;
     private static readonly Player player = Player.instance;
-    public Monster(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
+    public Monster(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con, int expOnKill, Position spawnPoint) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
+        this.expOnKill = expOnKill;
         for (int i = 0; i < cap; i++)
         {
-            Pickup(Draw().StanceShift());
+            int attack = rnd.Next(0, 11);
+            Card card = Draw();
+            if(attack > 2) card.StanceShift();
+            Pickup(card);
         }
-        target = player;//temp
+        Pos = spawnPoint;
     }
     public void Pickup(Card card)
     {
@@ -16,21 +21,31 @@ public class Monster : Entity
     protected override void OnDeath()
     {
         base.OnDeath();
-        player.exp.Gain(3);
-        player.Pickup(Draw());
-        player.target = null;
+        player.Loot(expOnKill, Draw());
+        Map.Current.SpawnMob();
     }
     public void DoTurn()
     {
-        if (Hp.IsAlive)
-            if (Hand.Count > 0)
+        if (!IsAlive) return;
+
+        if (Hand.Count > 0)
+        {
+            if (Target is null)
             {
-                UseCard(Hand.GetFirst());
+                int moveX = rnd.Next(2) == 1 ? 1 : -1;
+                int direction = Pos.facing == Facing.Front ? -1 : 1;
+                if (Map.Current.IsAtEnd(Pos.x)) _Move(direction, out char obj);
+                else _Move(moveX, out char obj);
             }
             else
             {
-                Rest();
+                _UseCard(Hand.GetFirst());
             }
+        }
+        else
+        {
+            Rest();
+        }
     }
     public override void Rest()
     {
@@ -40,5 +55,9 @@ public class Monster : Entity
     public void UseCard()
     {
         Card? card = Hand.GetFirst();
+    }
+    public override char ToChar()
+    {
+        return Pos.facing == Facing.Front ? 'b' : 'd';
     }
 }
