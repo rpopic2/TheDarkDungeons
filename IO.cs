@@ -1,3 +1,5 @@
+using System.Linq;
+
 public static class IO
 {
     public static readonly char[] NUMERICKEYS = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
@@ -31,6 +33,26 @@ public static class IO
     Cancel:
         del();
         cancel = true;
+    }
+    public static void newSeln(int max, out int index, out ConsoleModifiers mod, out bool cancel)
+    {
+        bool found;
+        do
+        {
+            ConsoleKeyInfo keyInfo = rk();
+            mod = keyInfo.Modifiers;
+            Char key = keyInfo.KeyChar;
+            index = (int)Char.GetNumericValue(key);
+            if(index == 0) index = 10;
+            index --;
+            cancel = key == CANCELKEY;
+            if(cancel) return;
+            found = index != -1 && index <= max;
+        } while (!found);
+    }
+    public static void newSelh(int max, out int result, out bool cancel)
+    {
+        newSeln(max, out result, out ConsoleModifiers mod, out cancel);
     }
     ///<summary>Select a card.</summary>
     public static void selc(out Card card, out int index, out bool cancel)
@@ -72,7 +94,7 @@ public static class IO
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object x, bool emphasis = false)
     {
-        if(emphasis) x = Emphasis + x;
+        if (emphasis) x = Emphasis + x;
         Console.WriteLine(x);
     }
     ///<summary>Print in Formated Options</summary>

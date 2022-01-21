@@ -31,7 +31,7 @@
         basic.Add("E(x)ile", () => ExileCard());
         basic.Add("(S)tats", () => ShowStats());
 
-        stanceShift.Add("(S)tanceshift", () =>
+        stanceShift.Add("(S)tanceshift?", () =>
         {
             IO.SelectCardIndex(out int x, out bool cancel);
             if (!cancel) player.Hand.StanceShift(x);

@@ -32,7 +32,8 @@ public class Player : Moveable
     {
         IO.pr("\nFound a card." + card);
         IO.pr(Hand);
-        IO.sel(Hand.Cur, out int index, out char key, out bool cancel);
+        IO.newSelh(Hand.Cap, out int index, out bool cancel);
+        IO.del();
         if (cancel)
         {
             if (card.Stance != Stance.Star)
