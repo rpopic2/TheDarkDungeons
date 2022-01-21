@@ -13,6 +13,7 @@ public class Moveable : Fightable
 
     protected virtual bool _Move(int x, out char obj)
     {
+        stance = (FightStance.Move, x);
         Map current = Map.Current;
         Position newPos = Pos + x;
         bool success = current.Tiles.TryGet(newPos.x, out obj);
@@ -22,7 +23,6 @@ public class Moveable : Fightable
         {
             Pos = newPos;
             current.UpdateMoveable(this);
-            stance = (FightStance.Move, x);
         }
         else
         {
