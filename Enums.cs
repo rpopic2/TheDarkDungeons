@@ -19,6 +19,10 @@ public enum Facing
 {
     Front, Back
 }
+public enum FightStance
+{
+    Nothing, Rest, Move, Attack, Dodge, Exile
+}
 
 public static class Extensions
 {

@@ -7,10 +7,9 @@ public class Fightable : Mass
     public GamePoint Hp { get; protected set; }
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
-    private int tempAtk;
-    private int tempDef;
-    private int tempStar;
-    public bool IsResting { get; set; }
+    public bool IsResting => stance.stance == FightStance.Rest;
+    public (FightStance stance, int amount) stance = (default, default);
+    public int star;
 
     public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -41,7 +40,7 @@ public class Fightable : Mass
             elaspeTurn = false;
             return;
         }
-        if (card.Stance == Stance.Star)
+        if (card.Stance == Stance.Star && star <= 0)
         {
             elaspeTurn = false;
             IO.pr("Next move will be reinforced.");
@@ -54,13 +53,13 @@ public class Fightable : Mass
         switch (card.Stance)
         {
             case Stance.Attack:
-                tempAtk += card.Sol;
+                stance = (FightStance.Attack, card.Sol);
                 break;
             case Stance.Dodge:
-                tempDef += card.Lun;
+                stance = (FightStance.Dodge, card.Sol);
                 break;
             case Stance.Star:
-                tempStar = card.Con;
+                star = card.Con;
                 break;
         }
     }
@@ -68,41 +67,42 @@ public class Fightable : Mass
     {
         if (!IsAlive) return;
         if (Target is null) return;
-
-        if (tempAtk > 0)
+        if (stance.stance == FightStance.Attack)
         {
-            string atkString = $"{Name} attacks with {tempAtk} damage.";
-            if (tempStar > 0)
+            string atkString = $"{Name} attacks with {stance.amount} damage.";
+            if (star > 0)
             {
-                int tempStar = this.tempStar;
-                tempAtk += tempStar;
-                atkString += $"..and {tempStar} more damage! (total {tempAtk})";
+                stance.amount += star;
+                atkString += $"..and {star} more damage! (total {stance.amount})";
+                star = 0;
             }
             IO.pr(atkString);
         }
 
-        if (tempAtk > 0) Target.TryDefence(tempAtk);
+        Target.TryDefence(stance.stance == FightStance.Attack ? stance.amount : 0);
         //if (tempAtk <= 0 && Target.tempDef > 0) IO.pr($"But {Target.Name} did not attack...");
     }
     private void TryDefence(int damage)
     {
-        if (IsResting)
+
+        if (stance.stance == FightStance.Dodge)
+        {
+            string tempStr = $"{Name} dodges {stance.amount} damage.";
+            if (star > 0)
+            {
+                stance.amount += star;
+                tempStr += $"..and {star} more damage! (total {stance.amount})";
+                star = 0;
+            }
+            if (damage <= 0) tempStr += "..but oppenent did not attack...";
+            IO.pr(tempStr);
+        }
+        else if (damage > 0 && IsResting)
         {
             damage = (int)MathF.Round(damage * Rules.vulMulp);
             IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
         }
-        else if (tempDef > 0)
-        {
-            string tempStr = $"{Name} dodges {tempDef} damage.";
-            if (tempStar > 0)
-            {
-                int tempStar = this.tempStar;
-                tempDef += tempStar;
-                tempStr += $"..and {tempStar} more damage! (total {tempDef})";
-            }
-            IO.pr(tempStr);
-        }
-        TakeDamage(damage - tempDef);
+        if (damage > 0) TakeDamage(damage - stance.amount);
     }
     private void TakeDamage(int damage)
     {
@@ -113,16 +113,12 @@ public class Fightable : Mass
     {
         /*if(Map.Current.IsVisible((Moveable)this))*/
         IO.pr($"{Name} is resting a turn.");
-        IsResting = true;
+        stance = (FightStance.Rest, 0);
     }
 
     public virtual void OnTurnEnd()
     {
-        TryAttack();
-        IsResting = false;
-        tempAtk = 0;
-        tempDef = 0;
-        tempStar = 0;
+        stance = (default, default);
     }
     public override string ToString() =>
         $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";

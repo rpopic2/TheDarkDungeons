@@ -65,7 +65,8 @@
         bool playerFirst = player.Lun >= monster?.Lun;
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
-
+        p1?.TryAttack();
+        p2?.TryAttack();
         p1?.OnTurnEnd();
         p2?.OnTurnEnd();
 
@@ -126,7 +127,7 @@
         } while (player.IsAlive);
     }
     private void DefaultSwitch(ConsoleKey key)
-        {
+    {
         switch (key)
         {
             case ConsoleKey.W:
