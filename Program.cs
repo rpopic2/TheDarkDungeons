@@ -28,7 +28,7 @@
     {
         basic.Add("Use Card(W)", () => UseCard());
         basic.Add("(R)est", () => Rest());
-        basic.Add("E(x)ile", () => IO.Prompt(exile, out bool cancel2));
+        basic.Add("E(x)ile", () => ExileCard());
         basic.Add("(S)tats", () => ShowStats());
 
         stanceShift.Add("(S)tanceshift", () =>

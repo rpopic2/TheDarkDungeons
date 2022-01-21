@@ -67,13 +67,6 @@ public static class IO
         else resultIndex = -1;
     }
 
-    ///<summary>Select and run</summary>
-    public static void selcmd(CmdTuple cmd, out bool cancel)
-    {
-        sel(cmd.Keys.ToArray(), out int index, out char key, out cancel);
-        if (!cancel) cmd.Invoke(key);
-    }
-
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
@@ -124,10 +117,7 @@ public static class IO
         selci(out index, out cancel);
         if (!cancel) del();
     }
-    public static void SelectCardUse()
-    {
-        prh(playerHand);
-    }
+
     public static void Prompt(CmdTuple cmd, out bool cancel)
     {
         IO.prfo(cmd.Names.ToArray());
