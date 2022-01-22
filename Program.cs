@@ -23,6 +23,7 @@
         Console.Clear();
         IO.pr("The Dark Dungeon " + Rules.version);
         if (!Rules.SkipIntro) Intro();
+        Console.Clear();
         IO.pr("Your adventure begins...");
         Map.NewMap();
         NewTurn();
@@ -30,16 +31,15 @@
 
     private void Intro()
     {
-        IO.pr("Press any key to start...");
-        Console.ReadKey(true);
+        IO.rk("Press any key to start...");
 
         IO.pr("Choose charactor`s name...");
-        string name = Console.ReadLine() ?? "";
+        string name = Console.ReadLine() ?? "Michael";
         IO.pr("Choose your class...");
         IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
-        player = Player.instance = new Player(name, className, 3, 5, 0, 2, 2, 2);
+        player = Player.instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
     }
     //-------------------------
     private void MainLoop()

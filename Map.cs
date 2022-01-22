@@ -34,7 +34,6 @@ public class Map
         monster = new Monster("Bat", ClassName.Warrior, cap, hp, level, sol, lun, 2, expOnKill, spawnPoint);
         if (IsVisible(monster)) monster.Move(2);
         UpdateMoveable(monster);
-        IO.pr("Mob spawned at " + monster.Pos);
     }
 
     public void UpdateMoveable(Moveable mov)
