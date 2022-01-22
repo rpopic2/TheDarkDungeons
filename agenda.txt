@@ -1,4 +1,3 @@
-player is istatic class?
 ondeath
 gamepoint to event
 gamepoint onvalchange -> support delta

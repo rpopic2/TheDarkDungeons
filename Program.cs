@@ -11,6 +11,7 @@
         do
         {
             instance.MainLoop();
+            if (player.TurnStance.stance != Stance.None) instance.ElaspeTurn();
         } while (player.IsAlive);
     }
     public Program()
@@ -62,7 +63,6 @@
                 DefaultSwitch(key);
                 break;
         }
-        if (player.TurnStance.stance != Stance.None) ElaspeTurn();
     }
     private void Menu()
     {
@@ -100,8 +100,6 @@
         bool playerFirst = player.Lun >= monster?.Lun;
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
-
-
 
         p1?.TryAttack();
         p2?.TryAttack();

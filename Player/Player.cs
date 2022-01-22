@@ -23,11 +23,6 @@ public class Player : Moveable
         Hp.Max += level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
-    protected override void OnDeath()
-    {
-        base.OnDeath();
-        IO.pr(this);
-    }
     public void Pickup(Card card)
     {
         IO.pr("\nFound a card." + card);
