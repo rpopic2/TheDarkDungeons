@@ -30,7 +30,7 @@ public class Map
         int sol = 2 + Program.turn.FloorMult(Rules.msolByTurn);
         int lun = 1 + Program.turn.FloorMult(Rules.mlunByTurn);
         int cap = 1 + level.FloorMult(Rules.mcapByLevel);
-        Position spawnPoint = new Position(rnd.Next(1, Map.Current.length - 2 - level.FloorMult(0.4f)), 0, Facing.Back);
+        Position spawnPoint = new Position(rnd.Next(2, Map.Current.length - 2 - level.FloorMult(0.4f)), 0, Facing.Back);
         monster = new Monster("Bat", ClassName.Warrior, cap, hp, level, sol, lun, 2, expOnKill, spawnPoint);
         if (IsVisible(monster)) monster.Move(2);
         UpdateMoveable(monster);

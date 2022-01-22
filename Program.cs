@@ -105,7 +105,7 @@
     {
         Monster monster = Map.Current.monster;
         monster.DoTurn();
-        if (player.DidPrint && monster.DidPrint)
+        if (!player.DidPrint && !monster.DidPrint)
         {
             IO.del(2);
         }
