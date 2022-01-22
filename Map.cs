@@ -16,26 +16,14 @@ public class Map
     {
         Current = this;
         this.length = length;
-        tiles = NewEmptyMap(length, MapSymb.road);
+        tiles = NewEmptyArray(length, MapSymb.road);
         moveables = new Moveable[length];
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
         SpawnBat();
     }
-    // public void SpawnMob()
-    // {
-    //     MonsterInfo bat = new MonsterInfo("Bat", ClassName.Assassin, (2, 0, 0.03f), new PointInfo(1, 0.2f), new PointInfo(2, 0.4f), new PointInfo(1, 1), new PointInfo(1, 0.2f), new PointInfo(3, 0.3f));
-    //     int turn = Program.turn;
-    //     int hp = 2 + turn.RoundMult(0.03f);
-    //     int expOnKill = 3 + level.RoundMult(0.3f);
-    //     int sol = 2 + level.FloorMult(0.4f);
-    //     int lun = 1 + level.FloorMult(1);
-    //     int cap = 1 + level.FloorMult(0.2f);
-    //     Position spawnPoint = new Position(rnd.Next(2, Map.Current.length - 1), 0, Facing.Back);
-    //     monster = new Monster("Bat", ClassName.Warrior, cap, hp, level, sol, lun, 2, expOnKill, spawnPoint);
-    //     _Spawn(monster);
-    // }
+
     public void SpawnBat()
     {
         List<int> fullMap = GetSpawnableIndices();
@@ -43,10 +31,10 @@ public class Map
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
 
-        int hp = (int)MathF.Round(Program.turn * 0.8f);
+        int hp = (int)MathF.Round(level * 0.8f);
         int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
 
-        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, (2, 1, 2), expOnKill, spawnPoint);
+        monster = new Monster("Bat", ClassName.Warrior, level, hp, 1, (2, 1, 2), 3, spawnPoint);
         UpdateMoveable(monster);
     }
 
@@ -80,7 +68,7 @@ public class Map
     {
         Moveable player = Player.instance;
         int front = player.Pos.Front;
-        char[] result = NewEmptyMap(length, MapSymb.invisible);
+        char[] result = NewEmptyArray(length, MapSymb.invisible);
         bool success2 = tiles.TryGet(front, out char obj2);
         if (success2) result[front] = obj2!;
 
@@ -114,7 +102,7 @@ public class Map
         Current.monster.UpdateTarget();
     }
 
-    private static char[] NewEmptyMap(int length, char fill)
+    private static char[] NewEmptyArray(int length, char fill)
     {
         char[] result = new char[length];
         for (int i = 0; i < length; i++)
