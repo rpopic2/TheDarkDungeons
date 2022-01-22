@@ -26,4 +26,5 @@ public struct Position
         original.oldX = original.x;
         return original;
     }
+    public override string ToString() => $"{x} facing {facing.ToString()}";
 }

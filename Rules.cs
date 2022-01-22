@@ -12,7 +12,7 @@ public static class Rules
     public const float hpByLevel = 1f;
 
     //map
-    public const int MapLengthMin = 4;
+    public const int MapLengthMin = 5;
     public const int MapLengthMax = 8;
     public const float MapWidthByLevel = 0.5f;
 
