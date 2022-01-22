@@ -3,10 +3,8 @@
     public static Player player = Player.instance;
     public static int turn { get; private set; }
     public static Program instance = default!;
-    private readonly CmdTuple basic = new CmdTuple();
-    private readonly CmdTuple stanceShift = new CmdTuple();
-    private readonly CmdTuple exile = new CmdTuple();
     public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
+    public static readonly string[] actions = new string[] { "Use card(W)", "(R)est", "(S)tats", "E(x)ile" };
     public static void Main()
     {
         instance = new Program();
@@ -18,26 +16,9 @@
         IO.pr("The Dark Dungeon " + Rules.version);
         if (!Rules.SkipIntro) Intro();
         IO.pr("Your adventure begins...");
-        InitActions();
         Map.NewMap();
         NewTurn();
         MainLoop();
-    }
-    private void InitActions()
-    {
-        basic.Add("Use Card(W)", () => player.UseCard());
-        basic.Add("(R)est", () => player.Rest());
-        basic.Add("E(x)ile", () => player.Exile());
-        basic.Add("(S)tats", () => player.ShowStats());
-
-        stanceShift.Add("(S)tanceshift", () =>
-        {
-            IO.seln(out int index, out bool cancel);
-            if (!cancel) player.Hand.StanceShift(index);
-            else IO.del();
-        });
-
-        exile.Add("Card(W)", () => player.Exile());
     }
 
     private void Intro()
@@ -113,7 +94,7 @@
     {
         do
         {
-            IO.prfo(basic.Names.ToArray());
+            IO.prfo(actions);
             ConsoleKey key = IO.rk().Key;
             IO.del();
             switch (key)

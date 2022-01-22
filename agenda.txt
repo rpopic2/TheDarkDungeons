@@ -1,3 +1,4 @@
+rm cmdtuple
 stance to struct, elaspeturn by auto
 
 intro 스킵하면 이동버그생김
@@ -8,5 +9,3 @@ intro 스킵하면 이동버그생김
 
 gamepoint to event
 gamepoint onvalchange -> support delta
-
-rm cmdtuple
