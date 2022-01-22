@@ -32,7 +32,8 @@ public class Fightable : Mass
     }
     public virtual void UseCard(int index)
     {
-        Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
+        if (Hand[index] is null) return;
+        Card card = Hand[index] ?? default;
         if (Target is null) return;
         if (card.Stance == CardStance.Star && star <= 0)
         {

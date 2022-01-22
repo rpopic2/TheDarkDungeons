@@ -63,7 +63,11 @@
                 DefaultSwitch(key2);
                 break;
             default:
-                //if(info.KeyChar)
+                if (IO.chkn(info.KeyChar, player.Hand.Cap, out int index))
+                {
+                    player.UseCard(index);
+                    break;
+                }
                 DefaultSwitch(key);
                 break;
         }

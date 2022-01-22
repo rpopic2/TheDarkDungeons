@@ -91,12 +91,8 @@ public class Player : Moveable
         {
             IO.selh(out int index, out bool cancel, out ConsoleModifiers mod);
             if (cancel) return;
-            Card? card = Hand[index];
-            if (card is not null)
-            {
-                UseCard(index);
-                return;
-            }
+            UseCard(index);
+            return;
         } while (true);
 
     }
