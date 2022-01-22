@@ -18,7 +18,7 @@ public class Player : Moveable
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
         level++;
         exp.UpdateMax();
-        Console.WriteLine("Level up! : " + level);
+        IO.pr("Level up! : " + level, true);
         Sol += level.FloorMult(Rules.solByLevel);
         Cap = Rules.capBasic + level.FloorMult(Rules.capByLevel);
         Hp.Max += level.FloorMult(Rules.hpByLevel);
@@ -27,9 +27,7 @@ public class Player : Moveable
     public void Pickup(Card card)
     {
         IO.pr("\nFound a card." + card);
-        IO.pr(Hand);
-        IO.seln(out int index, out bool cancel, out ConsoleModifiers mod);
-        IO.del();
+        IO.selh(out int index, out bool cancel, out ConsoleModifiers mod);
         if (mod == ConsoleModifiers.Alt) card.StanceShift();
         if (cancel)
         {
@@ -49,10 +47,8 @@ public class Player : Moveable
         Card card;
         do
         {
-            IO.pr(Hand);
-            IO.seln(out index, out bool cancel);
+            IO.selh(out index, out bool cancel, out ConsoleModifiers mod);
             card = Hand[index] ?? throw new Exception();
-            IO.del();
             if (cancel) return;
         } while (card.Stance == CardStance.Star);
         IO.pr("Exiled a card.");
@@ -68,29 +64,24 @@ public class Player : Moveable
         do
         {
             IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
-            IO.pr(Hand);
-            IO.seln(out int index, out cancel, out ConsoleModifiers mod);
+            IO.selh(out int index, out cancel, out ConsoleModifiers mod);
             if (!cancel && mod == ConsoleModifiers.Alt) Hand.StanceShift(index);
-            IO.del(2);
+            IO.del();
         } while (!cancel);
         OnAction();
     }
     public void UseCard()
     {
-        IO.pr(Hand);
-        IO.seln(out int index, out bool cancel);
+        IO.selh(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
-            IO.del();
             return;
         }
         Card? card = Hand[index];
         if (card is null)
         {
-            IO.del();
             return;
         }
-        IO.del();
         UseCard(index, out bool elaspe);
         if (elaspe) OnAction();
     }

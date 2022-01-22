@@ -9,18 +9,21 @@ public static class IO
     private static readonly Player player = Player.instance;
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
-    public static ConsoleKeyInfo rk()
+    public static ConsoleKeyInfo rk() => Console.ReadKey(true);
+
+    public static ConsoleKeyInfo rk(object obj)
     {
-        ConsoleKeyInfo info = Console.ReadKey(true);
+        pr(obj);
+        ConsoleKeyInfo info = rk();
+        del();
         return info;
     }
-    public static void seln(out int index, out bool cancel, out ConsoleModifiers mod, int max = -1)
+    public static void seln(object obj, out int index, out bool cancel, out ConsoleModifiers mod, int max)
     {
-        if (max == -1) max = player.Cap;
         bool found;
         do
         {
-            ConsoleKeyInfo keyInfo = rk();
+            ConsoleKeyInfo keyInfo = rk(obj);
             mod = keyInfo.Modifiers;
             Char key = keyInfo.KeyChar;
             index = (int)Char.GetNumericValue(key);
@@ -31,34 +34,24 @@ public static class IO
             found = index != -1 && index <= max - 1;
         } while (!found);
     }
-    public static void seln(out int result, out bool cancel, int max = -1)
+    public static void selh(out int result, out bool cancel, out ConsoleModifiers mod)
     {
-        seln(out result, out cancel, out ConsoleModifiers mod, max);
-    }
-    public static void nsel(object obj, out ConsoleKey key)
-    {
-        pr(obj);
-        key = rk().Key;
-        del();
-    }
-    public static void nself(string[] obj, out ConsoleKey key)
-    {
-        prfo(obj);
-        key = rk().Key;
-        del();
+        seln(player.Hand, out result, out cancel, out mod, player.Cap);
     }
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object x, bool emphasis = false, bool newline = false)
     {
+        if (x is string[])
+        {
+            _prfo(x); return;
+        }
         if (emphasis) x = Emphasis + x;
         if (newline) x = "\n" + x;
         Console.WriteLine(x);
     }
-    ///<summary>Print in Formated Options</summary>
-    public static void prfo(string[] options, string comment = "Select :")
-        => _prfo(options, comment);
+
     ///<summary>Print in Formated Options</summary>
     private static void _prfo(object options, string comment = "Select :")
     {

@@ -36,8 +36,7 @@
         IO.pr("Choose charactor`s name...");
         string name = Console.ReadLine() ?? "";
         IO.pr("Choose your class...");
-        IO.prfo(classes);
-        IO.seln(out int index, out bool cancel, classes.Count());
+        IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
         player = Player.instance = new Player(name, className, 3, 5, 0, 2, 2, 2);
@@ -45,7 +44,7 @@
     //-------------------------
     private void MainLoop()
     {
-        IO.nsel(Map.Current, out ConsoleKey key);
+        ConsoleKey key = IO.rk(Map.Current).Key;
         switch (key)
         {
             case ConsoleKey.RightArrow:
@@ -58,7 +57,7 @@
                 break;
             case ConsoleKey.Q:
             case ConsoleKey.Escape:
-                IO.nself(actions, out ConsoleKey key2);
+                ConsoleKey key2 = IO.rk(actions).Key;
                 DefaultSwitch(key2);
                 break;
             default:
