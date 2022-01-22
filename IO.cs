@@ -35,7 +35,7 @@ public static class IO
     }
     public static void selh(out int result, out bool cancel, out ConsoleModifiers mod)
     {
-        seln(player.Hand, out result, out cancel, out mod, player.Cap);
+        seln(player.Hand, out result, out cancel, out mod, player.Hand.Cap);
     }
 
     ///<summary>Print.

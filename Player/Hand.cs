@@ -1,21 +1,22 @@
 public class Hand
 {
-    private Fightable owner;
+    //private Fightable owner;
     private Card?[] content;
-    //public int Cap { get => owner.Cap; }
+    public int Cap {get; private set;}
     public int Count
     {
         get => content.Count(card => card != null);
     }
 
-    public Hand(Fightable owner)
+    public Hand(int cap)
     {
-        this.owner = owner;
-        content = new Card?[owner.Cap];
+        Cap = cap;
+        content = new Card?[cap];
     }
-    public void UpdateHandCap()
+    public void UpdateHandCap(int cap)
     {
-        Array.Resize(ref content, owner.Cap);
+        Cap = cap;
+        Array.Resize(ref content, Cap);
     }
     public void SetAt(int index, Card card)
     {

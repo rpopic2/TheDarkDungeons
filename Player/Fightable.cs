@@ -3,7 +3,6 @@ public class Fightable : Mass
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
-    public int Cap { get; protected set; }
     public GamePoint Hp { get; protected set; }
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
@@ -17,8 +16,7 @@ public class Fightable : Mass
         Name = name;
         ClassName = className;
         if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
-        Cap = cap;
-        Hand = new Hand(this);
+        Hand = new Hand(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Sol = sol;
@@ -117,7 +115,7 @@ public class Fightable : Mass
         stance = (default, default);
     }
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tCap : {Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
     private int GetRandomStat(int stat) =>
         rnd.Next(1, stat + 1);
     public bool IsAlive => !Hp.IsMin;
