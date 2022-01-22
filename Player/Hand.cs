@@ -1,4 +1,4 @@
-public struct Hand
+public class Hand
 {
     private Fightable owner;
     private Card?[] content;
@@ -13,11 +13,15 @@ public struct Hand
         this.owner = owner;
         content = new Card?[owner.Cap];
     }
+    public void UpdateHandCap()
+    {
+        Array.Resize(ref content, owner.Cap);
+    }
     public void SetAt(int index, Card card)
     {
         content[index] = card;
     }
-    public readonly Card GetAt(int index)
+    public Card GetAt(int index)
     {
         return content[index] ?? throw new Exception();
     }

@@ -38,6 +38,7 @@ public class Player : Moveable
                 break;
         }
         Cap = Rules.capBasic + level.FloorMult(Rules.capByLevel);
+        Hand.UpdateHandCap();
         Hp.Max += level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
