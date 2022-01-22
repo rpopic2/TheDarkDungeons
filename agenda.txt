@@ -1,7 +1,5 @@
 stance to struct, elaspeturn by auto
 
-program에있는 각종 행동들 플레이어로 옮기는게?
-
 intro 스킵하면 이동버그생김
 
 가끔 박쥐 카드 안썼는데 쉼 -> 다음맵 가자마자 코앞에서 만나면 그러는듯?

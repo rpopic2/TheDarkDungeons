@@ -31,7 +31,7 @@ public class Fightable : Mass
     {
         IO.pr($"{Name} died. {Hp}", true, true);
     }
-    public void UseCard(int index, out bool elaspeTurn)
+    public virtual void UseCard(int index, out bool elaspeTurn)
     {
         elaspeTurn = true;
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");

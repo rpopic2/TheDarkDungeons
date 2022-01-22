@@ -25,10 +25,10 @@
     }
     private void InitActions()
     {
-        basic.Add("Use Card(W)", () => UseCard());
+        basic.Add("Use Card(W)", () => player.UseCard());
         basic.Add("(R)est", () => player.Rest());
         basic.Add("E(x)ile", () => player.Exile());
-        basic.Add("(S)tats", () => ShowStats());
+        basic.Add("(S)tats", () => player.ShowStats());
 
         stanceShift.Add("(S)tanceshift", () =>
         {
@@ -134,42 +134,17 @@
         switch (key)
         {
             case ConsoleKey.W:
-                UseCard();
+                player.UseCard();
                 break;
             case ConsoleKey.R:
                 player.Rest();
                 break;
             case ConsoleKey.S:
-                ShowStats();
+                player.ShowStats();
                 break;
             case ConsoleKey.X:
                 player.Exile();
                 break;
         }
-    }
-    private void UseCard()
-    {
-        IO.pr(player.Hand);
-        IO.seln(out int index, out bool cancel);
-        if (cancel)
-        {
-            IO.del();
-            return;
-        }
-        Card? card = player.Hand[index];
-        if (card is null)
-        {
-            IO.del();
-            return;
-        }
-        IO.del();
-        player.UseCard(index, out bool elaspe);
-        if (elaspe) ElaspeTurn();
-    }
-    private void ShowStats()
-    {
-        IO.pr(player);
-        IO.rk();
-        IO.del(3);
     }
 }

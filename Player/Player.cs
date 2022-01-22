@@ -79,6 +79,25 @@ public class Player : Moveable
         } while (!cancel);
         Program.instance.ElaspeTurn();
     }
+    public void UseCard()
+    {
+        IO.pr(Hand);
+        IO.seln(out int index, out bool cancel);
+        if (cancel)
+        {
+            IO.del();
+            return;
+        }
+        Card? card = Hand[index];
+        if (card is null)
+        {
+            IO.del();
+            return;
+        }
+        IO.del();
+        UseCard(index, out bool elaspe);
+        if (elaspe) Program.instance.ElaspeTurn();
+    }
     public override void Move(int x)
     {
         bool success = _Move(x, out char obj);
@@ -89,6 +108,12 @@ public class Player : Moveable
             Pos = new Position();
         }
         Program.instance.ElaspeTurn();
+    }
+    public void ShowStats()
+    {
+        IO.pr(this);
+        IO.rk();
+        IO.del(3);
     }
     public override string ToString() =>
         base.ToString() + $"\nExp : {exp}";
