@@ -1,8 +1,4 @@
-read data // mobs constructor data should be in a data file.
-
-
-
-1렙던젼 너무쉬움
-
 스킬.
 스킬드롭 랜덤
+
+different mobs
