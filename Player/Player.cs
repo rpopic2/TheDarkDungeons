@@ -6,13 +6,14 @@ public class Player : Moveable
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
-        exp = new Exp(this, () => OnLvUp());
+        exp = new Exp(this);
+        exp.point.OnOverflow += new EventHandler(OnLvUp);
         for (int i = 0; i < cap; i++)
         {
             Hand.SetAt(Hand.Count, Draw());
         }
     }
-    private void OnLvUp()
+    private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
         level++;

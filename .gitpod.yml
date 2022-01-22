@@ -4,3 +4,4 @@ vscode:
   extensions:
     - muhammad-sammy.csharp
     - ms-dotnettools.csharp
+    - eamodio.gitlens

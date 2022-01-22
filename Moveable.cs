@@ -42,9 +42,9 @@ public class Moveable : Fightable
         UpdateTarget();
     }
 
-    protected override void OnDeath()
+    protected override void OnDeath(object? sender, EventArgs e)
     {
-        base.OnDeath();
+        base.OnDeath(sender, e);
         Map.Current.UpdateMoveable(this);
         Map.Current.UpdateMoveable(this);
     }

@@ -1,3 +1,1 @@
-ondeath
-gamepoint to event
 gamepoint onvalchange -> support delta

@@ -14,26 +14,25 @@ public class GamePoint
                     return;
                 }
                 cur = value - Max;
-                OnOverflow();
+                OnOverflow?.Invoke(this, EventArgs.Empty);
             }
             else if (value <= Min)
             {
                 cur = Min;
                 if (Option == GamePointOption.Stacking) return;
-                OnOverflow();
+                OnOverflow?.Invoke(this, EventArgs.Empty);
             }
             else cur = value;
         }
     }
     public int Max { get; set; }
     public const int Min = 0;
-    public Action OnOverflow = () => { };
+    public event EventHandler? OnOverflow;
     public readonly GamePointOption Option;
 
-    public GamePoint(int max, GamePointOption option, Action overFlow)
+    public GamePoint(int max, GamePointOption option)
     {
         Max = max;
-        OnOverflow = overFlow + OnOverflow;
         Option = option;
         if (option == GamePointOption.Reserving) cur = Max;
     }

@@ -19,7 +19,8 @@ public class Fightable : Mass
         if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
         Cap = cap;
         Hand = new Hand(this);
-        Hp = new GamePoint(maxHp, GamePointOption.Reserving, () => OnDeath());
+        Hp = new GamePoint(maxHp, GamePointOption.Reserving);
+        Hp.OnOverflow += new EventHandler(OnDeath);
         Sol = sol;
         Lun = lun;
         Con = con;
@@ -27,7 +28,7 @@ public class Fightable : Mass
     }
     public override Card Draw()
         => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), CardStance.Attack);
-    protected virtual void OnDeath()
+    protected virtual void OnDeath(object? sender, EventArgs e)
     {
         IO.pr($"{Name} died. {Hp}", true, true);
     }

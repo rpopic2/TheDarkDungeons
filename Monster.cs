@@ -18,9 +18,9 @@ public class Monster : Moveable
     {
         Hand.SetAt(Hand.Count, card);
     }
-    protected override void OnDeath()
+    protected override void OnDeath(object? sender, EventArgs e)
     {
-        base.OnDeath();
+        base.OnDeath(sender, e);
         player.exp.Gain(expOnKill);
         player.Pickup(Draw());
         Map.Current.SpawnMob();
