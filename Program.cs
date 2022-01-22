@@ -58,7 +58,7 @@
                 break;
             case ConsoleKey.Q:
             case ConsoleKey.Escape:
-                IO.nsel(actions, out ConsoleKey key2);
+                IO.nself(actions, out ConsoleKey key2);
                 DefaultSwitch(key2);
                 break;
             default:
