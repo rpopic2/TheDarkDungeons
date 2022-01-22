@@ -28,7 +28,7 @@ public class Map
         int turn = Program.turn;
         int hp = 2 + turn.RoundMult(0.020f);
         int expOnKill = 3 + level.RoundMult(0.3f);
-        int sol = 2 + level.FloorMult(1);
+        int sol = 2 + level.FloorMult(0.5f);
         int lun = 1 + level.FloorMult(1);
         int cap = 1 + level.FloorMult(0.2f);
         Position spawnPoint = new Position(rnd.Next(2, Map.Current.length - 2 - level.FloorMult(0.4f)), 0, Facing.Back);

@@ -95,7 +95,7 @@ public class Fightable : Mass
         else if (damage > 0 && IsResting)
         {
             damage = (int)MathF.Round(damage * Rules.vulMulp);
-            IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
+            IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage! (total {damage})");
         }
         Hp -= damage;
         if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
