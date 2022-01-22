@@ -51,7 +51,7 @@ public class Fightable : Mass
                 stance = (Stance.Attack, card.Sol);
                 break;
             case CardStance.Dodge:
-                stance = (Stance.Dodge, card.Sol);
+                stance = (Stance.Dodge, card.Lun);
                 break;
             case CardStance.Star:
                 star = card.Con;
