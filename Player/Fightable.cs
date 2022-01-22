@@ -88,7 +88,11 @@ public class Fightable : Mass
                 tempStr += $"..and {star} more damage! (total {stance.amount})";
                 star = 0;
             }
-            if (damage <= 0) tempStr += "..but oppenent did not attack...";
+            if (damage <= 0)
+            {
+                IO.pr(tempStr += "..but oppenent did not attack...");
+                return;
+            }
             IO.pr(tempStr);
             damage -= stance.amount;
         }

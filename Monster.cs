@@ -10,6 +10,7 @@ public class Monster : Moveable
             int attack = rnd.Next(0, 11);
             Card card = Draw();
             //if(attack > 2) card.StanceShift();
+            card.StanceShift();
             Pickup(card);
         }
         Pos = spawnPoint;
