@@ -1,5 +1,3 @@
-stance to struct, elaspeturn by auto
-
 intro 스킵하면 이동버그생김
 
 가끔 박쥐 카드 안썼는데 쉼 -> 다음맵 가자마자 코앞에서 만나면 그러는듯?

@@ -22,7 +22,6 @@
         IO.pr("Your adventure begins...");
         Map.NewMap();
         NewTurn();
-
     }
 
     private void Intro()
@@ -104,21 +103,17 @@
     }
     public void ElaspeTurn()
     {
-        Map current = Map.Current;
-        Monster monster = current.monster;
+        Monster monster = Map.Current.monster;
         monster.DoTurn();
-
+        if (player.DidPrint && monster.DidPrint)
+        {
+            IO.del(2);
+        }
         bool playerFirst = player.Lun >= monster?.Lun;
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
 
-        if (!p1?.DidPrint ?? false)
-        {
-            if (!p2?.DidPrint ?? false)
-            {
-                IO.del(2);
-            }
-        }
+
 
         p1?.TryAttack();
         p2?.TryAttack();
