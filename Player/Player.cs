@@ -19,7 +19,24 @@ public class Player : Moveable
         level++;
         exp.UpdateMax();
         IO.pr("Level up! : " + level, true);
-        Sol += level.FloorMult(Rules.solByLevel);
+        bool cancel;
+        int index;
+        do
+        {
+            IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod, Program.stats.Count());
+        } while (cancel);
+        switch (index)
+        {
+            case 0:
+                Sol += 2;
+                break;
+            case 1:
+                Lun += 2;
+                break;
+            case 2:
+                Con += 2;
+                break;
+        }
         Cap = Rules.capBasic + level.FloorMult(Rules.capByLevel);
         Hp.Max += level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;

@@ -2,6 +2,7 @@
 {
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
+    public static readonly string[] stats = new string[] { "(1) Sol", "(2) Lun", "(3) Con" };
     public static readonly string[] actions = new string[] { "Use card(W)", "(R)est", "(S)tats", "E(x)ile" };
     public static Player player = Player.instance;
     public static int turn { get; private set; }

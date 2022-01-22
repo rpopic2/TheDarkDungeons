@@ -113,7 +113,7 @@ public class Fightable : Mass
         stance = (default, default);
     }
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tStrength : {Sol}\tDexterity : {Lun}\tWisdom : {Con}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
     private int GetRandomStat(int stat) =>
         rnd.Next(1, stat + 1);
     public bool IsAlive => !Hp.IsMin;
