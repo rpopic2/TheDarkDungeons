@@ -1,3 +1,0 @@
-w안누르고 그냥 숫자누르면 카드사용?
-trydef to event?
-intro skip key
