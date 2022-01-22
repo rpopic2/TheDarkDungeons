@@ -103,10 +103,6 @@ public class Fightable : Mass
             damage = (int)MathF.Round(damage * Rules.vulMulp);
             IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage!");
         }
-        TakeDamage(damage);
-    }
-    private void TakeDamage(int damage)
-    {
         Hp -= damage;
         if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
         else if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
@@ -133,5 +129,4 @@ public class Fightable : Mass
         if (IsAlive) return Name.ToLower()[0];
         return MapSymb.invisible;
     }
-
 }

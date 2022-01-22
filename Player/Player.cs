@@ -61,7 +61,7 @@ public class Player : Moveable
         } while (card.Stance == Stance.Star);
         IO.pr("Exiled a card.");
         Hand.Exile(index);
-        Program.instance.ElaspeTurn();
+        OnAction();
         stance = (FightStance.Exile, default);
     }
     public override void Rest()
@@ -77,7 +77,7 @@ public class Player : Moveable
             if (!cancel && mod == ConsoleModifiers.Alt) Hand.StanceShift(index);
             IO.del(2);
         } while (!cancel);
-        Program.instance.ElaspeTurn();
+        OnAction();
     }
     public void UseCard()
     {
@@ -96,7 +96,7 @@ public class Player : Moveable
         }
         IO.del();
         UseCard(index, out bool elaspe);
-        if (elaspe) Program.instance.ElaspeTurn();
+        if (elaspe) OnAction();
     }
     public override void Move(int x)
     {
@@ -107,6 +107,10 @@ public class Player : Moveable
             Map.NewMap();
             Pos = new Position();
         }
+        OnAction();
+    }
+    private void OnAction()
+    {
         Program.instance.ElaspeTurn();
     }
     public void ShowStats()

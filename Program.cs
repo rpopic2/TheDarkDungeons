@@ -67,7 +67,6 @@
 
         if (p1?.TurnStance.stance == FightStance.Move && p2?.TurnStance.stance == FightStance.Move) IO.del(2);
 
-
         p1?.TryAttack();
         p2?.TryAttack();
         p1?.OnTurnEnd();
