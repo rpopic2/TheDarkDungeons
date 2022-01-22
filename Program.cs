@@ -36,7 +36,8 @@
         IO.seln(out int index, out bool cancel, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
-        player = new Player(name, className, 3, 5, 0, 2, 2, 2);
+        Player.instance = new Player(name, className, 3, 5, 0, 2, 2, 2);
+        player = Player.instance;
     }
     //-------------------------
     private void MainLoop()

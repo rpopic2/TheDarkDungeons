@@ -1,6 +1,3 @@
-intro 스킵하면 이동버그생김
-
-메뉴에서 행동하면 바로 리턴되서 맵이보이게
-
+player is istatic class?
 gamepoint to event
 gamepoint onvalchange -> support delta
