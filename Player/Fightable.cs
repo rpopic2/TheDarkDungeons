@@ -32,19 +32,12 @@ public class Fightable : Mass
     {
         IO.pr($"{Name} died. {Hp}", true, true);
     }
-    public virtual void UseCard(int index, out bool elaspeTurn)
+    public virtual void UseCard(int index)
     {
-        elaspeTurn = true;
         Card card = Hand[index] ?? throw new ArgumentNullException(nameof(card), "Cannot use card in null index");
-        if (Target is null)
-        {
-            //IO.pr("No target to use card");
-            elaspeTurn = false;
-            return;
-        }
+        if (Target is null) return;
         if (card.Stance == CardStance.Star && star <= 0)
         {
-            elaspeTurn = false;
             IO.pr("Next move will be reinforced.");
         }
         _UseCard(card);
@@ -81,7 +74,7 @@ public class Fightable : Mass
             IO.pr(atkString);
             Target.TryDodge(stance.amount);
         }
-        else if(Target.stance.stance == Stance.Dodge) Target.TryDodge(0);
+        else if (Target.stance.stance == Stance.Dodge) Target.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
