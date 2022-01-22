@@ -66,22 +66,10 @@
     }
     private void Menu()
     {
-        do
-        {
-            IO.prfo(actions);
-            ConsoleKey key = IO.rk().Key;
-            IO.del();
-            switch (key)
-            {
-                case ConsoleKey.Q:
-                case ConsoleKey.Escape:
-                    return;
-                default:
-                    DefaultSwitch(key);
-                    break;
-            }
-
-        } while (player.IsAlive);
+        IO.prfo(actions);
+        ConsoleKey key = IO.rk().Key;
+        IO.del();
+        DefaultSwitch(key);
     }
     private void DefaultSwitch(ConsoleKey key)
     {
