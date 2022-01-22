@@ -25,13 +25,17 @@ public static class IO
             ConsoleKeyInfo keyInfo = rk(obj);
             mod = keyInfo.Modifiers;
             Char key = keyInfo.KeyChar;
-            index = (int)Char.GetNumericValue(key);
-            if (index == 0) index = 10;
-            if (index != -1) index--;
             cancel = key == CANCELKEY;
+            found = chkn(key, max, out index);
             if (cancel) return;
-            found = index != -1 && index <= max - 1;
         } while (!found);
+    }
+    public static bool chkn(Char i, int max, out int index)
+    {
+        index = (int)Char.GetNumericValue(i);
+        if (index == 0) index = 10;
+        if (index != -1) index--;
+        return index != -1 && index <= max - 1;
     }
     public static void selh(out int result, out bool cancel, out ConsoleModifiers mod)
     {

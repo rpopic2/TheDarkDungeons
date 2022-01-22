@@ -45,7 +45,8 @@
     //-------------------------
     private void MainLoop()
     {
-        ConsoleKey key = IO.rk(Map.Current).Key;
+        ConsoleKeyInfo info = IO.rk(Map.Current);
+        ConsoleKey key = info.Key;
         switch (key)
         {
             case ConsoleKey.RightArrow:
@@ -62,6 +63,7 @@
                 DefaultSwitch(key2);
                 break;
             default:
+                //if(info.KeyChar)
                 DefaultSwitch(key);
                 break;
         }
