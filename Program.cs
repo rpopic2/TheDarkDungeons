@@ -1,10 +1,10 @@
 ﻿public class Program
 {
-    public static Player player = Player.instance;
-    public static int turn { get; private set; }
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
     public static readonly string[] actions = new string[] { "Use card(W)", "(R)est", "(S)tats", "E(x)ile" };
+    public static Player player = Player.instance;
+    public static int turn { get; private set; }
     public static void Main()
     {
         instance = new Program();
@@ -36,8 +36,7 @@
         IO.seln(out int index, out bool cancel, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
-        Player.instance = new Player(name, className, 3, 5, 0, 2, 2, 2);
-        player = Player.instance;
+        player = Player.instance = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
     //-------------------------
     private void MainLoop()
