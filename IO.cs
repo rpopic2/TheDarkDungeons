@@ -2,7 +2,6 @@ using System.Linq;
 
 public static class IO
 {
-    public static readonly char[] NUMERICKEYS = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
     private const char CANCELKEY = 'q';
     private const string Emphasis = "=> ";
     private const string delString = "                                                                 ";
