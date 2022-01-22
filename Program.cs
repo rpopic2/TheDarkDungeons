@@ -13,6 +13,9 @@
             instance.MainLoop();
             if (player.TurnStance.stance != Stance.None) instance.ElaspeTurn();
         } while (player.IsAlive);
+        IO.pr(player);
+        IO.pr("Your adventure ends here...");
+        IO.rk();
     }
     public Program()
     {
