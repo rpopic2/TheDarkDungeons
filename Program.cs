@@ -26,7 +26,7 @@
     private void InitActions()
     {
         basic.Add("Use Card(W)", () => UseCard());
-        basic.Add("(R)est", () => Rest());
+        basic.Add("(R)est", () => player.Rest());
         basic.Add("E(x)ile", () => player.Exile());
         basic.Add("(S)tats", () => ShowStats());
 
@@ -137,7 +137,7 @@
                 UseCard();
                 break;
             case ConsoleKey.R:
-                Rest();
+                player.Rest();
                 break;
             case ConsoleKey.S:
                 ShowStats();
@@ -146,20 +146,6 @@
                 player.Exile();
                 break;
         }
-    }
-    private void Rest()
-    {
-        player.Rest();
-        bool cancel = false;
-        do
-        {
-            IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
-            IO.pr(player.Hand);
-            IO.seln(out int index, out cancel, out ConsoleModifiers mod);
-            if (!cancel && mod == ConsoleModifiers.Alt) player.Hand.StanceShift(index);
-            IO.del(2);
-        } while (!cancel);
-        ElaspeTurn();
     }
     private void UseCard()
     {

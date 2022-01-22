@@ -68,6 +68,16 @@ public class Player : Moveable
     {
         base.Rest();
         Pickup(Draw());
+        bool cancel = false;
+        do
+        {
+            IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
+            IO.pr(Hand);
+            IO.seln(out int index, out cancel, out ConsoleModifiers mod);
+            if (!cancel && mod == ConsoleModifiers.Alt) Hand.StanceShift(index);
+            IO.del(2);
+        } while (!cancel);
+        Program.instance.ElaspeTurn();
     }
     public override void Move(int x)
     {
