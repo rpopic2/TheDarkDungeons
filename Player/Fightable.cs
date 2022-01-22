@@ -78,11 +78,11 @@ public class Fightable : Mass
                 star = 0;
             }
             IO.pr(atkString);
-            Target.TryDefence(stance.amount);
+            Target.TryDodge(stance.amount);
         }
-        else Target.TryDefence(0);
+        else if(Target.stance.stance == Stance.Dodge) Target.TryDodge(0);
     }
-    private void TryDefence(int damage)
+    private void TryDodge(int damage)
     {
 
         if (stance.stance == Stance.Dodge)
@@ -123,6 +123,7 @@ public class Fightable : Mass
     private int GetRandomStat(int stat) =>
         rnd.Next(1, stat + 1);
     public bool IsAlive => !Hp.IsMin;
+    public bool DidPrint => TurnStance.stance != Stance.Move && TurnStance.stance != Stance.None;
 
     public virtual char ToChar()
     {

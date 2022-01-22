@@ -47,12 +47,10 @@
         IO.del();
         switch (key)
         {
-            case ConsoleKey.UpArrow:
             case ConsoleKey.RightArrow:
             case ConsoleKey.H:
                 player.Move(1);
                 break;
-            case ConsoleKey.DownArrow:
             case ConsoleKey.LeftArrow:
             case ConsoleKey.L:
                 player.Move(-1);
@@ -65,7 +63,7 @@
                 DefaultSwitch(key);
                 break;
         }
-        if (player.TurnStance.stance !=Stance.None) ElaspeTurn();
+        if (player.TurnStance.stance != Stance.None) ElaspeTurn();
     }
     private void Menu()
     {
@@ -114,7 +112,13 @@
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
 
-        if (p1?.TurnStance.stance == Stance.Move && p2?.TurnStance.stance == Stance.Move) IO.del(2);
+        if (!p1?.DidPrint ?? false)
+        {
+            if (!p2?.DidPrint ?? false)
+            {
+                IO.del(2);
+            }
+        }
 
         p1?.TryAttack();
         p2?.TryAttack();
