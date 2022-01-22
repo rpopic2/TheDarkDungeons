@@ -35,6 +35,18 @@ public static class IO
     {
         seln(out result, out cancel, out ConsoleModifiers mod, max);
     }
+    public static void nsel(object obj, out ConsoleKey key)
+    {
+        pr(obj);
+        key = rk().Key;
+        del();
+    }
+    public static void nself(string[] obj, out ConsoleKey key)
+    {
+        prfo(obj);
+        key = rk().Key;
+        del();
+    }
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
@@ -48,8 +60,6 @@ public static class IO
     public static void prfo(string[] options, string comment = "Select :")
         => _prfo(options, comment);
     ///<summary>Print in Formated Options</summary>
-    public static void prfo(char[] options, string comment = "Select :")
-        => _prfo(options, comment);
     private static void _prfo(object options, string comment = "Select :")
     {
         string printResult = comment + " /";

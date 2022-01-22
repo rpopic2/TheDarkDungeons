@@ -45,9 +45,7 @@
     //-------------------------
     private void MainLoop()
     {
-        IO.pr(Map.Current);
-        ConsoleKey key = IO.rk().Key;
-        IO.del();
+        IO.nsel(Map.Current, out ConsoleKey key);
         switch (key)
         {
             case ConsoleKey.RightArrow:
@@ -60,20 +58,15 @@
                 break;
             case ConsoleKey.Q:
             case ConsoleKey.Escape:
-                Menu();
+                IO.nsel(actions, out ConsoleKey key2);
+                DefaultSwitch(key2);
                 break;
             default:
                 DefaultSwitch(key);
                 break;
         }
     }
-    private void Menu()
-    {
-        IO.prfo(actions);
-        ConsoleKey key = IO.rk().Key;
-        IO.del();
-        DefaultSwitch(key);
-    }
+
     private void DefaultSwitch(ConsoleKey key)
     {
         switch (key)
