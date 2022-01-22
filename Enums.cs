@@ -3,7 +3,7 @@ public enum ClassName
     Warrior, Assassin, Mage
 }
 
-public enum Stance
+public enum CardStance
 {
     Attack, Dodge, Star
 }
@@ -19,9 +19,9 @@ public enum Facing
 {
     Front, Back
 }
-public enum FightStance
+public enum Stance
 {
-    Move, Rest, Attack, Dodge, Exile
+    None, Move, Rest, Attack, Dodge, Exile
 }
 
 public static class Extensions

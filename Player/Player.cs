@@ -37,7 +37,7 @@ public class Player : Moveable
         if (mod == ConsoleModifiers.Alt) card.StanceShift();
         if (cancel)
         {
-            if (card.Stance != Stance.Star)
+            if (card.Stance != CardStance.Star)
             {
                 Pickup(card.Exile());
             }
@@ -58,11 +58,11 @@ public class Player : Moveable
             card = Hand[index] ?? throw new Exception();
             IO.del();
             if (cancel) return;
-        } while (card.Stance == Stance.Star);
+        } while (card.Stance == CardStance.Star);
         IO.pr("Exiled a card.");
         Hand.Exile(index);
         OnAction();
-        stance = (FightStance.Exile, default);
+        stance = (Stance.Exile, default);
     }
     public override void Rest()
     {
@@ -111,7 +111,7 @@ public class Player : Moveable
     }
     private void OnAction()
     {
-        Program.instance.ElaspeTurn();
+        //Program.instance.ElaspeTurn();
     }
     public void ShowStats()
     {

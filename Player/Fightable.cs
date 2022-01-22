@@ -7,9 +7,9 @@ public class Fightable : Mass
     public GamePoint Hp { get; protected set; }
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
-    public bool IsResting => stance.stance == FightStance.Rest;
-    protected (FightStance? stance, int amount) stance = (default, default);
-    public (FightStance? stance, int amount) TurnStance { get => stance; }
+    public bool IsResting => stance.stance == Stance.Rest;
+    protected (Stance stance, int amount) stance = (default, default);
+    public (Stance stance, int amount) TurnStance { get => stance; }
     private int star;
 
     public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
@@ -26,7 +26,7 @@ public class Fightable : Mass
         level = lv;
     }
     public override Card Draw()
-        => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), Stance.Attack);
+        => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), CardStance.Attack);
     protected virtual void OnDeath()
     {
         IO.pr($"{Name} died. {Hp}", true, true);
@@ -41,7 +41,7 @@ public class Fightable : Mass
             elaspeTurn = false;
             return;
         }
-        if (card.Stance == Stance.Star && star <= 0)
+        if (card.Stance == CardStance.Star && star <= 0)
         {
             elaspeTurn = false;
             IO.pr("Next move will be reinforced.");
@@ -53,13 +53,13 @@ public class Fightable : Mass
         Hand.Delete(card);
         switch (card.Stance)
         {
-            case Stance.Attack:
-                stance = (FightStance.Attack, card.Sol);
+            case CardStance.Attack:
+                stance = (Stance.Attack, card.Sol);
                 break;
-            case Stance.Dodge:
-                stance = (FightStance.Dodge, card.Sol);
+            case CardStance.Dodge:
+                stance = (Stance.Dodge, card.Sol);
                 break;
-            case Stance.Star:
+            case CardStance.Star:
                 star = card.Con;
                 break;
         }
@@ -68,7 +68,7 @@ public class Fightable : Mass
     {
         if (!IsAlive) return;
         if (Target is null) return;
-        if (stance.stance == FightStance.Attack)
+        if (stance.stance == Stance.Attack)
         {
             string atkString = $"{Name} attacks with {stance.amount} damage.";
             if (star > 0)
@@ -85,7 +85,7 @@ public class Fightable : Mass
     private void TryDefence(int damage)
     {
 
-        if (stance.stance == FightStance.Dodge)
+        if (stance.stance == Stance.Dodge)
         {
             string tempStr = $"{Name} dodges {stance.amount} damage.";
             if (star > 0)
@@ -111,7 +111,7 @@ public class Fightable : Mass
     {
         /*if(Map.Current.IsVisible((Moveable)this))*/
         IO.pr($"{Name} is resting a turn.");
-        stance = (FightStance.Rest, default);
+        stance = (Stance.Rest, default);
     }
 
     public virtual void OnTurnEnd()

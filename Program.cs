@@ -8,6 +8,10 @@
     public static void Main()
     {
         instance = new Program();
+        do
+        {
+            instance.MainLoop();
+        } while (player.IsAlive);
     }
     public Program()
     {
@@ -18,7 +22,7 @@
         IO.pr("Your adventure begins...");
         Map.NewMap();
         NewTurn();
-        MainLoop();
+
     }
 
     private void Intro()
@@ -36,59 +40,32 @@
         player = new Player(name, className, 3, 5, 0, 2, 2, 2);
     }
     //-------------------------
-    public void ElaspeTurn()
-    {
-        Map current = Map.Current;
-        Monster monster = current.monster;
-        monster.DoTurn();
-
-        bool playerFirst = player.Lun >= monster?.Lun;
-        Moveable? p1 = playerFirst ? player : monster;
-        Moveable? p2 = playerFirst ? monster : player;
-
-        if (p1?.TurnStance.stance == FightStance.Move && p2?.TurnStance.stance == FightStance.Move) IO.del(2);
-
-        p1?.TryAttack();
-        p2?.TryAttack();
-        p1?.OnTurnEnd();
-        p2?.OnTurnEnd();
-
-        NewTurn();
-    }
-    public void NewTurn()
-    {
-        turn++;
-        IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
-    }
     private void MainLoop()
     {
-        do
+        IO.pr(Map.Current);
+        ConsoleKey key = IO.rk().Key;
+        IO.del();
+        switch (key)
         {
-            IO.pr(Map.Current);
-            ConsoleKey key = IO.rk().Key;
-            IO.del();
-            switch (key)
-            {
-                case ConsoleKey.UpArrow:
-                case ConsoleKey.RightArrow:
-                case ConsoleKey.H:
-                    player.Move(1);
-                    break;
-                case ConsoleKey.DownArrow:
-                case ConsoleKey.LeftArrow:
-                case ConsoleKey.L:
-                    player.Move(-1);
-                    break;
-                case ConsoleKey.Q:
-                case ConsoleKey.Escape:
-                    Menu();
-                    break;
-                default:
-                    DefaultSwitch(key);
-                    break;
-            }
-
-        } while (player.IsAlive);
+            case ConsoleKey.UpArrow:
+            case ConsoleKey.RightArrow:
+            case ConsoleKey.H:
+                player.Move(1);
+                break;
+            case ConsoleKey.DownArrow:
+            case ConsoleKey.LeftArrow:
+            case ConsoleKey.L:
+                player.Move(-1);
+                break;
+            case ConsoleKey.Q:
+            case ConsoleKey.Escape:
+                Menu();
+                break;
+            default:
+                DefaultSwitch(key);
+                break;
+        }
+        if (player.TurnStance.stance !=Stance.None) ElaspeTurn();
     }
     private void Menu()
     {
@@ -126,5 +103,29 @@
                 player.Exile();
                 break;
         }
+    }
+    public void ElaspeTurn()
+    {
+        Map current = Map.Current;
+        Monster monster = current.monster;
+        monster.DoTurn();
+
+        bool playerFirst = player.Lun >= monster?.Lun;
+        Moveable? p1 = playerFirst ? player : monster;
+        Moveable? p2 = playerFirst ? monster : player;
+
+        if (p1?.TurnStance.stance == Stance.Move && p2?.TurnStance.stance == Stance.Move) IO.del(2);
+
+        p1?.TryAttack();
+        p2?.TryAttack();
+        p1?.OnTurnEnd();
+        p2?.OnTurnEnd();
+
+        NewTurn();
+    }
+    public void NewTurn()
+    {
+        turn++;
+        IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }
 }

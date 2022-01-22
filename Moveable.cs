@@ -13,14 +13,14 @@ public class Moveable : Fightable
 
     protected virtual bool _Move(int x, out char obj)
     {
-        stance = (FightStance.Move, x);
         Map current = Map.Current;
         Position newPos = Pos + x;
-        bool success = current.Tiles.TryGet(newPos.x, out obj);
-        bool fail = current.Moveables.TryGet(newPos.x, out Moveable? mov);
-        bool result = success && !fail;
+        bool existsTile = current.Tiles.TryGet(newPos.x, out obj);
+        bool obstructed = current.Moveables.TryGet(newPos.x, out Moveable? mov);
+        bool result = existsTile && !obstructed;
         if (result)
         {
+            stance = (Stance.Move, x);
             Pos = newPos;
             current.UpdateMoveable(this);
         }
@@ -28,6 +28,7 @@ public class Moveable : Fightable
         {
             if (newPos.facing != Pos.facing)
             {
+                stance = (Stance.Move, 0);
                 Pos = !Pos;
                 return true;
             }

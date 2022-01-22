@@ -1,12 +1,12 @@
 public struct Card : IMass
 {
-    public Stance Stance { get; private set; }
+    public CardStance Stance { get; private set; }
     public readonly int level { get; }
     public readonly int Sol { get; }
     public readonly int Lun { get; }
     public readonly int Con { get; }
 
-    public Card(int sol, int lun, int con, Stance stance)
+    public Card(int sol, int lun, int con, CardStance stance)
     {
         Sol = sol;
         Lun = lun;
@@ -16,21 +16,21 @@ public struct Card : IMass
     }
     public Card StanceShift()
     {
-        if (Stance == Stance.Star) return this;
-        Stance = Stance == Stance.Attack ? Stance.Dodge : Stance.Attack;
+        if (Stance == CardStance.Star) return this;
+        Stance = Stance == CardStance.Attack ? CardStance.Dodge : CardStance.Attack;
         return this;
     }
 
     internal Card Exile()
     {
-        Stance = Stance.Star;
+        Stance = CardStance.Star;
         return this;
     }
 
     public override string ToString()
     {
-        if (Stance == Stance.Attack) return $"<({Sol})/{Lun}>";
-        else if (Stance == Stance.Dodge) return $"[({Lun})/{Sol}]";
+        if (Stance == CardStance.Attack) return $"<({Sol})/{Lun}>";
+        else if (Stance == CardStance.Dodge) return $"[({Lun})/{Sol}]";
         else return $"[{Con}*]";
     }
 
