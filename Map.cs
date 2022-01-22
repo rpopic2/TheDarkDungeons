@@ -43,10 +43,10 @@ public class Map
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
 
-        int hp = (int)MathF.Round(level * 0.8f);
+        int hp = (int)MathF.Round(Program.turn * 0.8f);
         int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
 
-        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, 2, 1, 2, expOnKill, spawnPoint);
+        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, (2, 1, 2), expOnKill, spawnPoint);
         UpdateMoveable(monster);
     }
 
