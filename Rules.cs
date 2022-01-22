@@ -8,7 +8,6 @@ public static class Rules
     //player
     public const int capBasic = 3;
     public const float capByLevel = 0.4f;
-    public const float solByLevel = 1f;
     public const float hpByLevel = 1f;
 
     //map

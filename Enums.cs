@@ -48,4 +48,5 @@ public static class Extensions
         => Char.ToLower(option[option.IndexOf('(') + 1]);
     public static char[] ParseKeys(this string[] options)
         => Array.ConvertAll(options, new Converter<string, char>(ParseKey));
+
 }
