@@ -1,0 +1,34 @@
+{
+    "Name": "Bat",
+    "Class" : "Assassin",
+    "Cap": {
+        "Base": 1,
+        "Dep": "level",
+        "Amount": 0.2
+    },
+    "Hp": {
+        "Base": 2,
+        "Dep": "turn",
+        "Amount": 0.03
+    },
+    "KillExp": {
+        "Base": 3,
+        "Dep": "level",
+        "Amount": 0.3
+    },
+    "Sol": {
+        "Base": 2,
+        "Dep": "level",
+        "Amount": 0.4
+    },
+    "Lun": {
+        "Base": 1,
+        "Dep": "level",
+        "Amount": 1
+    },
+    "Con": {
+        "Base": 1,
+        "Dep": "level",
+        "Amount": 0
+    }
+}

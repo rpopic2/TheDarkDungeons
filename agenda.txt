@@ -1,1 +1,3 @@
 rules increase by system..
+name rules
+맵 들어가자마자 뒤짐?

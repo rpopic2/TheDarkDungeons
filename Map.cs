@@ -21,20 +21,48 @@ public class Map
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
-        SpawnMob();
+        SpawnBat();
     }
-    public void SpawnMob()
+    // public void SpawnMob()
+    // {
+    //     MonsterInfo bat = new MonsterInfo("Bat", ClassName.Assassin, (2, 0, 0.03f), new PointInfo(1, 0.2f), new PointInfo(2, 0.4f), new PointInfo(1, 1), new PointInfo(1, 0.2f), new PointInfo(3, 0.3f));
+    //     int turn = Program.turn;
+    //     int hp = 2 + turn.RoundMult(0.03f);
+    //     int expOnKill = 3 + level.RoundMult(0.3f);
+    //     int sol = 2 + level.FloorMult(0.4f);
+    //     int lun = 1 + level.FloorMult(1);
+    //     int cap = 1 + level.FloorMult(0.2f);
+    //     Position spawnPoint = new Position(rnd.Next(2, Map.Current.length - 1), 0, Facing.Back);
+    //     monster = new Monster("Bat", ClassName.Warrior, cap, hp, level, sol, lun, 2, expOnKill, spawnPoint);
+    //     _Spawn(monster);
+    // }
+    public void SpawnBat()
     {
-        int turn = Program.turn;
-        int hp = 2 + turn.RoundMult(0.020f);
-        int expOnKill = 3 + level.RoundMult(0.3f);
-        int sol = 2 + level.FloorMult(0.5f);
-        int lun = 1 + level.FloorMult(1);
-        int cap = 1 + level.FloorMult(0.2f);
-        Position spawnPoint = new Position(rnd.Next(2, Map.Current.length - 2 - level.FloorMult(0.4f)), 0, Facing.Back);
-        monster = new Monster("Bat", ClassName.Warrior, cap, hp, level, sol, lun, 2, expOnKill, spawnPoint);
-        if (IsVisible(monster)) monster.Move(2);
+        List<int> fullMap = GetSpawnableIndices();
+        int index = rnd.Next(0, fullMap.Count);
+        int newPos = fullMap[index];
+        Position spawnPoint = new Position(newPos, 0, Facing.Back);
+
+        int hp = (int)MathF.Round(level * 0.8f);
+        int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
+
+        monster = new Monster("Bat", ClassName.Warrior, 1, hp, level, 2, 1, 2, expOnKill, spawnPoint);
         UpdateMoveable(monster);
+    }
+
+    private List<int> GetSpawnableIndices()
+    {
+        List<int> fullMap = new List<int>(length);
+        for (int i = 0; i < length; i++)
+        {
+            fullMap.Add(i);
+        }
+        int playerX = player.Pos.x;
+        fullMap.Remove(0);
+        fullMap.Remove(playerX);
+        fullMap.Remove(playerX - 1);
+        fullMap.Remove(playerX + 1);
+        return fullMap;
     }
 
     public void UpdateMoveable(Moveable mov)

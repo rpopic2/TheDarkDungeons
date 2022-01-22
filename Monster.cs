@@ -23,7 +23,7 @@ public class Monster : Moveable
         base.OnDeath(sender, e);
         player.exp.Gain(expOnKill);
         player.Pickup(Draw());
-        Map.Current.SpawnMob();
+        Map.Current.SpawnBat();
     }
     public void DoTurn()
     {
