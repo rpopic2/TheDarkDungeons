@@ -96,10 +96,3 @@ public class Map
         return result;
     }
 }
-
-public static class MapSymb
-{
-    public const char road = '·';
-    public const char invisible = ' ';
-    public const char portal = '+';
-}

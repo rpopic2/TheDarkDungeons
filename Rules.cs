@@ -1,6 +1,6 @@
 public static class Rules
 {
-    public const string version = "0.1";
+    public const string version = "0.2";
     public static readonly bool MapDebug = false;
     public static readonly bool SkipIntro = true;
     public const float vulMulp = 1.3f;
@@ -22,4 +22,11 @@ public static class Rules
     public const float msolByTurn = 0.015f;
     public const float mlunByTurn = 0.005f;
     public const float mcapByLevel = 0.3f;
+}
+
+public static class MapSymb
+{
+    public const char road = '·';
+    public const char invisible = ' ';
+    public const char portal = '+';
 }
