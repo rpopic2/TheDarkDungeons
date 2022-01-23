@@ -16,7 +16,7 @@ public class Player : Moveable
             Hand.SetAt(Hand.Count, Draw());
         }
         Inven = new Inventory(3);
-        Inven[0] = new Item(HpPot);
+        Inven[0] = HpPot;
     }
 
     private void OnLvUp(object? sender, EventArgs e)
@@ -113,10 +113,10 @@ public class Player : Moveable
     }
     public void UseEquip(int index)
     {
-        if (Inven[index] is Item item)
+        if (Inven[index] is ItemData item)
         {
             stance = (Stance.Item, default);
-            Hp += item.data.amount;
+            Hp += item.amount;
             Inven[index] = null;
         }
     }

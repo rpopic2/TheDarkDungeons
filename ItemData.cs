@@ -8,4 +8,8 @@ public readonly struct ItemData
         this.abv = abv;
         this.amount = amount;
     }
+    public override string ToString()
+    {
+        return $"[{abv}]";
+    }
 }

@@ -3,3 +3,5 @@ an hp pot that restores 2 hp.
 player.useequip(int)
 
 gamepoint onvaluechanged -> fightables to use this.
+
+selecting empty hand should not return.
