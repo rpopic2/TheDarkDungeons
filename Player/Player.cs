@@ -3,7 +3,7 @@ public class Player : Moveable
     private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
-    public Inventory Equips { get; private set; }
+    public Inventory Inven { get; private set; }
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
@@ -13,8 +13,8 @@ public class Player : Moveable
         {
             Hand.SetAt(Hand.Count, Draw());
         }
-        Equips = new Inventory(3);
-        Equips[0] = new Item();
+        Inven = new Inventory(3);
+        Inven[0] = new Item();
     }
     private void OnLvUp(object? sender, EventArgs e)
     {
@@ -102,7 +102,7 @@ public class Player : Moveable
     {
         do
         {
-            IO.seln(Equips, out int index, out bool cancel, out ConsoleModifiers mod, Equips.Cap);
+            IO.seln(Inven, out int index, out bool cancel, out ConsoleModifiers mod, Inven.Cap);
             if (cancel) return;
             UseEquip(index);
             return;
@@ -110,9 +110,12 @@ public class Player : Moveable
     }
     public void UseEquip(int index)
     {
+        Item? item = Inven[index];
+        if(item is null) return;
         Hp += 2;
         IO.pr("Restored 2 hp.");
         stance = (Stance.Item, default);
+        Inven[index] = null;
     }
     public override void Move(int x)
     {
