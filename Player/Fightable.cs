@@ -1,4 +1,4 @@
-public class Fightable : Mass
+public class Fightable : Entity
 {
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
