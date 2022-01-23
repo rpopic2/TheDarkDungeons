@@ -84,7 +84,7 @@
                 player.UseCard();
                 break;
             case ConsoleKey.E:
-                player.UseEquip();
+                player.UseInven();
                 break;
             case ConsoleKey.R:
                 player.Rest();

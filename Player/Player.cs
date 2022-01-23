@@ -113,17 +113,17 @@ public class Player : Moveable
             return;
         } while (true);
     }
-    public void UseEquip()
+    public void UseInven()
     {
         do
         {
             IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
             if (cancel) return;
-            UseEquip(index);
+            UseInven(index);
             return;
         } while (true);
     }
-    public void UseEquip(int index)
+    public void UseInven(int index)
     {
         if (Inven[index] is Item item)
         {
