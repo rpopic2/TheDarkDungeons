@@ -4,7 +4,6 @@ public class Fightable : Mass
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
     public GamePoint Hp { get; set; }
-    protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
     public bool IsResting => stance.stance == Stance.Rest;
     protected (Stance stance, int amount) stance = (default, default);
@@ -24,8 +23,6 @@ public class Fightable : Mass
         Con = con;
         level = lv;
     }
-    public override Card Draw()
-        => new Card(GetRandomStat(Sol), GetRandomStat(Lun), GetRandomStat(Con), CardStance.Attack);
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
         IO.pr($"{Name} died. {Hp}", true, true);
@@ -106,8 +103,8 @@ public class Fightable : Mass
     }
     public virtual void Rest()
     {
-        /*if(Map.Current.IsVisible((Moveable)this))*/
-        IO.pr($"{Name} is resting a turn.");
+        if (this is not Player && Map.Current.IsVisible((Moveable)this))
+            IO.pr($"{Name} is resting a turn.");
         stance = (Stance.Rest, default);
     }
 
@@ -117,8 +114,7 @@ public class Fightable : Mass
     }
     public override string ToString() =>
         $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
-    private int GetRandomStat(int stat) =>
-        rnd.Next(1, stat + 1);
+
     public bool IsAlive => !Hp.IsMin;
     public bool DidPrint => TurnStance.stance != Stance.Move && TurnStance.stance != Stance.None;
 
