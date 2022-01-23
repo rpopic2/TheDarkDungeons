@@ -2,6 +2,9 @@ public class GamePoint
 {
     public const int Min = 0;
     private int cur = 0;
+    internal EventHandler<HealArgs>? OnHeal;
+    public event EventHandler? OnOverflow;
+
     private int Cur
     {
         get => cur;
@@ -26,7 +29,6 @@ public class GamePoint
         }
     }
     public int Max { get; set; }
-    public event EventHandler? OnOverflow;
     public readonly GamePointOption Option;
 
     public GamePoint(int max, GamePointOption option)
@@ -38,6 +40,7 @@ public class GamePoint
     public static GamePoint operator +(GamePoint x, int amount)
     {
         x.Cur += amount;
+        x.OnHeal?.Invoke(x, new HealArgs(amount));
         return x;
     }
     public static GamePoint operator -(GamePoint x, int amount)
@@ -50,4 +53,14 @@ public class GamePoint
     {
         return $"{Cur}/{Max}";
     }
+}
+
+public class HealArgs : EventArgs
+{
+    public HealArgs(int amount)
+    {
+        Amount = amount;
+    }
+
+    public int Amount { get; set; }
 }

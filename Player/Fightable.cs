@@ -127,4 +127,9 @@ public class Fightable : Mass
         if (IsAlive) return Name.ToLower()[0];
         return MapSymb.invisible;
     }
+
+    protected void OnHeal(object? sender, HealArgs e)
+    {
+        IO.pr($"{Name} restored {e.Amount} hp.");
+    }
 }

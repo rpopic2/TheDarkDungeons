@@ -2,4 +2,4 @@ an hp pot that restores 2 hp.
 
 player.useequip(int)
 
-gamepoint onvaluechanged
+gamepoint onvaluechanged -> fightables to use this.

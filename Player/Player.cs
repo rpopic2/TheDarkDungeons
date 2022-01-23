@@ -9,6 +9,7 @@ public class Player : Moveable
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
+        Hp.OnHeal += new EventHandler<HealArgs>(OnHeal);
         for (int i = 0; i < cap; i++)
         {
             Hand.SetAt(Hand.Count, Draw());
@@ -16,6 +17,7 @@ public class Player : Moveable
         Inven = new Inventory(3);
         Inven[0] = new Item("HPPOT");
     }
+
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
@@ -113,7 +115,6 @@ public class Player : Moveable
         Item? item = Inven[index];
         if(item is null) return;
         Hp += 2;
-        IO.pr("Restored 2 hp.");
         stance = (Stance.Item, default);
         Inven[index] = null;
     }
