@@ -31,7 +31,7 @@ public class Map
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
 
-        int hp = 1 + (int)MathF.Round(Program.turn * 0.02f);
+        int hp = 2 + (int)MathF.Round(Program.turn * 0.03f);
         int sol = 1 + (int)MathF.Round(level * 0.6f);
         int lun = 1 + (int)MathF.Round(level * 0.4f);
         int cap = 1 + (int)MathF.Round(level * 0.16f);
