@@ -25,16 +25,22 @@ public class Monster : Moveable
         player.exp.Gain(expOnKill);
         player.Pickup(Draw());
         Map.Current.SpawnBat();
-        int drop = rnd.Next(0, 11);
-        if(drop < 1) player.Pickup(Fightable.ItemData.HpPot);
-        drop = rnd.Next(0, 11);
-        if(drop < 1) player.Pickup(Fightable.ItemData.FieryRing);
-        drop = rnd.Next(0, 5);
-        if(drop < 1) player.Pickup(Fightable.ItemData.Torch);
-        drop = rnd.Next(0, 3);
-        if(drop < 1) player.Pickup(Fightable.ItemData.Charge);
-        drop = rnd.Next(0, 100);
-        if(drop < 1) player.Pickup(Fightable.ItemData.AmuletOfLa);
+        if (Drop(10)) player.Pickup(Fightable.ItemData.HpPot);
+        if (Drop(10)) player.Pickup(Fightable.ItemData.FieryRing);
+        if (Drop(5)) player.Pickup(Fightable.ItemData.Torch);
+        if (Drop(100)) player.Pickup(Fightable.ItemData.AmuletOfLa);
+        if (Drop(4)) player.Pickup(Fightable.ItemData.Scouter);
+        if (Drop(10)) player.Pickup(Fightable.ItemData.Charge);
+        if (Drop(20)) player.Pickup(Fightable.ItemData.SNIPE);
+        if (Drop(10)) player.Pickup(Fightable.ItemData.ShadowAttack);
+        if (Drop(12)) player.Pickup(Fightable.ItemData.Berserk);
+        if (Drop(20)) player.Pickup(Fightable.ItemData.Backstep);
+        if (Drop(11)) player.Pickup(Fightable.ItemData.Bag);
+    }
+    private bool Drop(int outof)
+    {
+        int drop = rnd.Next(0, outof);
+        return drop == 0;
     }
     public void DoTurn()
     {

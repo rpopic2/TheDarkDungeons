@@ -31,10 +31,13 @@ public class Map
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
 
-        int hp = (int)MathF.Round(level * 0.8f);
+        int hp = 1 + (int)MathF.Round(Program.turn * 0.02f);
+        int sol = 1 + (int)MathF.Round(level * 0.6f);
+        int lun = 1 + (int)MathF.Round(level * 0.4f);
+        int cap = 1 + (int)MathF.Round(level * 0.16f);
         int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
 
-        monster = new Monster("Bat", ClassName.Warrior, level, hp, 1, (2, 1, 2), 3, spawnPoint);
+        monster = new("Bat", ClassName.Warrior, level, hp, cap, (sol, lun, 2), expOnKill, spawnPoint);
         UpdateMoveable(monster);
     }
 
@@ -69,22 +72,34 @@ public class Map
         Moveable player = Player.instance;
         int front = player.Pos.Front;
         char[] result = NewEmptyArray(length, MapSymb.invisible);
-        bool success2 = tiles.TryGet(front, out char obj2);
-        if (success2) result[front] = obj2!;
-        if (Player.instance.sight == 2)
+        Foo(result, tiles, front);
+        if (Player.instance.torch > 0)
         {
-            bool success3 = tiles.TryGet(front + 1, out char obj3);
-            if (success3) result[front + 1] = obj3!;
-            bool success4 = tiles.TryGet(front + 2, out char obj4);
-            if (success4) result[front + 2] = obj4!;
+            Foo(result, tiles, front + 1);
+            Foo(result, tiles, front + 2);
+            Player.instance.torch--;
+            if (Player.instance.torch == 0) Player.instance.Inven.Delete(Fightable.ItemData.Torch);
+            Foo2(result, moveables, front + 1);
+            Foo2(result, moveables, front + 2);
         }
 
         bool success = moveables.TryGet(front, out Moveable? obj);
         if (success) result[front] = obj!.ToChar();
 
+
         if (Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
         result[player.Pos.x] = Player.instance.ToChar();
         return string.Join(" ", result);
+    }
+    public void Foo(char[] result, char[] target, int x)
+    {
+        bool success3 = target.TryGet(x, out char obj3);
+        if (success3) result[x] = obj3!;
+    }
+    public void Foo2(char[] result, Moveable?[] target, int x)
+    {
+        bool success = target.TryGet(x, out Moveable? obj);
+        if (success) result[x] = obj!.ToChar();
     }
     public bool IsVisible(Moveable mov)
     {

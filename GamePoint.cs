@@ -5,10 +5,10 @@ public class GamePoint
     internal EventHandler<HealArgs>? OnHeal;
     public event EventHandler? OnOverflow;
 
-    private int Cur
+    public int Cur
     {
         get => cur;
-        set
+        private set
         {
             if (value >= Max)
             {

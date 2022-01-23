@@ -3,7 +3,7 @@ public class Player : Moveable
     private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
-    public int sight = 1;
+    public int torch = 0;
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
@@ -13,6 +13,27 @@ public class Player : Moveable
         for (int i = 0; i < cap; i++)
         {
             Hand[Hand.Count] = Draw();
+        }
+    }
+    public void StartItem()
+    {
+        switch (ClassName)
+        {
+            case ClassName.Warrior:
+                Pickup(Fightable.ItemData.Charge);
+                Pickup(Fightable.ItemData.Berserk);
+                Sol += 2;
+                break;
+            case ClassName.Assassin:
+                Pickup(Fightable.ItemData.ShadowAttack);
+                Pickup(Fightable.ItemData.Backstep);
+                Lun += 2;
+                break;
+            case ClassName.Mage:
+                Pickup(Fightable.ItemData.Torch);
+                Pickup(Fightable.ItemData.SNIPE);
+                Con += 2;
+                break;
         }
     }
 
@@ -138,6 +159,6 @@ public class Player : Moveable
         IO.del(3);
     }
     public override string ToString() =>
-        base.ToString() + $"\nExp : {exp}";
+        base.ToString() + $"\nExp : {exp}\tTorch : {torch}";
     public override char ToChar() => PlayerChar;
 }

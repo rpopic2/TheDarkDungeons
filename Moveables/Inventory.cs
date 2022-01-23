@@ -15,7 +15,8 @@ public class Inventory<T>
         get => cap;
         set
         {
-            if (value < 1 || value > 10) throw new ArgumentException("cap is out of index");
+            if (value < 3) value = 3;
+            if (value > 10) value = 10;
             cap = value;
             Array.Resize(ref content, value);
         }

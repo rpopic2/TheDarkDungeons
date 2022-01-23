@@ -46,10 +46,12 @@ public class Fightable : Entity
         switch (card.Stance)
         {
             case CardStance.Attack:
-                stance = (Stance.Attack, card.Sol);
+                stance.stance = Stance.Attack;
+                stance.amount += card.Sol;
                 break;
             case CardStance.Dodge:
-                stance = (Stance.Dodge, card.Lun);
+                stance.stance = Stance.Dodge;
+                stance.amount += card.Lun;
                 break;
             case CardStance.Star:
                 star = card.Con;
@@ -132,9 +134,11 @@ public class Fightable : Entity
     public static class ItemData
     {
         public static readonly Item HpPot = new("HPPOT", null, f => f.Hp += 3, true);
-        public static readonly Item Torch = new("TORCH", null, f=>((Player)f).sight = 2, true);
+        public static readonly Item Torch = new("TORCH", null, f => ((Player)f).torch = 20, true);
+        public static readonly Item Scouter = new("SCOUT", null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."), true);
         public static readonly Item AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
-        public static readonly Item FieryRing = new("FIRIG", f => f.Sol += 2, null);
+        public static readonly Item FieryRing = new("FIRIG", f => f.Sol += 1, null);
+        public static readonly Item Bag = new(" BAG ", null, f => f.Inven.Cap += 2, true);
         public static readonly Item Charge = new("CHARG", null, f =>
         {
             Card? card = f.PickCard();
@@ -142,6 +146,38 @@ public class Fightable : Entity
             mov.Move(1);
             mov.Move(1);
             f.UseCard(card);
+        });
+        public static readonly Item ShadowAttack = new("SHADW", null, f =>
+        {
+            if (f.PickCard() is Card card)
+            {
+                Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Attack);
+                f.UseCard(newCard);
+            }
+        });
+        public static readonly Item SNIPE = new("SNIPE", null, f =>
+        {
+            Card? card = f.PickCard();
+            Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
+            Player.instance.Target = target;
+            f.UseCard(card);
+        });
+        public static readonly Item Berserk = new("BERSRK", null, f =>
+        {
+            Card? card = f.PickCard();
+            if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
+            f.UseCard(card);
+        });
+        public static readonly Item Backstep = new("BKSTEP", null, f =>
+        {
+            if (f.Target is not null)
+            {
+                if(f is Moveable mov)
+                {
+                    mov.Move(2);
+                    mov.Move(-1);
+                }
+            }
         });
     }
 }
