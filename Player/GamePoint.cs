@@ -1,5 +1,6 @@
 public class GamePoint
 {
+    public const int Min = 0;
     private int cur = 0;
     private int Cur
     {
@@ -25,7 +26,6 @@ public class GamePoint
         }
     }
     public int Max { get; set; }
-    public const int Min = 0;
     public event EventHandler? OnOverflow;
     public readonly GamePointOption Option;
 
