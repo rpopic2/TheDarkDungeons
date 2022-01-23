@@ -1,1 +1,3 @@
-Fightable : Moveable.. inherit
+hand and inven merge
+
+inven.getfirst

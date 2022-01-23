@@ -1,32 +1,49 @@
-public class Inventory
+public class Inventory<T>
 {
-    private Item?[] content;
+    private T?[] content;
+    private int cap;
+    public readonly string name;
 
-    public Inventory(int cap)
+    public Inventory(int cap, string name)
     {
         this.Cap = cap;
-        content = new Item?[cap];
+        content = new T?[cap];
+        this.name = name;
     }
-
-    public int Cap { get; private set; }
+    public int Cap
+    {
+        get => cap;
+        set
+        {
+            if (value < 1 || value > 10) throw new ArgumentException("cap is out of index");
+            cap = value;
+            Array.Resize(ref content, value);
+        }
+    }
+    public T? GetFirst()
+        => content.First(card => card != null);
+    public int Count => content.Count(item => item != null);
 
     public override string ToString()
     {
-        string result = "Inventory : ";
-        foreach (var item in content)
+        string result = $"{name} : ";
+        foreach (T? item in content)
         {
-            if (item == null)
-            {
-                result += "{EMPTY}";
-            }
-            else
-            {
-                result += item.ToString();
-            }
+            if (item == null) result += "{EMPTY}";
+            else result += item.ToString();
         }
         return result;
     }
-    public Item? this[int index]
+    public void Delete(T item)
+    {
+        int index = Array.IndexOf(content, item);
+        if (index != -1) content[index] = default(T?);
+    }
+    public void Delete(int index)
+    {
+        if (content[index] is not null) content[index] = default(T?);
+    }
+    public T? this[int index]
     {
         get => content[index];
         set => content[index] = value;

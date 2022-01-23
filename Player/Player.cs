@@ -11,7 +11,7 @@ public class Player : Moveable
         Hp.OnHeal += new EventHandler<HealArgs>(OnHeal);
         for (int i = 0; i < cap; i++)
         {
-            Hand.SetAt(Hand.Count, Draw());
+            Hand[Hand.Count] = Draw();
         }
     }
 
@@ -39,7 +39,7 @@ public class Player : Moveable
                 Con += 2;
                 break;
         }
-        Hand.UpdateHandCap(Rules.capBasic + Level.FloorMult(Rules.capByLevel));
+        Hand.Cap = Rules.capBasic + Level.FloorMult(Rules.capByLevel);
         Hp.Max += Level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
@@ -57,7 +57,7 @@ public class Player : Moveable
             IO.del(2);
             return;
         }
-        Hand.SetAt(index, card);
+        Hand[index] = card;
         IO.del(2);
     }
     public void Pickup(Item item)
@@ -85,7 +85,7 @@ public class Player : Moveable
             if (cancel) return;
         } while (card.Stance == CardStance.Star);
         IO.pr("Exiled a card.");
-        Hand.Exile(index);
+        Hand[index] = Hand[index]?.Exile();
         stance = (Stance.Exile, default);
     }
     public override void Rest()
@@ -97,7 +97,7 @@ public class Player : Moveable
         {
             IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
             IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
-            if (!cancel && mod == ConsoleModifiers.Alt) Hand.StanceShift(index);
+            if (!cancel && mod == ConsoleModifiers.Alt) Hand[index] = Hand[index]?.StanceShift();
             IO.del();
         } while (!cancel);
     }

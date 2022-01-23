@@ -1,19 +1,17 @@
 public class Hand
 {
-    //private Fightable owner;
     private Card?[] content;
-    public int Cap { get; private set; }
-    public int Count => content.Count(card => card != null);
-
     public Hand(int cap)
     {
         content = new Card?[cap];
         UpdateHandCap(cap);
     }
+    public int Cap { get; private set; }
+    public int Count => content.Count(card => card != null);
     public void UpdateHandCap(int cap)
     {
-        if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
-        if(Cap == cap) return;
+        if (cap < 1 || cap > 10) throw new ArgumentException("cap is out of index");
+        if (Cap == cap) return;
         Cap = cap;
         Array.Resize(ref content, Cap);
     }

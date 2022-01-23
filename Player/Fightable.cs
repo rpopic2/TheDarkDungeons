@@ -1,8 +1,8 @@
 public class Fightable : Entity
 {
     public ClassName ClassName { get; private set; }
-    public Hand Hand { get; private set; }
-    public Inventory Inven { get; private set; }
+    public Inventory<Card?> Hand { get; private set; }
+    public Inventory<Item?> Inven { get; private set; }
     public GamePoint Hp { get; set; }
     public virtual Fightable? Target { get; protected set; }
     protected (Stance stance, int amount) stance = (default, default);
@@ -15,8 +15,8 @@ public class Fightable : Entity
     public Fightable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(level, sol, lun, con, name)
     {
         ClassName = className;
-        Hand = new Hand(cap);
-        Inven = new Inventory(3);
+        Hand = new Inventory<Card?>(cap, "Hand");
+        Inven = new Inventory<Item?>(3, "Inventory");
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
     }
@@ -95,7 +95,7 @@ public class Fightable : Entity
             {
                 stance = (Stance.Item, default);
                 onUse(this);
-                if (item.isConsumeable) Inven[index] = null;
+                if (item.isConsumeable) Inven.Delete(index);
             }
         }
     }
@@ -129,6 +129,7 @@ public readonly record struct Item(string abv, Action<Fightable>? onPickup, Acti
 {
     public override string ToString()
     {
+        if(abv is null) return "[EMPTY]";
         return $"[{abv}]";
     }
 }

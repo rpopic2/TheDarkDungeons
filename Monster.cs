@@ -17,7 +17,7 @@ public class Monster : Moveable
     }
     public void Pickup(Card card)
     {
-        Hand.SetAt(Hand.Count, card);
+        Hand[Hand.Count] = card;
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
@@ -41,7 +41,7 @@ public class Monster : Moveable
             }
             else
             {
-                _UseCard(Hand.GetFirst());
+                _UseCard((Card)Hand.GetFirst()!);
             }
         }
         else

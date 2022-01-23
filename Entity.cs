@@ -4,7 +4,7 @@ public class Entity : IMass
     public int Sol { get; protected set; }
     public int Lun { get; protected set; }
     public int Con { get; protected set; }
-    public string Name { get; private set; }
+    public readonly string Name;
     protected Random rnd = new Random();
 
     public Entity(int level, int sol, int lun, int con, string name)

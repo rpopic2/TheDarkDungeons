@@ -1,8 +1,7 @@
 gamepoint onvaluechanged -> fightables to use this.
 selecting empty hand should not return.
-hand and inven merge
+Fightable : Moveable.. inherit?
 
-스킬.
-스킬드롭 랜덤
+skill drops.
 
 different mobs
