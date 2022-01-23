@@ -101,14 +101,13 @@ public class Player : Moveable
             IO.del();
         } while (!cancel);
     }
-    public void UseCard()
+    public override Card? PickCard()
     {
         do
         {
             IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
-            if (cancel) return;
-            UseCard(index);
-            return;
+            if (cancel) return null;
+            return Hand[index];
         } while (true);
     }
     public void UseInven()

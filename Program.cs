@@ -30,7 +30,7 @@
         NewTurn();
         //player.Pickup(Fightable.Item.AmuletOfLa);
         //player.Pickup(Fightable.Item.HpPot);
-        player.Pickup(Fightable.ItemData.Dash);
+        player.Pickup(Fightable.ItemData.Charge);
     }
 
     private void Intro()
@@ -81,7 +81,8 @@
         switch (key)
         {
             case ConsoleKey.W:
-                player.UseCard();
+                Card? card = player.PickCard();
+                player.UseCard(card);
                 break;
             case ConsoleKey.E:
                 player.UseInven();

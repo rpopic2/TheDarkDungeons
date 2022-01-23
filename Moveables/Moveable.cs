@@ -20,7 +20,7 @@ public class Moveable : Fightable
         bool result = existsTile && !obstructed;
         if (result)
         {
-            stance = (Stance.Move, x);
+            stance = (Stance.Move, stance.amount + x);
             Pos = newPos;
             current.UpdateMoveable(this);
         }
@@ -28,7 +28,7 @@ public class Moveable : Fightable
         {
             if (newPos.facing != Pos.facing)
             {
-                stance = (Stance.Move, 0);
+                stance = (Stance.Move, stance.amount);
                 Pos = !Pos;
                 return true;
             }

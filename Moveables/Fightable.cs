@@ -20,13 +20,24 @@ public class Fightable : Entity
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
     }
-    public virtual void UseCard(int index)
+    public virtual Card? PickCard() => Hand.GetFirst();
+
+    public void UseCard(int index)
     {
         if (Target is null) return;
         if (Hand[index] is Card card)
         {
             if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
             _UseCard(card);
+        }
+    }
+    public void UseCard(Card? card)
+    {
+        if (Target is null) return;
+        if (card is Card card2)
+        {
+            if (card2.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
+            _UseCard(card2);
         }
     }
     protected void _UseCard(Card card)
@@ -123,14 +134,19 @@ public class Fightable : Entity
         public static readonly Item HpPot = new("HPPOT", null, f => f.Hp += 3, true);
         public static readonly Item AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
         public static readonly Item FieryRing = new("FIRIG", f => f.Sol += 2, null);
-        public static readonly Item Dash = new("DASH", null, f => ((Moveable)f).Move(2));
+        public static readonly Item Charge = new("CHARG", null, f =>
+        {
+            Moveable mov = (Moveable)f;
+            mov.Move(1);
+            mov.Move(1);
+        });
     }
 }
 public readonly record struct Item(string abv, Action<Fightable>? onPickup, Action<Fightable>? onUse, bool isConsumeable = false)
 {
     public override string ToString()
     {
-        if(abv is null) return "[EMPTY]";
+        if (abv is null) return "[EMPTY]";
         return $"[{abv}]";
     }
 }

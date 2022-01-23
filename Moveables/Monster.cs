@@ -60,10 +60,6 @@ public class Monster : Moveable
         base.Rest();
         Pickup(Draw());
     }
-    public void UseCard()
-    {
-        Card? card = Hand.GetFirst();
-    }
     public override char ToChar()
     {
         return Pos.facing == Facing.Front ? 'b' : 'd';
