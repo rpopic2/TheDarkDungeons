@@ -22,14 +22,12 @@ public class Fightable : Entity
     }
     public virtual void UseCard(int index)
     {
-        if (Hand[index] is null) return;
-        Card card = Hand[index] ?? default;
         if (Target is null) return;
-        if (card.Stance == CardStance.Star && star <= 0)
+        if (Hand[index] is Card card)
         {
-            IO.pr("Next move will be reinforced.");
+            if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
+            _UseCard(card);
         }
-        _UseCard(card);
     }
     protected void _UseCard(Card card)
     {
@@ -93,6 +91,18 @@ public class Fightable : Entity
         Hp -= damage;
         if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
         else if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
+    }
+    public void UseInven(int index)
+    {
+        if (Inven[index] is Item item)
+        {
+            if (item.onUse is Action<Fightable> onUse)
+            {
+                stance = (Stance.Item, default);
+                onUse(this);
+                if (item.isConsumeable) Inven[index] = null;
+            }
+        }
     }
     public virtual void Rest()
     {

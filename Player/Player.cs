@@ -121,19 +121,6 @@ public class Player : Moveable
             return;
         } while (true);
     }
-    public void UseInven(int index)
-    {
-        if (Inven[index] is Item item)
-        {
-            if (item.onUse is Action<Fightable> onUse)
-            {
-                stance = (Stance.Item, default);
-                onUse(this);
-                if (item.isConsumeable) Inven[index] = null;
-            }
-        }
-
-    }
     public override void Move(int x)
     {
         bool success = _Move(x, out char obj);
