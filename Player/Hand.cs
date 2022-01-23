@@ -7,11 +7,13 @@ public class Hand
 
     public Hand(int cap)
     {
-        Cap = cap;
         content = new Card?[cap];
+        UpdateHandCap(cap);
     }
     public void UpdateHandCap(int cap)
     {
+        if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
+        if(Cap == cap) return;
         Cap = cap;
         Array.Resize(ref content, Cap);
     }

@@ -15,15 +15,10 @@ public class Fightable : Entity
     public Fightable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(level, sol, lun, con, name)
     {
         ClassName = className;
-        if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
         Hand = new Hand(cap);
         Inven = new Inventory(3);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
-        Sol = sol;
-        Lun = lun;
-        Con = con;
-        Level = level;
     }
     public virtual void UseCard(int index)
     {
