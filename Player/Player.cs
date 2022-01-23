@@ -62,7 +62,7 @@ public class Player : Moveable
         Hand.SetAt(index, card);
         IO.del(2);
     }
-    public void Pickup(ItemData item)
+    public void Pickup(Item item)
     {
         IO.pr("\nFound an item." + item);
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
@@ -125,12 +125,16 @@ public class Player : Moveable
     }
     public void UseEquip(int index)
     {
-        if (Inven[index]?.onUse is Action<Fightable> onUse)
+        if (Inven[index] is Item item)
         {
-            stance = (Stance.Item, default);
-            Inven[index] = null;
-            onUse(this);
+            if (item.onUse is Action<Fightable> onUse)
+            {
+                stance = (Stance.Item, default);
+                onUse(this);
+                if (item.isConsumeable) Inven[index] = null;
+            }
         }
+
     }
     public override void Move(int x)
     {

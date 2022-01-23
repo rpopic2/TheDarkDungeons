@@ -1,11 +1,11 @@
 public class Inventory
 {
-    private ItemData?[] content;
+    private Item?[] content;
 
     public Inventory(int cap)
     {
         this.Cap = cap;
-        content = new ItemData?[cap];
+        content = new Item?[cap];
     }
 
     public int Cap { get; private set; }
@@ -26,7 +26,7 @@ public class Inventory
         }
         return result;
     }
-    public ItemData? this[int index]
+    public Item? this[int index]
     {
         get => content[index];
         set => content[index] = value;

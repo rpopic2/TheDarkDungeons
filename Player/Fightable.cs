@@ -132,9 +132,18 @@ public class Fightable : Mass
     {
         IO.pr($"{Name} restored {e.Amount} hp. {Hp}");
     }
-    public static class Item
+
+    public static class ItemData
     {
-        public static readonly ItemData HpPot = new("HPPOT", null, f => f.Hp += 3);
-        public static readonly ItemData AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
+        public static readonly Item HpPot = new("HPPOT", null, f => f.Hp += 3, true);
+        public static readonly Item AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
+        public static readonly Item Dash = new("DASH", null, f => ((Moveable)f).Move(2));
+    }
+}
+public readonly record struct Item(string abv, Action<Fightable>? onPickup, Action<Fightable>? onUse, bool isConsumeable = false)
+{
+    public override string ToString()
+    {
+        return $"[{abv}]";
     }
 }

@@ -28,8 +28,9 @@
         IO.pr("Your adventure begins...");
         Map.NewMap();
         NewTurn();
-        player.Pickup(Fightable.Item.AmuletOfLa);
-        player.Pickup(Fightable.Item.HpPot);
+        //player.Pickup(Fightable.Item.AmuletOfLa);
+        //player.Pickup(Fightable.Item.HpPot);
+        player.Pickup(Fightable.ItemData.Dash);
     }
 
     private void Intro()
