@@ -47,34 +47,22 @@ public class Fightable : Entity
     }
     public void TryAttack()
     {
-        if (!IsAlive) return;
-        if (Target is null) return;
+        if (!IsAlive || Target is null) return;
         if (stance.stance == Stance.Attack)
         {
-            string atkString = $"{Name} attacks with {stance.amount} damage.";
-            if (star > 0)
-            {
-                stance.amount += star;
-                atkString += $"..and {star} more damage! (total {stance.amount})";
-                star = 0;
-            }
-            IO.pr(atkString);
+            string tempString = $"{Name} attacks with {stance.amount} damage.";
+            TryUseStar();
+            IO.pr(tempString);
             Target.TryDodge(stance.amount);
         }
         else if (Target.stance.stance == Stance.Dodge) Target.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
-
         if (stance.stance == Stance.Dodge)
         {
             string tempStr = $"{Name} dodges {stance.amount} damage.";
-            if (star > 0)
-            {
-                stance.amount += star;
-                tempStr += $"..and {star} more damage! (total {stance.amount})";
-                star = 0;
-            }
+            TryUseStar();
             if (damage <= 0)
             {
                 IO.pr(tempStr += "..but oppenent did not attack...");
@@ -91,6 +79,13 @@ public class Fightable : Entity
         Hp -= damage;
         if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
         else if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
+    }
+    private void TryUseStar()
+    {
+        if (star <= 0) return;
+        stance.amount += star;
+        IO.pr($"..and {star} more damage! (total {stance.amount})");
+        star = 0;
     }
     public void UseInven(int index)
     {
@@ -116,17 +111,15 @@ public class Fightable : Entity
         stance = (default, default);
     }
     protected virtual void OnDeath(object? sender, EventArgs e) => IO.pr($"{Name} died. {Hp}", true, true);
-    protected void OnHeal(object? sender, HealArgs e)
-    {
-        IO.pr($"{Name} restored {e.Amount} hp. {Hp}");
-    }
+    protected void OnHeal(object? sender, HealArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
+
     public override string ToString() =>
         $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
 
     public virtual char ToChar()
     {
         if (IsAlive) return Name.ToLower()[0];
-        return MapSymb.invisible;
+        else return MapSymb.invisible;
     }
     public static class ItemData
     {
