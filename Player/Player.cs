@@ -14,7 +14,7 @@ public class Player : Moveable
             Hand.SetAt(Hand.Count, Draw());
         }
         Inven = new Inventory(3);
-        Inven[0] = new Item();
+        Inven[0] = new Item("HPPOT");
     }
     private void OnLvUp(object? sender, EventArgs e)
     {

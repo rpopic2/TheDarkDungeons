@@ -1,1 +1,4 @@
 an hp pot that restores 2 hp.
+item 
+player.useequip(int)
+gamepoint onvaluechanged

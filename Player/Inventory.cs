@@ -12,7 +12,7 @@ public class Inventory
 
     public override string ToString()
     {
-        string result = "Hand : ";
+        string result = "Inventory : ";
         foreach (var item in content)
         {
             if (item == null)
