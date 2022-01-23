@@ -132,13 +132,16 @@ public class Fightable : Entity
     public static class ItemData
     {
         public static readonly Item HpPot = new("HPPOT", null, f => f.Hp += 3, true);
+        public static readonly Item Torch = new("TORCH", null, f=>((Player)f).sight = 2, true);
         public static readonly Item AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
         public static readonly Item FieryRing = new("FIRIG", f => f.Sol += 2, null);
         public static readonly Item Charge = new("CHARG", null, f =>
         {
+            Card? card = f.PickCard();
             Moveable mov = (Moveable)f;
             mov.Move(1);
             mov.Move(1);
+            f.UseCard(card);
         });
     }
 }

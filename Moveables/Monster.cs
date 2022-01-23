@@ -29,6 +29,10 @@ public class Monster : Moveable
         if(drop < 1) player.Pickup(Fightable.ItemData.HpPot);
         drop = rnd.Next(0, 11);
         if(drop < 1) player.Pickup(Fightable.ItemData.FieryRing);
+        drop = rnd.Next(0, 5);
+        if(drop < 1) player.Pickup(Fightable.ItemData.Torch);
+        drop = rnd.Next(0, 3);
+        if(drop < 1) player.Pickup(Fightable.ItemData.Charge);
         drop = rnd.Next(0, 100);
         if(drop < 1) player.Pickup(Fightable.ItemData.AmuletOfLa);
     }

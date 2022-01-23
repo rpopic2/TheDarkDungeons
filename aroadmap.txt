@@ -3,5 +3,8 @@ selecting empty hand should not return.
 Fightable : Moveable.. inherit?
 
 skill drops.
+rf map (TOSTRRING  )
+monster ad, monster can stay still?
+on equip put off
 
 different mobs

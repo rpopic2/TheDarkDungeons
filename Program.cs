@@ -30,7 +30,7 @@
         NewTurn();
         //player.Pickup(Fightable.Item.AmuletOfLa);
         //player.Pickup(Fightable.Item.HpPot);
-        player.Pickup(Fightable.ItemData.Charge);
+        player.Pickup(Fightable.ItemData.Torch);
     }
 
     private void Intro()

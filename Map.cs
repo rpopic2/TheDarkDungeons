@@ -71,6 +71,13 @@ public class Map
         char[] result = NewEmptyArray(length, MapSymb.invisible);
         bool success2 = tiles.TryGet(front, out char obj2);
         if (success2) result[front] = obj2!;
+        if (Player.instance.sight == 2)
+        {
+            bool success3 = tiles.TryGet(front + 1, out char obj3);
+            if (success3) result[front + 1] = obj3!;
+            bool success4 = tiles.TryGet(front + 2, out char obj4);
+            if (success4) result[front + 2] = obj4!;
+        }
 
         bool success = moveables.TryGet(front, out Moveable? obj);
         if (success) result[front] = obj!.ToChar();
