@@ -5,10 +5,10 @@ public class Fightable : Entity
     public Hand Hand { get; private set; }
     public GamePoint Hp { get; set; }
     public virtual Fightable? Target { get; protected set; }
-    public bool IsResting => stance.stance == Stance.Rest;
     protected (Stance stance, int amount) stance = (default, default);
     public (Stance stance, int amount) TurnStance { get => stance; }
     private int star;
+    public bool IsResting => stance.stance == Stance.Rest;
 
     public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
     {
@@ -16,6 +16,7 @@ public class Fightable : Entity
         ClassName = className;
         if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
         Hand = new Hand(cap);
+        Inven = new Inventory(3);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Sol = sol;
@@ -117,6 +118,7 @@ public class Fightable : Entity
 
     public bool IsAlive => !Hp.IsMin;
     public bool DidPrint => TurnStance.stance != Stance.Move && TurnStance.stance != Stance.None;
+    public Inventory Inven { get; private set; }
 
     public virtual char ToChar()
     {

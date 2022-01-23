@@ -3,7 +3,6 @@ public class Player : Moveable
     private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
-    public Inventory Inven { get; private set; }
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
@@ -14,7 +13,6 @@ public class Player : Moveable
         {
             Hand.SetAt(Hand.Count, Draw());
         }
-        Inven = new Inventory(3);
     }
 
     private void OnLvUp(object? sender, EventArgs e)
