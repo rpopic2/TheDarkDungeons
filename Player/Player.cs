@@ -73,6 +73,7 @@ public class Player : Moveable
             return;
         }
         Inven[index] = item;
+        if(item.Equals(ItemData.AmuletOfLa)) Sol += item.amount;
         IO.del(2);
     }
     public void Exile()
@@ -127,7 +128,7 @@ public class Player : Moveable
         if (Inven[index] is ItemData item)
         {
             stance = (Stance.Item, default);
-            Hp += item.amount;
+            if(item.abv == "HPPOT")  Hp += item.amount;
             Inven[index] = null;
         }
     }

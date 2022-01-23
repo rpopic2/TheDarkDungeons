@@ -1,6 +1,7 @@
 public readonly struct ItemData
 {
     public static readonly ItemData HpPot = new("HPPOT", 3);
+    public static readonly ItemData AmuletOfLa = new("AMULA", 30);
 
     public readonly string abv;
     public readonly int amount;

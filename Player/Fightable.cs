@@ -3,7 +3,7 @@ public class Fightable : Mass
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
-    public GamePoint Hp { get; protected set; }
+    protected GamePoint Hp { get; set; }
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
     public bool IsResting => stance.stance == Stance.Rest;
