@@ -101,7 +101,7 @@ public class Fightable : Entity
     }
     public virtual void Rest()
     {
-        if (this is not Player && Map.Current.IsVisible((Moveable)this))
+        if (this is Player || Map.Current.IsVisible((Moveable)this))
             IO.pr($"{Name} is resting a turn.");
         stance = (Stance.Rest, default);
     }
@@ -122,6 +122,7 @@ public class Fightable : Entity
     {
         public static readonly Item HpPot = new("HPPOT", null, f => f.Hp += 3, true);
         public static readonly Item AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
+        public static readonly Item FieryRing = new("FIRIG", f => f.Sol += 2, null);
         public static readonly Item Dash = new("DASH", null, f => ((Moveable)f).Move(2));
     }
 }

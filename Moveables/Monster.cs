@@ -9,7 +9,7 @@ public class Monster : Moveable
         {
             int attack = rnd.Next(0, 11);
             Card card = Draw();
-            //if(attack > 2) card.StanceShift();
+            if (attack > 2) card.StanceShift();
             card.StanceShift();
             Pickup(card);
         }
@@ -25,6 +25,12 @@ public class Monster : Moveable
         player.exp.Gain(expOnKill);
         player.Pickup(Draw());
         Map.Current.SpawnBat();
+        int drop = rnd.Next(0, 11);
+        if(drop < 1) player.Pickup(Fightable.ItemData.HpPot);
+        drop = rnd.Next(0, 11);
+        if(drop < 1) player.Pickup(Fightable.ItemData.FieryRing);
+        drop = rnd.Next(0, 100);
+        if(drop < 1) player.Pickup(Fightable.ItemData.AmuletOfLa);
     }
     public void DoTurn()
     {
@@ -63,3 +69,6 @@ public class Monster : Moveable
         return Pos.facing == Facing.Front ? 'b' : 'd';
     }
 }
+
+public readonly record struct MonsterInfo(string name, ClassName className, (int, float, float) hp, PointInfo cap, PointInfo sol, PointInfo lun, PointInfo con, PointInfo killExp);
+public readonly record struct PointInfo(int basePoint, float pointPerLevel = default, float pointPerTurn = default);
