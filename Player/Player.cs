@@ -17,6 +17,7 @@ public class Player : Moveable
         }
         Inven = new Inventory(3);
         Inven[0] = HpPot;
+        Inven[1] = HpPot;
     }
 
     private void OnLvUp(object? sender, EventArgs e)

@@ -130,6 +130,6 @@ public class Fightable : Mass
 
     protected void OnHeal(object? sender, HealArgs e)
     {
-        IO.pr($"{Name} restored {e.Amount} hp.");
+        IO.pr($"{Name} restored {e.Amount} hp. {Hp}");
     }
 }
