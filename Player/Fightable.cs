@@ -3,7 +3,7 @@ public class Fightable : Mass
     public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
-    protected GamePoint Hp { get; set; }
+    public GamePoint Hp { get; set; }
     protected Random rnd = new Random();
     public virtual Fightable? Target { get; protected set; }
     public bool IsResting => stance.stance == Stance.Rest;
@@ -131,5 +131,10 @@ public class Fightable : Mass
     protected void OnHeal(object? sender, HealArgs e)
     {
         IO.pr($"{Name} restored {e.Amount} hp. {Hp}");
+    }
+    public static class Item
+    {
+        public static readonly ItemData HpPot = new("HPPOT", null, f => f.Hp += 3);
+        public static readonly ItemData AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
     }
 }

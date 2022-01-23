@@ -37,10 +37,10 @@ public static class IO
         if (index != -1) index--;
         return index != -1 && index <= max - 1;
     }
-    public static void seln_h(out int result, out bool cancel, out ConsoleModifiers mod)
-    {
+    public static void seln_h(out int result, out bool cancel, out ConsoleModifiers mod) =>
         seln(player.Hand, out result, out cancel, out mod, player.Hand.Cap);
-    }
+    public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
+    seln(player.Inven, out result, out cancel, out mod, player.Inven.Cap);
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>

@@ -65,7 +65,7 @@ public class Player : Moveable
     public void Pickup(ItemData item)
     {
         IO.pr("\nFound an item." + item);
-        IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
+        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
             Pickup(Draw().Exile());
@@ -73,7 +73,7 @@ public class Player : Moveable
             return;
         }
         Inven[index] = item;
-        if(item.Equals(ItemData.AmuletOfLa)) Sol += item.amount;
+        item.onPickup?.Invoke(this);
         IO.del(2);
     }
     public void Exile()
@@ -117,7 +117,7 @@ public class Player : Moveable
     {
         do
         {
-            IO.seln(Inven, out int index, out bool cancel, out ConsoleModifiers mod, Inven.Cap);
+            IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
             if (cancel) return;
             UseEquip(index);
             return;
@@ -125,11 +125,11 @@ public class Player : Moveable
     }
     public void UseEquip(int index)
     {
-        if (Inven[index] is ItemData item)
+        if (Inven[index]?.onUse is Action<Fightable> onUse)
         {
             stance = (Stance.Item, default);
-            if(item.abv == "HPPOT")  Hp += item.amount;
             Inven[index] = null;
+            onUse(this);
         }
     }
     public override void Move(int x)
