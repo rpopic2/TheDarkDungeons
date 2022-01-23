@@ -3,6 +3,7 @@ public class Player : Moveable
     private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
+    public Inventory Equips { get; private set; }
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
@@ -12,6 +13,8 @@ public class Player : Moveable
         {
             Hand.SetAt(Hand.Count, Draw());
         }
+        Equips = new Inventory(3);
+        Equips[0] = new Item();
     }
     private void OnLvUp(object? sender, EventArgs e)
     {
@@ -44,7 +47,7 @@ public class Player : Moveable
     public void Pickup(Card card)
     {
         IO.pr("\nFound a card." + card);
-        IO.selh(out int index, out bool cancel, out ConsoleModifiers mod);
+        IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
         if (mod == ConsoleModifiers.Alt) card.StanceShift();
         if (cancel)
         {
@@ -64,7 +67,7 @@ public class Player : Moveable
         Card card;
         do
         {
-            IO.selh(out index, out bool cancel, out ConsoleModifiers mod);
+            IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
             card = Hand[index] ?? throw new Exception();
             if (cancel) return;
         } while (card.Stance == CardStance.Star);
@@ -80,7 +83,7 @@ public class Player : Moveable
         do
         {
             IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
-            IO.selh(out int index, out cancel, out ConsoleModifiers mod);
+            IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
             if (!cancel && mod == ConsoleModifiers.Alt) Hand.StanceShift(index);
             IO.del();
         } while (!cancel);
@@ -89,12 +92,27 @@ public class Player : Moveable
     {
         do
         {
-            IO.selh(out int index, out bool cancel, out ConsoleModifiers mod);
+            IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
             if (cancel) return;
             UseCard(index);
             return;
         } while (true);
-
+    }
+    public void UseEquip()
+    {
+        do
+        {
+            IO.seln(Equips, out int index, out bool cancel, out ConsoleModifiers mod, Equips.Cap);
+            if (cancel) return;
+            UseEquip(index);
+            return;
+        } while (true);
+    }
+    public void UseEquip(int index)
+    {
+        Hp += 2;
+        IO.pr("Restored 2 hp.");
+        stance = (Stance.Item, default);
     }
     public override void Move(int x)
     {

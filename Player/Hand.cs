@@ -2,11 +2,8 @@ public class Hand
 {
     //private Fightable owner;
     private Card?[] content;
-    public int Cap {get; private set;}
-    public int Count
-    {
-        get => content.Count(card => card != null);
-    }
+    public int Cap { get; private set; }
+    public int Count => content.Count(card => card != null);
 
     public Hand(int cap)
     {

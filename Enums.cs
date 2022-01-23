@@ -21,7 +21,7 @@ public enum Facing
 }
 public enum Stance
 {
-    None, Move, Rest, Attack, Dodge, Exile
+    None, Move, Rest, Attack, Dodge, Item, Exile
 }
 
 public static class Extensions
