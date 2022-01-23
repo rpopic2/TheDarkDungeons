@@ -12,7 +12,7 @@
         do
         {
             instance.MainLoop();
-            if (player.TurnStance.stance != Stance.None) instance.ElaspeTurn();
+            if (player.CurStance.stance != Stance.None) instance.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
         IO.pr("Your adventure ends here...");

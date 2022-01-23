@@ -18,9 +18,9 @@ public class Player : Moveable
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
-        level++;
+        Level++;
         exp.UpdateMax();
-        IO.pr("Level up! : " + level, true);
+        IO.pr("Level up! : " + Level, true);
         bool cancel;
         int index;
         do
@@ -39,8 +39,8 @@ public class Player : Moveable
                 Con += 2;
                 break;
         }
-        Hand.UpdateHandCap(Rules.capBasic + level.FloorMult(Rules.capByLevel));
-        Hp.Max += level.FloorMult(Rules.hpByLevel);
+        Hand.UpdateHandCap(Rules.capBasic + Level.FloorMult(Rules.capByLevel));
+        Hp.Max += Level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
     public void Pickup(Card card)

@@ -1,18 +1,19 @@
 public class Fightable : Entity
 {
-    public string Name { get; private set; }
     public ClassName ClassName { get; private set; }
     public Hand Hand { get; private set; }
+    public Inventory Inven { get; private set; }
     public GamePoint Hp { get; set; }
     public virtual Fightable? Target { get; protected set; }
     protected (Stance stance, int amount) stance = (default, default);
-    public (Stance stance, int amount) TurnStance { get => stance; }
+    public (Stance stance, int amount) CurStance => stance;
     private int star;
     public bool IsResting => stance.stance == Stance.Rest;
+    public bool IsAlive => !Hp.IsMin;
+    public bool DidPrint => CurStance.stance != Stance.Move && CurStance.stance != Stance.None;
 
-    public Fightable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con)
+    public Fightable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(level, sol, lun, con, name)
     {
-        Name = name;
         ClassName = className;
         if (cap <= 0 || cap > 10) throw new ArgumentException("cap is out of index");
         Hand = new Hand(cap);
@@ -22,11 +23,7 @@ public class Fightable : Entity
         Sol = sol;
         Lun = lun;
         Con = con;
-        level = lv;
-    }
-    protected virtual void OnDeath(object? sender, EventArgs e)
-    {
-        IO.pr($"{Name} died. {Hp}", true, true);
+        Level = level;
     }
     public virtual void UseCard(int index)
     {
@@ -113,24 +110,19 @@ public class Fightable : Entity
     {
         stance = (default, default);
     }
+    protected virtual void OnDeath(object? sender, EventArgs e) => IO.pr($"{Name} died. {Hp}", true, true);
+    protected void OnHeal(object? sender, HealArgs e)
+    {
+        IO.pr($"{Name} restored {e.Amount} hp. {Hp}");
+    }
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
-
-    public bool IsAlive => !Hp.IsMin;
-    public bool DidPrint => TurnStance.stance != Stance.Move && TurnStance.stance != Stance.None;
-    public Inventory Inven { get; private set; }
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
 
     public virtual char ToChar()
     {
         if (IsAlive) return Name.ToLower()[0];
         return MapSymb.invisible;
     }
-
-    protected void OnHeal(object? sender, HealArgs e)
-    {
-        IO.pr($"{Name} restored {e.Amount} hp. {Hp}");
-    }
-
     public static class ItemData
     {
         public static readonly Item HpPot = new("HPPOT", null, f => f.Hp += 3, true);
