@@ -1,0 +1,2 @@
+public readonly record struct MonsterInfo (string name, ClassName className, (int, float, float) hp, PointInfo cap, PointInfo sol, PointInfo lun, PointInfo con, PointInfo killExp);
+public readonly record struct PointInfo (int basePoint, float pointPerLevel = default, float pointPerTurn = default);
