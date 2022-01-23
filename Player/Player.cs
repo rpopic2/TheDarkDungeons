@@ -1,7 +1,6 @@
 public class Player : Moveable
 {
     private const char PlayerChar = '@';
-    private readonly ItemData HpPot = new ItemData("HPPOT", 3);
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
     public Inventory Inven { get; private set; }
@@ -16,8 +15,6 @@ public class Player : Moveable
             Hand.SetAt(Hand.Count, Draw());
         }
         Inven = new Inventory(3);
-        Inven[0] = HpPot;
-        Inven[1] = HpPot;
     }
 
     private void OnLvUp(object? sender, EventArgs e)
@@ -63,6 +60,19 @@ public class Player : Moveable
             return;
         }
         Hand.SetAt(index, card);
+        IO.del(2);
+    }
+    public void Pickup(ItemData item)
+    {
+        IO.pr("\nFound an item." + item);
+        IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
+        if (cancel)
+        {
+            Pickup(Draw().Exile());
+            IO.del(2);
+            return;
+        }
+        Inven[index] = item;
         IO.del(2);
     }
     public void Exile()

@@ -28,6 +28,7 @@
         IO.pr("Your adventure begins...");
         Map.NewMap();
         NewTurn();
+        player.Pickup(ItemData.HpPot);
     }
 
     private void Intro()
