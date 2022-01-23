@@ -1,6 +1,7 @@
 public class Player : Moveable
 {
     private const char PlayerChar = '@';
+    private readonly ItemData HpPot = new ItemData("HPPOT", 3);
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
     public Inventory Inven { get; private set; }
@@ -15,7 +16,7 @@ public class Player : Moveable
             Hand.SetAt(Hand.Count, Draw());
         }
         Inven = new Inventory(3);
-        Inven[0] = new Item("HPPOT");
+        Inven[0] = new Item(HpPot);
     }
 
     private void OnLvUp(object? sender, EventArgs e)
@@ -112,11 +113,12 @@ public class Player : Moveable
     }
     public void UseEquip(int index)
     {
-        Item? item = Inven[index];
-        if(item is null) return;
-        Hp += 2;
-        stance = (Stance.Item, default);
-        Inven[index] = null;
+        if (Inven[index] is Item item)
+        {
+            stance = (Stance.Item, default);
+            Hp += item.data.amount;
+            Inven[index] = null;
+        }
     }
     public override void Move(int x)
     {

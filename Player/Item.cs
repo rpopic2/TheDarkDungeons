@@ -1,14 +1,14 @@
 public struct Item
 {
-    public readonly string abv;
+    public readonly ItemData data;
 
-    public Item(string abv)
+    public Item(ItemData data)
     {
-        this.abv = abv;
+        this.data = data;
     }
 
     public override string ToString()
     {
-        return $"[{abv}]";
+        return $"[{data.abv}]";
     }
 }
