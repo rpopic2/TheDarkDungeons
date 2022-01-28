@@ -15,6 +15,8 @@
             if (player.CurStance.stance != Stance.None) instance.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
+        IO.pr(player.Hand);
+        IO.pr(player.Inven);
         IO.pr("Your adventure ends here...");
         IO.rk();
     }
