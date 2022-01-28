@@ -51,11 +51,11 @@
         switch (key)
         {
             case ConsoleKey.RightArrow:
-            case ConsoleKey.H:
+            case ConsoleKey.L:
                 player.Move(1);
                 break;
             case ConsoleKey.LeftArrow:
-            case ConsoleKey.L:
+            case ConsoleKey.H:
                 player.Move(-1);
                 break;
             case ConsoleKey.Q:
