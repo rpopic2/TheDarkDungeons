@@ -10,9 +10,10 @@ public struct Position
         this.oldX = oldX;
         this.facing = facing;
     }
-    public int Front
-      => facing == Facing.Front ? x + 1 : x - 1;
-
+    public int FrontIndex  => facing == Facing.Front ? x + 1 : x - 1;
+     
+    public int Front => facing == Facing.Front ? 1 : -1;
+    public int Back => facing == Facing.Front ? -1 : 1;
     public static Position operator +(Position original, int value)
     {
         original.oldX = original.x;

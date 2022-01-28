@@ -172,10 +172,11 @@ public class Fightable : Entity
         {
             if (f.Target is not null)
             {
-                if(f is Moveable mov)
+                if (f is Moveable mov)
                 {
-                    mov.Move(2);
-                    mov.Move(-1);
+                    mov.Target = null;
+                    mov.Move(2 * mov.Pos.Front);
+                    mov.Move(1 * mov.Pos.Back);
                 }
             }
         });

@@ -31,15 +31,17 @@ public class Map
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
 
-        int hp = 2 + (int)MathF.Round(Program.turn * 0.03f);
-        int sol = 1 + (int)MathF.Round(level * 0.6f);
-        int lun = 1 + (int)MathF.Round(level * 0.4f);
-        int cap = 1 + (int)MathF.Round(level * 0.16f);
+        int hp = 2 + m(0.03f, Program.turn) + m(0.5f, level);
+        int sol = 1 + m(0.6f, level);
+        int lun = 3;
+        int cap = 1 + m(0.16f, level);
         int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
 
         monster = new("Bat", ClassName.Warrior, level, hp, cap, (sol, lun, 2), expOnKill, spawnPoint);
         UpdateMoveable(monster);
     }
+
+    private int m(float x, int multiplier) => (int)MathF.Round(multiplier * x);
 
     private List<int> GetSpawnableIndices()
     {
@@ -70,7 +72,7 @@ public class Map
     public override string ToString()
     {
         Moveable player = Player.instance;
-        int front = player.Pos.Front;
+        int front = player.Pos.FrontIndex;
         char[] result = NewEmptyArray(length, MapSymb.invisible);
         Foo(result, tiles, front);
         if (Player.instance.torch > 0)

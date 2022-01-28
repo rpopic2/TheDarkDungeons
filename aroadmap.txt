@@ -1,5 +1,4 @@
 
-skill drops.
 rf map (TOSTRING  )
 monster ad, monster can stay still?
 on equip put off
@@ -7,7 +6,7 @@ map.tostring 2번씩실행됨
 map.tostring rf.
 different mobs
 stacking items
+스폰하자마자 처맞는거
 
 gamepoint onvaluechanged -> fightables to use this.
 selecting empty hand should not return.
-Fightable : Moveable.. inherit?

@@ -50,7 +50,7 @@ public class Moveable : Fightable
     }
     public void UpdateTarget()
     {
-        Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
+        Map.Current.Moveables.TryGet(Pos.FrontIndex, out Moveable? mov);
         Target = mov;
     }
     // public override Moveable? Target
