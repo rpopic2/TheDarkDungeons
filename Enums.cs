@@ -28,7 +28,7 @@ public static class Extensions
 {
     public static bool TryGet<T>(this T[] source, int index, out T? obj)
     {
-        obj = default(T);
+        obj = default(T?);
         if (index < 0 || index >= source.Length) return false;
         else if (source[index] is null) return false;
         else

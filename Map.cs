@@ -76,32 +76,22 @@ public class Map
     private void Render()
     {
         empty.CopyTo(rendered, 0);
-        Player player = Player.instance;
-        RenderTiles();
-        RenderMovs();
+        RenderFrom(Tiles);
+        RenderFrom(Moveables);
         rendered[player.Pos.x] = MapSymb.player;
     }
-
-    public void RenderTiles()
+    public void RenderFrom<T>(T[] target)
     {
         int sight = player.sight;
         int front = player.Pos.FrontIndex;
         for (int i = 0; i < sight; i++)
         {
             int targetTile = front + i;
-            bool success3 = tiles.TryGet(targetTile, out char obj3);
-            if (success3) rendered[targetTile] = obj3;
-        }
-    }
-    public void RenderMovs()
-    {
-        int sight = player.sight;
-        int front = player.Pos.FrontIndex;
-        for (int i = 0; i < sight; i++)
-        {
-            int targetTile = front + i;
-            bool success3 = moveables.TryGet(targetTile, out Moveable? obj3);
-            if (obj3 is not null) rendered[targetTile] = obj3.ToChar();
+            bool success = target.TryGet(targetTile, out T? obj);
+            if(!success) continue;
+            if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
+            else if (obj is char chr) rendered[targetTile] = chr;
+            else if (obj is not null) throw new Exception();
         }
     }
     public override string ToString()

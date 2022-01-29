@@ -114,7 +114,7 @@ public class Fightable : Entity
     }
     public virtual void Rest()
     {
-        if (this is Player || Map.Current.IsVisible((Moveable)this))
+        if (this is Player)
             IO.pr($"{Name} is resting a turn.");
         stance = (Stance.Rest, default);
     }
