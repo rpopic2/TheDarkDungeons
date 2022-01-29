@@ -2,7 +2,7 @@ public class GamePoint
 {
     public const int Min = 0;
     private int cur = 0;
-    internal EventHandler<HealArgs>? OnHeal;
+    public EventHandler<HealArgs>? OnHeal;
     public event EventHandler? OnOverflow;
 
     public int Cur
