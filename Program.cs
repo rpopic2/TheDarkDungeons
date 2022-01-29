@@ -6,6 +6,7 @@
     public static readonly string[] actions = new string[] { "Cards(W)", "(E)quipments", "(R)est", "(S)tats", "E(x)ile" };
     public static Player player = Player.instance;
     public static int turn { get; private set; }
+    public static event EventHandler? OnTurnEnd;
     public static void Main()
     {
         instance = new Program();
@@ -100,16 +101,7 @@
     }
     public void ElaspeTurn()
     {
-        if (player.torch > 0)
-        {
-            player.sight = 3;
-            player.torch--;
-            if (player.torch <= 0)
-            {
-                player.Inven.Delete(Fightable.ItemData.Torch);
-                player.sight = 1;
-            }
-        }
+        
 
         Monster monster = Map.Current.monster;
         monster.DoTurn();
@@ -123,8 +115,7 @@
 
         p1?.TryAttack();
         p2?.TryAttack();
-        p1?.OnTurnEnd();
-        p2?.OnTurnEnd();
+        OnTurnEnd?.Invoke(this, EventArgs.Empty);
 
         NewTurn();
     }

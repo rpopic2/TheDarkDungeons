@@ -23,6 +23,10 @@ public enum Stance
 {
     None, Move, Rest, Attack, Dodge, Item, Exile
 }
+public enum ItemType
+{
+    Equip, Skill, Consum
+}
 
 public static class Extensions
 {

@@ -36,9 +36,9 @@ public class Moveable : Fightable
         return result;
     }
 
-    public override void OnTurnEnd()
+    public override void OnTurnEnd(object? sender, EventArgs e)
     {
-        base.OnTurnEnd();
+        base.OnTurnEnd(sender, e);
         UpdateTarget();
     }
 

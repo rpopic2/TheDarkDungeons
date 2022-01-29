@@ -19,6 +19,7 @@ public class Fightable : Entity
         Inven = new Inventory<Item?>(3, "Inventory");
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
+        Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
     public virtual Card? PickCard() => Hand.GetFirst();
 
@@ -108,7 +109,7 @@ public class Fightable : Entity
             {
                 stance = (Stance.Item, default);
                 onUse(this);
-                if (item.isConsumeable) Inven.Delete(index);
+                if (item.ItemType == ItemType.Consum) Inven.Delete(index);
             }
         }
     }
@@ -119,7 +120,7 @@ public class Fightable : Entity
         stance = (Stance.Rest, default);
     }
 
-    public virtual void OnTurnEnd() => stance = (default, default);
+    public virtual void OnTurnEnd(object? sender, EventArgs e) => stance = (default, default);
     protected virtual void OnDeath(object? sender, EventArgs e) => IO.pr($"{Name} died. {Hp}", true, true);
     protected void OnHeal(object? sender, HealArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
 
@@ -131,15 +132,36 @@ public class Fightable : Entity
         if (IsAlive) return Name.ToLower()[0];
         else return MapSymb.Empty;
     }
+
+
     public static class ItemData
     {
-        public static readonly Item HpPot = new("HPPOT", null, f => f.Hp += 3, true);
-        public static readonly Item Torch = new("TORCH", null, f => ((Player)f).torch = 20, true);
-        public static readonly Item Scouter = new("SCOUT", null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."), true);
-        public static readonly Item AmuletOfLa = new("AMULA", f => f.Sol += 20, null);
-        public static readonly Item FieryRing = new("FIRIG", f => f.Sol += 1, null);
-        public static readonly Item Bag = new(" BAG ", null, f => f.Inven.Cap += 2, true);
-        public static readonly Item Charge = new("CHARG", null, f =>
+        public static readonly Item HpPot = new("HPPOT", ItemType.Consum, null, f => f.Hp += 3);
+        public static readonly Item Torch = new("TORCH", ItemType.Consum, null, f =>
+        {
+            Player player = (Player)f;
+            player.torch = 20;
+            Action<object?, EventArgs> act = (object? sender, EventArgs e) =>
+            {
+                if (player.torch > 0)
+                {
+                    player.sight = 3;
+                    player.torch--;
+                    if (player.torch <= 0)
+                    {
+                        player.Inven.Delete(Fightable.ItemData.Torch);
+                        player.sight = 1;
+                    }
+                }
+            };
+            Program.OnTurnEnd += new EventHandler(act);
+
+        });
+        public static readonly Item Scouter = new("SCOUT", ItemType.Skill, null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
+        public static readonly Item AmuletOfLa = new("AMULA", ItemType.Equip, f => f.Sol += 20, null);
+        public static readonly Item FieryRing = new("FIRIG", ItemType.Equip, f => f.Sol += 1, null);
+        public static readonly Item Bag = new(" BAG ", ItemType.Consum, null, f => f.Inven.Cap += 2);
+        public static readonly Item Charge = new("CHARG", ItemType.Skill, null, f =>
         {
             Card? card = f.PickCard();
             Moveable mov = (Moveable)f;
@@ -147,7 +169,7 @@ public class Fightable : Entity
             mov.Move(1);
             f.UseCard(card);
         });
-        public static readonly Item ShadowAttack = new("SHADW", null, f =>
+        public static readonly Item ShadowAttack = new("SHADW", ItemType.Skill, null, f =>
         {
             if (f.PickCard() is Card card)
             {
@@ -155,37 +177,37 @@ public class Fightable : Entity
                 f.UseCard(newCard);
             }
         });
-        public static readonly Item SNIPE = new("SNIPE", null, f =>
+        public static readonly Item SNIPE = new("SNIPE", ItemType.Skill, null, f =>
         {
             Card? card = f.PickCard();
             Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
             Player.instance.Target = target;
             f.UseCard(card);
         });
-        public static readonly Item Berserk = new("BERSRK", null, f =>
-        {
-            Card? card = f.PickCard();
-            if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
-            f.UseCard(card);
-        });
-        public static readonly Item Backstep = new("BKSTEP", null, f =>
-        {
-            if (f.Target is not null)
-            {
-                if (f is Moveable mov)
-                {
-                    Fightable target = f.Target;
-                    target.Target = null;
-                    Map.Current.Tiles.TryGet(mov.Pos.FrontIndex + 1, out char obj);
-                    if(obj == MapSymb.portal) return;
-                    mov.Move(2 * mov.Pos.FrontMul);
-                    mov.Move(1 * mov.Pos.BackMul);
-                }
-            }
-        });
+        public static readonly Item Berserk = new("BERSRK", ItemType.Skill, null, f =>
+         {
+             Card? card = f.PickCard();
+             if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
+             f.UseCard(card);
+         });
+        public static readonly Item Backstep = new("BKSTEP", ItemType.Skill, null, f =>
+          {
+              if (f.Target is not null)
+              {
+                  if (f is Moveable mov)
+                  {
+                      Fightable target = f.Target;
+                      target.Target = null;
+                      Map.Current.Tiles.TryGet(mov.Pos.FrontIndex + 1, out char obj);
+                      if (obj == MapSymb.portal) return;
+                      mov.Move(2 * mov.Pos.FrontMul);
+                      mov.Move(1 * mov.Pos.BackMul);
+                  }
+              }
+          });
     }
 }
-public readonly record struct Item(string abv, Action<Fightable>? onPickup, Action<Fightable>? onUse, bool isConsumeable = false)
+public readonly record struct Item(string abv, ItemType ItemType, Action<Fightable>? onPickup, Action<Fightable>? onUse)
 {
     public override string ToString()
     {
