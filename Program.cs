@@ -100,6 +100,17 @@
     }
     public void ElaspeTurn()
     {
+        if (player.torch > 0)
+        {
+            player.sight = 3;
+            player.torch--;
+            if (player.torch <= 0)
+            {
+                player.Inven.Delete(Fightable.ItemData.Torch);
+                player.sight = 1;
+            }
+        }
+
         Monster monster = Map.Current.monster;
         monster.DoTurn();
         if (!player.DidPrint && !monster.DidPrint)

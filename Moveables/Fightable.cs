@@ -129,7 +129,7 @@ public class Fightable : Entity
     public virtual char ToChar()
     {
         if (IsAlive) return Name.ToLower()[0];
-        else return MapSymb.invisible;
+        else return MapSymb.Empty;
     }
     public static class ItemData
     {
@@ -174,9 +174,12 @@ public class Fightable : Entity
             {
                 if (f is Moveable mov)
                 {
-                    mov.Target = null;
-                    mov.Move(2 * mov.Pos.Front);
-                    mov.Move(1 * mov.Pos.Back);
+                    Fightable target = f.Target;
+                    target.Target = null;
+                    Map.Current.Tiles.TryGet(mov.Pos.FrontIndex + 1, out char obj);
+                    if(obj == MapSymb.portal) return;
+                    mov.Move(2 * mov.Pos.FrontMul);
+                    mov.Move(1 * mov.Pos.BackMul);
                 }
             }
         });

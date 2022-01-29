@@ -1,0 +1,4 @@
+rendering map rf
+onendturn
+on equip put off
+items success or fail to not consume turns

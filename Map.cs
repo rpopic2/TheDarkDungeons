@@ -10,6 +10,8 @@ public class Map
     private Moveable?[] moveables;
     public ref readonly Moveable?[] Moveables
     => ref moveables;
+    private char[] rendered;
+    private char[] empty;
     public readonly int length;
     public Monster monster { get; private set; } = default!;
     public Map(int length)
@@ -18,6 +20,8 @@ public class Map
         this.length = length;
         tiles = NewEmptyArray(length, MapSymb.road);
         moveables = new Moveable[length];
+        empty = NewEmptyArray(length, MapSymb.Empty);
+        rendered = new char[length];
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
@@ -69,39 +73,41 @@ public class Map
         if (moveables[pos.oldX] == mov) moveables[pos.oldX] = null;
         moveables[pos.x] = mov;
     }
+    private void Render()
+    {
+        empty.CopyTo(rendered, 0);
+        Player player = Player.instance;
+        RenderTiles();
+        RenderMovs();
+        rendered[player.Pos.x] = MapSymb.player;
+    }
+
+    public void RenderTiles()
+    {
+        int sight = player.sight;
+        int front = player.Pos.FrontIndex;
+        for (int i = 0; i < sight; i++)
+        {
+            int targetTile = front + i;
+            bool success3 = tiles.TryGet(targetTile, out char obj3);
+            if (success3) rendered[targetTile] = obj3;
+        }
+    }
+    public void RenderMovs()
+    {
+        int sight = player.sight;
+        int front = player.Pos.FrontIndex;
+        for (int i = 0; i < sight; i++)
+        {
+            int targetTile = front + i;
+            bool success3 = moveables.TryGet(targetTile, out Moveable? obj3);
+            if (obj3 is not null) rendered[targetTile] = obj3.ToChar();
+        }
+    }
     public override string ToString()
     {
-        Moveable player = Player.instance;
-        int front = player.Pos.FrontIndex;
-        char[] result = NewEmptyArray(length, MapSymb.invisible);
-        Foo(result, tiles, front);
-        if (Player.instance.torch > 0)
-        {
-            Foo(result, tiles, front + 1);
-            Foo(result, tiles, front + 2);
-            Player.instance.torch--;
-            if (Player.instance.torch == 0) Player.instance.Inven.Delete(Fightable.ItemData.Torch);
-            Foo2(result, moveables, front + 1);
-            Foo2(result, moveables, front + 2);
-        }
-
-        bool success = moveables.TryGet(front, out Moveable? obj);
-        if (success) result[front] = obj!.ToChar();
-
-
-        if (Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
-        result[player.Pos.x] = Player.instance.ToChar();
-        return string.Join(" ", result);
-    }
-    public void Foo(char[] result, char[] target, int x)
-    {
-        bool success3 = target.TryGet(x, out char obj3);
-        if (success3) result[x] = obj3!;
-    }
-    public void Foo2(char[] result, Moveable?[] target, int x)
-    {
-        bool success = target.TryGet(x, out Moveable? obj);
-        if (success) result[x] = obj!.ToChar();
+        Render();
+        return string.Join(" ", rendered);
     }
     public bool IsVisible(Moveable mov)
     {
