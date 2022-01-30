@@ -1,7 +1,4 @@
-items success or fail to not consume turns
+items success or fail to not consume turns->scouter to not consume turn.
 
-
-monster ad, monster can stay still?
 different mobs
-
-selecting empty hand should not return.
+monster ad, monster can stay still?
