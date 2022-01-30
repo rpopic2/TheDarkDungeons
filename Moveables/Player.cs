@@ -66,7 +66,7 @@ public class Player : Moveable
         Hp.Max += Level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
-    public void Pickup(Card card)
+    public override void Pickup(Card card)
     {
         IO.pr("\nFound a card." + card);
         IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
@@ -80,7 +80,7 @@ public class Player : Moveable
             IO.del(2);
             return;
         }
-        Hand[index] = card;
+        base.Pickup(card);
         IO.del(2);
     }
     public void Pickup(Item item)

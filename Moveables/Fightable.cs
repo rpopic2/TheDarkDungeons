@@ -132,6 +132,10 @@ public class Fightable : Entity
         if (IsAlive) return Name.ToLower()[0];
         else return MapSymb.Empty;
     }
+    public virtual void Pickup(Card card)
+    {
+        Hand[Hand.Count] = card;
+    }
 
 
     public static class ItemData

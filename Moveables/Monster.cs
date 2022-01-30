@@ -15,10 +15,7 @@ public class Monster : Moveable
         }
         Pos = spawnPoint;
     }
-    public void Pickup(Card card)
-    {
-        Hand[Hand.Count] = card;
-    }
+
     protected override void OnDeath(object? sender, EventArgs e)
     {
         base.OnDeath(sender, e);
