@@ -10,7 +10,6 @@ public class Player : Moveable
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
-        Hp.OnHeal += new EventHandler<HealArgs>(OnHeal);
         for (int i = 0; i < cap; i++)
         {
             Hand[Hand.Count] = Draw();

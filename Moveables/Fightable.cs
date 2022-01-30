@@ -17,6 +17,8 @@ public class Fightable : Entity
         Inven = new Inventory<Item?>(3, "Inventory");
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
+        Hp.OnHeal += new EventHandler<PointArgs>(OnHeal);
+        Hp.OnDamage += new EventHandler<PointArgs>(OnDamaged);
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
     public virtual Card? PickCard() => Hand.GetFirst();
@@ -90,7 +92,7 @@ public class Fightable : Entity
         }
         Hp -= damage;
         if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
-        else if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
+        //else if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
     }
     private void TryUseStar()
     {
@@ -119,8 +121,12 @@ public class Fightable : Entity
     }
 
     public virtual void OnTurnEnd(object? sender, EventArgs e) => stance = (default, default);
-    protected virtual void OnDeath(object? sender, EventArgs e) => IO.pr($"{Name} died. {Hp}", true, true);
-    protected void OnHeal(object? sender, HealArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
+    protected virtual void OnDeath(object? sender, EventArgs e) => IO.pr($"{Name} died.", false, true);
+    protected void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
+    protected void OnDamaged(object? sender, PointArgs e)
+    {
+        if (e.Amount > 0) IO.pr($"{Name} takes {e.Amount} damage. {Hp}", true);
+    }
 
     public override string ToString() =>
         $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";

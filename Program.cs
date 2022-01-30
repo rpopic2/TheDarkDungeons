@@ -103,7 +103,6 @@
     {
         Monster monster = Map.Current.monster;
         monster.DoTurn();
-        if(IO.printCount == 3) IO.del(2);
         bool playerFirst = player.Lun >= monster?.Lun;
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
@@ -111,6 +110,7 @@
         p1?.TryAttack();
         p2?.TryAttack();
         OnTurnEnd?.Invoke(this, EventArgs.Empty);
+        if(IO.printCount == 3) IO.del(2);
 
         NewTurn();
     }
