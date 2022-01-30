@@ -2,7 +2,7 @@ public class Fightable : Entity
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
-    public Inventory<IItem?> Inven { get; private set; }
+    public Inventory<Item?> Inven { get; private set; }
     public GamePoint Hp { get; set; }
     public virtual Fightable? Target { get; protected set; }
     protected (Stance stance, int amount) stance = (default, default);
@@ -16,7 +16,7 @@ public class Fightable : Entity
     {
         ClassName = className;
         Hand = new Inventory<Card?>(cap, "Hand");
-        Inven = new Inventory<IItem?>(3, "Inventory");
+        Inven = new Inventory<Item?>(3, "Inventory");
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
@@ -140,7 +140,7 @@ public class Fightable : Entity
 
     public static class ItemData
     {
-        public static readonly Item HpPot = new("HPPOT", ItemType.Consum, null, f => f.Hp += 3);
+        public static readonly Item HpPot = new("HPPOT", ItemType.Consum, null, f => f.Hp += 3, null);
         public static readonly Item Torch = new("TORCH", ItemType.Consum, null, f =>
         {
             Player player = (Player)f;
@@ -160,11 +160,11 @@ public class Fightable : Entity
             };
             Program.OnTurnEnd += new EventHandler(act);
 
-        });
-        public static readonly Item Scouter = new("SCOUTR", ItemType.Skill, null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
-        public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, f => f.Sol -= 20);
-        public static readonly Equip FieryRing = new("FIRING", (Player.instance.Sol, 2));
-        public static readonly Item Bag = new(" BAG  ", ItemType.Consum, null, f => f.Inven.Cap += 2);
+        }, null);
+        public static readonly Item Scouter = new("SCOUTR", ItemType.Skill, null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."), null);
+        public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, null, f => f.Sol -= 20);
+        public static readonly Item FieryRing = new("FIRING", ItemType.Equip, f => f.Sol += 3, null, f => f.Sol -= 3);
+        public static readonly Item Bag = new(" BAG  ", ItemType.Consum, null, f => f.Inven.Cap += 2, null);
         public static readonly Item Charge = new("CHARGE", ItemType.Skill, null, f =>
         {
             Card? card = f.PickCard();
@@ -172,7 +172,7 @@ public class Fightable : Entity
             mov.Move(1);
             mov.Move(1);
             f.UseCard(card);
-        });
+        }, null);
         public static readonly Item ShadowAttack = new("SHADOW", ItemType.Skill, null, f =>
         {
             if (f.PickCard() is Card card)
@@ -180,20 +180,20 @@ public class Fightable : Entity
                 Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Attack);
                 f.UseCard(newCard);
             }
-        });
+        }, null);
         public static readonly Item SNIPE = new("SNIPE ", ItemType.Skill, null, f =>
         {
             Card? card = f.PickCard();
             Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
             Player.instance.Target = target;
             f.UseCard(card);
-        });
+        }, null);
         public static readonly Item Berserk = new("BERSRK", ItemType.Skill, null, f =>
          {
              Card? card = f.PickCard();
              if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
              f.UseCard(card);
-         });
+         }, null);
         public static readonly Item Backstep = new("BKSTEP", ItemType.Skill, null, f =>
           {
               if (f.Target is not null)
@@ -208,6 +208,6 @@ public class Fightable : Entity
                       mov.Move(1 * mov.Pos.BackMul);
                   }
               }
-          });
+          }, null);
     }
 }

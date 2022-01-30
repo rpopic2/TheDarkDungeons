@@ -18,7 +18,6 @@ public class Player : Moveable
     }
     public void StartItem()
     {
-        Pickup(Fightable.ItemData.FieryRing);
         switch (ClassName)
         {
             case ClassName.Warrior:
@@ -84,7 +83,7 @@ public class Player : Moveable
         Hand[index] = card;
         IO.del(2);
     }
-    public void Pickup(IItem item)
+    public void Pickup(Item item)
     {
         IO.pr("\nFound an item." + item);
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
@@ -94,10 +93,10 @@ public class Player : Moveable
             IO.del(2);
             return;
         }
-        if(Inven[index] is Equip equipOld) equipOld.onExile.Invoke(this); 
+        if (Inven[index] is Item oldItem && oldItem.itemType == ItemType.Equip)
+            oldItem.onExile?.Invoke(this);
         Inven[index] = item;
-        if(item is Equip equip) equip.onPickup.Invoke(this);
-        //item.onPickup?.Invoke(this);
+        if (item.itemType == ItemType.Equip) item.onPickup?.Invoke(this);
         IO.del(2);
     }
     public void Exile()
