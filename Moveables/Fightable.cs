@@ -2,7 +2,7 @@ public class Fightable : Entity
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
-    public Inventory<Item?> Inven { get; private set; }
+    public Inventory<IItem?> Inven { get; private set; }
     public GamePoint Hp { get; set; }
     public virtual Fightable? Target { get; protected set; }
     protected (Stance stance, int amount) stance = (default, default);
@@ -16,7 +16,7 @@ public class Fightable : Entity
     {
         ClassName = className;
         Hand = new Inventory<Card?>(cap, "Hand");
-        Inven = new Inventory<Item?>(3, "Inventory");
+        Inven = new Inventory<IItem?>(3, "Inventory");
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
@@ -109,9 +109,13 @@ public class Fightable : Entity
             {
                 stance = (Stance.Item, default);
                 onUse(this);
-                if (item.ItemType == ItemType.Consum) Inven.Delete(index);
+                if (item.itemType == ItemType.Consum) ExileItem(index);
             }
         }
+    }
+    public void ExileItem(int index)
+    {
+        Inven.Delete(index);
     }
     public virtual void Rest()
     {
@@ -161,11 +165,11 @@ public class Fightable : Entity
             Program.OnTurnEnd += new EventHandler(act);
 
         });
-        public static readonly Item Scouter = new("SCOUT", ItemType.Skill, null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
-        public static readonly Item AmuletOfLa = new("AMULA", ItemType.Equip, f => f.Sol += 20, null);
-        public static readonly Item FieryRing = new("FIRIG", ItemType.Equip, f => f.Sol += 1, null);
-        public static readonly Item Bag = new(" BAG ", ItemType.Consum, null, f => f.Inven.Cap += 2);
-        public static readonly Item Charge = new("CHARG", ItemType.Skill, null, f =>
+        public static readonly Item Scouter = new("SCOUTR", ItemType.Skill, null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
+        public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, null);
+        public static readonly Equip FieryRing = new("FIRING",1,1);
+        public static readonly Item Bag = new(" BAG  ", ItemType.Consum, null, f => f.Inven.Cap += 2);
+        public static readonly Item Charge = new("CHARGE", ItemType.Skill, null, f =>
         {
             Card? card = f.PickCard();
             Moveable mov = (Moveable)f;
@@ -173,7 +177,7 @@ public class Fightable : Entity
             mov.Move(1);
             f.UseCard(card);
         });
-        public static readonly Item ShadowAttack = new("SHADW", ItemType.Skill, null, f =>
+        public static readonly Item ShadowAttack = new("SHADOW", ItemType.Skill, null, f =>
         {
             if (f.PickCard() is Card card)
             {
@@ -181,7 +185,7 @@ public class Fightable : Entity
                 f.UseCard(newCard);
             }
         });
-        public static readonly Item SNIPE = new("SNIPE", ItemType.Skill, null, f =>
+        public static readonly Item SNIPE = new("SNIPE ", ItemType.Skill, null, f =>
         {
             Card? card = f.PickCard();
             Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
@@ -211,11 +215,36 @@ public class Fightable : Entity
           });
     }
 }
-public readonly record struct Item(string abv, ItemType ItemType, Action<Fightable>? onPickup, Action<Fightable>? onUse)
+public readonly record struct Item(string abv, ItemType itemType, Action<Fightable>? onPickup, Action<Fightable>? onUse) : IItem
 {
+    public string Abv { get; init; } = abv;
+    public ItemType itemType { get; init; } = itemType;
+    public Action<Fightable>? onUse { get; init; } = onUse;
+
     public override string ToString()
     {
         if (abv is null) return "[EMPTY]";
         return $"[{abv}]";
     }
+}
+public readonly record struct Equip(string abv, int stat, int amount) : IItem
+{
+    public string Abv { get; init; } = abv;
+    public ItemType itemType { get; init; } = ItemType.Equip;
+    public Action<Fightable>? onUse { get; init; } = null;
+    
+    public override string ToString()
+    {
+        if (abv is null) return "[EMPTY]";
+        return $"{{abv}}";
+    }
+}
+
+public interface IItem
+{
+    string Abv { get; init; }
+    ItemType itemType { get; init; }
+    Action<Fightable>? onUse { get; init; }
+
+    string ToString();
 }

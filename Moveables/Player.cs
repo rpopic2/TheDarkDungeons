@@ -83,7 +83,7 @@ public class Player : Moveable
         base.Pickup(card);
         IO.del(2);
     }
-    public void Pickup(Item item)
+    public void Pickup(IItem item)
     {
         IO.pr("\nFound an item." + item);
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
@@ -94,7 +94,7 @@ public class Player : Moveable
             return;
         }
         Inven[index] = item;
-        item.onPickup?.Invoke(this);
+        //item.onPickup?.Invoke(this);
         IO.del(2);
     }
     public void Exile()
