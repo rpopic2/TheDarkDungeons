@@ -37,7 +37,7 @@ public class Fightable : Entity
         if (Target is null) return;
         if (card is Card card2)
         {
-            if (card2.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
+            if (card2.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card2.Con);
             _UseCard(card2);
         }
     }
@@ -98,7 +98,7 @@ public class Fightable : Entity
     {
         if (star <= 0) return;
         stance.amount += star;
-        IO.pr($"..and {star} more damage! (total {stance.amount})");
+        IO.pr($"{star} more damage... (total {stance.amount})");
         star = 0;
     }
     public void UseInven(int index)
