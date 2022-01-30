@@ -11,7 +11,7 @@ public class Monster : Moveable
             Card card = Draw();
             if (attack > 2) card.StanceShift();
             card.StanceShift();
-            Pickup(card);
+            Pickup(card, Hand.Count);
         }
         Pos = spawnPoint;
     }
@@ -65,7 +65,7 @@ public class Monster : Moveable
     public override void Rest()
     {
         base.Rest();
-        Pickup(Draw());
+        Pickup(Draw(), Hand.Count);
     }
     public override char ToChar()
     {

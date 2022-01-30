@@ -1,4 +1,2 @@
-all stats -> to a Stat class? (to make it a reference type)
-on equip put off
 items success or fail to not consume turns
 b;empty turn things

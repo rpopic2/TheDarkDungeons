@@ -1,4 +1,4 @@
-public readonly record struct Item(string abv, ItemType itemType, Action<Fightable>? onPickup, Action<Fightable>? onUse, Action<Fightable>? onExile)
+public readonly record struct Item(string abv, ItemType itemType, Action<Fightable>? onUse, Action<Fightable>? onExile = null)
 {
     public override string ToString()
     {
@@ -45,11 +45,11 @@ public readonly record struct Item(string abv, ItemType itemType, Action<Fightab
 //     }
 // }
 
-public interface IItem
-{
-    string Abv { get; init; }
-    ItemType itemType { get; init; }
-    Action<Fightable>? onUse { get; init; }
+// public interface IItem
+// {
+//     string Abv { get; init; }
+//     ItemType itemType { get; init; }
+//     Action<Fightable>? onUse { get; init; }
 
-    string ToString();
-}
+//     string ToString();
+// }

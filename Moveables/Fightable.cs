@@ -132,16 +132,25 @@ public class Fightable : Entity
         if (IsAlive) return Name.ToLower()[0];
         else return MapSymb.Empty;
     }
-    public virtual void Pickup(Card card)
+
+    protected virtual void Pickup(Item item, int index)
     {
-        Hand[Hand.Count] = card;
+        if (Inven[index] is Item oldItem && oldItem.itemType == ItemType.Equip)
+            oldItem.onExile?.Invoke(this);
+        Inven[index] = item;
+        if (item.itemType == ItemType.Equip) item.onUse?.Invoke(this);
+    }
+
+    public virtual void Pickup(Card card, int index)
+    {
+        Hand[index] = card;
     }
 
 
     public static class ItemData
     {
-        public static readonly Item HpPot = new("HPPOT", ItemType.Consum, null, f => f.Hp += 3, null);
-        public static readonly Item Torch = new("TORCH", ItemType.Consum, null, f =>
+        public static readonly Item HpPot = new("HPPOT", ItemType.Consum, f => f.Hp += 3);
+        public static readonly Item Torch = new("TORCH", ItemType.Consum, f =>
         {
             Player player = (Player)f;
             player.torch = 20;
@@ -160,41 +169,41 @@ public class Fightable : Entity
             };
             Program.OnTurnEnd += new EventHandler(act);
 
-        }, null);
-        public static readonly Item Scouter = new("SCOUTR", ItemType.Skill, null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."), null);
-        public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, null, f => f.Sol -= 20);
-        public static readonly Item FieryRing = new("FIRING", ItemType.Equip, f => f.Sol += 3, null, f => f.Sol -= 3);
-        public static readonly Item Bag = new(" BAG  ", ItemType.Consum, null, f => f.Inven.Cap += 2, null);
-        public static readonly Item Charge = new("CHARGE", ItemType.Skill, null, f =>
+        });
+        public static readonly Item Scouter = new("SCOUTR", ItemType.Skill, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
+        public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, f => f.Sol -= 20);
+        public static readonly Item FieryRing = new("FIRING", ItemType.Equip, f => f.Sol += 3, f => f.Sol -= 3);
+        public static readonly Item Bag = new(" BAG  ", ItemType.Consum, f => f.Inven.Cap += 2);
+        public static readonly Item Charge = new("CHARGE", ItemType.Skill, f =>
         {
             Card? card = f.PickCard();
             Moveable mov = (Moveable)f;
             mov.Move(1);
             mov.Move(1);
             f.UseCard(card);
-        }, null);
-        public static readonly Item ShadowAttack = new("SHADOW", ItemType.Skill, null, f =>
+        });
+        public static readonly Item ShadowAttack = new("SHADOW", ItemType.Skill, f =>
         {
             if (f.PickCard() is Card card)
             {
                 Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Attack);
                 f.UseCard(newCard);
             }
-        }, null);
-        public static readonly Item SNIPE = new("SNIPE ", ItemType.Skill, null, f =>
+        });
+        public static readonly Item SNIPE = new("SNIPE ", ItemType.Skill, f =>
         {
             Card? card = f.PickCard();
             Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
             Player.instance.Target = target;
             f.UseCard(card);
-        }, null);
-        public static readonly Item Berserk = new("BERSRK", ItemType.Skill, null, f =>
+        });
+        public static readonly Item Berserk = new("BERSRK", ItemType.Skill, f =>
          {
              Card? card = f.PickCard();
              if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
              f.UseCard(card);
-         }, null);
-        public static readonly Item Backstep = new("BKSTEP", ItemType.Skill, null, f =>
+         });
+        public static readonly Item Backstep = new("BKSTEP", ItemType.Skill, f =>
           {
               if (f.Target is not null)
               {
@@ -208,6 +217,6 @@ public class Fightable : Entity
                       mov.Move(1 * mov.Pos.BackMul);
                   }
               }
-          }, null);
+          });
     }
 }
