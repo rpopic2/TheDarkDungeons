@@ -1,4 +1,4 @@
-public struct Card : IMass
+public struct Card
 {
     public CardStance Stance { get; private set; }
     public readonly int Level { get; }

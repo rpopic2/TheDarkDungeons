@@ -1,4 +1,4 @@
-public class Entity : IMass
+public class Entity
 {
     public int Level { get; protected set; }
     public int Sol { get; protected set; }

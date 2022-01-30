@@ -109,13 +109,9 @@ public class Fightable : Entity
             {
                 stance = (Stance.Item, default);
                 onUse(this);
-                if (item.itemType == ItemType.Consum) ExileItem(index);
+                if (item.itemType == ItemType.Consum) Inven.Delete(index);
             }
         }
-    }
-    public void ExileItem(int index)
-    {
-        Inven.Delete(index);
     }
     public virtual void Rest()
     {
@@ -166,8 +162,8 @@ public class Fightable : Entity
 
         });
         public static readonly Item Scouter = new("SCOUTR", ItemType.Skill, null, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
-        public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, null);
-        public static readonly Equip FieryRing = new("FIRING",1,1);
+        public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, f => f.Sol -= 20);
+        public static readonly Equip FieryRing = new("FIRING", (Player.instance.Sol, 2));
         public static readonly Item Bag = new(" BAG  ", ItemType.Consum, null, f => f.Inven.Cap += 2);
         public static readonly Item Charge = new("CHARGE", ItemType.Skill, null, f =>
         {
@@ -214,37 +210,4 @@ public class Fightable : Entity
               }
           });
     }
-}
-public readonly record struct Item(string abv, ItemType itemType, Action<Fightable>? onPickup, Action<Fightable>? onUse) : IItem
-{
-    public string Abv { get; init; } = abv;
-    public ItemType itemType { get; init; } = itemType;
-    public Action<Fightable>? onUse { get; init; } = onUse;
-
-    public override string ToString()
-    {
-        if (abv is null) return "[EMPTY]";
-        return $"[{abv}]";
-    }
-}
-public readonly record struct Equip(string abv, int stat, int amount) : IItem
-{
-    public string Abv { get; init; } = abv;
-    public ItemType itemType { get; init; } = ItemType.Equip;
-    public Action<Fightable>? onUse { get; init; } = null;
-    
-    public override string ToString()
-    {
-        if (abv is null) return "[EMPTY]";
-        return $"{{abv}}";
-    }
-}
-
-public interface IItem
-{
-    string Abv { get; init; }
-    ItemType itemType { get; init; }
-    Action<Fightable>? onUse { get; init; }
-
-    string ToString();
 }
