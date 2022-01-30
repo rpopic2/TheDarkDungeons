@@ -30,8 +30,8 @@
         Console.Clear();
         IO.pr("Your adventure begins...");
         Map.NewMap();
-        NewTurn();
         player.StartItem();
+        NewTurn();
     }
 
     private void Intro()
@@ -101,14 +101,9 @@
     }
     public void ElaspeTurn()
     {
-        
-
         Monster monster = Map.Current.monster;
         monster.DoTurn();
-        if (!player.DidPrint && !monster.DidPrint)
-        {
-            IO.del(2);
-        }
+        if(IO.printCount == 3) IO.del(2);
         bool playerFirst = player.Lun >= monster?.Lun;
         Moveable? p1 = playerFirst ? player : monster;
         Moveable? p2 = playerFirst ? monster : player;
@@ -121,6 +116,7 @@
     }
     public void NewTurn()
     {
+        IO.printCount = 0;
         turn++;
         IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }

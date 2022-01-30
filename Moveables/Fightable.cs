@@ -10,8 +10,6 @@ public class Fightable : Entity
     private int star;
     public bool IsResting => stance.stance == Stance.Rest;
     public bool IsAlive => !Hp.IsMin;
-    public bool DidPrint => CurStance.stance != Stance.Move && CurStance.stance != Stance.None;
-
     public Fightable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(level, sol, lun, con, name)
     {
         ClassName = className;

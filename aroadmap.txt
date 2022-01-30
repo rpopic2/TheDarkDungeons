@@ -1,9 +1,7 @@
+items success or fail to not consume turns
 
-stacking items
 
-스폰하자마자 처맞는거
 monster ad, monster can stay still?
 different mobs
 
-gamepoint onvaluechanged -> fightables to use this.
 selecting empty hand should not return.

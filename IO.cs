@@ -1,11 +1,10 @@
-using System.Linq;
-
 public static class IO
 {
     private const char CANCELKEY = 'q';
     private const string Emphasis = "=> ";
     private const string delString = "                                                                 ";
     private static readonly Player player = Player.instance;
+    public static int printCount;
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
@@ -53,6 +52,7 @@ public static class IO
         if (emphasis) x = Emphasis + x;
         if (newline) x = "\n" + x;
         Console.WriteLine(x);
+        printCount++;
     }
 
     ///<summary>Print in Formated Options</summary>
