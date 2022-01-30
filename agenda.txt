@@ -1,5 +1,3 @@
-bug;empty turn things-> make flag;
-bug; 스폰하자마자 처맞는거
 gamepoint ondamage
 
 stacking items

@@ -4,7 +4,7 @@
     public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
     public static readonly string[] stats = new string[] { "(1) Sol", "(2) Lun", "(3) Con" };
     public static readonly string[] actions = new string[] { "Cards(W)", "(E)quipments", "(R)est", "(S)tats", "E(x)ile" };
-    public static Player player = Player.instance;
+    private static Player player {get => Player.instance;}
     public static int turn { get; private set; }
     public static event EventHandler? OnTurnEnd;
     public static void Main()
@@ -44,7 +44,7 @@
         IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
-        player = Player.instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
+        Player.instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
     }
     //-------------------------
     private void MainLoop()

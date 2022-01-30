@@ -1,7 +1,7 @@
 public class Monster : Moveable
 {
     private int expOnKill;
-    private static readonly Player player = Player.instance;
+    private static Player player { get => Player.instance; }
     public Monster(string name, ClassName className, int lv, int maxHp, int cap, (int sol, int lun, int con) stat, int expOnKill, Position spawnPoint) : base(name, className, cap, maxHp, lv, stat.sol, stat.lun, stat.con)
     {
         this.expOnKill = expOnKill;

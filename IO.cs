@@ -3,7 +3,7 @@ public static class IO
     private const char CANCELKEY = 'q';
     private const string Emphasis = "=> ";
     private const string delString = "                                                                 ";
-    private static readonly Player player = Player.instance;
+    private static Player player {get => Player.instance;}
     public static int printCount;
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>

@@ -1,6 +1,6 @@
 public class Map
 {
-    private static Player player = Player.instance;
+    private static Player player { get => Player.instance; }
     public static Map Current = default!;
     public static Random rnd = new Random();
     public static int level;
@@ -56,6 +56,7 @@ public class Map
         }
         int playerX = player.Pos.x;
         fullMap.Remove(0);
+        fullMap.Remove(1);
         fullMap.Remove(playerX);
         fullMap.Remove(playerX - 1);
         fullMap.Remove(playerX + 1);
@@ -88,7 +89,7 @@ public class Map
         {
             int targetTile = front + i;
             bool success = target.TryGet(targetTile, out T? obj);
-            if(!success) continue;
+            if (!success) continue;
             if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
             else if (obj is char chr) rendered[targetTile] = chr;
             else if (obj is not null) throw new Exception();
