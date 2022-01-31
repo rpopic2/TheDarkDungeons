@@ -1,4 +1,4 @@
-public class Inventoriable : Moveable
+public class Inventoriable : Fightable
 {
     public Inventory<ItemEntity?> Inven { get; private set; }
 
@@ -68,9 +68,8 @@ public class Inventoriable : Moveable
         public static readonly Item Charge = new("CHARGE", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
-            Moveable mov = (Moveable)f;
-            mov.Move(1);
-            mov.Move(1);
+            f.Move(1);
+            f.Move(1);
             f.UseCard(card);
         });
         public static readonly Item ShadowAttack = new("SHADOW", ItemType.Skill, f =>

@@ -1,14 +1,21 @@
-public class Moveable : Fightable
+public class Moveable : Entity
 {
-    public Position Pos { get; set; }
-
-    public Moveable(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
+    protected (Stance stance, int amount) stance = (default, default);
+    public Moveable(int level, int sol, int lun, int con, string name) : base(level, sol, lun, con, name)
     {
         Pos = new Position();
     }
+    public Position Pos { get; set; }
+
+    public (Stance stance, int amount) CurStance => stance;
     public virtual void Move(int x)
     {
         _Move(x, out char obj);
+    }
+
+    public virtual char ToChar()
+    {
+        return Name.ToLower()[0];
     }
 
     protected virtual bool _Move(int x, out char obj)
@@ -35,31 +42,4 @@ public class Moveable : Fightable
         }
         return result;
     }
-
-    public override void OnTurnEnd(object? sender, EventArgs e)
-    {
-        base.OnTurnEnd(sender, e);
-        UpdateTarget();
-    }
-
-    protected override void OnDeath(object? sender, EventArgs e)
-    {
-        base.OnDeath(sender, e);
-        Map.Current.UpdateMoveable(this);
-        Map.Current.UpdateMoveable(this);
-    }
-    public void UpdateTarget()
-    {
-        Map.Current.Moveables.TryGet(Pos.FrontIndex, out Moveable? mov);
-        Target = mov;
-    }
-    // public override Moveable? Target
-    // {
-    //     get
-    //     {
-    //         Map.Current.Moveables.TryGet(Pos.Front, out Moveable? mov);
-    //         return mov;
-    //     }
-    // }
-
 }

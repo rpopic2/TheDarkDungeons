@@ -66,7 +66,7 @@ public class Map
     public void UpdateMoveable(Moveable mov)
     {
         Position pos = mov.Pos;
-        if (!mov.IsAlive)
+        if (mov is Fightable fight&& !fight.IsAlive)
         {
             moveables[pos.x] = null;
             return;

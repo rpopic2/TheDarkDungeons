@@ -1,4 +1,5 @@
 stacking items
 stacking skills
+stance to struct
 
 itemdata and itementity?

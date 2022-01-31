@@ -1,4 +1,4 @@
-public class Monster : Moveable
+public class Monster : Fightable
 {
     private int expOnKill;
     private static Player player { get => Player.instance; }

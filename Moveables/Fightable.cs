@@ -1,11 +1,9 @@
-public class Fightable : Entity
+public class Fightable : Moveable
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
     public GamePoint Hp { get; set; }
-    public virtual Fightable? Target { get; protected set; }
-    protected (Stance stance, int amount) stance = (default, default);
-    public (Stance stance, int amount) CurStance => stance;
+    public virtual Moveable? Target { get; protected set; }
     private int star;
     public bool IsResting => stance.stance == Stance.Rest;
     public bool IsAlive => !Hp.IsMin;
@@ -62,15 +60,15 @@ public class Fightable : Entity
     }
     public void TryAttack()
     {
-        if (!IsAlive || Target is null) return;
+        if (!IsAlive || !(Target is Fightable fight)) return;
         if (stance.stance == Stance.Attack)
         {
             string tempString = $"{Name} attacks with {stance.amount} damage.";
             TryUseStar();
             IO.pr(tempString);
-            Target.TryDodge(stance.amount);
+            fight.TryDodge(stance.amount);
         }
-        else if (Target.stance.stance == Stance.Dodge) Target.TryDodge(0);
+        else if (fight.stance.stance == Stance.Dodge) fight.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
@@ -109,8 +107,17 @@ public class Fightable : Entity
         stance = (Stance.Rest, default);
     }
 
-    public virtual void OnTurnEnd(object? sender, EventArgs e) => stance = (default, default);
-    protected virtual void OnDeath(object? sender, EventArgs e) => IO.pr($"{Name} died.", false, true);
+    public virtual void OnTurnEnd(object? sender, EventArgs e)
+    {
+        UpdateTarget();
+        stance = (default, default);
+    }
+    protected virtual void OnDeath(object? sender, EventArgs e)
+    {
+        IO.pr($"{Name} died.", false, true);
+        Map.Current.UpdateMoveable(this);
+        Map.Current.UpdateMoveable(this);
+    }
     protected void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
     protected void OnDamaged(object? sender, PointArgs e)
     {
@@ -119,10 +126,15 @@ public class Fightable : Entity
 
     public override string ToString() =>
         $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
-
-    public virtual char ToChar()
+    public override char ToChar()
     {
-        if (IsAlive) return Name.ToLower()[0];
+        if (IsAlive) return base.ToChar();
         else return MapSymb.Empty;
+    }
+
+    public void UpdateTarget()
+    {
+        Map.Current.Moveables.TryGet(Pos.FrontIndex, out Moveable? mov);
+        Target = mov;
     }
 }
