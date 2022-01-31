@@ -103,18 +103,14 @@ public class Fightable : Entity
     }
     public void UseInven(int index)
     {
-        if (Inven[index] is ItemEntity item)
+        if (!(Inven[index] is ItemEntity item)) return;
+        if (!(item.onUse is Action<Fightable> onUse)) return;
+        stance = (Stance.Item, default);
+        onUse(this);
+        if (item.itemType == ItemType.Consum)
         {
-            if (item.onUse is Action<Fightable> onUse)
-            {
-                stance = (Stance.Item, default);
-                onUse(this);
-                if (item.itemType == ItemType.Consum)
-                {
-                    item.stack--;
-                    if (item.stack <= 0) Inven.Delete(index);
-                }
-            }
+            item.stack--;
+            if (item.stack <= 0) Inven.Delete(index);
         }
     }
     public virtual void Rest()
