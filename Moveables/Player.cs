@@ -1,4 +1,4 @@
-public class Player : Moveable
+public class Player : Inventoriable
 {
     private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
@@ -17,23 +17,23 @@ public class Player : Moveable
     }
     public void StartItem()
     {
-        Pickup(Fightable.ItemData.HpPot);
-        Pickup(Fightable.ItemData.HpPot);
+        Pickup(Inventoriable.ItemData.HpPot);
+        Pickup(Inventoriable.ItemData.HpPot);
         switch (ClassName)
         {
             case ClassName.Warrior:
-                Pickup(Fightable.ItemData.Charge);
-                Pickup(Fightable.ItemData.Berserk);
+                Pickup(Inventoriable.ItemData.Charge);
+                Pickup(Inventoriable.ItemData.Berserk);
                 Sol += 2;
                 break;
             case ClassName.Assassin:
-                Pickup(Fightable.ItemData.ShadowAttack);
-                Pickup(Fightable.ItemData.Backstep);
+                Pickup(Inventoriable.ItemData.ShadowAttack);
+                Pickup(Inventoriable.ItemData.Backstep);
                 Lun += 2;
                 break;
             case ClassName.Mage:
-                Pickup(Fightable.ItemData.Torch);
-                Pickup(Fightable.ItemData.SNIPE);
+                Pickup(Inventoriable.ItemData.Torch);
+                Pickup(Inventoriable.ItemData.SNIPE);
                 Con += 2;
                 break;
         }
@@ -86,7 +86,8 @@ public class Player : Moveable
     }
     public void Pickup(Item item)
     {
-        IO.pr("\nFound an item." + item);
+        ItemEntity newEntity = new(item, this);
+        IO.pr("\nFound an item." + newEntity);
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
@@ -94,7 +95,7 @@ public class Player : Moveable
             IO.del(2);
             return;
         }
-        Pickup(item, index);
+        Pickup(newEntity, index);
         IO.del(2);
     }
     public void Exile()

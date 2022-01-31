@@ -1,7 +1,7 @@
-public readonly record struct Item(string abv, ItemType itemType, Action<Fightable>? onUse, Action<Fightable>? onExile = null) : IItem;
+public readonly record struct Item(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null) : IItem;
 public class ItemEntity : IItem
 {
-    public ItemEntity(Item data, Fightable owner)
+    public ItemEntity(Item data, Inventoriable owner)
     {
         this.abv = data.abv;
         this.itemType = data.itemType;
@@ -9,12 +9,12 @@ public class ItemEntity : IItem
         this.onExile = data.onExile;
         this.owner = owner;
     }
-    public Fightable owner { get; init; }
+    public Inventoriable owner { get; init; }
     public int stack = 1;
     public string abv { get; init; }
     public ItemType itemType { get; init; }
-    public Action<Fightable>? onUse { get; init; }
-    public Action<Fightable>? onExile { get; init; }
+    public Action<Inventoriable>? onUse { get; init; }
+    public Action<Inventoriable>? onExile { get; init; }
 
     public override string ToString()
     {
@@ -26,8 +26,8 @@ public interface IItem
 {
     string abv { get; init; }
     ItemType itemType { get; init; }
-    Action<Fightable>? onUse { get; init; }
-    Action<Fightable>? onExile { get; init; }
+    Action<Inventoriable>? onUse { get; init; }
+    Action<Inventoriable>? onExile { get; init; }
 
     string ToString();
 }
