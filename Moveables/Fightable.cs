@@ -21,7 +21,7 @@ public class Fightable : Entity
         Hp.OnDamage += new EventHandler<PointArgs>(OnDamaged);
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
-    public virtual Card? PickCard() => Hand.GetFirst();
+    public virtual Card? SelectCard() => Hand.GetFirst();
 
     public void UseCard(int index)
     {
@@ -180,7 +180,7 @@ public class Fightable : Entity
         public static readonly Item Bag = new(" BAG  ", ItemType.Consum, f => f.Inven.Cap += 2);
         public static readonly Item Charge = new("CHARGE", ItemType.Skill, f =>
         {
-            Card? card = f.PickCard();
+            Card? card = f.SelectCard();
             Moveable mov = (Moveable)f;
             mov.Move(1);
             mov.Move(1);
@@ -188,7 +188,7 @@ public class Fightable : Entity
         });
         public static readonly Item ShadowAttack = new("SHADOW", ItemType.Skill, f =>
         {
-            if (f.PickCard() is Card card)
+            if (f.SelectCard() is Card card)
             {
                 Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Attack);
                 f.UseCard(newCard);
@@ -196,14 +196,14 @@ public class Fightable : Entity
         });
         public static readonly Item SNIPE = new("SNIPE ", ItemType.Skill, f =>
         {
-            Card? card = f.PickCard();
+            Card? card = f.SelectCard();
             Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
             Player.instance.Target = target;
             f.UseCard(card);
         });
         public static readonly Item Berserk = new("BERSRK", ItemType.Skill, f =>
          {
-             Card? card = f.PickCard();
+             Card? card = f.SelectCard();
              if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
              f.UseCard(card);
          });

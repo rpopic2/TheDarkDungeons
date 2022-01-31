@@ -82,7 +82,7 @@
         switch (key)
         {
             case ConsoleKey.W:
-                Card? card = player.PickCard();
+                Card? card = player.SelectCard();
                 player.UseCard(card);
                 break;
             case ConsoleKey.E:

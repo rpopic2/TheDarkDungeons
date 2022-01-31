@@ -17,6 +17,8 @@ public class Player : Moveable
     }
     public void StartItem()
     {
+        Pickup(Fightable.ItemData.HpPot);
+        Pickup(Fightable.ItemData.HpPot);
         switch (ClassName)
         {
             case ClassName.Warrior:
@@ -122,7 +124,7 @@ public class Player : Moveable
             IO.del();
         } while (!cancel);
     }
-    public override Card? PickCard()
+    public override Card? SelectCard()
     {
         do
         {
