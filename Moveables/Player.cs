@@ -17,8 +17,7 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        Pickup(Inventoriable.Data.HpPot);
-        Pickup(Inventoriable.Data.HpPot);
+        Pickup(Inventoriable.Data.FieryRing);
         switch (ClassName)
         {
             case ClassName.Warrior:
