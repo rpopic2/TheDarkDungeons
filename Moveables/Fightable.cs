@@ -141,7 +141,7 @@ public class Fightable : Entity
     {
         if (Inven[index] is ItemEntity oldEntity)
         {
-            if (oldEntity.abv == item.abv) oldEntity.stack++;
+            if (oldEntity.itemType == ItemType.Consum && oldEntity.abv == item.abv) oldEntity.stack++;
             else if (oldEntity.itemType == ItemType.Equip)
             {
                 oldEntity.onExile?.Invoke(this);
