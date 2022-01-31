@@ -26,7 +26,7 @@ public class ItemEntity : IItem
     public override string ToString()
     {
         if (abv is null) return "[EMPTY]";
-        return $"[{abv}]";
+        return $"[{abv}{stack}]";
     }
 }
 // public readonly record struct Equip : IItem
