@@ -6,7 +6,7 @@ public readonly record struct Item(string abv, ItemType itemType, Action<Fightab
         return $"[{abv}]";
     }
 }
-public struct ItemEntity : IItem
+public class ItemEntity : IItem
 {
     public ItemEntity(Item data, Fightable owner)
     {

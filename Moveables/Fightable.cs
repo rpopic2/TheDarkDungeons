@@ -2,7 +2,7 @@ public class Fightable : Entity
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
-    public Inventory<Item?> Inven { get; private set; }
+    public Inventory<IItem?> Inven { get; private set; }
     public GamePoint Hp { get; set; }
     public virtual Fightable? Target { get; protected set; }
     protected (Stance stance, int amount) stance = (default, default);
@@ -14,7 +14,7 @@ public class Fightable : Entity
     {
         ClassName = className;
         Hand = new Inventory<Card?>(cap, "Hand");
-        Inven = new Inventory<Item?>(3, "Inventory");
+        Inven = new Inventory<IItem?>(3, "Inventory");
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnHeal += new EventHandler<PointArgs>(OnHeal);
@@ -103,7 +103,7 @@ public class Fightable : Entity
     }
     public void UseInven(int index)
     {
-        if (Inven[index] is Item item)
+        if (Inven[index] is II1tem item)
         {
             if (item.onUse is Action<Fightable> onUse)
             {
@@ -139,10 +139,11 @@ public class Fightable : Entity
 
     protected virtual void Pickup(Item item, int index)
     {
-        if (Inven[index] is Item oldItem && oldItem.itemType == ItemType.Equip)
+        if (Inven[index] is IItem oldItem && oldItem.itemType == ItemType.Equip)
             oldItem.onExile?.Invoke(this);
-        Inven[index] = item;
-        if (item.itemType == ItemType.Equip) item.onUse?.Invoke(this);
+        ItemEntity entity = new(item, this);
+        Inven[index] = entity;
+        if (entity.itemType == ItemType.Equip) entity.onUse?.Invoke(this);
     }
 
     public virtual void Pickup(Card card, int index)
