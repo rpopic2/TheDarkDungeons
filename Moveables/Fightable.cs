@@ -103,13 +103,17 @@ public class Fightable : Entity
     }
     public void UseInven(int index)
     {
-        if (Inven[index] is IItem item)
+        if (Inven[index] is ItemEntity item)
         {
             if (item.onUse is Action<Fightable> onUse)
             {
                 stance = (Stance.Item, default);
                 onUse(this);
-                if (item.itemType == ItemType.Consum) Inven.Delete(index);
+                if (item.itemType == ItemType.Consum)
+                {
+                    item.stack--;
+                    if (item.stack <= 0) Inven.Delete(index);
+                }
             }
         }
     }
@@ -141,14 +145,14 @@ public class Fightable : Entity
     {
         if (Inven[index] is ItemEntity oldEntity)
         {
-            if(oldEntity.abv == item.abv) oldEntity.stack ++;
-            else if(oldEntity.itemType == ItemType.Equip)
+            if (oldEntity.abv == item.abv) oldEntity.stack++;
+            else if (oldEntity.itemType == ItemType.Equip)
             {
                 oldEntity.onExile?.Invoke(this);
                 Inven[index] = null;
             }
         }
-        if(Inven[index] is null)
+        if (Inven[index] is null)
         {
             ItemEntity newEntity = new(item, this);
             Inven[index] = newEntity;
