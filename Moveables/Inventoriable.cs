@@ -37,7 +37,7 @@ public class Inventoriable : Moveable
             if (item.itemType == ItemType.Equip) item.onUse?.Invoke(this);
         }
     }
-    public static class ItemData
+    public static class Data
     {
         public static readonly Item HpPot = new("HPPOT", ItemType.Consum, f => f.Hp += 3);
         public static readonly Item Torch = new("TORCH", ItemType.Consum, f =>

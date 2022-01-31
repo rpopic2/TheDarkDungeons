@@ -17,23 +17,23 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        Pickup(Inventoriable.ItemData.HpPot);
-        Pickup(Inventoriable.ItemData.HpPot);
+        Pickup(Inventoriable.Data.HpPot);
+        Pickup(Inventoriable.Data.HpPot);
         switch (ClassName)
         {
             case ClassName.Warrior:
-                Pickup(Inventoriable.ItemData.Charge);
-                Pickup(Inventoriable.ItemData.Berserk);
+                Pickup(Inventoriable.Data.Charge);
+                Pickup(Inventoriable.Data.Berserk);
                 Sol += 2;
                 break;
             case ClassName.Assassin:
-                Pickup(Inventoriable.ItemData.ShadowAttack);
-                Pickup(Inventoriable.ItemData.Backstep);
+                Pickup(Inventoriable.Data.ShadowAttack);
+                Pickup(Inventoriable.Data.Backstep);
                 Lun += 2;
                 break;
             case ClassName.Mage:
-                Pickup(Inventoriable.ItemData.Torch);
-                Pickup(Inventoriable.ItemData.SNIPE);
+                Pickup(Inventoriable.Data.Torch);
+                Pickup(Inventoriable.Data.SNIPE);
                 Con += 2;
                 break;
         }

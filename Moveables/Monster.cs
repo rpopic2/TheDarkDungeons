@@ -22,17 +22,17 @@ public class Monster : Moveable
         player.exp.Gain(expOnKill);
         player.Pickup(Draw());
         Map.Current.SpawnBat();
-        if (Drop(10)) player.Pickup(Inventoriable.ItemData.HpPot);
-        if (Drop(10)) player.Pickup(Inventoriable.ItemData.FieryRing);
-        if (Drop(5)) player.Pickup(Inventoriable.ItemData.Torch);
-        if (Drop(100)) player.Pickup(Inventoriable.ItemData.AmuletOfLa);
-        if (Drop(4)) player.Pickup(Inventoriable.ItemData.Scouter);
-        if (Drop(10)) player.Pickup(Inventoriable.ItemData.Charge);
-        if (Drop(20)) player.Pickup(Inventoriable.ItemData.SNIPE);
-        if (Drop(10)) player.Pickup(Inventoriable.ItemData.ShadowAttack);
-        if (Drop(12)) player.Pickup(Inventoriable.ItemData.Berserk);
-        if (Drop(20)) player.Pickup(Inventoriable.ItemData.Backstep);
-        if (Drop(11)) player.Pickup(Inventoriable.ItemData.Bag);
+        if (Drop(10)) player.Pickup(Inventoriable.Data.HpPot);
+        if (Drop(10)) player.Pickup(Inventoriable.Data.FieryRing);
+        if (Drop(5)) player.Pickup(Inventoriable.Data.Torch);
+        if (Drop(100)) player.Pickup(Inventoriable.Data.AmuletOfLa);
+        if (Drop(4)) player.Pickup(Inventoriable.Data.Scouter);
+        if (Drop(10)) player.Pickup(Inventoriable.Data.Charge);
+        if (Drop(20)) player.Pickup(Inventoriable.Data.SNIPE);
+        if (Drop(10)) player.Pickup(Inventoriable.Data.ShadowAttack);
+        if (Drop(12)) player.Pickup(Inventoriable.Data.Berserk);
+        if (Drop(20)) player.Pickup(Inventoriable.Data.Backstep);
+        if (Drop(11)) player.Pickup(Inventoriable.Data.Bag);
     }
     private bool Drop(int outof)
     {

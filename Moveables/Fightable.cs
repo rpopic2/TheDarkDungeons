@@ -20,7 +20,10 @@ public class Fightable : Entity
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
     public virtual Card? SelectCard() => Hand.GetFirst();
-
+    public virtual void Pickup(Card card, int index)
+    {
+        Hand[index] = card;
+    }
     public void UseCard(int index)
     {
         if (Target is null) return;
@@ -121,12 +124,5 @@ public class Fightable : Entity
     {
         if (IsAlive) return Name.ToLower()[0];
         else return MapSymb.Empty;
-    }
-
-
-
-    public virtual void Pickup(Card card, int index)
-    {
-        Hand[index] = card;
     }
 }
