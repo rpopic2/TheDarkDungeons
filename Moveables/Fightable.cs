@@ -139,20 +139,21 @@ public class Fightable : Entity
 
     protected virtual void Pickup(Item item, int index)
     {
-
-        if (Inven[index] is ItemEntity oldEntity && oldEntity.abv == item.abv)
+        if (Inven[index] is ItemEntity oldEntity)
         {
-            oldEntity.stack ++;
+            if(oldEntity.abv == item.abv) oldEntity.stack ++;
+            else if(oldEntity.itemType == ItemType.Equip)
+            {
+                oldEntity.onExile?.Invoke(this);
+                Inven[index] = null;
+            }
         }
-        else
+        if(Inven[index] is null)
         {
-            if (Inven[index] is IItem oldItem && oldItem.itemType == ItemType.Equip)
-                oldItem.onExile?.Invoke(this);
             ItemEntity newEntity = new(item, this);
             Inven[index] = newEntity;
             if (newEntity.itemType == ItemType.Equip) newEntity.onUse?.Invoke(this);
         }
-
     }
 
     public virtual void Pickup(Card card, int index)
