@@ -104,13 +104,13 @@ public class Fightable : Moveable
     {
         if (this is Player)
             IO.pr($"{Name} is resting a turn.");
-        stance = (Stance.Rest, default);
+        stance = new(Stance.Rest, default);
     }
 
     public virtual void OnTurnEnd(object? sender, EventArgs e)
     {
         UpdateTarget();
-        stance = (default, default);
+        stance = new(default, default);
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {

@@ -110,7 +110,7 @@ public class Player : Inventoriable
         } while (card.Stance == CardStance.Star);
         IO.pr("Exiled a card.");
         Hand[index] = Hand[index]?.Exile();
-        stance = (Stance.Exile, default);
+        stance = new(Stance.Exile, default);
     }
     public override void Rest()
     {

@@ -11,7 +11,7 @@ public class Inventoriable : Fightable
     {
         if (!(Inven[index] is ItemEntity item)) return;
         if (!(item.onUse is Action<Inventoriable> onUse)) return;
-        stance = (Stance.Item, default);
+        stance = new(Stance.Item, default);
         onUse(this);
         if (item.itemType == ItemType.Consum)
         {

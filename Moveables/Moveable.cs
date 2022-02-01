@@ -1,13 +1,13 @@
 public class Moveable : Entity
 {
-    protected (Stance stance, int amount) stance = (default, default);
+    protected StanceInfo stance = new(default, default);
     public Moveable(int level, int sol, int lun, int con, string name) : base(level, sol, lun, con, name)
     {
         Pos = new Position();
     }
     public Position Pos { get; set; }
 
-    public (Stance stance, int amount) CurStance => stance;
+    public StanceInfo CurStance => stance;
     public virtual void Move(int x)
     {
         _Move(x, out char obj);
@@ -27,7 +27,7 @@ public class Moveable : Entity
         bool result = existsTile && !obstructed;
         if (result)
         {
-            stance = (Stance.Move, stance.amount + x);
+            stance = new(Stance.Move, stance.amount + x);
             Pos = newPos;
             current.UpdateMoveable(this);
         }
@@ -35,7 +35,7 @@ public class Moveable : Entity
         {
             if (newPos.facing != Pos.facing)
             {
-                stance = (Stance.Move, stance.amount);
+                stance = new(Stance.Move, stance.amount);
                 Pos = !Pos;
                 return true;
             }
