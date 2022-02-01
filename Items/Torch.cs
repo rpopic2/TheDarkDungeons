@@ -1,15 +1,10 @@
 public record Torch : ItemEntity
 {
-    public static readonly ItemData data = new("TORCH", ItemType.Consum, null);
+    public static readonly ItemData torch = new("TORCH", ItemType.Consum, null);
     public readonly Action<object?, EventArgs> onTurnEnd;
 
-    public Torch(Inventoriable owner, Stat ownerStat) : base(data, ownerStat)
+    public Torch(Inventoriable owner, Stat ownerStat) : base(torch, ownerStat)
     {
-        onUse = (f) =>
-        {
-            Player player = (Player)owner;
-            player.torch = 20;
-        };
         onTurnEnd = (object? sender, EventArgs e) =>
         {
             Player player = (Player)owner;
@@ -22,10 +17,15 @@ public record Torch : ItemEntity
                     player.sight = 1;
                 }
             }
-         };
+        };
         EventHandler torchHandler = new(onTurnEnd);
-        Program.OnTurnEnd -= torchHandler;
-        Program.OnTurnEnd += torchHandler;
+        onUse = (f) =>
+        {
+            Player player = (Player)owner;
+            player.torch = 20;
+            Program.OnTurnEnd -= torchHandler;
+            Program.OnTurnEnd += torchHandler;
+        };
     }
     public override string ToString() => base.ToString();
 }

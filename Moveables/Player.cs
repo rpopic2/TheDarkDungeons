@@ -17,22 +17,23 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItem(new Equip(this, stat, EquipDatabase.LunarRing));
+        PickupItem(new Torch(this, stat));
+        PickupItem(new Torch(this, stat));
         switch (ClassName)
         {
             case ClassName.Warrior:
-                PickupItem(Inventoriable.Data.Charge);
-                PickupItem(Inventoriable.Data.Berserk);
+                PickupItem(Inventoriable.SkillDb.Charge);
+                PickupItem(Inventoriable.SkillDb.Berserk);
                 stat.Sol += 2;
                 break;
             case ClassName.Assassin:
-                PickupItem(Inventoriable.Data.ShadowAttack);
-                PickupItem(Inventoriable.Data.Backstep);
+                PickupItem(Inventoriable.SkillDb.ShadowAttack);
+                PickupItem(Inventoriable.SkillDb.Backstep);
                 stat.Lun += 2;
                 break;
             case ClassName.Mage:
-                PickupItem(Torch.data);
-                PickupItem(Torch.data);
+                PickupItem(Torch.torch);
+                PickupItem(Torch.torch);
                 stat.Con += 2;
                 break;
         }
