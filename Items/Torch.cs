@@ -1,4 +1,4 @@
-public record struct Torch : IItem
+public record struct Torch : IItemEntity
 {
     public static readonly ItemData data = new("TORCH", ItemType.Consum, null);
     private readonly Inventoriable owner;

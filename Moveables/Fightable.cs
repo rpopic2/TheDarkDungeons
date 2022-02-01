@@ -18,7 +18,7 @@ public class Fightable : Moveable
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
     public virtual Card? SelectCard() => Hand.GetFirst();
-    public virtual void Pickup(Card card, int index)
+    public virtual void PickupCard(Card card, int index)
     {
         Hand[index] = card;
     }

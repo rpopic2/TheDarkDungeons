@@ -17,23 +17,23 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        Pickup(new Torch(this));
-        Pickup(new Torch(this));
+        PickupItem(new Torch(this));
+        PickupItem(new Torch(this));
         switch (ClassName)
         {
             case ClassName.Warrior:
-                Pickup(Inventoriable.Data.Charge);
-                Pickup(Inventoriable.Data.Berserk);
+                PickupItem(Inventoriable.Data.Charge);
+                PickupItem(Inventoriable.Data.Berserk);
                 Sol += 2;
                 break;
             case ClassName.Assassin:
-                Pickup(Inventoriable.Data.ShadowAttack);
-                Pickup(Inventoriable.Data.Backstep);
+                PickupItem(Inventoriable.Data.ShadowAttack);
+                PickupItem(Inventoriable.Data.Backstep);
                 Lun += 2;
                 break;
             case ClassName.Mage:
-                Pickup(Torch.data);
-                Pickup(Torch.data);
+                PickupItem(Torch.data);
+                PickupItem(Torch.data);
                 Con += 2;
                 break;
         }
@@ -67,7 +67,7 @@ public class Player : Inventoriable
         Hp.Max += Level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
-    public void Pickup(Card card)
+    public void PickupCard(Card card)
     {
         IO.pr("\nFound a card." + card);
         IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
@@ -76,39 +76,26 @@ public class Player : Inventoriable
         {
             if (card.Stance != CardStance.Star)
             {
-                Pickup(card.Exile());
+                PickupCard(card.Exile());
             }
             IO.del(2);
             return;
         }
-        Pickup(card, index);
+        PickupCard(card, index);
         IO.del(2);
     }
-    public void Pickup(ItemData item)
-    {
-        ItemEntity newEntity = new(item, this);
-        IO.pr("\nFound an item." + newEntity);
-        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
-        if (cancel)
-        {
-            Pickup(Draw().Exile());
-            IO.del(2);
-            return;
-        }
-        Pickup(newEntity, index);
-        IO.del(2);
-    }
-    public void Pickup(Torch item)
+    public void PickupItem(ItemData item) => PickupItem(new ItemEntity(item, this));
+    public void PickupItem(IItemEntity item)
     {
         IO.pr("\nFound an item." + item.abv);
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
-            Pickup(Draw().Exile());
+            PickupCard(Draw().Exile());
             IO.del(2);
             return;
         }
-        Pickup(item, index);
+        PickupItem(item, index);
         IO.del(2);
     }
     public void Exile()
@@ -128,7 +115,7 @@ public class Player : Inventoriable
     public override void Rest()
     {
         base.Rest();
-        Pickup(Draw());
+        PickupCard(Draw());
         bool cancel = false;
         do
         {

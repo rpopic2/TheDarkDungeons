@@ -1,5 +1,5 @@
-public readonly record struct ItemData(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null);
-public class ItemEntity : IItem
+public readonly record struct ItemData(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null) : IItem;
+public class ItemEntity : IItemEntity
 {
     public ItemEntity(ItemData data, Inventoriable owner)
     {
@@ -28,7 +28,10 @@ public interface IItem
     ItemType itemType { get; init; }
     Action<Inventoriable>? onUse { get; init; }
     Action<Inventoriable>? onExile { get; init; }
-    int stack { get; set; }
 
     string ToString();
+}
+public interface IItemEntity : IItem
+{
+    int stack { get; set; }
 }

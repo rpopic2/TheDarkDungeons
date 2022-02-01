@@ -11,7 +11,7 @@ public class Monster : Fightable
             Card card = Draw();
             if (attack > 2) card.StanceShift();
             card.StanceShift();
-            Pickup(card, Hand.Count);
+            PickupCard(card, Hand.Count);
         }
         Pos = spawnPoint;
     }
@@ -20,19 +20,19 @@ public class Monster : Fightable
     {
         base.OnDeath(sender, e);
         player.exp.Gain(expOnKill);
-        player.Pickup(Draw());
+        player.PickupCard(Draw());
         Map.Current.SpawnBat();
-        if (Drop(10)) player.Pickup(Inventoriable.Data.HpPot);
-        if (Drop(10)) player.Pickup(Inventoriable.Data.FieryRing);
-        if (Drop(5)) player.Pickup(Torch.data);
-        if (Drop(100)) player.Pickup(Inventoriable.Data.AmuletOfLa);
-        if (Drop(4)) player.Pickup(Inventoriable.Data.Scouter);
-        if (Drop(10)) player.Pickup(Inventoriable.Data.Charge);
-        if (Drop(20)) player.Pickup(Inventoriable.Data.SNIPE);
-        if (Drop(10)) player.Pickup(Inventoriable.Data.ShadowAttack);
-        if (Drop(12)) player.Pickup(Inventoriable.Data.Berserk);
-        if (Drop(20)) player.Pickup(Inventoriable.Data.Backstep);
-        if (Drop(11)) player.Pickup(Inventoriable.Data.Bag);
+        if (Drop(10)) player.PickupItem(Inventoriable.Data.HpPot);
+        if (Drop(10)) player.PickupItem(Inventoriable.Data.FieryRing);
+        if (Drop(5)) player.PickupItem(Torch.data);
+        if (Drop(100)) player.PickupItem(Inventoriable.Data.AmuletOfLa);
+        if (Drop(4)) player.PickupItem(Inventoriable.Data.Scouter);
+        if (Drop(10)) player.PickupItem(Inventoriable.Data.Charge);
+        if (Drop(20)) player.PickupItem(Inventoriable.Data.SNIPE);
+        if (Drop(10)) player.PickupItem(Inventoriable.Data.ShadowAttack);
+        if (Drop(12)) player.PickupItem(Inventoriable.Data.Berserk);
+        if (Drop(20)) player.PickupItem(Inventoriable.Data.Backstep);
+        if (Drop(11)) player.PickupItem(Inventoriable.Data.Bag);
     }
     private bool Drop(int outof)
     {
@@ -65,7 +65,7 @@ public class Monster : Fightable
     public override void Rest()
     {
         base.Rest();
-        Pickup(Draw(), Hand.Count);
+        PickupCard(Draw(), Hand.Count);
     }
     public override char ToChar()
     {
