@@ -1,4 +1,4 @@
-public readonly record struct EquipData(string abv, params (Func<Stat, Equip.RefInt> stat, int amount)[] mods);
+public readonly record struct EquipData(string abv, params (Func<Stat, Equip.RefInt> refGetter, int amount)[] mods);
 
 public static class EquipDatabase
 {
