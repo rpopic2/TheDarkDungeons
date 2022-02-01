@@ -17,8 +17,8 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        Pickup(Inventoriable.Data.Torch);
-        Pickup(Inventoriable.Data.Torch);
+        Pickup(new Torch(this));
+        Pickup(new Torch(this));
         switch (ClassName)
         {
             case ClassName.Warrior:
@@ -32,8 +32,8 @@ public class Player : Inventoriable
                 Lun += 2;
                 break;
             case ClassName.Mage:
-                Pickup(Inventoriable.Data.Torch);
-                Pickup(Inventoriable.Data.SNIPE);
+                Pickup(Torch.data);
+                Pickup(Torch.data);
                 Con += 2;
                 break;
         }
@@ -96,6 +96,19 @@ public class Player : Inventoriable
             return;
         }
         Pickup(newEntity, index);
+        IO.del(2);
+    }
+    public void Pickup(Torch item)
+    {
+        IO.pr("\nFound an item." + item.abv);
+        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
+        if (cancel)
+        {
+            Pickup(Draw().Exile());
+            IO.del(2);
+            return;
+        }
+        Pickup(item, index);
         IO.del(2);
     }
     public void Exile()

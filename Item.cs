@@ -1,4 +1,4 @@
-public readonly record struct ItemData(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null) : IItem;
+public readonly record struct ItemData(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null);
 public class ItemEntity : IItem
 {
     public ItemEntity(ItemData data, Inventoriable owner)
@@ -10,7 +10,7 @@ public class ItemEntity : IItem
         this.owner = owner;
     }
     public Inventoriable owner { get; init; }
-    public int stack = 1;
+    public int stack { get; set; } = 1;
     public string abv { get; init; }
     public ItemType itemType { get; init; }
     public Action<Inventoriable>? onUse { get; init; }
@@ -28,6 +28,7 @@ public interface IItem
     ItemType itemType { get; init; }
     Action<Inventoriable>? onUse { get; init; }
     Action<Inventoriable>? onExile { get; init; }
+    int stack { get; set; }
 
     string ToString();
 }

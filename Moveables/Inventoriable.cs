@@ -1,15 +1,15 @@
 public class Inventoriable : Fightable
 {
-    public Inventory<ItemEntity?> Inven { get; private set; }
+    public Inventory<IItem?> Inven { get; private set; }
 
     public Inventoriable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(name, className, cap, maxHp, level, sol, lun, con)
     {
-        Inven = new Inventory<ItemEntity?>(3, "Inventory");
+        Inven = new Inventory<IItem?>(3, "Inventory");
     }
 
     public void UseInven(int index)
     {
-        if (!(Inven[index] is ItemEntity item)) return;
+        if (!(Inven[index] is IItem item)) return;
         if (!(item.onUse is Action<Inventoriable> onUse)) return;
         stance = new(Stance.Item, default);
         onUse(this);
@@ -19,9 +19,9 @@ public class Inventoriable : Fightable
             if (item.stack <= 0) Inven.Delete(index);
         }
     }
-    protected virtual void Pickup(ItemEntity item, int index)
+    protected virtual void Pickup(IItem item, int index)
     {
-        if (Inven[index] is ItemEntity oldEntity)
+        if (Inven[index] is IItem oldEntity)
         {
             if (oldEntity.itemType == ItemType.Consum && oldEntity.abv == item.abv) oldEntity.stack++;
             else if (oldEntity.itemType == ItemType.Equip)
@@ -39,27 +39,6 @@ public class Inventoriable : Fightable
     public static class Data
     {
         public static readonly ItemData HpPot = new("HPPOT", ItemType.Consum, f => f.Hp += 3);
-        public static readonly ItemData Torch = new("TORCH", ItemType.Consum, f =>
-        {
-            Player player = (Player)f;
-            player.torch = 20;
-            Program.OnTurnEnd -= torchHandler;
-            Program.OnTurnEnd += torchHandler;
-        });
-        public static Action<object?, EventArgs> torchAct = (object? sender, EventArgs e) =>
-            {
-                Player player = Player.instance;
-                if (player.torch > 0)
-                {
-                    player.sight = 3;
-                    player.torch--;
-                    if (player.torch <= 0)
-                    {
-                        player.sight = 1;
-                    }
-                }
-            };
-        public static EventHandler torchHandler = new EventHandler(torchAct);
         public static readonly ItemData Scouter = new("SCOUTR", ItemType.Skill, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
         public static readonly ItemData AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, f => f.Sol -= 20);
         public static readonly ItemData FieryRing = new("FIRING", ItemType.Equip, f => f.Sol += 3, f => f.Sol -= 3);
