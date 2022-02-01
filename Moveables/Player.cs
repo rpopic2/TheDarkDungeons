@@ -62,8 +62,8 @@ public class Player : Inventoriable
                 stat.con += 2;
                 break;
         }
-        Hand.Cap = Rules.capBasic + Level.FloorMult(Rules.capByLevel);
-        Hp.Max += Level.FloorMult(Rules.hpByLevel);
+        Hand.Cap = new Mul(3, 0.4f, Mul.lv);
+        Hp.Max = new Mul(5, Mul.n, Mul.lv);
         Hp += Hp.Max;
     }
     public void PickupCard(Card card)

@@ -4,6 +4,9 @@ public readonly record struct DropList(params (IItemData data, int outof)[] list
 //sol lun con hp cap killexp
 public readonly record struct Mul
 {
+    public static int lv => Map.level;
+    public static int t => Program.turn;
+    public const int n = 1;
     public readonly int @base;
     public readonly float multiplier;
     public readonly int scaler;

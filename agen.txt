@@ -1,6 +1,3 @@
-monster.cs at bottom -> unness?
-map spawning system needs to be corrected.
-rules needs to be fixed.(multiplier system)
 {empty} to const
 map getspawnablindices -> moveables확인해서 있는곳은 제외하기
 stacking skill

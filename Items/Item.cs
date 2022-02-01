@@ -1,5 +1,6 @@
 public record Item : IItemEntity
 {
+    public const string Empty = "{EMPTY}";
     public Item(ItemData data, Stat ownerStat)
     {
         this.abv = data.abv;
@@ -21,7 +22,7 @@ public record Item : IItemEntity
 
     public override string ToString()
     {
-        if (abv is null) return "[EMPTY]";
+        if (abv is null) return Empty;
         return $"[{abv}{stack}]";
     }
 }
