@@ -1,4 +1,10 @@
-public readonly record struct MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList);
+public readonly record struct MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList)
+{
+    public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, behaviour, dropList)
+    {
+        MonsterDb.data[i] = this;
+    }
+}
 public readonly record struct StatMul(Mul sol, Mul lun, Mul con, Mul hp, Mul cap, Mul killExp);
 public readonly record struct DropList(params (IItemData data, int outof)[] list);
 //sol lun con hp cap killexp
@@ -23,6 +29,7 @@ public readonly record struct Mul
 }
 public static class MonsterDb
 {
+    public static List<MonsterData> data = new();
     private static int lv => Map.level;
     private static int t => Program.turn;
     private const int n = 1;
@@ -33,9 +40,9 @@ public static class MonsterDb
             (EquipDb.FieryRing, 15),
             (EquipDb.LunarRing, 15));
     private static StatMul batMul = new(new(1, 0.6f, lv), new(3, n, n), new(2, n, n), new(2, 0.03f, lv), new(1, 0.16f, lv), new(3, 0.3f, lv));
-    public static MonsterData bat = new("Bat", 'b', 'd', ClassName.Assassin, batMul, Monster.batBehav, batDropList);
+    public static MonsterData bat = new(0, "Bat", 'b', 'd', ClassName.Assassin, batMul, Monster.batBehav, batDropList);
     private static StatMul lunaticMul = new(new(2, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.03f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));
-    public static MonsterData lunatic = new("Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, batDropList);
+    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, batDropList);
 
 
 }
