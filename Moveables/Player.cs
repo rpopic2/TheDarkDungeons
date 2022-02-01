@@ -1,6 +1,5 @@
 public class Player : Inventoriable
 {
-    private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
     public int torch = 0;
@@ -147,7 +146,7 @@ public class Player : Inventoriable
     }
     public override void Move(int x)
     {
-        bool success = _Move(x, out char obj);
+        bool success = Move(x, out char obj);
         if (!success) return;
         if (obj == MapSymb.portal)
         {
@@ -161,7 +160,6 @@ public class Player : Inventoriable
         IO.rk();
         IO.del(3);
     }
-    public override string ToString() =>
-        base.ToString() + $"\nExp : {exp}\tTorch : {torch}";
-    public override char ToChar() => PlayerChar;
+    public override string ToString() => base.ToString() + $"\nExp : {exp}\tTorch : {torch}";
+    public override char ToChar() => MapSymb.player;
 }

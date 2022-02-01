@@ -8,17 +8,10 @@ public class Moveable : Entity
     public Position Pos { get; set; }
 
     public StanceInfo CurStance => stance;
-    public virtual void Move(int x)
-    {
-        _Move(x, out char obj);
-    }
+    public virtual void Move(int x) => Move(x, out char obj);
+    public virtual char ToChar() => Name.ToLower()[0];
 
-    public virtual char ToChar()
-    {
-        return Name.ToLower()[0];
-    }
-
-    protected virtual bool _Move(int x, out char obj)
+    protected virtual bool Move(int x, out char obj)
     {
         Map current = Map.Current;
         Position newPos = Pos + x;

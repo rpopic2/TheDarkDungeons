@@ -49,28 +49,19 @@ public class Monster : Fightable
             {
                 int moveX = rnd.Next(2) == 1 ? 1 : -1;
                 int direction = Pos.facing == Facing.Front ? -1 : 1;
-                if (Map.Current.IsAtEnd(Pos.x)) _Move(direction, out char obj);
-                else _Move(moveX, out char obj);
+                if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
+                else Move(moveX, out char obj);
             }
-            else
-            {
-                _UseCard((Card)Hand.GetFirst()!);
-            }
+            else _UseCard((Card)Hand.GetFirst()!);
         }
-        else
-        {
-            Rest();
-        }
+        else Rest();
     }
     public override void Rest()
     {
         base.Rest();
         PickupCard(Draw(), Hand.Count);
     }
-    public override char ToChar()
-    {
-        return Pos.facing == Facing.Front ? 'b' : 'd';
-    }
+    public override char ToChar() => Pos.facing == Facing.Front ? 'b' : 'd';
 }
 
 public readonly record struct MonsterInfo(string name, ClassName className, (int, float, float) hp, PointInfo cap, PointInfo sol, PointInfo lun, PointInfo con, PointInfo killExp);
