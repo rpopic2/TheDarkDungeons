@@ -22,7 +22,7 @@ public record Item : IItemEntity
 
     public override string ToString()
     {
-        if (abv is null) return Empty;
+        if (abv is null) return Item.Empty;
         return $"[{abv}{stack}]";
     }
 }
