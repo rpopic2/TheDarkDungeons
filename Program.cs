@@ -100,14 +100,16 @@
     }
     public void ElaspeTurn()
     {
-        Monster monster = Map.Current.monster;
-        monster.DoTurn();
-        bool playerFirst = Fightable.IsFirst(player, monster);
-        Fightable? p1 = playerFirst ? player : monster;
-        Fightable? p2 = playerFirst ? monster : player;
+        if (Map.Current.monster is Monster monster)
+        {
+            monster.DoTurn();
+            bool playerFirst = Fightable.IsFirst(player, monster);
+            Fightable? p1 = playerFirst ? player : monster;
+            Fightable? p2 = playerFirst ? monster : player;
 
-        p1?.TryAttack();
-        p2?.TryAttack();
+            p1?.TryAttack();
+            p2?.TryAttack();
+        }
         OnTurnEnd?.Invoke(this, EventArgs.Empty);
         if (IO.printCount == 3) IO.del(2);
 
@@ -116,6 +118,7 @@
     public void NewTurn()
     {
         IO.printCount = 0;
+        if (turn % 5 == 0) Map.Current.Spawn();
         turn++;
         IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }

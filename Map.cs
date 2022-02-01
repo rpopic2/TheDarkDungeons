@@ -13,7 +13,7 @@ public class Map
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
-    public Monster monster { get; private set; } = default!;
+    public Monster? monster { get; private set; }
     public Map(int length)
     {
         Current = this;
@@ -25,22 +25,29 @@ public class Map
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
-        SpawnBat();
+        Spawn();
     }
 
-    public void SpawnBat()
+    public void Spawn()
     {
+        MonsterData data = default;
+        switch (rnd.Next(2))
+        {
+            case 0:
+                data = MonsterDb.bat;
+                break;
+            case 1:
+                data = MonsterDb.lunatic;
+                break;
+        }
         List<int> fullMap = GetSpawnableIndices();
         int index = rnd.Next(0, fullMap.Count);
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
 
-        monster = new(MonsterDb.bat, spawnPoint);
+        monster = new(data, spawnPoint);
         UpdateMoveable(monster);
     }
-
-    private int m(float x, int multiplier) => (int)MathF.Round(multiplier * x);
-
     private List<int> GetSpawnableIndices()
     {
         List<int> fullMap = new List<int>(length);
@@ -114,7 +121,7 @@ public class Map
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
         Current = new Map(rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth));
         Player.instance.UpdateTarget();
-        Current.monster.UpdateTarget();
+        Current.monster?.UpdateTarget();
     }
 
     private static char[] NewEmptyArray(int length, char fill)
