@@ -19,7 +19,7 @@ public class Monster : Fightable
     protected override void OnDeath(object? sender, EventArgs e)
     {
         base.OnDeath(sender, e);
-        player.exp.Gain(expOnKill);
+        player.exp.point += expOnKill;
         player.PickupCard(Draw());
         Map.Current.SpawnBat();
         if (DropOutOf(10)) player.PickupItem(Inventoriable.ConsumeDb.HpPot);

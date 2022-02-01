@@ -13,8 +13,8 @@ public class Fightable : Moveable
         Hand = new Inventory<Card?>(cap, "Hand");
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
-        Hp.OnHeal += new EventHandler<PointArgs>(OnHeal);
-        Hp.OnDamage += new EventHandler<PointArgs>(OnDamaged);
+        Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
+        Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
     public virtual Card? SelectCard() => Hand.GetFirst();

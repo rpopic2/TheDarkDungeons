@@ -1,3 +1,4 @@
+rules needs to be fixed.(multiplier system)
 monster ad, monster can stay still?
 npcs
 traps

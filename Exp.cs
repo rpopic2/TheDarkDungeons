@@ -9,18 +9,13 @@ public struct Exp
     {
         this.owner = owner;
         point = new GamePoint(1, GamePointOption.Stacking);
+        point.OnIncrease += new EventHandler<PointArgs>(OnGain);
         UpdateMax();
     }
-    public void UpdateMax()
-        => point.Max = GetMax();
-    private int GetMax()
-    => (int)MathF.Floor(owner.Level * lvIncrement);
+    private void OnGain(object? sender, PointArgs e) => IO.pr($"Gained {e.Amount} xp. {point}");
+    public void UpdateMax() => point.Max = CalcMax();
+    private int CalcMax() => (int)MathF.Floor(owner.Level * lvIncrement);
 
-    public void Gain(int amount)
-    {
-        point += amount;
-        IO.pr($"Gained {amount} xp. {point}");
-    }
     public override string ToString()
     {
         return point.ToString();

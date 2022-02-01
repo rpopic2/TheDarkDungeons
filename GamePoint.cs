@@ -2,8 +2,8 @@ public class GamePoint
 {
     public const int Min = 0;
     private int cur = 0;
-    public event EventHandler<PointArgs>? OnHeal;
-    public event EventHandler<PointArgs>? OnDamage;
+    public event EventHandler<PointArgs>? OnIncrease;
+    public event EventHandler<PointArgs>? OnDecrease;
     public event EventHandler? OnOverflow;
 
     public int Cur
@@ -39,13 +39,13 @@ public class GamePoint
     public static GamePoint operator +(GamePoint x, int amount)
     {
         x.Cur += amount;
-        x.OnHeal?.Invoke(x, new PointArgs(amount));
+        x.OnIncrease?.Invoke(x, new PointArgs(amount));
         return x;
     }
     public static GamePoint operator -(GamePoint x, int amount)
     {
         x.Cur -= amount;
-        x.OnDamage?.Invoke(x, new PointArgs(amount));
+        x.OnDecrease?.Invoke(x, new PointArgs(amount));
         if (x.Cur == Min && x.Option == GamePointOption.Reserving)
             x.OnOverflow?.Invoke(x, EventArgs.Empty);
         return x;
