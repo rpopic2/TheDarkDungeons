@@ -125,7 +125,7 @@ public class Fightable : Moveable
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {stat.Sol}\tLun : {stat.Lun}\tCon : {stat.Con}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {stat.sol}\tLun : {stat.lun}\tCon : {stat.con}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();
@@ -138,5 +138,5 @@ public class Fightable : Moveable
     }
 
     public static bool IsFirst(Fightable p1, Fightable p2)
-    => p1.stat.Lun >= p2.stat.Lun;
+    => p1.stat.lun >= p2.stat.lun;
 }

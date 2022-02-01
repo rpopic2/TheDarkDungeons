@@ -12,6 +12,6 @@ public class Entity
         Name = name;
     }
 
-    public Card Draw() => new Card(GetRandomStat(stat.Sol), GetRandomStat(stat.Lun), GetRandomStat(stat.Con), CardStance.Attack);
+    public Card Draw() => new Card(GetRandomStat(stat.sol), GetRandomStat(stat.lun), GetRandomStat(stat.con), CardStance.Attack);
     private int GetRandomStat(int stat) => rnd.Next(1, stat + 1);
 }
