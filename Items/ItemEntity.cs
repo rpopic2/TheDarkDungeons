@@ -5,7 +5,6 @@ public record ItemEntity : IItemEntity
         this.abv = data.abv;
         this.itemType = data.itemType;
         this.onUse = data.onUse;
-        this.onExile = data.onExile;
         this.stat = ownerStat;
     }
     public ItemEntity(string abv, ItemType itemType, Stat ownerStat)
@@ -19,7 +18,6 @@ public record ItemEntity : IItemEntity
     public string abv { get; init; }
     public ItemType itemType { get; init; }
     public Action<Inventoriable>? onUse { get; init; }
-    public Action<Inventoriable>? onExile { get; init; }
 
     public override string ToString()
     {
