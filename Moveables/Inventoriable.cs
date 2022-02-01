@@ -58,10 +58,11 @@ public class Inventoriable : Fightable
         public static readonly ItemData Charge = new("CHARGE", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
+            if (card is not Card card2) return false;
             f.Move(1);
             f.Move(1);
-            f.UseCard(card);
-            return card is not null;
+            f.UseCard(card2);
+            return true;
         });
         public static readonly ItemData ShadowAttack = new("SHADOW", ItemType.Skill, f =>
         {
@@ -76,18 +77,21 @@ public class Inventoriable : Fightable
         public static readonly ItemData SNIPE = new("SNIPE ", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
+            if (card is not Card card2) return false;
             Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
+            if (target is null) return false;
             Player.instance.Target = target;
-            f.UseCard(card);
+            f.UseCard(card2);
             return card is not null;
         });
         public static readonly ItemData Berserk = new("BERSRK", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
-            if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
+            if (card is not Card card2) return false;
+            if (card2.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
             else return false;
-            f.UseCard(card);
-            return card is not null;
+            f.UseCard(card2);
+            return true;
         });
         public static readonly ItemData Backstep = new("BKSTEP", ItemType.Skill, f =>
         {

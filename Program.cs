@@ -4,7 +4,7 @@
     public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
     public static readonly string[] stats = new string[] { "(1) Sol", "(2) Lun", "(3) Con" };
     public static readonly string[] actions = new string[] { "Cards(W)", "(E)quipments", "(R)est", "(S)tats", "E(x)ile" };
-    private static Player player {get => Player.instance;}
+    private static Player player { get => Player.instance; }
     public static int turn { get; private set; }
     public static event EventHandler? OnTurnEnd;
     public static void Main()
@@ -83,7 +83,7 @@
         {
             case ConsoleKey.W:
                 Card? card = player.SelectCard();
-                player.UseCard(card);
+                if (card is Card card2) player.UseCard(card2);
                 break;
             case ConsoleKey.E:
                 player.UseInven();
@@ -110,7 +110,7 @@
         p1?.TryAttack();
         p2?.TryAttack();
         OnTurnEnd?.Invoke(this, EventArgs.Empty);
-        if(IO.printCount == 3) IO.del(2);
+        if (IO.printCount == 3) IO.del(2);
 
         NewTurn();
     }

@@ -31,14 +31,11 @@ public class Fightable : Moveable
             _UseCard(card);
         }
     }
-    public void UseCard(Card? card)
+    public void UseCard(Card card)
     {
         if (Target is null) return;
-        if (card is Card card2)
-        {
-            if (card2.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card2.Con);
-            _UseCard(card2);
-        }
+        if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
+            _UseCard(card);
     }
     protected void _UseCard(Card card)
     {
