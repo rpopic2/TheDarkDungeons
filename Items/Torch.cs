@@ -24,6 +24,7 @@ public record Torch : ItemEntity
             player.torch = 20;
             Program.OnTurnEnd -= torchHandler;
             Program.OnTurnEnd += torchHandler;
+            return true;
         };
     }
     public override string ToString() => base.ToString();

@@ -17,7 +17,7 @@ public record ItemEntity : IItemEntity
     public int stack { get; set; } = 1;
     public string abv { get; init; }
     public ItemType itemType { get; init; }
-    public Action<Inventoriable>? onUse { get; init; }
+    public Func<Inventoriable, bool>? onUse { get; init; }
 
     public override string ToString()
     {

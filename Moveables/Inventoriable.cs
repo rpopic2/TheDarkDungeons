@@ -10,9 +10,10 @@ public class Inventoriable : Fightable
     public void UseInven(int index)
     {
         if (!(Inven[index] is IItemEntity item)) return;
-        if (!(item.onUse is Action<Inventoriable> onUse)) return;
+        if (!(item.onUse is Func<Inventoriable, bool> onUse)) return;
+        bool success = onUse(this);
+        if (!success) return;
         stance = new(Stance.Item, default);
-        onUse(this);
         if (item.itemType == ItemType.Consum)
         {
             item.stack--;
@@ -38,18 +39,29 @@ public class Inventoriable : Fightable
     }
     public static class ConsumeDb
     {
-        public static readonly ItemData HpPot = new("HPPOT", ItemType.Consum, f => f.Hp += 3);
-        public static readonly ItemData Bag = new(" BAG  ", ItemType.Consum, f => f.Inven.Cap += 2);
+        public static readonly ItemData HpPot = new("HPPOT", ItemType.Consum, f =>
+        {
+            f.Hp += 3; return true;
+        });
+        public static readonly ItemData Bag = new(" BAG  ", ItemType.Consum, f =>
+        {
+            f.Inven.Cap += 2; return true;
+        });
     }
     public static class SkillDb
     {
-        public static readonly ItemData Scouter = new("SCOUTR", ItemType.Skill, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
+        public static readonly ItemData Scouter = new("SCOUTR", ItemType.Skill, f =>
+        {
+            IO.pr(f.Target?.ToString() ?? "No Target to scout.");
+            return f.Target is not null;
+        });
         public static readonly ItemData Charge = new("CHARGE", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
             f.Move(1);
             f.Move(1);
             f.UseCard(card);
+            return card is not null;
         });
         public static readonly ItemData ShadowAttack = new("SHADOW", ItemType.Skill, f =>
         {
@@ -57,7 +69,9 @@ public class Inventoriable : Fightable
             {
                 Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Attack);
                 f.UseCard(newCard);
+                return true;
             }
+            return false;
         });
         public static readonly ItemData SNIPE = new("SNIPE ", ItemType.Skill, f =>
         {
@@ -65,27 +79,32 @@ public class Inventoriable : Fightable
             Map.Current.Moveables.TryGet(Player.instance.Pos.x + 2, out Moveable? target);
             Player.instance.Target = target;
             f.UseCard(card);
+            return card is not null;
         });
         public static readonly ItemData Berserk = new("BERSRK", ItemType.Skill, f =>
-         {
-             Card? card = f.SelectCard();
-             if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
-             f.UseCard(card);
-         });
+        {
+            Card? card = f.SelectCard();
+            if (card?.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
+            else return false;
+            f.UseCard(card);
+            return card is not null;
+        });
         public static readonly ItemData Backstep = new("BKSTEP", ItemType.Skill, f =>
-          {
-              if (f.Target is not null)
-              {
-                  if (f is Moveable mov)
-                  {
-                      Inventoriable target = (Inventoriable)f.Target;
-                      target.Target = null;
-                      Map.Current.Tiles.TryGet(mov.Pos.FrontIndex + 1, out char obj);
-                      if (obj == MapSymb.portal) return;
-                      mov.Move(2 * mov.Pos.FrontMul);
-                      mov.Move(1 * mov.Pos.BackMul);
-                  }
-              }
-          });
+        {
+            if (f.Target is not null)
+            {
+                if (f is Moveable mov)
+                {
+                    Inventoriable target = (Inventoriable)f.Target;
+                    target.Target = null;
+                    Map.Current.Tiles.TryGet(mov.Pos.FrontIndex + 1, out char obj);
+                    if (obj == MapSymb.portal) return false;
+                    mov.Move(2 * mov.Pos.FrontMul);
+                    mov.Move(1 * mov.Pos.BackMul);
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 }

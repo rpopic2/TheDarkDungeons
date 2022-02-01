@@ -2,7 +2,7 @@ public interface IItemData
 {
     string abv { get; init; }
     ItemType itemType { get; init; }
-    Action<Inventoriable>? onUse { get; init; }
+    Func<Inventoriable, bool>? onUse { get; init; }
 
     string ToString();
 }
