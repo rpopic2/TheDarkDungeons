@@ -1,4 +1,4 @@
-public interface IItem
+public interface IItemData
 {
     string abv { get; init; }
     ItemType itemType { get; init; }
@@ -7,7 +7,7 @@ public interface IItem
 
     string ToString();
 }
-public interface IItemEntity : IItem
+public interface IItemEntity : IItemData
 {
     int stack { get; set; }
 }

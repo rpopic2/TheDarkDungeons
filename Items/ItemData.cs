@@ -1,2 +1,1 @@
-public readonly record struct ItemData(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null) : IItem;
-public readonly record struct EquipData(string abv, params (Func<Inventoriable, Equip.RefInt> stat, int amount)[] mods);
+public readonly record struct ItemData(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null) : IItemData;

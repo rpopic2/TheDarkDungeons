@@ -17,7 +17,7 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItem(new Equip(this, stat, Inventoriable.Data.LunarRing));
+        PickupItem(new Equip(this, stat, EquipDatabase.LunarRing));
         switch (ClassName)
         {
             case ClassName.Warrior:
@@ -83,7 +83,8 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItem(ItemData item) => PickupItem(new ItemEntity(item, stat));
+    public void PickupItem(ItemData data) => PickupItem(new ItemEntity(data, stat));
+    public void PickupItem(EquipData data) => PickupItem(new Equip(this, stat, data));
     public void PickupItem(IItemEntity item)
     {
         IO.pr("\nFound an item." + item.abv);

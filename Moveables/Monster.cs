@@ -23,9 +23,9 @@ public class Monster : Fightable
         player.PickupCard(Draw());
         Map.Current.SpawnBat();
         if (Drop(10)) player.PickupItem(Inventoriable.Data.HpPot);
-        if (Drop(10)) player.PickupItem(Inventoriable.Data.FieryRing);
+        if (Drop(10)) player.PickupItem(EquipDatabase.FieryRing);
         if (Drop(5)) player.PickupItem(Torch.data);
-        if (Drop(100)) player.PickupItem(Inventoriable.Data.AmuletOfLa);
+        if (Drop(100)) player.PickupItem(EquipDatabase.AmuletOfLa);
         if (Drop(4)) player.PickupItem(Inventoriable.Data.Scouter);
         if (Drop(10)) player.PickupItem(Inventoriable.Data.Charge);
         if (Drop(20)) player.PickupItem(Inventoriable.Data.SNIPE);
