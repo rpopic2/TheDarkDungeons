@@ -5,26 +5,6 @@ public class Monster : Fightable
     private DropList dropList;
     private char fowardChar, backwardChar;
     private Action<Monster> behaviour;
-    // public Monster(string name, ClassName className, int lv, int maxHp, int cap, (int sol, int lun, int con) stat, int expOnKill, Position spawnPoint) : base(name, className, cap, maxHp, lv, stat.sol, stat.lun, stat.con)
-    // {
-    //     this.expOnKill = expOnKill;
-    //     for (int i = 0; i < cap; i++)
-    //     {
-    //         int attack = rnd.Next(0, 11);
-    //         Card card = Draw();
-    //         if (attack > 2) card.StanceShift();
-    //         card.StanceShift();
-    //         PickupCard(card, Hand.Count);
-    //     }
-    //     Pos = spawnPoint;
-    //     dropList = new (IItemData data, int outof)[5]{
-    //         (Inventoriable.ConsumeDb.HpPot, 10),
-    //         (Inventoriable.ConsumeDb.Bag, 11),
-    //         (Torch.torch, 5),
-    //         (EquipDb.FieryRing, 15),
-    //         (EquipDb.LunarRing, 15)
-    //     };
-    // }
     public Monster(MonsterData data, Position spawnPoint) : base(data.name, data.className, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap)
     {
         dropList = data.dropList;
@@ -35,7 +15,6 @@ public class Monster : Fightable
         Pos = spawnPoint;
         if (data.name == "Bat") PickupCard(Draw().StanceShift(), Hand.Count);
     }
-
     protected override void OnDeath(object? sender, EventArgs e)
     {
         base.OnDeath(sender, e);
