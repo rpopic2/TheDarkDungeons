@@ -2,6 +2,7 @@ public class Monster : Fightable
 {
     private int expOnKill;
     private static Player player { get => Player.instance; }
+    private (IItemData data, int outof)[] dropList;
     public Monster(string name, ClassName className, int lv, int maxHp, int cap, (int sol, int lun, int con) stat, int expOnKill, Position spawnPoint) : base(name, className, cap, maxHp, lv, stat.sol, stat.lun, stat.con)
     {
         this.expOnKill = expOnKill;
@@ -14,6 +15,13 @@ public class Monster : Fightable
             PickupCard(card, Hand.Count);
         }
         Pos = spawnPoint;
+        dropList = new (IItemData data, int outof)[5]{
+            (Inventoriable.ConsumeDb.HpPot, 10),
+            (Inventoriable.ConsumeDb.Bag, 11),
+            (Torch.torch, 5),
+            (EquipDb.FieryRing, 15),
+            (EquipDb.LunarRing, 15)
+        };
     }
 
     protected override void OnDeath(object? sender, EventArgs e)
@@ -22,17 +30,10 @@ public class Monster : Fightable
         player.exp.point += expOnKill;
         player.PickupCard(Draw());
         Map.Current.SpawnBat();
-        if (DropOutOf(10)) player.PickupItem(Inventoriable.ConsumeDb.HpPot);
-        if (DropOutOf(11)) player.PickupItem(Inventoriable.ConsumeDb.Bag);
-        if (DropOutOf(10)) player.PickupItem(EquipDb.FieryRing);
-        if (DropOutOf(5)) player.PickupItem(Torch.torch);
-        if (DropOutOf(100)) player.PickupItem(EquipDb.AmuletOfLa);
-        if (DropOutOf(4)) player.PickupItem(Inventoriable.SkillDb.Scouter);
-        if (DropOutOf(10)) player.PickupItem(Inventoriable.SkillDb.Charge);
-        if (DropOutOf(20)) player.PickupItem(Inventoriable.SkillDb.SNIPE);
-        if (DropOutOf(10)) player.PickupItem(Inventoriable.SkillDb.ShadowAttack);
-        if (DropOutOf(12)) player.PickupItem(Inventoriable.SkillDb.Berserk);
-        if (DropOutOf(20)) player.PickupItem(Inventoriable.SkillDb.Backstep);
+        foreach (var item in dropList)
+        {
+            if(DropOutOf(item.outof)) player.PickupItem(item.data);
+        }
     }
     public void DoTurn()
     {
