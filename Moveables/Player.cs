@@ -17,8 +17,8 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItem(new Torch(this));
-        PickupItem(new Torch(this));
+        PickupItem(new Torch(this, stat));
+        PickupItem(new Torch(this, stat));
         switch (ClassName)
         {
             case ClassName.Warrior:
@@ -84,7 +84,7 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItem(ItemData item) => PickupItem(new ItemEntity(item, this));
+    public void PickupItem(ItemData item) => PickupItem(new ItemEntity(item, this, stat));
     public void PickupItem(IItemEntity item)
     {
         IO.pr("\nFound an item." + item.abv);

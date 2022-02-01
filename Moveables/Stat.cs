@@ -1,6 +1,6 @@
-public class StatData
+public class Stat
 {
-    public StatData(int sol, int lun, int con)
+    public Stat(int sol, int lun, int con)
     {
         Sol = sol;
         Lun = lun;

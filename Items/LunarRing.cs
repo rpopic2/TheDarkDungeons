@@ -3,15 +3,15 @@ public record LunarRing : ItemEntity
     public static readonly ItemData data = new("LUNRIN", ItemType.Equip, null);
     public const int LunInc = 3;
 
-    public LunarRing(Inventoriable owner) : base(data, owner)
+    public LunarRing(Inventoriable owner, Stat ownerStat) : base(data, owner, ownerStat)
     {
-        // onUse = (f) =>
-        // {
-        //     owner.Lun += LunInc;
-        // };
-        // onExile = (f) =>
-        // {
-        //     owner.Lun -= LunInc;
-        // };
+        onUse = (f) =>
+        {
+            ownerStat.Lun += LunInc;
+        };
+        onExile = (f) =>
+        {
+            ownerStat.Lun -= LunInc;
+        };
     }
 }
