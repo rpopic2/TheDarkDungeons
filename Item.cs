@@ -1,7 +1,7 @@
-public readonly record struct Item(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null) : IItem;
+public readonly record struct ItemData(string abv, ItemType itemType, Action<Inventoriable>? onUse, Action<Inventoriable>? onExile = null) : IItem;
 public class ItemEntity : IItem
 {
-    public ItemEntity(Item data, Inventoriable owner)
+    public ItemEntity(ItemData data, Inventoriable owner)
     {
         this.abv = data.abv;
         this.itemType = data.itemType;

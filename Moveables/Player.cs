@@ -84,7 +84,7 @@ public class Player : Inventoriable
         Pickup(card, index);
         IO.del(2);
     }
-    public void Pickup(Item item)
+    public void Pickup(ItemData item)
     {
         ItemEntity newEntity = new(item, this);
         IO.pr("\nFound an item." + newEntity);
