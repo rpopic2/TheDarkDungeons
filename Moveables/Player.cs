@@ -17,24 +17,24 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        Pickup(Inventoriable.Data.Torch);
-        Pickup(Inventoriable.Data.Torch);
+        PickupItem(new Torch(this, stat));
+        PickupItem(new Torch(this, stat));
         switch (ClassName)
         {
             case ClassName.Warrior:
-                Pickup(Inventoriable.Data.Charge);
-                Pickup(Inventoriable.Data.Berserk);
-                Sol += 2;
+                PickupItem(Inventoriable.SkillDb.Charge);
+                PickupItem(Inventoriable.SkillDb.Berserk);
+                stat.sol += 2;
                 break;
             case ClassName.Assassin:
-                Pickup(Inventoriable.Data.ShadowAttack);
-                Pickup(Inventoriable.Data.Backstep);
-                Lun += 2;
+                PickupItem(Inventoriable.SkillDb.ShadowAttack);
+                PickupItem(Inventoriable.SkillDb.Backstep);
+                stat.lun += 2;
                 break;
             case ClassName.Mage:
-                Pickup(Inventoriable.Data.Torch);
-                Pickup(Inventoriable.Data.SNIPE);
-                Con += 2;
+                PickupItem(Torch.torch);
+                PickupItem(Torch.torch);
+                stat.con += 2;
                 break;
         }
     }
@@ -54,20 +54,20 @@ public class Player : Inventoriable
         switch (index)
         {
             case 0:
-                Sol += 2;
+                stat.sol += 2;
                 break;
             case 1:
-                Lun += 2;
+                stat.lun += 2;
                 break;
             case 2:
-                Con += 2;
+                stat.con += 2;
                 break;
         }
         Hand.Cap = Rules.capBasic + Level.FloorMult(Rules.capByLevel);
         Hp.Max += Level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
-    public void Pickup(Card card)
+    public void PickupCard(Card card)
     {
         IO.pr("\nFound a card." + card);
         IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
@@ -76,26 +76,27 @@ public class Player : Inventoriable
         {
             if (card.Stance != CardStance.Star)
             {
-                Pickup(card.Exile());
+                PickupCard(card.Exile());
             }
             IO.del(2);
             return;
         }
-        Pickup(card, index);
+        PickupCard(card, index);
         IO.del(2);
     }
-    public void Pickup(Item item)
+    public void PickupItem(ItemData data) => PickupItem(new ItemEntity(data, stat));
+    public void PickupItem(EquipData data) => PickupItem(new Equip(this, stat, data));
+    public void PickupItem(IItemEntity item)
     {
-        ItemEntity newEntity = new(item, this);
-        IO.pr("\nFound an item." + newEntity);
+        IO.pr("\nFound an item." + item.abv);
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
-            Pickup(Draw().Exile());
+            PickupCard(Draw().Exile());
             IO.del(2);
             return;
         }
-        Pickup(newEntity, index);
+        PickupItem(item, index);
         IO.del(2);
     }
     public void Exile()
@@ -115,7 +116,7 @@ public class Player : Inventoriable
     public override void Rest()
     {
         base.Rest();
-        Pickup(Draw());
+        PickupCard(Draw());
         bool cancel = false;
         do
         {

@@ -66,7 +66,7 @@ public class Map
     public void UpdateMoveable(Moveable mov)
     {
         Position pos = mov.Pos;
-        if (mov is Fightable fight&& !fight.IsAlive)
+        if (mov is Fightable fight && !fight.IsAlive)
         {
             moveables[pos.x] = null;
             return;
@@ -87,7 +87,7 @@ public class Map
         int front = player.Pos.FrontIndex;
         for (int i = 0; i < sight; i++)
         {
-            int targetTile = front + i;
+            int targetTile = player.Pos.isFacingFront ? front + i : front - i;
             bool success = target.TryGet(targetTile, out T? obj);
             if (!success) continue;
             if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();

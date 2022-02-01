@@ -11,7 +11,7 @@ public class Monster : Fightable
             Card card = Draw();
             if (attack > 2) card.StanceShift();
             card.StanceShift();
-            Pickup(card, Hand.Count);
+            PickupCard(card, Hand.Count);
         }
         Pos = spawnPoint;
     }
@@ -20,21 +20,21 @@ public class Monster : Fightable
     {
         base.OnDeath(sender, e);
         player.exp.Gain(expOnKill);
-        player.Pickup(Draw());
+        player.PickupCard(Draw());
         Map.Current.SpawnBat();
-        if (Drop(10)) player.Pickup(Inventoriable.Data.HpPot);
-        if (Drop(10)) player.Pickup(Inventoriable.Data.FieryRing);
-        if (Drop(5)) player.Pickup(Inventoriable.Data.Torch);
-        if (Drop(100)) player.Pickup(Inventoriable.Data.AmuletOfLa);
-        if (Drop(4)) player.Pickup(Inventoriable.Data.Scouter);
-        if (Drop(10)) player.Pickup(Inventoriable.Data.Charge);
-        if (Drop(20)) player.Pickup(Inventoriable.Data.SNIPE);
-        if (Drop(10)) player.Pickup(Inventoriable.Data.ShadowAttack);
-        if (Drop(12)) player.Pickup(Inventoriable.Data.Berserk);
-        if (Drop(20)) player.Pickup(Inventoriable.Data.Backstep);
-        if (Drop(11)) player.Pickup(Inventoriable.Data.Bag);
+        if (DropOutOf(10)) player.PickupItem(Inventoriable.ConsumeDb.HpPot);
+        if (DropOutOf(11)) player.PickupItem(Inventoriable.ConsumeDb.Bag);
+        if (DropOutOf(10)) player.PickupItem(EquipDb.FieryRing);
+        if (DropOutOf(5)) player.PickupItem(Torch.torch);
+        if (DropOutOf(100)) player.PickupItem(EquipDb.AmuletOfLa);
+        if (DropOutOf(4)) player.PickupItem(Inventoriable.SkillDb.Scouter);
+        if (DropOutOf(10)) player.PickupItem(Inventoriable.SkillDb.Charge);
+        if (DropOutOf(20)) player.PickupItem(Inventoriable.SkillDb.SNIPE);
+        if (DropOutOf(10)) player.PickupItem(Inventoriable.SkillDb.ShadowAttack);
+        if (DropOutOf(12)) player.PickupItem(Inventoriable.SkillDb.Berserk);
+        if (DropOutOf(20)) player.PickupItem(Inventoriable.SkillDb.Backstep);
     }
-    private bool Drop(int outof)
+    private bool DropOutOf(int outof)
     {
         int drop = rnd.Next(0, outof);
         return drop == 0;
@@ -65,7 +65,7 @@ public class Monster : Fightable
     public override void Rest()
     {
         base.Rest();
-        Pickup(Draw(), Hand.Count);
+        PickupCard(Draw(), Hand.Count);
     }
     public override char ToChar()
     {

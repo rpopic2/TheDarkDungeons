@@ -18,7 +18,7 @@ public class Fightable : Moveable
         Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
     public virtual Card? SelectCard() => Hand.GetFirst();
-    public virtual void Pickup(Card card, int index)
+    public virtual void PickupCard(Card card, int index)
     {
         Hand[index] = card;
     }
@@ -31,14 +31,11 @@ public class Fightable : Moveable
             _UseCard(card);
         }
     }
-    public void UseCard(Card? card)
+    public void UseCard(Card card)
     {
         if (Target is null) return;
-        if (card is Card card2)
-        {
-            if (card2.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card2.Con);
-            _UseCard(card2);
-        }
+        if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
+            _UseCard(card);
     }
     protected void _UseCard(Card card)
     {
@@ -125,16 +122,18 @@ public class Fightable : Moveable
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {stat.sol}\tLun : {stat.lun}\tCon : {stat.con}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();
         else return MapSymb.Empty;
     }
-
     public void UpdateTarget()
     {
         Map.Current.Moveables.TryGet(Pos.FrontIndex, out Moveable? mov);
         Target = mov;
     }
+
+    public static bool IsFirst(Fightable p1, Fightable p2)
+    => p1.stat.lun >= p2.stat.lun;
 }

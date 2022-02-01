@@ -1,0 +1,1 @@
+public readonly record struct ItemData(string abv, ItemType itemType, Func<Inventoriable, bool>? onUse) : IItemData;
