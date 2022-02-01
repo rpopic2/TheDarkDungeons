@@ -1,4 +1,4 @@
-public record Equip : ItemEntity
+public record Equip : Item
 {
     public delegate ref int RefInt();
     private (Func<Stat, RefInt> refGetter, int amount)[] mods;

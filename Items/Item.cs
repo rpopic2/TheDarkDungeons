@@ -1,13 +1,13 @@
-public record ItemEntity : IItemEntity
+public record Item : IItemEntity
 {
-    public ItemEntity(ItemData data, Stat ownerStat)
+    public Item(ItemData data, Stat ownerStat)
     {
         this.abv = data.abv;
         this.itemType = data.itemType;
         this.onUse = data.onUse;
         this.stat = ownerStat;
     }
-    public ItemEntity(string abv, ItemType itemType, Stat ownerStat)
+    public Item(string abv, ItemType itemType, Stat ownerStat)
     {
         this.abv = abv;
         this.itemType = itemType;

@@ -1,4 +1,4 @@
-public record Torch : ItemEntity
+public record Torch : Item
 {
     public static readonly ItemData torch = new("TORCH", ItemType.Consum, null);
     public readonly Action<object?, EventArgs> onTurnEnd;

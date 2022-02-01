@@ -84,7 +84,7 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItem(ItemData data) => PickupItem(new ItemEntity(data, stat));
+    public void PickupItem(ItemData data) => PickupItem(new Item(data, stat));
     public void PickupItem(EquipData data) => PickupItem(new Equip(this, stat, data));
     public void PickupItem(IItemEntity item)
     {
