@@ -2,3 +2,4 @@ map getspawnablindices -> moveables확인해서 있는곳은 제외하기
 stacking skill
 multiple monster on map
 too much static would make app slower?->load and unload?
+rest to consume 2 or more turns
