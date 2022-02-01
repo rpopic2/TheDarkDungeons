@@ -17,8 +17,7 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItem(new Torch(this, stat));
-        PickupItem(new Torch(this, stat));
+        PickupItem(new LunarRing(this, stat));
         switch (ClassName)
         {
             case ClassName.Warrior:

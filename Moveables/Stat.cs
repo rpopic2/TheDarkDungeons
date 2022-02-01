@@ -7,7 +7,14 @@ public class Stat
         Con = con;
     }
 
-    public int Sol { get; internal set; }
-    public int Lun { get; internal set; }
-    public int Con { get; internal set; }
+    private int sol;
+    private int lun;
+    private int con;
+
+    public int Sol { get => sol; internal set => sol = value; }
+    public int Lun { get => lun; internal set => lun = value; }
+    public int Con { get => con; internal set => con = value; }
+    public ref int RefSol() => ref sol;
+    public ref int RefLun() => ref lun;
+    public ref int RefCon() => ref con;
 }
