@@ -1,1 +1,1 @@
-torch bug when facing back
+bug where picking up items evaeporate
