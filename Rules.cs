@@ -1,6 +1,6 @@
 public static class Rules
 {
-    public const string version = "0.2";
+    public const string version = "0.3";
     public static readonly bool MapDebug = false;
     public static readonly bool SkipIntro = false;
     public const float vulMulp = 1.3f;
@@ -25,7 +25,8 @@ public static class Rules
 
 public static class MapSymb
 {
+    public const char player = '@';
     public const char road = '·';
-    public const char invisible = ' ';
+    public const char Empty = ' ';
     public const char portal = '+';
 }

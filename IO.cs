@@ -1,28 +1,27 @@
-using System.Linq;
-
 public static class IO
 {
     private const char CANCELKEY = 'q';
     private const string Emphasis = "=> ";
     private const string delString = "                                                                 ";
-    private static readonly Player player = Player.instance;
+    private static Player player {get => Player.instance;}
+    public static int printCount;
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
-    public static ConsoleKeyInfo rk(object obj)
+    public static ConsoleKeyInfo rk(object print)
     {
-        pr(obj);
+        pr(print);
         ConsoleKeyInfo info = rk();
         del();
         return info;
     }
-    public static void seln(object obj, out int index, out bool cancel, out ConsoleModifiers mod, int max)
+    public static void seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, int max)
     {
         bool found;
         do
         {
-            ConsoleKeyInfo keyInfo = rk(obj);
+            ConsoleKeyInfo keyInfo = rk(print);
             mod = keyInfo.Modifiers;
             Char key = keyInfo.KeyChar;
             cancel = key == CANCELKEY;
@@ -37,10 +36,10 @@ public static class IO
         if (index != -1) index--;
         return index != -1 && index <= max - 1;
     }
-    public static void selh(out int result, out bool cancel, out ConsoleModifiers mod)
-    {
+    public static void seln_h(out int result, out bool cancel, out ConsoleModifiers mod) =>
         seln(player.Hand, out result, out cancel, out mod, player.Hand.Cap);
-    }
+    public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
+    seln(player.Inven, out result, out cancel, out mod, player.Inven.Cap);
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
@@ -53,6 +52,7 @@ public static class IO
         if (emphasis) x = Emphasis + x;
         if (newline) x = "\n" + x;
         Console.WriteLine(x);
+        printCount++;
     }
 
     ///<summary>Print in Formated Options</summary>

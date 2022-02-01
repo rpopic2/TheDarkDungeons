@@ -21,14 +21,18 @@ public enum Facing
 }
 public enum Stance
 {
-    None, Move, Rest, Attack, Dodge, Exile
+    None, Move, Rest, Attack, Dodge, Item, Exile
+}
+public enum ItemType
+{
+    Equip, Skill, Consum
 }
 
 public static class Extensions
 {
     public static bool TryGet<T>(this T[] source, int index, out T? obj)
     {
-        obj = default(T);
+        obj = default(T?);
         if (index < 0 || index >= source.Length) return false;
         else if (source[index] is null) return false;
         else
@@ -37,6 +41,8 @@ public static class Extensions
             return true;
         }
     }
+    public static int Distance(this Position pos1, Position pos2) => pos2.x - pos1.x;
+
     public static Facing Flip(this Facing facing)
         => facing == Facing.Front ? Facing.Back : Facing.Front;
 

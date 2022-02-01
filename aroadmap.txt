@@ -1,4 +1,4 @@
-스킬.
-스킬드롭 랜덤
+items success or fail to not consume turns->scouter to not consume turn.
 
 different mobs
+monster ad, monster can stay still?

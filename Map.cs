@@ -1,6 +1,6 @@
 public class Map
 {
-    private static Player player = Player.instance;
+    private static Player player { get => Player.instance; }
     public static Map Current = default!;
     public static Random rnd = new Random();
     public static int level;
@@ -10,6 +10,8 @@ public class Map
     private Moveable?[] moveables;
     public ref readonly Moveable?[] Moveables
     => ref moveables;
+    private char[] rendered;
+    private char[] empty;
     public readonly int length;
     public Monster monster { get; private set; } = default!;
     public Map(int length)
@@ -18,6 +20,8 @@ public class Map
         this.length = length;
         tiles = NewEmptyArray(length, MapSymb.road);
         moveables = new Moveable[length];
+        empty = NewEmptyArray(length, MapSymb.Empty);
+        rendered = new char[length];
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
@@ -31,12 +35,17 @@ public class Map
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
 
-        int hp = (int)MathF.Round(level * 0.8f);
+        int hp = 2 + m(0.03f, Program.turn) + m(0.5f, level);
+        int sol = 1 + m(0.6f, level);
+        int lun = 3;
+        int cap = 1 + m(0.16f, level);
         int expOnKill = 3 + (int)MathF.Round(level * 0.3f);
 
-        monster = new Monster("Bat", ClassName.Warrior, level, hp, 1, (2, 1, 2), 3, spawnPoint);
+        monster = new("Bat", ClassName.Warrior, level, hp, cap, (sol, lun, 2), expOnKill, spawnPoint);
         UpdateMoveable(monster);
     }
+
+    private int m(float x, int multiplier) => (int)MathF.Round(multiplier * x);
 
     private List<int> GetSpawnableIndices()
     {
@@ -47,6 +56,7 @@ public class Map
         }
         int playerX = player.Pos.x;
         fullMap.Remove(0);
+        fullMap.Remove(1);
         fullMap.Remove(playerX);
         fullMap.Remove(playerX - 1);
         fullMap.Remove(playerX + 1);
@@ -56,7 +66,7 @@ public class Map
     public void UpdateMoveable(Moveable mov)
     {
         Position pos = mov.Pos;
-        if (!mov.IsAlive)
+        if (mov is Fightable fight&& !fight.IsAlive)
         {
             moveables[pos.x] = null;
             return;
@@ -64,20 +74,31 @@ public class Map
         if (moveables[pos.oldX] == mov) moveables[pos.oldX] = null;
         moveables[pos.x] = mov;
     }
+    private void Render()
+    {
+        empty.CopyTo(rendered, 0);
+        RenderFrom(Tiles);
+        RenderFrom(Moveables);
+        rendered[player.Pos.x] = MapSymb.player;
+    }
+    public void RenderFrom<T>(T[] target)
+    {
+        int sight = player.sight;
+        int front = player.Pos.FrontIndex;
+        for (int i = 0; i < sight; i++)
+        {
+            int targetTile = front + i;
+            bool success = target.TryGet(targetTile, out T? obj);
+            if (!success) continue;
+            if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
+            else if (obj is char chr) rendered[targetTile] = chr;
+            else if (obj is not null) throw new Exception();
+        }
+    }
     public override string ToString()
     {
-        Moveable player = Player.instance;
-        int front = player.Pos.Front;
-        char[] result = NewEmptyArray(length, MapSymb.invisible);
-        bool success2 = tiles.TryGet(front, out char obj2);
-        if (success2) result[front] = obj2!;
-
-        bool success = moveables.TryGet(front, out Moveable? obj);
-        if (success) result[front] = obj!.ToChar();
-
-        if (Rules.MapDebug) result[monster.Pos.x] = monster.ToChar();
-        result[player.Pos.x] = Player.instance.ToChar();
-        return string.Join(" ", result);
+        Render();
+        return string.Join(" ", rendered);
     }
     public bool IsVisible(Moveable mov)
     {

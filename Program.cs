@@ -3,18 +3,21 @@
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
     public static readonly string[] stats = new string[] { "(1) Sol", "(2) Lun", "(3) Con" };
-    public static readonly string[] actions = new string[] { "Use card(W)", "(R)est", "(S)tats", "E(x)ile" };
-    public static Player player = Player.instance;
+    public static readonly string[] actions = new string[] { "Cards(W)", "(E)quipments", "(R)est", "(S)tats", "E(x)ile" };
+    private static Player player {get => Player.instance;}
     public static int turn { get; private set; }
+    public static event EventHandler? OnTurnEnd;
     public static void Main()
     {
         instance = new Program();
         do
         {
             instance.MainLoop();
-            if (player.TurnStance.stance != Stance.None) instance.ElaspeTurn();
+            if (player.CurStance.stance != Stance.None) instance.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
+        IO.pr(player.Hand);
+        IO.pr(player.Inven);
         IO.pr("Your adventure ends here...");
         IO.rk();
     }
@@ -27,6 +30,7 @@
         Console.Clear();
         IO.pr("Your adventure begins...");
         Map.NewMap();
+        player.StartItem();
         NewTurn();
     }
 
@@ -40,7 +44,7 @@
         IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
-        player = Player.instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
+        Player.instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
     }
     //-------------------------
     private void MainLoop()
@@ -50,11 +54,11 @@
         switch (key)
         {
             case ConsoleKey.RightArrow:
-            case ConsoleKey.H:
+            case ConsoleKey.L:
                 player.Move(1);
                 break;
             case ConsoleKey.LeftArrow:
-            case ConsoleKey.L:
+            case ConsoleKey.H:
                 player.Move(-1);
                 break;
             case ConsoleKey.Q:
@@ -78,7 +82,11 @@
         switch (key)
         {
             case ConsoleKey.W:
-                player.UseCard();
+                Card? card = player.SelectCard();
+                player.UseCard(card);
+                break;
+            case ConsoleKey.E:
+                player.UseInven();
                 break;
             case ConsoleKey.R:
                 player.Rest();
@@ -95,23 +103,20 @@
     {
         Monster monster = Map.Current.monster;
         monster.DoTurn();
-        if (!player.DidPrint && !monster.DidPrint)
-        {
-            IO.del(2);
-        }
         bool playerFirst = player.Lun >= monster?.Lun;
-        Moveable? p1 = playerFirst ? player : monster;
-        Moveable? p2 = playerFirst ? monster : player;
+        Fightable? p1 = playerFirst ? player : monster;
+        Fightable? p2 = playerFirst ? monster : player;
 
         p1?.TryAttack();
         p2?.TryAttack();
-        p1?.OnTurnEnd();
-        p2?.OnTurnEnd();
+        OnTurnEnd?.Invoke(this, EventArgs.Empty);
+        if(IO.printCount == 3) IO.del(2);
 
         NewTurn();
     }
     public void NewTurn()
     {
+        IO.printCount = 0;
         turn++;
         IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }

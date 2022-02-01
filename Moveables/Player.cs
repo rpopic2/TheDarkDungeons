@@ -1,8 +1,10 @@
-public class Player : Moveable
+public class Player : Inventoriable
 {
     private const char PlayerChar = '@';
     public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
     public Exp exp;
+    public int torch = 0;
+    public int sight = 1;
 
     public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
     {
@@ -10,15 +12,39 @@ public class Player : Moveable
         exp.point.OnOverflow += new EventHandler(OnLvUp);
         for (int i = 0; i < cap; i++)
         {
-            Hand.SetAt(Hand.Count, Draw());
+            Hand[Hand.Count] = Draw();
         }
     }
+    public void StartItem()
+    {
+        Pickup(Inventoriable.Data.Torch);
+        Pickup(Inventoriable.Data.Torch);
+        switch (ClassName)
+        {
+            case ClassName.Warrior:
+                Pickup(Inventoriable.Data.Charge);
+                Pickup(Inventoriable.Data.Berserk);
+                Sol += 2;
+                break;
+            case ClassName.Assassin:
+                Pickup(Inventoriable.Data.ShadowAttack);
+                Pickup(Inventoriable.Data.Backstep);
+                Lun += 2;
+                break;
+            case ClassName.Mage:
+                Pickup(Inventoriable.Data.Torch);
+                Pickup(Inventoriable.Data.SNIPE);
+                Con += 2;
+                break;
+        }
+    }
+
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
-        level++;
+        Level++;
         exp.UpdateMax();
-        IO.pr("Level up! : " + level, true);
+        IO.pr("Level up! : " + Level, true);
         bool cancel;
         int index;
         do
@@ -37,14 +63,14 @@ public class Player : Moveable
                 Con += 2;
                 break;
         }
-        Hand.UpdateHandCap(Rules.capBasic + level.FloorMult(Rules.capByLevel));
-        Hp.Max += level.FloorMult(Rules.hpByLevel);
+        Hand.Cap = Rules.capBasic + Level.FloorMult(Rules.capByLevel);
+        Hp.Max += Level.FloorMult(Rules.hpByLevel);
         Hp += Hp.Max;
     }
     public void Pickup(Card card)
     {
         IO.pr("\nFound a card." + card);
-        IO.selh(out int index, out bool cancel, out ConsoleModifiers mod);
+        IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
         if (mod == ConsoleModifiers.Alt) card.StanceShift();
         if (cancel)
         {
@@ -55,7 +81,21 @@ public class Player : Moveable
             IO.del(2);
             return;
         }
-        Hand.SetAt(index, card);
+        Pickup(card, index);
+        IO.del(2);
+    }
+    public void Pickup(Item item)
+    {
+        ItemEntity newEntity = new(item, this);
+        IO.pr("\nFound an item." + newEntity);
+        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
+        if (cancel)
+        {
+            Pickup(Draw().Exile());
+            IO.del(2);
+            return;
+        }
+        Pickup(newEntity, index);
         IO.del(2);
     }
     public void Exile()
@@ -64,13 +104,13 @@ public class Player : Moveable
         Card card;
         do
         {
-            IO.selh(out index, out bool cancel, out ConsoleModifiers mod);
+            IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
             card = Hand[index] ?? throw new Exception();
             if (cancel) return;
         } while (card.Stance == CardStance.Star);
         IO.pr("Exiled a card.");
-        Hand.Exile(index);
-        stance = (Stance.Exile, default);
+        Hand[index] = Hand[index]?.Exile();
+        stance = new(Stance.Exile, default);
     }
     public override void Rest()
     {
@@ -80,21 +120,29 @@ public class Player : Moveable
         do
         {
             IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
-            IO.selh(out int index, out cancel, out ConsoleModifiers mod);
-            if (!cancel && mod == ConsoleModifiers.Alt) Hand.StanceShift(index);
+            IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
+            if (!cancel && mod == ConsoleModifiers.Alt) Hand[index] = Hand[index]?.StanceShift();
             IO.del();
         } while (!cancel);
     }
-    public void UseCard()
+    public override Card? SelectCard()
     {
         do
         {
-            IO.selh(out int index, out bool cancel, out ConsoleModifiers mod);
+            IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
+            if (cancel) return null;
+            return Hand[index];
+        } while (true);
+    }
+    public void UseInven()
+    {
+        do
+        {
+            IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
             if (cancel) return;
-            UseCard(index);
+            UseInven(index);
             return;
         } while (true);
-
     }
     public override void Move(int x)
     {
@@ -113,6 +161,6 @@ public class Player : Moveable
         IO.del(3);
     }
     public override string ToString() =>
-        base.ToString() + $"\nExp : {exp}";
+        base.ToString() + $"\nExp : {exp}\tTorch : {torch}";
     public override char ToChar() => PlayerChar;
 }

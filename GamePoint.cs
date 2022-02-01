@@ -1,33 +1,33 @@
 public class GamePoint
 {
+    public const int Min = 0;
     private int cur = 0;
-    private int Cur
+    public event EventHandler<PointArgs>? OnHeal;
+    public event EventHandler<PointArgs>? OnDamage;
+    public event EventHandler? OnOverflow;
+
+    public int Cur
     {
         get => cur;
-        set
+        private set
         {
             if (value >= Max)
             {
-                if (Option == GamePointOption.Reserving)
+                if (Option == GamePointOption.Stacking)
                 {
-                    cur = Max;
-                    return;
+                    cur = value - Max;
+                    OnOverflow?.Invoke(this, EventArgs.Empty);
                 }
-                cur = value - Max;
-                OnOverflow?.Invoke(this, EventArgs.Empty);
+                else cur = Max;
             }
             else if (value <= Min)
             {
                 cur = Min;
-                if (Option == GamePointOption.Stacking) return;
-                OnOverflow?.Invoke(this, EventArgs.Empty);
             }
             else cur = value;
         }
     }
     public int Max { get; set; }
-    public const int Min = 0;
-    public event EventHandler? OnOverflow;
     public readonly GamePointOption Option;
 
     public GamePoint(int max, GamePointOption option)
@@ -39,11 +39,15 @@ public class GamePoint
     public static GamePoint operator +(GamePoint x, int amount)
     {
         x.Cur += amount;
+        x.OnHeal?.Invoke(x, new PointArgs(amount));
         return x;
     }
     public static GamePoint operator -(GamePoint x, int amount)
     {
         x.Cur -= amount;
+        x.OnDamage?.Invoke(x, new PointArgs(amount));
+        if (x.Cur == Min && x.Option == GamePointOption.Reserving)
+            x.OnOverflow?.Invoke(x, EventArgs.Empty);
         return x;
     }
     public bool IsMin => Cur == Min;
@@ -51,4 +55,14 @@ public class GamePoint
     {
         return $"{Cur}/{Max}";
     }
+}
+
+public class PointArgs : EventArgs
+{
+    public PointArgs(int amount)
+    {
+        Amount = amount;
+    }
+
+    public int Amount { get; set; }
 }
