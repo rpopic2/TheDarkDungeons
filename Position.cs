@@ -11,7 +11,6 @@ public struct Position
         this.facing = facing;
     }
     public int FrontIndex => facing == Facing.Front ? x + 1 : x - 1;
-
     public int FrontMul => facing == Facing.Front ? 1 : -1;
     public int BackMul => facing == Facing.Front ? -1 : 1;
     public bool isFacingFront => facing == Facing.Front;

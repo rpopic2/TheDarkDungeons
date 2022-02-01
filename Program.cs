@@ -76,7 +76,6 @@
                 break;
         }
     }
-
     private void DefaultSwitch(ConsoleKey key)
     {
         switch (key)
