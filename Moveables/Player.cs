@@ -17,7 +17,7 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItem(new Equip(this, stat, Inventoriable.Data.data));
+        PickupItem(new Equip(this, stat, Inventoriable.Data.LunarRing));
         switch (ClassName)
         {
             case ClassName.Warrior:

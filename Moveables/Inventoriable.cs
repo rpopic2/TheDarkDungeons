@@ -42,7 +42,7 @@ public class Inventoriable : Fightable
         public static readonly ItemData Scouter = new("SCOUTR", ItemType.Skill, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
         public static readonly ItemData AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.stat.Sol += 20, f => f.stat.Sol -= 20);
         public static readonly ItemData FieryRing = new("FIRING", ItemType.Equip, f => f.stat.Sol += 3, f => f.stat.Sol -= 3);
-        public static readonly EquipData2 data = new("LUNRIN", ((s)=>s.stat.RefSol, 3));
+        public static readonly EquipData2 LunarRing = new("LUNRIN", ((s)=>s.stat.RefLun, 3));
 
         public static readonly ItemData Bag = new(" BAG  ", ItemType.Consum, f => f.Inven.Cap += 2);
         public static readonly ItemData Charge = new("CHARGE", ItemType.Skill, f =>

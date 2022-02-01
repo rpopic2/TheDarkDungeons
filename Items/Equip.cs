@@ -9,7 +9,7 @@ public record Equip : ItemEntity
         {
             for (int i = 0; i < mods.Length; i++)
             {
-                var o = mods[i].stat(owner);
+                RefInt o = mods[i].stat(owner);
                 ref int stat = ref o();
                 stat += mods[i].amount;
             }
@@ -19,7 +19,7 @@ public record Equip : ItemEntity
         {
             for (int i = 0; i < mods.Length; i++)
             {
-                var o = mods[i].stat(owner);
+                RefInt o = mods[i].stat(owner);
                 ref int stat = ref o();
                 stat -= mods[i].amount;
             }
