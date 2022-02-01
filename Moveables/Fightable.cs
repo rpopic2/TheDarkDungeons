@@ -7,7 +7,7 @@ public class Fightable : Moveable
     private int star;
     public bool IsResting => stance.stance == Stance.Rest;
     public bool IsAlive => !Hp.IsMin;
-    public Fightable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(level, sol, lun, con, name)
+    public Fightable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
         ClassName = className;
         Hand = new Inventory<Card?>(cap, "Hand");
@@ -35,7 +35,7 @@ public class Fightable : Moveable
     {
         if (Target is null) return;
         if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
-            _UseCard(card);
+        _UseCard(card);
     }
     protected void _UseCard(Card card)
     {

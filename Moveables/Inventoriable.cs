@@ -2,7 +2,7 @@ public class Inventoriable : Fightable
 {
     public Inventory<IItemEntity?> Inven { get; private set; }
 
-    public Inventoriable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(name, className, cap, maxHp, level, sol, lun, con)
+    public Inventoriable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, className, level, sol, lun, con, maxHp, cap)
     {
         Inven = new Inventory<IItemEntity?>(3, "Inventory");
     }

@@ -30,7 +30,7 @@
         Console.Clear();
         IO.pr("Your adventure begins...");
         Map.NewMap();
-        player.StartItem();
+        //player.StartItem();
         NewTurn();
     }
 

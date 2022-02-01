@@ -1,17 +1,17 @@
 public class Player : Inventoriable
 {
-    public static Player instance = new Player("Michael", ClassName.Assassin, 3, 5, 1, 2, 2, 2);
+    public static Player instance = new Player("Michael", ClassName.Assassin, 1, 2, 2, 2, 5, 3);
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
 
-    public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, cap, maxHp, lv, sol, lun, con)
+    public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, lv, sol, lun, con, maxHp, cap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
         for (int i = 0; i < cap; i++)
         {
-            Hand[Hand.Count] = Draw();
+            Hand[i] = Draw();
         }
     }
     public void StartItem()
