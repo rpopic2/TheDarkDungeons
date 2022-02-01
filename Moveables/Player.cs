@@ -17,7 +17,8 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItem(new Equip(this, stat, (stat.RefSol, 3)));
+        EquipData data = new("LUNRIN", (stat.RefLun, 3));
+        PickupItem(new Equip(stat, data));
         switch (ClassName)
         {
             case ClassName.Warrior:
@@ -83,7 +84,7 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItem(ItemData item) => PickupItem(new ItemEntity(item, this, stat));
+    public void PickupItem(ItemData item) => PickupItem(new ItemEntity(item, stat));
     public void PickupItem(IItemEntity item)
     {
         IO.pr("\nFound an item." + item.abv);

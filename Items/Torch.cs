@@ -3,7 +3,7 @@ public record Torch : ItemEntity
     public static readonly ItemData data = new("TORCH", ItemType.Consum, null);
     public readonly Action<object?, EventArgs> onTurnEnd;
 
-    public Torch(Inventoriable owner, Stat ownerStat) : base(data, owner, ownerStat)
+    public Torch(Inventoriable owner, Stat ownerStat) : base(data, ownerStat)
     {
         onUse = (f) =>
         {

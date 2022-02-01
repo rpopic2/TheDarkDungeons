@@ -1,16 +1,20 @@
 public record ItemEntity : IItemEntity
 {
-    public ItemEntity(ItemData data, Inventoriable owner, Stat ownerStat)
+    public ItemEntity(ItemData data, Stat ownerStat)
     {
         this.abv = data.abv;
         this.itemType = data.itemType;
         this.onUse = data.onUse;
         this.onExile = data.onExile;
-        this.owner = owner;
-        this.ownerStat = ownerStat;
+        this.stat = ownerStat;
     }
-    public Inventoriable owner { get; init; }
-    public Stat ownerStat { get; init; }
+    public ItemEntity(string abv, ItemType itemType, Stat ownerStat)
+    {
+        this.abv = abv;
+        this.itemType = itemType;
+        this.stat = ownerStat;
+    }
+    public Stat stat { get; init; }
     public int stack { get; set; } = 1;
     public string abv { get; init; }
     public ItemType itemType { get; init; }
