@@ -30,16 +30,7 @@ public class Map
 
     public void Spawn()
     {
-        MonsterData data = default;
-        switch (rnd.Next(2))
-        {
-            case 0:
-                data = MonsterDb.bat;
-                break;
-            case 1:
-                data = MonsterDb.lunatic;
-                break;
-        }
+        MonsterData data = MonsterDb.Get[rnd.Next(MonsterDb.Count)];
         List<int> fullMap = GetSpawnableIndices();
         int index = rnd.Next(0, fullMap.Count);
         int newPos = fullMap[index];

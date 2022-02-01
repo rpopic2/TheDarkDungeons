@@ -30,6 +30,7 @@ public readonly record struct Mul
 public static class MonsterDb
 {
     public static List<MonsterData> data = new();
+    public static int Count => data.Count;
     private static int lv => Map.level;
     private static int t => Program.turn;
     private const int n = 1;
@@ -43,6 +44,4 @@ public static class MonsterDb
     public static MonsterData bat = new(0, "Bat", 'b', 'd', ClassName.Assassin, batMul, Monster.batBehav, batDropList);
     private static StatMul lunaticMul = new(new(2, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.03f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));
     public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, batDropList);
-
-
 }
