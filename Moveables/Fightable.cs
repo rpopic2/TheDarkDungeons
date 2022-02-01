@@ -88,7 +88,6 @@ public class Fightable : Moveable
         }
         Hp -= damage;
         if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
-        //else if (IsAlive) IO.pr($"{Name} takes {damage} damage. {Hp}", true);
     }
     private void TryUseStar()
     {
@@ -112,7 +111,6 @@ public class Fightable : Moveable
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
         IO.pr($"{Name} died.", false, true);
-        Map.Current.UpdateMoveable(this);
         Map.Current.UpdateMoveable(this);
     }
     protected void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
