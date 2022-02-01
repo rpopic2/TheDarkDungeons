@@ -1,17 +1,16 @@
-public readonly record struct EquipData(string abv, params (Equip.RefInt del, int amount)[] mods);
-
 public record Equip : ItemEntity
 {
     public delegate ref int RefInt();
-    private (RefInt del, int amount)[] mods;
-    public Equip(Stat ownerStat, EquipData data) : base(data.abv, ItemType.Equip, ownerStat)
+    private (Func<Inventoriable, Equip.RefInt> stat, int amount)[] mods;
+    public Equip(Inventoriable owner, Stat ownerStat, EquipData2 data) : base(data.abv, ItemType.Equip, ownerStat)
     {
         this.mods = data.mods;
         onUse = (f) =>
         {
             for (int i = 0; i < mods.Length; i++)
             {
-                ref int stat = ref mods[i].del();
+                var o = mods[i].stat(owner);
+                ref int stat = ref o();
                 stat += mods[i].amount;
             }
 
@@ -20,7 +19,8 @@ public record Equip : ItemEntity
         {
             for (int i = 0; i < mods.Length; i++)
             {
-                ref int stat = ref mods[i].del();
+                var o = mods[i].stat(owner);
+                ref int stat = ref o();
                 stat -= mods[i].amount;
             }
         };

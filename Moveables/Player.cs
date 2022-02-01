@@ -17,8 +17,7 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        EquipData data = new("LUNRIN", (stat.RefLun, 3));
-        PickupItem(new Equip(stat, data));
+        PickupItem(new Equip(this, stat, Inventoriable.Data.data));
         switch (ClassName)
         {
             case ClassName.Warrior:
