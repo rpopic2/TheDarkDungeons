@@ -1,1 +1,1 @@
-player.usecard Card? to just Card
+different mobs

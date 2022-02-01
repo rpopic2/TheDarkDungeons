@@ -11,7 +11,7 @@ public class Map
     public ref readonly Moveable?[] Moveables
     => ref moveables;
     private char[] rendered;
-    private char[] empty;
+    private readonly char[] empty;
     public readonly int length;
     public Monster monster { get; private set; } = default!;
     public Map(int length)
