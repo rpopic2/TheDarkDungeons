@@ -24,16 +24,16 @@ public class Inventoriable : Fightable
         if (Inven[index] is IItemEntity oldEntity)
         {
             if (oldEntity.itemType == ItemType.Consum && oldEntity.abv == item.abv) oldEntity.stack++;
-            else if (oldEntity.itemType == ItemType.Equip)
+            else if (oldEntity is Equip equip)
             {
-                oldEntity.onExile?.Invoke(this);
+                equip.onUse.Invoke(false);
                 Inven[index] = null;
             }
         }
         if (Inven[index] is null)
         {
             Inven[index] = item;
-            if (item is Equip) item.onUse?.Invoke(this);
+            if (item is Equip equip) equip.onUse.Invoke(true);
         }
     }
     public static class Data
