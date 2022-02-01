@@ -34,11 +34,6 @@ public class Monster : Fightable
         if (DropOutOf(12)) player.PickupItem(Inventoriable.SkillDb.Berserk);
         if (DropOutOf(20)) player.PickupItem(Inventoriable.SkillDb.Backstep);
     }
-    private bool DropOutOf(int outof)
-    {
-        int drop = rnd.Next(0, outof);
-        return drop == 0;
-    }
     public void DoTurn()
     {
         if (!IsAlive) return;
@@ -61,6 +56,7 @@ public class Monster : Fightable
         base.Rest();
         PickupCard(Draw(), Hand.Count);
     }
+    private bool DropOutOf(int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Front ? 'b' : 'd';
 }
 

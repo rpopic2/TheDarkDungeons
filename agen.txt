@@ -1,3 +1,4 @@
-different mobs
+spawning different mobs
 monster.cs at bottom -> unness?
 map spawning system needs to be corrected.
+rules needs to be fixed.(multiplier system)

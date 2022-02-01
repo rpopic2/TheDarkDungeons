@@ -1,4 +1,8 @@
-public readonly record struct EquipData(string abv, params (Func<Stat, Equip.RefInt> refGetter, int amount)[] mods);
+public readonly record struct EquipData(string abv, params (Func<Stat, Equip.RefInt> refGetter, int amount)[] mods) : IItemData
+{
+    public ItemType itemType { get; init; } = ItemType.Equip;
+    public Func<Inventoriable, bool>? onUse { get; init; } = null;
+}
 
 public static class EquipDb
 {
