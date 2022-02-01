@@ -5,7 +5,6 @@ public class Inventoriable : Fightable
     public Inventoriable(string name, ClassName className, int cap, int maxHp, int level, int sol, int lun, int con) : base(name, className, cap, maxHp, level, sol, lun, con)
     {
         Inven = new Inventory<ItemEntity?>(3, "Inventory");
-
     }
 
     public void UseInven(int index)
@@ -44,23 +43,23 @@ public class Inventoriable : Fightable
         {
             Player player = (Player)f;
             player.torch = 20;
-            Action<object?, EventArgs> act = (object? sender, EventArgs e) =>
+            Program.OnTurnEnd -= torchHandler;
+            Program.OnTurnEnd += torchHandler;
+        });
+        public static Action<object?, EventArgs> torchAct = (object? sender, EventArgs e) =>
             {
+                Player player = Player.instance;
                 if (player.torch > 0)
                 {
                     player.sight = 3;
                     player.torch--;
                     if (player.torch <= 0)
                     {
-                        throw new NotImplementedException();
-                        //player.Inven.Delete(Fightable.ItemData.Torch);
-                        //player.sight = 1;
+                        player.sight = 1;
                     }
                 }
             };
-            Program.OnTurnEnd += new EventHandler(act);
-
-        });
+        public static EventHandler torchHandler = new EventHandler(torchAct);
         public static readonly Item Scouter = new("SCOUTR", ItemType.Skill, f => IO.pr(f.Target?.ToString() ?? "No Target to scout."));
         public static readonly Item AmuletOfLa = new("AMULLA", ItemType.Equip, f => f.Sol += 20, f => f.Sol -= 20);
         public static readonly Item FieryRing = new("FIRING", ItemType.Equip, f => f.Sol += 3, f => f.Sol -= 3);
