@@ -125,16 +125,18 @@ public class Fightable : Moveable
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {Sol}\tLun : {Lun}\tCon : {Con}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {stat.Sol}\tLun : {stat.Lun}\tCon : {stat.Con}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();
         else return MapSymb.Empty;
     }
-
     public void UpdateTarget()
     {
         Map.Current.Moveables.TryGet(Pos.FrontIndex, out Moveable? mov);
         Target = mov;
     }
+
+    public static bool IsFirst(Fightable p1, Fightable p2)
+    => p1.stat.Lun >= p2.stat.Lun;
 }

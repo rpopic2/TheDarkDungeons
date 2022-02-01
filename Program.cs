@@ -103,7 +103,7 @@
     {
         Monster monster = Map.Current.monster;
         monster.DoTurn();
-        bool playerFirst = player.Lun >= monster?.Lun;
+        bool playerFirst = Fightable.IsFirst(player, monster);
         Fightable? p1 = playerFirst ? player : monster;
         Fightable? p2 = playerFirst ? monster : player;
 

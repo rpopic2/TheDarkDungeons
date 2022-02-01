@@ -24,17 +24,17 @@ public class Player : Inventoriable
             case ClassName.Warrior:
                 PickupItem(Inventoriable.Data.Charge);
                 PickupItem(Inventoriable.Data.Berserk);
-                Sol += 2;
+                stat.Sol += 2;
                 break;
             case ClassName.Assassin:
                 PickupItem(Inventoriable.Data.ShadowAttack);
                 PickupItem(Inventoriable.Data.Backstep);
-                Lun += 2;
+                stat.Lun += 2;
                 break;
             case ClassName.Mage:
                 PickupItem(Torch.data);
                 PickupItem(Torch.data);
-                Con += 2;
+                stat.Con += 2;
                 break;
         }
     }
@@ -54,13 +54,13 @@ public class Player : Inventoriable
         switch (index)
         {
             case 0:
-                Sol += 2;
+                stat.Sol += 2;
                 break;
             case 1:
-                Lun += 2;
+                stat.Lun += 2;
                 break;
             case 2:
-                Con += 2;
+                stat.Con += 2;
                 break;
         }
         Hand.Cap = Rules.capBasic + Level.FloorMult(Rules.capByLevel);
