@@ -19,7 +19,7 @@ public class Inventoriable : Fightable
             if (item.stack <= 0) Inven.Delete(index);
         }
     }
-    protected virtual void PickupItem(IItemEntity item, int index)
+    protected void PickupItem(IItemEntity item, int index)
     {
         if (Inven[index] is IItemEntity oldEntity)
         {
@@ -33,7 +33,7 @@ public class Inventoriable : Fightable
         if (Inven[index] is null)
         {
             Inven[index] = item;
-            if (item.itemType == ItemType.Equip) item.onUse?.Invoke(this);
+            if (item is Equip) item.onUse?.Invoke(this);
         }
     }
     public static class Data
