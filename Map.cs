@@ -49,7 +49,7 @@ public class Map
         List<int> fullMap = new List<int>(length);
         for (int i = 0; i < length; i++)
         {
-            fullMap.Add(i);
+            if(moveables[i] is null) fullMap.Add(i);
         }
         int playerX = player.Pos.x;
         fullMap.Remove(0);
