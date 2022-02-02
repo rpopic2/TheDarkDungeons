@@ -1,15 +1,15 @@
 public class Inventoriable : Fightable
 {
-    public Inventory<IItemEntity?> Inven { get; private set; }
+    public Inventory<IItem?> Inven { get; private set; }
 
     public Inventoriable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, className, level, sol, lun, con, maxHp, cap)
     {
-        Inven = new Inventory<IItemEntity?>(3, "Inventory");
+        Inven = new Inventory<IItem?>(3, "Inventory");
     }
 
     public void UseInven(int index)
     {
-        if (!(Inven[index] is IItemEntity item)) return;
+        if (!(Inven[index] is IItem item)) return;
         if (!(item.onUse is Func<Inventoriable, bool> onUse)) return;
         bool success = onUse(this);
         if (!success) return;
@@ -20,9 +20,9 @@ public class Inventoriable : Fightable
             if (item.stack <= 0) Inven.Delete(index);
         }
     }
-    protected void _PickupItem(IItemEntity item, int index)
+    protected void PickupItem(IItem item, int index)
     {
-        if (Inven[index] is IItemEntity oldEntity)
+        if (Inven[index] is IItem oldEntity)
         {
             if (oldEntity is not Equip oldEquip)
             {

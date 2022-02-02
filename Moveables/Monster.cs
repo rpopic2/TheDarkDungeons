@@ -22,7 +22,7 @@ public class Monster : Fightable
         player.PickupCard(Draw());
         foreach (var item in dropList.list)
         {
-            if (DropOutOf(item.outof)) player.PickupItem(item.data);
+            if (DropOutOf(item.outof)) player.PickupItemData(item.data);
         }
     }
     public void DoTurn()

@@ -21,18 +21,18 @@ public class Player : Inventoriable
         switch (ClassName)
         {
             case ClassName.Warrior:
-                PickupItem(Inventoriable.SkillDb.Charge);
-                PickupItem(Inventoriable.SkillDb.Berserk);
+                PickupItemData(Inventoriable.SkillDb.Charge);
+                PickupItemData(Inventoriable.SkillDb.Berserk);
                 stat.sol += 2;
                 break;
             case ClassName.Assassin:
-                PickupItem(Inventoriable.SkillDb.ShadowAttack);
-                PickupItem(Inventoriable.SkillDb.Backstep);
+                PickupItemData(Inventoriable.SkillDb.ShadowAttack);
+                PickupItemData(Inventoriable.SkillDb.Backstep);
                 stat.lun += 2;
                 break;
             case ClassName.Mage:
-                PickupItem(Torch.torch);
-                PickupItem(Torch.torch);
+                PickupItemData(Torch.torch);
+                PickupItemData(Torch.torch);
                 stat.con += 2;
                 break;
         }
@@ -83,18 +83,16 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItem(IItemData data)
+    public void PickupItemData(IItemData data)
     {
-        if (data is ItemData item) PickupItem(item);
-        else if (data is EquipData equip) PickupItem(equip);
+        if (data is ItemData item)
+        {
+            if (item == Torch.torch) PickupItem(new Torch(this, stat));
+            else PickupItem(new Item(item, stat));
+        }
+        else if (data is EquipData equip) PickupItem(new Equip(this, stat, equip));
     }
-    public void PickupItem(ItemData data)
-    {
-        if(data == Torch.torch) PickupItem(new Torch(this, stat));
-        PickupItem(new Item(data, stat));
-    }
-    public void PickupItem(EquipData data) => PickupItem(new Equip(this, stat, data));
-    public void PickupItem(IItemEntity item)
+    private void PickupItem(IItem item)
     {
         IO.pr("\nFound an item." + item.abv);
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
@@ -104,7 +102,7 @@ public class Player : Inventoriable
             IO.del(2);
             return;
         }
-        _PickupItem(item, index);
+        PickupItem(item, index);
         IO.del(2);
     }
     public void Exile()

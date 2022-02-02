@@ -6,7 +6,8 @@ public interface IItemData
 
     string ToString();
 }
-public interface IItemEntity : IItemData
+public interface IItem : IItemData
 {
     int stack { get; set; }
+    //IItem Instantiate();
 }

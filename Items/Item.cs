@@ -1,4 +1,4 @@
-public record Item : IItemEntity
+public record Item : IItem
 {
     public const string Empty = "{EMPTY}";
     public Item(ItemData data, Stat ownerStat)
