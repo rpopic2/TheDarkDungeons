@@ -84,16 +84,7 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItemData(IItemData data)
-    {
-        // if (data is ItemData item)
-        // {
-        //     if (item == Torch.torch) PickupItem(new Torch(this, stat));
-        //     else PickupItem(new Item(item, stat));
-        // }
-        // else if (data is EquipData equip) PickupItem(new Equip(this, stat, equip));
-        PickupItem(data.Instantiate(this, stat));
-    }
+    public void PickupItemData(IItemData data) => PickupItem(data.Instantiate(this, stat));
     private void PickupItem(IItem item)
     {
         IO.pr("\nFound an item." + item.abv);
