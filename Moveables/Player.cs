@@ -31,8 +31,8 @@ public class Player : Inventoriable
                 stat.lun += 2;
                 break;
             case ClassName.Mage:
-                PickupItemData(Torch.torch);
-                PickupItemData(Torch.torch);
+                PickupItemData(TorchData.data);
+                PickupItemData(TorchData.data);
                 stat.con += 2;
                 break;
         }
@@ -85,12 +85,13 @@ public class Player : Inventoriable
     }
     public void PickupItemData(IItemData data)
     {
-        if (data is ItemData item)
-        {
-            if (item == Torch.torch) PickupItem(new Torch(this, stat));
-            else PickupItem(new Item(item, stat));
-        }
-        else if (data is EquipData equip) PickupItem(new Equip(this, stat, equip));
+        // if (data is ItemData item)
+        // {
+        //     if (item == Torch.torch) PickupItem(new Torch(this, stat));
+        //     else PickupItem(new Item(item, stat));
+        // }
+        // else if (data is EquipData equip) PickupItem(new Equip(this, stat, equip));
+        PickupItem(data.Instantiate(this, stat));
     }
     private void PickupItem(IItem item)
     {

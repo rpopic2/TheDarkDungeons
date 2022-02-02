@@ -2,6 +2,11 @@ public readonly record struct EquipData(string abv, params (Func<Stat, Equip.Ref
 {
     public ItemType itemType { get; init; } = ItemType.Equip;
     public Func<Inventoriable, bool>? onUse { get; init; } = null;
+
+    public IItem Instantiate(Inventoriable owner, Stat ownerStat)
+    {
+        return new Equip(owner, ownerStat, this);
+    }
 }
 
 public static class EquipDb

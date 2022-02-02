@@ -37,7 +37,7 @@ public static class MonsterDb
     private static DropList batDropList = new(
         (Inventoriable.ConsumeDb.HpPot, 10),
             (Inventoriable.ConsumeDb.Bag, 11),
-            (Torch.torch, 5),
+            (TorchData.data, 5),
             (EquipDb.FieryRing, 15),
             (EquipDb.LunarRing, 15));
     private static StatMul batMul = new(new(1, 0.6f, lv), new(3, n, n), new(2, n, n), new(2, 0.03f, lv), new(1, 0.16f, lv), new(3, 0.3f, lv));
