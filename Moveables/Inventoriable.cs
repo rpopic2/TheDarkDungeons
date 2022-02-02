@@ -12,8 +12,11 @@ public class Inventoriable : Fightable
         if (!(Inven[index] is IItem item)) return;
         if (!(item.onUse is Func<Inventoriable, bool> onUse)) return;
         bool success = onUse(this);
-        if (!success) return;
-        stance = new(Stance.Item, default);
+        if (!success)
+        {
+            stance = new(default, default);
+            return;
+        }
         if (item.itemType == ItemType.Consum)
         {
             item.stack--;

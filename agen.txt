@@ -1,3 +1,4 @@
+skill cannot use
 map getspawnablindices -> moveables확인해서 있는곳은 제외하기
 stacking skill
 multiple monster on map
