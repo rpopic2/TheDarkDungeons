@@ -2,7 +2,7 @@ public readonly record struct MonsterData(string name, char fowardChar, char bac
 {
     public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, behaviour, dropList)
     {
-        MonsterDb.data[i] = this;
+        MonsterDb.data.Add(this);
     }
 }
 public readonly record struct StatMul(Mul sol, Mul lun, Mul con, Mul hp, Mul cap, Mul killExp);

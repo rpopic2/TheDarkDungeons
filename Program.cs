@@ -112,13 +112,13 @@
         }
         OnTurnEnd?.Invoke(this, EventArgs.Empty);
         if (IO.printCount == 3) IO.del(2);
+        if (turn % 5 == 0) Map.Current.Spawn();
 
         NewTurn();
     }
     public void NewTurn()
     {
         IO.printCount = 0;
-        if (turn % 5 == 0) Map.Current.Spawn();
         turn++;
         IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }

@@ -30,7 +30,12 @@ public class Map
 
     public void Spawn()
     {
-        MonsterData data = MonsterDb.Get[rnd.Next(MonsterDb.Count)];
+        int difficulty = (int)MathF.Floor(level / 2) + 1;
+        int max = Math.Min(difficulty, MonsterDb.Count);
+        int min = monster is null ? difficulty - 2 : 0;
+        min = Math.Max(min, 0);
+        int randomInt = rnd.Next(min, max);
+        MonsterData data = MonsterDb.data[randomInt];
         List<int> fullMap = GetSpawnableIndices();
         int index = rnd.Next(0, fullMap.Count);
         int newPos = fullMap[index];
