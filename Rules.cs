@@ -1,8 +1,6 @@
 public static class Rules
 {
     public const string version = "0.3";
-    public static readonly bool MapDebug = false;
-    public static readonly bool SkipIntro = false;
     public const float vulMulp = 1.3f;
     //map
     public const int MapLengthMin = 5;
