@@ -5,10 +5,7 @@ public readonly record struct TorchData : IItemData
     public ItemType itemType { get; init; } = ItemType.Consum;
     public Func<Inventoriable, bool>? onUse { get; init; }
 
-    public IItem Instantiate(Inventoriable owner, Stat ownerStat)
-    {
-        return new Torch(owner, ownerStat);
-    }
+    public IItem Instantiate(Inventoriable owner, Stat ownerStat) => new Torch(owner, ownerStat);
 }
 
 public record Torch : Item
@@ -40,8 +37,4 @@ public record Torch : Item
         };
     }
     public override string ToString() => base.ToString();
-    public static new IItem Instantiate(Inventoriable owner, Stat ownerStat, IItemData data)
-    {
-        return new Torch(owner, ownerStat);
-    }
 }

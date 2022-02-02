@@ -18,8 +18,5 @@ public record Equip : Item
         };
     }
     public override string ToString() => base.ToString();
-    public static new IItem Instantiate(Inventoriable owner, Stat ownerStat, IItemData data)
-    {
-        return new Equip(owner, ownerStat, (EquipData)data);
-    }
+    public static new IItem Instantiate(Inventoriable owner, Stat ownerStat, IItemData data) => new Equip(owner, ownerStat, (EquipData)data);
 }
