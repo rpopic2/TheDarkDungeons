@@ -26,7 +26,7 @@
         instance = this;
         Console.Clear();
         IO.pr("The Dark Dungeon " + Rules.version);
-        if (!Rules.SkipIntro) Intro();
+        Intro();
         Console.Clear();
         IO.pr("Your adventure begins...");
         Map.NewMap();
@@ -44,7 +44,7 @@
         IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
-        Player.instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
+        Player._instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
     }
     //-------------------------
     private void MainLoop()
@@ -103,9 +103,9 @@
         if (Map.Current.monster is Monster monster)
         {
             monster.DoTurn();
-            bool playerFirst = Fightable.IsFirst(player, monster);
-            Fightable? p1 = playerFirst ? player : monster;
-            Fightable? p2 = playerFirst ? monster : player;
+            //bool playerFirst = Fightable.IsFirst(player, monster);
+            Fightable? p1 = player;
+            Fightable? p2 = monster;
 
             p1?.TryAttack();
             p2?.TryAttack();

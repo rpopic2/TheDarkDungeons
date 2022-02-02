@@ -1,6 +1,7 @@
 public class Player : Inventoriable
 {
-    public static Player instance = new Player("Michael", ClassName.Assassin, 1, 2, 2, 2, 5, 3);
+    public static Player? _instance;
+    public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
     public int torch = 0;
     public int sight = 1;

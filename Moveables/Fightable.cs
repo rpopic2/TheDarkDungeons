@@ -57,7 +57,7 @@ public class Fightable : Moveable
     }
     public void TryAttack()
     {
-        if (!IsAlive || !(Target is Fightable fight)) return;
+        if (!(Target is Fightable fight)) return;
         if (stance.stance == Stance.Attack)
         {
             string tempString = $"{Name} attacks with {stance.amount} damage.";

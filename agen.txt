@@ -1,4 +1,3 @@
-map getspawnablindices -> moveables확인해서 있는곳은 제외하기
-stacking skill
+del fight priority?
 multiple monster on map
-
+stacking skill
