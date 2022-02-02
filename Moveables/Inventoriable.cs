@@ -20,7 +20,7 @@ public class Inventoriable : Fightable
             if (item.stack <= 0) Inven.Delete(index);
         }
     }
-    protected void PickupItem(IItemEntity item, int index)
+    protected void _PickupItem(IItemEntity item, int index)
     {
         if (Inven[index] is IItemEntity oldEntity)
         {

@@ -85,10 +85,14 @@ public class Player : Inventoriable
     }
     public void PickupItem(IItemData data)
     {
-        if(data is ItemData item) PickupItem(item);
-        else if(data is EquipData equip) PickupItem(equip);
+        if (data is ItemData item) PickupItem(item);
+        else if (data is EquipData equip) PickupItem(equip);
     }
-    public void PickupItem(ItemData data) => PickupItem(new Item(data, stat));
+    public void PickupItem(ItemData data)
+    {
+        if(data == Torch.torch) PickupItem(new Torch(this, stat));
+        PickupItem(new Item(data, stat));
+    }
     public void PickupItem(EquipData data) => PickupItem(new Equip(this, stat, data));
     public void PickupItem(IItemEntity item)
     {
@@ -100,7 +104,7 @@ public class Player : Inventoriable
             IO.del(2);
             return;
         }
-        PickupItem(item, index);
+        _PickupItem(item, index);
         IO.del(2);
     }
     public void Exile()
