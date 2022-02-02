@@ -1,5 +1,6 @@
+too much static would make app slower?->load and unload?
+rest to consume 2 or more turns
 monster ads
-monster can stay still
 npcs
 traps
 tresures
