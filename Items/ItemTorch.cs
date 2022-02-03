@@ -30,7 +30,8 @@ public record Torch : Item
         onUse = (f) =>
         {
             Player player = (Player)owner;
-            player.torch = 20;
+            player.torch = 21;
+            onTurnEnd.Invoke(null, EventArgs.Empty);
             Program.OnTurnEnd -= torchHandler;
             Program.OnTurnEnd += torchHandler;
             return true;
