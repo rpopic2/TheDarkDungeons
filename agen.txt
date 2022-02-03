@@ -1,2 +1,3 @@
 stacking skill
 monster ads
+use on pickup option?

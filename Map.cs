@@ -13,6 +13,7 @@ public class Map
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
+    private readonly bool debug;
     private bool monsterSpawned = false;
     public Map(int length)
     {
@@ -34,7 +35,7 @@ public class Map
         if (fullMap.Count <= 0) return;
         int difficulty = (int)MathF.Floor(level / 2) + 1;
         int max = Math.Min(difficulty, MonsterDb.Count);
-        int min = monsterSpawned ? 0 : difficulty - 2;
+        int min = monsterSpawned ? 0 : Math.Min(0, max - 2);
         min = Math.Max(min, 0);
         int randomInt = rnd.Next(min, max);
         MonsterData data = MonsterDb.data[randomInt];
@@ -77,9 +78,17 @@ public class Map
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
         RenderVisible(Moveables);
+        if(debug) RenderAllMobs();
         rendered[player.Pos.x] = MapSymb.player;
     }
-    public void RenderVisible<T>(T[] target)
+    private void RenderAllMobs()
+    {
+        for (int i = 0; i < length; i++)
+        {
+            if (moveables[i] is Monster m) rendered[i] = m.ToChar();
+        }
+    }
+    private void RenderVisible<T>(T[] target)
     {
         int sight = player.sight;
         int front = player.Pos.FrontIndex;
