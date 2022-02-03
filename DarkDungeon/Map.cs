@@ -13,7 +13,7 @@ public class Map
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
-    private const bool debug = true;
+    private const bool debug = false;
     private bool monsterSpawned = false;
     public Map(int length)
     {

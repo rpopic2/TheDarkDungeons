@@ -1,2 +1,3 @@
-monster ads
+monster ads->attack back when get attacked
 monsters should not fight by themselves
+item komakai info
