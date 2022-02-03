@@ -38,7 +38,7 @@ public class Inventoriable : Fightable
             }
             else if (oldEntity is Equip oldEquip) oldEquip.onUse.Invoke(false);
         }
-        if (item.itemType == ItemType.Skill) item.stack = 2;
+        if (item.itemType == ItemType.Skill) item.stack = Player.skillMax;
         Inven[index] = item;
         if (item is Equip equip) equip.onUse.Invoke(true);
     }

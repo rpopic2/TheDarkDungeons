@@ -3,6 +3,7 @@ public class Inventory<T>
     private T?[] content;
     private int cap;
     public readonly string name;
+    public ref readonly T?[] Content => ref content;
 
     public Inventory(int cap, string name)
     {

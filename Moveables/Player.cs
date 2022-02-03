@@ -2,6 +2,7 @@ using System.Diagnostics;
 
 public class Player : Inventoriable
 {
+    public const int skillMax = 2;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
@@ -124,6 +125,11 @@ public class Player : Inventoriable
             if (!cancel && mod == ConsoleModifiers.Alt) Hand[index] = Hand[index]?.StanceShift();
             IO.del();
         } while (!cancel);
+        var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
+        foreach (var item in skills)
+        {
+            item.stack = skillMax;
+        }
     }
     public override Card? SelectCard()
     {
