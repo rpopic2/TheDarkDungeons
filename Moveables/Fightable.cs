@@ -15,7 +15,6 @@ public class Fightable : Moveable
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
-        Program.OnTurnEnd += new EventHandler(OnTurnEnd);
     }
     public virtual Card? SelectCard() => Hand.GetFirst();
     public virtual void PickupCard(Card card, int index)
@@ -102,8 +101,11 @@ public class Fightable : Moveable
             IO.pr($"{Name} is resting a turn.");
         stance = new(Stance.Rest, default);
     }
-
-    public virtual void OnTurnEnd(object? sender, EventArgs e)
+    public virtual void OnBeforeTurnEnd()
+    {
+        TryAttack();
+    }
+    public void OnTurnEnd()
     {
         UpdateTarget();
         stance = new(default, default);
@@ -124,7 +126,7 @@ public class Fightable : Moveable
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();
-        else return MapSymb.Empty;
+        else return 'x';
     }
     public void UpdateTarget()
     {

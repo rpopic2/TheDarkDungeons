@@ -1,5 +1,6 @@
 public class Monster : Fightable
 {
+    public static WeakReference? reference;
     private int killExp;
     private static Player player { get => Player.instance; }
     private DropList dropList;
@@ -7,6 +8,7 @@ public class Monster : Fightable
     private Action<Monster> behaviour;
     public Monster(MonsterData data, Position spawnPoint) : base(data.name, data.className, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap)
     {
+        if(reference is null) reference = new(this);
         dropList = data.dropList;
         killExp = data.stat.killExp;
         fowardChar = data.fowardChar;

@@ -2,7 +2,7 @@ public static class IO
 {
     private const char CANCELKEY = 'q';
     private const string Emphasis = "=> ";
-    private const string delString = "                                                                 ";
+    private const string delString = "                                                                                       ";
     private static Player player {get => Player.instance;}
     public static int printCount;
 

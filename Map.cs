@@ -13,7 +13,8 @@ public class Map
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
-    public Monster? monster { get; private set; }
+    private bool monsterSpawned = false;
+    public List<Monster> monsters = new();
     public Map(int length)
     {
         Current = this;
@@ -30,26 +31,28 @@ public class Map
 
     public void Spawn()
     {
+        List<int> fullMap = GetSpawnableIndices();
+        if (fullMap.Count <= 0) return;
         int difficulty = (int)MathF.Floor(level / 2) + 1;
         int max = Math.Min(difficulty, MonsterDb.Count);
-        int min = monster is null ? difficulty - 2 : 0;
+        int min = monsterSpawned ? 0 : difficulty - 2;
         min = Math.Max(min, 0);
         int randomInt = rnd.Next(min, max);
         MonsterData data = MonsterDb.data[randomInt];
-        List<int> fullMap = GetSpawnableIndices();
         int index = rnd.Next(0, fullMap.Count);
         int newPos = fullMap[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
-
-        monster = new(data, spawnPoint);
+        Monster monster = new(data, spawnPoint);
         UpdateMoveable(monster);
+        monsters.Add(monster);
+        monsterSpawned = true;
     }
     private List<int> GetSpawnableIndices()
     {
         List<int> fullMap = new List<int>(length);
         for (int i = 0; i < length; i++)
         {
-            if(moveables[i] is null) fullMap.Add(i);
+            if (moveables[i] is null) fullMap.Add(i);
         }
         int playerX = player.Pos.x;
         fullMap.Remove(0);
@@ -117,7 +120,6 @@ public class Map
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
         Current = new Map(rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth));
         Player.instance.UpdateTarget();
-        Current.monster?.UpdateTarget();
     }
 
     private static char[] NewEmptyArray(int length, char fill)

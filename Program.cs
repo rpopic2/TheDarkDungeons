@@ -47,6 +47,33 @@
         Player._instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
     }
     //-------------------------
+    public void ElaspeTurn()
+    {
+        Array.ForEach(Map.Current.Moveables, m =>
+        {
+            if (m is Monster mon) mon.DoTurn();
+        });
+        Array.ForEach(Map.Current.Moveables, m =>
+        {
+            if (m is Fightable f) f.OnBeforeTurnEnd();
+        });
+        Array.ForEach(Map.Current.Moveables, m =>
+        {
+            if (m is Fightable f) f.OnTurnEnd();
+        });
+
+        OnTurnEnd?.Invoke(this, EventArgs.Empty);
+        if (IO.printCount == 3) IO.del(2);
+        if (turn % 5 == 0) Map.Current.Spawn();
+
+        NewTurn();
+    }
+    public void NewTurn()
+    {
+        IO.printCount = 0;
+        turn++;
+        IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
+    }
     private void MainLoop()
     {
         ConsoleKeyInfo info = IO.rk(Map.Current);
@@ -97,29 +124,5 @@
                 player.Exile();
                 break;
         }
-    }
-    public void ElaspeTurn()
-    {
-        if (Map.Current.monster is Monster monster)
-        {
-            monster.DoTurn();
-            //bool playerFirst = Fightable.IsFirst(player, monster);
-            Fightable? p1 = player;
-            Fightable? p2 = monster;
-
-            p1?.TryAttack();
-            p2?.TryAttack();
-        }
-        OnTurnEnd?.Invoke(this, EventArgs.Empty);
-        if (IO.printCount == 3) IO.del(2);
-        if (turn % 5 == 0) Map.Current.Spawn();
-
-        NewTurn();
-    }
-    public void NewTurn()
-    {
-        IO.printCount = 0;
-        turn++;
-        IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
     }
 }

@@ -1,3 +1,5 @@
-del fight priority?
 multiple monster on map
+del fight priority?
 stacking skill
+moveables 겹치지 않게
+torch does not insta on

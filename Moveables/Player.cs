@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 public class Player : Inventoriable
 {
     public static Player? _instance;
@@ -161,6 +163,6 @@ public class Player : Inventoriable
         IO.rk();
         IO.del(3);
     }
-    public override string ToString() => base.ToString() + $"\nExp : {exp}\tTorch : {torch}";
+    public override string ToString() => base.ToString() + $"\nExp : {exp}\tTorch : {torch}\tMem : {Process.GetCurrentProcess().PrivateMemorySize64}";
     public override char ToChar() => MapSymb.player;
 }
