@@ -64,6 +64,7 @@ public class Inventoriable : Fightable
             if (card is not Card card2) return false;
             f.Move(1);
             f.Move(1);
+            f.UpdateTarget();
             f.UseCard(card2);
             return true;
         });

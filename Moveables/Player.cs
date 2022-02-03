@@ -19,9 +19,6 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItem(new Torch(this, stat));
-        PickupItem(new Torch(this, stat));
-        PickupItem(EquipDb.FieryRing.Instantiate(this, stat));
         switch (ClassName)
         {
             case ClassName.Warrior:
