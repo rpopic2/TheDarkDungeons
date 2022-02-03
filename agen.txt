@@ -2,3 +2,4 @@ skill restore and consume
 stacking skill
 monster ads
 use on pickup option?
+monsters should not fight by themselves?
