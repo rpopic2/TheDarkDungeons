@@ -97,8 +97,7 @@ public class Fightable : Moveable
     }
     public virtual void Rest()
     {
-        if (this is Player)
-            IO.pr($"{Name} is resting a turn.");
+        IO.pr($"{Name} is resting a turn.");
         stance = new(Stance.Rest, default);
     }
     public virtual void OnBeforeTurnEnd()

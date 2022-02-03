@@ -11,23 +11,24 @@ public class Inventoriable : Fightable
     {
         if (!(Inven[index] is IItem item)) return;
         if (!(item.onUse is Func<Inventoriable, bool> onUse)) return;
+        if (item.stack <= 0) return;
         bool success = onUse(this);
         if (!success)
         {
             stance = new(default, default);
             return;
         }
-        if (item.itemType == ItemType.Consum)
+        if (item is not Equip)
         {
-            item.stack--;
-            if (item.stack <= 0) Inven.Delete(index);
+            if (item.stack > 0) item.stack--;
+            else if (item.itemType == ItemType.Consum) Inven.Delete(index);
         }
     }
     protected void PickupItem(IItem item, int index)
     {
         if (Inven[index] is IItem oldEntity)
         {
-            if (oldEntity is not Equip oldEquip)
+            if (oldEntity.itemType == ItemType.Consum)
             {
                 if (oldEntity.abv == item.abv)
                 {
@@ -35,8 +36,9 @@ public class Inventoriable : Fightable
                     return;
                 }
             }
-            else oldEquip.onUse.Invoke(false);
+            else if (oldEntity is Equip oldEquip) oldEquip.onUse.Invoke(false);
         }
+        if (item.itemType == ItemType.Skill) item.stack = 2;
         Inven[index] = item;
         if (item is Equip equip) equip.onUse.Invoke(true);
     }
