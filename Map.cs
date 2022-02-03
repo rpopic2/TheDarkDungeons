@@ -14,7 +14,6 @@ public class Map
     private readonly char[] empty;
     public readonly int length;
     private bool monsterSpawned = false;
-    public List<Monster> monsters = new();
     public Map(int length)
     {
         Current = this;
@@ -44,7 +43,6 @@ public class Map
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
         Monster monster = new(data, spawnPoint);
         UpdateMoveable(monster);
-        monsters.Add(monster);
         monsterSpawned = true;
     }
     private List<int> GetSpawnableIndices()
@@ -77,11 +75,11 @@ public class Map
     private void Render()
     {
         empty.CopyTo(rendered, 0);
-        RenderFrom(Tiles);
-        RenderFrom(Moveables);
+        RenderVisible(Tiles);
+        RenderVisible(Moveables);
         rendered[player.Pos.x] = MapSymb.player;
     }
-    public void RenderFrom<T>(T[] target)
+    public void RenderVisible<T>(T[] target)
     {
         int sight = player.sight;
         int front = player.Pos.FrontIndex;
