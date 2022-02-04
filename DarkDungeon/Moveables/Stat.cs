@@ -6,6 +6,7 @@ public class Stat
         get => data[(int)index];
         set => data[(int)index] = value;
     }
+    public void ModifyStat(Stats stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
 }
 public enum Stats
 {
