@@ -1,5 +1,4 @@
 monster data : item by index;
-stat info -> use array?
 
 monster ads->attack back when get attacked
 monsters should not fight by themselves
