@@ -20,7 +20,6 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
-        PickupItemData(EquipDb.FieryRing);
         switch (ClassName)
         {
             case ClassName.Warrior:

@@ -130,7 +130,14 @@ public class Fightable : Moveable
     public void UpdateTarget()
     {
         Map.Current.Moveables.TryGet(Pos.FrontIndex, out Moveable? mov);
-        Target = mov;
+        if (mov is Fightable f && isEnemy(this, f)) Target = mov;
+        else Target = null;
+    }
+    private bool isEnemy(Fightable p1, Fightable p2)
+    {
+        if (p1 is Player && p2 is Monster) return true;
+        if (p1 is Monster && p2 is Player) return true;
+        return false;
     }
 
     public static bool IsFirst(Fightable p1, Fightable p2)

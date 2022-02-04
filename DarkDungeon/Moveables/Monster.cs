@@ -8,7 +8,7 @@ public class Monster : Fightable
     private Action<Monster> behaviour;
     public Monster(MonsterData data, Position spawnPoint) : base(data.name, data.className, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap)
     {
-        if(reference is null) reference = new(this);
+        if (reference is null) reference = new(this);
         dropList = data.dropList;
         killExp = data.stat.killExp;
         fowardChar = data.fowardChar;
@@ -43,7 +43,10 @@ public class Monster : Fightable
                 if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
                 else m.Move(moveX, out char obj);
             }
-            else m._UseCard((Card)m.Hand.GetFirst()!);
+            else if (m.Hand.GetFirst() is Card card)
+            {
+                m._UseCard(card);
+            }
         }
         else m.Rest();
     };
