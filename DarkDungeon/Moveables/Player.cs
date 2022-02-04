@@ -20,22 +20,23 @@ public class Player : Inventoriable
     }
     public void StartItem()
     {
+        PickupItemData(EquipDb.FieryRing);
         switch (ClassName)
         {
             case ClassName.Warrior:
                 PickupItemData(Inventoriable.SkillDb.Charge);
                 PickupItemData(Inventoriable.SkillDb.Berserk);
-                stat.sol += 2;
+                stat[Stats.Sol] += 2;
                 break;
             case ClassName.Assassin:
                 PickupItemData(Inventoriable.SkillDb.ShadowAttack);
                 PickupItemData(Inventoriable.SkillDb.Backstep);
-                stat.lun += 2;
+                stat[Stats.Lun] += 2;
                 break;
             case ClassName.Mage:
                 PickupItemData(TorchData.data);
                 PickupItemData(TorchData.data);
-                stat.con += 2;
+                stat[Stats.Con] += 2;
                 break;
         }
     }
@@ -55,13 +56,13 @@ public class Player : Inventoriable
         switch (index)
         {
             case 0:
-                stat.sol += 2;
+                stat[Stats.Sol] += 2;
                 break;
             case 1:
-                stat.lun += 2;
+                stat[Stats.Lun] += 2;
                 break;
             case 2:
-                stat.con += 2;
+                stat[Stats.Con] += 2;
                 break;
         }
         Hand.Cap = new Mul(3, 0.4f, Mul.lv);

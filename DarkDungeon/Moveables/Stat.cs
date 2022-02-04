@@ -1,16 +1,13 @@
 public class Stat
 {
-    public Stat(int sol, int lun, int con)
+    private int[] data = new int[3];
+    public int this[Stats index]
     {
-        this.lun = lun;
-        this.sol = sol;
-        this.con = con;
+        get => data[(int)index];
+        set => data[(int)index] = value;
     }
-
-    public int sol;
-    public int lun;
-    public int con;
-    public ref int RefSol() => ref sol;
-    public ref int RefLun() => ref lun;
-    public ref int RefCon() => ref con;
+}
+public enum Stats
+{
+    Sol, Lun, Con
 }

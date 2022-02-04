@@ -8,10 +8,13 @@ public class Entity
     public Entity(int level, int sol, int lun, int con, string name)
     {
         this.Level = level;
-        stat = new Stat(sol, lun, con);
+        stat = new();
+        stat[Stats.Sol] = sol;
+        stat[Stats.Lun] = lun;
+        stat[Stats.Con] = con;
         Name = name;
     }
 
-    public Card Draw() => new Card(GetRandomStat(stat.sol), GetRandomStat(stat.lun), GetRandomStat(stat.con), CardStance.Attack);
+    public Card Draw() => new Card(GetRandomStat(stat[Stats.Sol]), GetRandomStat(stat[Stats.Lun]), GetRandomStat(stat[Stats.Con]), CardStance.Attack);
     private int GetRandomStat(int stat) => rnd.Next(1, stat + 1);
 }
