@@ -4,3 +4,4 @@ stat info -> use array?
 monster ads->attack back when get attacked
 monsters should not fight by themselves
 item komakai info
+make skill class, skill lvup.

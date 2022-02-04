@@ -78,7 +78,7 @@ public class Map
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
         RenderVisible(Moveables);
-        if(debug) RenderAllMobs();
+        //if(debug) RenderAllMobs();
         rendered[player.Pos.x] = MapSymb.player;
     }
     private void RenderAllMobs()
