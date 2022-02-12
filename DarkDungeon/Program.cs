@@ -42,7 +42,7 @@ public class Program
         IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
-        Player._instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
+        Player._instance = new Player(name, className, 3, 5, 2, 2, 2);
     }
     //-------------------------
 

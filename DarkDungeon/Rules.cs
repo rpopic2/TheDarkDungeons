@@ -1,6 +1,6 @@
 public static class Rules
 {
-    public const string version = "0.3";
+    public const string version = "0.4";
     public const float vulMulp = 1.3f;
     //map
     public const int MapLengthMin = 5;

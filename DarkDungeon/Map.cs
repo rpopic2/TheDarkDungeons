@@ -109,6 +109,7 @@ public class Map
     }
     public bool IsVisible(Moveable mov)
     {
+        if(mov is Player) return true;
         Position playerPos = Player.instance.Pos;
         int distance = mov.Pos.x - playerPos.x;
         if (distance > 0 && playerPos.facing == Facing.Front) return true;

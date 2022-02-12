@@ -10,7 +10,7 @@ public class Player : Inventoriable
     public int torch = 0;
     public int sight = 1;
 
-    public Player(string name, ClassName className, int cap, int maxHp, int lv, int sol, int lun, int con) : base(name, className, lv, sol, lun, con, maxHp, cap)
+    public Player(string name, ClassName className, int cap, int maxHp, int sol, int lun, int con) : base(name, className, 1, sol, lun, con, maxHp, cap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
@@ -26,17 +26,17 @@ public class Player : Inventoriable
             case ClassName.Warrior:
                 PickupItemData(Inventoriable.SkillDb.Charge);
                 PickupItemData(Inventoriable.SkillDb.Berserk);
-                stat[Stats.Sol] += 2;
+                stat[Stats.Sol] += 1;
                 break;
             case ClassName.Assassin:
                 PickupItemData(Inventoriable.SkillDb.ShadowAttack);
                 PickupItemData(Inventoriable.SkillDb.Backstep);
-                stat[Stats.Lun] += 2;
+                stat[Stats.Lun] += 1;
                 break;
             case ClassName.Mage:
                 PickupItemData(TorchData.data);
                 PickupItemData(TorchData.data);
-                stat[Stats.Con] += 2;
+                stat[Stats.Con] += 1;
                 break;
         }
     }
@@ -56,16 +56,16 @@ public class Player : Inventoriable
         switch (index)
         {
             case 0:
-                stat[Stats.Sol] += 2;
+                stat[Stats.Sol] += 1;
                 break;
             case 1:
-                stat[Stats.Lun] += 2;
+                stat[Stats.Lun] += 1;
                 break;
             case 2:
-                stat[Stats.Con] += 2;
+                stat[Stats.Con] += 1;
                 break;
         }
-        Hand.Cap = new Mul(3, 0.4f, Mul.lv);
+        Hand.Cap = new Mul(3, 0.3f, Mul.lv);
         Hp.Max = new Mul(5, Mul.n, Mul.lv);
         Hp += Hp.Max;
     }

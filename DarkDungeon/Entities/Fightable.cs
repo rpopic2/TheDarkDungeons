@@ -98,7 +98,7 @@ public class Fightable : Moveable
     }
     public virtual void Rest()
     {
-        IO.pr($"{Name} is resting a turn.");
+        if (Map.Current.IsVisible(this)) IO.pr($"{Name} is resting a turn.");
         stance = new(Stance.Rest, default);
     }
     public virtual void OnBeforeTurnEnd()

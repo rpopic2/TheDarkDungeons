@@ -1,6 +1,7 @@
 public static class Game
 {
     private static Player Player { get => Player.instance; }
+    private const int SpawnRate = 10;
     public static event EventHandler? OnTurnEnd;
 
     public static int Turn { get; private set; }
@@ -26,7 +27,7 @@ public static class Game
 
         OnTurnEnd?.Invoke(null, EventArgs.Empty);
         if (IO.printCount == 3) IO.del(2);
-        if (Turn % 5 == 0) Map.Current.Spawn();
+        if (Turn % SpawnRate == 0) Map.Current.Spawn();
 
         NewTurn();
     }

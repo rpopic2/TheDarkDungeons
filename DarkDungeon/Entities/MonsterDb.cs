@@ -40,8 +40,8 @@ public static class MonsterDb
             (TorchData.data, 5),
             (EquipDb.FieryRing, 15),
             (EquipDb.LunarRing, 15));
-    private static StatMul batMul = new(new(1, 0.6f, lv), new(3, n, n), new(2, n, n), new(2, 0.03f, lv), new(1, 0.16f, lv), new(3, 0.3f, lv));
+    private static StatMul batMul = new(new(1, 0.6f, lv), new(3, n, n), new(2, n, n), new(2, 0.4f, lv), new(1, 0.16f, lv), new(3, 0.3f, lv));
     public static MonsterData bat = new(0, "Bat", 'b', 'd', ClassName.Assassin, batMul, Monster.batBehav, batDropList);
-    private static StatMul lunaticMul = new(new(2, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.03f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));
+    private static StatMul lunaticMul = new(new(2, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.6f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));
     public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, batDropList);
 }
