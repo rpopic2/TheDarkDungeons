@@ -21,7 +21,7 @@ public class UnitTest1
     [Fact]
     public void Test3()
     {
-        Player._instance = new("Micheal", ClassName.Warrior, 3, 5, 1, 2, 2, 2);
+        Player._instance = new("Micheal", ClassName.Warrior, 3, 5, 2, 2, 2);
         Assert.True(Player.instance.IsAlive);
         //Game.NewTurn();
 
