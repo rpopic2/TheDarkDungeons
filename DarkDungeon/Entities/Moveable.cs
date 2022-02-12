@@ -1,3 +1,4 @@
+namespace Entities;
 public class Moveable : Entity
 {
     protected StanceInfo stance = new(default, default);

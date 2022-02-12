@@ -1,3 +1,4 @@
+namespace Entities;
 public class Fightable : Moveable
 {
     public ClassName ClassName { get; private set; }

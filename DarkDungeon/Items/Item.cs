@@ -1,3 +1,5 @@
+namespace Items;
+
 public record Item : IItem
 {
     public const string Empty = "{EMPTY}";

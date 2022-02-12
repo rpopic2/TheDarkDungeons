@@ -1,3 +1,4 @@
+namespace Items;
 public record Equip : Item
 {
     private (Stats stats, int amount)[] mods;

@@ -1,3 +1,5 @@
+namespace Items;
+
 public interface IItemBase
 {
     string abv { get; init; }

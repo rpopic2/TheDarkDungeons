@@ -1,3 +1,5 @@
+global using Items;
+namespace Entities;
 public class Entity
 {
     public int Level { get; protected set; }

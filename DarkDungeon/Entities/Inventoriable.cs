@@ -1,3 +1,4 @@
+namespace Entities;
 public class Inventoriable : Fightable
 {
     public Inventory<IItem?> Inven { get; private set; }

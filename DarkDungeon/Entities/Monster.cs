@@ -1,3 +1,4 @@
+namespace Entities;
 public class Monster : Fightable
 {
     private int killExp;

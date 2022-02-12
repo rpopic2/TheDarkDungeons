@@ -1,3 +1,5 @@
+namespace Items;
+
 public readonly record struct TorchData : IItemData
 {
     public static TorchData data = new();

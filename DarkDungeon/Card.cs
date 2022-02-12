@@ -33,5 +33,4 @@ public struct Card
         else if (Stance == CardStance.Dodge) return $"[({Lun})/{Sol}]";
         else return $"[{Con}*]";
     }
-
 }

@@ -1,3 +1,5 @@
+namespace Items;
+
 public readonly record struct EquipData(string abv, params (Stats stats, int amount)[] mods) : IItemData
 {
     public ItemType itemType { get; init; } = ItemType.Equip;

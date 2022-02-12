@@ -1,4 +1,5 @@
 using System.Diagnostics;
+namespace Entities;
 
 public class Player : Inventoriable
 {

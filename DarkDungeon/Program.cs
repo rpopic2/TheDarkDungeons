@@ -1,4 +1,6 @@
-﻿public class Program
+﻿global using Entities;
+global using Items;
+public class Program
 {
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
