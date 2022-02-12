@@ -22,7 +22,7 @@ public class Inventoriable : Fightable
         if (item is not Equip)
         {
             if (item.stack > 0) item.stack--;
-            else if (item.itemType == ItemType.Consum) Inven.Delete(index);
+            if (item.itemType == ItemType.Consum) Inven.Delete(index);
         }
     }
     protected void PickupItem(IItem item, int index)
