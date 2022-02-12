@@ -27,7 +27,8 @@ public class Monster : Fightable
         player.PickupCard(Draw());
         foreach (var item in dropList.list)
         {
-            if (DropOutOf(rnd, item.outof)) player.PickupItemData(item.data);
+            IItemData iitem = Inventoriable.Items[(int)item.dataIndex];
+            if (DropOutOf(rnd, item.outof)) player.PickupItemData(iitem);
         }
     }
     public virtual void DoTurn()

@@ -6,7 +6,7 @@ public readonly record struct MonsterData(string name, char fowardChar, char bac
     }
 }
 public readonly record struct StatMul(Mul sol, Mul lun, Mul con, Mul hp, Mul cap, Mul killExp);
-public readonly record struct DropList(params (IItemData data, int outof)[] list);
+public readonly record struct DropList(params (It dataIndex, int outof)[] list);
 //sol lun con hp cap killexp
 public readonly record struct Mul
 {
@@ -35,11 +35,11 @@ public static class MonsterDb
     private static int t => Game.Turn;
     private const int n = 1;
     private static DropList batDropList = new(
-        (Inventoriable.ConsumeDb.HpPot, 10),
-            (Inventoriable.ConsumeDb.Bag, 11),
-            (TorchData.data, 5),
-            (EquipDb.FieryRing, 15),
-            (EquipDb.LunarRing, 15));
+        (It.HpPot, 10),
+            (It.Bag, 11),
+            (It.Torch, 5),
+            (It.FieryRing, 15),
+            (It.LunarRing, 15));
     private static StatMul batMul = new(new(1, 0.6f, lv), new(3, n, n), new(2, n, n), new(2, 0.4f, lv), new(1, 0.16f, lv), new(3, 0.3f, lv));
     public static MonsterData bat = new(0, "Bat", 'b', 'd', ClassName.Assassin, batMul, Monster.batBehav, batDropList);
     private static StatMul lunaticMul = new(new(2, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.6f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));

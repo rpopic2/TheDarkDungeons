@@ -31,5 +31,9 @@ public record Item : IItem
 }
 public readonly record struct ItemData(string abv, ItemType itemType, Func<Inventoriable, bool>? onUse) : IItemData
 {
+    public ItemData(int index, string abv, ItemType itemType, Func<Inventoriable, bool>? onUse) : this(abv, itemType, onUse)
+    {
+        Inventoriable.RegisterItem(index, this);
+    }
     public IItem Instantiate(Inventoriable owner, Stat ownerStat) => new Item(this, ownerStat);
 }

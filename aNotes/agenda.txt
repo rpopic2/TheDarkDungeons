@@ -2,10 +2,8 @@ monster data : item by index;
 
 monster ads->attack back when get attacked
 item komakai info
-make skill class, skill lvup.
+make skill class, skill lvup.-> stacked skills -> can use more times?
 
-bug : 0stack items does not go away
 cap is incresing to fast;
 player grows too fast / or monster is too weak / or monster growth is to slow  
 monster health growth is too low;
-too easy game.

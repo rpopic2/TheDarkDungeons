@@ -2,12 +2,17 @@ namespace Entities;
 public class Inventoriable : Fightable
 {
     public Inventory<IItem?> Inven { get; private set; }
-
+    private static List<IItemData> items = new();
+    public static ref readonly List<IItemData> Items => ref Items;
     public Inventoriable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, className, level, sol, lun, con, maxHp, cap)
     {
         Inven = new Inventory<IItem?>(3, "Inventory");
     }
-
+    public static void RegisterItem(int index, IItemData data)
+    {
+        if (items[index] is not null) throw new Exception($"ItemData : {index} index is already taken!");
+        items[index] = data;
+    }
     public void UseInven(int index)
     {
         if (!(Inven[index] is IItem item)) return;
@@ -45,23 +50,23 @@ public class Inventoriable : Fightable
     }
     public static class ConsumeDb
     {
-        public static readonly ItemData HpPot = new("HPPOT", ItemType.Consum, f =>
+        public static readonly ItemData HpPot = new(0, "HPPOT", ItemType.Consum, f =>
         {
             f.Hp += 3; return true;
         });
-        public static readonly ItemData Bag = new(" BAG  ", ItemType.Consum, f =>
+        public static readonly ItemData Bag = new(1, " BAG  ", ItemType.Consum, f =>
         {
             f.Inven.Cap += 2; return true;
         });
     }
     public static class SkillDb
     {
-        public static readonly ItemData Scouter = new("SCOUTR", ItemType.Skill, f =>
+        public static readonly ItemData Scouter = new(2, "SCOUTR", ItemType.Skill, f =>
         {
             IO.pr(f.Target?.ToString() ?? "No Target to scout.");
             return f.Target is not null;
         });
-        public static readonly ItemData Charge = new("CHARGE", ItemType.Skill, f =>
+        public static readonly ItemData Charge = new(3, "CHARGE", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
             if (card is not Card card2) return false;
@@ -71,7 +76,7 @@ public class Inventoriable : Fightable
             f.UseCard(card2);
             return true;
         });
-        public static readonly ItemData ShadowAttack = new("SHADOW", ItemType.Skill, f =>
+        public static readonly ItemData ShadowAttack = new(4, "SHADOW", ItemType.Skill, f =>
         {
             if (f.SelectCard() is Card card)
             {
@@ -81,7 +86,7 @@ public class Inventoriable : Fightable
             }
             return false;
         });
-        public static readonly ItemData SNIPE = new("SNIPE ", ItemType.Skill, f =>
+        public static readonly ItemData SNIPE = new(5, "SNIPE ", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
             if (card is not Card card2) return false;
@@ -91,7 +96,7 @@ public class Inventoriable : Fightable
             f.UseCard(card2);
             return card is not null;
         });
-        public static readonly ItemData Berserk = new("BERSRK", ItemType.Skill, f =>
+        public static readonly ItemData Berserk = new(6, "BERSRK", ItemType.Skill, f =>
         {
             Card? card = f.SelectCard();
             if (card is not Card card2) return false;
@@ -100,7 +105,7 @@ public class Inventoriable : Fightable
             f.UseCard(card2);
             return true;
         });
-        public static readonly ItemData Backstep = new("BKSTEP", ItemType.Skill, f =>
+        public static readonly ItemData Backstep = new(7, "BKSTEP", ItemType.Skill, f =>
         {
             if (f.Target is not null)
             {
@@ -117,5 +122,11 @@ public class Inventoriable : Fightable
             }
             return false;
         });
+    }
+    public static class EquipDb
+    {
+        public static readonly EquipData LunarRing = new(8, "LUNRIN", (Stats.Lun, 3));
+        public static readonly EquipData AmuletOfLa = new(9, "AMULLA", (Stats.Sol, 20));
+        public static readonly EquipData FieryRing = new(10, "FIRING", (Stats.Sol, 3));
     }
 }

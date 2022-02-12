@@ -27,6 +27,10 @@ public enum ItemType
 {
     Equip, Skill, Consum
 }
+public enum It
+{
+    HpPot, Bag, Scouter, Charge, ShadowAttack, Snipe, Berserk, Backstep, LunarRing, AmuletOfLa, FieryRing, Torch
+}
 
 public static class Extensions
 {
