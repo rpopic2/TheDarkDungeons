@@ -1,5 +1,8 @@
-rules needs to be fixed.(multiplier system)
-monster ad, monster can stay still?
+too much static would make app slower?->load and unload?
+rest to consume 2 or more turns
+
 npcs
 traps
 tresures
+
+sounds

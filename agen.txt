@@ -1,3 +1,5 @@
-different mobs
-monster.cs at bottom -> unness?
-map spawning system needs to be corrected.
+monster data : item by index;
+
+monster ads->attack back when get attacked
+item komakai info
+make skill class, skill lvup.
