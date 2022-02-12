@@ -1,21 +1,19 @@
 public class Monster : Fightable
 {
-    public static WeakReference? reference;
     private int killExp;
     protected static Player player { get => Player.instance; }
     protected DropList dropList;
     private char fowardChar, backwardChar;
-    //private Action<Monster> behaviour;
+    private Action<Monster> behaviour;
     public Monster(MonsterData data, Position spawnPoint) : base(data.name, data.className, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap)
     {
-        if (reference is null) reference = new(this);
-        //dropList = data.dropList;
+        dropList = data.dropList;
         killExp = data.stat.killExp;
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
-        //behaviour = data.behaviour;
+        behaviour = data.behaviour;
         Pos = spawnPoint;
-        //if (data.name == "Bat") PickupCard(Draw().StanceShift(), Hand.Count);
+        if (data.name == "Bat") PickupCard(Draw().StanceShift(), Hand.Count);
     }
     protected virtual void OnSpawn()
     {
@@ -34,7 +32,7 @@ public class Monster : Fightable
     public virtual void DoTurn()
     {
         if (!IsAlive) return;
-        //behaviour(this);
+        behaviour(this);
     }
     public readonly static Action<Monster> batBehav = (m) =>
     {
