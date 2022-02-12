@@ -1,5 +1,4 @@
 using Xunit;
-
 namespace DarkDungeon.Tests;
 
 public class UnitTest1

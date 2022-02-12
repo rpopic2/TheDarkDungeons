@@ -7,15 +7,14 @@ public class Program
     public static readonly string[] stats = new string[] { "(1) Sol", "(2) Lun", "(3) Con" };
     public static readonly string[] actions = new string[] { "Cards(W)", "(E)quipments", "(R)est", "(S)tats", "E(x)ile" };
     private static Player player { get => Player.instance; }
-    public static int turn { get; private set; }
-    public static event EventHandler? OnTurnEnd;
     public static void Main()
     {
         instance = new Program();
+        Game.NewTurn();
         do
         {
             instance.MainLoop();
-            if (player.CurStance.stance != Stance.None) instance.ElaspeTurn();
+            if (player.CurStance.stance != Stance.None) Game.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
         IO.pr(player.Hand);
@@ -31,9 +30,6 @@ public class Program
         Intro();
         Console.Clear();
         IO.pr("Your adventure begins...");
-        Map.NewMap();
-        player.StartItem();
-        NewTurn();
     }
 
     private void Intro()
@@ -49,33 +45,7 @@ public class Program
         Player._instance = new Player(name, className, 3, 5, 1, 2, 2, 2);
     }
     //-------------------------
-    public void ElaspeTurn()
-    {
-        Array.ForEach(Map.Current.Moveables, m =>
-        {
-            if (m is Monster mon) mon.DoTurn();
-        });
-        Array.ForEach(Map.Current.Moveables, m =>
-        {
-            if (m is Fightable f) f.OnBeforeTurnEnd();
-        });
-        Array.ForEach(Map.Current.Moveables, m =>
-        {
-            if (m is Fightable f) f.OnTurnEnd();
-        });
 
-        OnTurnEnd?.Invoke(this, EventArgs.Empty);
-        if (IO.printCount == 3) IO.del(2);
-        if (turn % 5 == 0) Map.Current.Spawn();
-
-        NewTurn();
-    }
-    public void NewTurn()
-    {
-        IO.printCount = 0;
-        turn++;
-        IO.pr($"\nTurn : {turn}\tDungeon Level : {Map.level}");
-    }
     private void MainLoop()
     {
         ConsoleKeyInfo info = IO.rk(Map.Current);

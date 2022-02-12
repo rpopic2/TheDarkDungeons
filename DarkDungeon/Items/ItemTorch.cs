@@ -34,8 +34,8 @@ public record Torch : Item
             Player player = (Player)owner;
             player.torch = 21;
             onTurnEnd.Invoke(null, EventArgs.Empty);
-            Program.OnTurnEnd -= torchHandler;
-            Program.OnTurnEnd += torchHandler;
+            Game.OnTurnEnd -= torchHandler;
+            Game.OnTurnEnd += torchHandler;
             return true;
         };
     }

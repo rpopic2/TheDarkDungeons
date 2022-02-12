@@ -11,7 +11,7 @@ public readonly record struct DropList(params (IItemData data, int outof)[] list
 public readonly record struct Mul
 {
     public static int lv => Map.level;
-    public static int t => Program.turn;
+    public static int t => Game.Turn;
     public const int n = 1;
     public readonly int @base;
     public readonly float multiplier;
@@ -32,7 +32,7 @@ public static class MonsterDb
     public static List<MonsterData> data = new();
     public static int Count => data.Count;
     private static int lv => Map.level;
-    private static int t => Program.turn;
+    private static int t => Game.Turn;
     private const int n = 1;
     private static DropList batDropList = new(
         (Inventoriable.ConsumeDb.HpPot, 10),
