@@ -1,4 +1,3 @@
-global using Items;
 namespace Entities;
 public class Entity
 {
