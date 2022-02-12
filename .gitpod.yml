@@ -5,3 +5,11 @@ vscode:
     - muhammad-sammy.csharp
     - ms-dotnettools.csharp
     - eamodio.gitlens
+tasks:
+  - name: Restore & Build
+    init: |
+      dotnet dev-certs https
+      dotnet restore DarkDungeon
+      dotnet build DarkDungeon
+      dotnet restore DarkDungeon.Tests
+      dotnet build DarkDungeon.Tests
