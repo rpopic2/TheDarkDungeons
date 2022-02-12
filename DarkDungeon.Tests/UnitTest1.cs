@@ -1,6 +1,7 @@
 using Xunit;
 namespace DarkDungeon.Tests;
 
+using Entities;
 public class UnitTest1
 {
     [Fact]
@@ -20,7 +21,9 @@ public class UnitTest1
     [Fact]
     public void Test3()
     {
-        Program prg = new();
-        Assert.True(prg.GetType() == typeof(Program));
+        Player._instance = new("Micheal", ClassName.Warrior, 3, 5, 1, 2, 2, 2);
+        Assert.True(Player.instance.IsAlive);
+        //Game.NewTurn();
+
     }
 }
