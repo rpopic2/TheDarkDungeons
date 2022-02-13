@@ -14,8 +14,8 @@ public class Monster : Fightable
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
         Pos = spawnPoint;
-        if (data.name == "Bat") PickupCard(Draw().StanceShift(), Hand.Count);
-        else PickupCard(Draw(), Hand.Count);
+        PickupCard(Draw(), Hand.Count);
+        IO.pr("monster created");
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
@@ -35,21 +35,7 @@ public class Monster : Fightable
     }
     public readonly static Action<Monster> batBehav = (m) =>
     {
-        if (m.Hand.Count > 0)
-        {
-            if (m.Target is null)
-            {
-                int moveX = m.rnd.Next(2) == 1 ? 1 : -1;
-                int direction = m.Pos.facing == Facing.Front ? -1 : 1;
-                if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
-                else m.Move(moveX, out char obj);
-            }
-            else if (m.Hand.GetFirst() is Card card)
-            {
-                m._UseCard(card);
-            }
-        }
-        else m.Rest();
+        throw new NotImplementedException();
     };
     internal static readonly Action<Monster> lunaticBehav = (m) =>
     {

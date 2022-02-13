@@ -2,8 +2,6 @@ monster ads->attack back when get attacked, follow player if player flees, attac
 
 item komakai info
 
-make skill class, skill lvup.-> stacked skills -> can use more times?
-
 individual monsters into a class
 
 entities inheritance problems

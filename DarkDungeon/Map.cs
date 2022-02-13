@@ -42,8 +42,16 @@ public class Map
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
-        Monster monster = new(data, spawnPoint);
-        UpdateMoveable(monster);
+        if (data.name == MonsterDb.bat.name)
+        {
+            Bat monster = new(data, spawnPoint);
+            UpdateMoveable(monster);
+        }
+        else
+        {
+            Monster monster = new(data, spawnPoint);
+            UpdateMoveable(monster);
+        }
         monsterSpawned = true;
     }
     private List<int> GetSpawnableIndices()
@@ -109,7 +117,7 @@ public class Map
     }
     public bool IsVisible(Moveable mov)
     {
-        if(mov is Player) return true;
+        if (mov is Player) return true;
         Position playerPos = Player.instance.Pos;
         int distance = mov.Pos.x - playerPos.x;
         if (distance > 0 && playerPos.facing == Facing.Front) return true;

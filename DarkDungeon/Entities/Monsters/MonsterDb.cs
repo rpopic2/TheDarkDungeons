@@ -5,12 +5,7 @@ public static class MonsterDb
     private static int lv => Map.level;
     private static int t => Game.Turn;
     private const int n = 1;
-    private static DropList batDropList = new(
-        (It.HpPot, 10),
-        (It.Bag, 11),
-        (It.Torch, 5),
-        (It.FieryRing, 15),
-        (It.LunarRing, 15));
+    private static DropList batDropList = new();
     private static DropList snakeDropList = new(
         (It.HpPot, 10),
         (It.Bag, 11),
