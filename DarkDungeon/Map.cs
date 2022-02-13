@@ -42,17 +42,15 @@ public class Map
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
-        if (data.name == MonsterDb.bat.name)
-        {
-            Bat monster = new(data, spawnPoint);
-            UpdateMoveable(monster);
-        }
-        else
-        {
-            Monster monster = new(data, spawnPoint);
-            UpdateMoveable(monster);
-        }
+        _Spawn(data, spawnPoint);
         monsterSpawned = true;
+    }
+    public void _Spawn(MonsterData data, Position spawnPoint)
+    {
+        Moveable mov;
+        if (data == MonsterDb.bat) mov = new Bat(data, spawnPoint);
+        else mov = new Monster(data, spawnPoint);
+        UpdateMoveable(mov);
     }
     private List<int> GetSpawnableIndices()
     {
