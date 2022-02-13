@@ -10,8 +10,9 @@ public class Player : Inventoriable
     public int torch = 0;
     public int sight = 1;
 
-    public Player(string name, ClassName className, int cap, int maxHp, int sol, int lun, int con) : base(name, className, 1, sol, lun, con, maxHp, cap)
+    public Player(string name, ClassName className) : base(name, className, level: 1, sol: 2, lun: 2, con: 2, maxHp: 3, cap: 3)
     {
+        int cap = 3;
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
         for (int i = 0; i < cap; i++)
@@ -67,7 +68,7 @@ public class Player : Inventoriable
         }
         Hand.Cap = new Mul(3, 0.4f, Level);
         Hp.Max = new Mul(3, Mul.n, Level);
-        Hp += Hp.Max;
+        Hp += Level;
     }
     public void PickupCard(Card card)
     {

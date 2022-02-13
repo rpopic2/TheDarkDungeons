@@ -1,5 +1,3 @@
-pressing only number -> to use skill not cards.
-
 player to user Muls
 
 monster ads->attack back when get attacked, follow player if player flees, attack when player is seen.
