@@ -17,10 +17,6 @@ public class Monster : Fightable
         if (data.name == "Bat") PickupCard(Draw().StanceShift(), Hand.Count);
         else PickupCard(Draw(), Hand.Count);
     }
-    protected virtual void OnSpawn()
-    {
-
-    }
     protected override void OnDeath(object? sender, EventArgs e)
     {
         base.OnDeath(sender, e);
