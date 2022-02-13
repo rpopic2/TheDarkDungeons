@@ -3,5 +3,12 @@ mob spawnrate nerfed from 5 to 10
 
 player talant stats nerfed from 2 to 1
 player levelup stats nerfed from 2 to 1
+player startup item : only one skills.
+player hp nerfed from 5+lv to 4+lv
+
 bat hp scale buffed from 0.03lv to 0.4lv
+
 lunatic hp scale buffed from 0.03lv to 0.6lv
+lunatic base sol buffed from 2 to 3
+
+snake added.
