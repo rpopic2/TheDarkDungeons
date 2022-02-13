@@ -3,10 +3,6 @@ namespace Items;
 public readonly record struct TorchData : IItemData
 {
     public static TorchData data = new();
-    static TorchData()
-    {
-        Inventoriable.RegisterItem(11, data);
-    }
     public string abv { get; init; } = "TORCH";
     public ItemType itemType { get; init; } = ItemType.Consum;
     public Func<Inventoriable, bool>? onUse { get; init; }

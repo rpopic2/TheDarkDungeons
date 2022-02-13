@@ -7,6 +7,7 @@ public class Inventoriable : Fightable
     public Inventoriable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, className, level, sol, lun, con, maxHp, cap)
     {
         Inven = new Inventory<IItem?>(3, "Inventory");
+        RegisterItem(11, TorchData.data);
     }
     public static void RegisterItem(int index, IItemData data)
     {
@@ -47,10 +48,6 @@ public class Inventoriable : Fightable
         if (item.itemType == ItemType.Skill) item.stack = Player.skillMax;
         Inven[index] = item;
         if (item is Equip equip) equip.onUse.Invoke(true);
-    }
-    public static class ConsumeDb
-    {
-
     }
     public static class SkillDb
     {

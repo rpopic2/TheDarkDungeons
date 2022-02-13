@@ -9,3 +9,6 @@ individual monsters into a class
 cap is incresing to fast;
 player grows too fast / or monster is too weak / or monster growth is to slow  
 monster health growth is too low;
+
+nerf player helalth?
+buff lunatic atk dmg
