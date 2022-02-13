@@ -66,12 +66,12 @@ public class Program
                 DefaultSwitch(key2);
                 break;
             default:
-                if (IO.chkn(info.KeyChar, player.Hand.Cap, out int index))
+                if (IO.chkn(info.KeyChar, player.Inven.Cap, out int index))
                 {
-                    player.UseCard(index);
+                    player.UseInven(index);
                     break;
                 }
-                DefaultSwitch(key);
+                else DefaultSwitch(key);
                 break;
         }
     }

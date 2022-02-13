@@ -1,3 +1,7 @@
+pressing only number -> to use skill not cards.
+
+player to user Muls
+
 monster ads->attack back when get attacked, follow player if player flees, attack when player is seen.
 
 item komakai info
@@ -6,10 +10,4 @@ make skill class, skill lvup.-> stacked skills -> can use more times?
 
 individual monsters into a class
 
-delete overkill
-
-player to user Muls
-
 entities inheritance problems
-
-pressing only number -> to use skill not cards.
