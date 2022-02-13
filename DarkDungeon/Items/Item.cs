@@ -19,6 +19,7 @@ public record Item : IItem
     public static IItem Instantiate(Inventoriable owner, Stat ownerStat, IItemData data) => new Item((ItemData)data, ownerStat);
     public Stat stat { get; init; }
     public int stack { get; set; } = 1;
+    public int level { get; set; } = 1;
     public string abv { get; init; }
     public ItemType itemType { get; init; }
     public Func<Inventoriable, bool>? onUse { get; init; }

@@ -130,7 +130,7 @@ public class Player : Inventoriable
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
         {
-            item.stack = skillMax;
+            item.stack = item.level;
         }
     }
     public override Card? SelectCard()

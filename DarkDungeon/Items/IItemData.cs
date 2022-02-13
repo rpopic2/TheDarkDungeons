@@ -13,4 +13,5 @@ public interface IItemData : IItemBase
 public interface IItem : IItemBase
 {
     int stack { get; set; }
+    int level { get; set; }
 }

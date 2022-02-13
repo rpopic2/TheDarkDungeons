@@ -31,23 +31,24 @@ public class Inventoriable : Fightable
             if (item.itemType == ItemType.Consum) Inven.Delete(index);
         }
     }
-    protected void PickupItem(IItem item, int index)
+    protected void PickupItem(IItem newItem, int index)
     {
-        if (Inven[index] is IItem oldEntity)
+        if (Inven[index] is IItem oldItem)
         {
-            if (oldEntity.itemType == ItemType.Consum)
+            if (oldItem.itemType == ItemType.Consum)
             {
-                if (oldEntity.abv == item.abv)
+                if (oldItem.abv == newItem.abv)
                 {
-                    oldEntity.stack++;
+                    oldItem.stack++;
                     return;
                 }
             }
-            else if (oldEntity is Equip oldEquip) oldEquip.onUse.Invoke(false);
+            else if (oldItem.itemType == ItemType.Skill && oldItem.abv == newItem.abv) oldItem.level ++;
+            else if (oldItem is Equip oldEquip) oldEquip.onUse.Invoke(false);
         }
-        if (item.itemType == ItemType.Skill) item.stack = Player.skillMax;
-        Inven[index] = item;
-        if (item is Equip equip) equip.onUse.Invoke(true);
+        
+        Inven[index] = newItem;
+        if (newItem is Equip equip) equip.onUse.Invoke(true);
     }
     public static class SkillDb
     {

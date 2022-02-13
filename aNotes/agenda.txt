@@ -1,5 +1,3 @@
-player to user Muls
-
 monster ads->attack back when get attacked, follow player if player flees, attack when player is seen.
 
 item komakai info
@@ -9,3 +7,5 @@ make skill class, skill lvup.-> stacked skills -> can use more times?
 individual monsters into a class
 
 entities inheritance problems
+
+rest 2 or more turns
