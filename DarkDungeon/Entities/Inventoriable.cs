@@ -2,8 +2,8 @@ namespace Entities;
 public class Inventoriable : Fightable
 {
     public Inventory<IItem?> Inven { get; private set; }
-    private static List<IItemData> items = new();
-    public static ref readonly List<IItemData> Items => ref Items;
+    private static IItemData[] items = new IItemData[255];
+    public static ref readonly IItemData[] Items => ref items;
     public Inventoriable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, className, level, sol, lun, con, maxHp, cap)
     {
         Inven = new Inventory<IItem?>(3, "Inventory");
