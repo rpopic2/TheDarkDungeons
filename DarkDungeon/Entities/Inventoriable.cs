@@ -50,6 +50,10 @@ public class Inventoriable : Fightable
     }
     public static class ConsumeDb
     {
+
+    }
+    public static class SkillDb
+    {
         public static readonly ItemData HpPot = new(0, "HPPOT", ItemType.Consum, f =>
         {
             f.Hp += 3; return true;
@@ -58,9 +62,6 @@ public class Inventoriable : Fightable
         {
             f.Inven.Cap += 2; return true;
         });
-    }
-    public static class SkillDb
-    {
         public static readonly ItemData Scouter = new(2, "SCOUTR", ItemType.Skill, f =>
         {
             IO.pr(f.Target?.ToString() ?? "No Target to scout.");
@@ -122,9 +123,6 @@ public class Inventoriable : Fightable
             }
             return false;
         });
-    }
-    public static class EquipDb
-    {
         public static readonly EquipData LunarRing = new(8, "LUNRIN", (Stats.Lun, 3));
         public static readonly EquipData AmuletOfLa = new(9, "AMULLA", (Stats.Sol, 20));
         public static readonly EquipData FieryRing = new(10, "FIRING", (Stats.Sol, 3));
