@@ -9,7 +9,9 @@ tasks:
   - name: Restore & Build
     init: |
       dotnet dev-certs https
-      dotnet restore DarkDungeon
-      dotnet build DarkDungeon
-      dotnet restore DarkDungeon.Tests
-      dotnet build DarkDungeon.Tests
+      cd DarkDungeon
+      dotnet restore
+      dotnet build
+      cd ../DarkDungeon.Tests
+      dotnet restore
+      dotnet build
