@@ -25,12 +25,12 @@ public class Player : Inventoriable
         {
             case ClassName.Warrior:
                 PickupItemData(Inventoriable.SkillDb.Charge);
-                PickupItemData(Inventoriable.SkillDb.Berserk);
+                //PickupItemData(Inventoriable.SkillDb.Berserk);
                 stat[Stats.Sol] += 1;
                 break;
             case ClassName.Assassin:
                 PickupItemData(Inventoriable.SkillDb.ShadowAttack);
-                PickupItemData(Inventoriable.SkillDb.Backstep);
+                //PickupItemData(Inventoriable.SkillDb.Backstep);
                 stat[Stats.Lun] += 1;
                 break;
             case ClassName.Mage:
@@ -65,8 +65,8 @@ public class Player : Inventoriable
                 stat[Stats.Con] += 1;
                 break;
         }
-        Hand.Cap = new Mul(3, 0.3f, Level);
-        Hp.Max = new Mul(5, Mul.n, Level);
+        Hand.Cap = new Mul(3, 0.4f, Level);
+        Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Hp.Max;
     }
     public void PickupCard(Card card)
