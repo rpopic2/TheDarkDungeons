@@ -4,18 +4,18 @@ namespace Entities;
 public class Player : Inventoriable
 {
     public const int skillMax = 2;
+    private const int basicCap = 3;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
 
-    public Player(string name, ClassName className) : base(name, className, level: 1, sol: 2, lun: 2, con: 2, maxHp: 3, cap: 3)
+    public Player(string name, ClassName className) : base(name, className, level: 1, sol: 2, lun: 2, con: 2, maxHp: 3, cap: basicCap)
     {
-        int cap = 3;
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
-        for (int i = 0; i < cap; i++)
+        for (int i = 0; i < basicCap; i++)
         {
             Hand[i] = Draw();
         }
