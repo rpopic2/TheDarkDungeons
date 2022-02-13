@@ -24,7 +24,7 @@ public readonly record struct Mul
     }
     public static implicit operator int(Mul m)
     {
-        return (int)(m.@base + MathF.Round(m.multiplier * m.scaler));
+        return (int)(m.@base + MathF.Floor(m.multiplier * m.scaler));
     }
 }
 public static class MonsterDb

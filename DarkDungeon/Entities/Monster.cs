@@ -15,6 +15,7 @@ public class Monster : Fightable
         behaviour = data.behaviour;
         Pos = spawnPoint;
         if (data.name == "Bat") PickupCard(Draw().StanceShift(), Hand.Count);
+        else PickupCard(Draw(), Hand.Count);
     }
     protected virtual void OnSpawn()
     {
