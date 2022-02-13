@@ -6,14 +6,10 @@ make skill class, skill lvup.-> stacked skills -> can use more times?
 
 individual monsters into a class
 
-cap is incresing to fast;
-player grows too fast / or monster is too weak / or monster growth is to slow  
-monster health growth is too low;
-
-nerf player helalth?
-buff lunatic atk dmg
 delete overkill
 
 player to user Muls
 
 entities inheritance problems
+
+pressing only number -> to use skill not cards.
