@@ -8,3 +8,5 @@ It is said that deep in dungeon under the 'Temple of the La', the secret of this
 - Select your class. Warrior for crushing enemies, Assassin for assassinating enemies without noticing, Mage for manipulating enemies and time.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/chaeripicker/TheDarkDungeons)
+
+https://gitpod.io/teams/join?inviteId=3de96673-9ac8-4c1b-b9b3-60956fcd9274
