@@ -122,9 +122,9 @@ public class Player : Inventoriable
         bool cancel = false;
         do
         {
-            IO.pr("Review your hand\tq : Exit | Alt + num : Stanceshift");
+            IO.pr("Review your hand\tq : Exit | num : Stanceshift");
             IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
-            if (!cancel && mod == ConsoleModifiers.Alt) Hand[index] = Hand[index]?.StanceShift();
+            if (!cancel) Hand[index] = Hand[index]?.StanceShift();
             IO.del();
         } while (!cancel);
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
