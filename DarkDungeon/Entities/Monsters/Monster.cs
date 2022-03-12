@@ -15,7 +15,6 @@ public class Monster : Fightable
         behaviour = data.behaviour;
         Pos = spawnPoint;
         PickupCard(Draw(), Hand.Count);
-        IO.pr("monster created");
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
