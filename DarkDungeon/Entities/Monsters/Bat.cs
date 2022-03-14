@@ -3,7 +3,6 @@ public class Bat : Monster
 {
     public Bat(MonsterData data, Position spawnPoint) : base(data, spawnPoint)
     {
-        IO.pr("Bat spawned");
         if (Hand[0] is Card card)
         {
             Hand[0] = card.StanceShift();
