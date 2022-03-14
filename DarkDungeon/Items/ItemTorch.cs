@@ -2,6 +2,10 @@ namespace Items;
 
 public readonly record struct TorchData : IItemData
 {
+    public TorchData(Func<Inventoriable, bool> onUse)
+    {
+        this.onUse = onUse;
+    }
     public static TorchData data = new();
     public string abv { get; init; } = "TORCH";
     public ItemType itemType { get; init; } = ItemType.Consum;
