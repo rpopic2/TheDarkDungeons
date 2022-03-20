@@ -1,3 +1,4 @@
+10 levels + boss fight
 npcs
 traps
 tresures
