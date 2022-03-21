@@ -7,3 +7,7 @@ individual monsters into a class
 entities inheritance problems
 
 rest 2 or more turns
+
+mobs does not need to spawn in special order
+
+* star cards consumes turn
