@@ -32,6 +32,8 @@ public record Torch : Item
                 }
             }
         };
+        abv = "TORCH";
+        itemType = ItemType.Consum;
         EventHandler torchHandler = new(onTurnEnd);
         onUse = (f) =>
         {
