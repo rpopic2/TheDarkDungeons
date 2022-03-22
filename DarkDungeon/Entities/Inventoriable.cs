@@ -77,10 +77,10 @@ public class Inventoriable : Fightable
         });
         public static readonly ItemData ShadowAttack = new(4, "SHADOW", ItemType.Skill, f =>
         {
-            if (f.SelectCard() is Card card)
+            if (f.Target is not null && f.SelectCard() is Card card)
             {
                 Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Attack);
-                f.UseCard(newCard);
+                f.UseCard(card);
                 return true;
             }
             return false;
