@@ -5,7 +5,11 @@ public static class MonsterDb
     private static int lv => Map.level;
     private static int t => Game.Turn;
     private const int n = 1;
-    private static DropList batDropList = new();
+    private static DropList lunDropList = new(
+        (It.HpPot, 10),
+        (It.Bag, 11),
+        (It.Torch, 5),
+        (It.LunarRing, 15));
     private static DropList snakeDropList = new(
         (It.HpPot, 10),
         (It.Bag, 11),
@@ -13,9 +17,9 @@ public static class MonsterDb
         (It.ShadowAttack, 20),
         (It.Scouter, 5));
     private static StatMul batMul = new(new(1, 0.6f, lv), new(3, n, n), new(2, n, n), new(2, 0.4f, lv), new(1, 0.16f, lv), new(3, 0.3f, lv));
-    public static MonsterData bat = new(0, "Bat", 'b', 'd', ClassName.Assassin, batMul, Monster.batBehav, batDropList);
+    public static MonsterData bat = new(0, "Bat", 'b', 'd', ClassName.Assassin, batMul, Monster.batBehav, lunDropList);
     private static StatMul lunaticMul = new(new(3, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.6f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));
-    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, batDropList);
+    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, lunDropList);
     private static StatMul snakeMul = new(sol:new(2, 0.6f, lv), lun:new(1, n, n), con:new(2, n, n), hp:new(2, 0.3f, lv), cap:new(2, 0.16f, lv), killExp:new(5, 0.3f, lv));
     public static MonsterData snake = new(2, "Snake", 'S', 'Ƨ', ClassName.Warrior, snakeMul, Monster.snakeBehav, snakeDropList);
 }
