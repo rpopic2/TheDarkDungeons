@@ -36,6 +36,6 @@ public static class Game
     {
         IO.printCount = 0;
         Turn++;
-        IO.pr($"\nTurn : {Turn}\tDungeon Level : {Map.level}");
+        IO.pr($"\nTurn : {Turn}\tDungeon Level : {Map.level}\tHP : {Player.instance.Hp}");
     }
 }
