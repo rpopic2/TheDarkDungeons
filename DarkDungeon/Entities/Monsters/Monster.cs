@@ -1,6 +1,9 @@
 namespace Entities;
 public class Monster : Fightable
 {
+    protected static int lv => Map.level;
+    protected static int t => Game.Turn;
+    protected const int n = 1;
     private int killExp;
     protected static Player player { get => Player.instance; }
     protected DropList dropList;
@@ -67,7 +70,7 @@ public class Monster : Fightable
                     else m.Move(moveX, out char obj);
                 }
             }
-            if(m.Target is not null)
+            if (m.Target is not null)
             {
                 m._UseCard((Card)m.Hand.GetFirst()!);
             }

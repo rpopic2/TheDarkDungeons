@@ -14,7 +14,6 @@ public class Map
     private readonly char[] empty;
     public readonly int length;
     private const bool debug = false;
-    private bool monsterSpawned = false;
     public Map(int length)
     {
         Current = this;
@@ -41,12 +40,11 @@ public class Map
         int newPos = spawnableIndices[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
         _Spawn(data, spawnPoint);
-        monsterSpawned = true;
     }
     public void _Spawn(MonsterData data, Position spawnPoint)
     {
         Moveable mov;
-        if (data == MonsterDb.bat) mov = new Bat(data, spawnPoint);
+        if (data == Bat.data) mov = new Bat(data, spawnPoint);
         else mov = new Monster(data, spawnPoint);
         UpdateMoveable(mov);
     }
