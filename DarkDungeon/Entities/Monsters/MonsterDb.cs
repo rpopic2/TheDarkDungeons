@@ -5,26 +5,12 @@ public static class MonsterDb
     private static int lv => Map.level;
     private static int t => Game.Turn;
     private const int n = 1;
-    private static DropList lunDropList = new(
-        (It.HpPot, 10),
-        (It.Bag, 11),
-        (It.Torch, 5),
-        (It.FieryRing, 15),
-        (It.LunarRing, 15));
-    private static DropList snakeDropList = new(
-        (It.HpPot, 10),
-        (It.Bag, 11),
-        (It.Torch, 5),
-        (It.ShadowAttack, 20),
-        (It.Scouter, 5));
-    private static StatMul lunaticMul = new(new(3, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.6f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));
-    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, lunDropList);
-    private static StatMul snakeMul = new(sol: new(2, 0.6f, lv), lun: new(1, n, n), con: new(2, n, n), hp: new(2, 0.3f, lv), cap: new(2, 0.16f, lv), killExp: new(5, 0.3f, lv));
-    public static MonsterData snake = new(2, "Snake", 'S', '2', ClassName.Warrior, snakeMul, Monster.snakeBehav, snakeDropList);
+
+    
 }
-public readonly record struct MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList)
+public readonly record struct MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, DropList dropList)
 {
-    public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, behaviour, dropList)
+    public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, dropList)
     {
         MonsterDb.data.Add(this);
     }

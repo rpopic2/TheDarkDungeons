@@ -44,7 +44,7 @@ public class Map
     public void _Spawn(MonsterData data, Position spawnPoint)
     {
         Moveable mov;
-        if (data == Bat.data) mov = new Bat(data, spawnPoint);
+        if (data == Bat.data) mov = new Bat(spawnPoint);
         else mov = new Monster(data, spawnPoint);
         UpdateMoveable(mov);
     }
