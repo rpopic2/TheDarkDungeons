@@ -1,13 +1,11 @@
-monster ads->attack back when get attacked, follow player if player flees, attack when player is seen.
-
-item komakai info
-
 individual monsters into a class
 
+monster ads->attack back when get attacked, follow player if player flees, attack when player is seen.
+
+item details (inventory ui)
+
+
+
 entities inheritance problems
-
-rest 2 or more turns
-
-mobs does not need to spawn in special order
 
 * star cards consumes turn
