@@ -1,6 +1,6 @@
 public static class MonsterDb
 {
-    public static List<MonsterData> data = new();
+    public static List<MonsterData> data = new List<MonsterData>{Bat.bat, Lunatic.lunatic, Snake.snake};
     public static int Count => data.Count;
     private static int lv => Map.level;
     private static int t => Game.Turn;
@@ -12,7 +12,7 @@ public readonly record struct MonsterData(string name, char fowardChar, char bac
 {
     public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, dropList)
     {
-        MonsterDb.data.Add(this);
+        //MonsterDb.data.Add(this);
     }
 }
 public readonly record struct StatMul(Mul sol, Mul lun, Mul con, Mul hp, Mul cap, Mul killExp);

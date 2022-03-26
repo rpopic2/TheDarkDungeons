@@ -7,9 +7,10 @@ public class Snake : Monster
         (It.ShadowAttack, 20),
         (It.Scouter, 5));
     private static StatMul snakeMul = new(sol: new(2, 0.6f, lv), lun: new(1, n, n), con: new(2, n, n), hp: new(2, 0.3f, lv), cap: new(2, 0.16f, lv), killExp: new(5, 0.3f, lv));
-    public static MonsterData data = new(2, "Snake", 'S', '2', ClassName.Warrior, snakeMul, snakeDropList);
+    public static MonsterData snake = new(2, "Snake", 'S', '2', ClassName.Warrior, snakeMul, snakeDropList);
+    public override MonsterData data {get => snake;}
 
-    public Snake(Position pos) : base(data, pos)
+    public Snake(Position pos) : base(snake, pos)
     {
 
     }
