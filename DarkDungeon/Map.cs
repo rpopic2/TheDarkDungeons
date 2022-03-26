@@ -14,7 +14,6 @@ public class Map
     private readonly char[] empty;
     public readonly int length;
     private const bool debug = false;
-    private bool monsterSpawned = false;
     public Map(int length)
     {
         Current = this;
@@ -33,21 +32,33 @@ public class Map
     {
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
-        
+
         int randomInt = rnd.Next(0, MonsterDb.Count);
-        MonsterData data = MonsterDb.data[randomInt];
+        MonsterData data;
+        switch (randomInt)
+        {
+            case 1:
+                data = Lunatic.lunatic;
+                break;
+            case 2:
+                data = Snake.snake;
+                break;
+            default:
+                data = Bat.bat;
+                break;
+        }
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
         Position spawnPoint = new Position(newPos, 0, Facing.Back);
         _Spawn(data, spawnPoint);
-        monsterSpawned = true;
+
     }
     public void _Spawn(MonsterData data, Position spawnPoint)
     {
         Moveable mov;
-        if (data == MonsterDb.bat) mov = new Bat(data, spawnPoint);
-        else mov = new Monster(data, spawnPoint);
+        //if (data == Bat.data) mov = new Bat(spawnPoint);
+        mov = new Monster(data, spawnPoint);
         UpdateMoveable(mov);
     }
     private List<int> GetSpawnableIndices()
