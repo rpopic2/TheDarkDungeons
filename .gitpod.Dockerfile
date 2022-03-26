@@ -1,1 +1,1 @@
-FROM gitpod/workspace-dotnet:latest
+FROM gitpod/workspace-dotnet:2022-03-22-23-33-48
