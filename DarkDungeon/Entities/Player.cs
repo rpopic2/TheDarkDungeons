@@ -126,7 +126,7 @@ public class Player : Inventoriable
         base.Rest();
         Card[] newCards = {Draw(Stats.Sol), Draw(Stats.Lun), Draw(Stats.Con)};
         IO.seln(newCards, out int index, out bool cancel, out ConsoleModifiers mod);
-        PickupCard(Draw(Stats.Sol, true));
+        PickupCard(newCards[index]);
         // bool cancel = false;
         // do
         // {
