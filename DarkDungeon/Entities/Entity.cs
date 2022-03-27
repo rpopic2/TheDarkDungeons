@@ -16,6 +16,6 @@ public class Entity
         Name = name;
     }
 
-    public Card Draw(Stats stats, bool isOffence) => new(GetRandomStat(stat[stats]), stats, isOffence);
+    public Card Draw(Stats stats, bool isOffence = true) => new(GetRandomStat(stat[stats]), stats, isOffence);
     private int GetRandomStat(int stat) => rnd.Next(1, stat + 1);
 }

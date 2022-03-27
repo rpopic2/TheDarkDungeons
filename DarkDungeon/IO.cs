@@ -36,8 +36,10 @@ public static class IO
         if (index != -1) index--;
         return index != -1 && index <= max - 1;
     }
+    ///<summary>Select from hand</summary>
     public static void seln_h(out int result, out bool cancel, out ConsoleModifiers mod) =>
         seln(player.Hand, out result, out cancel, out mod, player.Hand.Cap);
+    ///<summary>Select from inventory</summary>
     public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
     seln(player.Inven, out result, out cancel, out mod, player.Inven.Cap);
 

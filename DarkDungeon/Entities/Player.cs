@@ -124,15 +124,17 @@ public class Player : Inventoriable
     public override void Rest()
     {
         base.Rest();
+        Card[] newCards = {Draw(Stats.Sol), Draw(Stats.Lun), Draw(Stats.Con)};
+        IO.seln(newCards, out int index, out bool cancel, out ConsoleModifiers mod, newCards.Count());
         PickupCard(Draw(Stats.Sol, true));
-        bool cancel = false;
-        do
-        {
-            IO.pr("Review your hand\tq : Exit | num : Stanceshift");
-            IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
-            //if (!cancel) Hand[index] = Hand[index]?.StanceShift();
-            IO.del();
-        } while (!cancel);
+        // bool cancel = false;
+        // do
+        // {
+        //     IO.pr("Review your hand\tq : Exit | num : Stanceshift");
+        //     IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
+        //     //if (!cancel) Hand[index] = Hand[index]?.StanceShift();
+        //     IO.del();
+        // } while (!cancel);
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
         {

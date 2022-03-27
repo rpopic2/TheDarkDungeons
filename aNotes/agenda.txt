@@ -6,6 +6,8 @@ map system
 
 skills system
 
+IO.seln => 마지막 인수 안받게끔
+
 monster ads->attack back when get attacked, follow player if player flees, attack when player is seen.
 
 item details (inventory ui)
