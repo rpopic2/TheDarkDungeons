@@ -1,7 +1,6 @@
 public class Lunatic : Monster
 {
-    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, lunDropList);
-    public override MonsterData data { get => lunatic; }
+    public static MonsterData data = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, lunDropList);
     private static StatMul lunaticMul = new(new(3, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.6f, lv), new(1, 0.16f, lv), new(4, 0.3f, lv));
     private static DropList lunDropList = new(
         (It.HpPot, 10),
@@ -10,7 +9,7 @@ public class Lunatic : Monster
         (It.FieryRing, 15),
         (It.LunarRing, 15));
 
-    public Lunatic(Position pos) : base(lunatic, pos)
+    public Lunatic(Position pos) : base(data, pos)
     {
 
     }
@@ -30,5 +29,5 @@ public class Lunatic : Monster
         }
         else Rest();
     }
-
+    
 }

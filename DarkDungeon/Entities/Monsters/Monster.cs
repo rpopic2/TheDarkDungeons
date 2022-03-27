@@ -6,7 +6,6 @@ public class Monster : Fightable
     protected const int n = 1;
     private int killExp;
     protected static Player player { get => Player.instance; }
-    public virtual MonsterData data { get => Bat.bat; }
     protected DropList dropList;
     private char fowardChar, backwardChar;
     public Monster(MonsterData data, Position spawnPoint) : base(data.name, data.className, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap)
