@@ -17,13 +17,13 @@ public class Monster : Fightable
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
         Pos = spawnPoint;
-        PickupCard(Draw(), Hand.Count);
+        PickupCard(Draw(Stats.Sol, true), Hand.Count);
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
         base.OnDeath(sender, e);
         player.exp.point += killExp;
-        player.PickupCard(Draw());
+        player.PickupCard(Draw(Stats.Sol, true));
         foreach (var item in dropList.list)
         {
             IItemData iitem = Inventoriable.Items[(int)item.dataIndex];
@@ -81,7 +81,7 @@ public class Monster : Fightable
     public override void Rest()
     {
         base.Rest();
-        PickupCard(Draw(), Hand.Count);
+        PickupCard(Draw(Stats.Sol, true), Hand.Count);
     }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;

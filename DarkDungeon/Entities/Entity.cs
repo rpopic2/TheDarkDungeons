@@ -16,6 +16,6 @@ public class Entity
         Name = name;
     }
 
-    public Card Draw() => throw new NotImplementedException();//new Card(GetRandomStat(stat[Stats.Sol]), GetRandomStat(stat[Stats.Lun]), GetRandomStat(stat[Stats.Con]), CardStance.Offence);
+    public Card Draw(Stats stats, bool isOffence) => new(GetRandomStat(stat[stats]), stats, isOffence);
     private int GetRandomStat(int stat) => rnd.Next(1, stat + 1);
 }

@@ -17,7 +17,7 @@ public class Player : Inventoriable
         exp.point.OnOverflow += new EventHandler(OnLvUp);
         for (int i = 0; i < basicCap; i++)
         {
-            Hand[i] = Draw();
+            Hand[i] = Draw(Stats.Sol, true);
         }
     }
     public void StartItem()
@@ -124,7 +124,7 @@ public class Player : Inventoriable
     public override void Rest()
     {
         base.Rest();
-        PickupCard(Draw());
+        PickupCard(Draw(Stats.Sol, true));
         bool cancel = false;
         do
         {
