@@ -16,6 +16,10 @@ public static class IO
         del();
         return info;
     }
+    public static void seln(Array print, out int index, out bool cancel, out ConsoleModifiers mod)
+    {
+        seln(print, out index, out cancel, out mod, print.Length);
+    }
     public static void seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, int max)
     {
         bool found;
@@ -47,9 +51,9 @@ public static class IO
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object x, bool emphasis = false, bool newline = false)
     {
-        if (x is string[])
+        if (x is Array array)
         {
-            _prfo(x); return;
+            _prfo(array); return;
         }
         if (emphasis) x = Emphasis + x;
         if (newline) x = "\n" + x;
@@ -58,10 +62,10 @@ public static class IO
     }
 
     ///<summary>Print in Formated Options</summary>
-    private static void _prfo(object options, string comment = "Select :")
+    private static void _prfo(Array options, string comment = "Select :")
     {
         string printResult = comment + " /";
-        foreach (var item in (Array)options)
+        foreach (var item in options)
         {
             printResult += $" {item} /";
         }
