@@ -91,9 +91,6 @@ public class Player : Inventoriable
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
-            throw new NotImplementedException();
-
-            //PickupCard(Draw().Exile());
             IO.del(2);
             return;
         }
