@@ -74,18 +74,13 @@ public class Player : Inventoriable
     {
         IO.pr("\nFound a card." + card);
         IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
-        throw new NotImplementedException();
 
-        //if (mod == ConsoleModifiers.Alt) card.StanceShift();
-        // if (cancel)
-        // {
-        //     if (card.Stance != CardStance.Star)
-        //     {
-        //         PickupCard(card.Exile());
-        //     }
-        //     IO.del(2);
-        //     return;
-        // }
+        if (mod == ConsoleModifiers.Alt) card = Card.StanceShift(card);
+        if (cancel)
+        {
+            IO.del(2);
+            return;
+        }
         PickupCard(card, index);
         IO.del(2);
     }
