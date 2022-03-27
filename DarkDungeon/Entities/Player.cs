@@ -102,7 +102,7 @@ public class Player : Inventoriable
     }
     public void Exile()
     {
-            throw new NotImplementedException();
+        throw new NotImplementedException();
 
         // int index;
         // Card card;
@@ -119,17 +119,18 @@ public class Player : Inventoriable
     public override void Rest()
     {
         base.Rest();
-        Card[] newCards = {Draw(Stats.Sol), Draw(Stats.Lun), Draw(Stats.Con)};
-        IO.seln(newCards, out int index, out bool cancel, out ConsoleModifiers mod);
-        PickupCard(newCards[index]);
-        // bool cancel = false;
-        // do
-        // {
-        //     IO.pr("Review your hand\tq : Exit | num : Stanceshift");
-        //     IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
-        //     //if (!cancel) Hand[index] = Hand[index]?.StanceShift();
-        //     IO.del();
-        // } while (!cancel);
+        Card[] newCards = { Draw(Stats.Sol), Draw(Stats.Lun), Draw(Stats.Con) };
+        IO.seln(newCards, out int index, out bool cancel, out _);
+        if (cancel)
+        {
+            for (int i = 0; i < newCards.Length; i++)
+            {
+                newCards[i] = Card.StanceShift(newCards[i]);
+            }
+            IO.seln(newCards, out index, out _, out _);
+        }
+        if(newCards[index] is Card card) PickupCard(card);
+        
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
         {
