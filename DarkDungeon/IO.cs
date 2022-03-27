@@ -16,11 +16,11 @@ public static class IO
         del();
         return info;
     }
-    public static void seln(Array print, out int index, out bool cancel, out ConsoleModifiers mod)
+    public static void seln(Array value, out int index, out bool cancel, out ConsoleModifiers mod)
     {
-        seln(print, out index, out cancel, out mod, print.Length);
+        _seln(value, out index, out cancel, out mod, value.Length);
     }
-    public static void seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, int max)
+    private static void _seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, int max)
     {
         bool found;
         do
@@ -42,10 +42,10 @@ public static class IO
     }
     ///<summary>Select from hand</summary>
     public static void seln_h(out int result, out bool cancel, out ConsoleModifiers mod) =>
-        seln(player.Hand, out result, out cancel, out mod, player.Hand.Cap);
+        _seln(player.Hand, out result, out cancel, out mod, player.Hand.Cap);
     ///<summary>Select from inventory</summary>
     public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
-    seln(player.Inven, out result, out cancel, out mod, player.Inven.Cap);
+    _seln(player.Inven, out result, out cancel, out mod, player.Inven.Cap);
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>

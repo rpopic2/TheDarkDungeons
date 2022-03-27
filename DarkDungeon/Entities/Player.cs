@@ -52,7 +52,7 @@ public class Player : Inventoriable
         int index;
         do
         {
-            IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod, Program.stats.Count());
+            IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod);
         } while (cancel);
         switch (index)
         {

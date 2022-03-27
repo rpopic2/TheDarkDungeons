@@ -39,7 +39,7 @@ public class Program
         IO.pr("Choose charactor`s name...");
         string name = Console.ReadLine() ?? "Michael";
         IO.pr("Choose your class...");
-        IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
+        IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
         Player._instance = new Player(name, className);
