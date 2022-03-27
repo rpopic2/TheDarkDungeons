@@ -1,18 +1,22 @@
 namespace Entities;
 public class Bat : Monster
 {
-    public Bat(MonsterData data, Position spawnPoint) : base(data, spawnPoint)
-    {
-        if (Hand[0] is Card card)
-        {
-            Hand[0] = card.StanceShift();
-        }
-        dropList = new(
+    public static MonsterData bat = new(0, "Bat", 'b', 'd', ClassName.Assassin, mul, dropList);
+    public override MonsterData data {get => bat;}
+    private static StatMul mul = new(new(1, 0.6f, lv), new(3, n, n), new(2, n, n), new(2, 0.4f, lv), new(1, 0.16f, lv), new(3, 0.3f, lv));
+    private new static DropList dropList = new(
         (It.HpPot, 10),
         (It.Bag, 11),
         (It.Torch, 5),
         (It.FieryRing, 15),
         (It.LunarRing, 15));
+
+    public Bat(Position spawnPoint) : base(bat, spawnPoint)
+    {
+        if (Hand[0] is Card card)
+        {
+            Hand[0] = card.StanceShift();
+        }
     }
     public override void DoTurn()
     {
