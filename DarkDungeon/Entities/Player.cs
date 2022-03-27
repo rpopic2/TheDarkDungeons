@@ -72,10 +72,16 @@ public class Player : Inventoriable
     }
     public void PickupCard(Card card)
     {
+        Show:
         IO.pr("\nFound a card." + card);
-        IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
-
-        if (mod == ConsoleModifiers.Alt) card = Card.StanceShift(card);
+        IO.seln_h(out int index, out bool cancel, out ConsoleKeyInfo keyInfo);
+        if (keyInfo.Key == IO.OKKEY) 
+        {
+            card = Card.StanceShift(card);
+            IO.del(2);
+            goto Show;
+        }
+        
         if (cancel)
         {
             IO.del(2);
@@ -127,7 +133,7 @@ public class Player : Inventoriable
             }
             goto Show;
         }
-        if(newCards.Length -1 <= index && newCards[index] is Card card) PickupCard(card);
+        if(newCards.Length -1 >= index && newCards[index] is Card card) PickupCard(card);
         
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
@@ -139,7 +145,7 @@ public class Player : Inventoriable
     {
         do
         {
-            IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
+            IO.seln_h(out int index, out bool cancel, out _);
             if (cancel) return null;
             return Hand[index];
         } while (true);
