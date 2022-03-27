@@ -16,10 +16,6 @@ public enum GamePointOption
 {
     Stacking, Reserving
 }
-public enum KeyArrow
-{
-    Cancel, UpArrow, DownArrow, LeftArrow, RightArrow
-}
 public enum Facing
 {
     Front, Back

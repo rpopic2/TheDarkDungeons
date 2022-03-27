@@ -117,16 +117,17 @@ public class Player : Inventoriable
     {
         base.Rest();
         Card[] newCards = { Draw(Stats.Sol), Draw(Stats.Lun), Draw(Stats.Con) };
-        IO.seln(newCards, out int index, out bool cancel, out _);
-        if (cancel)
+        Show:
+        IO.seln(newCards, out int index, out ConsoleKeyInfo keyInfo);
+        if (keyInfo.Key == IO.OKKEY)
         {
             for (int i = 0; i < newCards.Length; i++)
             {
                 newCards[i] = Card.StanceShift(newCards[i]);
             }
-            IO.seln(newCards, out index, out _, out _);
+            goto Show;
         }
-        if(newCards[index] is Card card) PickupCard(card);
+        if(newCards.Length -1 <= index && newCards[index] is Card card) PickupCard(card);
         
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
