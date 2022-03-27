@@ -3,9 +3,14 @@ public enum ClassName
     Warrior, Assassin, Mage
 }
 
+public enum Stats
+{
+    Sol, Lun, Con
+}
+
 public enum CardStance
 {
-    Attack, Dodge, Star
+    Offence, Defence,
 }
 public enum GamePointOption
 {

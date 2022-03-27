@@ -74,16 +74,18 @@ public class Player : Inventoriable
     {
         IO.pr("\nFound a card." + card);
         IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
-        if (mod == ConsoleModifiers.Alt) card.StanceShift();
-        if (cancel)
-        {
-            if (card.Stance != CardStance.Star)
-            {
-                PickupCard(card.Exile());
-            }
-            IO.del(2);
-            return;
-        }
+        throw new NotImplementedException();
+
+        //if (mod == ConsoleModifiers.Alt) card.StanceShift();
+        // if (cancel)
+        // {
+        //     if (card.Stance != CardStance.Star)
+        //     {
+        //         PickupCard(card.Exile());
+        //     }
+        //     IO.del(2);
+        //     return;
+        // }
         PickupCard(card, index);
         IO.del(2);
     }
@@ -94,7 +96,9 @@ public class Player : Inventoriable
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
-            PickupCard(Draw().Exile());
+            throw new NotImplementedException();
+
+            //PickupCard(Draw().Exile());
             IO.del(2);
             return;
         }
@@ -103,17 +107,19 @@ public class Player : Inventoriable
     }
     public void Exile()
     {
-        int index;
-        Card card;
-        do
-        {
-            IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
-            card = Hand[index] ?? throw new Exception();
-            if (cancel) return;
-        } while (card.Stance == CardStance.Star);
-        IO.pr("Exiled a card.");
-        Hand[index] = Hand[index]?.Exile();
-        stance = new(Stance.Exile, default);
+            throw new NotImplementedException();
+
+        // int index;
+        // Card card;
+        // do
+        // {
+        //     IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
+        //     card = Hand[index] ?? throw new Exception();
+        //     if (cancel) return;
+        // } while (card.Stance == CardStance.Star);
+        // IO.pr("Exiled a card.");
+        // Hand[index] = Hand[index]?.Exile();
+        // stance = new(Stance.Exile, default);
     }
     public override void Rest()
     {
@@ -124,7 +130,7 @@ public class Player : Inventoriable
         {
             IO.pr("Review your hand\tq : Exit | num : Stanceshift");
             IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
-            if (!cancel) Hand[index] = Hand[index]?.StanceShift();
+            //if (!cancel) Hand[index] = Hand[index]?.StanceShift();
             IO.del();
         } while (!cancel);
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;

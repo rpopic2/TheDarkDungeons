@@ -43,10 +43,10 @@ public class Inventoriable : Fightable
                     return;
                 }
             }
-            else if (oldItem.itemType == ItemType.Skill && oldItem.abv == newItem.abv) oldItem.level ++;
+            else if (oldItem.itemType == ItemType.Skill && oldItem.abv == newItem.abv) oldItem.level++;
             else if (oldItem is Equip oldEquip) oldEquip.onUse.Invoke(false);
         }
-        
+
         Inven[index] = newItem;
         if (newItem is Equip equip) equip.onUse.Invoke(true);
     }
@@ -79,7 +79,8 @@ public class Inventoriable : Fightable
         {
             if (f.Target is not null && f.SelectCard() is Card card)
             {
-                Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Attack);
+                throw new NotImplementedException();
+                //Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Offence);
                 f.UseCard(card);
                 return true;
             }
@@ -97,9 +98,11 @@ public class Inventoriable : Fightable
         });
         public static readonly ItemData Berserk = new(6, "BERSRK", ItemType.Skill, f =>
         {
+            throw new NotImplementedException();
+
             Card? card = f.SelectCard();
             if (card is not Card card2) return false;
-            if (card2.Stance == CardStance.Attack) f.stance.amount += f.Hp.Max - f.Hp.Cur;
+            //if (card2.Stance == CardStance.Offence) f.stance.amount += f.Hp.Max - f.Hp.Cur;
             else return false;
             f.UseCard(card2);
             return true;

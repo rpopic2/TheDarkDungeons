@@ -27,33 +27,34 @@ public class Fightable : Moveable
         if (Target is null) return;
         if (Hand[index] is Card card)
         {
-            if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
+            //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
             _UseCard(card);
         }
     }
     public void UseCard(Card card)
     {
         if (Target is null) return;
-        if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
+        //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
         _UseCard(card);
     }
     protected void _UseCard(Card card)
     {
         Hand.Delete(card);
-        switch (card.Stance)
-        {
-            case CardStance.Attack:
-                stance.stance = Stance.Attack;
-                stance.amount += card.Sol;
-                break;
-            case CardStance.Dodge:
-                stance.stance = Stance.Dodge;
-                stance.amount += card.Lun;
-                break;
-            case CardStance.Star:
-                star = card.Con;
-                break;
-        }
+        throw new NotImplementedException();
+        // switch (card.Stance)
+        // {
+        //     case CardStance.Offence:
+        //         stance.stance = Stance.Attack;
+        //         stance.amount += card.Sol;
+        //         break;
+        //     case CardStance.Defence:
+        //         stance.stance = Stance.Dodge;
+        //         stance.amount += card.Lun;
+        //         break;
+        //     case CardStance.Star:
+        //         star = card.Con;
+        //         break;
+        // }
     }
     public void TryAttack()
     {
