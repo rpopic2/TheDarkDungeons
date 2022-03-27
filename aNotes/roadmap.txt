@@ -12,9 +12,15 @@ monster ads
 
 score, high score scoreboard
 
+new ui
+
+
 10 levels + boss fight
+
 npcs
+
 traps
+
 tresures
 
 sounds

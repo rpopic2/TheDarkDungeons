@@ -60,7 +60,6 @@ public class Program
             case ConsoleKey.H:
                 player.Move(-1);
                 break;
-            case ConsoleKey.Q:
             case ConsoleKey.Escape:
                 ConsoleKey key2 = IO.rk(actions).Key;
                 DefaultSwitch(key2);
@@ -79,7 +78,7 @@ public class Program
     {
         switch (key)
         {
-            case ConsoleKey.W:
+            case ConsoleKey.Q:
                 Card? card = player.SelectCard();
                 if (card is Card card2) player.UseCard(card2);
                 break;
