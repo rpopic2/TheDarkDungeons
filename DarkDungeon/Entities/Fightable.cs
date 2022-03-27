@@ -39,22 +39,25 @@ public class Fightable : Moveable
     }
     protected void _UseCard(Card card)
     {
+        if (card.isOffence)
+        {
+            if (card.stat == Stats.Sol)
+            {
+                stance.stance = Stance.Attack;
+                stance.amount += card.value;
+            }
+            else return;
+        }
+        if (!card.isOffence)
+        {
+            if (card.stat == Stats.Sol || card.stat == Stats.Lun)
+            {
+                stance.stance = Stance.Dodge;
+                stance.amount += card.value;
+            }
+            else return;
+        }
         Hand.Delete(card);
-        throw new NotImplementedException();
-        // switch (card.Stance)
-        // {
-        //     case CardStance.Offence:
-        //         stance.stance = Stance.Attack;
-        //         stance.amount += card.Sol;
-        //         break;
-        //     case CardStance.Defence:
-        //         stance.stance = Stance.Dodge;
-        //         stance.amount += card.Lun;
-        //         break;
-        //     case CardStance.Star:
-        //         star = card.Con;
-        //         break;
-        // }
     }
     public void TryAttack()
     {
