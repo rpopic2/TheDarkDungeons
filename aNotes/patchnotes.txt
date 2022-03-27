@@ -12,4 +12,4 @@ lunatic hp scale buffed from 0.03lv to 0.6lv
 lunatic base sol buffed from 2 to 3
 
 snake added.
-mobs now does not spawn in fixed order
+now mobs does not spawn in fixed order

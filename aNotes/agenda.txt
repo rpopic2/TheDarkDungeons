@@ -1,4 +1,10 @@
-individual monsters into a class
+monsters system
+
+io system
+
+map system
+
+skills system
 
 monster ads->attack back when get attacked, follow player if player flees, attack when player is seen.
 
