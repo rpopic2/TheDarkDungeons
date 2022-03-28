@@ -64,7 +64,7 @@ public class Fightable : Moveable
         if (!(Target is Fightable fight)) return;
         if (stance.stance == Stance.Attack)
         {
-            string tempString = $"{Name} attacks with {stance.amount} damage.";
+            string tempString = $"{Name}은 주먹으로 상대를 힘껏 떄렸다. ({stance.amount})";
             TryUseStar();
             IO.pr(tempString);
             fight.TryDodge(stance.amount);
@@ -75,7 +75,7 @@ public class Fightable : Moveable
     {
         if (stance.stance == Stance.Dodge)
         {
-            string tempStr = $"{Name} dodges {stance.amount} damage.";
+            string tempStr = $"{Name}는 굴러서 적의 공격을 피 {stance.amount} damage.";
             TryUseStar();
             if (damage <= 0)
             {
@@ -126,11 +126,21 @@ public class Fightable : Moveable
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{GetHandPrivate()}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();
         else return 'x';
+    }
+    public string GetHandPrivate()
+    {
+        string result = $"Hand : ";
+        foreach (Card? item in Hand.Content)
+        {
+            if (item is not Card card) result += Item.Empty;
+            else result += card.ToStringPrivate();
+        }
+        return result;
     }
     public void UpdateTarget()
     {

@@ -22,6 +22,7 @@ public readonly struct Card
     }
 
     public override string ToString() => visual;
+    public string ToStringPrivate() => isOffence ? OFFENSIVE : DEFENSIVE;
 
     public static Card StanceShift(Card card) => new Card(card.value, card.stat, !card.isOffence);
 }
