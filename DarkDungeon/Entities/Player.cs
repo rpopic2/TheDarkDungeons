@@ -151,6 +151,16 @@ public class Player : Inventoriable
             return Hand[index];
         } while (true);
     }
+    public TokenType? SelectToken()
+    {
+        do
+        {
+            IO.seln_t(out int index, out bool cancel, out _);
+            if (cancel) return null;
+            return (TokenType)tokens[index]!;
+        } while (true);
+    }
+    
     public void UseInven()
     {
         do

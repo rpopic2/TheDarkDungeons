@@ -61,6 +61,14 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
+    public void UseToken(TokenType token)
+    {
+        if (token == TokenType.Offence)
+        {
+            stance = new(Stance.Attack, rnd.Next(1, stat[Stats.Sol]));
+            stance.stance = Stance.Attack;
+        }
+    }
     public void TryAttack()
     {
         if (!(Target is Fightable fight)) return;

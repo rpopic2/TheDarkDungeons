@@ -1,5 +1,5 @@
 [x] token(card) draw
-[ ] print token hand
+[x] print token hand
 [ ] atk w/ token
 [ ] def w/ token
 [ ] charge w/ token

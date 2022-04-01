@@ -79,8 +79,8 @@ public class Program
         switch (key)
         {
             case ConsoleKey.Q:
-                Card? card = player.SelectCard();
-                if (card is Card card2) player.UseCard(card2);
+                TokenType? selResult = player.SelectToken();
+                if (selResult is TokenType token) player.UseToken(token);
                 break;
             case ConsoleKey.E:
                 player.UseInven();
