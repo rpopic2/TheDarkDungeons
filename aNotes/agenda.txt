@@ -1,7 +1,8 @@
 [x] token(card) draw
 [x] print token hand
-[ ] atk w/ token
+[x] atk w/ token
 [ ] def w/ token
 [ ] charge w/ token
-[ ] 여기서 드는 생각 : 토큰 저장소에 굳이 객체를 저장? 그냥 숫자 저장해도 되지 않나??
+[ ] new ui : inventory always showing / or i to show, I to show full version
+[ ] select item from inventory, list its skills
 [ ] 
