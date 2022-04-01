@@ -3,7 +3,6 @@ public class Fightable : Moveable
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
-    public Inventory<Token?> Tokens { get; private set; } = new(3, "Tokens");
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     private int star;

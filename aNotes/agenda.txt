@@ -1,1 +1,7 @@
-token(card) draw
+[x] token(card) draw
+[ ] print token hand
+[ ] atk w/ token
+[ ] def w/ token
+[ ] charge w/ token
+[ ] 여기서 드는 생각 : 토큰 저장소에 굳이 객체를 저장? 그냥 숫자 저장해도 되지 않나??
+[ ] 

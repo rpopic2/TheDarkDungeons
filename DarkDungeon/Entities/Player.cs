@@ -3,12 +3,13 @@ namespace Entities;
 public class Player : Inventoriable
 {
     public const int skillMax = 2;
-    private const int basicCap = 3;
+    public const int basicCap = 3;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
+    public Tokens tokens;
 
     public Player(string name, ClassName className) : base(name, className, level: 1, sol: 2, lun: 2, con: 2, maxHp: 3, cap: basicCap)
     {
@@ -18,6 +19,7 @@ public class Player : Inventoriable
         {
             Hand[i] = Draw(Stats.Sol, true);
         }
+        tokens = new(basicCap);
     }
     public void StartItem()
     {
@@ -122,12 +124,7 @@ public class Player : Inventoriable
     {
         base.Rest();
         IO.pr("토큰 종류를 선택해 주십시오.");
-        IO.seln(Token.TokenNames, out int index, out _);
-        //if(tokenTypes.Length -1 >= index && tokenTypes[index] is Card card) PickupCard(card);
-        Token token = new((TokenType)index);
-        Tokens[Tokens.Count] = token;
-        IO.pr(Tokens);
-        
+        IO.seln(Tokens.TokenPromptNames, out int index, out _);
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
         {
