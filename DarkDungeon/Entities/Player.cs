@@ -1,4 +1,3 @@
-using System.Diagnostics;
 namespace Entities;
 
 public class Player : Inventoriable
@@ -122,18 +121,12 @@ public class Player : Inventoriable
     public override void Rest()
     {
         base.Rest();
-        Card[] newCards = { Draw(Stats.Sol), Draw(Stats.Lun), Draw(Stats.Con) };
-        Show:
-        IO.seln(newCards, out int index, out ConsoleKeyInfo keyInfo);
-        if (keyInfo.Key == IO.OKKEY)
-        {
-            for (int i = 0; i < newCards.Length; i++)
-            {
-                newCards[i] = Card.StanceShift(newCards[i]);
-            }
-            goto Show;
-        }
-        if(newCards.Length -1 >= index && newCards[index] is Card card) PickupCard(card);
+        IO.pr("토큰 종류를 선택해 주십시오.");
+        IO.seln(Token.TokenNames, out int index, out _);
+        //if(tokenTypes.Length -1 >= index && tokenTypes[index] is Card card) PickupCard(card);
+        Token token = new((TokenType)index);
+        Tokens[Tokens.Count] = token;
+        IO.pr(Tokens);
         
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)

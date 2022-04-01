@@ -1,4 +1,5 @@
 using Xunit;
+using Entities;
 
 public class UnitTest
 {
@@ -33,5 +34,12 @@ public class UnitTest
         Assert.Equal("[1*]", card.ToString());
 
         Assert.NotEqual("[1s]", card.ToString());
+    }
+
+    [Fact]
+    public void TokenCreationTest()
+    {
+        Player player = new("TestPlayer", default);
+        
     }
 }
