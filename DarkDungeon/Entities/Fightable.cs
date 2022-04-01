@@ -3,6 +3,7 @@ public class Fightable : Moveable
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
+    public Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     private int star;
@@ -12,6 +13,7 @@ public class Fightable : Moveable
     {
         ClassName = className;
         Hand = new Inventory<Card?>(cap, "Hand");
+        tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
@@ -102,7 +104,7 @@ public class Fightable : Moveable
     }
     public virtual void Rest()
     {
-        if (Map.Current.IsVisible(this)) IO.pr($"{Name} is resting a turn.");
+        if (Map.Current.IsVisible(this)) IO.pr($"{Name}은 잠시 숨을 골랐다.");
         stance = new(Stance.Rest, default);
     }
     public virtual void OnBeforeTurnEnd()
@@ -126,7 +128,7 @@ public class Fightable : Moveable
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{GetHandPrivate()}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();

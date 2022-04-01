@@ -51,6 +51,8 @@ public static class IO
     ///<summary>Select from inventory</summary>
     public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
     _seln(player.Inven, out result, out cancel, out mod, out _, player.Inven.Cap);
+    public static void seln_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
+    _seln(player.tokens, out result, out cancel, out mod, out _, player.Hand.Cap);
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>

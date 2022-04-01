@@ -9,8 +9,6 @@ public class Player : Inventoriable
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
-    public Tokens tokens;
-
     public Player(string name, ClassName className) : base(name, className, level: 1, sol: 2, lun: 2, con: 2, maxHp: 3, cap: basicCap)
     {
         exp = new Exp(this);
@@ -19,7 +17,6 @@ public class Player : Inventoriable
         {
             Hand[i] = Draw(Stats.Sol, true);
         }
-        tokens = new(basicCap);
     }
     public void StartItem()
     {
@@ -73,16 +70,16 @@ public class Player : Inventoriable
     }
     public void PickupCard(Card card)
     {
-        Show:
+    Show:
         IO.pr("\nFound a card." + card);
         IO.seln_h(out int index, out bool cancel, out ConsoleKeyInfo keyInfo);
-        if (keyInfo.Key == IO.OKKEY) 
+        if (keyInfo.Key == IO.OKKEY)
         {
             card = Card.StanceShift(card);
             IO.del(2);
             goto Show;
         }
-        
+
         if (cancel)
         {
             IO.del(2);
@@ -125,6 +122,20 @@ public class Player : Inventoriable
         base.Rest();
         IO.pr("토큰 종류를 선택해 주십시오.");
         IO.seln(Tokens.TokenPromptNames, out int index, out _);
+        IO.del();
+
+        if (tokens.IsFull)
+        {
+            IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
+            IO.seln_t(out int index2, out _, out _);
+            IO.del();
+            tokens.RemoveAt(index2);
+        }
+        tokens.Add((byte)index);
+        IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
+        IO.rk();
+        IO.del();
+
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
         {
