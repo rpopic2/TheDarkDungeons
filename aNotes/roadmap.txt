@@ -1,4 +1,4 @@
-monsters system
+monsters
 
 io system
 
@@ -7,14 +7,6 @@ map system
 skills system
 
 new inventory system.
-
-monster ads
-
-score, high score scoreboard
-
-new ui
-
-스카우터 적 카드 보기가능
 
 10 levels + boss fight
 
@@ -25,3 +17,5 @@ traps
 tresures
 
 sounds
+
+score, high score scoreboard

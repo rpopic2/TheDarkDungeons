@@ -85,7 +85,7 @@ public class Program
             case ConsoleKey.E:
                 player.UseInven();
                 break;
-            case ConsoleKey.R:
+            case ConsoleKey.OemPeriod:
                 player.Rest();
                 break;
             case ConsoleKey.S:
