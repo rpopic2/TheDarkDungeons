@@ -61,7 +61,7 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
-    public void SelectSkillAndUse(NewItem item, int index)
+    public void SelectSkillAndUse(Item item, int index)
     {
         
 

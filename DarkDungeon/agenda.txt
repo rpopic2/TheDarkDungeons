@@ -14,18 +14,16 @@ new-inventory
 [X] Skill[] to NewItem class.
 [X] Stance.amount 할당에 버그있음. 
 [X] Monster도 새 스킬 쓰게끔.
-[ ] 아이템 먹을때 숫자?
-[ ] delete old Items
+[ ] 아이템 먹을때 숫자? -> IO에 새로운 메서드 필요
+[X] delete old Items
 [ ]
 
+[ ] 클래스 고르면 바로 무기 주기
 [ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
-[ ] I to show full inventory ui
-[ ] stance 시스템을 아예 새로 써야될듯? 약점 상태이상 부여하는게 더 나을수도?
+[ ] Stat.cs와 Stats.cs 너무 헷갈릴듯.
 [ ] combat unittest
+[ ] I to show full inventory ui
 [ ] 충전 알고리즘은 나중에 더 고민해야할 듯. 애초에 스킬이라 지금은 stub implementation임
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
-[ ] Stat.cs와 Stats.cs 너무 헷갈릴듯.
-[ ] inventory 사용할때 알파벳 말고 그냥 숫자로??
-[ ] 클래스 고르면 바로 무기 주기
-[ ] 몬스터 클래스 많이 수정 필요할듯.
+[ ] 몬스터 클래스 많이 수정 필요할듯. 몬스터 패턴 시스템도.
 [ ] 

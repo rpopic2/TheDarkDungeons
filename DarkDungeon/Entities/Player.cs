@@ -19,7 +19,7 @@ public class Player : Inventoriable
         switch (ClassName)
         {
             case ClassName.Warrior:
-                NewPickupItem(NewItem.sword);
+                NewPickupItem(Item.sword);
                 stat[Stats.Sol] += 1;
                 break;
             case ClassName.Assassin:
@@ -79,7 +79,7 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    private void NewPickupItem(NewItem item)
+    private void NewPickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);

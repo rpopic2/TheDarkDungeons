@@ -50,7 +50,7 @@ public static class IO
         _seln(player.Hand, out result, out cancel, out _, out keyInfo, player.Hand.Cap);
     ///<summary>Select from inventory</summary>
     public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
-    _seln(player.NewInven, out result, out cancel, out mod, out _, player.NewInven.Cap);
+    _seln(player.Inven, out result, out cancel, out mod, out _, player.Inven.Cap);
     public static void seln_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
     _seln(player.tokens, out result, out cancel, out mod, out _, player.Hand.Cap);
 

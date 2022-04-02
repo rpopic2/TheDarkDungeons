@@ -66,7 +66,7 @@ public class Program
     private void DefaultSwitch(ConsoleKeyInfo key)
     {
         int i = ItemKeys1.IndexOf(key.KeyChar);
-        if (i != -1 && player.NewInven[i] is NewItem item)
+        if (i != -1 && player.Inven[i] is Item item)
         {
             IO.seln(item.skills, out int index, out bool cancel, out _);
             if (cancel) return;
@@ -75,9 +75,9 @@ public class Program
         switch (key.KeyChar)
         {
             case 'q':
-                IO.seln(NewItem.bardHand.skills, out int index, out bool cancel, out _);
+                IO.seln(Item.bardHand.skills, out int index, out bool cancel, out _);
                 if (cancel) return;
-                player.SelectSkillAndUse(NewItem.bardHand, index);
+                player.SelectSkillAndUse(Item.bardHand, index);
                 break;
             case 'u':
                 IO.rk(player.tokens);
