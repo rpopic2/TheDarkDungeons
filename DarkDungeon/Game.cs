@@ -1,6 +1,6 @@
 public static class Game
 {
-    private static Player Player { get => Player.instance; }
+    private static Player _Player { get => Player.instance; }
     private const int SpawnRate = 10;
     public static event EventHandler? OnTurnEnd;
 
@@ -8,7 +8,7 @@ public static class Game
     static Game()
     {
         Map.NewMap();
-        Player.StartItem();
+        _Player.StartItem();
     }
     internal static void ElaspeTurn()
     {
@@ -38,8 +38,8 @@ public static class Game
         Turn++;
         Console.Clear();
         IO.pr("History");
-        IO.prb($"\nT : {Turn}\tDungeon Level : {Map.level}\tHP : {Player.instance.Hp}");
-        IO.prb(Player.instance.Inven);
+        IO.prb($"\nT : {Turn}\tDungeon Level : {Map.level}\tHP : {_Player.Hp}\t{_Player.tokens}");
+        IO.prb(_Player.Inven);
         IO.pr(Map.Current);
     }
 }
