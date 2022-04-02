@@ -13,18 +13,19 @@ public class Player : Inventoriable
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
+        PickupItem(Inventoriable.ItemDb.BareHand.Instantiate(this, stat), 0);
     }
     public void StartItem()
     {
         switch (ClassName)
         {
             case ClassName.Warrior:
-                PickupItemData(Inventoriable.SkillDb.Charge);
+                PickupItemData(Inventoriable.ItemDb.Charge);
                 //PickupItemData(Inventoriable.SkillDb.Berserk);
                 stat[Stats.Sol] += 1;
                 break;
             case ClassName.Assassin:
-                PickupItemData(Inventoriable.SkillDb.ShadowAttack);
+                PickupItemData(Inventoriable.ItemDb.ShadowAttack);
                 //PickupItemData(Inventoriable.SkillDb.Backstep);
                 stat[Stats.Lun] += 1;
                 break;
@@ -153,10 +154,10 @@ public class Player : Inventoriable
         {
             IO.seln_t(out int index, out bool cancel, out _);
             if (cancel) return null;
-            if(tokens[index] is byte result) return(TokenType)result;
+            if (tokens[index] is byte result) return (TokenType)result;
         } while (true);
     }
-    
+
     public void UseInven()
     {
         do

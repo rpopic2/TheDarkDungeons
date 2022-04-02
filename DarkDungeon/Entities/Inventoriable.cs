@@ -50,7 +50,7 @@ public class Inventoriable : Fightable
         Inven[index] = newItem;
         if (newItem is Equip equip) equip.onUse.Invoke(true);
     }
-    public static class SkillDb
+    public static class ItemDb
     {
         public static readonly ItemData HpPot = new(0, "HPPOT", ItemType.Consum, f =>
         {
@@ -127,5 +127,6 @@ public class Inventoriable : Fightable
         public static readonly EquipData LunarRing = new(8, "LUNRIN", (Stats.Lun, 3));
         public static readonly EquipData AmuletOfLa = new(9, "AMULLA", (Stats.Sol, 20));
         public static readonly EquipData FieryRing = new(10, "FIRING", (Stats.Sol, 3));
+        public static readonly EquipData BareHand = new(12, "맨손");
     }
 }
