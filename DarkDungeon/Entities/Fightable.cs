@@ -45,7 +45,7 @@ public class Fightable : Moveable
         {
             if (card.stat == Stats.Sol)
             {
-                stance.stance = Stance.Attack;
+                stance.stance = Stance.Offence;
                 stance.amount += card.value;
             }
             else return;
@@ -65,20 +65,25 @@ public class Fightable : Moveable
     {
         if (token == TokenType.Offence)
         {
-            stance.stance = Stance.Attack;
+            stance.stance = Stance.Offence;
             stance.amount += rnd.Next(1, stat[Stats.Sol]);
         }
         else if (token == TokenType.Defence)
         {
             stance.stance = Stance.Defence;
             stance.amount += rnd.Next(1, stat[Stats.Sol]);
+        }else if(token == TokenType.Charge)
+        {
+            stance.stance = Stance.Charge;
+            stance.amount += rnd.Next(1, stat[Stats.Con]);
+            IO.pr($"{Name}은 손에 별빛을 휘감았다. ({stance.amount})");
         }
         tokens.Remove(token);
     }
     public void TryAttack()
     {
         if (!(Target is Fightable fight)) return;
-        if (stance.stance == Stance.Attack)
+        if (stance.stance == Stance.Offence)
         {
             string tempString = $"{Name}은 주먹으로 상대를 힘껏 때렸다. ({stance.amount})";
             TryUseStar();
@@ -128,7 +133,7 @@ public class Fightable : Moveable
     public void OnTurnEnd()
     {
         UpdateTarget();
-        stance = new(default, default);
+        stance.stance = default;
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
