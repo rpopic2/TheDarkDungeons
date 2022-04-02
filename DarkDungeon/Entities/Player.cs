@@ -20,17 +20,12 @@ public class Player : Inventoriable
         {
             case ClassName.Warrior:
                 NewPickupItem(NewItem.sword);
-                //PickupItemData(Inventoriable.SkillDb.Berserk);
                 stat[Stats.Sol] += 1;
                 break;
             case ClassName.Assassin:
-                PickupItemData(Inventoriable.ItemDb.ShadowAttack);
-                //PickupItemData(Inventoriable.SkillDb.Backstep);
                 stat[Stats.Lun] += 1;
                 break;
             case ClassName.Mage:
-                PickupItemData(TorchData.data);
-                PickupItemData(TorchData.data);
                 stat[Stats.Con] += 1;
                 break;
         }
@@ -84,7 +79,6 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItemData(IItemData data) => PickupItem(data.Instantiate(this, stat));
     private void NewPickupItem(NewItem item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
@@ -95,18 +89,6 @@ public class Player : Inventoriable
             return;
         }
         NewPickupItem(item, index);
-        IO.del(2);
-    }
-    private void PickupItem(IItem item)
-    {
-        IO.pr("\nFound an item." + item.abv);
-        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
-        if (cancel)
-        {
-            IO.del(2);
-            return;
-        }
-        PickupItem(item, index);
         IO.del(2);
     }
     public void Exile()
@@ -166,17 +148,6 @@ public class Player : Inventoriable
             IO.seln_t(out int index, out bool cancel, out _);
             if (cancel) return null;
             if (tokens[index] is byte result) return (TokenType)result;
-        } while (true);
-    }
-
-    public void UseInven()
-    {
-        do
-        {
-            IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
-            if (cancel) return;
-            UseInven(index);
-            return;
         } while (true);
     }
     public override void Move(int x)

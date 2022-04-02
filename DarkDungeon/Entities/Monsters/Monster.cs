@@ -29,11 +29,11 @@ public class Monster : Inventoriable
         base.OnDeath(sender, e);
         player.exp.point += killExp;
         player.PickupCard(Draw(Stats.Sol, true));
-        foreach (var item in dropList.list)
-        {
-            IItemData iitem = Inventoriable.Items[(int)item.dataIndex];
-            if (DropOutOf(rnd, item.outof)) player.PickupItemData(iitem);
-        }
+        // foreach (var item in dropList.list)
+        // {
+        //     IItemData iitem = Inventoriable.Items[(int)item.dataIndex];
+        //     if (DropOutOf(rnd, item.outof)) player.PickupItemData(iitem);
+        // }
     }
     public virtual void DoTurn()
     {

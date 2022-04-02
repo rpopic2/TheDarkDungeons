@@ -31,7 +31,7 @@ public class Inventory<T>
         string result = $"{name}|";
         foreach (T? item in content)
         {
-            if (item == null) result += Item.Empty;
+            if (item == null) result += "{EMPTY}";
             else result += item.ToString();
         }
         return result;

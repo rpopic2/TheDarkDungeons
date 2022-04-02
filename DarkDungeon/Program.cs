@@ -1,5 +1,4 @@
 ﻿global using Entities;
-global using Items;
 public class Program
 {
     public static Program instance = default!;
@@ -82,9 +81,6 @@ public class Program
                 break;
             case 'u':
                 IO.rk(player.tokens);
-                break;
-            case 'i':
-                player.UseInven();
                 break;
             case '.':
                 player.Rest();

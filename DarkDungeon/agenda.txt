@@ -15,10 +15,10 @@ new-inventory
 [X] Stance.amount 할당에 버그있음. 
 [X] Monster도 새 스킬 쓰게끔.
 [ ] 아이템 먹을때 숫자?
-[ ] .눌렀을때 턴진행안됨?
+[ ] delete old Items
+[ ]
 
 [ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
-[ ] delete old Items
 [ ] I to show full inventory ui
 [ ] stance 시스템을 아예 새로 써야될듯? 약점 상태이상 부여하는게 더 나을수도?
 [ ] combat unittest
