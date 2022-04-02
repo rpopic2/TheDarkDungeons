@@ -68,26 +68,13 @@ public class Program
                 break;
         }
     }
+    public readonly Skill[] bardHand = { new("주먹질", TokenType.Offence, Stats.Sol, "주먹을 휘둘렀다."), new("구르기", TokenType.Defence, Stats.Lun, "옆으로 굴렀다.") };
     private void DefaultSwitch(ConsoleKeyInfo key)
     {
         switch (key.KeyChar)
         {
             case 'q':
-                Skill[] bardHandActions = { new("주먹질", TokenType.Offence, Stats.Sol, "주먹을 휘둘렀다."), new("구르기", TokenType.Defence, Stats.Lun, "옆으로 굴렀다.") };
-                IO.seln(bardHandActions, out int index, out bool cancel, out _);
-                if(cancel) return;
-
-                Skill? selected = bardHandActions[index];
-                TokenType? tokenTry = player.tokens.TryUse(selected.TokenType);
-                if (tokenTry is TokenType token)
-                {
-                    player.SetStance(token, selected.stats);
-                    IO.rk(selected.OnUseOutput);
-                }
-                else
-                {
-                    IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
-                }
+                player.SelectSkillAndUse(bardHand);
                 break;
             case 'u':
                 IO.rk(player.tokens);

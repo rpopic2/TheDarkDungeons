@@ -61,6 +61,24 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
+    public void SelectSkillAndUse(Skill[] skill)
+    {
+        IO.seln(skill, out int index, out bool cancel, out _);
+        if (cancel) return;
+
+        Skill? selected = skill[index];
+        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
+        if (tokenTry is TokenType token)
+        {
+            SetStance(token, selected.stats);
+            IO.rk(selected.OnUseOutput);
+        }
+        else
+        {
+            IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
+        }
+
+    }
     public void SetStance(TokenType token, Stats stats)
     {
         stance.stance = token.ToStance();
