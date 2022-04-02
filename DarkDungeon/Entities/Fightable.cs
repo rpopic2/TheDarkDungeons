@@ -3,7 +3,7 @@ public class Fightable : Moveable
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
-    public Tokens tokens;
+    public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     private int star;
@@ -43,7 +43,7 @@ public class Fightable : Moveable
     {
         if (card.isOffence)
         {
-            if (card.stat == Stats.Sol)
+            if (card.stat == StatName.Sol)
             {
                 stance.stance = Stance.Offence;
                 stance.amount += card.value;
@@ -52,7 +52,7 @@ public class Fightable : Moveable
         }
         if (!card.isOffence)
         {
-            if (card.stat == Stats.Sol || card.stat == Stats.Lun)
+            if (card.stat == StatName.Sol || card.stat == StatName.Lun)
             {
                 stance.stance = Stance.Defence;
                 stance.amount += card.value;
@@ -61,33 +61,32 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
-    public void UseToken(TokenType token)
+    public void SelectSkillAndUse(Item item, int index)
     {
-        if (token == TokenType.Offence)
+        Skill? selected = item.skills[index];
+        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
+        if (tokenTry is TokenType token)
         {
-            stance.stance = Stance.Offence;
-            stance.amount += rnd.Next(1, stat[Stats.Sol]);
+            int amount = SetStance(token, selected.stats);
+            IO.rk($"{Name}은 {selected.OnUseOutput} ({amount})");
         }
-        else if (token == TokenType.Defence)
+        else
         {
-            stance.stance = Stance.Defence;
-            stance.amount += rnd.Next(1, stat[Stats.Sol]);
-        }else if(token == TokenType.Charge)
-        {
-            stance.stance = Stance.Charge;
-            stance.amount += rnd.Next(1, stat[Stats.Con]);
-            IO.pr($"{Name}은 손에 별빛을 휘감았다. ({stance.amount})");
+            IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
         }
-        tokens.Remove(token);
+    }
+    public int SetStance(TokenType token, StatName stats)
+    {
+        stance.stance = token.ToStance();
+        int amount = rnd.Next(1, stat[stats]);
+        stance.amount += amount;
+        return amount;
     }
     public void TryAttack()
     {
         if (!(Target is Fightable fight)) return;
         if (stance.stance == Stance.Offence)
         {
-            string tempString = $"{Name}은 주먹으로 상대를 힘껏 때렸다. ({stance.amount})";
-            TryUseStar();
-            IO.pr(tempString);
             fight.TryDodge(stance.amount);
         }
         else if (fight.stance.stance == Stance.Defence) fight.TryDodge(0);
@@ -96,30 +95,14 @@ public class Fightable : Moveable
     {
         if (stance.stance == Stance.Defence)
         {
-            string tempStr = $"{Name}는 굴러서 적의 공격을 피했다. {stance.amount} damage.";
-            TryUseStar();
-            if (damage <= 0)
-            {
-                IO.pr(tempStr += "..but oppenent did not attack...");
-                return;
-            }
-            IO.pr(tempStr);
             damage -= stance.amount;
         }
         else if (damage > 0 && IsResting)
         {
+            IO.rk($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
             damage = (int)MathF.Round(damage * Rules.vulMulp);
-            IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage! (total {damage})");
         }
         Hp -= damage;
-        if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
-    }
-    private void TryUseStar()
-    {
-        if (star <= 0) return;
-        stance.amount += star;
-        IO.pr($"{star} more damage... (total {stance.amount})");
-        star = 0;
     }
     public virtual void Rest()
     {
@@ -133,21 +116,21 @@ public class Fightable : Moveable
     public void OnTurnEnd()
     {
         UpdateTarget();
-        stance.stance = default;
+        stance = new(default, default);
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
-        IO.pr($"{Name} died.", false, true);
+        IO.pr($"{Name}가 죽었다.", false, true);
         Map.Current.UpdateMoveable(this);
     }
     protected void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
     protected void OnDamaged(object? sender, PointArgs e)
     {
-        if (e.Amount > 0) IO.pr($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", true);
+        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", true);
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[StatName.Sol]}\tLun : {stat[StatName.Lun]}\tCon : {stat[StatName.Con]}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();
@@ -167,5 +150,5 @@ public class Fightable : Moveable
     }
 
     public static bool IsFirst(Fightable p1, Fightable p2)
-    => p1.stat[Stats.Lun] >= p2.stat[Stats.Lun];
+    => p1.stat[StatName.Lun] >= p2.stat[StatName.Lun];
 }

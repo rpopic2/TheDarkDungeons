@@ -12,7 +12,7 @@ public struct Exp
         point.OnIncrease += new EventHandler<PointArgs>(OnGain);
         UpdateMax();
     }
-    private void OnGain(object? sender, PointArgs e) => IO.pr($"Gained {e.Amount} xp. {point}");
+    private void OnGain(object? sender, PointArgs e) => IO.pr($"{e.Amount}xp를 얻었다. {point}");
     public void UpdateMax() => point.Max = CalcMax();
     private int CalcMax() => (int)MathF.Floor(owner.Level * lvIncrement);
 

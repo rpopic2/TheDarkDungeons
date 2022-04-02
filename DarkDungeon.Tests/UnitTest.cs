@@ -7,31 +7,31 @@ public class UnitTest
     [Fact]
     public void CardToStringOffensive()
     {
-        Card card = new(3, Stats.Sol, true);
+        Card card = new(3, StatName.Sol, true);
         Assert.Equal("(3s)", card.ToString());
 
-        card = new(1, Stats.Sol, true);
+        card = new(1, StatName.Sol, true);
         Assert.Equal("(1s)", card.ToString());
 
-        card = new(1, Stats.Lun, true);
+        card = new(1, StatName.Lun, true);
         Assert.Equal("(1L)", card.ToString());
 
-        card = new(1, Stats.Con, true);
+        card = new(1, StatName.Con, true);
         Assert.Equal("(1*)", card.ToString());
     }
     [Fact]
     public void CardToStringdefensive()
     {
-        Card card = new(3, Stats.Sol, false);
+        Card card = new(3, StatName.Sol, false);
         Assert.Equal("[3s]", card.ToString());
 
-        card = new(1, Stats.Sol, false);
+        card = new(1, StatName.Sol, false);
         Assert.Equal("[1s]", card.ToString());
 
-        card = new(1, Stats.Lun, false);
+        card = new(1, StatName.Lun, false);
         Assert.Equal("[1L]", card.ToString());
 
-        card = new(1, Stats.Con, false);
+        card = new(1, StatName.Con, false);
         Assert.Equal("[1*]", card.ToString());
 
         Assert.NotEqual("[1s]", card.ToString());
@@ -59,5 +59,12 @@ public class UnitTest
         player.tokens.Add(TokenType.Offence);
         Assert.Equal((byte)TokenType.Offence, player.tokens[0]);
         Assert.NotEqual((byte)TokenType.Defence, player.tokens[0]);
+    }
+    [Fact]
+    public void SkillStructTest()
+    {
+        Skill skill = new("주먹질", TokenType.Offence, StatName.Sol, "Test!");
+        Assert.Equal("(주먹질)", skill.ToString());
+        Assert.NotEqual("[주먹질]", skill.ToString());
     }
 }

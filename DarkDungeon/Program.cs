@@ -1,5 +1,4 @@
 ﻿global using Entities;
-global using Items;
 public class Program
 {
     public static Program instance = default!;
@@ -27,7 +26,6 @@ public class Program
         IO.pr("The Dungeons of the Mine " + Rules.version);
         Intro();
         Console.Clear();
-        IO.pr($"{player.Name}은 광산으로 들어갔다...");
     }
 
     private void Intro()
@@ -46,7 +44,7 @@ public class Program
 
     private void MainLoop()
     {
-        ConsoleKeyInfo info = IO.rk(Map.Current);
+        ConsoleKeyInfo info = IO.rk();
         ConsoleKey key = info.Key;
         switch (key)
         {
@@ -58,41 +56,37 @@ public class Program
             case ConsoleKey.H:
                 player.Move(-1);
                 break;
-            case ConsoleKey.Escape:
-                ConsoleKey key2 = IO.rk(actions).Key;
-                DefaultSwitch(key2);
-                break;
             default:
-                if (IO.chkn(info.KeyChar, player.Inven.Cap, out int index))
-                {
-                    player.UseInven(index);
-                    break;
-                }
-                else DefaultSwitch(key);
+                DefaultSwitch(info);
                 break;
         }
     }
-    private void DefaultSwitch(ConsoleKey key)
+    private void DefaultSwitch(ConsoleKeyInfo key)
     {
-        switch (key)
+        bool found = IO.chki(key.KeyChar, out int i);
+        if (found && player.Inven[i] is Item item)
         {
-            case ConsoleKey.Q:
-                TokenType? selResult = player.SelectToken();
-                if (selResult is TokenType token) player.UseToken(token);
+            IO.seln(item.skills, out int index, out bool cancel, out _);
+            if (cancel) return;
+            player.SelectSkillAndUse(item, index);
+        }
+        switch (key.KeyChar)
+        {
+            case 'q':
+                IO.seln(Item.bardHand.skills, out int index, out bool cancel, out _);
+                if (cancel) return;
+                player.SelectSkillAndUse(Item.bardHand, index);
                 break;
-            case ConsoleKey.E:
-                player.UseInven();
+            case 'u':
+                IO.rk(player.tokens);
                 break;
-            case ConsoleKey.U:
-                IO.pr(player.tokens);
-                break;
-            case ConsoleKey.OemPeriod:
+            case '.':
                 player.Rest();
                 break;
-            case ConsoleKey.Oem2:
+            case '/':
                 player.ShowStats();
                 break;
-            case ConsoleKey.X:
+            case 'x':
                 player.Exile();
                 break;
         }

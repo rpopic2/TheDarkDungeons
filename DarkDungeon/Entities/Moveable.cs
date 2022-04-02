@@ -21,7 +21,7 @@ public class Moveable : Entity
         bool result = existsTile && !obstructed;
         if (result)
         {
-            stance = new(Stance.Move, stance.amount + x);
+            stance = new(Stance.Move, default);
             Pos = newPos;
             current.UpdateMoveable(this);
         }
@@ -29,7 +29,7 @@ public class Moveable : Entity
         {
             if (newPos.facing != Pos.facing)
             {
-                stance = new(Stance.Move, stance.amount);
+                stance = new(Stance.Move, default);
                 Pos = !Pos;
                 return true;
             }

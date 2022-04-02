@@ -3,7 +3,7 @@ public enum ClassName
     Warrior, Assassin, Mage
 }
 
-public enum Stats
+public enum StatName
 {
     Sol, Lun, Con
 }
@@ -22,7 +22,7 @@ public enum Facing
 }
 public enum Stance
 {
-    None, Move, Rest, Offence, Defence, Item, Exile, Charge
+    None, Move, Rest, Offence, Defence, Charge
 }
 public enum ItemType
 {
@@ -59,4 +59,10 @@ public static class Extensions
         => Char.ToLower(option[option.IndexOf('(') + 1]);
     public static char[] ParseKeys(this string[] options)
         => Array.ConvertAll(options, new Converter<string, char>(ParseKey));
+    public static Stance ToStance(this TokenType token) =>  token switch{
+        TokenType.Offence => Stance.Offence,
+        TokenType.Defence => Stance.Defence,
+        TokenType.Charge => Stance.Charge,
+        _ => Stance.None
+    };
 }

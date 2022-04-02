@@ -19,19 +19,14 @@ public class Player : Inventoriable
         switch (ClassName)
         {
             case ClassName.Warrior:
-                PickupItemData(Inventoriable.SkillDb.Charge);
-                //PickupItemData(Inventoriable.SkillDb.Berserk);
-                stat[Stats.Sol] += 1;
+                NewPickupItem(Item.sword);
+                stat[StatName.Sol] += 1;
                 break;
             case ClassName.Assassin:
-                PickupItemData(Inventoriable.SkillDb.ShadowAttack);
-                //PickupItemData(Inventoriable.SkillDb.Backstep);
-                stat[Stats.Lun] += 1;
+                stat[StatName.Lun] += 1;
                 break;
             case ClassName.Mage:
-                PickupItemData(TorchData.data);
-                PickupItemData(TorchData.data);
-                stat[Stats.Con] += 1;
+                stat[StatName.Con] += 1;
                 break;
         }
     }
@@ -51,13 +46,13 @@ public class Player : Inventoriable
         switch (index)
         {
             case 0:
-                stat[Stats.Sol] += 1;
+                stat[StatName.Sol] += 1;
                 break;
             case 1:
-                stat[Stats.Lun] += 1;
+                stat[StatName.Lun] += 1;
                 break;
             case 2:
-                stat[Stats.Con] += 1;
+                stat[StatName.Con] += 1;
                 break;
         }
         Hand.Cap = new Mul(3, 0.4f, Level);
@@ -84,17 +79,16 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    public void PickupItemData(IItemData data) => PickupItem(data.Instantiate(this, stat));
-    private void PickupItem(IItem item)
+    private void NewPickupItem(Item item)
     {
-        IO.pr("\nFound an item." + item.abv);
-        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
+        IO.pr($"\n아이템을 얻었다. {item.name}");
+        IO.seli(out int index, out bool cancel, out _, out _ );
         if (cancel)
         {
             IO.del(2);
             return;
         }
-        PickupItem(item, index);
+        NewPickupItem(item, index);
         IO.del(2);
     }
     public void Exile()
@@ -132,11 +126,11 @@ public class Player : Inventoriable
         IO.rk();
         IO.del();
 
-        var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
-        foreach (var item in skills)
-        {
-            item.stack = item.level;
-        }
+        // var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
+        // foreach (var item in skills)
+        // {
+        //     item.stack = item.level;
+        // }
     }
     public override Card? SelectCard()
     {
@@ -153,18 +147,7 @@ public class Player : Inventoriable
         {
             IO.seln_t(out int index, out bool cancel, out _);
             if (cancel) return null;
-            if(tokens[index] is byte result) return(TokenType)result;
-        } while (true);
-    }
-    
-    public void UseInven()
-    {
-        do
-        {
-            IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
-            if (cancel) return;
-            UseInven(index);
-            return;
+            if (tokens[index] is byte result) return (TokenType)result;
         } while (true);
     }
     public override void Move(int x)
