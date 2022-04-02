@@ -77,8 +77,19 @@ public class Program
         switch (key.KeyChar)
         {
             case 'q':
-                TokenType? selResult = player.SelectToken();
-                if (selResult is TokenType token) player.UseToken(token);
+                string[] bardHandActions = { "(주먹질)", "[맨손막기]", "[구르기]" };
+                IO.seln(bardHandActions, out int index, out bool cancel, out _);
+                if (index == 0)
+                {
+                    TokenType? selResult = player.tokens.TryUse(TokenType.Offence);
+                    if (selResult is TokenType token)
+                    {
+                        player.UseToken(token);
+                        IO.rk("주먹을 휘둘렀다.");
+                    }else{
+                        IO.rk("공격 토큰이 없습니다.");
+                    }
+                }
                 break;
             case 'u':
                 IO.pr(player.tokens);

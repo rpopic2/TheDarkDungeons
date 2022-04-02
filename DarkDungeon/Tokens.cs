@@ -49,12 +49,26 @@ public struct Tokens
     {
         get
         {
-            if(index >= _array.Count) return null;
+            if (index >= _array.Count) return null;
             return _array[index];
         }
     }
     public int Count => _array.Count((i) => i is not null);
     public bool IsFull => Count >= _array.Capacity;
+
+    public TokenType? TryUse(TokenType token)
+    {
+        byte target = (byte)token;
+        if (_array.IndexOf(target) != -1)
+        {
+            Remove(target);
+            return token;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
 
 public enum TokenType
