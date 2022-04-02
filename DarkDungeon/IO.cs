@@ -38,12 +38,29 @@ public static class IO
             if (cancel || ok) return;
         } while (!found);
     }
+    public static void seli(out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
+    {
+        bool found;
+        do
+        {
+            keyInfo = rk(player.Inven);
+            mod = keyInfo.Modifiers;
+            cancel = keyInfo.Key == ConsoleKey.Escape;
+            found = chki(keyInfo.KeyChar, player.Inven.Cap, out index);
+            if (cancel) return;
+        } while (!found);
+    }
     public static bool chkn(Char i, int max, out int index)
     {
         index = (int)Char.GetNumericValue(i);
         if (index == 0) index = 10;
         if (index != -1) index--;
         return index != -1 && index <= max - 1;
+    }
+    public static bool chki(Char i, int max, out int index)
+    {
+        index = Program.ItemKeys1.IndexOf(i);
+        return index != -1 && index <= max -1;
     }
     ///<summary>Select from hand</summary>
     public static void seln_h(out int result, out bool cancel, out ConsoleKeyInfo keyInfo) =>

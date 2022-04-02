@@ -82,7 +82,7 @@ public class Player : Inventoriable
     private void NewPickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
-        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
+        IO.seli(out int index, out bool cancel, out _, out _ );
         if (cancel)
         {
             IO.del(2);

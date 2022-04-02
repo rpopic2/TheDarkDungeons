@@ -14,7 +14,7 @@ new-inventory
 [X] Skill[] to NewItem class.
 [X] Stance.amount 할당에 버그있음. 
 [X] Monster도 새 스킬 쓰게끔.
-[ ] 아이템 먹을때 숫자? -> IO에 새로운 메서드 필요
+[X] 아이템 먹을때 숫자? -> IO에 새로운 메서드 필요
 [X] delete old Items
 [ ]
 
