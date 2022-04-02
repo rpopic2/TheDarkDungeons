@@ -1,5 +1,9 @@
 new-inventory
-[ ] new ui : inventory always showing / or i to show, I to show full version
+[ ] new ui : inventory always showing 
+[ ] 
+[ ]
+
+[ ] i to show, I to show full version
 [ ] select item from inventory, list its skills
 [ ] combat unittest
 [ ] remove unness Enums.Stance members
