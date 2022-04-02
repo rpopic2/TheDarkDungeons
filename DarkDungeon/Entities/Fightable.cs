@@ -61,7 +61,7 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
-    public void UseToken(TokenType token, Stats stats)
+    public void SetStance(TokenType token, Stats stats)
     {
         stance.stance = token.ToStance();
         stance.amount += rnd.Next(1, stat[stats]);

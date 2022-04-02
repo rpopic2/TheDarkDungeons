@@ -3,9 +3,11 @@ new-inventory
 [X] 맨손 as first element.
 [X] 맨손 선택하면 list of skill 보이게
 [X] Program.DefaultSwitch()의 방식이 바뀌어야.
-[ ] 새로운 아이템 시스템이 필요할까?
 [X] Fightable.UseToken() needs refactor first : should recieve stat as param.
+[ ] Tokens.TryUse, Fightable.TryUse 2개가 공존?
 
+[ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
+[ ] 새로운 아이템 시스템이 필요할까?
 [ ] I to show full inventory ui
 [ ] combat unittest
 [ ] remove unness Enums.Stance members

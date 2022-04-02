@@ -81,10 +81,10 @@ public class Program
                 IO.seln(bardHandActions, out int index, out bool cancel, out _);
 
                 Skill? selected = bardHandActions[index];
-                TokenType? selResult = player.tokens.TryUse(selected.TokenType);
-                if (selResult is TokenType token)
+                TokenType? tokenTry = player.tokens.TryUse(selected.TokenType);
+                if (tokenTry is TokenType token)
                 {
-                    player.UseToken(token, selected.stats);
+                    player.SetStance(token, selected.stats);
                     IO.rk(selected.OnUseOutput);
                 }
                 else
