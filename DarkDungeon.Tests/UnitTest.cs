@@ -60,4 +60,11 @@ public class UnitTest
         Assert.Equal((byte)TokenType.Offence, player.tokens[0]);
         Assert.NotEqual((byte)TokenType.Defence, player.tokens[0]);
     }
+    [Fact]
+    public void SkillStructTest()
+    {
+        Skill skill = new("주먹질", TokenType.Offence, Stats.Sol, "Test!");
+        Assert.Equal("(주먹질)", skill.ToString());
+        Assert.NotEqual("[주먹질]", skill.ToString());
+    }
 }

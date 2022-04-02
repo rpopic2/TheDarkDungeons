@@ -3,6 +3,8 @@ public readonly struct Card
     private readonly char[] STATCHARS = {'s', 'L', '*'};
     private const string OFFENSIVE = "()";
     private const string DEFENSIVE = "[]";
+    private const string CHARGE = "<>";
+
 
 
     public readonly int value;

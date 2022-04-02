@@ -77,34 +77,23 @@ public class Program
         switch (key.KeyChar)
         {
             case 'q':
-                string[] bardHandActions = { "(주먹질)", "[맨손막기]", "[구르기]" };
+                Skill[] bardHandActions = { new("주먹질", TokenType.Offence, Stats.Sol, "주먹을 휘둘렀다."), new("구르기", TokenType.Defence, Stats.Lun, "옆으로 굴렀다.") };
                 IO.seln(bardHandActions, out int index, out bool cancel, out _);
-                if (index == 0)
-                {
-                    TokenType? selResult = player.tokens.TryUse(TokenType.Offence);
-                    if (selResult is TokenType token)
-                    {
-                        player.UseToken(token, Stats.Sol);
-                        IO.rk("주먹을 휘둘렀다.");
-                    }else{
-                        IO.rk("공격 토큰이 없습니다.");
-                    }
-                }
-                else if(index == 1)
-                {
-                    TokenType? selResult = player.tokens.TryUse(TokenType.Defence);
-                    if (selResult is TokenType token)
-                    {
-                        player.UseToken(token, Stats.Sol);
-                        IO.rk("You try to block with your bare hands.");
-                    }else{
-                        IO.rk("Defence token이 없습니다.");
-                    }
 
+                Skill? selected = bardHandActions[index];
+                TokenType? selResult = player.tokens.TryUse(selected.TokenType);
+                if (selResult is TokenType token)
+                {
+                    player.UseToken(token, selected.stats);
+                    IO.rk(selected.OnUseOutput);
+                }
+                else
+                {
+                    IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
                 }
                 break;
             case 'u':
-                IO.pr(player.tokens);
+                IO.rk(player.tokens);
                 break;
             case 'i':
                 player.UseInven();
