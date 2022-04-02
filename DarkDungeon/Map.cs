@@ -14,7 +14,7 @@ public class Map
     private readonly char[] empty;
     public readonly int length;
     private const bool debug = false;
-    public Map(int length)
+    public Map(int length, bool spawn = true)
     {
         Current = this;
         this.length = length;
@@ -25,14 +25,14 @@ public class Map
 
         tiles[length - 1] = MapSymb.portal;
         moveables[0] = Player.instance;
-        Spawn();
+        if (spawn) Spawn();
     }
 
     public void Spawn()
     {
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
-        
+
         // int randomInt = rnd.Next(0, MonsterDb.Count);
         int randomInt = 0;
         MonsterData data = MonsterDb.data[randomInt];
