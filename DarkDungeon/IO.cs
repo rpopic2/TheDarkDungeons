@@ -10,9 +10,9 @@ public static class IO
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
-    public static ConsoleKeyInfo rk(object print)
+    public static ConsoleKeyInfo rk(object print, bool emphasis = false, bool newline = false)
     {
-        pr(print);
+        pr(print, emphasis, newline);
         ConsoleKeyInfo info = rk();
         del();
         return info;
