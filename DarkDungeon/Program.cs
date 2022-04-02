@@ -84,11 +84,23 @@ public class Program
                     TokenType? selResult = player.tokens.TryUse(TokenType.Offence);
                     if (selResult is TokenType token)
                     {
-                        player.UseToken(token);
+                        player.UseToken(token, Stats.Sol);
                         IO.rk("주먹을 휘둘렀다.");
                     }else{
                         IO.rk("공격 토큰이 없습니다.");
                     }
+                }
+                else if(index == 1)
+                {
+                    TokenType? selResult = player.tokens.TryUse(TokenType.Defence);
+                    if (selResult is TokenType token)
+                    {
+                        player.UseToken(token, Stats.Sol);
+                        IO.rk("You try to block with your bare hands.");
+                    }else{
+                        IO.rk("Defence token이 없습니다.");
+                    }
+
                 }
                 break;
             case 'u':

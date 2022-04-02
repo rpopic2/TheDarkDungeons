@@ -61,23 +61,10 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
-    public void UseToken(TokenType token)
+    public void UseToken(TokenType token, Stats stats)
     {
-        if (token == TokenType.Offence)
-        {
-            stance.stance = Stance.Offence;
-            stance.amount += rnd.Next(1, stat[Stats.Sol]);
-        }
-        else if (token == TokenType.Defence)
-        {
-            stance.stance = Stance.Defence;
-            stance.amount += rnd.Next(1, stat[Stats.Sol]);
-        }else if(token == TokenType.Charge)
-        {
-            stance.stance = Stance.Charge;
-            stance.amount += rnd.Next(1, stat[Stats.Con]);
-            IO.pr($"{Name}은 손에 별빛을 휘감았다. ({stance.amount})");
-        }
+        stance.stance = token.ToStance();
+        stance.amount += rnd.Next(1, stat[stats]);
         tokens.Remove(token);
     }
     public void TryAttack()

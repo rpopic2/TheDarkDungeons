@@ -4,7 +4,7 @@ new-inventory
 [X] 맨손 선택하면 list of skill 보이게
 [ ] Program.DefaultSwitch()의 방식이 바뀌어야.
 [ ] 새로운 아이템 시스템이 필요할까?
-[ ]
+[X] Fightable.UseToken() needs refactor first : should recieve stat as param.
 
 [ ] I to show full inventory ui
 [ ] combat unittest
