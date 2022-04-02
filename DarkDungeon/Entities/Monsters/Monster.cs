@@ -21,7 +21,6 @@ public class Monster : Inventoriable
         {
             NewInven[0] = NewItem.sword;
             tokens.Add(TokenType.Offence);
-            tokens.Add(TokenType.Defence);
             tokens.Add(TokenType.Offence);
         }
     }
@@ -56,7 +55,11 @@ public class Monster : Inventoriable
                 if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
                 else m.Move(moveX, out char obj);
             }
-            else m.SelectSkillAndUse(m.NewInven[0]!, 0);
+            else
+            {
+                TokenType? token = m.tokens.TryUse(0);
+                if (token is TokenType token1) m.SelectSkillAndUse(m.NewInven[0]!, 0);
+            }
         }
         else m.Rest();
     };
@@ -87,7 +90,7 @@ public class Monster : Inventoriable
     public override void Rest()
     {
         base.Rest();
-        PickupCard(Draw(Stats.Sol, true), Hand.Count);
+        tokens.Add(TokenType.Offence);
     }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;

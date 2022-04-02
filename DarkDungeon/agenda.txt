@@ -13,7 +13,7 @@ new-inventory
 [X] 공격하면 텍스트가 처음 나오고 그 뒤에도 한번 더나오는데 두번 안나오게끔.
 [X] Skill[] to NewItem class.
 [X] Stance.amount 할당에 버그있음. 
-- [ ] Monster도 새 스킬 쓰게끔.
+[X] Monster도 새 스킬 쓰게끔.
 [ ] 아이템 먹을때 숫자?
 [ ] .눌렀을때 턴진행안됨?
 
