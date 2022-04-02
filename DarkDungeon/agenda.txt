@@ -10,8 +10,10 @@ new-inventory
 [X] Program에 bareHands 다른데로 옮겨야함.
 [X] Program DefaultSwitch 내용 Fightable로 옮기기.
 [X] DefaultSwitch키바인드 stub implementation 고치기
-[ ] 공격하면 텍스트가 처음 나오고 그 뒤에도 한번 더나오는데 두번 안나오게끔.
+[X] 공격하면 텍스트가 처음 나오고 그 뒤에도 한번 더나오는데 두번 안나오게끔.
 [X] Skill[] to NewItem class.
+[ ] Stance.amount 할당에 버그있음. => stance 시스템을 아예 새로 써야될듯? 약점 상태이상 부여하는게 더 나을수도?
+[ ] Monster도 새 스킬 쓰게끔.
 [ ]
 
 [ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
