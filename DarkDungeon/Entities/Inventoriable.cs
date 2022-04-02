@@ -128,5 +128,6 @@ public class Inventoriable : Fightable
         public static readonly EquipData AmuletOfLa = new(9, "AMULLA", (Stats.Sol, 20));
         public static readonly EquipData FieryRing = new(10, "FIRING", (Stats.Sol, 3));
         public static readonly EquipData BareHand = new(12, "맨손");
+        public static readonly EquipData Sword = new(13, "검");
     }
 }

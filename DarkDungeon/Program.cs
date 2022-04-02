@@ -68,13 +68,15 @@ public class Program
                 break;
         }
     }
-    public readonly Skill[] bardHand = { new("주먹질", TokenType.Offence, Stats.Sol, "주먹을 휘둘렀다."), new("구르기", TokenType.Defence, Stats.Lun, "옆으로 굴렀다.") };
-    private void DefaultSwitch(ConsoleKeyInfo key)
+        private void DefaultSwitch(ConsoleKeyInfo key)
     {
         switch (key.KeyChar)
         {
             case 'q':
-                player.SelectSkillAndUse(bardHand);
+                player.SelectSkillAndUse(Skill.bardHand);
+                break;
+            case 'w':
+                player.SelectSkillAndUse(Skill.sword);
                 break;
             case 'u':
                 IO.rk(player.tokens);

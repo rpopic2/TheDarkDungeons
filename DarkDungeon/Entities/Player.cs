@@ -19,7 +19,7 @@ public class Player : Inventoriable
         switch (ClassName)
         {
             case ClassName.Warrior:
-                PickupItemData(Inventoriable.ItemDb.Charge);
+                PickupItemData(Inventoriable.ItemDb.Sword);
                 //PickupItemData(Inventoriable.SkillDb.Berserk);
                 stat[Stats.Sol] += 1;
                 break;
