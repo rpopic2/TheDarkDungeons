@@ -77,7 +77,6 @@ public class Fightable : Moveable
         {
             IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
         }
-
     }
     public int SetStance(TokenType token, Stats stats)
     {
