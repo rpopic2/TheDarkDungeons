@@ -27,7 +27,7 @@ public static class Game
         });
 
         OnTurnEnd?.Invoke(null, EventArgs.Empty);
-        if (IO.printCount == 3) IO.del(2);
+        // if (IO.printCount == 3) IO.del(4);
         if (Turn % SpawnRate == 0) Map.Current.Spawn();
 
         NewTurn();
@@ -36,6 +36,10 @@ public static class Game
     {
         IO.printCount = 0;
         Turn++;
-        IO.pr($"\nTurn : {Turn}\tDungeon Level : {Map.level}\tHP : {Player.instance.Hp}");
+        Console.Clear();
+        IO.pr("History");
+        IO.prb($"\nT : {Turn}\tDungeon Level : {Map.level}\tHP : {Player.instance.Hp}");
+        IO.prb(Player.instance.Inven);
+        IO.pr(Map.Current);
     }
 }

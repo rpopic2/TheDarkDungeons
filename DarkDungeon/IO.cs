@@ -67,6 +67,14 @@ public static class IO
         Console.WriteLine(x);
         printCount++;
     }
+    public static void prb(object text, bool emphasis = false, bool newline = false)
+    {
+        int x = Console.CursorLeft;
+        int y = Console.CursorTop;
+        Console.CursorTop = x + Console.WindowHeight - 1;
+        pr(text, emphasis, newline);
+        Console.SetCursorPosition(x, y);
+    }
 
     ///<summary>Print in Formated Options</summary>
     private static void _prfo(Array options, string comment = "Select :")
