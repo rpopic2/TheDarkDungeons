@@ -1,9 +1,10 @@
 public static class IO
 {
-    private const char CANCELKEY = 'q';
+    public const ConsoleKey CANCELKEY = ConsoleKey.Q;
+    public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
     private const string Emphasis = "=> ";
     private const string delString = "                                                                                       ";
-    private static Player player {get => Player.instance;}
+    private static Player player { get => Player.instance; }
     public static int printCount;
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
@@ -16,17 +17,25 @@ public static class IO
         del();
         return info;
     }
-    public static void seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, int max)
+    public static void seln(Array value, out int index, out bool cancel, out ConsoleModifiers mod)
+    {
+        _seln(value, out index, out cancel, out mod, out _, value.Length);
+    }
+    public static void seln(Array value, out int index, out ConsoleKeyInfo keyInfo)
+    {
+        _seln(value, out index, out _, out _, out keyInfo, value.Length);
+    }
+    private static void _seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, int max)
     {
         bool found;
         do
         {
-            ConsoleKeyInfo keyInfo = rk(print);
+            keyInfo = rk(print);
             mod = keyInfo.Modifiers;
-            Char key = keyInfo.KeyChar;
-            cancel = key == CANCELKEY;
-            found = chkn(key, max, out index);
-            if (cancel) return;
+            cancel = keyInfo.Key == CANCELKEY;
+            bool ok = keyInfo.Key == OKKEY;
+            found = chkn(keyInfo.KeyChar, max, out index);
+            if (cancel || ok) return;
         } while (!found);
     }
     public static bool chkn(Char i, int max, out int index)
@@ -36,18 +45,22 @@ public static class IO
         if (index != -1) index--;
         return index != -1 && index <= max - 1;
     }
-    public static void seln_h(out int result, out bool cancel, out ConsoleModifiers mod) =>
-        seln(player.Hand, out result, out cancel, out mod, player.Hand.Cap);
+    ///<summary>Select from hand</summary>
+    public static void seln_h(out int result, out bool cancel, out ConsoleKeyInfo keyInfo) =>
+        _seln(player.Hand, out result, out cancel, out _, out keyInfo, player.Hand.Cap);
+    ///<summary>Select from inventory</summary>
     public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
-    seln(player.Inven, out result, out cancel, out mod, player.Inven.Cap);
+    _seln(player.Inven, out result, out cancel, out mod, out _, player.Inven.Cap);
+    public static void seln_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
+    _seln(player.tokens, out result, out cancel, out mod, out _, player.Hand.Cap);
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object x, bool emphasis = false, bool newline = false)
     {
-        if (x is string[])
+        if (x is Array array)
         {
-            _prfo(x); return;
+            _prfo(array); return;
         }
         if (emphasis) x = Emphasis + x;
         if (newline) x = "\n" + x;
@@ -56,10 +69,10 @@ public static class IO
     }
 
     ///<summary>Print in Formated Options</summary>
-    private static void _prfo(object options, string comment = "Select :")
+    private static void _prfo(Array options, string comment = "Select :")
     {
         string printResult = comment + " /";
-        foreach (var item in (Array)options)
+        foreach (var item in options)
         {
             printResult += $" {item} /";
         }

@@ -1,24 +1,18 @@
-using System.Diagnostics;
 namespace Entities;
 
 public class Player : Inventoriable
 {
     public const int skillMax = 2;
-    private const int basicCap = 3;
+    public const int basicCap = 3;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
-
     public Player(string name, ClassName className) : base(name, className, level: 1, sol: 2, lun: 2, con: 2, maxHp: 3, cap: basicCap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
-        for (int i = 0; i < basicCap; i++)
-        {
-            Hand[i] = Draw();
-        }
     }
     public void StartItem()
     {
@@ -52,7 +46,7 @@ public class Player : Inventoriable
         int index;
         do
         {
-            IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod, Program.stats.Count());
+            IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod);
         } while (cancel);
         switch (index)
         {
@@ -72,15 +66,18 @@ public class Player : Inventoriable
     }
     public void PickupCard(Card card)
     {
+    Show:
         IO.pr("\nFound a card." + card);
-        IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
-        if (mod == ConsoleModifiers.Alt) card.StanceShift();
+        IO.seln_h(out int index, out bool cancel, out ConsoleKeyInfo keyInfo);
+        if (keyInfo.Key == IO.OKKEY)
+        {
+            card = Card.StanceShift(card);
+            IO.del(2);
+            goto Show;
+        }
+
         if (cancel)
         {
-            if (card.Stance != CardStance.Star)
-            {
-                PickupCard(card.Exile());
-            }
             IO.del(2);
             return;
         }
@@ -94,7 +91,6 @@ public class Player : Inventoriable
         IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel)
         {
-            PickupCard(Draw().Exile());
             IO.del(2);
             return;
         }
@@ -103,30 +99,39 @@ public class Player : Inventoriable
     }
     public void Exile()
     {
-        int index;
-        Card card;
-        do
-        {
-            IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
-            card = Hand[index] ?? throw new Exception();
-            if (cancel) return;
-        } while (card.Stance == CardStance.Star);
-        IO.pr("Exiled a card.");
-        Hand[index] = Hand[index]?.Exile();
-        stance = new(Stance.Exile, default);
+        throw new NotImplementedException();
+
+        // int index;
+        // Card card;
+        // do
+        // {
+        //     IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
+        //     card = Hand[index] ?? throw new Exception();
+        //     if (cancel) return;
+        // } while (card.Stance == CardStance.Star);
+        // IO.pr("Exiled a card.");
+        // Hand[index] = Hand[index]?.Exile();
+        // stance = new(Stance.Exile, default);
     }
     public override void Rest()
     {
         base.Rest();
-        PickupCard(Draw());
-        bool cancel = false;
-        do
+        IO.pr("토큰 종류를 선택해 주십시오.");
+        IO.seln(Tokens.TokenPromptNames, out int index, out _);
+        IO.del();
+
+        if (tokens.IsFull)
         {
-            IO.pr("Review your hand\tq : Exit | num : Stanceshift");
-            IO.seln_h(out int index, out cancel, out ConsoleModifiers mod);
-            if (!cancel) Hand[index] = Hand[index]?.StanceShift();
+            IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
+            IO.seln_t(out int index2, out _, out _);
             IO.del();
-        } while (!cancel);
+            tokens.RemoveAt(index2);
+        }
+        tokens.Add((byte)index);
+        IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
+        IO.rk();
+        IO.del();
+
         var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
         foreach (var item in skills)
         {
@@ -137,11 +142,21 @@ public class Player : Inventoriable
     {
         do
         {
-            IO.seln_h(out int index, out bool cancel, out ConsoleModifiers mod);
+            IO.seln_h(out int index, out bool cancel, out _);
             if (cancel) return null;
             return Hand[index];
         } while (true);
     }
+    public TokenType? SelectToken()
+    {
+        do
+        {
+            IO.seln_t(out int index, out bool cancel, out _);
+            if (cancel) return null;
+            if(tokens[index] is byte result) return(TokenType)result;
+        } while (true);
+    }
+    
     public void UseInven()
     {
         do
@@ -168,6 +183,6 @@ public class Player : Inventoriable
         IO.rk();
         IO.del(3);
     }
-    public override string ToString() => base.ToString() + $"\nExp : {exp}\tTorch : {torch}\tMem : {Process.GetCurrentProcess().PrivateMemorySize64}";
+    public override string ToString() => base.ToString() + $"\nExp : {exp}\tTorch : {torch}";
     public override char ToChar() => MapSymb.player;
 }

@@ -3,6 +3,7 @@ public class Fightable : Moveable
 {
     public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
+    public Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     private int star;
@@ -12,6 +13,7 @@ public class Fightable : Moveable
     {
         ClassName = className;
         Hand = new Inventory<Card?>(cap, "Hand");
+        tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
@@ -27,51 +29,74 @@ public class Fightable : Moveable
         if (Target is null) return;
         if (Hand[index] is Card card)
         {
-            if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
+            //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
             _UseCard(card);
         }
     }
     public void UseCard(Card card)
     {
         if (Target is null) return;
-        if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
+        //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
         _UseCard(card);
     }
     protected void _UseCard(Card card)
     {
-        Hand.Delete(card);
-        switch (card.Stance)
+        if (card.isOffence)
         {
-            case CardStance.Attack:
-                stance.stance = Stance.Attack;
-                stance.amount += card.Sol;
-                break;
-            case CardStance.Dodge:
-                stance.stance = Stance.Dodge;
-                stance.amount += card.Lun;
-                break;
-            case CardStance.Star:
-                star = card.Con;
-                break;
+            if (card.stat == Stats.Sol)
+            {
+                stance.stance = Stance.Offence;
+                stance.amount += card.value;
+            }
+            else return;
         }
+        if (!card.isOffence)
+        {
+            if (card.stat == Stats.Sol || card.stat == Stats.Lun)
+            {
+                stance.stance = Stance.Defence;
+                stance.amount += card.value;
+            }
+            else return;
+        }
+        Hand.Delete(card);
+    }
+    public void UseToken(TokenType token)
+    {
+        if (token == TokenType.Offence)
+        {
+            stance.stance = Stance.Offence;
+            stance.amount += rnd.Next(1, stat[Stats.Sol]);
+        }
+        else if (token == TokenType.Defence)
+        {
+            stance.stance = Stance.Defence;
+            stance.amount += rnd.Next(1, stat[Stats.Sol]);
+        }else if(token == TokenType.Charge)
+        {
+            stance.stance = Stance.Charge;
+            stance.amount += rnd.Next(1, stat[Stats.Con]);
+            IO.pr($"{Name}은 손에 별빛을 휘감았다. ({stance.amount})");
+        }
+        tokens.Remove(token);
     }
     public void TryAttack()
     {
         if (!(Target is Fightable fight)) return;
-        if (stance.stance == Stance.Attack)
+        if (stance.stance == Stance.Offence)
         {
-            string tempString = $"{Name} attacks with {stance.amount} damage.";
+            string tempString = $"{Name}은 주먹으로 상대를 힘껏 때렸다. ({stance.amount})";
             TryUseStar();
             IO.pr(tempString);
             fight.TryDodge(stance.amount);
         }
-        else if (fight.stance.stance == Stance.Dodge) fight.TryDodge(0);
+        else if (fight.stance.stance == Stance.Defence) fight.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
-        if (stance.stance == Stance.Dodge)
+        if (stance.stance == Stance.Defence)
         {
-            string tempStr = $"{Name} dodges {stance.amount} damage.";
+            string tempStr = $"{Name}는 굴러서 적의 공격을 피했다. {stance.amount} damage.";
             TryUseStar();
             if (damage <= 0)
             {
@@ -98,7 +123,7 @@ public class Fightable : Moveable
     }
     public virtual void Rest()
     {
-        if (Map.Current.IsVisible(this)) IO.pr($"{Name} is resting a turn.");
+        if (Map.Current.IsVisible(this)) IO.pr($"{Name}은 잠시 숨을 골랐다.");
         stance = new(Stance.Rest, default);
     }
     public virtual void OnBeforeTurnEnd()
@@ -108,7 +133,7 @@ public class Fightable : Moveable
     public void OnTurnEnd()
     {
         UpdateTarget();
-        stance = new(default, default);
+        stance.stance = default;
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
@@ -118,11 +143,11 @@ public class Fightable : Moveable
     protected void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
     protected void OnDamaged(object? sender, PointArgs e)
     {
-        if (e.Amount > 0) IO.pr($"{Name} takes {e.Amount} damage. {Hp}", true);
+        if (e.Amount > 0) IO.pr($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", true);
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\tCap : {Hand.Cap}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();

@@ -1,6 +1,21 @@
+monsters
+
+io system
+
+map system
+
+skills system
+
+new inventory system.
+
 10 levels + boss fight
+
 npcs
+
 traps
+
 tresures
 
 sounds
+
+score, high score scoreboard

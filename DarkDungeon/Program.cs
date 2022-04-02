@@ -17,29 +17,27 @@ public class Program
             if (player.CurStance.stance != Stance.None) Game.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
-        IO.pr(player.Hand);
-        IO.pr(player.Inven);
-        IO.pr("Your adventure ends here...");
+        IO.pr($"{player.Name}은 여기에 잠들었다...");
         IO.rk();
     }
     public Program()
     {
         instance = this;
         Console.Clear();
-        IO.pr("The Dark Dungeon " + Rules.version);
+        IO.pr("The Dungeons of the Mine " + Rules.version);
         Intro();
         Console.Clear();
-        IO.pr("Your adventure begins...");
+        IO.pr($"{player.Name}은 광산으로 들어갔다...");
     }
 
     private void Intro()
     {
         IO.rk("Press any key to start...");
 
-        IO.pr("Choose charactor`s name...");
+        IO.pr("캐릭터의 이름은?...");
         string name = Console.ReadLine() ?? "Michael";
-        IO.pr("Choose your class...");
-        IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod, classes.Count());
+        IO.pr($"{name}의 직업은?...");
+        IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel) index = 0;
         ClassName className = (ClassName)index;
         Player._instance = new Player(name, className);
@@ -60,7 +58,6 @@ public class Program
             case ConsoleKey.H:
                 player.Move(-1);
                 break;
-            case ConsoleKey.Q:
             case ConsoleKey.Escape:
                 ConsoleKey key2 = IO.rk(actions).Key;
                 DefaultSwitch(key2);
@@ -79,17 +76,20 @@ public class Program
     {
         switch (key)
         {
-            case ConsoleKey.W:
-                Card? card = player.SelectCard();
-                if (card is Card card2) player.UseCard(card2);
+            case ConsoleKey.Q:
+                TokenType? selResult = player.SelectToken();
+                if (selResult is TokenType token) player.UseToken(token);
                 break;
             case ConsoleKey.E:
                 player.UseInven();
                 break;
-            case ConsoleKey.R:
+            case ConsoleKey.U:
+                IO.pr(player.tokens);
+                break;
+            case ConsoleKey.OemPeriod:
                 player.Rest();
                 break;
-            case ConsoleKey.S:
+            case ConsoleKey.Oem2:
                 player.ShowStats();
                 break;
             case ConsoleKey.X:

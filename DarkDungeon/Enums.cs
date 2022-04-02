@@ -3,17 +3,18 @@ public enum ClassName
     Warrior, Assassin, Mage
 }
 
+public enum Stats
+{
+    Sol, Lun, Con
+}
+
 public enum CardStance
 {
-    Attack, Dodge, Star
+    Offence, Defence,
 }
 public enum GamePointOption
 {
     Stacking, Reserving
-}
-public enum KeyArrow
-{
-    Cancel, UpArrow, DownArrow, LeftArrow, RightArrow
 }
 public enum Facing
 {
@@ -21,7 +22,7 @@ public enum Facing
 }
 public enum Stance
 {
-    None, Move, Rest, Attack, Dodge, Item, Exile
+    None, Move, Rest, Offence, Defence, Item, Exile, Charge
 }
 public enum ItemType
 {

@@ -1,36 +1,28 @@
-public struct Card
+public readonly struct Card
 {
-    public CardStance Stance { get; private set; }
-    public readonly int Level { get; }
-    public readonly int Sol { get; }
-    public readonly int Lun { get; }
-    public readonly int Con { get; }
+    private readonly char[] STATCHARS = {'s', 'L', '*'};
+    private const string OFFENSIVE = "()";
+    private const string DEFENSIVE = "[]";
 
-    public Card(int sol, int lun, int con, CardStance stance)
-    {
-        Sol = sol;
-        Lun = lun;
-        Con = con;
-        Level = (sol + lun + con) / 3;
-        Stance = stance;
-    }
-    public Card StanceShift()
-    {
-        if (Stance == CardStance.Star) return this;
-        Stance = Stance == CardStance.Attack ? CardStance.Dodge : CardStance.Attack;
-        return this;
-    }
 
-    internal Card Exile()
+    public readonly int value;
+    public readonly Stats stat;
+    public readonly bool isOffence;
+    private readonly string visual;
+
+    public Card(int value, Stats stat, bool isOffence)
     {
-        Stance = CardStance.Star;
-        return this;
+        this.value = value;
+        this.stat = stat;
+        this.isOffence = isOffence;
+        
+        char statChar = STATCHARS[((int)stat)];
+        visual = isOffence ? OFFENSIVE : DEFENSIVE;
+        visual = visual.Insert(1, $"{value}{statChar}");
     }
 
-    public override string ToString()
-    {
-        if (Stance == CardStance.Attack) return $"<({Sol})/{Lun}>";
-        else if (Stance == CardStance.Dodge) return $"[({Lun})/{Sol}]";
-        else return $"[{Con}*]";
-    }
+    public override string ToString() => visual;
+    public string ToStringPrivate() => isOffence ? OFFENSIVE : DEFENSIVE;
+
+    public static Card StanceShift(Card card) => new Card(card.value, card.stat, !card.isOffence);
 }

@@ -8,7 +8,3 @@ public class Stat
     }
     public void ModifyStat(Stats stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
 }
-public enum Stats
-{
-    Sol, Lun, Con
-}

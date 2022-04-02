@@ -12,10 +12,7 @@ public class Bat : Monster
 
     public Bat(Position spawnPoint) : base(data, spawnPoint)
     {
-        if (Hand[0] is Card card)
-        {
-            Hand[0] = card.StanceShift();
-        }
+
     }
     public override void DoTurn()
     {
