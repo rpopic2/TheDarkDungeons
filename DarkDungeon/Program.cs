@@ -59,7 +59,7 @@ public class Program
                 player.Move(-1);
                 break;
             case ConsoleKey.Escape:
-                ConsoleKey key2 = IO.rk(actions).Key;
+                ConsoleKeyInfo key2 = IO.rk(actions);
                 DefaultSwitch(key2);
                 break;
             default:
@@ -68,31 +68,31 @@ public class Program
                     player.UseInven(index);
                     break;
                 }
-                else DefaultSwitch(key);
+                else DefaultSwitch(info);
                 break;
         }
     }
-    private void DefaultSwitch(ConsoleKey key)
+    private void DefaultSwitch(ConsoleKeyInfo key)
     {
-        switch (key)
+        switch (key.KeyChar)
         {
-            case ConsoleKey.Q:
+            case 'q':
                 TokenType? selResult = player.SelectToken();
                 if (selResult is TokenType token) player.UseToken(token);
                 break;
-            case ConsoleKey.E:
-                player.UseInven();
-                break;
-            case ConsoleKey.U:
+            case 'u':
                 IO.pr(player.tokens);
                 break;
-            case ConsoleKey.OemPeriod:
+            case 'i':
+                player.UseInven();
+                break;
+            case '.':
                 player.Rest();
                 break;
-            case ConsoleKey.Oem2:
+            case '/':
                 player.ShowStats();
                 break;
-            case ConsoleKey.X:
+            case 'x':
                 player.Exile();
                 break;
         }

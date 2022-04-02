@@ -1,13 +1,4 @@
-new-token-system
-[x] token(card) draw
-[x] print token hand
-[x] atk w/ token
-[x] def w/ token
-[x] charge w/ token
-[x] Tokens indexer에 캡 넘어서면 null 리턴해서 exception 안뜨게해야
-[ ] 
-
-
+new-inventory
 [ ] new ui : inventory always showing / or i to show, I to show full version
 [ ] select item from inventory, list its skills
 [ ] combat unittest
