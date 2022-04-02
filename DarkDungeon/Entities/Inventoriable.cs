@@ -81,8 +81,8 @@ public class Inventoriable : Fightable
             {
                 throw new NotImplementedException();
                 //Card newCard = new(card.Lun, card.Sol, card.Con, CardStance.Offence);
-                f.UseCard(card);
-                return true;
+                //f.UseCard(card);
+                // return true;
             }
             return false;
         });
@@ -100,12 +100,12 @@ public class Inventoriable : Fightable
         {
             throw new NotImplementedException();
 
-            Card? card = f.SelectCard();
-            if (card is not Card card2) return false;
+            // Card? card = f.SelectCard();
+            // if (card is not Card card2) return false;
             //if (card2.Stance == CardStance.Offence) f.stance.amount += f.Hp.Max - f.Hp.Cur;
-            else return false;
-            f.UseCard(card2);
-            return true;
+            // else return false;
+            // f.UseCard(card2);
+            // return true;
         });
         public static readonly ItemData Backstep = new(7, "BKSTEP", ItemType.Skill, f =>
         {
