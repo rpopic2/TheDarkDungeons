@@ -17,6 +17,7 @@ public struct Tokens
     public override string ToString()
     {
         string result = "토큰 :";
+        if(Count <= 0) return result + " EMPTY";
         foreach (byte? item in _array)
         {
             if (item is byte value) result += " " + TokenSymbols[value];

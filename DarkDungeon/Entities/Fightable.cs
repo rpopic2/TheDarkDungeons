@@ -73,6 +73,7 @@ public class Fightable : Moveable
             stance.stance = Stance.Defence;
             stance.amount += rnd.Next(1, stat[Stats.Sol]);
         }
+        tokens.Remove(token);
     }
     public void TryAttack()
     {
