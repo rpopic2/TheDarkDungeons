@@ -3,6 +3,7 @@ public static class IO
     public const ConsoleKey CANCELKEY = ConsoleKey.Q;
     public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
     private const string Emphasis = "=> ";
+    public const string ItemKeys1 = "werty";
     private const string delString = "                                                                                       ";
     private static Player player { get => Player.instance; }
     public static int printCount;
@@ -46,7 +47,7 @@ public static class IO
             keyInfo = rk(player.Inven);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == ConsoleKey.Escape;
-            found = chki(keyInfo.KeyChar, player.Inven.Cap, out index);
+            found = chki(keyInfo.KeyChar, out index);
             if (cancel) return;
         } while (!found);
     }
@@ -57,10 +58,10 @@ public static class IO
         if (index != -1) index--;
         return index != -1 && index <= max - 1;
     }
-    public static bool chki(Char i, int max, out int index)
+    public static bool chki(Char i, out int index)
     {
-        index = Program.ItemKeys1.IndexOf(i);
-        return index != -1 && index <= max -1;
+        index = ItemKeys1.IndexOf(i);
+        return index != -1 && index <= player.Inven.Cap -1;
     }
     ///<summary>Select from hand</summary>
     public static void seln_h(out int result, out bool cancel, out ConsoleKeyInfo keyInfo) =>

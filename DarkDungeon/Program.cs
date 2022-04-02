@@ -61,10 +61,9 @@ public class Program
                 break;
         }
     }
-    public const string ItemKeys1 = "werty";
     private void DefaultSwitch(ConsoleKeyInfo key)
     {
-        int i = ItemKeys1.IndexOf(key.KeyChar);
+        IO.chki(key.KeyChar, out int i);
         if (i != -1 && player.Inven[i] is Item item)
         {
             IO.seln(item.skills, out int index, out bool cancel, out _);
