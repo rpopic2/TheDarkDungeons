@@ -1,5 +1,5 @@
 namespace Entities;
-public class Monster : Fightable
+public class Monster : Inventoriable
 {
     protected static int lv => Map.level;
     protected static int t => Game.Turn;
@@ -17,7 +17,13 @@ public class Monster : Fightable
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
         Pos = spawnPoint;
-        PickupCard(Draw(Stats.Sol, true), Hand.Count);
+        if (data.name == "Lunatic")
+        {
+            NewInven[0] = NewItem.sword;
+            tokens.Add(TokenType.Offence);
+            tokens.Add(TokenType.Defence);
+            tokens.Add(TokenType.Offence);
+        }
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
@@ -41,7 +47,7 @@ public class Monster : Fightable
     };
     internal static readonly Action<Monster> lunaticBehav = (m) =>
     {
-        if (m.Hand.Count > 0)
+        if (m.tokens.Count > 0)
         {
             if (m.Target is null)
             {
@@ -50,7 +56,7 @@ public class Monster : Fightable
                 if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
                 else m.Move(moveX, out char obj);
             }
-            else m._UseCard((Card)m.Hand.GetFirst()!);
+            else m.SelectSkillAndUse(m.NewInven[0]!, 0);
         }
         else m.Rest();
     };

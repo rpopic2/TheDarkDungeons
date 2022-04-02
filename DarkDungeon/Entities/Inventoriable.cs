@@ -9,7 +9,7 @@ public class Inventoriable : Fightable
     {
         NewInven = new(3, "(맨손)");
         Inven = new Inventory<IItem?>(3, "(맨손)");
-        RegisterItem(11, TorchData.data);
+        //RegisterItem(11, TorchData.data);
     }
     public static void RegisterItem(int index, IItemData data)
     {

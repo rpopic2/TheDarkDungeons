@@ -61,10 +61,9 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
-    public void SelectSkillAndUse(NewItem item)
+    public void SelectSkillAndUse(NewItem item, int index)
     {
-        IO.seln(item.skills, out int index, out bool cancel, out _);
-        if (cancel) return;
+        
 
         Skill? selected = item.skills[index];
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
