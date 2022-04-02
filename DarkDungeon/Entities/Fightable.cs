@@ -70,7 +70,7 @@ public class Fightable : Moveable
         if (tokenTry is TokenType token)
         {
             int amount = SetStance(token, selected.stats);
-            IO.rk(selected.OnUseOutput + $"({amount})");
+            IO.rk($"{Name}은 {selected.OnUseOutput} ({amount})");
         }
         else
         {
@@ -137,7 +137,7 @@ public class Fightable : Moveable
     public void OnTurnEnd()
     {
         UpdateTarget();
-        stance.stance = default;
+        stance = new(default, default);
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
