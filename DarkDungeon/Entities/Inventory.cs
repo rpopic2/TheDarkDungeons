@@ -28,7 +28,7 @@ public class Inventory<T>
 
     public override string ToString()
     {
-        string result = $"{name} : ";
+        string result = $"{name}|";
         foreach (T? item in content)
         {
             if (item == null) result += Item.Empty;

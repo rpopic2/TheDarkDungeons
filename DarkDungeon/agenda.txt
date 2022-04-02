@@ -4,7 +4,11 @@ new-inventory
 [X] 맨손 선택하면 list of skill 보이게
 [X] Program.DefaultSwitch()의 방식이 바뀌어야.
 [X] Fightable.UseToken() needs refactor first : should recieve stat as param.
-[ ] Tokens.TryUse, Fightable.TryUse 2개가 공존?
+[X] Tokens.TryUse, Fightable.TryUse 2개가 공존?
+[ ] 여러개 무기 쓰기 시도.
+[X] 애초에 barehand는 인벤토리에 포함 안되게끔?
+[ ] Program에 bareHandsActions 다른데로 옮겨야함.
+[ ]
 
 [ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
 [ ] 새로운 아이템 시스템이 필요할까?

@@ -13,7 +13,6 @@ public class Player : Inventoriable
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
-        PickupItem(Inventoriable.ItemDb.BareHand.Instantiate(this, stat), 0);
     }
     public void StartItem()
     {

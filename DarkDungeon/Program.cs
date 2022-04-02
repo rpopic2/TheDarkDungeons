@@ -58,10 +58,6 @@ public class Program
             case ConsoleKey.H:
                 player.Move(-1);
                 break;
-            case ConsoleKey.Escape:
-                ConsoleKeyInfo key2 = IO.rk(actions);
-                DefaultSwitch(key2);
-                break;
             default:
                 if (IO.chkn(info.KeyChar, player.Inven.Cap, out int index))
                 {
@@ -79,6 +75,7 @@ public class Program
             case 'q':
                 Skill[] bardHandActions = { new("주먹질", TokenType.Offence, Stats.Sol, "주먹을 휘둘렀다."), new("구르기", TokenType.Defence, Stats.Lun, "옆으로 굴렀다.") };
                 IO.seln(bardHandActions, out int index, out bool cancel, out _);
+                if(cancel) return;
 
                 Skill? selected = bardHandActions[index];
                 TokenType? tokenTry = player.tokens.TryUse(selected.TokenType);

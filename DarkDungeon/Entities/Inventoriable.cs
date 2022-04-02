@@ -6,7 +6,7 @@ public class Inventoriable : Fightable
     public static ref readonly IItemData[] Items => ref items;
     public Inventoriable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, className, level, sol, lun, con, maxHp, cap)
     {
-        Inven = new Inventory<IItem?>(3, "Inventory");
+        Inven = new Inventory<IItem?>(3, "(맨손)");
         RegisterItem(11, TorchData.data);
     }
     public static void RegisterItem(int index, IItemData data)
