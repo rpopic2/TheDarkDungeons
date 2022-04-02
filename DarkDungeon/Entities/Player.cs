@@ -13,10 +13,6 @@ public class Player : Inventoriable
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
-        for (int i = 0; i < basicCap; i++)
-        {
-            Hand[i] = Draw(Stats.Sol, true);
-        }
     }
     public void StartItem()
     {

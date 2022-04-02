@@ -22,7 +22,7 @@ public enum Facing
 }
 public enum Stance
 {
-    None, Move, Rest, Attack, Dodge, Item, Exile
+    None, Move, Rest, Attack, Defence, Item, Exile
 }
 public enum ItemType
 {

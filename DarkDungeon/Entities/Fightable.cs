@@ -54,7 +54,7 @@ public class Fightable : Moveable
         {
             if (card.stat == Stats.Sol || card.stat == Stats.Lun)
             {
-                stance.stance = Stance.Dodge;
+                stance.stance = Stance.Defence;
                 stance.amount += card.value;
             }
             else return;
@@ -65,8 +65,13 @@ public class Fightable : Moveable
     {
         if (token == TokenType.Offence)
         {
-            stance = new(Stance.Attack, rnd.Next(1, stat[Stats.Sol]));
             stance.stance = Stance.Attack;
+            stance.amount += rnd.Next(1, stat[Stats.Sol]);
+        }
+        else if (token == TokenType.Defence)
+        {
+            stance.stance = Stance.Defence;
+            stance.amount += rnd.Next(1, stat[Stats.Sol]);
         }
     }
     public void TryAttack()
@@ -79,11 +84,11 @@ public class Fightable : Moveable
             IO.pr(tempString);
             fight.TryDodge(stance.amount);
         }
-        else if (fight.stance.stance == Stance.Dodge) fight.TryDodge(0);
+        else if (fight.stance.stance == Stance.Defence) fight.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
-        if (stance.stance == Stance.Dodge)
+        if (stance.stance == Stance.Defence)
         {
             string tempStr = $"{Name}는 굴러서 적의 공격을 피 {stance.amount} damage.";
             TryUseStar();
