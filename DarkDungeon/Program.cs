@@ -26,7 +26,6 @@ public class Program
         IO.pr("The Dungeons of the Mine " + Rules.version);
         Intro();
         Console.Clear();
-        IO.rk($"{player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
     }
 
     private void Intro()

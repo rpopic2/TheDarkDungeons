@@ -16,9 +16,9 @@ new-inventory
 [X] Monster도 새 스킬 쓰게끔.
 [X] 아이템 먹을때 숫자? -> IO에 새로운 메서드 필요
 [X] delete old Items
+[ ] 클래스 고르면 바로 무기 주기
 [ ]
 
-[ ] 클래스 고르면 바로 무기 주기
 [ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
 [ ] Stat.cs와 Stats.cs 너무 헷갈릴듯.
 [ ] combat unittest
