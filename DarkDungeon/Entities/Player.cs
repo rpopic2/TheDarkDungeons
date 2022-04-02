@@ -153,7 +153,7 @@ public class Player : Inventoriable
         {
             IO.seln_t(out int index, out bool cancel, out _);
             if (cancel) return null;
-            return (TokenType)tokens[index]!;
+            if(tokens[index] is byte result) return(TokenType)result;
         } while (true);
     }
     

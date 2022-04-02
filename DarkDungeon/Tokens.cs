@@ -17,7 +17,7 @@ public struct Tokens
     public override string ToString()
     {
         string result = "토큰 :";
-        if(Count <= 0) return result + " EMPTY";
+        if (Count <= 0) return result + " EMPTY";
         foreach (byte? item in _array)
         {
             if (item is byte value) result += " " + TokenSymbols[value];
@@ -47,7 +47,11 @@ public struct Tokens
     }
     public byte? this[int index]
     {
-        get => _array[index];
+        get
+        {
+            if(index >= _array.Count) return null;
+            return _array[index];
+        }
     }
     public int Count => _array.Count((i) => i is not null);
     public bool IsFull => Count >= _array.Capacity;

@@ -1,10 +1,10 @@
+new-token-system
 [x] token(card) draw
 [x] print token hand
 [x] atk w/ token
 [x] def w/ token
 [x] charge w/ token
-[ ] refactor Fightable.UseToken()
-[ ] Tokens indexer에 캡 넘어서면 null 리턴해서 exception 안뜨게해야
+[x] Tokens indexer에 캡 넘어서면 null 리턴해서 exception 안뜨게해야
 [ ] 
 
 
@@ -12,5 +12,6 @@
 [ ] select item from inventory, list its skills
 [ ] combat unittest
 [ ] remove unness Enums.Stance members
+[ ] refactor Fightable.UseToken()
 [ ] 충전 알고리즘은 나중에 더 고민해야할 듯. 애초에 스킬이라 지금은 stub implementation임
 [ ] 
