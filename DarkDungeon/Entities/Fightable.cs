@@ -87,7 +87,7 @@ public class Fightable : Moveable
         {
             string tempString = $"{Name}은 주먹으로 상대를 힘껏 때렸다. ({stance.amount})";
             TryUseStar();
-            IO.pr(tempString);
+            IO.rk(tempString);
             fight.TryDodge(stance.amount);
         }
         else if (fight.stance.stance == Stance.Defence) fight.TryDodge(0);
@@ -100,19 +100,19 @@ public class Fightable : Moveable
             TryUseStar();
             if (damage <= 0)
             {
-                IO.pr(tempStr += "..but oppenent did not attack...");
+                IO.rk(tempStr += "..but oppenent did not attack...");
                 return;
             }
-            IO.pr(tempStr);
+            IO.rk(tempStr);
             damage -= stance.amount;
         }
         else if (damage > 0 && IsResting)
         {
             damage = (int)MathF.Round(damage * Rules.vulMulp);
-            IO.pr($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage! (total {damage})");
+            IO.rk($"{Name} is resting vulnerable, takes {Rules.vulMulp}x damage! (total {damage})");
         }
         Hp -= damage;
-        if (damage <= 0) IO.pr($"{Name} completely dodges. {Hp}", true);
+        if (damage <= 0) IO.rk($"{Name} completely dodges. {Hp}");
     }
     private void TryUseStar()
     {

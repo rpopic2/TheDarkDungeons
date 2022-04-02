@@ -1,7 +1,7 @@
 new-inventory
 [X] new ui : inventory always showing 
-[ ] 맨손 as first element.
-[ ] 맨손 선택하면 list of skill 보이게
+[X] 맨손 as first element.
+[X] 맨손 선택하면 list of skill 보이게
 [ ] Program.DefaultSwitch()의 방식이 바뀌어야.
 [ ] 새로운 아이템 시스템이 필요할까?
 [ ]
