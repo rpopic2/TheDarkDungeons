@@ -10,12 +10,12 @@ public class Entity
     {
         this.Level = level;
         stat = new();
-        stat[Stats.Sol] = sol;
-        stat[Stats.Lun] = lun;
-        stat[Stats.Con] = con;
+        stat[StatName.Sol] = sol;
+        stat[StatName.Lun] = lun;
+        stat[StatName.Con] = con;
         Name = name;
     }
 
-    public Card Draw(Stats stats, bool isOffence = true) => new(GetRandomStat(stat[stats]), stats, isOffence);
+    public Card Draw(StatName stats, bool isOffence = true) => new(GetRandomStat(stat[stats]), stats, isOffence);
     private int GetRandomStat(int stat) => rnd.Next(1, stat + 1);
 }

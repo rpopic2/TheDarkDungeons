@@ -28,7 +28,7 @@ public class Monster : Inventoriable
     {
         base.OnDeath(sender, e);
         player.exp.point += killExp;
-        player.PickupCard(Draw(Stats.Sol, true));
+        player.PickupCard(Draw(StatName.Sol, true));
         // foreach (var item in dropList.list)
         // {
         //     IItemData iitem = Inventoriable.Items[(int)item.dataIndex];

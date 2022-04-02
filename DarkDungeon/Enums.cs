@@ -3,7 +3,7 @@ public enum ClassName
     Warrior, Assassin, Mage
 }
 
-public enum Stats
+public enum StatName
 {
     Sol, Lun, Con
 }

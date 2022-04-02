@@ -8,11 +8,11 @@ public readonly struct Card
 
 
     public readonly int value;
-    public readonly Stats stat;
+    public readonly StatName stat;
     public readonly bool isOffence;
     private readonly string visual;
 
-    public Card(int value, Stats stat, bool isOffence)
+    public Card(int value, StatName stat, bool isOffence)
     {
         this.value = value;
         this.stat = stat;

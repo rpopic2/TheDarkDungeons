@@ -43,7 +43,7 @@ public class Fightable : Moveable
     {
         if (card.isOffence)
         {
-            if (card.stat == Stats.Sol)
+            if (card.stat == StatName.Sol)
             {
                 stance.stance = Stance.Offence;
                 stance.amount += card.value;
@@ -52,7 +52,7 @@ public class Fightable : Moveable
         }
         if (!card.isOffence)
         {
-            if (card.stat == Stats.Sol || card.stat == Stats.Lun)
+            if (card.stat == StatName.Sol || card.stat == StatName.Lun)
             {
                 stance.stance = Stance.Defence;
                 stance.amount += card.value;
@@ -63,8 +63,6 @@ public class Fightable : Moveable
     }
     public void SelectSkillAndUse(Item item, int index)
     {
-        
-
         Skill? selected = item.skills[index];
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
@@ -77,7 +75,7 @@ public class Fightable : Moveable
             IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
         }
     }
-    public int SetStance(TokenType token, Stats stats)
+    public int SetStance(TokenType token, StatName stats)
     {
         stance.stance = token.ToStance();
         int amount = rnd.Next(1, stat[stats]);
@@ -112,11 +110,10 @@ public class Fightable : Moveable
         }
         else if (damage > 0 && IsResting)
         {
-            IO.rk($"{Name}은 무방비 상태로 쉬고 있었다! {Rules.vulMulp}x({damage})");
+            IO.rk($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
             damage = (int)MathF.Round(damage * Rules.vulMulp);
         }
         Hp -= damage;
-        if (damage <= 0) IO.rk($"{Name} completely dodges. {Hp}");
     }
     private void TryUseStar()
     {
@@ -151,7 +148,7 @@ public class Fightable : Moveable
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[Stats.Sol]}\tLun : {stat[Stats.Lun]}\tCon : {stat[Stats.Con]}";
+        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[StatName.Sol]}\tLun : {stat[StatName.Lun]}\tCon : {stat[StatName.Con]}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();
@@ -171,5 +168,5 @@ public class Fightable : Moveable
     }
 
     public static bool IsFirst(Fightable p1, Fightable p2)
-    => p1.stat[Stats.Lun] >= p2.stat[Stats.Lun];
+    => p1.stat[StatName.Lun] >= p2.stat[StatName.Lun];
 }

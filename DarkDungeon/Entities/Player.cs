@@ -20,13 +20,13 @@ public class Player : Inventoriable
         {
             case ClassName.Warrior:
                 NewPickupItem(Item.sword);
-                stat[Stats.Sol] += 1;
+                stat[StatName.Sol] += 1;
                 break;
             case ClassName.Assassin:
-                stat[Stats.Lun] += 1;
+                stat[StatName.Lun] += 1;
                 break;
             case ClassName.Mage:
-                stat[Stats.Con] += 1;
+                stat[StatName.Con] += 1;
                 break;
         }
     }
@@ -46,13 +46,13 @@ public class Player : Inventoriable
         switch (index)
         {
             case 0:
-                stat[Stats.Sol] += 1;
+                stat[StatName.Sol] += 1;
                 break;
             case 1:
-                stat[Stats.Lun] += 1;
+                stat[StatName.Lun] += 1;
                 break;
             case 2:
-                stat[Stats.Con] += 1;
+                stat[StatName.Con] += 1;
                 break;
         }
         Hand.Cap = new Mul(3, 0.4f, Level);

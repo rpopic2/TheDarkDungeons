@@ -1,4 +1,4 @@
-public record Skill(string Name, TokenType TokenType, Stats stats, string OnUseOutput)
+public record Skill(string Name, TokenType TokenType, StatName stats, string OnUseOutput)
 {
     private readonly string[] parenthesis = { "()", "[]", "<>" };
     public override string ToString()
