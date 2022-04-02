@@ -63,8 +63,8 @@ public class Program
     }
     private void DefaultSwitch(ConsoleKeyInfo key)
     {
-        IO.chki(key.KeyChar, out int i);
-        if (i != -1 && player.Inven[i] is Item item)
+        bool found = IO.chki(key.KeyChar, out int i);
+        if (found && player.Inven[i] is Item item)
         {
             IO.seln(item.skills, out int index, out bool cancel, out _);
             if (cancel) return;
