@@ -87,9 +87,6 @@ public class Fightable : Moveable
         if (!(Target is Fightable fight)) return;
         if (stance.stance == Stance.Offence)
         {
-            // string tempString = $"{Name}은 주먹으로 상대를 힘껏 때렸다. ({stance.amount})";
-            // TryUseStar();
-            // IO.rk(tempString);
             fight.TryDodge(stance.amount);
         }
         else if (fight.stance.stance == Stance.Defence) fight.TryDodge(0);
@@ -98,14 +95,6 @@ public class Fightable : Moveable
     {
         if (stance.stance == Stance.Defence)
         {
-            //string tempStr = $"{Name}는 굴러서 적의 공격을 피했다. ({stance.amount}).";
-            //TryUseStar();
-            // if (damage <= 0)
-            // {
-            //     IO.rk(tempStr += "..but oppenent did not attack...");
-            //     return;
-            // }
-            // IO.rk(tempStr);
             damage -= stance.amount;
         }
         else if (damage > 0 && IsResting)
@@ -114,13 +103,6 @@ public class Fightable : Moveable
             damage = (int)MathF.Round(damage * Rules.vulMulp);
         }
         Hp -= damage;
-    }
-    private void TryUseStar()
-    {
-        if (star <= 0) return;
-        stance.amount += star;
-        IO.pr($"{star} more damage... (total {stance.amount})");
-        star = 0;
     }
     public virtual void Rest()
     {
