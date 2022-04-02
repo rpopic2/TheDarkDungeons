@@ -17,8 +17,6 @@ public class Program
             if (player.CurStance.stance != Stance.None) Game.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
-        IO.pr(player.Hand);
-        IO.pr(player.Inven);
         IO.pr($"{player.Name}은 여기에 잠들었다...");
         IO.rk();
     }
