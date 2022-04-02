@@ -2,10 +2,12 @@ namespace Entities;
 public class Inventoriable : Fightable
 {
     public Inventory<IItem?> Inven { get; private set; }
+    public Inventory<NewItem> NewInven {get; private set;}
     private static IItemData[] items = new IItemData[255];
     public static ref readonly IItemData[] Items => ref items;
     public Inventoriable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, className, level, sol, lun, con, maxHp, cap)
     {
+        NewInven = new(3, "(맨손)");
         Inven = new Inventory<IItem?>(3, "(맨손)");
         RegisterItem(11, TorchData.data);
     }
@@ -49,6 +51,10 @@ public class Inventoriable : Fightable
 
         Inven[index] = newItem;
         if (newItem is Equip equip) equip.onUse.Invoke(true);
+    }
+    protected void NewPickupItem(NewItem item, int index)
+    {
+        NewInven[index] = item;
     }
     public static class ItemDb
     {

@@ -39,7 +39,7 @@ public static class Game
         Console.Clear();
         IO.pr("History");
         IO.prb($"\nT : {Turn}\tDungeon Level : {Map.level}\tHP : {Player.instance.Hp}");
-        IO.prb(Player.instance.Inven);
+        IO.prb(Player.instance.NewInven);
         IO.pr(Map.Current);
     }
 }

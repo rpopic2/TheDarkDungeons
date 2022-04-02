@@ -19,7 +19,7 @@ public class Player : Inventoriable
         switch (ClassName)
         {
             case ClassName.Warrior:
-                PickupItemData(Inventoriable.ItemDb.Sword);
+                NewPickupItem(NewItem.sword);
                 //PickupItemData(Inventoriable.SkillDb.Berserk);
                 stat[Stats.Sol] += 1;
                 break;
@@ -85,6 +85,18 @@ public class Player : Inventoriable
         IO.del(2);
     }
     public void PickupItemData(IItemData data) => PickupItem(data.Instantiate(this, stat));
+    private void NewPickupItem(NewItem item)
+    {
+        IO.pr($"\n아이템을 얻었다. {item.name}");
+        IO.seln_i(out int index, out bool cancel, out ConsoleModifiers mod);
+        if (cancel)
+        {
+            IO.del(2);
+            return;
+        }
+        NewPickupItem(item, index);
+        IO.del(2);
+    }
     private void PickupItem(IItem item)
     {
         IO.pr("\nFound an item." + item.abv);
@@ -132,11 +144,11 @@ public class Player : Inventoriable
         IO.rk();
         IO.del();
 
-        var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
-        foreach (var item in skills)
-        {
-            item.stack = item.level;
-        }
+        // var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
+        // foreach (var item in skills)
+        // {
+        //     item.stack = item.level;
+        // }
     }
     public override Card? SelectCard()
     {

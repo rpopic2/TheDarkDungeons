@@ -59,24 +59,22 @@ public class Program
                 player.Move(-1);
                 break;
             default:
-                if (IO.chkn(info.KeyChar, player.Inven.Cap, out int index))
-                {
-                    player.UseInven(index);
-                    break;
-                }
-                else DefaultSwitch(info);
+                DefaultSwitch(info);
                 break;
         }
     }
-        private void DefaultSwitch(ConsoleKeyInfo key)
+    public const string ItemKeys1 = "werty";
+    private void DefaultSwitch(ConsoleKeyInfo key)
     {
+        int i = ItemKeys1.IndexOf(key.KeyChar);
+        if (i != -1 && player.NewInven[i] is NewItem skill)
+        {
+            player.SelectSkillAndUse(skill);
+        }
         switch (key.KeyChar)
         {
             case 'q':
-                player.SelectSkillAndUse(Skill.bardHand);
-                break;
-            case 'w':
-                player.SelectSkillAndUse(Skill.sword);
+                player.SelectSkillAndUse(NewItem.bardHand);
                 break;
             case 'u':
                 IO.rk(player.tokens);
