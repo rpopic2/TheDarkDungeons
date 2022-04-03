@@ -138,7 +138,7 @@ public class Fightable : Moveable
     }
     public void UpdateTarget()
     {
-        Map.Current.Moveables.TryGet(Pos.FrontIndex, out Moveable? mov);
+        Map.Current.MoveablePositions.TryGet(Pos.FrontIndex, out Moveable? mov);
         if (mov is Fightable f && isEnemy(this, f)) Target = mov;
         else Target = null;
     }

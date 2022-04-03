@@ -13,7 +13,7 @@ public static class Game
     }
     internal static void ElaspeTurn()
     {
-        var temp = (from mov in Map.Current.Moveables where mov is not null select mov).ToArray();
+        var temp = (from mov in Map.Current.MoveablePositions where mov is not null select mov).ToArray();
         Array.ForEach(temp, m =>
         {
             if (m is Monster mon) mon.DoTurn(); //mob ai

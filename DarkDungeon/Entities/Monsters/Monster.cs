@@ -70,7 +70,7 @@ public class Monster : Inventoriable
         {
             if (m.Target is null)
             {
-                Map.Current.Moveables.TryGet(m.Pos.x + 2, out Moveable? target);
+                Map.Current.MoveablePositions.TryGet(m.Pos.x + 2, out Moveable? target);
                 if (target is not null) m.Target = target;
                 else
                 {

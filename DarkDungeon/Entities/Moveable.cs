@@ -17,7 +17,7 @@ public class Moveable : Entity
         Map current = Map.Current;
         Position newPos = Pos + x;
         bool existsTile = current.Tiles.TryGet(newPos.x, out obj);
-        bool obstructed = current.Moveables.TryGet(newPos.x, out Moveable? mov);
+        bool obstructed = current.MoveablePositions.TryGet(newPos.x, out Moveable? mov);
         bool result = existsTile && !obstructed;
         if (result)
         {

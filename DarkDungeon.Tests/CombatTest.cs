@@ -36,7 +36,7 @@ public class CombatTest
         Map map = new(5, false);
         MonsterData lunData = MonsterDb.lunatic;
         map._Spawn(lunData, new(1, 1, Facing.Back));
-        Monster mob = ((Monster)map.Moveables[1]!);
+        Monster mob = ((Monster)map.MoveablePositions[1]!);
         //Give player a token
         player.tokens.Add(TokenType.Offence);
         Assert.Equal(1, player.tokens.Count);
@@ -143,7 +143,7 @@ public class CombatTest
         map = new(5, false);
         MonsterData lunData = MonsterDb.lunatic;
         map._Spawn(lunData, new(1, 1, Facing.Back));
-        return ((Monster)map.Moveables[1]!);
+        return ((Monster)map.MoveablePositions[1]!);
     }
     private void _StartTurn(Fightable[] fights)
     {

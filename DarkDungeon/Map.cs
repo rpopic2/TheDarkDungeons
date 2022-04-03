@@ -7,9 +7,9 @@ public class Map
     private char[] tiles;
     public ref readonly char[] Tiles
         => ref tiles;
-    private Moveable?[] moveables;
-    public ref readonly Moveable?[] Moveables
-    => ref moveables;
+    private Moveable?[] moveablePositions;
+    public ref readonly Moveable?[] MoveablePositions
+    => ref moveablePositions;
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
@@ -19,12 +19,12 @@ public class Map
         Current = this;
         this.length = length;
         tiles = NewEmptyArray(length, MapSymb.road);
-        moveables = new Moveable[length];
+        moveablePositions = new Moveable[length];
         empty = NewEmptyArray(length, MapSymb.Empty);
         rendered = new char[length];
 
         tiles[length - 1] = MapSymb.portal;
-        moveables[0] = Player.instance;
+        moveablePositions[0] = Player.instance;
         if (spawn) Spawn();
     }
 
@@ -54,7 +54,7 @@ public class Map
         List<int> fullMap = new List<int>(length);
         for (int i = 0; i < length; i++)
         {
-            if (moveables[i] is null) fullMap.Add(i);
+            if (moveablePositions[i] is null) fullMap.Add(i);
         }
         int playerX = player.Pos.x;
         fullMap.Remove(0);
@@ -70,17 +70,17 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
         {
-            moveables[pos.x] = null;
+            moveablePositions[pos.x] = null;
             return;
         }
-        if (moveables[pos.oldX] == mov) moveables[pos.oldX] = null;
-        moveables[pos.x] = mov;
+        if (moveablePositions[pos.oldX] == mov) moveablePositions[pos.oldX] = null;
+        moveablePositions[pos.x] = mov;
     }
     private void Render()
     {
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
-        RenderVisible(Moveables);
+        RenderVisible(MoveablePositions);
         //if(debug) RenderAllMobs();
         rendered[player.Pos.x] = MapSymb.player;
     }
@@ -88,7 +88,7 @@ public class Map
     {
         for (int i = 0; i < length; i++)
         {
-            if (moveables[i] is Monster m) rendered[i] = m.ToChar();
+            if (moveablePositions[i] is Monster m) rendered[i] = m.ToChar();
         }
     }
     private void RenderVisible<T>(T[] target)
