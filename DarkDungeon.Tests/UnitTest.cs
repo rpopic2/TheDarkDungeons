@@ -61,6 +61,14 @@ public class UnitTest
         Assert.NotEqual((byte)TokenType.Defence, player.tokens[0]);
     }
     [Fact]
+    public void TokenCapExceedTest()
+    {
+        Tokens token = new(2);
+        token.Add(TokenType.Offence);
+        token.Add(TokenType.Offence);
+        Assert.Throws<System.IndexOutOfRangeException>(() => token.Add(TokenType.Offence));
+    }
+    [Fact]
     public void SkillStructTest()
     {
         Skill skill = new("주먹질", TokenType.Offence, StatName.Sol, "Test!");
