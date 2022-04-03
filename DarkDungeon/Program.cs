@@ -13,7 +13,7 @@ public class Program
         do
         {
             instance.MainLoop();
-            if (player.CurStance.stance != Stance.None) Game.ElaspeTurn();
+            if (player.Stance.stance != Stance.None) Game.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
         IO.pr($"{player.Name}은 여기에 잠들었다...");

@@ -8,7 +8,7 @@ public class Moveable : Entity
     }
     public Position Pos { get; set; }
 
-    public StanceInfo CurStance => stance;
+    public StanceInfo Stance => stance;
     public virtual void Move(int x) => Move(x, out char obj);
     public virtual char ToChar() => Name.ToLower()[0];
 
@@ -21,7 +21,7 @@ public class Moveable : Entity
         bool result = existsTile && !obstructed;
         if (result)
         {
-            stance = new(Stance.Move, default);
+            stance = new(global::Stance.Move, default);
             Pos = newPos;
             current.UpdateMoveable(this);
         }
@@ -29,7 +29,7 @@ public class Moveable : Entity
         {
             if (newPos.facing != Pos.facing)
             {
-                stance = new(Stance.Move, default);
+                stance = new(global::Stance.Move, default);
                 Pos = !Pos;
                 return true;
             }

@@ -7,7 +7,7 @@ public class Fightable : Moveable
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     private int star;
-    public bool IsResting => stance.stance == Stance.Rest;
+    public bool IsResting => stance.stance == global::Stance.Rest;
     public bool IsAlive => !Hp.IsMin;
     public Fightable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
@@ -45,7 +45,7 @@ public class Fightable : Moveable
         {
             if (card.stat == StatName.Sol)
             {
-                stance.stance = Stance.Offence;
+                stance.stance = global::Stance.Offence;
                 stance.amount += card.value;
             }
             else return;
@@ -54,7 +54,7 @@ public class Fightable : Moveable
         {
             if (card.stat == StatName.Sol || card.stat == StatName.Lun)
             {
-                stance.stance = Stance.Defence;
+                stance.stance = global::Stance.Defence;
                 stance.amount += card.value;
             }
             else return;
@@ -85,15 +85,15 @@ public class Fightable : Moveable
     public void TryAttack()
     {
         if (!(Target is Fightable fight)) return;
-        if (stance.stance == Stance.Offence)
+        if (stance.stance == global::Stance.Offence)
         {
             fight.TryDodge(stance.amount);
         }
-        else if (fight.stance.stance == Stance.Defence) fight.TryDodge(0);
+        else if (fight.stance.stance == global::Stance.Defence) fight.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
-        if (stance.stance == Stance.Defence)
+        if (stance.stance == global::Stance.Defence)
         {
             damage -= stance.amount;
         }
@@ -107,7 +107,7 @@ public class Fightable : Moveable
     public virtual void Rest()
     {
         if (Map.Current.IsVisible(this)) IO.pr($"{Name}은 잠시 숨을 골랐다.");
-        stance = new(Stance.Rest, default);
+        stance = new(global::Stance.Rest, default);
     }
     public virtual void OnBeforeTurnEnd()
     {
