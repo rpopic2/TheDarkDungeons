@@ -44,14 +44,15 @@ public class CombatTest
         Assert.Equal(lunData.stat.cap, mob.tokens.Count);
 
         //1. New Turn. update its targets
-        FakeOnNewTurn(player);
-        FakeOnNewTurn(mob);
+        player.OnTurnEnd();
+        mob.OnTurnEnd();
         Assert.Equal(mob, player.Target);
         Assert.Equal(player, mob.Target);
 
         //2. Select Behaviour use a skill : 맨손 - 주먹질
-        FakeDoBehaviour(player);
-        FakeDoBehaviour(mob);
+        
+        try { player.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
+        try { mob.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
         //check if player skill is used properly : stance changed, token deleted
         Assert.Equal(Stance.Offence, player.CurStance.stance);
         Assert.InRange(player.CurStance.amount, Stat.MIN, Player.BASICSTAT);
@@ -69,13 +70,5 @@ public class CombatTest
         //check damage taken
         Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
         Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
-    }
-    public void FakeOnNewTurn(Fightable target)
-    {
-        target.OnTurnEnd();
-    }
-    public void FakeDoBehaviour(Fightable target)
-    {
-        try { target.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
     }
 }
