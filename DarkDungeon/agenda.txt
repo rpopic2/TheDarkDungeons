@@ -10,4 +10,4 @@ combat-improved
 
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
 [ ] I to show full inventory ui
-[ ] 
+[ ] 가본 무기 : 대검, 단도, 지팡이, 활, 방패, 반지,  마법책
