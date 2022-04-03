@@ -6,7 +6,6 @@ public class Fightable : Moveable
     public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
-    public bool IsResting => stance.stance == global::Stance.Rest;
     public bool IsAlive => !Hp.IsMin;
     public Fightable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
@@ -98,7 +97,7 @@ public class Fightable : Moveable
         {
             damage -= stance.amount;
         }
-        else if (damage > 0 && IsResting)
+        else if (damage > 0 && stance.stance == global::Stance.Charge)
         {
             IO.pr($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
             damage = (int)MathF.Round(damage * Rules.vulMulp);
@@ -114,7 +113,7 @@ public class Fightable : Moveable
             if (discardIndex != -1) tokens.RemoveAt(discardIndex);
             else tokens.RemoveAt(tokens.Count - 1);
         }
-        stance.Set(global::Stance.Rest, default);
+        stance.Set(global::Stance.Charge, default);
         tokens.Add(tokenType);
     }
     public virtual void OnBeforeTurnEnd()

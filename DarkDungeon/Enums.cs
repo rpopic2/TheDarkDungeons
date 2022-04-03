@@ -18,7 +18,7 @@ public enum Facing
 }
 public enum Stance
 {
-    None, Move, Rest, Offence, Defence, Charge
+    None, Offence, Defence, Charge
 }
 public enum ItemType
 {

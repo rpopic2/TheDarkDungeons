@@ -63,8 +63,8 @@ public class CombatTest
 
         player.Rest(TokenType.Offence);
         mob.Rest(TokenType.Offence);
-        Assert.Equal(Stance.Rest, player.Stance.stance);
-        Assert.Equal(Stance.Rest, mob.Stance.stance);
+        Assert.Equal(Stance.Charge, player.Stance.stance);
+        Assert.Equal(Stance.Charge, mob.Stance.stance);
     }
     
     //Combats
