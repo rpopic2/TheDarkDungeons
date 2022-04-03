@@ -42,16 +42,16 @@ public class CombatTest
         Assert.Equal(1, player.tokens.Count);
         //Mobs gets full 2 tokens on spawn
         Assert.Equal(lunData.stat.cap, mob.tokens.Count);
-        
-        //update its targets
-        player.UpdateTarget();
-        mob.UpdateTarget();
+
+        //1. New Turn. update its targets
+        FakeOnNewTurn(player);
+        FakeOnNewTurn(mob);
         Assert.Equal(mob, player.Target);
         Assert.Equal(player, mob.Target);
 
-        //use a skill : 맨손 - 주먹질
-        try { player.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
-        try { mob.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
+        //2. Select Behaviour use a skill : 맨손 - 주먹질
+        FakeDoBehaviour(player);
+        FakeDoBehaviour(mob);
         //check if player skill is used properly : stance changed, token deleted
         Assert.Equal(Stance.Offence, player.CurStance.stance);
         Assert.InRange(player.CurStance.amount, Stat.MIN, Player.BASICSTAT);
@@ -61,13 +61,22 @@ public class CombatTest
         Assert.InRange(mob.CurStance.amount, Stat.MIN, lunData.stat.sol);
         Assert.Equal(lunData.stat.cap - 1, mob.tokens.Count);
 
-        //Perform attack
+        //3. Perform selected behaviour : attack
+        Assert.Equal(player.Hp.Max, player.Hp.Cur);
         Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
         try { player.TryAttack(); } catch (System.InvalidOperationException) { }
-        Assert.Equal(player.Hp.Max, player.Hp.Cur);
         try { mob.TryAttack(); } catch (System.InvalidOperationException) { }
         //check damage taken
         Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
         Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
+    }
+    public void FakeOnNewTurn(Fightable target)
+    {
+        target.UpdateTarget();
+        target.TempResetStance();
+    }
+    public void FakeDoBehaviour(Fightable target)
+    {
+        try { target.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
     }
 }

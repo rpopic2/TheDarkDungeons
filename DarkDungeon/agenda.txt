@@ -12,6 +12,8 @@ combat-improved
 [ ] 몬스터 클래스 많이 수정 필요할듯. 몬스터 패턴 시스템도.
 [ ] 스페이스바(공) 스킬(소모 등).
 [ ] 최대 캡보다 더 많은 토큰 저장 가능??
+[ ] StanceInfo to class.
+[ ] Fightable.SelectSkillAndUse같은경우 return값을 string으로 해서(out을 쓰던지 해서) 밖에서 IO에 인수를 집어넣어도 해결될듯..?
 
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
 [ ] I to show full inventory ui

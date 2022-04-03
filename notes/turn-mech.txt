@@ -22,10 +22,11 @@ A.
 
 
 새로운 턴 메커니즘 개요
-1. 새 턴 시작 : 턴 카운터 ++, stance reset, target update, UI 드로우.
-2. 플레이어 행동 : 플레이어 행동 선택.
-3. 몹 ai 수행 : 몹 행동 선택.
-4. 전투 진행 :
+1. 새 턴 시작 NewTurn : 턴 카운터 ++, stance reset, target update, UI 드로우. -> Game.cs에서 했으면 좋겠다.
+2. Fightables 행동
+    a. 플레이어 행동 : 플레이어 행동 선택.
+    b. 몹 ai 수행 : 몹 행동 선택.
+3. 전투 진행 :
     a. 맵 위 모든 fightables에 대하여 공격 수행.
         * 피격 대상은 회피(방어) 시도.
-5. 몹 스폰.
+4. 몹 스폰.

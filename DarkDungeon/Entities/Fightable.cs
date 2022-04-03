@@ -118,6 +118,10 @@ public class Fightable : Moveable
         UpdateTarget();
         stance = new(default, default);
     }
+    public void TempResetStance()
+    {
+        stance = new();
+    }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
         IO.pr($"{Name}가 죽었다.", false, true);
