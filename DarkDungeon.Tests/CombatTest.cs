@@ -72,8 +72,7 @@ public class CombatTest
     }
     public void FakeOnNewTurn(Fightable target)
     {
-        target.UpdateTarget();
-        target.TempResetStance();
+        target.OnTurnEnd();
     }
     public void FakeDoBehaviour(Fightable target)
     {

@@ -1,4 +1,4 @@
-public struct StanceInfo
+public class StanceInfo
 {
     public Stance stance;
     public int amount;
@@ -7,5 +7,10 @@ public struct StanceInfo
     {
         this.stance = stance;
         this.amount = amount;
+    }
+    public void Reset()
+    {
+        this.stance = default;
+        this.amount = default;
     }
 }

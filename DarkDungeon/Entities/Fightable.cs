@@ -116,11 +116,7 @@ public class Fightable : Moveable
     public void OnTurnEnd()
     {
         UpdateTarget();
-        stance = new(default, default);
-    }
-    public void TempResetStance()
-    {
-        stance = new();
+        stance.Reset();
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
