@@ -20,7 +20,7 @@ public class Player : Inventoriable
         switch (ClassName)
         {
             case ClassName.Warrior:
-                NewPickupItem(Item.sword);
+                PickupItem(Item.sword);
                 stat[StatName.Sol] += 1;
                 break;
             case ClassName.Assassin:
@@ -80,17 +80,13 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    private void NewPickupItem(Item item)
+    private void PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
-        IO.seli(out int index, out bool cancel, out _, out _ );
-        if (cancel)
-        {
-            IO.del(2);
-            return;
-        }
+        IO.seli(out int index, out bool cancel, out _, out _);
+        IO.del();
+        if (cancel) return;
         NewPickupItem(item, index);
-        IO.del(2);
     }
     public void Exile()
     {
