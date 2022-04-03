@@ -8,7 +8,7 @@ public record Item(string name, Skill[] skills)
         new("베기", TokenType.Offence, StatName.Sol, "칼을 휘둘러 앞을 베었다."),
         new("칼로막기", TokenType.Defence, StatName.Lun, "칼로 막기 자세를 취했다.")
         });
-    public static readonly Item holySword = new("(신성검)", new Skill[] {
+    public static readonly Item holySword = new("(광란의 신성검)", new Skill[] {
         new("베기", TokenType.Offence, StatName.Sol, "칼을 휘둘러 앞을 베었다."),
         new("광란의기도", TokenType.Charge, StatName.Con, "미친 듯이 기도하였고 칼이 빛나기 시작했다.")
         });
