@@ -8,6 +8,10 @@ public record Item(string name, Skill[] skills)
         new("베기", TokenType.Offence, StatName.Sol, "칼을 휘둘러 앞을 베었다."),
         new("칼로막기", TokenType.Defence, StatName.Lun, "칼로 막기 자세를 취했다.")
         });
+    public static readonly Item staff = new("지팡이", new Skill[] {
+        new("휘두르기", TokenType.Offence, StatName.Sol, "지팡이를 휘둘렀다."),
+        new("별빛부름", TokenType.Charge, StatName.Con, "신비한 별빛을 불러내어 지팡이를 감쌌다.")
+        });
     public override string ToString()
     {
         return name;

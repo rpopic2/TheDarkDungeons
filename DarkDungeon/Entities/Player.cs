@@ -27,6 +27,7 @@ public class Player : Inventoriable
                 stat[StatName.Lun] += 1;
                 break;
             case ClassName.Mage:
+                PickupItem(Item.staff);
                 stat[StatName.Con] += 1;
                 break;
         }
