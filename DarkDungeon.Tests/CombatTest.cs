@@ -66,7 +66,14 @@ public class CombatTest
         Assert.Equal(Stance.Charge, player.Stance.stance);
         Assert.Equal(Stance.Charge, mob.Stance.stance);
     }
-    
+    [Fact]
+    public void ChargeTest()
+    {
+        Player player = _SetupPlayer();
+        _SelectSkill(player, Item.staff, 1);
+        Assert.Equal(Stance.Charge, player.Stance.stance);
+    }
+
     //Combats
     [Fact]
     public void PlayerAtksMobAtks()
@@ -105,10 +112,11 @@ public class CombatTest
         _SelectSkill(player, Item.sword, 0);
         mob.Rest(TokenType.Offence);
         _ElaspeTurn(map);
+        Assert.Equal(Stance.Offence, player.Stance.stance);
+        Assert.Equal(Stance.Charge, mob.Stance.stance);
+
         Assert.Equal(player.Hp.Max, player.Hp.Cur);
         Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
-        if(player.Stance.amount != 1) Assert.NotEqual(player.Stance.amount, mob.Hp.Max - mob.Hp.Cur);
-        else Assert.Equal(player.Stance.amount, mob.Hp.Max - mob.Hp.Cur);
     }
     [Fact]
     public void PlayerDefsMobRests()
@@ -117,6 +125,8 @@ public class CombatTest
         _SelectSkill(player, Item.sword, 1);
         mob.Rest(TokenType.Offence);
         _ElaspeTurn(map);
+        Assert.Equal(Stance.Defence, player.Stance.stance);
+        Assert.Equal(Stance.Charge, mob.Stance.stance);
         Assert.Equal(player.Hp.Max, player.Hp.Cur);
         Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
     }
@@ -127,10 +137,10 @@ public class CombatTest
         _SelectSkill(mob, Item.sword, 0);
         player.Rest(TokenType.Offence);
         _ElaspeTurn(map);
+        Assert.Equal(Stance.Offence, mob.Stance.stance);
+        Assert.Equal(Stance.Charge, player.Stance.stance);
         Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
         Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
-        if(mob.Stance.amount != 1) Assert.NotEqual(mob.Stance.amount, player.Hp.Max - player.Hp.Cur);
-        else Assert.Equal(mob.Stance.amount, player.Hp.Max - player.Hp.Cur);
     }
     [Fact]
     public void PlayerRestsMobDefs()
@@ -139,8 +149,22 @@ public class CombatTest
         _SelectSkill(mob, Item.sword, 1);
         player.Rest(TokenType.Offence);
         _ElaspeTurn(map);
+        Assert.Equal(Stance.Defence, mob.Stance.stance);
+        Assert.Equal(Stance.Charge, player.Stance.stance);
         Assert.Equal(player.Hp.Max, player.Hp.Cur);
         Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
+    }
+    [Fact]
+    public void PlayerAtksMobCharges()
+    {
+        (Player player, Monster mob) = _SetupCombat(out Map map);
+        _SelectSkill(player, Item.staff, 0);
+        _SelectSkill(mob, Item.staff, 1);
+        _ElaspeTurn(map);
+        Assert.Equal(Stance.Offence, player.Stance.stance);
+        Assert.Equal(Stance.Charge, mob.Stance.stance);
+        Assert.Equal(player.Hp.Max, player.Hp.Cur);
+        Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
     }
 
     ///Private Methods
@@ -152,6 +176,7 @@ public class CombatTest
         Player player = Player.instance;
         player.tokens.Add(TokenType.Offence);
         player.tokens.Add(TokenType.Defence);
+        player.tokens.Add(TokenType.Charge);
         return player;
     }
     ///<summary> Always setup player first</summary>

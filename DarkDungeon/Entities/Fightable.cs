@@ -100,9 +100,13 @@ public class Fightable : Moveable
         else if (damage > 0 && stance.stance == global::Stance.Charge)
         {
             IO.pr($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
-            damage = (int)MathF.Round(damage * Rules.vulMulp);
+            damage = GetVulDmg(damage);
         }
         Hp -= damage;
+    }
+    public static int GetVulDmg(int damage)
+    {
+        return (int)MathF.Round(damage * Rules.vulMulp);
     }
 
     public void Rest(TokenType tokenType, int discardIndex = -1)

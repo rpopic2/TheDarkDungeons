@@ -17,4 +17,8 @@ public class StanceInfo
         this.stance = default;
         this.amount = default;
     }
+    public override string ToString()
+    {
+        return $"{stance}, {amount}";
+    }
 }
