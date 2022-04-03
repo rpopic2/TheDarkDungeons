@@ -50,7 +50,7 @@ public class Monster : Inventoriable
         {
             if (m.Target is null)
             {
-                int moveX = m.rnd.Next(3) - 1;
+                int moveX = m.stat.rnd.Next(3) - 1;
                 int direction = m.Pos.facing == Facing.Front ? -1 : 1;
                 if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
                 else m.Move(moveX, out char obj);
@@ -73,7 +73,7 @@ public class Monster : Inventoriable
                 if (target is not null) m.Target = target;
                 else
                 {
-                    int moveX = m.rnd.Next(2) == 1 ? 1 : -1;
+                    int moveX = m.stat.rnd.Next(2) == 1 ? 1 : -1;
                     int direction = m.Pos.facing == Facing.Front ? -1 : 1;
                     if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
                     else m.Move(moveX, out char obj);

@@ -28,8 +28,9 @@ public class CombatTest
         Assert.Equal(new(0, 0), player.Pos);
     }
     [Fact]
-    public void Combat()
+    public void PlayerAtksMob()
     {
+        //Setup
         Player._instance = new("Tester", ClassName.Warrior);
         Player player = Player.instance;
         Map map = new(5, false);
@@ -38,27 +39,19 @@ public class CombatTest
 
         player.UpdateTarget();
         Assert.Equal(mob, player.Target);
-
+        //Give player a token
         player.tokens.Add(TokenType.Offence);
-        try
-        {
-            player.SelectSkillAndUse(Item.bardHand, 0);
-        }
-        catch (System.InvalidOperationException)
-        {
+        //use a skill 
+        try { player.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
 
-        }
+        //check if skill is used properly : stance changed, token deleted
         Assert.Equal(Stance.Offence, player.CurStance.stance);
+        Assert.InRange(player.CurStance.amount, Stat.MIN, 3);
         Assert.Equal(0, player.tokens.Count);
 
-        try
-        {
-            player.TryAttack();
-        }
-        catch (System.InvalidOperationException)
-        {
+        Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
+        try { player.TryAttack(); } catch (System.InvalidOperationException) { }
 
-        }
         Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
     }
 }

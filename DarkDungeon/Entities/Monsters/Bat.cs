@@ -20,7 +20,7 @@ public class Bat : Monster
         {
             if (Target is null)
             {
-                int moveX = rnd.Next(2) == 1 ? 1 : -1;
+                int moveX = stat.rnd.Next(2) == 1 ? 1 : -1;
                 int direction = Pos.facing == Facing.Front ? -1 : 1;
                 if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
                 else Move(moveX, out char obj);
