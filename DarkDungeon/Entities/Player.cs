@@ -77,12 +77,12 @@ public class Player : Inventoriable
         if (cancel) return;
         NewPickupItem(item, index);
     }
-    public override void Rest()
+    public new void Rest()
     {
         base.Rest();
         IO.pr("토큰 종류를 선택해 주십시오.");
-        IO.seln(Tokens.TokenPromptNames, out int index, out _);
         IO.del();
+        IO.seln(Tokens.TokenPromptNames, out int index, out _);
 
         if (tokens.IsFull)
         {
