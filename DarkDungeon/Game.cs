@@ -2,7 +2,7 @@ public static class Game
 {
     private static Player _Player { get => Player.instance; }
     private const int SpawnRate = 10;
-    public static event EventHandler? OnTurnEnd;
+    public static event EventHandler? OnTurnEnd; //unused
 
     public static int Turn { get; private set; }
     static Game()
@@ -16,15 +16,15 @@ public static class Game
         var temp = (from mov in Map.Current.Moveables where mov is not null select mov).ToArray();
         Array.ForEach(temp, m =>
         {
-            if (m is Monster mon) mon.DoTurn();
+            if (m is Monster mon) mon.DoTurn(); //mob ai
         });
         Array.ForEach(temp, m =>
         {
-            if (m is Fightable f) f.OnBeforeTurnEnd();
+            if (m is Fightable f) f.OnBeforeTurnEnd(); //tryattack
         });
         Array.ForEach(temp, m =>
         {
-            if (m is Fightable f) f.OnTurnEnd();
+            if (m is Fightable f) f.OnTurnEnd(); //update target and reset stance
         });
 
         OnTurnEnd?.Invoke(null, EventArgs.Empty);
