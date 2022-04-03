@@ -21,7 +21,7 @@ public class Monster : Inventoriable
         {
             Inven[0] = Item.sword;
             tokens.Add(TokenType.Offence);
-            tokens.Add(TokenType.Offence);
+            tokens.Add(TokenType.Defence);
             tokens.Add(TokenType.Offence);
         }
     }
