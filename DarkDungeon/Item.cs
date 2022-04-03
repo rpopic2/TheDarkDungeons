@@ -16,6 +16,10 @@ public record Item(string name, Skill[] skills)
         new("휘두르기", TokenType.Offence, StatName.Sol, "지팡이를 휘둘렀다."),
         new("별빛부름", TokenType.Charge, StatName.Con, "신비한 별빛을 불러내어 지팡이를 감쌌다.")
         });
+    public static readonly Item bat = new("(박쥐)", new Skill[] {
+        new("들이박기", TokenType.Offence, StatName.Sol, "갑자기 당신의 얼굴로 날아들어 부딪혔다!"),
+        new("구르기", TokenType.Defence, StatName.Lun, "가벼운 날개짓으로 옆으로 피했다.")
+        });
     public override string ToString()
     {
         return name;
