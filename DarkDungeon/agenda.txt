@@ -1,6 +1,7 @@
 combat-improved
 - [ ] combat unittest
 [ ] rk 수정좀 해서 try catch 항상 안해도 되게 만들기? Console.IsInputRedirected 써보기
+    [ ] 이거 하려면 io를 추상화시키고 여러개의 io클래스가 필요할듯. io spec도 정리해야할듯.
 [ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
 [ ] 충전 알고리즘은 나중에 더 고민해야할 듯. 애초에 스킬이라 지금은 stub implementation임
 [ ] 몬스터 클래스 많이 수정 필요할듯. 몬스터 패턴 시스템도.

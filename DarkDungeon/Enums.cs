@@ -3,10 +3,6 @@ public enum ClassName
     Warrior, Assassin, Mage
 }
 
-public enum StatName
-{
-    Sol, Lun, Con
-}
 
 public enum CardStance
 {

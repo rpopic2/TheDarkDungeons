@@ -75,10 +75,10 @@ public class Fightable : Moveable
             IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
         }
     }
-    public int SetStance(TokenType token, StatName stats)
+    public int SetStance(TokenType token, StatName statName)
     {
         stance.stance = token.ToStance();
-        int amount = rnd.Next(1, stat[stats]);
+        int amount = stat.GetRandom(statName);
         stance.amount += amount;
         return amount;
     }
