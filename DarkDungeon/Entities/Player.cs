@@ -44,18 +44,7 @@ public class Player : Inventoriable
         {
             IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod);
         } while (cancel);
-        switch (index)
-        {
-            case 0:
-                stat[StatName.Sol] += 1;
-                break;
-            case 1:
-                stat[StatName.Lun] += 1;
-                break;
-            case 2:
-                stat[StatName.Con] += 1;
-                break;
-        }
+        stat[(StatName)index] += 1;
         Hand.Cap = new Mul(3, 0.4f, Level);
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
