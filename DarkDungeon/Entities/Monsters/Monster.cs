@@ -22,6 +22,7 @@ public class Monster : Inventoriable
             Inven[0] = Item.sword;
             tokens.Add(TokenType.Offence);
             tokens.Add(TokenType.Offence);
+            tokens.Add(TokenType.Offence);
         }
     }
     protected override void OnDeath(object? sender, EventArgs e)

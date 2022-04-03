@@ -28,30 +28,47 @@ public class CombatTest
         Assert.Equal(new(0, 0), player.Pos);
     }
     [Fact]
-    public void PlayerAtksMob()
+    public void PlayerAtksMobAtks()
     {
         //Setup
         Player._instance = new("Tester", ClassName.Warrior);
         Player player = Player.instance;
         Map map = new(5, false);
-        map._Spawn(MonsterDb.lunatic, new(1, 1, Facing.Back));
+        MonsterData lunData = MonsterDb.lunatic;
+        map._Spawn(lunData, new(1, 1, Facing.Back));
         Monster mob = ((Monster)map.Moveables[1]!);
-
+        //update its targets
         player.UpdateTarget();
+        mob.UpdateTarget();
         Assert.Equal(mob, player.Target);
-        //Give player a token
+        Assert.Equal(player, mob.Target);
+        //Give player and monster a token
         player.tokens.Add(TokenType.Offence);
-        //use a skill 
+        Assert.Equal(1, player.tokens.Count);
+        //Mobs gets full 2 tokens on spawn
+        Assert.Equal(lunData.stat.cap, mob.tokens.Count);
+
+        //use a skill : 맨손 - 주먹질
         try { player.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
+        try { mob.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
 
         //check if skill is used properly : stance changed, token deleted
         Assert.Equal(Stance.Offence, player.CurStance.stance);
-        Assert.InRange(player.CurStance.amount, Stat.MIN, 3);
+        Assert.InRange(player.CurStance.amount, Stat.MIN, Player.BASICSTAT);
         Assert.Equal(0, player.tokens.Count);
 
+        Assert.Equal(Stance.Offence, mob.CurStance.stance);
+        Assert.InRange(mob.CurStance.amount, Stat.MIN, lunData.stat.sol);
+        Assert.Equal(lunData.stat.cap - 1, mob.tokens.Count);
+
+        //Perform attack
         Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
         try { player.TryAttack(); } catch (System.InvalidOperationException) { }
 
+        Assert.Equal(player.Hp.Max, player.Hp.Cur);
+        try { mob.TryAttack(); } catch (System.InvalidOperationException) { }
+
         Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
+        Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
     }
 }
