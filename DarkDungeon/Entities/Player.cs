@@ -88,22 +88,6 @@ public class Player : Inventoriable
         if (cancel) return;
         NewPickupItem(item, index);
     }
-    public void Exile()
-    {
-        throw new NotImplementedException();
-
-        // int index;
-        // Card card;
-        // do
-        // {
-        //     IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
-        //     card = Hand[index] ?? throw new Exception();
-        //     if (cancel) return;
-        // } while (card.Stance == CardStance.Star);
-        // IO.pr("Exiled a card.");
-        // Hand[index] = Hand[index]?.Exile();
-        // stance = new(Stance.Exile, default);
-    }
     public override void Rest()
     {
         base.Rest();
@@ -122,12 +106,6 @@ public class Player : Inventoriable
         IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
         IO.rk();
         IO.del();
-
-        // var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
-        // foreach (var item in skills)
-        // {
-        //     item.stack = item.level;
-        // }
     }
     public override Card? SelectCard()
     {

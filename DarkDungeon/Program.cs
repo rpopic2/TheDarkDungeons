@@ -86,9 +86,6 @@ public class Program
             case '/':
                 player.ShowStats();
                 break;
-            case 'x':
-                player.Exile();
-                break;
         }
     }
 }
