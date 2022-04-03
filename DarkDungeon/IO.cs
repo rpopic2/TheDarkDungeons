@@ -85,6 +85,7 @@ public static class IO
         Console.WriteLine(x);
         printCount++;
     }
+    ///<summary>Print on the bottom</summary>
     public static void prb(object text, bool emphasis = false, bool newline = false)
     {
         int x = Console.CursorLeft;
