@@ -62,7 +62,7 @@ public class Monster : Inventoriable
                 if (token is TokenType token1) m.SelectSkill(m.Inven[0]!, 0);
             }
         }
-        else m.Rest();
+        else m.Rest(TokenType.Offence);
     };
     internal static readonly Action<Monster> snakeBehav = (m) =>
     {
@@ -85,13 +85,8 @@ public class Monster : Inventoriable
                 m._UseCard((Card)m.Hand.GetFirst()!);
             }
         }
-        else m.Rest();
+        else m.Rest(TokenType.Offence);
     };
-
-    public void Rest()
-    {
-        base.Rest(TokenType.Offence);
-    }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;
 }

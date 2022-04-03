@@ -30,6 +30,6 @@ public class Bat : Monster
                 _UseCard(card);
             }
         }
-        else Rest();
+        else Rest(TokenType.Offence);
     }
 }
