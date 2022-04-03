@@ -4,7 +4,7 @@ public class Player : Inventoriable
 {
     public const int skillMax = 2;
     public const int basicCap = 3;
-    public const int BASICSTAT = 5;
+    public const int BASICSTAT = 2;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;

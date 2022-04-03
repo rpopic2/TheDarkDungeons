@@ -19,9 +19,10 @@ public class Monster : Inventoriable
         Pos = spawnPoint;
         if (data.name == "Lunatic")
         {
-            Inven[0] = Item.sword;
+            Inven[0] = Item.holySword;
             tokens.Add(TokenType.Offence);
-            tokens.Add(TokenType.Defence);
+            tokens.Add(TokenType.Charge);
+            tokens.Add(TokenType.Offence);
             tokens.Add(TokenType.Charge);
         }
     }
@@ -58,8 +59,8 @@ public class Monster : Inventoriable
             }
             else
             {
-                TokenType? token = m.tokens.TryUse(0);
-                if (token is TokenType token1) m.SelectSkill(m.Inven[0]!, 0);
+                if (m.tempCharge > 0 && m.tokens.Contains(TokenType.Offence)) m.SelectSkill(m.Inven[0]!, 0);
+                else if(m.tokens.Contains(TokenType.Charge)) m.SelectSkill(m.Inven[0]!, 1);
             }
         }
         else m.Rest(TokenType.Offence);

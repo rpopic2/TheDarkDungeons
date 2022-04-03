@@ -59,7 +59,7 @@ public class Fightable : Moveable
         }
         Hand.Delete(card);
     }
-    private int tempCharge;
+    public int tempCharge;
     public void SelectSkill(Item item, int index)
     {
         Skill? selected = item.skills[index];
@@ -68,7 +68,8 @@ public class Fightable : Moveable
         {
             int amount = SetStance(token, selected.statName);
             if (selected.statName == StatName.Con) tempCharge += amount;
-            IO.rk($"{Name}은 {selected.OnUseOutput} ({amount})");
+            if(tempCharge > 0) IO.rk($"{Name}은 {selected.OnUseOutput} ({amount}+{tempCharge})");
+            else IO.rk($"{Name}은 {selected.OnUseOutput} ({amount})");
         }
         else
         {
@@ -87,7 +88,12 @@ public class Fightable : Moveable
         if (!(Target is Fightable fight)) return;
         if (stance.stance == global::Stance.Offence)
         {
-            fight.TryDodge(stance.amount + tempCharge);
+            if (tempCharge > 0)
+            {
+                stance.amount += tempCharge;
+                tempCharge = 0;
+            }
+            fight.TryDodge(stance.amount);
         }
         else if (fight.stance.stance == global::Stance.Defence) fight.TryDodge(0);
     }
