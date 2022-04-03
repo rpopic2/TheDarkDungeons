@@ -5,7 +5,8 @@ combat-improved
     [ ] PlayerDefsMobAtks
     [ ] PlayerDefsMobDefs
     [ ] Try to test with predefined methods from Game.cs?
-[ ] Map에 모든 fightables 일괄적으로 retrive가능하게
+[X] Map에 모든 fightables 일괄적으로 retrive가능하게
+[ ] Map test cover
 [ ] Map을 Player보다 먼저 init할수있게?
 [ ] 스킬이 랜덤이 아니라 항상 같은 데미지(=내가원하는뎀지) 입혀야 테스트 하기 편한가? 
 [X] StanceInfo to class.

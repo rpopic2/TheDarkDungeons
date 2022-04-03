@@ -8,8 +8,9 @@ public class Map
     public ref readonly char[] Tiles
         => ref tiles;
     private Moveable?[] moveablePositions;
-    public ref readonly Moveable?[] MoveablePositions
-    => ref moveablePositions;
+    public ref readonly Moveable?[] MoveablePositions => ref moveablePositions;
+    private List<Fightable> fightables = new();
+    public ref readonly List<Fightable> Fightables => ref fightables;
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
@@ -25,6 +26,7 @@ public class Map
 
         tiles[length - 1] = MapSymb.portal;
         moveablePositions[0] = Player.instance;
+        fightables.Add(player);
         if (spawn) Spawn();
     }
 
@@ -47,6 +49,7 @@ public class Map
         Moveable mov;
         if (data == Bat.data) mov = new Bat(spawnPoint);
         else mov = new Monster(data, spawnPoint);
+        fightables.Add((Fightable)mov);
         UpdateMoveable(mov);
     }
     private List<int> GetSpawnableIndices()
@@ -70,6 +73,7 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
         {
+            fightables.Remove(fight);
             moveablePositions[pos.x] = null;
             return;
         }

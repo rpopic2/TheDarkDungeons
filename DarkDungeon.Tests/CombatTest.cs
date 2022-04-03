@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Entities;
 using Xunit;
 
@@ -30,43 +31,18 @@ public class CombatTest
     [Fact]
     public void PlayerAtksMobAtks()
     {
-        //Setup
-        Player._instance = new("Tester", ClassName.Warrior);
-        Player player = Player.instance;
-        Map map = new(5, false);
-        MonsterData lunData = MonsterDb.lunatic;
-        map._Spawn(lunData, new(1, 1, Facing.Back));
-        Monster mob = ((Monster)map.MoveablePositions[1]!);
-        //Give player a token
-        player.tokens.Add(TokenType.Offence);
-        Assert.Equal(1, player.tokens.Count);
-        //Mobs gets full 2 tokens on spawn
-        Assert.Equal(lunData.stat.cap, mob.tokens.Count);
-
+        Player player = _SetupPlayer();
+        Monster mob = _SetupMonser(out Map map);
+        
         //1. New Turn. update its targets
-        player.OnTurnEnd();
-        mob.OnTurnEnd();
-        Assert.Equal(mob, player.Target);
-        Assert.Equal(player, mob.Target);
-
+        _StartTurn(map);
         //2. Select Behaviour use a skill : 맨손 - 주먹질
-
-        try { player.SelectSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
-        try { mob.SelectSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
-        //check if player skill is used properly : stance changed, token deleted
-        Assert.Equal(Stance.Offence, player.Stance.stance);
-        Assert.InRange(player.Stance.amount, Stat.MIN, Player.BASICSTAT);
-        Assert.Equal(0, player.tokens.Count);
-        //check if mob skill is used properly.
-        Assert.Equal(Stance.Offence, mob.Stance.stance);
-        Assert.InRange(mob.Stance.amount, Stat.MIN, lunData.stat.sol);
-        Assert.Equal(lunData.stat.cap - 1, mob.tokens.Count);
-
+        _SelectSkill(player, Item.bareHand, 0);
+        _SelectSkill(mob, Item.bareHand, 0);
         //3. Perform selected behaviour : attack
         Assert.Equal(player.Hp.Max, player.Hp.Cur);
         Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
-        try { player.TryAttack(); } catch (System.InvalidOperationException) { }
-        try { mob.TryAttack(); } catch (System.InvalidOperationException) { }
+        _ElaspeTurn(map);
         //check damage taken
         Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
         Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
@@ -76,10 +52,10 @@ public class CombatTest
     {
         //Setup
         Player player = _SetupPlayer();
-        Monster mob = _SetupMonser(out _);
+        Monster mob = _SetupMonser(out Map map);
 
         //1. New Turn. update its targets
-        _StartTurn(new Fightable[] { player, mob });
+        _StartTurn(map);
         Assert.Equal(mob, player.Target);
         Assert.Equal(player, mob.Target);
 
@@ -104,11 +80,11 @@ public class CombatTest
     public void PlayerAtksMobDefs()
     {
         Player player = _SetupPlayer();
-        Monster mob = _SetupMonser(out _);
-        _StartTurn(new Fightable[] { player, mob });
+        Monster mob = _SetupMonser(out Map map);
+        _StartTurn(map);
         _SelectSkill(player, Item.bareHand, 0);
         _SelectSkill(mob, Item.bareHand, 1);
-        _ElaspeTurn(new Fightable[] { player, mob });
+        _ElaspeTurn(map);
         Assert.Equal(Stance.Defence, mob.Stance.stance);
         if (mob.Stance.amount >= player.Stance.amount)
         {
@@ -145,60 +121,18 @@ public class CombatTest
         map._Spawn(lunData, new(1, 1, Facing.Back));
         return ((Monster)map.MoveablePositions[1]!);
     }
-    private void _StartTurn(Fightable[] fights)
+    private void _StartTurn(Map map)
     {
-        foreach (Fightable item in fights)
+        foreach (Fightable item in map.Fightables)
         {
             item.OnTurnEnd();
         }
     }
-    private void _ElaspeTurn(Fightable[] fights)
+    private void _ElaspeTurn(Map map)
     {
-        foreach (Fightable item in fights)
+        foreach (Fightable item in map.Fightables)
         {
             _TryAttack(item);
         }
     }
-    // [Fact]
-    // public void PlayerAtksMobDefs()
-    // {
-    //     //Setup
-    //     Player._instance = new("Tester", ClassName.Warrior);
-    //     Player player = Player.instance;
-    //     Map map = new(5, false);
-    //     MonsterData lunData = MonsterDb.lunatic;
-    //     map._Spawn(lunData, new(1, 1, Facing.Back));
-    //     Monster mob = ((Monster)map.Moveables[1]!);
-    //     //Give player 2 tokens. Mob gets 3 tokens on spawn
-    //     player.tokens.Add(TokenType.Offence);
-    //     player.tokens.Add(TokenType.Defence);
-
-    //     //1. New Turn. update its targets
-    //     player.OnTurnEnd();
-    //     mob.OnTurnEnd();
-    //     Assert.Equal(mob, player.Target);
-    //     Assert.Equal(player, mob.Target);
-    //     Assert.Equal(default, player.CurStance);
-    //     Assert.Equal(default, mob.CurStance);
-
-    //     //2. Select Behaviour use a skill : 맨손 - 주먹질
-
-    //     try { player.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
-    //     try { mob.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
-    //     //check if player skill is used properly : stance changed, token deleted
-    //     Assert.Equal(Stance.Offence, player.CurStance.stance);
-    //     Assert.InRange(player.CurStance.amount, Stat.MIN, Player.BASICSTAT);
-    //     //check if mob skill is used properly.
-    //     Assert.Equal(Stance.Offence, mob.CurStance.stance);
-    //     Assert.InRange(mob.CurStance.amount, Stat.MIN, lunData.stat.sol);
-
-    //     //3. Perform selected behaviour : attack
-    //     Assert.Equal(player.Hp.Max, player.Hp.Cur);
-    //     Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
-    //     try { player.TryAttack(); } catch (System.InvalidOperationException) { }
-    //     try { mob.TryAttack(); } catch (System.InvalidOperationException) { }
-    //     //check damage taken
-    //     Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
-    //     Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
-    // }
 }
