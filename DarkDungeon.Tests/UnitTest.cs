@@ -59,6 +59,22 @@ public class UnitTest
         player.tokens.Add(TokenType.Offence);
         Assert.Equal((byte)TokenType.Offence, player.tokens[0]);
         Assert.NotEqual((byte)TokenType.Defence, player.tokens[0]);
+        player.tokens.Remove(TokenType.Offence);
+        Assert.Equal(0, player.tokens.Count);
+
+        player.tokens.Add((byte)0);
+        Assert.Equal(1, player.tokens.Count);
+        player.tokens.RemoveAt(0);
+        Assert.Equal(0, player.tokens.Count);
+
+    }
+    [Fact]
+    public void TokenCapExceedTest()
+    {
+        Tokens token = new(2);
+        token.Add(TokenType.Offence);
+        token.Add(TokenType.Offence);
+        Assert.Throws<System.IndexOutOfRangeException>(() => token.Add(TokenType.Offence));
     }
     [Fact]
     public void SkillStructTest()

@@ -4,12 +4,13 @@ public class Player : Inventoriable
 {
     public const int skillMax = 2;
     public const int basicCap = 3;
+    public const int BASICSTAT = 5;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
-    public Player(string name, ClassName className) : base(name, className, level: 1, sol: 2, lun: 2, con: 2, maxHp: 3, cap: basicCap)
+    public Player(string name, ClassName className) : base(name, className, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
@@ -19,13 +20,14 @@ public class Player : Inventoriable
         switch (ClassName)
         {
             case ClassName.Warrior:
-                NewPickupItem(Item.sword);
+                PickupItem(Item.sword);
                 stat[StatName.Sol] += 1;
                 break;
             case ClassName.Assassin:
                 stat[StatName.Lun] += 1;
                 break;
             case ClassName.Mage:
+                PickupItem(Item.staff);
                 stat[StatName.Con] += 1;
                 break;
         }
@@ -43,18 +45,7 @@ public class Player : Inventoriable
         {
             IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod);
         } while (cancel);
-        switch (index)
-        {
-            case 0:
-                stat[StatName.Sol] += 1;
-                break;
-            case 1:
-                stat[StatName.Lun] += 1;
-                break;
-            case 2:
-                stat[StatName.Con] += 1;
-                break;
-        }
+        stat[(StatName)index] += 1;
         Hand.Cap = new Mul(3, 0.4f, Level);
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
@@ -79,58 +70,29 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    private void NewPickupItem(Item item)
+    private void PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
-        IO.seli(out int index, out bool cancel, out _, out _ );
-        if (cancel)
-        {
-            IO.del(2);
-            return;
-        }
-        NewPickupItem(item, index);
-        IO.del(2);
-    }
-    public void Exile()
-    {
-        throw new NotImplementedException();
-
-        // int index;
-        // Card card;
-        // do
-        // {
-        //     IO.seln_h(out index, out bool cancel, out ConsoleModifiers mod);
-        //     card = Hand[index] ?? throw new Exception();
-        //     if (cancel) return;
-        // } while (card.Stance == CardStance.Star);
-        // IO.pr("Exiled a card.");
-        // Hand[index] = Hand[index]?.Exile();
-        // stance = new(Stance.Exile, default);
-    }
-    public override void Rest()
-    {
-        base.Rest();
-        IO.pr("토큰 종류를 선택해 주십시오.");
-        IO.seln(Tokens.TokenPromptNames, out int index, out _);
+        IO.seli(out int index, out bool cancel, out _, out _);
         IO.del();
-
+        if (cancel) return;
+        NewPickupItem(item, index);
+    }
+    public void Rest()
+    {
+        IO.seln(Tokens.TokenPromptNames, out int index, out _);
+        int discard = -1;
         if (tokens.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
-            IO.seln_t(out int index2, out _, out _);
+            IO.seln_t(out discard, out _, out _);
             IO.del();
-            tokens.RemoveAt(index2);
         }
-        tokens.Add((byte)index);
+        Rest((TokenType)index, discard);
+
         IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
         IO.rk();
         IO.del();
-
-        // var skills = from s in Inven.Content where s is not null && s.itemType == ItemType.Skill select s;
-        // foreach (var item in skills)
-        // {
-        //     item.stack = item.level;
-        // }
     }
     public override Card? SelectCard()
     {

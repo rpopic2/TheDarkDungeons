@@ -3,10 +3,6 @@ public enum ClassName
     Warrior, Assassin, Mage
 }
 
-public enum StatName
-{
-    Sol, Lun, Con
-}
 
 public enum CardStance
 {
@@ -22,7 +18,7 @@ public enum Facing
 }
 public enum Stance
 {
-    None, Move, Rest, Offence, Defence, Charge
+    None, Offence, Defence, Charge
 }
 public enum ItemType
 {

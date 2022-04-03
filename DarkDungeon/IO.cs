@@ -85,6 +85,7 @@ public static class IO
         Console.WriteLine(x);
         printCount++;
     }
+    ///<summary>Print on the bottom</summary>
     public static void prb(object text, bool emphasis = false, bool newline = false)
     {
         int x = Console.CursorLeft;
@@ -95,7 +96,7 @@ public static class IO
     }
 
     ///<summary>Print in Formated Options</summary>
-    private static void _prfo(Array options, string comment = "Select :")
+    private static void _prfo(Array options, string comment = "선택 :")
     {
         string printResult = comment + " /";
         foreach (var item in options)

@@ -1,10 +1,17 @@
 public class Stat
 {
-    private int[] data = new int[3];
+    public const int MIN = 1;
+    private int[] _data = new int[3];
+    public Random rnd = new Random();
     public int this[StatName index]
     {
-        get => data[(int)index];
-        set => data[(int)index] = value;
+        get => _data[(int)index];
+        set => _data[(int)index] = value;
     }
     public void ModifyStat(StatName stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
+    public int GetRandom(StatName stat) => rnd.Next(MIN, this[stat]);
+}
+public enum StatName
+{
+    Sol, Lun, Con
 }

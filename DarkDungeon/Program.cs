@@ -13,7 +13,7 @@ public class Program
         do
         {
             instance.MainLoop();
-            if (player.CurStance.stance != Stance.None) Game.ElaspeTurn();
+            if (player.Stance.stance != Stance.None) Game.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
         IO.pr($"{player.Name}은 여기에 잠들었다...");
@@ -68,14 +68,14 @@ public class Program
         {
             IO.seln(item.skills, out int index, out bool cancel, out _);
             if (cancel) return;
-            player.SelectSkillAndUse(item, index);
+            player.SelectSkill(item, index);
         }
         switch (key.KeyChar)
         {
             case 'q':
-                IO.seln(Item.bardHand.skills, out int index, out bool cancel, out _);
+                IO.seln(Item.bareHand.skills, out int index, out bool cancel, out _);
                 if (cancel) return;
-                player.SelectSkillAndUse(Item.bardHand, index);
+                player.SelectSkill(Item.bareHand, index);
                 break;
             case 'u':
                 IO.rk(player.tokens);
@@ -85,9 +85,6 @@ public class Program
                 break;
             case '/':
                 player.ShowStats();
-                break;
-            case 'x':
-                player.Exile();
                 break;
         }
     }

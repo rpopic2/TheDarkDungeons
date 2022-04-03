@@ -21,7 +21,8 @@ public class Monster : Inventoriable
         {
             Inven[0] = Item.sword;
             tokens.Add(TokenType.Offence);
-            tokens.Add(TokenType.Offence);
+            tokens.Add(TokenType.Defence);
+            tokens.Add(TokenType.Charge);
         }
     }
     protected override void OnDeath(object? sender, EventArgs e)
@@ -50,7 +51,7 @@ public class Monster : Inventoriable
         {
             if (m.Target is null)
             {
-                int moveX = m.rnd.Next(3) - 1;
+                int moveX = m.stat.rnd.Next(3) - 1;
                 int direction = m.Pos.facing == Facing.Front ? -1 : 1;
                 if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
                 else m.Move(moveX, out char obj);
@@ -58,10 +59,10 @@ public class Monster : Inventoriable
             else
             {
                 TokenType? token = m.tokens.TryUse(0);
-                if (token is TokenType token1) m.SelectSkillAndUse(m.Inven[0]!, 0);
+                if (token is TokenType token1) m.SelectSkill(m.Inven[0]!, 0);
             }
         }
-        else m.Rest();
+        else m.Rest(TokenType.Offence);
     };
     internal static readonly Action<Monster> snakeBehav = (m) =>
     {
@@ -69,11 +70,11 @@ public class Monster : Inventoriable
         {
             if (m.Target is null)
             {
-                Map.Current.Moveables.TryGet(m.Pos.x + 2, out Moveable? target);
+                Map.Current.MoveablePositions.TryGet(m.Pos.x + 2, out Moveable? target);
                 if (target is not null) m.Target = target;
                 else
                 {
-                    int moveX = m.rnd.Next(2) == 1 ? 1 : -1;
+                    int moveX = m.stat.rnd.Next(2) == 1 ? 1 : -1;
                     int direction = m.Pos.facing == Facing.Front ? -1 : 1;
                     if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
                     else m.Move(moveX, out char obj);
@@ -84,14 +85,8 @@ public class Monster : Inventoriable
                 m._UseCard((Card)m.Hand.GetFirst()!);
             }
         }
-        else m.Rest();
+        else m.Rest(TokenType.Offence);
     };
-
-    public override void Rest()
-    {
-        base.Rest();
-        tokens.Add(TokenType.Offence);
-    }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;
 }

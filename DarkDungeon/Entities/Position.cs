@@ -15,7 +15,7 @@ public struct Position
     public int BackMul => facing == Facing.Front ? -1 : 1;
     public bool isFacingFront => facing == Facing.Front;
 
-    public override string ToString() => $"{x} facing {facing.ToString()}";
+    public override string ToString() => $"{x} {oldX} facing {facing.ToString()}";
     public static Position operator +(Position original, int value)
     {
         original.oldX = original.x;

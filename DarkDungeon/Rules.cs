@@ -11,7 +11,7 @@ public static class Rules
 public static class MapSymb
 {
     public const char player = '@';
-    public const char road = '·';
+    public const char road = '.';
     public const char Empty = ' ';
     public const char portal = '+';
 }
