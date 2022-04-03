@@ -28,9 +28,7 @@ public static class Game
         });
 
         OnTurnEnd?.Invoke(null, EventArgs.Empty);
-        // if (IO.printCount == 3) IO.del(4);
         if (Turn % SpawnRate == 0) Map.Current.Spawn();
-
         NewTurn();
     }
     public static void NewTurn()
