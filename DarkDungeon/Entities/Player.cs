@@ -77,21 +77,18 @@ public class Player : Inventoriable
         if (cancel) return;
         NewPickupItem(item, index);
     }
-    public new void Rest()
+    public void Rest()
     {
-        base.Rest();
-        IO.pr("토큰 종류를 선택해 주십시오.");
-        IO.del();
         IO.seln(Tokens.TokenPromptNames, out int index, out _);
-
+        int discard = -1;
         if (tokens.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
-            IO.seln_t(out int index2, out _, out _);
+            IO.seln_t(out discard, out _, out _);
             IO.del();
-            tokens.RemoveAt(index2);
         }
-        tokens.Add((byte)index);
+        Rest((TokenType)index, discard);
+
         IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
         IO.rk();
         IO.del();

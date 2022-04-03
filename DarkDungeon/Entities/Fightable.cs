@@ -104,10 +104,17 @@ public class Fightable : Moveable
         }
         Hp -= damage;
     }
-    public virtual void Rest()
+
+    public void Rest(TokenType tokenType, int discardIndex = -1)
     {
-        if (Map.Current.IsVisible(this)) IO.pr($"{Name}은 잠시 숨을 골랐다.");
-        stance = new(global::Stance.Rest, default);
+        IO.pr($"{Name}은 잠시 숨을 골랐다.");
+        if (tokens.IsFull)
+        {
+            if (discardIndex != -1) tokens.RemoveAt(discardIndex);
+            else tokens.RemoveAt(tokens.Count - 1);
+        }
+        stance.Set(global::Stance.Rest, default);
+        tokens.Add(tokenType);
     }
     public virtual void OnBeforeTurnEnd()
     {

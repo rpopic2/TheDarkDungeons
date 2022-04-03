@@ -5,6 +5,10 @@ public class StanceInfo
 
     public StanceInfo(Stance stance, int amount)
     {
+        Set(stance, amount);
+    }
+    public void Set(Stance stance, int amount)
+    {
         this.stance = stance;
         this.amount = amount;
     }

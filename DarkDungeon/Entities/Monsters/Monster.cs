@@ -88,10 +88,9 @@ public class Monster : Inventoriable
         else m.Rest();
     };
 
-    public override void Rest()
+    public void Rest()
     {
-        base.Rest();
-        tokens.Add(TokenType.Offence);
+        base.Rest(TokenType.Offence);
     }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;

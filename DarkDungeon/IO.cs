@@ -96,7 +96,7 @@ public static class IO
     }
 
     ///<summary>Print in Formated Options</summary>
-    private static void _prfo(Array options, string comment = "Select :")
+    private static void _prfo(Array options, string comment = "선택 :")
     {
         string printResult = comment + " /";
         foreach (var item in options)

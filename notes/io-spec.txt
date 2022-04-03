@@ -2,6 +2,8 @@ pr(object 출력) 콘솔에 쓰기. object가 Array면 format해서 보여줌 -b
 rk([string 출력]) 키 읽어들임. 입력하는 글자는 보이지 않음.
 del([int 줄 수]) 지정한 줄 수 만큼 지움.
 
+
+
 int seln(Array 선택지) 선택지를 띄워주고 숫자(n)를 누르면 몇 번째 선택지를 골랐는지 반환.
 int seli() 인벤토리를 띄워주고 w~y를 누르면 몇 번째를 골랐는지 반환.
 

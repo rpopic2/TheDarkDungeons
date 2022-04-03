@@ -1,19 +1,23 @@
 combat-improved
+[X] StanceInfo to class.
+[X] Map에 모든 fightables 일괄적으로 retrive가능하게
+[X] Complete token tests
 [ ] combat unittest
     [X] PlayerAtksMobAtks
     [X] PlayerAtksMobDefs
     [X] PlayerDefsMobAtks
     [X] PlayerDefsMobDefs
-    [ ] RestTest
+    [X] RestTest
+    [ ] PlayerAtksMobRests
+    [ ] PlayerDefsMobRests
     [ ] Try to test with predefined methods from Game.cs?
-[X] Map에 모든 fightables 일괄적으로 retrive가능하게
+[ ] Rest와 RestTest 합치기?
+[ ] Monster.RestTest == Player.RestTest
 [ ] Map test cover
 [ ] Map을 Player보다 먼저 init할수있게?
-[X] StanceInfo to class.
 [ ] rk 수정좀 해서 try catch 항상 안해도 되게 만들기? Console.IsInputRedirected 써보기
     [ ] 이거 하려면 io를 추상화시키고 여러개의 io클래스가 필요할듯. io spec도 정리해야할듯.
 [ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
-[X] Complete token tests
 [ ] io flags
 
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?

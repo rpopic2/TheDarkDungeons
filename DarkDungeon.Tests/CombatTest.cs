@@ -55,7 +55,19 @@ public class CombatTest
         Assert.Equal(Stance.Offence, player.Stance.stance);
         Assert.InRange(player.Stance.amount, Stat.MIN, player.GetStat(bareHand.skills[0].statName));
     }
-
+    [Fact]
+    public void PlayerRest()
+    {
+        Player player = _SetupPlayer();
+        player.Rest(TokenType.Offence);
+        Assert.Equal(Stance.Rest, player.Stance.stance);
+    }
+    public void MobRest()
+    {
+        Monster mob = _SetupMonser(out _);
+        mob.Rest(TokenType.Offence);
+        Assert.Equal(Stance.Rest, mob.Stance.stance);
+    }
     //Combats
     [Fact]
     public void PlayerAtksMobAtks()
