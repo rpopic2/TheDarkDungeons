@@ -35,7 +35,7 @@ public readonly record struct DropList
     public readonly (It dataIndex, int outof)[] list;
     public DropList()
     {
-        throw new ArgumentOutOfRangeException("Droplist needs cannot be empty");
+        throw new ArgumentOutOfRangeException("Droplist cannot be empty");
     }
     public DropList(params (It dataIndex, int outof)[] list)
     {
