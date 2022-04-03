@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 public struct Tokens
 {
     public static readonly char[] TokenSymbols = { '(', '[', '<' };
-    public static readonly string[] TokenPromptNames = { "(공격", "[방어", "<충전" };
+    public static readonly string[] TokenPromptNames = { "(공격)", "[방어}", "<충전>" };
 
     private List<byte?> _array;
 
