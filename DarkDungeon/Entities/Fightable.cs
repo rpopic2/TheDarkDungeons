@@ -67,7 +67,7 @@ public class Fightable : Moveable
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
         {
-            int amount = SetStance(token, selected.stats);
+            int amount = SetStance(token, selected.statName);
             IO.rk($"{Name}은 {selected.OnUseOutput} ({amount})");
         }
         else
