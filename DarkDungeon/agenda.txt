@@ -1,7 +1,7 @@
 combat-improved
 [ ] combat unittest
     [X] PlayerAtksMobAtks
-    [ ] PlayerAtksMobDefs
+    [X] PlayerAtksMobDefs
     [ ] PlayerDefsMobAtks
     [ ] PlayerDefsMobDefs
     [ ] Try to test with predefined methods from Game.cs?

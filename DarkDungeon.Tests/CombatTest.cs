@@ -51,8 +51,8 @@ public class CombatTest
 
         //2. Select Behaviour use a skill : 맨손 - 주먹질
 
-        try { player.UseSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
-        try { mob.UseSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
+        try { player.SelectSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
+        try { mob.SelectSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
         //check if player skill is used properly : stance changed, token deleted
         Assert.Equal(Stance.Offence, player.Stance.stance);
         Assert.InRange(player.Stance.amount, Stat.MIN, Player.BASICSTAT);
@@ -131,7 +131,7 @@ public class CombatTest
     }
     private void _SelectSkill(Fightable caster, Item item, int skill)
     {
-        try { caster.UseSkill(item, skill); } catch (System.InvalidOperationException) { }
+        try { caster.SelectSkill(item, skill); } catch (System.InvalidOperationException) { }
     }
     private void _TryAttack(Fightable caster)
     {
