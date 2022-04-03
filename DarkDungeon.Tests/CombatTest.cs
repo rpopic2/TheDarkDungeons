@@ -107,7 +107,40 @@ public class CombatTest
         _ElaspeTurn(map);
         Assert.Equal(player.Hp.Max, player.Hp.Cur);
         Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
-        Assert.NotEqual(player.Stance.amount, mob.Hp.Max - mob.Hp.Cur);
+        if(player.Stance.amount != 1) Assert.NotEqual(player.Stance.amount, mob.Hp.Max - mob.Hp.Cur);
+        else Assert.Equal(player.Stance.amount, mob.Hp.Max - mob.Hp.Cur);
+    }
+    [Fact]
+    public void PlayerDefsMobRests()
+    {
+        (Player player, Monster mob) = _SetupCombat(out Map map);
+        _SelectSkill(player, Item.sword, 1);
+        mob.Rest(TokenType.Offence);
+        _ElaspeTurn(map);
+        Assert.Equal(player.Hp.Max, player.Hp.Cur);
+        Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
+    }
+    [Fact]
+    public void PlayerRestsMobAtks()
+    {
+        (Player player, Monster mob) = _SetupCombat(out Map map);
+        _SelectSkill(mob, Item.sword, 0);
+        player.Rest(TokenType.Offence);
+        _ElaspeTurn(map);
+        Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
+        Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
+        if(mob.Stance.amount != 1) Assert.NotEqual(mob.Stance.amount, player.Hp.Max - player.Hp.Cur);
+        else Assert.Equal(mob.Stance.amount, player.Hp.Max - player.Hp.Cur);
+    }
+    [Fact]
+    public void PlayerRestsMobDefs()
+    {
+        (Player player, Monster mob) = _SetupCombat(out Map map);
+        _SelectSkill(mob, Item.sword, 1);
+        player.Rest(TokenType.Offence);
+        _ElaspeTurn(map);
+        Assert.Equal(player.Hp.Max, player.Hp.Cur);
+        Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
     }
 
     ///Private Methods

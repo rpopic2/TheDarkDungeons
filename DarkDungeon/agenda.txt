@@ -3,14 +3,14 @@ combat-improved
 [X] Map에 모든 fightables 일괄적으로 retrive가능하게
 [X] Complete token tests
 [X] Rest와 RestTest 합치기?
-[ ] combat unittest
+[X] one turn combat unittest
     [X] PlayerAtksMobAtks
     [X] PlayerAtksMobDefs
     [X] PlayerDefsMobAtks
     [X] PlayerDefsMobDefs
     [X] RestTest
-    [ ] PlayerAtksMobRests
-    [ ] PlayerDefsMobRests
+    [X] PlayerAtksMobRests, vice verca
+    [X] PlayerDefsMobRests, vice verca
     [X] Try to test with predefined methods from Game.cs?
 [ ] 충전 알고리즘은 나중에 더 고민해야할 듯. 애초에 스킬이라 지금은 stub implementation임
 [ ] Rest to skill

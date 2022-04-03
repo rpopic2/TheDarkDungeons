@@ -6,7 +6,6 @@ public class Fightable : Moveable
     public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
-    private int star;
     public bool IsResting => stance.stance == global::Stance.Rest;
     public bool IsAlive => !Hp.IsMin;
     public Fightable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
@@ -101,7 +100,7 @@ public class Fightable : Moveable
         }
         else if (damage > 0 && IsResting)
         {
-            IO.rk($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
+            IO.pr($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
             damage = (int)MathF.Round(damage * Rules.vulMulp);
         }
         Hp -= damage;
