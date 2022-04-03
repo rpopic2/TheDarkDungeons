@@ -1,6 +1,6 @@
 public record Item(string name, Skill[] skills)
 {
-    public static readonly Item bardHand = new("(맨손)", new Skill[] {
+    public static readonly Item bareHand = new("(맨손)", new Skill[] {
         new("주먹질", TokenType.Offence, StatName.Sol, "주먹을 휘둘렀다."),
         new("구르기", TokenType.Defence, StatName.Lun, "옆으로 굴렀다.")
         });

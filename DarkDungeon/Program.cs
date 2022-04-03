@@ -68,14 +68,14 @@ public class Program
         {
             IO.seln(item.skills, out int index, out bool cancel, out _);
             if (cancel) return;
-            player.SelectSkillAndUse(item, index);
+            player.UseSkill(item, index);
         }
         switch (key.KeyChar)
         {
             case 'q':
-                IO.seln(Item.bardHand.skills, out int index, out bool cancel, out _);
+                IO.seln(Item.bareHand.skills, out int index, out bool cancel, out _);
                 if (cancel) return;
-                player.SelectSkillAndUse(Item.bardHand, index);
+                player.UseSkill(Item.bareHand, index);
                 break;
             case 'u':
                 IO.rk(player.tokens);

@@ -51,8 +51,8 @@ public class CombatTest
 
         //2. Select Behaviour use a skill : 맨손 - 주먹질
 
-        try { player.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
-        try { mob.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
+        try { player.UseSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
+        try { mob.UseSkill(Item.bareHand, 0); } catch (System.InvalidOperationException) { }
         //check if player skill is used properly : stance changed, token deleted
         Assert.Equal(Stance.Offence, player.CurStance.stance);
         Assert.InRange(player.CurStance.amount, Stat.MIN, Player.BASICSTAT);
@@ -95,12 +95,14 @@ public class CombatTest
         Assert.Equal(Stance.None, mob.CurStance.stance);
     }
     [Fact]
-    public void TestSelectSkillAndUse()
+    public void TestSkillUse()
     {
         _SetupPlayer();
         Player player = Player.instance;
-        Skill fist = Item.bardHand.skills[0];
-        try { player.SelectSkillAndUse(Item.bardHand, 0); } catch (System.InvalidOperationException) { }
+        Item bareHand = Item.bareHand;
+        Skill fist = bareHand.skills[0];
+
+        try { player.UseSkill(bareHand, 0); } catch (System.InvalidOperationException) { }
         Assert.Equal(Stance.Offence, player.CurStance.stance);
         Assert.InRange(player.CurStance.amount, Stat.MIN, player.GetStat(fist.statName));
     }
