@@ -29,25 +29,6 @@ public class CombatTest
         Assert.Equal(new(0, 0), player.Pos);
     }
     [Fact]
-    public void PlayerAtksMobAtks()
-    {
-        Player player = _SetupPlayer();
-        Monster mob = _SetupMonser(out Map map);
-        
-        //1. New Turn. update its targets
-        _StartTurn(map);
-        //2. Select Behaviour use a skill : 맨손 - 주먹질
-        _SelectSkill(player, Item.bareHand, 0);
-        _SelectSkill(mob, Item.bareHand, 0);
-        //3. Perform selected behaviour : attack
-        Assert.Equal(player.Hp.Max, player.Hp.Cur);
-        Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
-        _ElaspeTurn(map);
-        //check damage taken
-        Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
-        Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
-    }
-    [Fact]
     public void TestOnNewTurn()
     {
         //Setup
@@ -77,15 +58,16 @@ public class CombatTest
         Assert.InRange(player.Stance.amount, Stat.MIN, player.GetStat(bareHand.skills[0].statName));
     }
     [Fact]
+    public void PlayerAtksMobAtks()
+    {
+        (Player player, Monster mob) = _SetupCombat(0, 0);
+        Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
+        Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
+    }
+    [Fact]
     public void PlayerAtksMobDefs()
     {
-        Player player = _SetupPlayer();
-        Monster mob = _SetupMonser(out Map map);
-        _StartTurn(map);
-        _SelectSkill(player, Item.bareHand, 0);
-        _SelectSkill(mob, Item.bareHand, 1);
-        _ElaspeTurn(map);
-        Assert.Equal(Stance.Defence, mob.Stance.stance);
+        (Player player, Monster mob) = _SetupCombat(0, 1);
         if (mob.Stance.amount >= player.Stance.amount)
         {
             Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
@@ -95,6 +77,20 @@ public class CombatTest
             Assert.NotEqual(mob.Hp.Max, mob.Hp.Cur);
         }
         Assert.Equal(player.Hp.Max, player.Hp.Cur);
+    }
+    [Fact]
+    public void PlayerDefsMobAtks()
+    {
+        (Player player, Monster mob) = _SetupCombat(1, 0);
+        if (player.Stance.amount >= mob.Stance.amount)
+        {
+            Assert.Equal(player.Hp.Max, player.Hp.Cur);
+        }
+        else
+        {
+            Assert.NotEqual(player.Hp.Max, player.Hp.Cur);
+        }
+        Assert.Equal(mob.Hp.Max, mob.Hp.Cur);
     }
     ///<summary> Always setup player first</summary>
     private Player _SetupPlayer()
@@ -134,5 +130,15 @@ public class CombatTest
         {
             _TryAttack(item);
         }
+    }
+    private (Player, Monster) _SetupCombat(int playerSkill, int mobSkill)
+    {
+        Player player = _SetupPlayer();
+        Monster mob = _SetupMonser(out Map map);
+        _StartTurn(map);
+        _SelectSkill(player, Item.bareHand, playerSkill);
+        _SelectSkill(mob, Item.bareHand, mobSkill);
+        _ElaspeTurn(map);
+        return(player, mob);
     }
 }
