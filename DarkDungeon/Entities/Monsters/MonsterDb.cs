@@ -22,15 +22,15 @@ public static class MonsterDb
     private static StatMul snakeMul = new(sol: new(2, 0.6f, lv), lun: new(1, n, n), con: new(2, n, n), hp: new(2, 0.3f, lv), cap: new(2, 0.16f, lv), killExp: new(5, 0.3f, lv));
     public static MonsterData snake = new(2, "Snake", 'S', '2', ClassName.Warrior, snakeMul, Monster.snakeBehav, snakeDropList);
 }
-public readonly record struct MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList)
+public record MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList)
 {
     public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, behaviour, dropList)
     {
         MonsterDb.data.Add(this);
     }
 }
-public readonly record struct StatMul(Mul sol, Mul lun, Mul con, Mul hp, Mul cap, Mul killExp);
-public readonly record struct DropList
+public record StatMul(int sol, int lun, int con, int hp, int cap, int killExp);
+public record struct DropList
 {
     public readonly (It dataIndex, int outof)[] list;
     public DropList()
@@ -43,7 +43,7 @@ public readonly record struct DropList
     }
 }
 //sol lun con hp cap killexp
-public readonly record struct Mul
+public record struct Mul
 {
     public static int lv => Map.level;
     public static int t => Game.Turn;
