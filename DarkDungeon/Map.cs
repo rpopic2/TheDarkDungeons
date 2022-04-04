@@ -36,7 +36,7 @@ public class Map
         if (spawnableIndices.Count <= 0) return;
 
         // int randomInt = rnd.Next(0, MonsterDb.Count);
-        int randomInt = 0;
+        int randomInt = 2;
         MonsterData data = MonsterDb.data[randomInt];
 
         int index = rnd.Next(0, spawnableIndices.Count);
@@ -47,8 +47,7 @@ public class Map
     public void _Spawn(MonsterData data, Position spawnPoint)
     {
         Moveable mov;
-        if (data == Bat.data) mov = new Bat(spawnPoint);
-        else mov = new Monster(data, spawnPoint);
+        mov = new Monster(data, spawnPoint);
         fightables.Add((Fightable)mov);
         UpdateMoveable(mov);
     }

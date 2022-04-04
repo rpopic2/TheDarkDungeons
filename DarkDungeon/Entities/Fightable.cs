@@ -67,9 +67,10 @@ public class Fightable : Moveable
         if (tokenTry is TokenType token)
         {
             int amount = SetStance(token, selected.statName);
+            string s = $"{Name}은 {selected.OnUseOutput} ({amount})";
+            if(tempCharge > 0) s += ($"+({tempCharge})");
             if (selected.statName == StatName.Con) tempCharge += amount;
-            if(tempCharge > 0) IO.rk($"{Name}은 {selected.OnUseOutput} ({amount}+{tempCharge})");
-            else IO.rk($"{Name}은 {selected.OnUseOutput} ({amount})");
+            IO.rk(s);
         }
         else
         {
@@ -105,7 +106,7 @@ public class Fightable : Moveable
         }
         else if (damage > 0 && stance.stance == global::Stance.Charge)
         {
-            IO.pr($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
+            IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = GetVulDmg(damage);
         }
         Hp -= damage;
