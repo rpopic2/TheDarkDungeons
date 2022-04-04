@@ -1,6 +1,6 @@
 monster-ai-new
 [ ] 몬스터 클래스 많이 수정 필요할듯. 몬스터 패턴 시스템.
-[ ] Lunatic
+[X] Lunatic
 [ ] Bat
 [ ] Snake
 [ ] Shaman
