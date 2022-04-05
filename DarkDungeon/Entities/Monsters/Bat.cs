@@ -1,8 +1,8 @@
 namespace Entities;
 public class Bat : Monster
 {
-    public static MonsterData data = new(0, "Bat", 'b', 'd', mul, Monster.batBehav, dropList);
     private static StatMul mul = new(1, 3, 2, 2, 1, 3);
+    public static MonsterData data = new("Bat", 'b', 'd', mul, Monster.batBehav, dropList);
     private new static DropList dropList = new(
         (It.HpPot, 10),
         (It.Bag, 11),
