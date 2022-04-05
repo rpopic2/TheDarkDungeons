@@ -2,9 +2,8 @@
 public class Program
 {
     public static Program instance = default!;
-    public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
-    public static readonly string[] stats = new string[] { "(1) Sol", "(2) Lun", "(3) Con" };
-    public static readonly string[] actions = new string[] { "Cards(W)", "(E)quipments", "(R)est", "(S)tats", "E(x)ile" };
+    public static readonly string[] classes = new string[] { "(1) 검사", "(2) 암살자", "(3) 마법사" };
+    public static readonly string[] stats = new string[] { "(1) 힘/체력", "(2) 정밀/민첩", "(3) 마력/지능" };
     private static Player player { get => Player.instance; }
     public static void Main()
     {
