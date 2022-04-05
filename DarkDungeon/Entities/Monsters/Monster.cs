@@ -9,7 +9,7 @@ public class Monster : Inventoriable
     protected DropList dropList;
     private char fowardChar, backwardChar;
     private Action<Monster> behaviour;
-    public Monster(MonsterData data, Position spawnPoint) : base(data.name, data.className, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap)
+    public Monster(MonsterData data, Position spawnPoint) : base(data.name, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap)
     {
         dropList = data.dropList;
         killExp = data.stat.killExp;

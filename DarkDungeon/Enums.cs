@@ -1,9 +1,3 @@
-public enum ClassName
-{
-    Warrior, Assassin, Mage
-}
-
-
 public enum CardStance
 {
     Offence, Defence,

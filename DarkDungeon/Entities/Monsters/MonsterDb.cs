@@ -17,14 +17,14 @@ public static class MonsterDb
         (It.Torch, 5),
         (It.ShadowAttack, 20),
         (It.Scouter, 5));
-    private static StatMul lunaticMul = new(sol: new(1, 0.6f, lv), lun: new(1, n, n), con: new(3, n, n), hp: new(3, 0.6f, lv), cap: new(4, n, n), killExp: new(4, 0.3f, lv));
-    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, lunDropList);
-    private static StatMul snakeMul = new(sol: new(2, 0.6f, lv), lun: new(1, n, n), con: new(2, n, n), hp: new(2, 0.3f, lv), cap: new(2, 0.16f, lv), killExp: new(5, 0.3f, lv));
-    public static MonsterData snake = new(2, "Snake", 'S', '2', ClassName.Warrior, snakeMul, Monster.snakeBehav, snakeDropList);
+    private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, hp: 3, cap: 4, killExp: 4);
+    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', lunaticMul, Monster.lunaticBehav, lunDropList);
+    private static StatMul snakeMul = new(sol: 2, lun: 1, con: 2, hp: 2, cap: 2, killExp: 5);
+    public static MonsterData snake = new(2, "Snake", 'S', '2', snakeMul, Monster.snakeBehav, snakeDropList);
 }
-public record MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList)
+public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, DropList dropList)
 {
-    public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, behaviour, dropList)
+    public MonsterData(int i, string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, DropList dropList) : this(name, fowardChar, backwardChar, stat, behaviour, dropList)
     {
         MonsterDb.data.Add(this);
     }

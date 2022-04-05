@@ -55,7 +55,7 @@ public class UnitTest
     [Fact]
     public void TokenPickup()
     {
-        Player player = new("TestPlayer", default);
+        Player player = new("TestPlayer");
         player.tokens.Add(TokenType.Offence);
         Assert.Equal((byte)TokenType.Offence, player.tokens[0]);
         Assert.NotEqual((byte)TokenType.Defence, player.tokens[0]);

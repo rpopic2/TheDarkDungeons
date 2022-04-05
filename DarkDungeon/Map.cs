@@ -36,7 +36,7 @@ public class Map
         if (spawnableIndices.Count <= 0) return;
 
         // int randomInt = rnd.Next(0, MonsterDb.Count);
-        int randomInt = 2;
+        int randomInt = 0;
         MonsterData data = MonsterDb.data[randomInt];
 
         int index = rnd.Next(0, spawnableIndices.Count);

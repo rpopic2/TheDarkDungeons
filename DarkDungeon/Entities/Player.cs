@@ -10,29 +10,11 @@ public class Player : Inventoriable
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
-    public Player(string name, ClassName className) : base(name, className, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
+    public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
-    public void StartItem()
-    {
-        switch (ClassName)
-        {
-            case ClassName.Warrior:
-                PickupItem(Item.sword);
-                stat[StatName.Sol] += 1;
-                break;
-            case ClassName.Assassin:
-                stat[StatName.Lun] += 1;
-                break;
-            case ClassName.Mage:
-                PickupItem(Item.staff);
-                stat[StatName.Con] += 1;
-                break;
-        }
-    }
-
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
@@ -70,7 +52,7 @@ public class Player : Inventoriable
         PickupCard(card, index);
         IO.del(2);
     }
-    private void PickupItem(Item item)
+    public void PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
         IO.seli(out int index, out bool cancel, out _, out _);

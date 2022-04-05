@@ -37,8 +37,20 @@ public class Program
         IO.pr($"{name}의 직업은?...");
         IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod);
         if (cancel) index = 0;
-        ClassName className = (ClassName)index;
-        Player._instance = new Player(name, className);
+        Player._instance = new Player(name);
+        switch (index)
+        {
+            case 0:
+                Player._instance.PickupItem(Item.sword);
+                break;
+            case 1:
+                break;
+            case 2:
+                Player._instance.PickupItem(Item.staff);
+                break;
+            default:
+                break;
+        }
     }
     //-------------------------
 

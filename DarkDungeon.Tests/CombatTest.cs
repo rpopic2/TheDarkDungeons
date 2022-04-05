@@ -7,7 +7,7 @@ public class CombatTest
     [Fact]
     public void Movement()
     {
-        Player._instance = new("Tester", ClassName.Warrior);
+        Player._instance = new("Tester");
         Player player = Player.instance;
         Map map = new(5, false);
         Assert.Equal(new(0, 0), player.Pos);
@@ -172,7 +172,7 @@ public class CombatTest
     ///<summary> Always setup player first</summary>
     private Player _SetupPlayer()
     {
-        Player._instance = new("Tester", ClassName.Warrior);
+        Player._instance = new("Tester");
         Player player = Player.instance;
         player.tokens.Add(TokenType.Offence);
         player.tokens.Add(TokenType.Defence);
