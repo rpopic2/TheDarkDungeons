@@ -18,12 +18,12 @@ public static class MonsterDb
         (It.ShadowAttack, 20),
         (It.Scouter, 5));
     private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, hp: 3, cap: 4, killExp: 4);
-    public static MonsterData lunatic = new("Lunatic", '>', '<', lunaticMul, Monster.lunaticBehav, lunDropList);
+    public static MonsterData lunatic = new("Lunatic", '>', '<', lunaticMul, Monster.lunaticBehav, Item.holySword, new int[] { 2, 0, 2, 0 }, lunDropList);
     private static StatMul snakeMul = new(sol: 2, lun: 1, con: 2, hp: 2, cap: 2, killExp: 5);
-    public static MonsterData snake = new("Snake", 'S', '2', snakeMul, Monster.snakeBehav, snakeDropList);
-    public static List<MonsterData> data = new() {lunatic, snake};
+    public static MonsterData snake = new("Snake", 'S', '2', snakeMul, Monster.snakeBehav, Item.bareHand, new int[] { 2, 0, 0 }, snakeDropList);
+    public static List<MonsterData> data = new() { lunatic, snake };
 }
-public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, DropList dropList);
+public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, Item startItem, int[] startToken, DropList dropList);
 
 public record StatMul(int sol, int lun, int con, int hp, int cap, int killExp);
 public record struct DropList

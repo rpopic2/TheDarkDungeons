@@ -17,13 +17,14 @@ public class Monster : Inventoriable
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
         Pos = spawnPoint;
-        if (data.name == "Lunatic")
+        OnSpawn(data.startItem, data.startToken);
+    }
+    public void OnSpawn(Item item, int[] startTokens)
+    {
+        Inven[0] = item;
+        foreach (var token in startTokens)
         {
-            Inven[0] = Item.holySword;
-            tokens.Add(TokenType.Offence);
-            tokens.Add(TokenType.Charge);
-            tokens.Add(TokenType.Offence);
-            tokens.Add(TokenType.Charge);
+            tokens.Add((TokenType)token);
         }
     }
     protected override void OnDeath(object? sender, EventArgs e)
@@ -60,7 +61,7 @@ public class Monster : Inventoriable
             else
             {
                 if (m.tempCharge > 0 && m.tokens.Contains(TokenType.Offence)) m.SelectSkill(m.Inven[0]!, 0);
-                else if(m.tokens.Contains(TokenType.Charge)) m.SelectSkill(m.Inven[0]!, 1);
+                else if (m.tokens.Contains(TokenType.Charge)) m.SelectSkill(m.Inven[0]!, 1);
             }
         }
         else m.Rest(TokenType.Offence);
