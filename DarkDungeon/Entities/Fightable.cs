@@ -137,7 +137,6 @@ public class Fightable : Moveable
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
         IO.pr($"{Name}가 죽었다.", false, true);
-        Map.Current.UpdateMoveable(this);
     }
     protected void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
     protected void OnDamaged(object? sender, PointArgs e)
