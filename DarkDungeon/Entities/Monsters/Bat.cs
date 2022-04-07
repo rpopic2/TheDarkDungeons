@@ -2,7 +2,7 @@ namespace Entities;
 public class Bat : Monster
 {
     private static StatMul mul = new(1, 3, 2, 2, 1, 3);
-    public static MonsterData data = new("Bat", 'b', 'd', mul, Monster.batBehav, Item.bareHand, new int[]{1, 1, 0}, dropList);
+    public static MonsterData data = new("Bat", 'b', 'd', mul, (m)=>{}, Item.bareHand, new int[]{1, 1, 0}, dropList);
     private new static DropList dropList = new(
         (It.HpPot, 10),
         (It.Bag, 11),

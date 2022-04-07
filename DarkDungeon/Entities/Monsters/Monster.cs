@@ -43,52 +43,48 @@ public class Monster : Inventoriable
         if (!IsAlive) return;
         behaviour(this);
     }
-    public readonly static Action<Monster> batBehav = (m) =>
+    internal void LunaticBehav()
     {
-        throw new NotImplementedException();
-    };
-    internal static readonly Action<Monster> lunaticBehav = (m) =>
-    {
-        if (m.tokens.Count > 0)
+        if (tokens.Count > 0)
         {
-            if (m.Target is null)
+            if (Target is null)
             {
-                int moveX = m.stat.rnd.Next(3) - 1;
-                int direction = m.Pos.facing == Facing.Front ? -1 : 1;
-                if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
-                else m.Move(moveX, out char obj);
+                int moveX = stat.rnd.Next(3) - 1;
+                int direction = Pos.facing == Facing.Front ? -1 : 1;
+                if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
+                else Move(moveX, out char obj);
             }
             else
             {
-                if (m.tempCharge > 0 && m.tokens.Contains(TokenType.Offence)) m.SelectSkill(m.Inven[0]!, 0);
-                else if (m.tokens.Contains(TokenType.Charge)) m.SelectSkill(m.Inven[0]!, 1);
+                if (tempCharge > 0 && tokens.Contains(TokenType.Offence)) SelectSkill(Inven[0]!, 0);
+                else if (tokens.Contains(TokenType.Charge)) SelectSkill(Inven[0]!, 1);
             }
         }
-        else m.Rest(TokenType.Offence);
-    };
-    internal static readonly Action<Monster> snakeBehav = (m) =>
+        else Rest(TokenType.Offence);
+    }
+    internal void SnakeBehav()
     {
-        if (m.Hand.Count > 0)
+        if (Hand.Count > 0)
         {
-            if (m.Target is null)
+            if (Target is null)
             {
-                Map.Current.MoveablePositions.TryGet(m.Pos.x + 2, out Moveable? target);
-                if (target is not null) m.Target = target;
+                Map.Current.MoveablePositions.TryGet(Pos.x + 2, out Moveable? target);
+                if (target is not null) Target = target;
                 else
                 {
-                    int moveX = m.stat.rnd.Next(2) == 1 ? 1 : -1;
-                    int direction = m.Pos.facing == Facing.Front ? -1 : 1;
-                    if (Map.Current.IsAtEnd(m.Pos.x)) m.Move(direction, out char obj);
-                    else m.Move(moveX, out char obj);
+                    int moveX = stat.rnd.Next(2) == 1 ? 1 : -1;
+                    int direction = Pos.facing == Facing.Front ? -1 : 1;
+                    if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
+                    else Move(moveX, out char obj);
                 }
             }
-            if (m.Target is not null)
+            if (Target is not null)
             {
-                m._UseCard((Card)m.Hand.GetFirst()!);
+                _UseCard((Card)Hand.GetFirst()!);
             }
         }
-        else m.Rest(TokenType.Offence);
-    };
+        else Rest(TokenType.Offence);
+    }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;
 }

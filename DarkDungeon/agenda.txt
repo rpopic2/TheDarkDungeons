@@ -1,6 +1,8 @@
 monster-ai-new
 [ ] 몬스터 클래스 많이 수정 필요할듯. 몬스터 패턴 시스템.
 [X] Lunatic
+[X] !!Monsnter 업데이트 map 내부에서 알아서 처리되게끔. map.render 할때마다 콜하게.
+[X] MonsterDb startitem, starttoken 추가
 [ ] Bat
 [ ] Snake
 [ ] Shaman
