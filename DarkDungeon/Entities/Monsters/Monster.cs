@@ -1,5 +1,5 @@
 namespace Entities;
-public class Monster : Inventoriable
+public partial class Monster : Inventoriable
 {
     protected static int lv => Map.level;
     protected static int t => Game.Turn;
@@ -42,6 +42,25 @@ public class Monster : Inventoriable
     {
         if (!IsAlive) return;
         behaviour(this);
+    }
+    public void BatBehav()
+    {
+        if (tokens.Count > 0)
+        {
+            if (Target is null)
+            {
+                int moveX = stat.rnd.Next(2) == 1 ? 1 : -1;
+                int direction = Pos.facing == Facing.Front ? -1 : 1;
+                if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
+                else Move(moveX, out char obj);
+            }
+            else
+            {
+                if(tokens.Contains(TokenType.Defence)) SelectSkill(Inven[0]!, 1);
+                else if (tokens.Contains(TokenType.Offence)) SelectSkill(Inven[0]!, 0);
+            }
+        }
+        else Rest(TokenType.Offence);
     }
     internal void LunaticBehav()
     {
