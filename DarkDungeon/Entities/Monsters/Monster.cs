@@ -29,11 +29,10 @@ public partial class Monster : Inventoriable
         base.OnDeath(sender, e);
         player.exp.point += killExp;
         player.PickupCard(Draw(StatName.Sol, true));
-        // foreach (var item in dropList.list)
-        // {
-        //     IItemData iitem = Inventoriable.Items[(int)item.dataIndex];
-        //     if (DropOutOf(rnd, item.outof)) player.PickupItemData(iitem);
-        // }
+        foreach (var item in dropList.list)
+        {
+            if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);
+        }
     }
     public virtual void DoTurn()
     {
@@ -47,15 +46,4 @@ public partial class Monster : Inventoriable
 public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, Item startItem, int[] startToken, DropList dropList);
 
 
-public record struct DropList
-{
-    public readonly (It dataIndex, int outof)[] list;
-    public DropList()
-    {
-        throw new ArgumentOutOfRangeException("Droplist cannot be empty");
-    }
-    public DropList(params (It dataIndex, int outof)[] list)
-    {
-        this.list = list;
-    }
-}
+public record struct DropList(params (Item item, int outOf)[] list);

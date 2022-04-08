@@ -37,7 +37,7 @@ public class Map
 
         // int randomInt = rnd.Next(0, MonsterDb.Count);
         //int randomInt = 0;
-        MonsterData data = Monster.bat;//MonsterDb.data[randomInt];
+        MonsterData data = Monster.lunatic;//MonsterDb.data[randomInt];
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];

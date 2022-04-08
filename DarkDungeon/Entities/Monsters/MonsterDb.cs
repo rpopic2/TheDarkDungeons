@@ -2,24 +2,11 @@ namespace Entities;
 public partial class Monster
 {
     private static DropList lunDropList = new(
-        (It.HpPot, 10),
-        (It.Bag, 11),
-        (It.Torch, 5),
-        (It.FieryRing, 15),
-        (It.LunarRing, 15));
+        (Item.holySword, 10));
     private static DropList snakeDropList = new(
-        (It.HpPot, 10),
-        (It.Bag, 11),
-        (It.Torch, 5),
-        (It.ShadowAttack, 20),
-        (It.Scouter, 5));
-
+        (Item.holySword, 10));
     private static DropList batDropList = new(
-            (It.HpPot, 10),
-            (It.Bag, 11),
-            (It.Torch, 5),
-            (It.FieryRing, 15),
-            (It.LunarRing, 15));
+        (Item.holySword, 10));
     private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, hp: 3, cap: 4, killExp: 4);
     public static MonsterData lunatic = new("Lunatic", '>', '<', lunaticMul, (m) => m.LunaticBehav(), Item.holySword, new int[] { 2, 0, 2, 0 }, lunDropList);
     private static StatMul snakeMul = new(sol: 2, lun: 1, con: 2, hp: 2, cap: 2, killExp: 5);
@@ -68,7 +55,7 @@ public partial class Monster
     }
     internal void SnakeBehav()
     {
-        if (Hand.Count > 0)
+        if (tokens.Count > 0)
         {
             if (Target is null)
             {
