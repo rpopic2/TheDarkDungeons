@@ -80,7 +80,7 @@ public class Map
     }
     private void Render()
     {
-        foreach (var fight in fightables)
+        foreach (var fight in Fightables)
         {
             UpdateMoveables(fight);
         }
