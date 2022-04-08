@@ -14,15 +14,6 @@ public enum Stance
 {
     None, Offence, Defence, Charge
 }
-public enum ItemType
-{
-    Equip, Skill, Consum
-}
-public enum It
-{
-    HpPot, Bag, Scouter, Charge, ShadowAttack, Snipe, Berserk, Backstep, LunarRing, AmuletOfLa, FieryRing, Torch
-}
-
 public static class Extensions
 {
     public static bool TryGet<T>(this T[] source, int index, out T? obj)
