@@ -4,10 +4,10 @@ public struct Position
     public int x;
     public Facing facing;
 
-    public Position(int x, int oldX = default, Facing facing = default)
+    public Position(int x, Facing facing = default)
     {
         this.x = x;
-        this.oldX = oldX;
+        this.oldX = x;
         this.facing = facing;
     }
     public int FrontIndex => facing == Facing.Front ? x + 1 : x - 1;

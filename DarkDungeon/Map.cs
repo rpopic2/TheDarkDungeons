@@ -41,7 +41,7 @@ public class Map
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
-        Position spawnPoint = new Position(newPos, 0, Facing.Back);
+        Position spawnPoint = new Position(newPos, Facing.Back);
         _Spawn(data, spawnPoint);
     }
     public void _Spawn(MonsterData data, Position spawnPoint)

@@ -17,10 +17,20 @@ public static class MonsterDb
         (It.Torch, 5),
         (It.ShadowAttack, 20),
         (It.Scouter, 5));
+    
+private static DropList batDropList = new(
+        (It.HpPot, 10),
+        (It.Bag, 11),
+        (It.Torch, 5),
+        (It.FieryRing, 15),
+        (It.LunarRing, 15));
     private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, hp: 3, cap: 4, killExp: 4);
     public static MonsterData lunatic = new("Lunatic", '>', '<', lunaticMul, (m) => m.LunaticBehav(), Item.holySword, new int[] { 2, 0, 2, 0 }, lunDropList);
     private static StatMul snakeMul = new(sol: 2, lun: 1, con: 2, hp: 2, cap: 2, killExp: 5);
-    public static MonsterData snake = new("Snake", 'S', '2', snakeMul, (m)  => m.SnakeBehav(), Item.bareHand, new int[] { 2, 0, 0 }, snakeDropList);
+    public static MonsterData snake = new("Snake", 'S', '2', snakeMul, (m) => m.SnakeBehav(), Item.bareHand, new int[] { 2, 0, 0 }, snakeDropList);
+    public static MonsterData BatData = new("Bat", 'b', 'd', batMul, (m) => { }, Item.bareHand, new int[] { 1, 1, 0 }, batDropList);
+
+    private static StatMul batMul = new(1, 3, 2, 2, 1, 3);
     public static List<MonsterData> data = new() { lunatic, snake };
 }
 public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, Item startItem, int[] startToken, DropList dropList);
