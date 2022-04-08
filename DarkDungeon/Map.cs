@@ -80,9 +80,9 @@ public class Map
     }
     private void Render()
     {
-        foreach (var fight in Fightables)
+        for (int i = 0; i < Fightables.Count; i++)
         {
-            UpdateMoveables(fight);
+            UpdateMoveables(Fightables[i]);
         }
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
