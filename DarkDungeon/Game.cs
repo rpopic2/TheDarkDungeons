@@ -8,7 +8,6 @@ public static class Game
     static Game()
     {
         Map.NewMap();
-        _Player.StartItem();
         IO.rk($"{_Player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
     }
     internal static void ElaspeTurn()
@@ -37,7 +36,7 @@ public static class Game
         Turn++;
         Console.Clear();
         IO.pr("History");
-        IO.prb($"\nT : {Turn}\tDungeon Level : {Map.level}\tHP : {_Player.Hp}\t{_Player.tokens}");
+        IO.prb($"\nT : {Turn}\tDungeon Level : {Map.level}\tHP : {_Player.Hp}\t{_Player.tokens}\t 상대 {((Fightable?)_Player.Target)?.tokens}");
         IO.prb(_Player.Inven);
         IO.pr(Map.Current);
     }

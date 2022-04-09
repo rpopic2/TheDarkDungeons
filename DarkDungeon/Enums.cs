@@ -1,9 +1,3 @@
-public enum ClassName
-{
-    Warrior, Assassin, Mage
-}
-
-
 public enum CardStance
 {
     Offence, Defence,
@@ -16,19 +10,10 @@ public enum Facing
 {
     Front, Back
 }
-public enum Stance
+public enum StanceName
 {
     None, Offence, Defence, Charge
 }
-public enum ItemType
-{
-    Equip, Skill, Consum
-}
-public enum It
-{
-    HpPot, Bag, Scouter, Charge, ShadowAttack, Snipe, Berserk, Backstep, LunarRing, AmuletOfLa, FieryRing, Torch
-}
-
 public static class Extensions
 {
     public static bool TryGet<T>(this T[] source, int index, out T? obj)
@@ -55,10 +40,10 @@ public static class Extensions
         => Char.ToLower(option[option.IndexOf('(') + 1]);
     public static char[] ParseKeys(this string[] options)
         => Array.ConvertAll(options, new Converter<string, char>(ParseKey));
-    public static Stance ToStance(this TokenType token) =>  token switch{
-        TokenType.Offence => Stance.Offence,
-        TokenType.Defence => Stance.Defence,
-        TokenType.Charge => Stance.Charge,
-        _ => Stance.None
+    public static StanceName ToStance(this TokenType token) =>  token switch{
+        TokenType.Offence => StanceName.Offence,
+        TokenType.Defence => StanceName.Defence,
+        TokenType.Charge => StanceName.Charge,
+        _ => StanceName.None
     };
 }

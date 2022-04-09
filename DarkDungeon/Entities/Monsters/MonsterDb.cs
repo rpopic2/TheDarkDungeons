@@ -1,64 +1,64 @@
-public static class MonsterDb
+namespace Entities;
+public partial class Monster
 {
-    public static List<MonsterData> data = new();
-    public static int Count => data.Count;
-    private static int lv => Map.level;
-    private static int t => Game.Turn;
-    private const int n = 1;
     private static DropList lunDropList = new(
-        (It.HpPot, 10),
-        (It.Bag, 11),
-        (It.Torch, 5),
-        (It.FieryRing, 15),
-        (It.LunarRing, 15));
+        (Item.holySword, 10));
     private static DropList snakeDropList = new(
-        (It.HpPot, 10),
-        (It.Bag, 11),
-        (It.Torch, 5),
-        (It.ShadowAttack, 20),
-        (It.Scouter, 5));
-    private static StatMul lunaticMul = new(new(3, 0.6f, lv), new(1, n, n), new(2, n, n), new(3, 0.6f, lv), new(2, n, n), new(4, 0.3f, lv));
-    public static MonsterData lunatic = new(1, "Lunatic", '>', '<', ClassName.Warrior, lunaticMul, Monster.lunaticBehav, lunDropList);
-    private static StatMul snakeMul = new(sol: new(2, 0.6f, lv), lun: new(1, n, n), con: new(2, n, n), hp: new(2, 0.3f, lv), cap: new(2, 0.16f, lv), killExp: new(5, 0.3f, lv));
-    public static MonsterData snake = new(2, "Snake", 'S', '2', ClassName.Warrior, snakeMul, Monster.snakeBehav, snakeDropList);
-}
-public readonly record struct MonsterData(string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList)
-{
-    public MonsterData(int i, string name, char fowardChar, char backwardChar, ClassName className, StatMul stat, Action<Monster> behaviour, DropList dropList) : this(name, fowardChar, backwardChar, className, stat, behaviour, dropList)
+        (Item.holySword, 10));
+    private static DropList batDropList = new(
+        (Item.holySword, 10));
+    private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, hp: 3, cap: 4, killExp: 4);
+    public static MonsterData lunatic = new("Lunatic", '>', '<', lunaticMul, (m) => m.LunaticBehav(), Item.holySword, new int[] { 2, 0, 2, 0 }, lunDropList);
+    private static StatMul snakeMul = new(sol: 2, lun: 1, con: 2, hp: 2, cap: 2, killExp: 5);
+    public static MonsterData snake = new("Snake", 'S', '2', snakeMul, (m) => m.SnakeBehav(), Item.bareHand, new int[] { 2, 0, 0 }, snakeDropList);
+    public static StatMul batMul = new(sol: 1, lun: 3, con: 2, hp: 2, cap: 3, killExp: 3);
+    public static MonsterData bat = new("Bat", 'b', 'd', batMul, (m) => m.BatBehav(), Item.bareHand, new int[] { 1, 1, 0 }, batDropList);
+    public static List<MonsterData> data = new() { lunatic, snake, bat };
+    public static int Count => data.Count;
+    private void BasicMovement()
     {
-        MonsterDb.data.Add(this);
+        int moveX = stat.rnd.Next(2) == 1 ? 1 : -1;
+        int direction = Pos.facing == Facing.Front ? -1 : 1;
+        if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
+        else Move(moveX, out char obj);
     }
-}
-public readonly record struct StatMul(Mul sol, Mul lun, Mul con, Mul hp, Mul cap, Mul killExp);
-public readonly record struct DropList
-{
-    public readonly (It dataIndex, int outof)[] list;
-    public DropList()
+    public void BatBehav()
     {
-        throw new ArgumentOutOfRangeException("Droplist needs cannot be empty");
+        if (tokens.Count > 0)
+        {
+            if (Target is null) BasicMovement();
+            else
+            {
+                if (tokens.Count < 3 && player.Stance.Last == global::StanceName.Charge && tokens.Contains(TokenType.Offence)) SelectSkill(Item.bat, 0);
+                else if (tokens.Contains(TokenType.Defence)) SelectSkill(Item.bat, 1);
+                else if (tokens.Contains(TokenType.Offence)) SelectSkill(Item.bat, 0);
+            }
+        }
+        else Rest(TokenType.Offence);
     }
-    public DropList(params (It dataIndex, int outof)[] list)
+    internal void LunaticBehav()
     {
-        this.list = list;
+        if (tokens.Count > 0)
+        {
+            if (Target is null) BasicMovement();
+            else
+            {
+                if (tempCharge > 0 && tokens.Contains(TokenType.Offence)) SelectSkill(Inven[0]!, 0);
+                else if (tokens.Contains(TokenType.Charge)) SelectSkill(Inven[0]!, 1);
+            }
+        }
+        else Rest(TokenType.Offence);
     }
-}
-//sol lun con hp cap killexp
-public readonly record struct Mul
-{
-    public static int lv => Map.level;
-    public static int t => Game.Turn;
-    public const int n = 1;
-    public readonly int @base;
-    public readonly float multiplier;
-    public readonly int scaler;
-    public Mul(int @base, float multiplier, int scaler)
+    internal void SnakeBehav()
     {
-        this.@base = @base;
-        this.multiplier = multiplier;
-        this.scaler = scaler;
-    }
-    public static implicit operator int(Mul m)
-    {
-        return (int)(m.@base + MathF.Floor(m.multiplier * m.scaler));
+        if (tokens.Count > 0)
+        {
+            if (Target is null) BasicMovement();
+            else
+            {
+
+            }
+        }
+        else Rest(TokenType.Offence);
     }
 }

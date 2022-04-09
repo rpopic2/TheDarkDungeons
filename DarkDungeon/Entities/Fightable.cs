@@ -1,15 +1,13 @@
 namespace Entities;
 public class Fightable : Moveable
 {
-    public ClassName ClassName { get; private set; }
     public Inventory<Card?> Hand { get; private set; }
     public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     public bool IsAlive => !Hp.IsMin;
-    public Fightable(string name, ClassName className, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
+    public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
-        ClassName = className;
         Hand = new Inventory<Card?>(cap, "Hand");
         tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
@@ -17,89 +15,36 @@ public class Fightable : Moveable
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
-    public virtual Card? SelectCard() => Hand.GetFirst();
-    public virtual void PickupCard(Card card, int index)
-    {
-        Hand[index] = card;
-    }
-    public void UseCard(int index)
-    {
-        if (Target is null) return;
-        if (Hand[index] is Card card)
-        {
-            //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
-            _UseCard(card);
-        }
-    }
-    public void UseCard(Card card)
-    {
-        if (Target is null) return;
-        //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
-        _UseCard(card);
-    }
-    protected void _UseCard(Card card)
-    {
-        if (card.isOffence)
-        {
-            if (card.stat == StatName.Sol)
-            {
-                stance.stance = global::Stance.Offence;
-                stance.amount += card.value;
-            }
-            else return;
-        }
-        if (!card.isOffence)
-        {
-            if (card.stat == StatName.Sol || card.stat == StatName.Lun)
-            {
-                stance.stance = global::Stance.Defence;
-                stance.amount += card.value;
-            }
-            else return;
-        }
-        Hand.Delete(card);
-    }
-    private int tempCharge;
-    public void SelectSkill(Item item, int index)
-    {
-        Skill? selected = item.skills[index];
-        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
-        if (tokenTry is TokenType token)
-        {
-            int amount = SetStance(token, selected.statName);
-            if (selected.statName == StatName.Con) tempCharge += amount;
-            IO.rk($"{Name}은 {selected.OnUseOutput} ({amount})");
-        }
-        else
-        {
-            IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
-        }
-    }
+    public int tempCharge;
     public int SetStance(TokenType token, StatName statName)
     {
-        stance.stance = token.ToStance();
         int amount = stat.GetRandom(statName);
-        stance.amount += amount;
+        stance.Set(token.ToStance(), amount);
         return amount;
     }
     public void TryAttack()
     {
         if (!(Target is Fightable fight)) return;
-        if (stance.stance == global::Stance.Offence)
+        if (stance.Stance == global::StanceName.Offence)
         {
-            fight.TryDodge(stance.amount + tempCharge);
+            if (tempCharge > 0)
+            {
+                stance.AddAmount(tempCharge);
+                tempCharge = 0;
+            }
+            fight.TryDodge(stance.Amount);
         }
-        else if (fight.stance.stance == global::Stance.Defence) fight.TryDodge(0);
+        else if (fight.stance.Stance == global::StanceName.Defence) fight.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
-        if (stance.stance == global::Stance.Defence)
+        if (stance.Stance == global::StanceName.Defence)
         {
-            damage -= stance.amount;
+            damage -= stance.Amount;
         }
-        else if (damage > 0 && stance.stance == global::Stance.Charge)
+        else if (damage > 0 && stance.Stance == global::StanceName.Charge)
         {
-            IO.pr($"{Name}은 무방비 상태로 쉬고 있었다! ({damage})x{Rules.vulMulp}");
+            IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = GetVulDmg(damage);
         }
         Hp -= damage;
@@ -117,7 +62,7 @@ public class Fightable : Moveable
             if (discardIndex != -1) tokens.RemoveAt(discardIndex);
             else tokens.RemoveAt(tokens.Count - 1);
         }
-        stance.Set(global::Stance.Charge, default);
+        stance.Set(global::StanceName.Charge, default);
         tokens.Add(tokenType);
     }
     public virtual void OnBeforeTurnEnd()
@@ -141,7 +86,7 @@ public class Fightable : Moveable
     }
 
     public override string ToString() =>
-        $"Name : {Name}\tClass : {ClassName.ToString()}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[StatName.Sol]}\tLun : {stat[StatName.Lun]}\tCon : {stat[StatName.Con]}";
+        $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[StatName.Sol]}\tLun : {stat[StatName.Lun]}\tCon : {stat[StatName.Con]}";
     public override char ToChar()
     {
         if (IsAlive) return base.ToChar();

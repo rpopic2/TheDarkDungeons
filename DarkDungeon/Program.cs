@@ -2,9 +2,8 @@
 public class Program
 {
     public static Program instance = default!;
-    public static readonly string[] classes = new string[] { "(1) Warrior", "(2) Assassin", "(3) Mage" };
-    public static readonly string[] stats = new string[] { "(1) Sol", "(2) Lun", "(3) Con" };
-    public static readonly string[] actions = new string[] { "Cards(W)", "(E)quipments", "(R)est", "(S)tats", "E(x)ile" };
+    public static readonly string[] classes = new string[] { "(q) 검사", "(w) 암살자", "(e) 마법사" };
+    public static readonly string[] stats = new string[] { "(q) 힘/체력", "(w) 정밀/민첩", "(e) 마력/지능" };
     private static Player player { get => Player.instance; }
     public static void Main()
     {
@@ -13,7 +12,7 @@ public class Program
         do
         {
             instance.MainLoop();
-            if (player.Stance.stance != Stance.None) Game.ElaspeTurn();
+            if (player.Stance.Stance != StanceName.None) Game.ElaspeTurn();
         } while (player.IsAlive);
         IO.pr(player);
         IO.pr($"{player.Name}은 여기에 잠들었다...");
@@ -35,10 +34,22 @@ public class Program
         IO.pr("캐릭터의 이름은?...");
         string name = Console.ReadLine() ?? "Michael";
         IO.pr($"{name}의 직업은?...");
-        IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod);
-        if (cancel) index = 0;
-        ClassName className = (ClassName)index;
-        Player._instance = new Player(name, className);
+        int index = 0;
+        IO.seli(classes, out index, out bool cancel, out _, out _);
+        Player._instance = new Player(name);
+        switch (index)
+        {
+            case 0:
+                Player._instance.PickupItem(Item.sword);
+                break;
+            case 1:
+                break;
+            case 2:
+                Player._instance.PickupItem(Item.staff);
+                break;
+            default:
+                break;
+        }
     }
     //-------------------------
 
@@ -63,7 +74,7 @@ public class Program
     }
     private void DefaultSwitch(ConsoleKeyInfo key)
     {
-        bool found = IO.chki(key.KeyChar, out int i);
+        bool found = IO.chki_i(key.KeyChar, out int i);
         if (found && player.Inven[i] is Item item)
         {
             IO.seln(item.skills, out int index, out bool cancel, out _);
@@ -72,8 +83,8 @@ public class Program
         }
         switch (key.KeyChar)
         {
-            case 'q':
-                IO.seln(Item.bareHand.skills, out int index, out bool cancel, out _);
+            case ' ':
+                IO.seli(Item.bareHand.skills, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
                 player.SelectSkill(Item.bareHand, index);
                 break;

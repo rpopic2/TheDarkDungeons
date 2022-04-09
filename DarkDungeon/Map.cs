@@ -36,19 +36,18 @@ public class Map
         if (spawnableIndices.Count <= 0) return;
 
         // int randomInt = rnd.Next(0, MonsterDb.Count);
-        int randomInt = 0;
-        MonsterData data = MonsterDb.data[randomInt];
+        //int randomInt = 0;
+        MonsterData data = Monster.bat;//MonsterDb.data[randomInt];
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
-        Position spawnPoint = new Position(newPos, 0, Facing.Back);
+        Position spawnPoint = new Position(newPos, Facing.Back);
         _Spawn(data, spawnPoint);
     }
     public void _Spawn(MonsterData data, Position spawnPoint)
     {
         Moveable mov;
-        if (data == Bat.data) mov = new Bat(spawnPoint);
-        else mov = new Monster(data, spawnPoint);
+        mov = new Monster(data, spawnPoint);
         fightables.Add((Fightable)mov);
         UpdateMoveable(mov);
     }

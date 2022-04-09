@@ -4,35 +4,17 @@ public class Player : Inventoriable
 {
     public const int skillMax = 2;
     public const int basicCap = 3;
-    public const int BASICSTAT = 5;
+    public const int BASICSTAT = 2;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
-    public Player(string name, ClassName className) : base(name, className, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
+    public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
-    public void StartItem()
-    {
-        switch (ClassName)
-        {
-            case ClassName.Warrior:
-                PickupItem(Item.sword);
-                stat[StatName.Sol] += 1;
-                break;
-            case ClassName.Assassin:
-                stat[StatName.Lun] += 1;
-                break;
-            case ClassName.Mage:
-                PickupItem(Item.staff);
-                stat[StatName.Con] += 1;
-                break;
-        }
-    }
-
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
@@ -50,58 +32,31 @@ public class Player : Inventoriable
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
     }
-    public void PickupCard(Card card)
-    {
-    Show:
-        IO.pr("\nFound a card." + card);
-        IO.seln_h(out int index, out bool cancel, out ConsoleKeyInfo keyInfo);
-        if (keyInfo.Key == IO.OKKEY)
-        {
-            card = Card.StanceShift(card);
-            IO.del(2);
-            goto Show;
-        }
-
-        if (cancel)
-        {
-            IO.del(2);
-            return;
-        }
-        PickupCard(card, index);
-        IO.del(2);
-    }
-    private void PickupItem(Item item)
+    public void PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
-        IO.seli(out int index, out bool cancel, out _, out _);
+        IO.seli_i(out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
         NewPickupItem(item, index);
     }
     public void Rest()
     {
-        IO.seln(Tokens.TokenPromptNames, out int index, out _);
+        IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
+        if(cancel) return;
         int discard = -1;
         if (tokens.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
-            IO.seln_t(out discard, out _, out _);
+            IO.seln_t(out discard, out bool cancel2, out _);
             IO.del();
+            if(cancel2) return;
         }
         Rest((TokenType)index, discard);
 
         IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
         IO.rk();
         IO.del();
-    }
-    public override Card? SelectCard()
-    {
-        do
-        {
-            IO.seln_h(out int index, out bool cancel, out _);
-            if (cancel) return null;
-            return Hand[index];
-        } while (true);
     }
     public TokenType? SelectToken()
     {

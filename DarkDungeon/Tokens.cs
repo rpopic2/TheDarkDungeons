@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 public struct Tokens
 {
     public static readonly char[] TokenSymbols = { '(', '[', '<' };
-    public static readonly string[] TokenPromptNames = { "(공격)", "[방어}", "<충전>" };
+    public static readonly string[] TokenPromptNames = { "(공격)", "[방어]", "<충전>" };
 
     private List<byte?> _array;
 
@@ -44,6 +44,14 @@ public struct Tokens
     public void RemoveAt(int index)
     {
         _array.RemoveAt(index);
+    }
+    public int IndexOf(TokenType tokenType)
+    {
+        return _array.IndexOf((byte)tokenType);
+    }
+    public bool Contains(TokenType tokenType)
+    {
+        return _array.Contains((byte)tokenType);
     }
     public byte? this[int index]
     {
