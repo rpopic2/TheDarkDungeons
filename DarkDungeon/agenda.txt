@@ -1,21 +1,4 @@
-monster-ai-new
-[X] Lunatic
-[X] rolled back =>!!Monsnter 업데이트 map 내부에서 알아서 처리되게끔. map.render 할때마다 콜하게.
-[X] MonsterDb startitem, starttoken 추가
-[X] map rendering rollback to what it was (new system so buggy)
-[X] 새로운 몹db시스템 필요. 그 전에 인수로 받던거
-[X] Mul시스템 불필요할듯? 일괄적으로 얘들이 세져야할듯
-[X] Bat
-[X] 숫자 말고 알파벳으로 모든거 고르게끔
-[X] vul 재정의 필요 1뎀에 vul이면 2뎀되게
-[X] 시작할때 시작 스텟 주기
-[X] remove old card
-[X] 죽이면 전리품으로 들고있던 토큰 줍기. 
-[X] remove remaining seln
-[X] 겜 시작시 토큰 3개 뽑고 시작시키기.
-[X] stacking items
-[X] 패시브 등록식으로 하기
-[X] 포션 횟불 
+main
 [ ] Snake
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
