@@ -24,7 +24,8 @@ public class Fightable : Moveable
     }
     public void TryAttack()
     {
-        if(stance.Stance == global::StanceName.Offence && lastBehav is not null){
+        if (stance.Stance == global::StanceName.Offence && lastBehav is not null)
+        {
             lastBehav.Invoke((Inventoriable)this);
             return;
         }
@@ -79,13 +80,21 @@ public class Fightable : Moveable
 
     public void Rest(TokenType tokenType, int discardIndex = -1)
     {
+        _Rest();
+        _PickupToken(tokenType, discardIndex);
+    }
+    protected void _Rest()
+    {
         IO.pr($"{Name}은 잠시 숨을 골랐다.");
+        stance.Set(global::StanceName.Charge, default);
+    }
+    protected void _PickupToken(TokenType tokenType, int discardIndex = -1)
+    {
         if (tokens.IsFull)
         {
             if (discardIndex != -1) tokens.RemoveAt(discardIndex);
             else tokens.RemoveAt(tokens.Count - 1);
         }
-        stance.Set(global::StanceName.Charge, default);
         tokens.Add(tokenType);
     }
     public virtual void OnBeforeTurnEnd()

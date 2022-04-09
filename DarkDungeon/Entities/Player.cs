@@ -51,10 +51,8 @@ public class Player : Inventoriable
             IO.seli_t(out discard, out bool cancel2, out _);
             IO.del();
             if (cancel2) return;
-            if (discard != -1) tokens.RemoveAt(discard);
-            else tokens.RemoveAt(tokens.Count - 1);
         }
-        tokens.Add(token);
+        _PickupToken(token, discard);
 
         IO.pr($"{Tokens.ToString(token)} 토큰을 얻었습니다.");
         IO.rk();
@@ -68,7 +66,7 @@ public class Player : Inventoriable
     }
     public void Rest()
     {
-        IO.pr($"{Name}은 잠시 숨을 골랐다.");
+        _Rest();
         IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
