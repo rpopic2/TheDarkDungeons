@@ -1,4 +1,4 @@
-public record Skill(string Name, TokenType TokenType, StatName statName, string OnUseOutput)
+public record Skill(string Name, TokenType TokenType, StatName statName, string OnUseOutput) : IBehaviour
 {
     private readonly string[] parenthesis = { "()", "[]", "<>" };
     public override string ToString()
@@ -7,4 +7,17 @@ public record Skill(string Name, TokenType TokenType, StatName statName, string 
         result = result.Insert(1, Name);
         return result;
     }
+}
+
+public record Consume(string Name, string OnUseOutput, Action<Fightable> behaviour) : IBehaviour
+{
+    public override string ToString()
+    {
+        return Name;
+    }
+}
+
+public interface IBehaviour
+{
+    
 }

@@ -12,7 +12,12 @@ public class Inventoriable : Fightable
     }
     public void SelectSkill(Item item, int index)
     {
-        Skill? selected = item.skills[index];
+        IBehaviour behaviour = item.skills[index];
+        if (behaviour is Skill skill) SelectSkill(skill);
+        else if(behaviour is Consume consume) SelectConsume(consume);
+    }
+    public void SelectSkill(Skill selected)
+    {
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
         {
@@ -26,5 +31,10 @@ public class Inventoriable : Fightable
         {
             IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
         }
+    }
+    public void SelectConsume(Consume consume)
+    {
+        IO.rk($"{Name}은 {consume.OnUseOutput}");
+        consume.behaviour.Invoke(this);
     }
 }

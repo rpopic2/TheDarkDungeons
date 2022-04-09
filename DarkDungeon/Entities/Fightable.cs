@@ -78,7 +78,7 @@ public class Fightable : Moveable
         IO.pr($"{Name}가 죽었다.", false, true);
         Map.Current.UpdateMoveable(this);
     }
-    protected void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name} restored {e.Amount} hp. {Hp}", true);
+    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name} restored {e.Amount} hp. {Hp}", true);
     protected void OnDamaged(object? sender, PointArgs e)
     {
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", true);

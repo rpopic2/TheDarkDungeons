@@ -1,4 +1,4 @@
-public record Item(string name, Skill[] skills)
+public record Item(string name, IBehaviour[] skills)
 {
     public static readonly Item bareHand = new("(맨손)", new Skill[] {
         new("주먹질", TokenType.Offence, StatName.Sol, "주먹을 휘둘렀다."),
@@ -24,6 +24,9 @@ public record Item(string name, Skill[] skills)
         new("들이박기", TokenType.Offence, StatName.Lun, "갑자기 당신의 얼굴로 날아들어 부딪혔다!"),
         new("구르기", TokenType.Defence, StatName.Lun, "가벼운 날개짓으로 옆으로 피했다.")
         });
+    public static readonly Item potion = new("<달의 눈물>", new IBehaviour[]{
+        new Consume("사용한다", "포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 아물었다.", (p)=>{Player.instance.Hp += 3;})
+    });
     public override string ToString()
     {
         return name;
