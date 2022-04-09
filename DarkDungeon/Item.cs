@@ -28,14 +28,15 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
         new Consume("사용한다", "포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Hp += 3)
     });
     public static readonly Item torch = new("(횃불)", ItemType.Consume, new IBehaviour[]{
-        new WearEffect("횃불", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>p.sight+=3, (p)=>p.sight-=3)
+        new WearEffect("횃불", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.sight+=3;p.Inven.GetMeta(torch!).stack=15;}, (p)=>p.sight-=3),
+        new Passive("꺼져가는 횃불", "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})
     });
     public override string ToString()
     {
         return name;
     }
-    public WearEffect[] GetWearEffects()
+    public WearEffect[]? GetWearEffects()
     {
-        return (WearEffect[])(from p in skills where p is WearEffect select p);
+        return (WearEffect[]?)(from p in skills where p is WearEffect select p);
     }
 }

@@ -1,6 +1,6 @@
 public record Skill(string Name, TokenType TokenType, StatName statName, string OnUseOutput) : IBehaviour
 {
-    private readonly string[] parenthesis = { "()", "[]", "<>" };
+    public static readonly string[] parenthesis = { "()", "[]", "<>" };
     public override string ToString()
     {
         string result = parenthesis[(int)TokenType];
@@ -19,7 +19,14 @@ public record Consume(string Name, string OnUseOutput, Action<Fightable> behavio
 
 public record WearEffect(string Name, string OnUseOutput, Action<Inventoriable> wear, Action<Inventoriable> takeOff) : IBehaviour;
 
+public record Passive(string Name, string OnUseOutput, Action<Inventoriable> actionEveryTurn) : IBehaviour;
+
 public interface IBehaviour
 {
-
+    public string Name {get;}
+    public string OnUseOutput {get;}
+    public virtual string ToString()
+    {
+        return Name;
+    }
 }

@@ -19,10 +19,6 @@ public class Inventory
     public int Count => content.Count(item => item != null);
     public void Add(Item item)
     {
-        foreach (WearEffect pass in item.GetWearEffects())
-        {
-            pass.wear.Invoke(owner);
-        }
         if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
             GetMeta(item).stack++;
@@ -32,13 +28,36 @@ public class Inventory
             content.Add(item);
             metaDatas.Add(item, new());
         }
+
+        var wears = from p in item.skills where p is WearEffect select p;
+        if (wears is not null)
+        {
+            foreach (WearEffect pass in wears)
+            {
+                pass.wear.Invoke(owner);
+            }
+        }
+        var passives = from p in item.skills where p is Passive select p as Passive;
+        owner.passives.AddRange(passives);
+
+
     }
     public void Remove(Item item)
     {
-        foreach (WearEffect pass in item.GetWearEffects())
+        var wears = from p in item.skills where p is WearEffect select p;
+        if (wears is not null)
         {
-            pass.takeOff.Invoke(owner);
+            foreach (WearEffect wear in wears)
+            {
+                wear.takeOff.Invoke(owner);
+            }
         }
+        var passives = from p in item.skills where p is Passive select p as Passive;
+        foreach (var p in passives)
+        {
+            owner.passives.Remove(p);
+        }
+
         content.Remove(item);
         metaDatas.Remove(item);
     }

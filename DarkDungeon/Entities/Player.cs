@@ -3,8 +3,8 @@ namespace Entities;
 public class Player : Inventoriable
 {
     public const int skillMax = 2;
-    public const int BASICCAP = 5;
-    public const int BASICSTAT = 100;
+    public const int BASICCAP = 3;
+    public const int BASICSTAT = 3;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;

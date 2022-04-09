@@ -15,12 +15,15 @@ public class Inventoriable : Fightable
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(skill);
         else if(behaviour is Consume consume) SelectConsume(item, consume);
-        else if(behaviour is WearEffect passive) SelectPassive(item, passive);
+        else IO.rk(behaviour.OnUseOutput);
     }
-
-    private void SelectPassive(Item item, WearEffect passive)
+    public override void OnBeforeTurnEnd()
     {
-        IO.rk(passive.OnUseOutput);
+        foreach (var item in passives)
+        {
+            item.actionEveryTurn.Invoke(this);
+        }
+        base.OnBeforeTurnEnd();
     }
 
     public void SelectSkill(Skill selected)
