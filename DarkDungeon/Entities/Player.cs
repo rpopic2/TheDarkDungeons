@@ -32,26 +32,6 @@ public class Player : Inventoriable
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
     }
-    public void PickupCard(Card card)
-    {
-    Show:
-        IO.pr("\nFound a card." + card);
-        IO.seln_h(out int index, out bool cancel, out ConsoleKeyInfo keyInfo);
-        if (keyInfo.Key == IO.OKKEY)
-        {
-            card = Card.StanceShift(card);
-            IO.del(2);
-            goto Show;
-        }
-
-        if (cancel)
-        {
-            IO.del(2);
-            return;
-        }
-        PickupCard(card, index);
-        IO.del(2);
-    }
     public void PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
@@ -77,15 +57,6 @@ public class Player : Inventoriable
         IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
         IO.rk();
         IO.del();
-    }
-    public override Card? SelectCard()
-    {
-        do
-        {
-            IO.seln_h(out int index, out bool cancel, out _);
-            if (cancel) return null;
-            return Hand[index];
-        } while (true);
     }
     public TokenType? SelectToken()
     {

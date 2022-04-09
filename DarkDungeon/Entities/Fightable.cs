@@ -15,77 +15,34 @@ public class Fightable : Moveable
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
-    public virtual Card? SelectCard() => Hand.GetFirst();
-    public virtual void PickupCard(Card card, int index)
-    {
-        Hand[index] = card;
-    }
-    public void UseCard(int index)
-    {
-        if (Target is null) return;
-        if (Hand[index] is Card card)
-        {
-            //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced.");
-            _UseCard(card);
-        }
-    }
-    public void UseCard(Card card)
-    {
-        if (Target is null) return;
-        //if (card.Stance == CardStance.Star) IO.pr("Next move will be reinforced by ." + card.Con);
-        _UseCard(card);
-    }
-    protected void _UseCard(Card card)
-    {
-        if (card.isOffence)
-        {
-            if (card.stat == StatName.Sol)
-            {
-                stance.stance = global::Stance.Offence;
-                stance.amount += card.value;
-            }
-            else return;
-        }
-        if (!card.isOffence)
-        {
-            if (card.stat == StatName.Sol || card.stat == StatName.Lun)
-            {
-                stance.stance = global::Stance.Defence;
-                stance.amount += card.value;
-            }
-            else return;
-        }
-        Hand.Delete(card);
-    }
     public int tempCharge;
     public int SetStance(TokenType token, StatName statName)
     {
-        stance.stance = token.ToStance();
         int amount = stat.GetRandom(statName);
-        stance.amount += amount;
+        stance.Set(token.ToStance(), amount);
         return amount;
     }
     public void TryAttack()
     {
         if (!(Target is Fightable fight)) return;
-        if (stance.stance == global::Stance.Offence)
+        if (stance.Stance == global::StanceName.Offence)
         {
             if (tempCharge > 0)
             {
-                stance.amount += tempCharge;
+                stance.AddAmount(tempCharge);
                 tempCharge = 0;
             }
-            fight.TryDodge(stance.amount);
+            fight.TryDodge(stance.Amount);
         }
-        else if (fight.stance.stance == global::Stance.Defence) fight.TryDodge(0);
+        else if (fight.stance.Stance == global::StanceName.Defence) fight.TryDodge(0);
     }
     private void TryDodge(int damage)
     {
-        if (stance.stance == global::Stance.Defence)
+        if (stance.Stance == global::StanceName.Defence)
         {
-            damage -= stance.amount;
+            damage -= stance.Amount;
         }
-        else if (damage > 0 && stance.stance == global::Stance.Charge)
+        else if (damage > 0 && stance.Stance == global::StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = GetVulDmg(damage);
@@ -105,7 +62,7 @@ public class Fightable : Moveable
             if (discardIndex != -1) tokens.RemoveAt(discardIndex);
             else tokens.RemoveAt(tokens.Count - 1);
         }
-        stance.Set(global::Stance.Charge, default);
+        stance.Set(global::StanceName.Charge, default);
         tokens.Add(tokenType);
     }
     public virtual void OnBeforeTurnEnd()
