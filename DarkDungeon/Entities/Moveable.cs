@@ -23,6 +23,7 @@ public class Moveable : Entity
         {
             stance = new(global::Stance.Charge, default);
             Pos = newPos;
+            current.UpdateMoveable(this);
         }
         else
         {

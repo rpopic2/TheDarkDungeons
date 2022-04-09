@@ -49,6 +49,7 @@ public class Map
         Moveable mov;
         mov = new Monster(data, spawnPoint);
         fightables.Add((Fightable)mov);
+        UpdateMoveable(mov);
     }
     private List<int> GetSpawnableIndices()
     {
@@ -66,7 +67,7 @@ public class Map
         return fullMap;
     }
 
-    private void UpdateMoveables(Moveable mov)
+    public void UpdateMoveable(Moveable mov)
     {
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
@@ -80,10 +81,6 @@ public class Map
     }
     private void Render()
     {
-        for (int i = 0; i < Fightables.Count; i++)
-        {
-            UpdateMoveables(Fightables[i]);
-        }
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
         RenderVisible(MoveablePositions);
