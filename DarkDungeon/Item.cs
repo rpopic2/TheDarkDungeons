@@ -18,7 +18,7 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
         });
     public static readonly Item dagger = new("(단검)", ItemType.Equip, new Skill[] {
         new("찌르기", TokenType.Offence, StatName.Sol, "단검으로 적을 찔렀다."),
-        new("투검", TokenType.Offence, StatName.Lun, "적을 향해 단검을 던졌다.")
+        new("투검", TokenType.Offence, StatName.Lun, "적을 향해 단검을 던졌다.", (f)=>f.Throw(3))
     });
     public static readonly Item bat = new("(박쥐)", ItemType.Equip, new Skill[] {
         new("들이박기", TokenType.Offence, StatName.Lun, "갑자기 당신의 얼굴로 날아들어 부딪혔다!"),

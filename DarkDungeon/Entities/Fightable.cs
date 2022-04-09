@@ -23,6 +23,7 @@ public class Fightable : Moveable
     }
     public void TryAttack()
     {
+
         if (!(Target is Fightable fight)) return;
         if (stance.Stance == global::StanceName.Offence)
         {
@@ -34,6 +35,24 @@ public class Fightable : Moveable
             fight.TryDodge(stance.Amount);
         }
         else if (fight.stance.Stance == global::StanceName.Defence) fight.TryDodge(0);
+    }
+    public void Throw(int range)
+    {
+        for (int i = 0; i < range; i++)
+        {
+            Map.Current.MoveablePositions.TryGet(Pos.GetFrontIndex(i + 1), out Moveable? mov);
+            if (mov is Fightable hit)
+            {
+                if (tempCharge > 0)
+                {
+                    stance.AddAmount(tempCharge);
+                    tempCharge = 0;
+                }
+                hit.TryDodge(stance.Amount);
+                break;
+            }
+        }
+
     }
     private void TryDodge(int damage)
     {
@@ -94,7 +113,7 @@ public class Fightable : Moveable
     }
     public void UpdateTarget()
     {
-        Map.Current.MoveablePositions.TryGet(Pos.FrontIndex, out Moveable? mov);
+        Map.Current.MoveablePositions.TryGet(Pos.GetFrontIndex(1), out Moveable? mov);
         if (mov is Fightable f && isEnemy(this, f)) Target = mov;
         else Target = null;
     }

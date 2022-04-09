@@ -60,6 +60,7 @@ public class Program
         player.SelectPickupToken();
         player.SelectPickupToken();
         player.SelectPickupToken();
+        player.PickupItem(Item.torch);
         IO.del();
     }
     //-------------------------
@@ -98,9 +99,6 @@ public class Program
                 IO.seli(Item.bareHand.skills, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
                 player.SelectSkill(Item.bareHand, index);
-                break;
-            case 'd':
-                player.SelectSkill(Item.dagger, 1);
                 break;
             case '.':
                 player.Rest();

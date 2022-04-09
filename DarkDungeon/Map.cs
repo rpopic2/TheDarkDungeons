@@ -97,7 +97,7 @@ public class Map
     private void RenderVisible<T>(T[] target)
     {
         int sight = player.sight;
-        int front = player.Pos.FrontIndex;
+        int front = player.Pos.GetFrontIndex(1);
         for (int i = 0; i < sight; i++)
         {
             int targetTile = player.Pos.isFacingFront ? front + i : front - i;
