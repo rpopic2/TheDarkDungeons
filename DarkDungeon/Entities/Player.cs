@@ -10,7 +10,7 @@ public class Player : Inventoriable
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
-    public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
+    public Player(string name) : base(name, level: 0, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
@@ -20,12 +20,12 @@ public class Player : Inventoriable
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
         Level++;
         exp.UpdateMax();
-        IO.pr("Level up! : " + Level, true);
+        IO.pr($"{Level}레벨이 되었다.", true);
         bool cancel;
         int index;
         do
         {
-            IO.seln(Program.stats, out index, out cancel, out ConsoleModifiers mod);
+            IO.seli(Program.stats, out index, out cancel, out ConsoleModifiers mod, out _);
         } while (cancel);
         stat[(StatName)index] += 1;
         Hand.Cap = new Mul(3, 0.4f, Level);

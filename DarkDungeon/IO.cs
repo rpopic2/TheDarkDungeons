@@ -17,14 +17,6 @@ public static class IO
         del();
         return info;
     }
-    public static void seln(Array value, out int index, out bool cancel, out ConsoleModifiers mod)
-    {
-        _seln(value, out index, out cancel, out mod, out _, value.Length);
-    }
-    public static void seln(Array value, out int index, out ConsoleKeyInfo keyInfo)
-    {
-        _seln(value, out index, out _, out _, out keyInfo, value.Length);
-    }
     private static void _seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, int max)
     {
         bool found;

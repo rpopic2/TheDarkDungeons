@@ -43,6 +43,7 @@ public class Program
                 Player._instance.PickupItem(Item.sword);
                 break;
             case 1:
+                Player._instance.PickupItem(Item.dagger);
                 break;
             case 2:
                 Player._instance.PickupItem(Item.staff);
@@ -50,6 +51,7 @@ public class Program
             default:
                 break;
         }
+        Player._instance.exp.point += 1;
     }
     //-------------------------
 
@@ -77,7 +79,7 @@ public class Program
         bool found = IO.chki_i(key.KeyChar, out int i);
         if (found && player.Inven[i] is Item item)
         {
-            IO.seln(item.skills, out int index, out bool cancel, out _);
+            IO.seli(item.skills, out int index, out bool cancel, out _, out _);
             if (cancel) return;
             player.SelectSkill(item, index);
         }
