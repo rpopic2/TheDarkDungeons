@@ -80,15 +80,19 @@ public class Inventory
     public override string ToString()
     {
         string result = $"{name}|";
-        foreach (Item? item in content)
+        for (int i = 0; i < INVENSIZE; i++)
         {
-            if (item == null) result += "{EMPTY}";
-            else
+            if (i >= Count) result += $"({IO.ItemKeys1[i]})";
+            else if(content[i] is Item item)
             {
                 string itemName = item.ToString();
                 if (item.itemType == ItemType.Consume) itemName = itemName.Insert(1, $"{GetMeta(item).stack}x");
                 result += itemName;
             }
+        }
+        foreach (Item? item in content)
+        {
+
         }
         return result;
     }
