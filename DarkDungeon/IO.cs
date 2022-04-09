@@ -37,7 +37,7 @@ public static class IO
             if (cancel) return;
         } while (!found);
     }
-    public static void seli(object print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
+    public static void seli(Array print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
     {
         bool found;
         do
@@ -45,7 +45,7 @@ public static class IO
             keyInfo = rk(print);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == ConsoleKey.Escape;
-            found = chki(keyInfo.KeyChar, out index);
+            found = chki(keyInfo.KeyChar, print.Length, out index);
             if (cancel) return;
         } while (!found);
     }
@@ -57,7 +57,7 @@ public static class IO
             keyInfo = rk(player.Inven);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == ConsoleKey.Escape;
-            found = chki(keyInfo.KeyChar, out index);
+            found = chki_i(keyInfo.KeyChar, out index);
             if (cancel) return;
         } while (!found);
     }
@@ -68,7 +68,12 @@ public static class IO
         if (index != -1) index--;
         return index != -1 && index <= max - 1;
     }
-    public static bool chki(Char i, out int index)
+    public static bool chki(Char i, int max, out int index)
+    {
+        index = ItemKeys1.IndexOf(i);
+        return index != -1 && index <= max -1;
+    }
+    public static bool chki_i(Char i, out int index)
     {
         index = ItemKeys1.IndexOf(i);
         return index != -1 && index <= player.Inven.Cap -1;
