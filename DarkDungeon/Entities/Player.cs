@@ -41,7 +41,7 @@ public class Player : Inventoriable
         IO.seli_i(out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
-        NewPickupItem(item, index);
+        PickupItem(item, index);
     }
     public void PickupToken(TokenType token)
     {

@@ -6,7 +6,7 @@ public class Inventoriable : Fightable
     {
         Inven = new(cap, "(맨손)");
     }
-    protected void NewPickupItem(Item item, int index)
+    protected void PickupItem(Item item, int index)
     {
         Inven[index] = item;
     }
