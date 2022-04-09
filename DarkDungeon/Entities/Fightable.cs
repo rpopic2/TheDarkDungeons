@@ -5,6 +5,7 @@ public class Fightable : Moveable
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     public bool IsAlive => !Hp.IsMin;
+    public int sight = 1;
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
         tokens = new(cap);

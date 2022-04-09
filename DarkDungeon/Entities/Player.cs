@@ -9,7 +9,6 @@ public class Player : Inventoriable
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
     public int torch = 0;
-    public int sight = 1;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP)
     {
         exp = new Exp(this);

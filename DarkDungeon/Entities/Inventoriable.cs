@@ -4,7 +4,7 @@ public class Inventoriable : Fightable
     public Inventory Inven { get; private set; }
     public Inventoriable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, level, sol, lun, con, maxHp, cap)
     {
-        Inven = new("(맨손)");
+        Inven = new(this, "(맨손)");
     }
     protected void PickupItem(Item item, int index)
     {
@@ -15,7 +15,14 @@ public class Inventoriable : Fightable
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(skill);
         else if(behaviour is Consume consume) SelectConsume(item, consume);
+        else if(behaviour is Passive passive) SelectPassive(item, passive);
     }
+
+    private void SelectPassive(Item item, Passive passive)
+    {
+        IO.rk(passive.OnUseOutput);
+    }
+
     public void SelectSkill(Skill selected)
     {
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);

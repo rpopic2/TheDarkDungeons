@@ -60,8 +60,7 @@ public class Program
         player.SelectPickupToken();
         player.SelectPickupToken();
         player.SelectPickupToken();
-        player.PickupItem(Item.tearOfLun);
-        player.PickupItem(Item.tearOfLun);
+        player.PickupItem(Item.torch);
         IO.del();
     }
     //-------------------------

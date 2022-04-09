@@ -17,7 +17,9 @@ public record Consume(string Name, string OnUseOutput, Action<Fightable> behavio
     }
 }
 
+public record Passive(string Name, string OnUseOutput, Action<Inventoriable> wear, Action<Inventoriable> takeOff) : IBehaviour;
+
 public interface IBehaviour
 {
-    
+
 }
