@@ -47,7 +47,7 @@ public class Player : Inventoriable
         int discard = -1;
         if (tokens.IsFull)
         {
-            IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
+            IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString(token));
             IO.seli_t(out discard, out bool cancel2, out _);
             IO.del();
             if (cancel2) return;
@@ -56,7 +56,7 @@ public class Player : Inventoriable
         }
         tokens.Add(token);
 
-        IO.pr($"{Tokens.TokenSymbols[(int)token]} 토큰을 얻었습니다.");
+        IO.pr($"{Tokens.ToString(token)} 토큰을 얻었습니다.");
         IO.rk();
         IO.del();
     }
@@ -68,21 +68,11 @@ public class Player : Inventoriable
     }
     public void Rest()
     {
+        IO.pr($"{Name}은 잠시 숨을 골랐다.");
         IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
-        if (cancel) return;
-        int discard = -1;
-        if (tokens.IsFull)
-        {
-            IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
-            IO.seli_t(out discard, out bool cancel2, out _);
-            IO.del();
-            if (cancel2) return;
-        }
-        Rest((TokenType)index, discard);
-
-        IO.pr($"{Tokens.TokenSymbols[index]} 토큰을 얻었습니다.");
-        IO.rk();
         IO.del();
+        if (cancel) return;
+        PickupToken((TokenType)index);
     }
     public TokenType? SelectToken()
     {

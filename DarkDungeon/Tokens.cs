@@ -24,6 +24,10 @@ public struct Tokens
         }
         return result;
     }
+    public static string ToString(TokenType token)
+    {
+        return TokenSymbols[(int)token].ToString();
+    }
     public void Add(byte item)
     {
         if (Count >= _array.Capacity) throw new IndexOutOfRangeException("Your token hand is full. Cannot add more.");
