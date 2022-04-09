@@ -5,7 +5,6 @@ public class Moveable : Entity
     public Moveable(int level, string name, Position pos) : base(level, name)
     {
         Pos = pos;
-        Map.Current.UpdateMoveable(this);
     }
     public Position Pos { get; set; }
 

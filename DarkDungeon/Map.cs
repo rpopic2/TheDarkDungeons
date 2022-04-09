@@ -86,6 +86,7 @@ public class Map
         {
             if (!item.IsAlive) fightables.Remove(item);
             Moveable corpse = new(level, "x", item.Pos);
+            UpdateMoveable(corpse);
         }
         corpseList.Clear();
     }
@@ -143,7 +144,7 @@ public class Map
         level++;
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
         Current = new Map(rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth));
-        Player.instance.UpdateTarget();
+        Player._instance?.UpdateTarget();
     }
 
     private static char[] NewEmptyArray(int length, char fill)

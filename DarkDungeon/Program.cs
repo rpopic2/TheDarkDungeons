@@ -39,6 +39,8 @@ public class Program
         IO.seli(classes, out index, out bool cancel, out _, out _);
         IO.pr(classes[index]);
         Player player = Player._instance = new Player(name);
+        Map.NewMap();
+
         switch (index)
         {
             case 0:

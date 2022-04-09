@@ -7,7 +7,6 @@ public static class Game
     public static int Turn { get; private set; }
     static Game()
     {
-        Map.NewMap();
         IO.rk($"{_Player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
     }
     internal static void ElaspeTurn()
