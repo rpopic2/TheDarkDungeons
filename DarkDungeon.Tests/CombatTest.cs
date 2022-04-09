@@ -18,11 +18,11 @@ public class CombatTest
 
         //move backward
         player.Move(-1);
-        Assert.Equal(new(0, 1, Facing.Back), player.Pos);
+        Assert.Equal(new(0, Facing.Back), player.Pos);
 
         //cannot move further than 0
         player.Move(-1);
-        Assert.Equal(new(0, 1, Facing.Back), player.Pos);
+        Assert.Equal(new(0, Facing.Back), player.Pos);
 
         //moving further than max moves you to next room
         player.Move(4);
@@ -183,8 +183,8 @@ public class CombatTest
     private Monster _SetupMonser(out Map map)
     {
         map = new(5, false);
-        MonsterData lunData = MonsterDb.lunatic;
-        map._Spawn(lunData, new(1, 1, Facing.Back));
+        MonsterData lunData = Monster.lunatic;
+        map._Spawn(lunData, new(1, Facing.Back));
         return ((Monster)map.MoveablePositions[1]!);
     }
     private void _StartTurn(Map map)

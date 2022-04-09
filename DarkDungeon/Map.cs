@@ -36,8 +36,8 @@ public class Map
         if (spawnableIndices.Count <= 0) return;
 
         // int randomInt = rnd.Next(0, MonsterDb.Count);
-        int randomInt = 0;
-        MonsterData data = MonsterDb.data[randomInt];
+        //int randomInt = 0;
+        MonsterData data = Monster.lunatic;//MonsterDb.data[randomInt];
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
@@ -80,9 +80,9 @@ public class Map
     }
     private void Render()
     {
-        foreach (var fight in fightables)
+        for (int i = 0; i < Fightables.Count; i++)
         {
-            UpdateMoveables(fight);
+            UpdateMoveables(Fightables[i]);
         }
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
