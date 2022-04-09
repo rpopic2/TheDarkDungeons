@@ -35,9 +35,9 @@ public class Map
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
 
-        // int randomInt = rnd.Next(0, MonsterDb.Count);
+        int randomInt = rnd.Next(0, Monster.Count);
         //int randomInt = 0;
-        MonsterData data = Monster.bat;//MonsterDb.data[randomInt];
+        MonsterData data = Monster.data[randomInt];
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
