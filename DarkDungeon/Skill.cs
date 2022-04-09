@@ -17,16 +17,18 @@ public record Consume(string Name, string OnUseOutput, Action<Fightable> behavio
     }
 }
 
-public record WearEffect(string Name, string OnUseOutput, Action<Inventoriable> wear, Action<Inventoriable> takeOff) : IBehaviour;
+public record WearEffect(string Name, string OnUseOutput, Action<Inventoriable> wear, Action<Inventoriable> takeOff) : IBehaviour
+{
+    public override string ToString() => Name;
+}
 
-public record Passive(string Name, string OnUseOutput, Action<Inventoriable> actionEveryTurn) : IBehaviour;
+public record Passive(string Name, string OnUseOutput, Action<Inventoriable> actionEveryTurn) : IBehaviour
+{
+    public override string ToString() => Name;
+}
 
 public interface IBehaviour
 {
-    public string Name {get;}
-    public string OnUseOutput {get;}
-    public virtual string ToString()
-    {
-        return Name;
-    }
+    public string Name { get; }
+    public string OnUseOutput { get; }
 }
