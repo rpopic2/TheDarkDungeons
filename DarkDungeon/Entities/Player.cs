@@ -90,6 +90,10 @@ public class Player : Inventoriable
             Map.NewMap();
             Pos = new Position();
         }
+        else if(obj == MapSymb.corpse)
+        {
+            
+        }
     }
     public void ShowStats()
     {
