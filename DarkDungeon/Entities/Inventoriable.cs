@@ -38,6 +38,7 @@ public class Inventoriable : Fightable
             string s = $"{Name}은 {selected.OnUseOutput} ({amount})";
             if (tempCharge > 0) s += ($"+({tempCharge})");
             if (selected.statName == StatName.Con) tempCharge += amount;
+            if(selected.behaviour is Action<Fightable> beh) lastBehav = beh;
             IO.rk(s);
         }
         else
