@@ -9,6 +9,7 @@ main
 [ ] 몹들 새 소비 아이템들 드롭하게끔.
 [ ] Fightable.TryAttack 리팩토링 가능할듯.
 [ ] 박쥐는 자체 변수 만들어서 해결해야할듯. 지금도 플레이어 행동에 즉각반응함.
+[ ] inventoriable.selectskill에서 '은'을 빼서 item에서 쓰게끔.
 
 [ ] 인벤토리 빈곳 qwert 보여주기
 [ ] 데미지타입 시스템?

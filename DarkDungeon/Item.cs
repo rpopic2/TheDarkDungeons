@@ -10,11 +10,11 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
         });
     public static readonly Item holySword = new("(광란의 신성검)", ItemType.Equip, new Skill[] {
         new("베기", TokenType.Offence, StatName.Sol, "칼을 휘둘러 앞을 베었다.", (f)=>f.Throw(1)),
-        new("광란의기도", TokenType.Charge, StatName.Con, "미친 듯이 기도하였고 칼이 빛나기 시작했다.", null)
+        new("광란의기도", TokenType.Charge, StatName.Con, "미친 듯이 기도하였고 칼이 빛나기 시작했다.", (f)=>{})
         });
     public static readonly Item staff = new("(지팡이)", ItemType.Equip, new Skill[] {
         new("휘두르기", TokenType.Offence, StatName.Sol, "지팡이를 휘둘렀다.", (f)=>f.Throw(1)),
-        new("별빛부름", TokenType.Charge, StatName.Con, "신비한 별빛을 불러내어 지팡이를 감쌌다.", null)
+        new("별빛부름", TokenType.Charge, StatName.Con, "신비한 별빛을 불러내어 지팡이를 감쌌다.", (f)=>{})
         });
     public static readonly Item dagger = new("(단검)", ItemType.Equip, new Skill[] {
         new("찌르기", TokenType.Offence, StatName.Sol, "단검으로 적을 찔렀다.", (f)=>f.Throw(1)),

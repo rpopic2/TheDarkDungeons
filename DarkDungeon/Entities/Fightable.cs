@@ -1,21 +1,23 @@
 namespace Entities;
 public class Fightable : Moveable
 {
+    public Inventory Inven { get; private set; }
     public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     public bool IsAlive => !Hp.IsMin;
     public int sight = 1;
-    public Action<Inventoriable>? lastBehav;
+    public Action<Inventoriable>? currentBehav;
+    public Item? currentItem;
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
+        Inven = new((Inventoriable)this, "(맨손)");
         tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
-    public int tempCharge;
     public int SetStance(TokenType token, StatName statName)
     {
         int amount = stat.GetRandom(statName);
@@ -24,14 +26,14 @@ public class Fightable : Moveable
     }
     public void TryAttack()
     {
-        if (stance.Stance == global::StanceName.Offence && lastBehav is not null)
+        if (stance.Stance == StanceName.Offence && currentBehav is not null)
         {
-            lastBehav.Invoke((Inventoriable)this);
-            lastBehav = null;
+            currentBehav.Invoke((Inventoriable)this);
+            currentBehav = null;
             return;
         }
         if (Target is not Fightable tar) return;
-        if (tar.stance.Stance == global::StanceName.Defence) tar.Dodge(0);
+        if (tar.stance.Stance == StanceName.Defence) tar.Dodge(0);
     }
     public void Throw(int range)
     {
@@ -40,37 +42,35 @@ public class Fightable : Moveable
             Map.Current.MoveablePositions.TryGet(Pos.GetFrontIndex(i + 1), out Moveable? mov);
             if (mov is Fightable hit)
             {
-                if (tempCharge > 0)
+                int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
+                if (magicCharge > 0)
                 {
-                    stance.AddAmount(tempCharge);
-                    tempCharge = 0;
+                    stance.AddAmount(magicCharge);
+                    Inven.GetMeta(currentItem!).magicCharge = 0;
                 }
                 hit.Dodge(stance.Amount);
                 break;
             }
         }
-
     }
+
     public void TryDefence()
     {
-        if (stance.Stance == global::StanceName.Defence && lastBehav is not null)
+        if (stance.Stance == StanceName.Defence && currentBehav is not null)
         {
-            lastBehav.Invoke((Inventoriable)this);
-            lastBehav = null;
+            currentBehav.Invoke((Inventoriable)this);
+            currentBehav = null;
             return;
         }
     }
-    public void Dodge()
-    {
-        Dodge(0); 
-    }
+    public void Dodge() => Dodge(0);
     public void Dodge(int damage)
     {
-        if (stance.Stance == global::StanceName.Defence)
+        if (stance.Stance == StanceName.Defence)
         {
             damage -= stance.Amount;
         }
-        else if (damage > 0 && stance.Stance == global::StanceName.Charge)
+        else if (damage > 0 && stance.Stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = GetVulDmg(damage);
@@ -91,7 +91,7 @@ public class Fightable : Moveable
     protected void _Rest()
     {
         IO.pr($"{Name}은 잠시 숨을 골랐다.");
-        stance.Set(global::StanceName.Charge, default);
+        stance.Set(StanceName.Charge, default);
     }
     protected void _PickupToken(TokenType tokenType, int discardIndex = -1)
     {
@@ -110,7 +110,7 @@ public class Fightable : Moveable
     {
         UpdateTarget();
         stance.Reset();
-        lastBehav = null;
+        currentBehav = null;
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {

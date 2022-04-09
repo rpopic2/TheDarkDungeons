@@ -11,6 +11,7 @@ public class Map
     public ref readonly Moveable?[] MoveablePositions => ref moveablePositions;
     private List<Fightable> fightables = new();
     public ref readonly List<Fightable> Fightables => ref fightables;
+    private List<Fightable> corpsList = new();
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
@@ -72,12 +73,20 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
         {
-            fightables.Remove(fight);
+            corpsList.Add(fight);
             moveablePositions[pos.x] = null;
             return;
         }
         if (moveablePositions[pos.oldX] == mov) moveablePositions[pos.oldX] = null;
         moveablePositions[pos.x] = mov;
+    }
+    public void RemoveCorps()
+    {
+        foreach (var item in corpsList)
+        {
+            if (!item.IsAlive) fightables.Remove(item);
+        }
+        corpsList.Clear();
     }
     private void Render()
     {

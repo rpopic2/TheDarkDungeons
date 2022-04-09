@@ -2,10 +2,9 @@ namespace Entities;
 public class Inventoriable : Fightable
 {
     public Action<Inventoriable> passives = (p) => { };
-    public Inventory Inven { get; private set; }
     public Inventoriable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, level, sol, lun, con, maxHp, cap)
     {
-        Inven = new(this, "(맨손)");
+        
     }
     protected void PickupItem(Item item, int index)
     {
@@ -19,7 +18,7 @@ public class Inventoriable : Fightable
     public void SelectSkill(Item item, int index)
     {
         IBehaviour behaviour = item.skills[index];
-        if (behaviour is Skill skill) SelectSkill(skill);
+        if (behaviour is Skill skill) SelectSkill(item, skill);
         else if (behaviour is Consume consume) SelectConsume(item, consume);
         else IO.rk(behaviour.OnUseOutput);
     }
@@ -28,17 +27,18 @@ public class Inventoriable : Fightable
         passives.Invoke(this);
         base.OnBeforeFight();
     }
-
-    public void SelectSkill(Skill selected)
+    public void SelectSkill(Item item, Skill selected)
     {
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
         {
             int amount = SetStance(token, selected.statName);
             string s = $"{Name}은 {selected.OnUseOutput} ({amount})";
-            if (tempCharge > 0) s += ($"+({tempCharge})");
-            if (selected.statName == StatName.Con) tempCharge += amount;
-            if(selected.behaviour is Action<Inventoriable> beh) lastBehav = beh;
+            int mcharge = Inven.GetMeta(item).magicCharge;
+            if (mcharge > 0) s += ($"+({mcharge})");
+            if (selected.statName == StatName.Con) Inven.GetMeta(item).magicCharge += amount;
+            currentBehav = selected.behaviour;
+            currentItem = item;
             IO.rk(s);
         }
         else

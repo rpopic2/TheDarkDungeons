@@ -4,6 +4,7 @@ public class Inventory
     public const int INVENSIZE = 5;
     private List<Item?> content;
     private Dictionary<Item, ItemMetaData> metaDatas;
+    private ItemMetaData bareHandMetaData = new();
     public readonly string name;
     public ref readonly List<Item?> Content => ref content;
 
@@ -71,6 +72,7 @@ public class Inventory
     }
     public ItemMetaData GetMeta(Item item)
     {
+        if(item == Item.bareHand) return bareHandMetaData;
         return metaDatas[item];
     }
     public void Consume(Item item)
