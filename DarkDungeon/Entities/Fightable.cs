@@ -6,7 +6,7 @@ public class Fightable : Moveable
     public virtual Moveable? Target { get; protected set; }
     public bool IsAlive => !Hp.IsMin;
     public int sight = 1;
-    public Action<Fightable>? lastBehav;
+    public Action<Inventoriable>? lastBehav;
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
         tokens = new(cap);
@@ -25,7 +25,7 @@ public class Fightable : Moveable
     public void TryAttack()
     {
         if(stance.Stance == global::StanceName.Offence && lastBehav is not null){
-            lastBehav.Invoke(this);
+            lastBehav.Invoke((Inventoriable)this);
             return;
         }
         if (!(Target is Fightable fight)) return;
