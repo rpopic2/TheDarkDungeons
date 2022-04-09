@@ -1,9 +1,8 @@
 public static class IO
 {
-    public const ConsoleKey CANCELKEY = ConsoleKey.Q;
-    public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
+    public const ConsoleKey CANCELKEY = ConsoleKey.Backspace;
     private const string Emphasis = "=> ";
-    public const string ItemKeys1 = "werty";
+    public const string ItemKeys1 = "qwerty";
     private const string delString = "                                                                                       ";
     private static Player player { get => Player.instance; }
     public static int printCount;
@@ -34,12 +33,23 @@ public static class IO
             keyInfo = rk(print);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == CANCELKEY;
-            bool ok = keyInfo.Key == OKKEY;
             found = chkn(keyInfo.KeyChar, max, out index);
-            if (cancel || ok) return;
+            if (cancel) return;
         } while (!found);
     }
-    public static void seli(out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
+    public static void seli(object print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
+    {
+        bool found;
+        do
+        {
+            keyInfo = rk(print);
+            mod = keyInfo.Modifiers;
+            cancel = keyInfo.Key == ConsoleKey.Escape;
+            found = chki(keyInfo.KeyChar, out index);
+            if (cancel) return;
+        } while (!found);
+    }
+    public static void seli_i(out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
     {
         bool found;
         do

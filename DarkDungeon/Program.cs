@@ -2,8 +2,8 @@
 public class Program
 {
     public static Program instance = default!;
-    public static readonly string[] classes = new string[] { "(1) 검사", "(2) 암살자", "(3) 마법사" };
-    public static readonly string[] stats = new string[] { "(1) 힘/체력", "(2) 정밀/민첩", "(3) 마력/지능" };
+    public static readonly string[] classes = new string[] { "(q) 검사", "(w) 암살자", "(e) 마법사" };
+    public static readonly string[] stats = new string[] { "(q) 힘/체력", "(w) 정밀/민첩", "(e) 마력/지능" };
     private static Player player { get => Player.instance; }
     public static void Main()
     {
@@ -34,8 +34,8 @@ public class Program
         IO.pr("캐릭터의 이름은?...");
         string name = Console.ReadLine() ?? "Michael";
         IO.pr($"{name}의 직업은?...");
-        IO.seln(classes, out int index, out bool cancel, out ConsoleModifiers mod);
-        if (cancel) index = 0;
+        int index = 0;
+        IO.seli(classes, out index, out bool cancel, out _, out _);
         Player._instance = new Player(name);
         switch (index)
         {
@@ -83,8 +83,8 @@ public class Program
         }
         switch (key.KeyChar)
         {
-            case 'q':
-                IO.seln(Item.bareHand.skills, out int index, out bool cancel, out _);
+            case ' ':
+                IO.seli(Item.bareHand.skills, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
                 player.SelectSkill(Item.bareHand, index);
                 break;

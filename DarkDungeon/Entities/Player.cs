@@ -35,14 +35,14 @@ public class Player : Inventoriable
     public void PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.name}");
-        IO.seli(out int index, out bool cancel, out _, out _);
+        IO.seli_i(out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
         NewPickupItem(item, index);
     }
     public void Rest()
     {
-        IO.seln(Tokens.TokenPromptNames, out int index, out bool cancel, out _);
+        IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
         if(cancel) return;
         int discard = -1;
         if (tokens.IsFull)
