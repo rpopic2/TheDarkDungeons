@@ -1,6 +1,6 @@
 monster-ai-new
 [X] Lunatic
-[X] !!Monsnter 업데이트 map 내부에서 알아서 처리되게끔. map.render 할때마다 콜하게.
+[X] rolled back =>!!Monsnter 업데이트 map 내부에서 알아서 처리되게끔. map.render 할때마다 콜하게.
 [X] MonsterDb startitem, starttoken 추가
 [X] map rendering rollback to what it was (new system so buggy)
 [X] 새로운 몹db시스템 필요. 그 전에 인수로 받던거
@@ -12,12 +12,12 @@ monster-ai-new
 [X] remove old card
 [X] 죽이면 전리품으로 들고있던 토큰 줍기. 
 [X] remove remaining seln
+[X] 겜 시작시 토큰 3개 뽑고 시작시키기.
 [ ] Snake
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔
 [ ] vul 상태이상으로?
 [ ] 투검 제대로 구현(원거리 공격 구현)
-[ ] 겜 시작시 토큰 3개 뽑고 시작시키기.
 
 [ ] 짧게 싸우면 토큰 길게 싸우면 경치?
 [ ] Stance.none 말고 null 쓰기?

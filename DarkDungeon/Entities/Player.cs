@@ -10,7 +10,7 @@ public class Player : Inventoriable
     public Exp exp;
     public int torch = 0;
     public int sight = 1;
-    public Player(string name) : base(name, level: 0, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
+    public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: basicCap)
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
@@ -21,6 +21,12 @@ public class Player : Inventoriable
         Level++;
         exp.UpdateMax();
         IO.pr($"{Level}레벨이 되었다.", true);
+        SelectPickupStat();
+        Hp.Max = new Mul(3, Mul.n, Level);
+        Hp += Level;
+    }
+    public void SelectPickupStat()
+    {
         bool cancel;
         int index;
         do
@@ -28,8 +34,6 @@ public class Player : Inventoriable
             IO.seli(Program.stats, out index, out cancel, out ConsoleModifiers mod, out _);
         } while (cancel);
         stat[(StatName)index] += 1;
-        Hp.Max = new Mul(3, Mul.n, Level);
-        Hp += Level;
     }
     public void PickupItem(Item item)
     {
@@ -56,6 +60,12 @@ public class Player : Inventoriable
         IO.pr($"{Tokens.TokenSymbols[(int)token]} 토큰을 얻었습니다.");
         IO.rk();
         IO.del();
+    }
+    public void SelectPickupToken()
+    {
+        IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
+        if (cancel) return;
+        PickupToken((TokenType)index);
     }
     public void Rest()
     {

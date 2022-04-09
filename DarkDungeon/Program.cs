@@ -33,25 +33,34 @@ public class Program
 
         IO.pr("캐릭터의 이름은?...");
         string name = Console.ReadLine() ?? "Michael";
+        IO.del();
         IO.pr($"{name}의 직업은?...");
         int index = 0;
         IO.seli(classes, out index, out bool cancel, out _, out _);
-        Player._instance = new Player(name);
+        IO.pr(classes[index]);
+        Player player = Player._instance = new Player(name);
         switch (index)
         {
             case 0:
-                Player._instance.PickupItem(Item.sword);
+                player.PickupItem(Item.sword);
                 break;
             case 1:
-                Player._instance.PickupItem(Item.dagger);
+                player.PickupItem(Item.dagger);
                 break;
             case 2:
-                Player._instance.PickupItem(Item.staff);
+                player.PickupItem(Item.staff);
                 break;
             default:
                 break;
         }
-        Player._instance.exp.point += 1;
+        IO.pr("남은 능력치 포인트 : 1");
+        player.SelectPickupStat();
+        IO.del();
+        IO.pr("얻을 토큰 종류를 선택해 주십시오. (3)");
+        player.SelectPickupToken();
+        player.SelectPickupToken();
+        player.SelectPickupToken();
+        IO.del();
     }
     //-------------------------
 
