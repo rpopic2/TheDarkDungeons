@@ -33,7 +33,7 @@ public class Inventoriable : Fightable
         if (tokenTry is TokenType token)
         {
             int amount = SetStance(token, selected.statName);
-            string s = $"{Name}은 {selected.OnUseOutput} ({amount})";
+            string s = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) s += ($"+({mcharge})");
             if (selected.statName == StatName.Con) Inven.GetMeta(item).magicCharge += amount;
@@ -51,6 +51,6 @@ public class Inventoriable : Fightable
         SetStance(TokenType.Charge, default);
         consume.behaviour.Invoke(this);
         Inven.Consume(item);
-        IO.rk($"{Name}은 {consume.OnUseOutput}");
+        IO.rk($"{Name} {consume.OnUseOutput}");
     }
 }
