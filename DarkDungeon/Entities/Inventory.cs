@@ -25,8 +25,11 @@ public class Inventory
         }
         else
         {
-            content.Add(item);
-            metaDatas.Add(item, new());
+            if (content.IndexOf(item) != -1)
+            {
+                content.Add(item);
+                metaDatas.Add(item, new());
+            }
         }
 
         var wears = from p in item.skills where p is WearEffect select p;
@@ -58,7 +61,7 @@ public class Inventory
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var p in passives)
         {
-            if(owner.passives is not null) owner.passives -= p.actionEveryTurn;
+            if (owner.passives is not null) owner.passives -= p.actionEveryTurn;
         }
 
         content.Remove(item);
@@ -71,6 +74,10 @@ public class Inventory
     public ItemMetaData GetMeta(Item item)
     {
         return metaDatas[item];
+    }
+    public void Consume(Item item)
+    {
+        if (--GetMeta(item).stack <= 0) Remove(item);
     }
     public override string ToString()
     {
@@ -86,10 +93,5 @@ public class Inventory
             }
         }
         return result;
-    }
-
-    public void Consume(Item item)
-    {
-        if (--GetMeta(item).stack <= 0) Remove(item);
     }
 }

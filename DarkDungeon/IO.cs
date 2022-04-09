@@ -1,6 +1,6 @@
 public static class IO
 {
-    public const ConsoleKey CANCELKEY = ConsoleKey.Backspace;
+    public const ConsoleKey CANCELKEY = ConsoleKey.Escape;
     private const string Emphasis = "=> ";
     public const string ItemKeys1 = "qwert";
     private const string delString = "                                                                                       ";

@@ -9,6 +9,11 @@ public class Inventoriable : Fightable
     }
     protected void PickupItem(Item item, int index)
     {
+        if (index < Inven.Count && Inven[index] is Item old)
+        {
+            ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
+            if(keyInfo.Key != IO.CANCELKEY) Inven.Remove(old);
+        }
         Inven.Add(item);
     }
     public void SelectSkill(Item item, int index)
