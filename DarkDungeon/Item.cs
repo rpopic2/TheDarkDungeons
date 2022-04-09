@@ -21,13 +21,14 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
         new("투검", TokenType.Offence, StatName.Lun, "적을 향해 단검을 던졌다.", (f)=>{f.Throw(3); f.Inven.Remove(dagger!);})
     });
     public static readonly Item bat = new("(박쥐)", ItemType.Equip, new Skill[] {
-        new("들이박기", TokenType.Offence, StatName.Lun, "갑자기 당신의 얼굴로 날아들어 부딪혔다!"),
+        new("들이박기", TokenType.Offence, StatName.Lun, "갑자기 당신의 얼굴로 날아들어 부딪혔다!", (f)=>f.Hp -= 2),
         new("구르기", TokenType.Defence, StatName.Lun, "가벼운 날개짓으로 옆으로 피했다.")
         });
     public static readonly Item tearOfLun = new("<달의 눈물>", ItemType.Consume, new IBehaviour[]{
         new Consume("사용한다", "포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Hp += 3)
     });
     public static readonly Item torch = new("(횃불)", ItemType.Consume, new IBehaviour[]{
+        new Skill("휘두르기", TokenType.Offence, StatName.Sol, "횃불을 휘둘렀다."),
         new WearEffect("밝음", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.sight+=3;p.Inven.GetMeta(torch!).stack=15;}, (p)=>p.sight-=3),
         new Passive("꺼져가는 횃불", "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})
     });
