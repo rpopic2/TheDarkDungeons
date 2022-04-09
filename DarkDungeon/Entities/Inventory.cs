@@ -25,7 +25,7 @@ public class Inventory
         }
         else
         {
-            if (content.IndexOf(item) != -1)
+            if (content.IndexOf(item) == -1)
             {
                 content.Add(item);
                 metaDatas.Add(item, new());
