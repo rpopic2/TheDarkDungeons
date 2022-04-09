@@ -29,8 +29,8 @@ public partial class Monster
             if (Target is null) BasicMovement();
             else
             {
-                if (tokens.Contains(TokenType.Defence)) SelectSkill(Inven[0]!, 1);
-                else if (tokens.Contains(TokenType.Offence)) SelectSkill(Inven[0]!, 0);
+                if (tokens.Contains(TokenType.Defence)) SelectSkill(Item.bat, 1);   
+                else if (tokens.Contains(TokenType.Offence)) SelectSkill(Item.bat, 0);
             }
         }
         else Rest(TokenType.Offence);

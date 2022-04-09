@@ -58,23 +58,6 @@ public class Fightable : Moveable
         Hand.Delete(card);
     }
     public int tempCharge;
-    public void SelectSkill(Item item, int index)
-    {
-        Skill? selected = item.skills[index];
-        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
-        if (tokenTry is TokenType token)
-        {
-            int amount = SetStance(token, selected.statName);
-            string s = $"{Name}은 {selected.OnUseOutput} ({amount})";
-            if(tempCharge > 0) s += ($"+({tempCharge})");
-            if (selected.statName == StatName.Con) tempCharge += amount;
-            IO.rk(s);
-        }
-        else
-        {
-            IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
-        }
-    }
     public int SetStance(TokenType token, StatName statName)
     {
         stance.stance = token.ToStance();

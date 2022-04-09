@@ -194,7 +194,7 @@ public class CombatTest
             item.OnTurnEnd();
         }
     }
-    private void _SelectSkill(Fightable caster, Item item, int skill)
+    private void _SelectSkill(Inventoriable caster, Item item, int skill)
     {
         try { caster.SelectSkill(item, skill); } catch (System.InvalidOperationException) { }
     }
