@@ -1,14 +1,14 @@
 monster-ai-new
-[ ] 몬스터 클래스 많이 수정 필요할듯. 몬스터 패턴 시스템.
 [X] Lunatic
 [X] !!Monsnter 업데이트 map 내부에서 알아서 처리되게끔. map.render 할때마다 콜하게.
 [X] MonsterDb startitem, starttoken 추가
+[X] map rendering rollback to what it was (new system so buggy)
+[X] 새로운 몹db시스템 필요. 그 전에 인수로 받던거
+[X] Mul시스템 불필요할듯? 일괄적으로 얘들이 세져야할듯
+[ ] 숫자 말고 알파벳으로 모든거 고르게끔
 [ ] Bat
 [ ] Snake
 [ ] Shaman
-[ ] map rendering rollback to what it was (new system so buggy)
-[X] 새로운 몹db시스템 필요. 그 전에 인수로 받던거
-[X] Mul시스템 불필요할듯? 일괄적으로 얘들이 세져야할듯
 
 [ ] Damage as object?
 [ ] Rest to skill?

@@ -15,17 +15,18 @@ public partial class Monster
     public static MonsterData bat = new("Bat", 'b', 'd', batMul, (m) => m.BatBehav(), Item.bareHand, new int[] { 1, 1, 0 }, batDropList);
     public static List<MonsterData> data = new() { lunatic, snake, bat };
     public static int Count => data.Count;
+    private void BasicMovement()
+    {
+        int moveX = stat.rnd.Next(2) == 1 ? 1 : -1;
+        int direction = Pos.facing == Facing.Front ? -1 : 1;
+        if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
+        else Move(moveX, out char obj);
+    }
     public void BatBehav()
     {
         if (tokens.Count > 0)
         {
-            if (Target is null)
-            {
-                int moveX = stat.rnd.Next(2) == 1 ? 1 : -1;
-                int direction = Pos.facing == Facing.Front ? -1 : 1;
-                if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
-                else Move(moveX, out char obj);
-            }
+            if (Target is null) BasicMovement();
             else
             {
                 if (tokens.Contains(TokenType.Defence)) SelectSkill(Inven[0]!, 1);
@@ -38,13 +39,7 @@ public partial class Monster
     {
         if (tokens.Count > 0)
         {
-            if (Target is null)
-            {
-                int moveX = stat.rnd.Next(3) - 1;
-                int direction = Pos.facing == Facing.Front ? -1 : 1;
-                if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
-                else Move(moveX, out char obj);
-            }
+            if (Target is null) BasicMovement();
             else
             {
                 if (tempCharge > 0 && tokens.Contains(TokenType.Offence)) SelectSkill(Inven[0]!, 0);
@@ -57,19 +52,8 @@ public partial class Monster
     {
         if (tokens.Count > 0)
         {
-            if (Target is null)
-            {
-                Map.Current.MoveablePositions.TryGet(Pos.x + 2, out Moveable? target);
-                if (target is not null) Target = target;
-                else
-                {
-                    int moveX = stat.rnd.Next(2) == 1 ? 1 : -1;
-                    int direction = Pos.facing == Facing.Front ? -1 : 1;
-                    if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
-                    else Move(moveX, out char obj);
-                }
-            }
-            if (Target is not null)
+            if (Target is null) BasicMovement();
+            else
             {
                 _UseCard((Card)Hand.GetFirst()!);
             }
