@@ -4,7 +4,7 @@ public class Player : Inventoriable
 {
     public const int skillMax = 2;
     public const int basicCap = 3;
-    public const int BASICSTAT = 2;
+    public const int BASICSTAT = 100;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
@@ -39,17 +39,35 @@ public class Player : Inventoriable
         if (cancel) return;
         NewPickupItem(item, index);
     }
-    public void Rest()
+    public void PickupToken(TokenType token)
     {
-        IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
-        if(cancel) return;
         int discard = -1;
         if (tokens.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
-            IO.seln_t(out discard, out bool cancel2, out _);
+            IO.seli_t(out discard, out bool cancel2, out _);
             IO.del();
-            if(cancel2) return;
+            if (cancel2) return;
+            if (discard != -1) tokens.RemoveAt(discard);
+            else tokens.RemoveAt(tokens.Count - 1);
+        }
+        tokens.Add(token);
+
+        IO.pr($"{Tokens.TokenSymbols[(int)token]} 토큰을 얻었습니다.");
+        IO.rk();
+        IO.del();
+    }
+    public void Rest()
+    {
+        IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
+        if (cancel) return;
+        int discard = -1;
+        if (tokens.IsFull)
+        {
+            IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
+            IO.seli_t(out discard, out bool cancel2, out _);
+            IO.del();
+            if (cancel2) return;
         }
         Rest((TokenType)index, discard);
 
@@ -61,7 +79,7 @@ public class Player : Inventoriable
     {
         do
         {
-            IO.seln_t(out int index, out bool cancel, out _);
+            IO.seli_t(out int index, out bool cancel, out _);
             if (cancel) return null;
             if (tokens[index] is byte result) return (TokenType)result;
         } while (true);

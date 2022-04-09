@@ -28,6 +28,10 @@ public partial class Monster : Inventoriable
     {
         base.OnDeath(sender, e);
         player.exp.point += killExp;
+        foreach (var item in tokens.Content)
+        {
+            if (item is not null) player.PickupToken((TokenType)item);
+        }
         foreach (var item in dropList.list)
         {
             if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);

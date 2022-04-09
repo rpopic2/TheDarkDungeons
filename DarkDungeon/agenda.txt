@@ -7,17 +7,18 @@ monster-ai-new
 [X] Mul시스템 불필요할듯? 일괄적으로 얘들이 세져야할듯
 [X] Bat
 [X] 숫자 말고 알파벳으로 모든거 고르게끔
+[X] vul 재정의 필요 1뎀에 vul이면 2뎀되게
+[X] 시작할때 시작 스텟 주기
+[X] remove old card
 [ ] Snake
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔
-[ ] Stance.none 말고 null 쓰기?
-[X] vul 재정의 필요 1뎀에 vul이면 2뎀되게
 [ ] vul 상태이상으로?
 [ ] 죽이면 전리품으로 들고있던 토큰 줍기. 짧게 싸우면 토큰 길게 싸우면 경치?
-[ ] 시작할때 시작 스텟 주기
-[ ] remove old card
 [ ] 투검 제대로 구현(원거리 공격 구현)
+[ ] remove remaining seln
 
+[ ] Stance.none 말고 null 쓰기?
 [ ] 포션 횟불 가방
 [ ] 몹들 새 아이템들 드롭하게끔.
 [ ] Damage as object?
