@@ -62,13 +62,15 @@ public class Player : Inventoriable
     }
     public void Rest()
     {
-        IO.seln(Tokens.TokenPromptNames, out int index, out _);
+        IO.seln(Tokens.TokenPromptNames, out int index, out bool cancel, out _);
+        if(cancel) return;
         int discard = -1;
         if (tokens.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오.");
-            IO.seln_t(out discard, out _, out _);
+            IO.seln_t(out discard, out bool cancel2, out _);
             IO.del();
+            if(cancel2) return;
         }
         Rest((TokenType)index, discard);
 
