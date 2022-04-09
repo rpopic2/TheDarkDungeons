@@ -29,7 +29,8 @@ public partial class Monster
             if (Target is null) BasicMovement();
             else
             {
-                if (player.Stance.Last == global::StanceName.Charge && tokens.Contains(TokenType.Defence)) SelectSkill(Item.bat, 1);   
+                if (tokens.Count < 3 && player.Stance.Last == global::StanceName.Charge && tokens.Contains(TokenType.Offence)) SelectSkill(Item.bat, 0);
+                else if (tokens.Contains(TokenType.Defence)) SelectSkill(Item.bat, 1);
                 else if (tokens.Contains(TokenType.Offence)) SelectSkill(Item.bat, 0);
             }
         }
@@ -55,7 +56,7 @@ public partial class Monster
             if (Target is null) BasicMovement();
             else
             {
-                
+
             }
         }
         else Rest(TokenType.Offence);
