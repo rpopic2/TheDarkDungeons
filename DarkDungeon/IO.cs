@@ -17,7 +17,7 @@ public static class IO
         del();
         return info;
     }
-    private static void _seln(object print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, int max)
+    private static void _seli(object print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, int max)
     {
         bool found;
         do
@@ -25,7 +25,7 @@ public static class IO
             keyInfo = rk(print);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == CANCELKEY;
-            found = chkn(keyInfo.KeyChar, max, out index);
+            found = chki(keyInfo.KeyChar, max, out index);
             if (cancel) return;
         } while (!found);
     }
@@ -70,11 +70,8 @@ public static class IO
         index = ItemKeys1.IndexOf(i);
         return index != -1 && index <= player.Inven.Cap -1;
     }
-    ///<summary>Select from inventory</summary>
-    public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
-    _seln(player.Inven, out result, out cancel, out mod, out _, player.Inven.Cap);
     public static void seli_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
-    _seln(player.tokens, out result, out cancel, out mod, out _, player.tokens.Count);
+    _seli(player.tokens, out result, out cancel, out mod, out _, player.tokens.Count);
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
