@@ -1,4 +1,5 @@
 main
+[ ] item 그냥 struct record로 하는게 더 나을지도?? value type가 맞을지도.
 [ ] Snake
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?

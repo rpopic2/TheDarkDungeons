@@ -45,8 +45,6 @@ public class Inventory
         {
             owner.passives += pass.actionEveryTurn;
         }
-
-
     }
     public void Remove(Item item)
     {

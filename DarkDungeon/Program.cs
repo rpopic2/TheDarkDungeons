@@ -100,9 +100,6 @@ public class Program
                 if (cancel) return;
                 player.SelectSkill(Item.bareHand, index);
                 break;
-            case 'u':
-                IO.rk(player.tokens);
-                break;
             case '.':
                 player.Rest();
                 break;
