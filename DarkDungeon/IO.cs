@@ -2,7 +2,7 @@ public static class IO
 {
     public const ConsoleKey CANCELKEY = ConsoleKey.Backspace;
     private const string Emphasis = "=> ";
-    public const string ItemKeys1 = "qwerty";
+    public const string ItemKeys1 = "qwert";
     private const string delString = "                                                                                       ";
     private static Player player { get => Player.instance; }
     public static int printCount;
