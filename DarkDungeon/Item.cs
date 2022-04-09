@@ -28,10 +28,14 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
         new Consume("사용한다", "포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Hp += 3)
     });
     public static readonly Item torch = new("(횃불)", ItemType.Consume, new IBehaviour[]{
-        new Passive("횃불", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>p.sight+=3, (p)=>p.sight-=3)
+        new WearEffect("횃불", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>p.sight+=3, (p)=>p.sight-=3)
     });
     public override string ToString()
     {
         return name;
+    }
+    public WearEffect[] GetWearEffects()
+    {
+        return (WearEffect[])(from p in skills where p is WearEffect select p);
     }
 }

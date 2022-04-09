@@ -15,10 +15,10 @@ public class Inventoriable : Fightable
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(skill);
         else if(behaviour is Consume consume) SelectConsume(item, consume);
-        else if(behaviour is Passive passive) SelectPassive(item, passive);
+        else if(behaviour is WearEffect passive) SelectPassive(item, passive);
     }
 
-    private void SelectPassive(Item item, Passive passive)
+    private void SelectPassive(Item item, WearEffect passive)
     {
         IO.rk(passive.OnUseOutput);
     }
