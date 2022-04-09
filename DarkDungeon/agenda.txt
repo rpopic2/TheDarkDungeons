@@ -1,5 +1,7 @@
 main
+[X] Fightable.TryAttack 리팩토링 가능할듯.
 [X] 투검 제대로 구현(원거리 공격 구현)
+[X] 인벤토리 빈곳 qwert 보여주기
 [ ] 지금 문제 : 인벤토리에 중복 아이템을 못넣음!
     [ ] item 그냥 struct record로 하는게 더 나을지도?? value type가 맞을지도.
     [ ] inventory list 말고 array 쓰는게 맞는듯
@@ -7,11 +9,11 @@ main
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
 [ ] 몹들 새 소비 아이템들 드롭하게끔.
-[ ] Fightable.TryAttack 리팩토링 가능할듯.
 [ ] 박쥐는 자체 변수 만들어서 해결해야할듯. 지금도 플레이어 행동에 즉각반응함.
 [ ] inventoriable.selectskill에서 '은'을 빼서 item에서 쓰게끔.
+[ ] item.getmeta 개선
+[ ] 마공 충전식.
 
-[ ] 인벤토리 빈곳 qwert 보여주기
 [ ] 데미지타입 시스템?
 [ ] IO as flags?k
 [ ] 스킬 고를때 아래에 출력?
