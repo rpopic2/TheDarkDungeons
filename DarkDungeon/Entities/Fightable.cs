@@ -49,7 +49,8 @@ public class Fightable : Moveable
     }
     public static int GetVulDmg(int damage)
     {
-        return (int)MathF.Round(damage * Rules.vulMulp);
+        int result = (int)MathF.Round(damage * Rules.vulMulp);
+        return result == damage ? ++result : result;
     }
 
     public void Rest(TokenType tokenType, int discardIndex = -1)
