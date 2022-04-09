@@ -27,10 +27,11 @@ public class Fightable : Moveable
         if (stance.Stance == global::StanceName.Offence && lastBehav is not null)
         {
             lastBehav.Invoke((Inventoriable)this);
+            lastBehav = null;
             return;
         }
         if (Target is not Fightable tar) return;
-        if (tar.stance.Stance == global::StanceName.Defence) tar.TryDodge(0);
+        if (tar.stance.Stance == global::StanceName.Defence) tar.Dodge(0);
     }
     public void Throw(int range)
     {
@@ -44,13 +45,26 @@ public class Fightable : Moveable
                     stance.AddAmount(tempCharge);
                     tempCharge = 0;
                 }
-                hit.TryDodge(stance.Amount);
+                hit.Dodge(stance.Amount);
                 break;
             }
         }
 
     }
-    private void TryDodge(int damage)
+    public void TryDefence()
+    {
+        if (stance.Stance == global::StanceName.Defence && lastBehav is not null)
+        {
+            lastBehav.Invoke((Inventoriable)this);
+            lastBehav = null;
+            return;
+        }
+    }
+    public void Dodge()
+    {
+        Dodge(0); 
+    }
+    public void Dodge(int damage)
     {
         if (stance.Stance == global::StanceName.Defence)
         {
@@ -88,9 +102,9 @@ public class Fightable : Moveable
         }
         tokens.Add(tokenType);
     }
-    public virtual void OnBeforeTurnEnd()
+    public virtual void OnBeforeFight()
     {
-        TryAttack();
+        //TryAttack();
     }
     public void OnTurnEnd()
     {

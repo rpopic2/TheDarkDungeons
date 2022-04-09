@@ -23,10 +23,10 @@ public class Inventoriable : Fightable
         else if (behaviour is Consume consume) SelectConsume(item, consume);
         else IO.rk(behaviour.OnUseOutput);
     }
-    public override void OnBeforeTurnEnd()
+    public override void OnBeforeFight()
     {
         passives.Invoke(this);
-        base.OnBeforeTurnEnd();
+        base.OnBeforeFight();
     }
 
     public void SelectSkill(Skill selected)

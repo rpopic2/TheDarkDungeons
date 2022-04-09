@@ -12,16 +12,18 @@ public static class Game
     }
     internal static void ElaspeTurn()
     {
-        var temp = (from mov in Map.Current.MoveablePositions where mov is not null select mov).ToArray();
-        Array.ForEach(temp, m =>
+        var fights = Map.Current.Fightables;
+        fights.ForEach(m =>
         {
             if (m is Monster mon) mon.DoTurn(); //mob ai
         });
-        Array.ForEach(temp, m =>
+        fights.ForEach(m =>
         {
-            if (m is Fightable f) f.OnBeforeTurnEnd(); //tryattack
+            if (m is Fightable f) f.OnBeforeFight(); //tryattack
         });
-        Array.ForEach(temp, m =>
+        fights.ForEach(m=>m.TryAttack());
+        fights.ForEach(m=>m.TryDefence());
+        fights.ForEach(m =>
         {
             if (m is Fightable f) f.OnTurnEnd(); //update target and reset stance
         });
