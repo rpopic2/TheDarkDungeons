@@ -1,6 +1,7 @@
 namespace Entities;
 public class Fightable : Moveable
 {
+    protected Stat stat;
     public Inventory Inven { get; private set; }
     public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
@@ -9,14 +10,22 @@ public class Fightable : Moveable
     public int sight = 1;
     public Action<Inventoriable>? currentBehav;
     public Item? currentItem;
-    public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
+    public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos) : base(level, name, pos)
     {
+        stat = new();
+        stat[StatName.Sol] = sol;
+        stat[StatName.Lun] = lun;
+        stat[StatName.Con] = con;
         Inven = new((Inventoriable)this, "(맨손)");
         tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
+    }
+    public int GetStat(StatName statName)
+    {
+        return stat[statName];
     }
     public int SetStance(TokenType token, StatName statName)
     {

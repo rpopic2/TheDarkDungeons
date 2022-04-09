@@ -2,9 +2,10 @@ namespace Entities;
 public class Moveable : Entity
 {
     protected StanceInfo stance = new(default, default);
-    public Moveable(int level, int sol, int lun, int con, string name) : base(level, sol, lun, con, name)
+    public Moveable(int level, string name, Position pos) : base(level, name)
     {
-        Pos = new Position();
+        Pos = pos;
+        Map.Current.UpdateMoveable(this);
     }
     public Position Pos { get; set; }
 
