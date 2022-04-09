@@ -32,13 +32,16 @@ public class Inventory
         var wears = from p in item.skills where p is WearEffect select p;
         if (wears is not null)
         {
-            foreach (WearEffect pass in wears)
+            foreach (WearEffect wear in wears)
             {
-                pass.wear.Invoke(owner);
+                wear.wear.Invoke(owner);
             }
         }
         var passives = from p in item.skills where p is Passive select p as Passive;
-        owner.passives.AddRange(passives);
+        foreach (var pass in passives)
+        {
+            owner.passives += pass.actionEveryTurn;
+        }
 
 
     }
@@ -55,7 +58,7 @@ public class Inventory
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var p in passives)
         {
-            owner.passives.Remove(p);
+            if(owner.passives is not null) owner.passives -= p.actionEveryTurn;
         }
 
         content.Remove(item);

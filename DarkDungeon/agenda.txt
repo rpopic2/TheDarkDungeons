@@ -14,6 +14,7 @@ monster-ai-new
 [X] remove remaining seln
 [X] 겜 시작시 토큰 3개 뽑고 시작시키기.
 [ ] stacking items
+[ ] 패시브 등록식으로 하기
 [ ] Snake
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?

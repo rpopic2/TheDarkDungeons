@@ -1,6 +1,7 @@
 namespace Entities;
 public class Inventoriable : Fightable
 {
+    public Action<Inventoriable> passives = (p) => { };
     public Inventory Inven { get; private set; }
     public Inventoriable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(name, level, sol, lun, con, maxHp, cap)
     {
@@ -14,15 +15,12 @@ public class Inventoriable : Fightable
     {
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(skill);
-        else if(behaviour is Consume consume) SelectConsume(item, consume);
+        else if (behaviour is Consume consume) SelectConsume(item, consume);
         else IO.rk(behaviour.OnUseOutput);
     }
     public override void OnBeforeTurnEnd()
     {
-        foreach (var item in passives)
-        {
-            item.actionEveryTurn.Invoke(this);
-        }
+        passives.Invoke(this);
         base.OnBeforeTurnEnd();
     }
 
