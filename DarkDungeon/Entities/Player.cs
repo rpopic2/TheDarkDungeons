@@ -28,7 +28,6 @@ public class Player : Inventoriable
             IO.seli(Program.stats, out index, out cancel, out ConsoleModifiers mod, out _);
         } while (cancel);
         stat[(StatName)index] += 1;
-        Hand.Cap = new Mul(3, 0.4f, Level);
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
     }

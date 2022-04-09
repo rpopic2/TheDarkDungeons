@@ -1,14 +1,12 @@
 namespace Entities;
 public class Fightable : Moveable
 {
-    public Inventory<Card?> Hand { get; private set; }
     public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
     public virtual Moveable? Target { get; protected set; }
     public bool IsAlive => !Hp.IsMin;
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap) : base(level, sol, lun, con, name)
     {
-        Hand = new Inventory<Card?>(cap, "Hand");
         tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);

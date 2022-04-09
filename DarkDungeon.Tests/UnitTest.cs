@@ -5,39 +5,6 @@ using System.Linq;
 public class UnitTest
 {
     [Fact]
-    public void CardToStringOffensive()
-    {
-        Card card = new(3, StatName.Sol, true);
-        Assert.Equal("(3s)", card.ToString());
-
-        card = new(1, StatName.Sol, true);
-        Assert.Equal("(1s)", card.ToString());
-
-        card = new(1, StatName.Lun, true);
-        Assert.Equal("(1L)", card.ToString());
-
-        card = new(1, StatName.Con, true);
-        Assert.Equal("(1*)", card.ToString());
-    }
-    [Fact]
-    public void CardToStringdefensive()
-    {
-        Card card = new(3, StatName.Sol, false);
-        Assert.Equal("[3s]", card.ToString());
-
-        card = new(1, StatName.Sol, false);
-        Assert.Equal("[1s]", card.ToString());
-
-        card = new(1, StatName.Lun, false);
-        Assert.Equal("[1L]", card.ToString());
-
-        card = new(1, StatName.Con, false);
-        Assert.Equal("[1*]", card.ToString());
-
-        Assert.NotEqual("[1s]", card.ToString());
-    }
-
-    [Fact]
     public void TokenCreationTest()
     {
         Tokens tokens = new(3);

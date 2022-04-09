@@ -17,5 +17,4 @@ public class Entity
     {
         return stat[statName];
     }
-    public Card Draw(StatName stats, bool isOffence = true) => new(stat.GetRandom(stats), stats, isOffence);
 }

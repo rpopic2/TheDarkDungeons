@@ -70,14 +70,11 @@ public static class IO
         index = ItemKeys1.IndexOf(i);
         return index != -1 && index <= player.Inven.Cap -1;
     }
-    ///<summary>Select from hand</summary>
-    public static void seln_h(out int result, out bool cancel, out ConsoleKeyInfo keyInfo) =>
-        _seln(player.Hand, out result, out cancel, out _, out keyInfo, player.Hand.Cap);
     ///<summary>Select from inventory</summary>
     public static void seln_i(out int result, out bool cancel, out ConsoleModifiers mod) =>
     _seln(player.Inven, out result, out cancel, out mod, out _, player.Inven.Cap);
     public static void seln_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
-    _seln(player.tokens, out result, out cancel, out mod, out _, player.Hand.Cap);
+    _seln(player.tokens, out result, out cancel, out mod, out _, player.tokens.Count);
 
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
