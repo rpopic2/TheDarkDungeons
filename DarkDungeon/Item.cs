@@ -29,7 +29,7 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
     });
     public static readonly Item torch = new("(횃불)", ItemType.Consume, new IBehaviour[]{
         new Skill("휘두르기", TokenType.Offence, StatName.Sol, "횃불을 휘둘렀다."),
-        new WearEffect("밝음", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.sight+=3;p.Inven.GetMeta(torch!).stack=15;}, (p)=>p.sight-=3),
+        new WearEffect("밝음", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.sight+=2;p.Inven.GetMeta(torch!).stack=15;}, (p)=>p.sight-=2),
         new Passive("꺼져가는 횃불", "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})
     });
     public override string ToString()

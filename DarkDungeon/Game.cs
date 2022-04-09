@@ -36,7 +36,7 @@ public static class Game
         Turn++;
         Console.Clear();
         IO.pr("History");
-        IO.prb($"\nT : {Turn}\tDungeon Level : {Map.level}\tHP : {_Player.Hp}\t{_Player.tokens}\t 상대 {((Fightable?)_Player.Target)?.tokens}");
+        IO.prb($"\n턴 : {Turn}  깊이 : {Map.level}\tHP : {_Player.Hp}  Level : {_Player.Level} ({_Player.exp})\t{_Player.tokens}\t 상대 : {((Fightable?)_Player.Target)?.tokens}");
         IO.prb(_Player.Inven);
         IO.pr(Map.Current);
     }
