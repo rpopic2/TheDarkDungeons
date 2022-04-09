@@ -29,17 +29,8 @@ public class Fightable : Moveable
             lastBehav.Invoke((Inventoriable)this);
             return;
         }
-        if (!(Target is Fightable fight)) return;
-        if (stance.Stance == global::StanceName.Offence)
-        {
-            if (tempCharge > 0)
-            {
-                stance.AddAmount(tempCharge);
-                tempCharge = 0;
-            }
-            fight.TryDodge(stance.Amount);
-        }
-        else if (fight.stance.Stance == global::StanceName.Defence) fight.TryDodge(0);
+        if (Target is not Fightable tar) return;
+        if (tar.stance.Stance == global::StanceName.Defence) tar.TryDodge(0);
     }
     public void Throw(int range)
     {
