@@ -24,7 +24,7 @@ public class Fightable : Moveable
     }
     public void TryAttack()
     {
-        if(lastBehav is not null){
+        if(stance.Stance == global::StanceName.Offence && lastBehav is not null){
             lastBehav.Invoke(this);
             return;
         }
