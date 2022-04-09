@@ -18,7 +18,7 @@ public partial class Monster : Inventoriable
     }
     public void OnSpawn(Item item, int[] startTokens)
     {
-        Inven[0] = item;
+        Inven.Add(item);
         foreach (var token in startTokens)
         {
             tokens.Add((TokenType)token);

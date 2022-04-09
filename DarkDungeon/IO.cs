@@ -63,12 +63,12 @@ public static class IO
     public static bool chki(Char i, int max, out int index)
     {
         index = ItemKeys1.IndexOf(i);
-        return index != -1 && index <= max -1;
+        return index != -1 && index <= max - 1;
     }
     public static bool chki_i(Char i, out int index)
     {
         index = ItemKeys1.IndexOf(i);
-        return index != -1 && index <= player.Inven.Cap -1;
+        return index != -1 && index <= Inventory.INVENSIZE - 1;
     }
     public static void seli_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
     _seli(player.tokens, out result, out cancel, out mod, out _, player.tokens.Count);

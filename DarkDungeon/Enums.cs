@@ -1,7 +1,3 @@
-public enum CardStance
-{
-    Offence, Defence,
-}
 public enum GamePointOption
 {
     Stacking, Reserving
@@ -13,6 +9,10 @@ public enum Facing
 public enum StanceName
 {
     None, Offence, Defence, Charge
+}
+public enum ItemType
+{
+    Equip, Consume
 }
 public static class Extensions
 {

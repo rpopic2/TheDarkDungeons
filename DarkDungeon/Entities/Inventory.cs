@@ -1,53 +1,63 @@
-public class Inventory<T>
+public class Inventory
 {
-    private T?[] content;
-    private int cap;
+    public const int INVENSIZE = 5;
+    private List<Item?> content;
+    private Dictionary<Item, ItemMetaData> metaDatas;
     public readonly string name;
-    public ref readonly T?[] Content => ref content;
+    public ref readonly List<Item?> Content => ref content;
 
-    public Inventory(int cap, string name)
+    public Inventory(string name)
     {
-        this.Cap = cap;
-        content = new T?[cap];
+        content = new(INVENSIZE);
+        metaDatas = new(INVENSIZE);
         this.name = name;
     }
-    public int Cap
-    {
-        get => cap;
-        set
-        {
-            if (value < 3) value = 3;
-            if (value > 10) value = 10;
-            cap = value;
-            Array.Resize(ref content, value);
-        }
-    }
-    public T? GetFirst()
+    public Item? GetFirst()
         => content.First(card => card != null);
     public int Count => content.Count(item => item != null);
-
+    public void Add(Item item)
+    {
+        if (content.IndexOf(item) != -1)
+        {
+            GetMeta(item).stack++;
+        }
+        else
+        {
+            content.Add(item);
+            metaDatas.Add(item, new());
+        }
+    }
+    public void Remove(Item item)
+    {
+        content.Remove(item);
+        metaDatas.Remove(item);
+    }
+    public Item? this[int index]
+    {
+        get => content[index];
+    }
+    public ItemMetaData GetMeta(Item item)
+    {
+        return metaDatas[item];
+    }
     public override string ToString()
     {
         string result = $"{name}|";
-        foreach (T? item in content)
+        foreach (Item? item in content)
         {
             if (item == null) result += "{EMPTY}";
-            else result += item.ToString();
+            else
+            {
+                string itemName = item.ToString();
+                if (item.itemtType == ItemType.Consume) itemName = itemName.Insert(1, $"{GetMeta(item).stack}x");
+                result += itemName;
+            }
         }
         return result;
     }
-    public void Delete(T item)
+
+    public void Consume(Item item)
     {
-        int index = Array.IndexOf(content, item);
-        if (index != -1) content[index] = default(T?);
-    }
-    public void Delete(int index)
-    {
-        if (content[index] is not null) content[index] = default(T?);
-    }
-    public T? this[int index]
-    {
-        get => content[index];
-        set => content[index] = value;
+        if(--GetMeta(item).stack <= 0) Remove(item);
     }
 }
