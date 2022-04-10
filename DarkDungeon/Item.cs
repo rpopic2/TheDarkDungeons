@@ -46,9 +46,10 @@ public partial class Inventoriable
     public static readonly Item tearOfLun = new("<달의 눈물>", ItemType.Consume, new IBehaviour[]{
         new Consume("사용한다", "은 포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Hp += 3)
     });
+    private const int TORCH_BRIGHTNESS = 2;
     public static readonly Item torch = new("(횃불)", ItemType.Consume, new IBehaviour[]{
         new Skill("휘두르기", TokenType.Offence, StatName.Sol, "횃불을 휘둘렀다.", (i)=>i.Throw(1)),
-        new WearEffect("밝음", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.sight+=2;p.Inven.GetMeta(torch!).stack=15;}, (p)=>p.sight-=2),
+        new WearEffect("밝음", "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.sight+=TORCH_BRIGHTNESS;p.Inven.GetMeta(torch!).stack=15;}, (p)=>p.sight-=TORCH_BRIGHTNESS),
         new Passive("꺼져가는 횃불", "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})
     });
 }
