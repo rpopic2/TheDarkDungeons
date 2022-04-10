@@ -12,7 +12,7 @@ public partial class Inventoriable : Fightable
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
         else if (behaviour is Consume consume) SelectConsume(item, consume);
-        else if (behaviour is Passive) IO.rk(behaviour.OnUseOutput);
+        else if (behaviour is Passive || behaviour is WearEffect) IO.rk(behaviour.OnUseOutput);
         else throw new Exception("등록되지 않은 행동 종류입니다.");
     }
     public override void OnBeforeFight()
