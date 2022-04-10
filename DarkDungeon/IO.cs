@@ -38,7 +38,7 @@ public static class IO
         {
             keyInfo = rk(print);
             mod = keyInfo.Modifiers;
-            cancel = keyInfo.Key == ConsoleKey.Escape;
+            cancel = keyInfo.Key == CANCELKEY;
             found = chki(keyInfo.KeyChar, print.Length, out index);
             if (cancel) return;
         } while (!found);
@@ -50,7 +50,7 @@ public static class IO
         {
             keyInfo = rk(player.Inven);
             mod = keyInfo.Modifiers;
-            cancel = keyInfo.Key == ConsoleKey.Escape;
+            cancel = keyInfo.Key == CANCELKEY;
             found = chki_i(keyInfo.KeyChar, out index);
             if (cancel) return;
         } while (!found);
