@@ -97,7 +97,7 @@ public class Program
         }
         switch (key.KeyChar)
         {
-            case ' ':
+            case 'y':
                 IO.seli(Item.bareHand.skills, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
                 player.SelectSkill(Item.bareHand, index);

@@ -81,7 +81,7 @@ public class Inventory
     }
     public override string ToString()
     {
-        string result = $"{name}|";
+        string result = "";
         for (int i = 0; i < INVENSIZE; i++)
         {
             if (i >= Count) result += $"({IO.ItemKeys1[i]})";
@@ -96,6 +96,6 @@ public class Inventory
         {
 
         }
-        return result;
+        return result + "|" + name;
     }
 }
