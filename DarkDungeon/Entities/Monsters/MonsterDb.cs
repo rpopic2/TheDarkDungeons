@@ -39,7 +39,7 @@ public partial class Monster
                 else if (tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
             }
         }
-        else Rest(TokenType.Offence);
+        else SelectBasicBehaviour(1, 1, -1); //pickup offence
         if (Target?.Stance.Stance == StanceName.Charge) metaData["isAngry"] = 1;
         else metaData["isAngry"] = 0;
     }
@@ -55,7 +55,7 @@ public partial class Monster
                 else if (tokens.Contains(TokenType.Charge)) _SelectSkill(0, 1);
             }
         }
-        else Rest(TokenType.Offence);
+        else SelectBasicBehaviour(1, 1, -1); //pickup offence
     }
     internal void SnakeBehav()
     {
@@ -67,6 +67,6 @@ public partial class Monster
 
             }
         }
-        else Rest(TokenType.Offence);
+        else SelectBasicBehaviour(1, 1, -1); //pickup offence
     }
 }

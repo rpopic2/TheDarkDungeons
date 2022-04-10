@@ -14,7 +14,7 @@ public partial class Inventoriable
 {
     public static readonly Item basicActions = new("(기본)", ItemType.Equip, new NonTokenSkill[]{
         new("이동", string.Empty, (i, x, y)=>i.Move(x*y)),
-        new("숨고르기", "은 숨을 골랐다.", (i,x,y)=>i.Rest((TokenType)x, y))
+        new("숨고르기", "은 숨을 골랐다.", (i,x,y)=>i._PickupToken((TokenType)x, y))
     });
     public static readonly Item bareHand = new("(맨손)", ItemType.Equip, new Skill[] {
         new("주먹질", TokenType.Offence, StatName.Sol, "은 주먹을 휘둘렀다.", (i)=>i.Throw(1)),

@@ -91,12 +91,6 @@ public class Fightable : Moveable
         int result = (int)MathF.Round(damage * Rules.vulMulp);
         return result == damage ? ++result : result;
     }
-
-    protected void Rest(TokenType tokenType, int discardIndex = -1)
-    {
-        _PickupToken(tokenType, discardIndex);
-    }
-
     protected void _PickupToken(TokenType tokenType, int discardIndex = -1)
     {
         if (tokens.IsFull)
