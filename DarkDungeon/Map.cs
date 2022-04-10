@@ -85,8 +85,9 @@ public class Map
         foreach (var item in corpseList)
         {
             if (!item.IsAlive) fightables.Remove(item);
-            Loot corpse = new(item.Level, MapSymb.corpse.ToString(), item.Pos, item.Inven.Content);
-            UpdateMoveable(corpse);
+            //Loot corpse = new(item.Level, MapSymb.corpse.ToString(), item.Pos, item.Inven.Content);
+            tiles[item.Pos.x] = MapSymb.corpse;
+            //UpdateMoveable(corpse);
         }
         corpseList.Clear();
     }
