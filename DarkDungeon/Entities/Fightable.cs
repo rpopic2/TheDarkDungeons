@@ -10,6 +10,7 @@ public class Fightable : Moveable
     public int sight = 1;
     public Action<Inventoriable>? currentBehav;
     public Item? currentItem;
+    public Fightable? lastHit { get; private set; }
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos) : base(level, name, pos)
     {
         stat = new();
@@ -44,7 +45,6 @@ public class Fightable : Moveable
         if (Target is not Fightable tar) return;
         if (tar.stance.Stance == StanceName.Defence) tar.Dodge(0);
     }
-    public Fightable lastHit { get; private set; }
     public void Throw(int range)
     {
         for (int i = 0; i < range; i++)
