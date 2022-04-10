@@ -24,7 +24,7 @@ public enum __
 }
 public enum DamageType
 {
-    Normal, Slash, Thrust, Magic
+    None, Normal, Slash, Thrust, Magic
 }
 public static class Extensions
 {
