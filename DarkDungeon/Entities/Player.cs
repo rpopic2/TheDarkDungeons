@@ -72,23 +72,6 @@ public class Player : Inventoriable
         if (cancel) return;
         PickupToken((TokenType)index);
     }
-    private void Rest()
-    {
-        IO.pr("토큰을 획득하였습니다.");
-        IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
-        IO.del(2);
-        if (cancel) return;
-        PickupToken((TokenType)index);
-    }
-    public TokenType? SelectToken()
-    {
-        do
-        {
-            IO.seli_t(out int index, out bool cancel, out _);
-            if (cancel) return null;
-            if (tokens[index] is byte result) return (TokenType)result;
-        } while (true);
-    }
     protected override void Move(int x)
     {
         bool success = Move(x, out char obj);

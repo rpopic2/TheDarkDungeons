@@ -106,19 +106,7 @@ public class Program
                 player.InteractUnderFoot();
                 break;
             case '.':
-                IO.pr("토큰을 획득하였습니다.");
-                IO.seli(Tokens.TokenPromptNames, out int tokenType, out bool cancelRest, out _, out _);
-                IO.del();
-                if (cancelRest) return;
-                int discard = -1;
-                if (player.tokens.IsFull)
-                {
-                    IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString((TokenType)tokenType));
-                    IO.seli_t(out discard, out bool cancel2, out _);
-                    IO.del();
-                    if (cancel2) return;
-                }
-                player.SelectBasicBehaviour(1, tokenType, discard);
+                player.SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
                 break;
             case '/':
                 player.ShowStats();

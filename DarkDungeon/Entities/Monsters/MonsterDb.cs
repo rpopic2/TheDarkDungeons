@@ -39,7 +39,11 @@ public partial class Monster
                 else if (tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
             }
         }
-        else SelectBasicBehaviour(1, 1, -1); //pickup offence
+        else
+        {
+            SelectBasicBehaviour(1, 1, -1); //pickup offence
+            return;
+        }
         if (Target?.Stance.Stance == StanceName.Charge) metaData["isAngry"] = 1;
         else metaData["isAngry"] = 0;
     }
