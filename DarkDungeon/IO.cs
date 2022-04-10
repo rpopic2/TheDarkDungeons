@@ -29,7 +29,7 @@ public static class IO
         }
         do
         {
-            keyInfo = rk(value);
+            keyInfo = rk(value, flags);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == CANCELKEY;
             found = chk(keyInfo.KeyChar, max, out index);
