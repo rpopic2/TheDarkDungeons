@@ -21,6 +21,8 @@ public partial class Inventoriable : Fightable
         IBehaviour behaviour = basicActions.skills[index];
         if (behaviour is NonTokenSkill nonToken)
         {
+            string output = behaviour.OnUseOutput;
+            if(output != string.Empty)IO.rk(Name + output);
             stance.Set(StanceName.Charge, default);
             nonToken.behaviour.Invoke(this, x, y);
         }
