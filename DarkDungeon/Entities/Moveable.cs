@@ -1,10 +1,14 @@
 namespace Entities;
-public class Moveable : Entity
+public class Moveable
 {
+    public int Level { get; protected set; }
+    public readonly string Name;
     protected StanceInfo stance = new(default, default);
-    public Moveable(int level, string name, Position pos) : base(level, name)
+    public Moveable(int level, string name, Position pos)
     {
         Pos = pos;
+        this.Level = level;
+        Name = name;
     }
     public Position Pos { get; set; }
 
