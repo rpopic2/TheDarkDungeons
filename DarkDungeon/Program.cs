@@ -102,6 +102,15 @@ public class Program
                 if (cancel) return;
                 player.SelectSkill(Item.bareHand, index);
                 break;
+            case ' ':
+                if (player.underFoot != "")
+                {
+                    player.PickupItem(Item.torch);
+                    Map.Current.Tiles[player.Pos.x] = MapSymb.road;
+                    player.underFoot = "";
+                    player.Stance.Set(StanceName.Charge, 0);
+                }
+                break;
             case '.':
                 player.Rest();
                 break;
