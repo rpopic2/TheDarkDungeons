@@ -11,7 +11,7 @@ public class Map
     public ref readonly Moveable?[] MoveablePositions => ref moveablePositions;
     private List<Fightable> fightables = new();
     public ref readonly List<Fightable> Fightables => ref fightables;
-    private List<Fightable> deadFightables = new();
+    private List<Fightable> temp_deadFightables = new();
     public ISteppable?[] steppables;
     private Corpse? corpseToNext;
     private char[] rendered;
@@ -77,7 +77,7 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
         {
-            deadFightables.Add(fight);
+            temp_deadFightables.Add(fight);
             moveablePositions[pos.x] = null;
             return;
         }
@@ -86,12 +86,12 @@ public class Map
     }
     public void RemoveAndCreateCorpse()
     {
-        foreach (var item in deadFightables)
+        foreach (var item in temp_deadFightables)
         {
             fightables.Remove(item);
             CreateCorpse(item);
         }
-        deadFightables.Clear();
+        temp_deadFightables.Clear();
     }
     public void CreateCorpse(Fightable fight)
     {
