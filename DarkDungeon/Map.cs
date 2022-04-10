@@ -11,7 +11,8 @@ public class Map
     public ref readonly Moveable?[] MoveablePositions => ref moveablePositions;
     private List<Fightable> fightables = new();
     public ref readonly List<Fightable> Fightables => ref fightables;
-    private List<Fightable> corpseList = new();
+    private List<Fightable> deadFightables = new();
+    public char?[] corpses;
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
@@ -23,6 +24,7 @@ public class Map
         tiles = NewEmptyArray(length, MapSymb.road);
         moveablePositions = new Moveable[length];
         empty = NewEmptyArray(length, MapSymb.Empty);
+        corpses = new char?[length];
         rendered = new char[length];
 
         tiles[length - 1] = MapSymb.portal;
@@ -73,7 +75,7 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
         {
-            corpseList.Add(fight);
+            deadFightables.Add(fight);
             moveablePositions[pos.x] = null;
             return;
         }
@@ -82,17 +84,18 @@ public class Map
     }
     public void RemoveAndCreateCorpse()
     {
-        foreach (var item in corpseList)
+        foreach (var item in deadFightables)
         {
             if (!item.IsAlive) fightables.Remove(item);
-            tiles[item.Pos.x] = MapSymb.corpse;
+            corpses[item.Pos.x] = MapSymb.corpse;
         }
-        corpseList.Clear();
+        deadFightables.Clear();
     }
     private void Render()
     {
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
+        RenderVisible(corpses);
         RenderVisible(MoveablePositions);
         //if(debug) RenderAllMobs();
         rendered[player.Pos.x] = MapSymb.player;

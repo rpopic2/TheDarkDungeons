@@ -86,10 +86,11 @@ public class Player : Inventoriable
     {
         bool success = Move(x, out char obj);
         if (!success) return;
-        if(obj == MapSymb.corpse)
+        if (obj == MapSymb.corpse)
         {
             underFoot = "발밑 : 시체";
-        }else
+        }
+        else
         {
             underFoot = "";
         }
@@ -98,6 +99,14 @@ public class Player : Inventoriable
             Map.NewMap();
             Pos = new Position();
         }
+    }
+    public void PickUpCorpse()
+    {
+        if (underFoot == "") return;
+        PickupItem(Item.torch);
+        Map.Current.corpses[Pos.x] = null;
+        underFoot = "";
+        Stance.Set(StanceName.Charge, 0);
     }
     public void ShowStats()
     {
