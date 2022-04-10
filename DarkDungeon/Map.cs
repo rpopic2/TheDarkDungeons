@@ -97,9 +97,9 @@ public class Map
     {
         int pos = fight.Pos.x;
         ISteppable? old = steppables[pos];
-        
+
         Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
-        if (old is Corpse cor) cor += temp;
+        if (old is Corpse cor) steppables[pos] = cor + temp;
         else if (old is Portal) corpseToNext = temp;
         else steppables[pos] = temp;
     }
@@ -149,7 +149,7 @@ public class Map
         level++;
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
         int length = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
-        Current = new Map(length, Current.corpseToNext);
+        Current = new Map(length, Current?.corpseToNext);
         Player._instance?.UpdateTarget();
     }
 

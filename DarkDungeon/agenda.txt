@@ -9,6 +9,7 @@ main
 [ ] 스킬쓸떄 인수로 숫자 말고 좀 더 freindly한거 없나
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
+[ ] deadfightables local로
 
 [ ] item.getmeta 개선
 [ ] 이제 그냥 드롭은 없애기. droplist
