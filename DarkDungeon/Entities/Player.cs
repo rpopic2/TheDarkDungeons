@@ -7,7 +7,7 @@ public class Player : Inventoriable
     public const int BASICSTAT = 3;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public string underFoot = "";
+    public Corpse? underFoot = null;
     public Exp exp;
     public int torch = 0;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP, pos: new(0))
@@ -88,11 +88,11 @@ public class Player : Inventoriable
         if (!success) return;
         if (obj == MapSymb.corpse)
         {
-            underFoot = "발밑 : 시체";
+            underFoot = Map.Current.corpses[Pos.x];
         }
         else
         {
-            underFoot = "";
+            underFoot = null;
         }
         if (obj == MapSymb.portal)
         {
@@ -102,10 +102,11 @@ public class Player : Inventoriable
     }
     public void PickUpCorpse()
     {
-        if (underFoot == "") return;
-        PickupItem(Item.torch);
+        if (underFoot is null) return;
+        IO.seli(underFoot.droplist.ToArray(), out int index, out bool cancel, out _, out _);
+        if(underFoot.droplist[index] is Item drop) PickupItem(drop);
         Map.Current.corpses[Pos.x] = null;
-        underFoot = "";
+        underFoot = null;
         Stance.Set(StanceName.Charge, 0);
     }
     public void ShowStats()

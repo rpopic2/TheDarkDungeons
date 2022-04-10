@@ -20,8 +20,8 @@ public static class Game
         {
             if (m is Fightable f) f.OnBeforeFight(); //tryattack
         });
-        fights.ForEach(m=>m.TryAttack());
-        fights.ForEach(m=>m.TryDefence());
+        fights.ForEach(m => m.TryAttack());
+        fights.ForEach(m => m.TryDefence());
         fights.ForEach(m =>
         {
             if (m is Fightable f) f.OnTurnEnd(); //update target and reset stance
@@ -37,7 +37,7 @@ public static class Game
         Turn++;
         Console.Clear();
         IO.pr("History");
-        IO.prb(_Player.underFoot);
+        if (_Player.underFoot is Corpse cor) IO.prb(cor.name + "의 시체 위에 서있다.");
         IO.prb($"턴 : {Turn}  깊이 : {Map.level}\tHP : {_Player.Hp}  Level : {_Player.Level} ({_Player.exp})\t{_Player.tokens}\t 상대 : {((Fightable?)_Player.Target)?.tokens}");
         IO.prb(_Player.Inven);
         IO.pr(Map.Current);

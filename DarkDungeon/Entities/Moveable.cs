@@ -17,7 +17,7 @@ public class Moveable : Entity
         Map current = Map.Current;
         Position newPos = Pos + x;
         bool existsTile = current.Tiles.TryGet(newPos.x, out obj);
-        if(current.corpses[newPos.x] is char corpse) obj = corpse;
+        if(existsTile && current.corpses[newPos.x] is Corpse corpse) obj = corpse.ToChar();
         bool obstructed = current.MoveablePositions.TryGet(newPos.x, out Moveable? mov);
         bool result = existsTile && !obstructed;
         if (result)

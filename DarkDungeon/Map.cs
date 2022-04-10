@@ -12,7 +12,7 @@ public class Map
     private List<Fightable> fightables = new();
     public ref readonly List<Fightable> Fightables => ref fightables;
     private List<Fightable> deadFightables = new();
-    public char?[] corpses;
+    public Corpse?[] corpses;
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
@@ -24,7 +24,7 @@ public class Map
         tiles = NewEmptyArray(length, MapSymb.road);
         moveablePositions = new Moveable[length];
         empty = NewEmptyArray(length, MapSymb.Empty);
-        corpses = new char?[length];
+        corpses = new Corpse?[length];
         rendered = new char[length];
 
         tiles[length - 1] = MapSymb.portal;
@@ -87,7 +87,7 @@ public class Map
         foreach (var item in deadFightables)
         {
             if (!item.IsAlive) fightables.Remove(item);
-            corpses[item.Pos.x] = MapSymb.corpse;
+            corpses[item.Pos.x] = new(item.Name, item.Inven.Content);
         }
         deadFightables.Clear();
     }
@@ -118,6 +118,7 @@ public class Map
             if (!success) continue;
             if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
             else if (obj is char chr) rendered[targetTile] = chr;
+            else if( obj is Corpse cor) rendered[targetTile] = cor.ToChar();
             else if (obj is not null) throw new Exception();
         }
     }
