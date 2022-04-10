@@ -68,8 +68,9 @@ public class Player : Inventoriable
     public void Rest()
     {
         _Rest();
+        IO.pr("토큰을 획득하였습니다.");
         IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
-        IO.del();
+        IO.del(2);
         if (cancel) return;
         PickupToken((TokenType)index);
     }
