@@ -17,7 +17,7 @@ public class Moveable : Entity
         Map current = Map.Current;
         Position newPos = Pos + x;
         bool existsTile = current.Tiles.TryGet(newPos.x, out obj);
-        if(existsTile && current.corpses[newPos.x] is Corpse corpse) obj = corpse.ToChar();
+        if (existsTile && current.steppables[newPos.x] is ISteppable step) obj = step.ToChar();
         bool obstructed = current.MoveablePositions.TryGet(newPos.x, out Moveable? mov);
         bool result = existsTile && !obstructed;
         if (result)

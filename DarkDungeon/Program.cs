@@ -103,7 +103,7 @@ public class Program
                 player.SelectBehaviour(Item.bareHand, index);
                 break;
             case ' ':
-                player.PickUpCorpse();
+                player.InteractUnderFoot();
                 break;
             case '.':
                 player.Rest();

@@ -7,7 +7,7 @@ public class Player : Inventoriable
     public const int BASICSTAT = 3;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public Corpse? corpseUnderFoot = null;
+    public ISteppable? underFoot => Map.Current.steppables[Pos.x];
     public Exp exp;
     public int torch = 0;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP, pos: new(0))
@@ -95,39 +95,36 @@ public class Player : Inventoriable
     {
         bool success = Move(x, out char obj);
         if (!success) return;
-        if (obj == MapSymb.corpse)
-        {
-            corpseUnderFoot = Map.Current.corpses[Pos.x];
-        }
-        else
-        {
-            corpseUnderFoot = null;
-        }
-        if (obj == MapSymb.portal)
+    }
+    public void InteractUnderFoot()
+    {
+        if (underFoot is null) return;
+        else if (underFoot is Corpse corpse) PickupCorpse(corpse);
+        else if (underFoot is Portal portal)
         {
             Map.NewMap();
             Pos = new Position();
+            Map.Current.UpdateMoveable(this);
         }
+
+        Stance.Set(StanceName.Charge, 0);
     }
-    public void PickUpCorpse()
+    public void PickupCorpse(Corpse corpse)
     {
-        if (corpseUnderFoot is null) return;
-        while (corpseUnderFoot.droplist.Count > 0)
+        while (corpse.droplist.Count > 0)
         {
-            IO.seli(corpseUnderFoot.droplist.ToArray(), out int index, out bool cancel, out _, out _);
+            IO.seli(corpse.droplist.ToArray(), out int index, out bool cancel, out _, out _);
             if (cancel) break;
-            if (corpseUnderFoot.droplist[index] is Item item)
+            if (corpse.droplist[index] is Item item)
             {
                 PickupItem(item);
-                corpseUnderFoot.droplist.Remove(item);
+                corpse.droplist.Remove(item);
             }
         }
-        if (corpseUnderFoot.droplist.Count() <= 0)
+        if (corpse.droplist.Count() <= 0)
         {
-            Map.Current.corpses[Pos.x] = null;
-            corpseUnderFoot = null;
+            Map.Current.steppables[Pos.x] = null;
         }
-        Stance.Set(StanceName.Charge, 0);
     }
     public void ShowStats()
     {

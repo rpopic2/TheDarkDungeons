@@ -12,7 +12,7 @@ public class Map
     private List<Fightable> fightables = new();
     public ref readonly List<Fightable> Fightables => ref fightables;
     private List<Fightable> deadFightables = new();
-    public Corpse?[] corpses;
+    public ISteppable?[] steppables;
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
@@ -24,10 +24,10 @@ public class Map
         tiles = NewEmptyArray(length, MapSymb.road);
         moveablePositions = new Moveable[length];
         empty = NewEmptyArray(length, MapSymb.Empty);
-        corpses = new Corpse?[length];
+        steppables = new ISteppable?[length];
         rendered = new char[length];
 
-        tiles[length - 1] = MapSymb.portal;
+        steppables[length - 1] = new Portal();
         moveablePositions[0] = Player.instance;
         fightables.Add(player);
         if (spawn) Spawn();
@@ -87,7 +87,7 @@ public class Map
         foreach (var item in deadFightables)
         {
             fightables.Remove(item);
-            corpses[item.Pos.x] = new(item.Name, item.Inven.Content);
+            steppables[item.Pos.x] = new Corpse(item.Name + "의 시체", item.Inven.Content);
         }
         deadFightables.Clear();
     }
@@ -95,7 +95,7 @@ public class Map
     {
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
-        RenderVisible(corpses);
+        RenderVisible(steppables);
         RenderVisible(MoveablePositions);
         //if(debug) RenderAllMobs();
         rendered[player.Pos.x] = MapSymb.player;
@@ -118,8 +118,8 @@ public class Map
             if (!success) continue;
             if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
             else if (obj is char chr) rendered[targetTile] = chr;
-            else if( obj is Corpse cor) rendered[targetTile] = cor.ToChar(); 
-            else if (obj is not null) throw new Exception();
+            else if( obj is ISteppable cor) rendered[targetTile] = cor.ToChar(); 
+            else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");
         }
     }
     public override string ToString()
