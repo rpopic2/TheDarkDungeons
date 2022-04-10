@@ -6,6 +6,7 @@ public partial class Monster : Inventoriable
     protected DropList dropList;
     private char fowardChar, backwardChar;
     private Action<Monster> behaviour;
+    private Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint) : base(data.name, Map.level, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap, spawnPoint)
     {
         dropList = data.dropList;

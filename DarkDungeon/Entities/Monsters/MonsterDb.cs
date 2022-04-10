@@ -34,16 +34,18 @@ public partial class Monster
             if (Target is null) BasicMovement();
             else
             {
-                if (tokens.Count < player.tokens.Count && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
+                if (metaData["isAngry"] == 1 && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
                 else if (tokens.Contains(TokenType.Defence)) _SelectSkill(0, 1);
                 else if (tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
             }
         }
         else Rest(TokenType.Offence);
+        if (Target?.Stance.Stance == StanceName.Charge) metaData["isAngry"] = 1;
+        else metaData["isAngry"] = 0;
     }
     internal void LunaticBehav()
     {
-        if(Hp.Cur != Hp.Max && Inven.Content.Contains(Item.tearOfLun)) _SelectSkill(1, 0);
+        if (Hp.Cur != Hp.Max && Inven.Content.Contains(Item.tearOfLun)) _SelectSkill(1, 0);
         else if (tokens.Count > 0)
         {
             if (Target is null) BasicMovement();
