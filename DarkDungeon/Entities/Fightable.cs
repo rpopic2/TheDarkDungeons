@@ -11,6 +11,8 @@ public class Fightable : Moveable
     public Action<Inventoriable>? currentBehav;
     public Item? currentItem;
     public Fightable? lastHit { get; private set; }
+    public Action<Inventoriable> passives = (p) => { };
+
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos) : base(level, name, pos)
     {
         stat = new();
@@ -104,7 +106,7 @@ public class Fightable : Moveable
     }
     public virtual void OnBeforeFight()
     {
-        //TryAttack();
+        
     }
     public void OnTurnEnd()
     {

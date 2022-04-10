@@ -2,8 +2,6 @@ public static class Game
 {
     private static Player _Player { get => Player.instance; }
     private const int SpawnRate = 10;
-    public static event EventHandler? OnTurnEnd; //unused
-
     public static int Turn { get; private set; }
     static Game()
     {
@@ -16,18 +14,19 @@ public static class Game
         {
             if (m is Monster mon) mon.DoTurn(); //mob ai
         });
+
         fights.ForEach(m =>
         {
-            if (m is Fightable f) f.OnBeforeFight(); //tryattack
+            m.passives.Invoke((Inventoriable)m); //tryattack
         });
         fights.ForEach(m => m.TryAttack());
         fights.ForEach(m => m.TryDefence());
+
         fights.ForEach(m =>
         {
-            if (m is Fightable f) f.OnTurnEnd(); //update target and reset stance
+            m.OnTurnEnd(); //update target and reset stance
         });
         Map.Current.RemoveAndCreateCorpse();
-        OnTurnEnd?.Invoke(null, EventArgs.Empty);
         if (Turn % SpawnRate == 0) Map.Current.Spawn();
         NewTurn();
     }
