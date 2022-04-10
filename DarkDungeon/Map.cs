@@ -80,14 +80,12 @@ public class Map
         if (moveablePositions[pos.oldX] == mov) moveablePositions[pos.oldX] = null;
         moveablePositions[pos.x] = mov;
     }
-    public void RemoveCorpse()
+    public void RemoveAndCreateCorpse()
     {
         foreach (var item in corpseList)
         {
             if (!item.IsAlive) fightables.Remove(item);
-            //Loot corpse = new(item.Level, MapSymb.corpse.ToString(), item.Pos, item.Inven.Content);
             tiles[item.Pos.x] = MapSymb.corpse;
-            //UpdateMoveable(corpse);
         }
         corpseList.Clear();
     }

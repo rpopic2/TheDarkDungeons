@@ -26,7 +26,7 @@ public static class Game
         {
             if (m is Fightable f) f.OnTurnEnd(); //update target and reset stance
         });
-        Map.Current.RemoveCorpse();
+        Map.Current.RemoveAndCreateCorpse();
         OnTurnEnd?.Invoke(null, EventArgs.Empty);
         if (Turn % SpawnRate == 0) Map.Current.Spawn();
         NewTurn();
