@@ -1,20 +1,31 @@
 namespace Entities;
-public partial class Fightable : Moveable
+public partial class Fightable
 {
     protected Stat stat;
     public Inventory Inven { get; private set; }
     public readonly Tokens tokens;
     public GamePoint Hp { get; set; }
-    public virtual Moveable? Target { get; protected set; }
+    public virtual Fightable? Target { get; protected set; }
     public bool IsAlive => !Hp.IsMin;
     public int sight = 1;
     public Action<Fightable>? currentBehav;
     public Item? currentItem;
     public Fightable? lastHit { get; private set; }
     public Action<Fightable> passives = (p) => { };
+    public int Level { get; protected set; }
+    public readonly string Name;
+    protected StanceInfo stance = new(default, default);
 
-    public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos) : base(level, name, pos)
+    public Position Pos { get; set; }
+
+    public StanceInfo Stance => stance;
+    protected virtual void Move(int x) => Move(x, out char obj);
+    public virtual char ToChar() => Name.ToLower()[0];
+    public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos)
     {
+        Pos = pos;
+        this.Level = level;
+        Name = name;
         stat = new();
         stat[StatName.Sol] = sol;
         stat[StatName.Lun] = lun;
@@ -25,6 +36,38 @@ public partial class Fightable : Moveable
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
+    }
+    protected virtual bool Move(int x, out char obj)
+    {
+        Map current = Map.Current;
+        Position newPos = Pos + x;
+        bool existsTile = current.Tiles.TryGet(newPos.x, out obj);
+        if (Pos.facing != newPos.facing)
+        {
+            Pos = !Pos;
+            return true;
+        }
+        if (existsTile && current.steppables[newPos.x] is ISteppable step) obj = step.ToChar();
+        bool obstructed = current.FightablePositions.TryGet(newPos.x, out Fightable? mov);
+        bool canGo = existsTile && !obstructed;
+        if (canGo)
+        {
+            Pos = newPos;
+            current.UpdateFightable(this);
+        }
+        else
+        {
+            if (newPos.facing != Pos.facing)
+            {
+                Pos = !Pos;
+                return true;
+            }
+            else
+            {
+                stance.Set(StanceName.None, default);
+            }
+        }
+        return canGo;
     }
     public int SetStance(TokenType token, StatName statName)
     {
@@ -47,7 +90,7 @@ public partial class Fightable : Moveable
     {
         for (int i = 0; i < range; i++)
         {
-            Map.Current.MoveablePositions.TryGet(Pos.GetFrontIndex(i + 1), out Moveable? mov);
+            Map.Current.FightablePositions.TryGet(Pos.GetFrontIndex(i + 1), out Fightable? mov);
             if (mov is Fightable hit)
             {
                 int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
@@ -109,7 +152,7 @@ public partial class Fightable : Moveable
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
         IO.pr($"{Name}가 죽었다.", __.newline);
-        Map.Current.UpdateMoveable(this);
+        Map.Current.UpdateFightable(this);
     }
     protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {Hp}", __.emphasis);
     protected void OnDamaged(object? sender, PointArgs e)
@@ -119,14 +162,9 @@ public partial class Fightable : Moveable
 
     public override string ToString() =>
         $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[StatName.Sol]}\tLun : {stat[StatName.Lun]}\tCon : {stat[StatName.Con]}";
-    public override char ToChar()
-    {
-        if (IsAlive) return base.ToChar();
-        else return 'x';
-    }
     public void UpdateTarget()
     {
-        Map.Current.MoveablePositions.TryGet(Pos.GetFrontIndex(1), out Moveable? mov);
+        Map.Current.FightablePositions.TryGet(Pos.GetFrontIndex(1), out Fightable? mov);
         if (mov is Fightable f && isEnemy(this, f)) Target = mov;
         else Target = null;
     }

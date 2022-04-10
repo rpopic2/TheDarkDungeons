@@ -86,7 +86,7 @@ public class Player : Fightable
         {
             Map.NewMap();
             Pos = new Position();
-            Map.Current.UpdateMoveable(this);
+            Map.Current.UpdateFightable(this);
         }
 
         Stance.Set(StanceName.Charge, 0);

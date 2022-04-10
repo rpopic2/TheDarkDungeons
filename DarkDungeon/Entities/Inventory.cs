@@ -60,6 +60,7 @@ public class Inventory
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var p in passives)
         {
+            #pragma warning disable CS8601
             if (owner.passives is not null) owner.passives -= p.actionEveryTurn;
         }
 
