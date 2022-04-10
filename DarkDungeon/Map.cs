@@ -13,11 +13,12 @@ public class Map
     public ref readonly List<Fightable> Fightables => ref fightables;
     private List<Fightable> deadFightables = new();
     public ISteppable?[] steppables;
+    private Corpse? corpseToNext;
     private char[] rendered;
     private readonly char[] empty;
     public readonly int length;
     private const bool debug = false;
-    public Map(int length, bool spawn = true)
+    public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
         this.length = length;
@@ -28,9 +29,10 @@ public class Map
         rendered = new char[length];
 
         steppables[length - 1] = new Portal();
+        if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
         moveablePositions[0] = Player.instance;
         fightables.Add(player);
-        if (spawn) Spawn();
+        if (spawnMobs) Spawn();
     }
 
     public void Spawn()
@@ -87,9 +89,19 @@ public class Map
         foreach (var item in deadFightables)
         {
             fightables.Remove(item);
-            steppables[item.Pos.x] = new Corpse(item.Name + "의 시체", item.Inven.Content);
+            CreateCorpse(item);
         }
         deadFightables.Clear();
+    }
+    public void CreateCorpse(Fightable fight)
+    {
+        int pos = fight.Pos.x;
+        ISteppable? old = steppables[pos];
+        
+        Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
+        if (old is Corpse cor) cor += temp;
+        else if (old is Portal) corpseToNext = temp;
+        else steppables[pos] = temp;
     }
     private void Render()
     {
@@ -136,7 +148,8 @@ public class Map
     {
         level++;
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
-        Current = new Map(rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth));
+        int length = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
+        Current = new Map(length, Current.corpseToNext);
         Player._instance?.UpdateTarget();
     }
 

@@ -1,8 +1,14 @@
-public record Corpse(string name, List<Item?> droplist) : ISteppable
+public record struct Corpse(string name, List<Item?> droplist) : ISteppable
 {
     public char ToChar() => MapSymb.corpse;
+    public static Corpse operator +(Corpse old, Corpse newOne)
+    {
+        old.droplist.AddRange(newOne.droplist);
+        old.name += $", {newOne.name}";
+        return old;
+    }
 }
-public record Portal(string name = "포탈") : ISteppable
+public record struct Portal(string name = "포탈") : ISteppable
 {
     public char ToChar() => MapSymb.portal;
 }
@@ -10,5 +16,5 @@ public record Portal(string name = "포탈") : ISteppable
 public interface ISteppable
 {
     public char ToChar();
-    public string name {get;}
+    public string name { get; set; }
 }
