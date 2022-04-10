@@ -196,7 +196,7 @@ public class CombatTest
     }
     private void _SelectSkill(Inventoriable caster, Item item, int skill)
     {
-        try { caster.SelectSkill(item, skill); } catch (System.InvalidOperationException) { }
+        try { caster.SelectBehaviour(item, skill); } catch (System.InvalidOperationException) { }
     }
     private void _ElaspeTurn(Map map)
     {

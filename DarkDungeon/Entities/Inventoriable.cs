@@ -15,7 +15,7 @@ public class Inventoriable : Fightable
         }
         Inven.Add(item);
     }
-    public void SelectSkill(Item item, int index)
+    public void SelectBehaviour(Item item, int index)
     {
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
@@ -27,7 +27,7 @@ public class Inventoriable : Fightable
         passives.Invoke(this);
         base.OnBeforeFight();
     }
-    public void SelectSkill(Item item, Skill selected)
+    private void SelectSkill(Item item, Skill selected)
     {
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
@@ -46,11 +46,11 @@ public class Inventoriable : Fightable
             IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
         }
     }
-    public void SelectConsume(Item item, Consume consume)
+    private void SelectConsume(Item item, Consume consume)
     {
         SetStance(TokenType.Charge, default);
+        IO.rk($"{Name} {consume.OnUseOutput}");
         consume.behaviour.Invoke(this);
         Inven.Consume(item);
-        IO.rk($"{Name} {consume.OnUseOutput}");
     }
 }

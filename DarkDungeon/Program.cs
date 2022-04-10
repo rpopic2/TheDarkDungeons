@@ -93,14 +93,14 @@ public class Program
         {
             IO.seli(item.skills, out int index, out bool cancel, out _, out _);
             if (cancel) return;
-            player.SelectSkill(item, index);
+            player.SelectBehaviour(item, index);
         }
         switch (key.KeyChar)
         {
             case 'y':
                 IO.seli(Item.bareHand.skills, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
-                player.SelectSkill(Item.bareHand, index);
+                player.SelectBehaviour(Item.bareHand, index);
                 break;
             case ' ':
                 player.PickUpCorpse();

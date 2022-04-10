@@ -1,4 +1,5 @@
 namespace Entities;
+public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, Item[] startItem, int[] startToken, DropList dropList);
 public partial class Monster
 {
     private static DropList lunDropList = new(
@@ -8,11 +9,11 @@ public partial class Monster
     private static DropList batDropList = new(
         (Item.bat, 10));
     private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, hp: 3, cap: 4, killExp: 4);
-    public static MonsterData lunatic = new("광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), Item.holySword, new int[] { 2, 0, 2, 0 }, lunDropList);
+    public static MonsterData lunatic = new("광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { Item.holySword, Item.tearOfLun }, new int[] { 2, 0, 2, 0 }, lunDropList);
     private static StatMul snakeMul = new(sol: 2, lun: 1, con: 2, hp: 2, cap: 2, killExp: 5);
-    public static MonsterData snake = new("뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), Item.bareHand, new int[] { 2, 0, 0 }, snakeDropList);
+    public static MonsterData snake = new("뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { Item.bareHand }, new int[] { 2, 0, 0 }, snakeDropList);
     public static StatMul batMul = new(sol: 1, lun: 3, con: 2, hp: 2, cap: 3, killExp: 3);
-    public static MonsterData bat = new("박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), Item.bat, new int[] { 1, 1, 0 }, batDropList);
+    public static MonsterData bat = new("박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { Item.bat }, new int[] { 1, 1, 0 }, batDropList);
     public static List<MonsterData> data = new() { lunatic, bat };
     public static int Count => data.Count;
     private void BasicMovement()
@@ -24,7 +25,7 @@ public partial class Monster
     }
     private void _SelectSkill(int item, int skill)
     {
-        SelectSkill(Inven[item]!, skill);
+        SelectBehaviour(Inven[item]!, skill);
     }
     public void BatBehav()
     {
@@ -42,7 +43,8 @@ public partial class Monster
     }
     internal void LunaticBehav()
     {
-        if (tokens.Count > 0)
+        if(Hp.Cur != Hp.Max && Inven.Content.Contains(Item.tearOfLun)) _SelectSkill(1, 0);
+        else if (tokens.Count > 0)
         {
             if (Target is null) BasicMovement();
             else

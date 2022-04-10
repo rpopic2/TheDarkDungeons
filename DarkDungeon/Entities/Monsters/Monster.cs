@@ -15,9 +15,12 @@ public partial class Monster : Inventoriable
         behaviour = data.behaviour;
         OnSpawn(data.startItem, data.startToken);
     }
-    public void OnSpawn(Item item, int[] startTokens)
+    public void OnSpawn(Item[] items, int[] startTokens)
     {
-        Inven.Add(item);
+        foreach (var newItem in items)
+        {
+            Inven.Add(newItem);
+        }
         foreach (var token in startTokens)
         {
             tokens.Add((TokenType)token);
@@ -45,7 +48,6 @@ public partial class Monster : Inventoriable
     public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;
 }
 
-public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, Item startItem, int[] startToken, DropList dropList);
 
 
 public record struct DropList(params (Item item, int outOf)[] list);
