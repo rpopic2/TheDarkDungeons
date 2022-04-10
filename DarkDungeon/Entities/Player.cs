@@ -7,7 +7,7 @@ public class Player : Inventoriable
     public const int BASICSTAT = 3;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public Corpse? underFoot = null;
+    public Corpse? corpseUnderFoot = null;
     public Exp exp;
     public int torch = 0;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP, pos: new(0))
@@ -55,9 +55,9 @@ public class Player : Inventoriable
         }
         _PickupToken(token, discard);
 
-        IO.pr($"{Tokens.ToString(token)} 토큰을 얻었습니다.");
-        IO.rk();
-        IO.del();
+        //IO.pr($"{Tokens.ToString(token)} 토큰을 얻었습니다.");
+        //IO.rk();
+        //IO.del();
     }
     public void SelectPickupToken()
     {
@@ -88,11 +88,11 @@ public class Player : Inventoriable
         if (!success) return;
         if (obj == MapSymb.corpse)
         {
-            underFoot = Map.Current.corpses[Pos.x];
+            corpseUnderFoot = Map.Current.corpses[Pos.x];
         }
         else
         {
-            underFoot = null;
+            corpseUnderFoot = null;
         }
         if (obj == MapSymb.portal)
         {
@@ -102,11 +102,22 @@ public class Player : Inventoriable
     }
     public void PickUpCorpse()
     {
-        if (underFoot is null) return;
-        IO.seli(underFoot.droplist.ToArray(), out int index, out bool cancel, out _, out _);
-        if(underFoot.droplist[index] is Item drop) PickupItem(drop);
-        Map.Current.corpses[Pos.x] = null;
-        underFoot = null;
+        if (corpseUnderFoot is null) return;
+        while (corpseUnderFoot.droplist.Count > 0)
+        {
+            IO.seli(corpseUnderFoot.droplist.ToArray(), out int index, out bool cancel, out _, out _);
+            if (cancel) break;
+            if (corpseUnderFoot.droplist[index] is Item item)
+            {
+                PickupItem(item);
+                corpseUnderFoot.droplist.Remove(item);
+            }
+        }
+        if (corpseUnderFoot.droplist.Count() <= 0)
+        {
+            Map.Current.corpses[Pos.x] = null;
+            corpseUnderFoot = null;
+        }
         Stance.Set(StanceName.Charge, 0);
     }
     public void ShowStats()

@@ -31,10 +31,10 @@ public partial class Monster : Inventoriable
         {
             if (item is not null) player.PickupToken((TokenType)item);
         }
-        foreach (var item in dropList.list)
-        {
-            if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);
-        }
+        // foreach (var item in dropList.list)
+        // {
+        //     if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);
+        // }
     }
     public virtual void DoTurn()
     {

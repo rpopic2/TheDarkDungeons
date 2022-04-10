@@ -37,7 +37,7 @@ public static class Game
         Turn++;
         Console.Clear();
         IO.pr("History");
-        if (_Player.underFoot is Corpse cor) IO.prb(cor.name + "의 시체 위에 서있다.");
+        if (_Player.corpseUnderFoot is Corpse cor) IO.prb(cor.name + "의 시체 위에 서있다.");
         IO.prb($"턴 : {Turn}  깊이 : {Map.level}\tHP : {_Player.Hp}  Level : {_Player.Level} ({_Player.exp})\t{_Player.tokens}\t 상대 : {((Fightable?)_Player.Target)?.tokens}");
         IO.prb(_Player.Inven);
         IO.pr(Map.Current);

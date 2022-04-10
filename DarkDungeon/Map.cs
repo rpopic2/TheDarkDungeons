@@ -86,7 +86,7 @@ public class Map
     {
         foreach (var item in deadFightables)
         {
-            if (!item.IsAlive) fightables.Remove(item);
+            fightables.Remove(item);
             corpses[item.Pos.x] = new(item.Name, item.Inven.Content);
         }
         deadFightables.Clear();
@@ -118,7 +118,7 @@ public class Map
             if (!success) continue;
             if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
             else if (obj is char chr) rendered[targetTile] = chr;
-            else if( obj is Corpse cor) rendered[targetTile] = cor.ToChar();
+            else if( obj is Corpse cor) rendered[targetTile] = cor.ToChar(); 
             else if (obj is not null) throw new Exception();
         }
     }
