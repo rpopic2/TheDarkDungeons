@@ -8,8 +8,9 @@ public record struct Corpse(string name, List<Item?> droplist) : ISteppable
         return old;
     }
 }
-public record struct Portal(string name = "포탈") : ISteppable
+public record struct Portal() : ISteppable
 {
+    public string name { get; set; } = "포탈";
     public char ToChar() => MapSymb.portal;
 }
 
