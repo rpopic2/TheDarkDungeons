@@ -14,6 +14,14 @@ public enum ItemType
 {
     Equip, Consume
 }
+[Flags]
+public enum __
+{
+    emphasis = 1,
+    newline = 2,
+    bottom = 4,
+    fullinven = 8,
+}
 public static class Extensions
 {
     public static bool TryGet<T>(this T[] source, int index, out T? obj)
@@ -40,10 +48,20 @@ public static class Extensions
         => Char.ToLower(option[option.IndexOf('(') + 1]);
     public static char[] ParseKeys(this string[] options)
         => Array.ConvertAll(options, new Converter<string, char>(ParseKey));
-    public static StanceName ToStance(this TokenType token) =>  token switch{
+    public static StanceName ToStance(this TokenType token) => token switch
+    {
         TokenType.Offence => StanceName.Offence,
         TokenType.Defence => StanceName.Defence,
         TokenType.Charge => StanceName.Charge,
         _ => StanceName.None
     };
+    public static string ToFString(this Array value, string comment = "선택 :")
+    {
+        string printResult = comment + " /";
+        foreach (var item in value)
+        {
+            printResult += $" {item} /";
+        }
+        return printResult;
+    }
 }

@@ -112,13 +112,13 @@ public class Fightable : Moveable
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
-        IO.pr($"{Name}가 죽었다.", false, true);
+        IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateMoveable(this);
     }
-    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {Hp}", true);
+    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {Hp}", __.emphasis);
     protected void OnDamaged(object? sender, PointArgs e)
     {
-        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", true);
+        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
     }
 
     public override string ToString() =>

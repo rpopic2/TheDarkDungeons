@@ -10,113 +10,60 @@ public static class IO
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
-    public static ConsoleKeyInfo rk(object print, bool emphasis = false, bool newline = false)
+    public static ConsoleKeyInfo rk(object print, __ flags = 0)
     {
-        pr(print, emphasis, newline);
+        pr(print, flags);
         ConsoleKeyInfo info = rk();
         del();
         return info;
     }
-    private static void _seli(object print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, int max)
+    public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
     {
         bool found;
+        int max = Inventory.INVENSIZE;
+        if (!flags.HasFlag(__.fullinven))
+        {
+            if (value is Array a) max = a.Length;
+            else if (value is Tokens t) max = t.Count;
+            else if (value is Inventory inv) max = inv.Count;
+        }
         do
         {
-            keyInfo = rk(print);
+            keyInfo = rk(value);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == CANCELKEY;
-            found = chki(keyInfo.KeyChar, max, out index);
+            found = chk(keyInfo.KeyChar, max, out index);
             if (cancel) return;
         } while (!found);
     }
-    public static void seli(Array print, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
-    {
-        bool found;
-        do
-        {
-            keyInfo = rk(print);
-            mod = keyInfo.Modifiers;
-            cancel = keyInfo.Key == CANCELKEY;
-            found = chki(keyInfo.KeyChar, print.Length, out index);
-            if (cancel) return;
-        } while (!found);
-    }
-    public static void seli_if(out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
-    {
-        bool found;
-        do
-        {
-            keyInfo = rk(player.Inven);
-            mod = keyInfo.Modifiers;
-            cancel = keyInfo.Key == CANCELKEY;
-            found = chki_if(keyInfo.KeyChar, out index);
-            if (cancel) return;
-        } while (!found);
-    }
-    public static void seli_i(out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
-    {
-        bool found;
-        do
-        {
-            keyInfo = rk(player.Inven);
-            mod = keyInfo.Modifiers;
-            cancel = keyInfo.Key == CANCELKEY;
-            found = chki(keyInfo.KeyChar, player.Inven.Count, out index);
-            if (cancel) return;
-        } while (!found);
-    }
-    public static bool chkn(Char i, int max, out int index)
-    {
-        index = (int)Char.GetNumericValue(i);
-        if (index == 0) index = 10;
-        if (index != -1) index--;
-        return index != -1 && index <= max - 1;
-    }
-    public static bool chki(Char i, int max, out int index)
+    public static bool chk(Char i, int max, out int index)
     {
         index = ITEMKEYS1.IndexOf(i);
         return index != -1 && index <= max - 1;
     }
-    public static bool chki_if(Char i, out int index)
-    {
-        index = ITEMKEYS1.IndexOf(i);
-        return index != -1 && index <= Inventory.INVENSIZE - 1;
-    }
-    public static void seli_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
-    _seli(player.tokens, out result, out cancel, out mod, out _, player.tokens.Count);
-
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object x, bool emphasis = false, bool newline = false)
+    public static void pr(object value, __ flag = 0)
     {
-        if (x is Array array)
+        if (value is Array array)
         {
-            _prfo(array); return;
+            value = array.ToFString();
         }
-        if (emphasis) x = EMPHASIS + x;
-        if (newline) x = "\n" + x;
-        Console.WriteLine(x);
+        if (flag.HasFlag(__.emphasis)) value = EMPHASIS + value;
+        if (flag.HasFlag(__.newline)) value = "\n" + value;
+        if (flag.HasFlag(__.bottom))
+        {
+            int x = Console.CursorLeft;
+            int y = Console.CursorTop;
+            Console.CursorTop = x + Console.WindowHeight - 1;
+            Console.WriteLine(value);
+            Console.SetCursorPosition(x, y);
+            return;
+        }
+        Console.WriteLine(value);
     }
-    ///<summary>Print on the bottom</summary>
-    public static void prb(object text, bool emphasis = false, bool newline = false)
-    {
-        int x = Console.CursorLeft;
-        int y = Console.CursorTop;
-        Console.CursorTop = x + Console.WindowHeight - 1;
-        pr(text, emphasis, newline);
-        Console.SetCursorPosition(x, y);
-    }
-
     ///<summary>Print in Formated Options</summary>
-    private static void _prfo(Array options, string comment = "선택 :")
-    {
-        string printResult = comment + " /";
-        foreach (var item in options)
-        {
-            printResult += $" {item} /";
-        }
-        pr(printResult);
-    }
+
 
     public static void del()
     {

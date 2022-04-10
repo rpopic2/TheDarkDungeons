@@ -19,7 +19,7 @@ public class Player : Inventoriable
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
         Level++;
         exp.UpdateMax();
-        IO.pr($"{Level}레벨이 되었다.", true);
+        IO.pr($"{Level}레벨이 되었다.", __.emphasis);
         SelectPickupStat();
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
@@ -30,7 +30,7 @@ public class Player : Inventoriable
         int index;
         do
         {
-            IO.seli(Program.stats, out index, out cancel, out ConsoleModifiers mod, out _);
+            IO.sel(Program.stats, 0, out index, out cancel, out ConsoleModifiers mod, out _);
         } while (cancel);
         stat[(StatName)index] += 1;
     }
@@ -38,7 +38,7 @@ public class Player : Inventoriable
     {
     Select:
         IO.pr($"\n아이템을 얻었다. {item.name}");
-        IO.seli_if(out int index, out bool cancel, out _, out _);
+        IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
 
@@ -56,7 +56,7 @@ public class Player : Inventoriable
         if (tokens.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString(token));
-            IO.seli_t(out discard, out bool cancel2, out _);
+            IO.sel(tokens, 0, out discard, out bool cancel2, out _, out _);
             IO.del();
             if (cancel2) return;
         }
@@ -68,7 +68,7 @@ public class Player : Inventoriable
     }
     public void SelectPickupToken()
     {
-        IO.seli(Tokens.TokenPromptNames, out int index, out bool cancel, out _, out _);
+        IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
         if (cancel) return;
         PickupToken((TokenType)index);
     }
@@ -94,7 +94,7 @@ public class Player : Inventoriable
     {
         while (corpse.droplist.Count > 0)
         {
-            IO.seli(corpse.droplist.ToArray(), out int index, out bool cancel, out _, out _);
+            IO.sel(corpse.droplist.ToArray(), __.fullinven, out int index, out bool cancel, out _, out _);
             if (cancel) break;
             if (corpse.droplist[index] is Item item)
             {

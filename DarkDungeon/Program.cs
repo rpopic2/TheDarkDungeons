@@ -36,7 +36,7 @@ public class Program
         IO.del();
         IO.pr($"{name}의 직업은?...");
         int index = 0;
-        IO.seli(classes, out index, out bool cancel, out _, out _);
+        IO.sel(classes, 0, out index, out bool cancel, out _, out _);
         IO.pr(classes[index]);
         Player player = Player._instance = new Player(name);
         Map.NewMap();
@@ -88,17 +88,17 @@ public class Program
     }
     private void DefaultSwitch(ConsoleKeyInfo key)
     {
-        bool found = IO.chki(key.KeyChar, player.Inven.Count, out int i);
+        bool found = IO.chk(key.KeyChar, player.Inven.Count, out int i);
         if (found && player.Inven[i] is Item item)
         {
-            IO.seli(item.skills, out int index, out bool cancel, out _, out _);
+            IO.sel(item.skills, 0, out int index, out bool cancel, out _, out _);
             if (cancel) return;
             player.SelectBehaviour(item, index);
         }
         switch (key.KeyChar)
         {
             case 'y':
-                IO.seli(Inventoriable.bareHand.skills, out int index, out bool cancel, out _, out _);
+                IO.sel(Inventoriable.bareHand.skills, 0, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
                 player.SelectBehaviour(Inventoriable.bareHand, index);
                 break;
