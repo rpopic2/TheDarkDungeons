@@ -1,10 +1,4 @@
 main
-[X] 이동 캔슬돼도 시간은 감. ㄱㅊ?
-[X] 포탈 위에 시체 있으면 포탈 사라짐.->시체가 사라지고 다음으로 이동하게끔?
-[?] 몬스터 휴식할떄 조금 이상한듯. ->??
-[X] deadfightables local로
-[X] IO as flags?
-[X] 투검 바닥에 떨어져있고 줍기
 [ ] 지금 문제 : 인벤토리에 중복 아이템을 못넣음!
     [ ] item 그냥 struct record로 하는게 더 나을지도?? value type가 맞을지도.
     [ ] inventory list 말고 array 쓰는게 맞는듯
@@ -14,11 +8,6 @@ main
 [ ] 데미지타입 시스템?
 
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
-[ ] item.getmeta 개선
-[ ] 스킬 고를때 아래에 출력?
-[ ] 가방
-[ ] vul 상태이상으로?
-[ ] 짧게 싸우면 토큰 길게 싸우면 경치?
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
-[ ] I to show full inventory ui
 [ ] 가본 무기 : 활, 방패, 반지, 마법책
+[ ] I to show full inventory ui
