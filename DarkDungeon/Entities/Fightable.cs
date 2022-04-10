@@ -92,16 +92,11 @@ public class Fightable : Moveable
         return result == damage ? ++result : result;
     }
 
-    public void Rest(TokenType tokenType, int discardIndex = -1)
+    protected void Rest(TokenType tokenType, int discardIndex = -1)
     {
-        _Rest();
         _PickupToken(tokenType, discardIndex);
     }
-    protected void _Rest()
-    {
-        IO.pr($"{Name}은 잠시 숨을 골랐다.");
-        stance.Set(StanceName.Charge, default);
-    }
+
     protected void _PickupToken(TokenType tokenType, int discardIndex = -1)
     {
         if (tokens.IsFull)

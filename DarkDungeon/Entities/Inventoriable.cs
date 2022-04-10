@@ -12,14 +12,18 @@ public partial class Inventoriable : Fightable
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
         else if (behaviour is Consume consume) SelectConsume(item, consume);
-        else if (behaviour is NonTokenSkill nonToken) SelectNonToken(item, nonToken);
-        else IO.rk(behaviour.OnUseOutput);
-    }
+        else if (behaviour is Passive) IO.rk(behaviour.OnUseOutput);
+        else throw new Exception("등록되지 않은 행동 종류입니다.");
 
-    private void SelectNonToken(Item item, NonTokenSkill nonToken)
+    }
+    public void SelectBasicBehaviour(int index, int x, int y)
     {
-        nonToken.behaviour.Invoke(this);
-        stance.Set(StanceName.Charge, default);
+        IBehaviour behaviour = basicActions.skills[index];
+        if (behaviour is NonTokenSkill nonToken)
+        {
+            stance.Set(StanceName.Charge, default);
+            nonToken.behaviour.Invoke(this, x, y);
+        }
     }
 
     public override void OnBeforeFight()

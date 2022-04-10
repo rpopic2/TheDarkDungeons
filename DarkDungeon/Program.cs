@@ -75,11 +75,11 @@ public class Program
         {
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
-                player.SelectBehaviour(Inventoriable.basicActions, 0);
+                player.SelectBasicBehaviour(0, 1, 1);
                 break;
             case ConsoleKey.LeftArrow:
             case ConsoleKey.H:
-                player.SelectBehaviour(Inventoriable.basicActions, 1);
+                player.SelectBasicBehaviour(0, -1, 1);
                 break;
             default:
                 DefaultSwitch(info);
@@ -106,7 +106,19 @@ public class Program
                 player.InteractUnderFoot();
                 break;
             case '.':
-                player.Rest();
+                IO.pr("토큰을 획득하였습니다.");
+                IO.seli(Tokens.TokenPromptNames, out int tokenType, out bool cancelRest, out _, out _);
+                IO.del();
+                if (cancelRest) return;
+                int discard = -1;
+                if (player.tokens.IsFull)
+                {
+                    IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString((TokenType)tokenType));
+                    IO.seli_t(out discard, out bool cancel2, out _);
+                    IO.del();
+                    if (cancel2) return;
+                }
+                player.SelectBasicBehaviour(1, tokenType, discard);
                 break;
             case '/':
                 player.ShowStats();

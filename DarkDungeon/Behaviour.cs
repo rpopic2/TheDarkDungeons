@@ -8,7 +8,7 @@ public record Skill(string Name, TokenType TokenType, StatName statName, string 
         return result;
     }
 }
-public record NonTokenSkill(string Name, string OnUseOutput, Action<Inventoriable> behaviour) : IBehaviour;
+public record NonTokenSkill(string Name, string OnUseOutput, Action<Inventoriable, int, int> behaviour) : IBehaviour;
 
 public record Consume(string Name, string OnUseOutput, Action<Fightable> behaviour) : IBehaviour
 {
