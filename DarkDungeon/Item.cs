@@ -20,15 +20,15 @@ public partial class Inventoriable
         })
     });
     public static readonly Item bareHand = new("(맨손)", ItemType.Equip, new Skill[] {
-        new("주먹질", TokenType.Offence, StatName.Sol, "은 주먹을 휘둘렀다.", (i)=>i.Throw(1)),
-        new("구르기", TokenType.Defence, StatName.Lun, "은 옆으로 굴렀다.", (i)=>i.Dodge())
+        new("주먹질", TokenType.Offence, StatName.Sol, DamageType.Normal, "은 주먹을 휘둘렀다.", (i)=>i.Throw(1)),
+        new("구르기", TokenType.Defence, StatName.Lun, DamageType.Thrust, "은 옆으로 굴렀다.", (i)=>i.Dodge())
         });
     public static readonly Item sword = new("(검)", ItemType.Equip, new Skill[] {
-        new("베기", TokenType.Offence, StatName.Sol, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Throw(1)),
-        new("칼로막기", TokenType.Defence, StatName.Lun, "은 칼로 막기 자세를 취했다.", (i)=>i.Dodge())
+        new("베기", TokenType.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Throw(1)),
+        new("칼로막기", TokenType.Defence, StatName.Lun, DamageType.Slash, "은 칼로 막기 자세를 취했다.", (i)=>i.Dodge())
         });
     public static readonly Item holySword = new("(광란의 신성검)", ItemType.Equip, new Skill[] {
-        new("베기", TokenType.Offence, StatName.Sol, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Throw(1)),
+        new("베기", TokenType.Offence, StatName.Sol, D "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Throw(1)),
         new("광란의기도", TokenType.Charge, StatName.Con, "은 미친 듯이 기도하였고 칼이 빛나기 시작했다.", (i)=>{})
         });
     public static readonly Item staff = new("(지팡이)", ItemType.Equip, new Skill[] {

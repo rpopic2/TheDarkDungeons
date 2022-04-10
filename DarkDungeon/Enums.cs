@@ -22,6 +22,10 @@ public enum __
     bottom = 4,
     fullinven = 8,
 }
+public enum DamageType
+{
+    Normal, Slash, Thrust, Magic
+}
 public static class Extensions
 {
     public static bool TryGet<T>(this T[] source, int index, out T? obj)
