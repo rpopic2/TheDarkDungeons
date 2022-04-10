@@ -37,7 +37,7 @@ public partial class Inventoriable
         });
     public static readonly Item dagger = new("(단검)", ItemType.Equip, new Skill[] {
         new("찌르기", TokenType.Offence, StatName.Sol, "은 단검으로 적을 찔렀다.", (i)=>i.Throw(1)),
-        new("투검", TokenType.Offence, StatName.Lun, "은 적을 향해 단검을 던졌다.", (i)=>{i.Throw(3); i.Inven.Remove(dagger!);})
+        new("투검", TokenType.Offence, StatName.Lun, "은 적을 향해 단검을 던졌다.", (i)=>{i.Throw(3); i.lastHit.Inven.Add(dagger!); i.Inven.Remove(dagger!);})
     });
     public static readonly Item batItem = new("(박쥐)", ItemType.Equip, new Skill[] {
         new("들이박기", TokenType.Offence, StatName.Lun, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Throw(1); i.Hp -= 1;}),

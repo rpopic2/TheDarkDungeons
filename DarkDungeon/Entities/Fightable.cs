@@ -44,6 +44,7 @@ public class Fightable : Moveable
         if (Target is not Fightable tar) return;
         if (tar.stance.Stance == StanceName.Defence) tar.Dodge(0);
     }
+    public Fightable lastHit { get; private set; }
     public void Throw(int range)
     {
         for (int i = 0; i < range; i++)
@@ -57,6 +58,7 @@ public class Fightable : Moveable
                     stance.AddAmount(magicCharge);
                     Inven.GetMeta(currentItem!).magicCharge = 0;
                 }
+                lastHit = hit;
                 hit.Dodge(stance.Amount);
                 break;
             }

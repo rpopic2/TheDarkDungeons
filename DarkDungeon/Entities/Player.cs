@@ -94,7 +94,7 @@ public class Player : Inventoriable
     {
         while (corpse.droplist.Count > 0)
         {
-            IO.sel(corpse.droplist.ToArray(), __.fullinven, out int index, out bool cancel, out _, out _);
+            IO.sel(corpse.droplist.ToArray(), 0, out int index, out bool cancel, out _, out _);
             if (cancel) break;
             if (corpse.droplist[index] is Item item)
             {
