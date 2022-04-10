@@ -1,42 +1,41 @@
 namespace Entities;
 public partial class Fightable
 {
-    protected Stat stat;
+    public readonly string Name;
+    public int Level { get; protected set; }
+    public GamePoint Hp { get; protected set; }
+    public Tokens Toks { get; private set; }
+    protected readonly Stat Stat;
+    public int Sight { get; private set; } = 1;
+    public Position Pos { get; protected set; }
+
     public Inventory Inven { get; private set; }
-    public readonly Tokens tokens;
-    public GamePoint Hp { get; set; }
+
+    public StanceInfo Stance { get; protected set; } = new(default, default);
     public virtual Fightable? Target { get; protected set; }
-    public bool IsAlive => !Hp.IsMin;
-    public int sight = 1;
+
     public Action<Fightable>? currentBehav;
     public Item? currentItem;
     public Fightable? lastHit { get; private set; }
     public Action<Fightable> passives = (p) => { };
-    public int Level { get; protected set; }
-    public readonly string Name;
-    protected StanceInfo stance = new(default, default);
-
-    public Position Pos { get; set; }
-
-    public StanceInfo Stance => stance;
-    protected virtual void Move(int x) => Move(x, out char obj);
-    public virtual char ToChar() => Name.ToLower()[0];
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos)
     {
         Pos = pos;
         this.Level = level;
         Name = name;
-        stat = new();
-        stat[StatName.Sol] = sol;
-        stat[StatName.Lun] = lun;
-        stat[StatName.Con] = con;
+        Stat = new();
+        Stat[StatName.Sol] = sol;
+        Stat[StatName.Lun] = lun;
+        Stat[StatName.Con] = con;
         Inven = new((Fightable)this, "(맨손)");
-        tokens = new(cap);
+        Toks = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
+    public bool IsAlive => !Hp.IsMin;
+    protected virtual void Move(int x) => Move(x, out char obj);
     protected virtual bool Move(int x, out char obj)
     {
         Map current = Map.Current;
@@ -64,27 +63,21 @@ public partial class Fightable
             }
             else
             {
-                stance.Set(StanceName.None, default);
+                Stance.Set(StanceName.None, default);
             }
         }
         return canGo;
     }
-    public int SetStance(TokenType token, StatName statName)
-    {
-        int amount = stat.GetRandom(statName);
-        stance.Set(token.ToStance(), amount);
-        return amount;
-    }
     public void TryAttack()
     {
-        if (stance.Stance == StanceName.Offence && currentBehav is not null)
+        if (Stance.Stance == StanceName.Offence && currentBehav is not null)
         {
             currentBehav.Invoke((Fightable)this);
             currentBehav = null;
             return;
         }
         if (Target is not Fightable tar) return;
-        if (tar.stance.Stance == StanceName.Defence) tar.Dodge(0);
+        if (tar.Stance.Stance == StanceName.Defence) tar.Dodge(0);
     }
     public void Throw(int range)
     {
@@ -96,11 +89,11 @@ public partial class Fightable
                 int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
                 if (magicCharge > 0)
                 {
-                    stance.AddAmount(magicCharge);
+                    Stance.AddAmount(magicCharge);
                     Inven.GetMeta(currentItem!).magicCharge = 0;
                 }
                 lastHit = hit;
-                hit.Dodge(stance.Amount);
+                hit.Dodge(Stance.Amount);
                 break;
             }
         }
@@ -108,7 +101,7 @@ public partial class Fightable
 
     public void TryDefence()
     {
-        if (stance.Stance == StanceName.Defence && currentBehav is not null)
+        if (Stance.Stance == StanceName.Defence && currentBehav is not null)
         {
             currentBehav.Invoke((Fightable)this);
             currentBehav = null;
@@ -118,35 +111,21 @@ public partial class Fightable
     public void Dodge() => Dodge(0);
     public void Dodge(int damage)
     {
-        if (stance.Stance == StanceName.Defence)
+        if (Stance.Stance == StanceName.Defence)
         {
-            damage -= stance.Amount;
+            damage -= Stance.Amount;
         }
-        else if (damage > 0 && stance.Stance == StanceName.Charge)
+        else if (damage > 0 && Stance.Stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
-            damage = GetVulDmg(damage);
+            damage = damage.ToVul();
         }
         Hp -= damage;
-    }
-    public static int GetVulDmg(int damage)
-    {
-        int result = (int)MathF.Round(damage * Rules.vulMulp);
-        return result == damage ? ++result : result;
-    }
-    protected void _PickupToken(TokenType tokenType, int discardIndex = -1)
-    {
-        if (tokens.IsFull)
-        {
-            if (discardIndex != -1) tokens.RemoveAt(discardIndex);
-            else tokens.RemoveAt(tokens.Count - 1);
-        }
-        tokens.Add(tokenType);
     }
     public void OnTurnEnd()
     {
         UpdateTarget();
-        stance.Reset();
+        Stance.Reset();
         currentBehav = null;
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
@@ -159,24 +138,27 @@ public partial class Fightable
     {
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
     }
-
-    public override string ToString() =>
-        $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {stat[StatName.Sol]}\tLun : {stat[StatName.Lun]}\tCon : {stat[StatName.Con]}";
     public void UpdateTarget()
     {
         Map.Current.FightablePositions.TryGet(Pos.GetFrontIndex(1), out Fightable? mov);
-        if (mov is Fightable f && isEnemy(this, f)) Target = mov;
+        if (mov is Fightable f && this.IsEnemy(f)) Target = mov;
         else Target = null;
     }
-    private bool isEnemy(Fightable p1, Fightable p2)
+    protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
-        if (p1 is Player && p2 is Monster) return true;
-        if (p1 is Monster && p2 is Player) return true;
-        return false;
+        if (Toks.IsFull)
+        {
+            if (discardIndex != -1) Toks.RemoveAt(discardIndex);
+            else Toks.RemoveAt(Toks.Count - 1);
+        }
+        Toks.Add(tokenType);
     }
-
-    public static bool IsFirst(Fightable p1, Fightable p2)
-    => p1.stat[StatName.Lun] >= p2.stat[StatName.Lun];
+    public int SetStance(TokenType token, StatName statName)
+    {
+        int amount = Stat.GetRandom(statName);
+        Stance.Set(token.ToStance(), amount);
+        return amount;
+    }
     public void SelectBehaviour(Item item, int index)
     {
         if (Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
@@ -194,13 +176,13 @@ public partial class Fightable
         {
             string output = behaviour.OnUseOutput;
             if (output != string.Empty) IO.pr(Name + output);
-            stance.Set(StanceName.Charge, default);
+            Stance.Set(StanceName.Charge, default);
             nonToken.behaviour.Invoke(this, x, y);
         }
     }
     private void SelectSkill(Item item, Skill selected)
     {
-        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
+        TokenType? tokenTry = Toks.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
         {
             int amount = SetStance(token, selected.statName);
@@ -224,4 +206,6 @@ public partial class Fightable
         consume.behaviour.Invoke(this);
         Inven.Consume(item);
     }
+    public virtual char ToChar() => Name.ToLower()[0];
+    public override string ToString() => $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{Toks}\tSol : {Stat[StatName.Sol]}\tLun : {Stat[StatName.Lun]}\tCon : {Stat[StatName.Con]}";
 }

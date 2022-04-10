@@ -24,14 +24,14 @@ public partial class Monster : Fightable
         }
         foreach (var token in startTokens)
         {
-            tokens.Add((TokenType)token);
+            Toks.Add((TokenType)token);
         }
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
         base.OnDeath(sender, e);
         player.exp.point += killExp;
-        foreach (var item in tokens.Content)
+        foreach (var item in Toks.Content)
         {
             if (item is not null) player.PickupToken((TokenType)item);
         }

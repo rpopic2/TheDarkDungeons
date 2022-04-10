@@ -31,7 +31,7 @@ public class Player : Fightable
         {
             IO.sel(Program.stats, 0, out index, out cancel, out ConsoleModifiers mod, out _);
         } while (cancel);
-        stat[(StatName)index] += 1;
+        Stat[(StatName)index] += 1;
     }
     public void PickupItem(Item item)
     {
@@ -52,14 +52,14 @@ public class Player : Fightable
     public void PickupToken(TokenType token)
     {
         int discard = -1;
-        if (tokens.IsFull)
+        if (Toks.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString(token));
-            IO.sel(tokens, 0, out discard, out bool cancel2, out _, out _);
+            IO.sel(Toks, 0, out discard, out bool cancel2, out _, out _);
             IO.del();
             if (cancel2) return;
         }
-        _PickupToken(token, discard);
+        PickupToken(token, discard);
 
         //IO.pr($"{Tokens.ToString(token)} 토큰을 얻었습니다.");
         //IO.rk();
