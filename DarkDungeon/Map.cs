@@ -118,7 +118,7 @@ public class Map
             if (!success) continue;
             if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
             else if (obj is char chr) rendered[targetTile] = chr;
-            else if( obj is ISteppable cor) rendered[targetTile] = cor.ToChar(); 
+            else if (obj is ISteppable cor) rendered[targetTile] = cor.ToChar();
             else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");
         }
     }
