@@ -1,5 +1,5 @@
 namespace Entities;
-public partial class Monster : Inventoriable
+public partial class Monster : Fightable
 {
     private int killExp;
     protected static Player player { get => Player.instance; }

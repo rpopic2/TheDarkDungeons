@@ -1,6 +1,6 @@
 public class Inventory
 {
-    public Inventoriable owner;
+    public Fightable owner;
     public const int INVENSIZE = 5;
     private List<Item?> content;
     public ref readonly List<Item?> Content => ref content;
@@ -8,7 +8,7 @@ public class Inventory
     private ItemMetaData bareHandMetaData = new();
     public readonly string name;
 
-    public Inventory(Inventoriable owner, string name)
+    public Inventory(Fightable owner, string name)
     {
         this.owner = owner;
         content = new(INVENSIZE);
@@ -72,7 +72,7 @@ public class Inventory
     }
     public ItemMetaData GetMeta(Item item)
     {
-        if(item == Inventoriable.bareHand) return bareHandMetaData;
+        if(item == Fightable.bareHand) return bareHandMetaData;
         return metaDatas[item];
     }
     public void Consume(Item item)

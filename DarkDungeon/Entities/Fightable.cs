@@ -1,5 +1,5 @@
 namespace Entities;
-public class Fightable : Moveable
+public partial class Fightable : Moveable
 {
     protected Stat stat;
     public Inventory Inven { get; private set; }
@@ -8,10 +8,10 @@ public class Fightable : Moveable
     public virtual Moveable? Target { get; protected set; }
     public bool IsAlive => !Hp.IsMin;
     public int sight = 1;
-    public Action<Inventoriable>? currentBehav;
+    public Action<Fightable>? currentBehav;
     public Item? currentItem;
     public Fightable? lastHit { get; private set; }
-    public Action<Inventoriable> passives = (p) => { };
+    public Action<Fightable> passives = (p) => { };
 
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos) : base(level, name, pos)
     {
@@ -19,16 +19,12 @@ public class Fightable : Moveable
         stat[StatName.Sol] = sol;
         stat[StatName.Lun] = lun;
         stat[StatName.Con] = con;
-        Inven = new((Inventoriable)this, "(맨손)");
+        Inven = new((Fightable)this, "(맨손)");
         tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
-    }
-    public int GetStat(StatName statName)
-    {
-        return stat[statName];
     }
     public int SetStance(TokenType token, StatName statName)
     {
@@ -40,7 +36,7 @@ public class Fightable : Moveable
     {
         if (stance.Stance == StanceName.Offence && currentBehav is not null)
         {
-            currentBehav.Invoke((Inventoriable)this);
+            currentBehav.Invoke((Fightable)this);
             currentBehav = null;
             return;
         }
@@ -71,7 +67,7 @@ public class Fightable : Moveable
     {
         if (stance.Stance == StanceName.Defence && currentBehav is not null)
         {
-            currentBehav.Invoke((Inventoriable)this);
+            currentBehav.Invoke((Fightable)this);
             currentBehav = null;
             return;
         }
@@ -103,10 +99,6 @@ public class Fightable : Moveable
             else tokens.RemoveAt(tokens.Count - 1);
         }
         tokens.Add(tokenType);
-    }
-    public virtual void OnBeforeFight()
-    {
-        
     }
     public void OnTurnEnd()
     {
@@ -147,4 +139,51 @@ public class Fightable : Moveable
 
     public static bool IsFirst(Fightable p1, Fightable p2)
     => p1.stat[StatName.Lun] >= p2.stat[StatName.Lun];
+    public void SelectBehaviour(Item item, int index)
+    {
+        if (Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
+        IBehaviour behaviour = item.skills[index];
+        if (behaviour is Skill skill) SelectSkill(item, skill);
+        else if (behaviour is Consume consume) SelectConsume(item, consume);
+        else if (behaviour is Passive || behaviour is WearEffect) IO.rk(behaviour.OnUseOutput);
+        else throw new Exception("등록되지 않은 행동 종류입니다.");
+    }
+    //requirements : stance 정하기, rk로 프린트하기.
+    public void SelectBasicBehaviour(int index, int x, int y)
+    {
+        IBehaviour behaviour = basicActions.skills[index];
+        if (behaviour is NonTokenSkill nonToken)
+        {
+            string output = behaviour.OnUseOutput;
+            if (output != string.Empty) IO.pr(Name + output);
+            stance.Set(StanceName.Charge, default);
+            nonToken.behaviour.Invoke(this, x, y);
+        }
+    }
+    private void SelectSkill(Item item, Skill selected)
+    {
+        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
+        if (tokenTry is TokenType token)
+        {
+            int amount = SetStance(token, selected.statName);
+            string s = $"{Name} {selected.OnUseOutput} ({amount})";
+            int mcharge = Inven.GetMeta(item).magicCharge;
+            if (mcharge > 0) s += ($"+({mcharge})");
+            if (selected.statName == StatName.Con) Inven.GetMeta(item).magicCharge += amount;
+            currentBehav = selected.behaviour;
+            currentItem = item;
+            IO.rk(s);
+        }
+        else
+        {
+            IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
+        }
+    }
+    private void SelectConsume(Item item, Consume consume)
+    {
+        SetStance(TokenType.Charge, default);
+        IO.rk($"{Name} {consume.OnUseOutput}");
+        consume.behaviour.Invoke(this);
+        Inven.Consume(item);
+    }
 }

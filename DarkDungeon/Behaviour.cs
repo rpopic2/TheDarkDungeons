@@ -1,4 +1,4 @@
-public record Skill(string Name, TokenType TokenType, StatName statName, DamageType damageType, string OnUseOutput, Action<Inventoriable> behaviour) : IBehaviour
+public record Skill(string Name, TokenType TokenType, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> behaviour) : IBehaviour
 {
     public static readonly string[] parenthesis = { "()", "[]", "<>" };
     public override string ToString()
@@ -8,7 +8,7 @@ public record Skill(string Name, TokenType TokenType, StatName statName, DamageT
         return result;
     }
 }
-public record NonTokenSkill(string Name, string OnUseOutput, Action<Inventoriable, int, int> behaviour) : IBehaviour;
+public record NonTokenSkill(string Name, string OnUseOutput, Action<Fightable, int, int> behaviour) : IBehaviour;
 
 public record Consume(string Name, string OnUseOutput, Action<Fightable> behaviour) : IBehaviour
 {
@@ -18,12 +18,12 @@ public record Consume(string Name, string OnUseOutput, Action<Fightable> behavio
     }
 }
 
-public record WearEffect(string Name, string OnUseOutput, Action<Inventoriable> wear, Action<Inventoriable> takeOff) : IBehaviour
+public record WearEffect(string Name, string OnUseOutput, Action<Fightable> wear, Action<Fightable> takeOff) : IBehaviour
 {
     public override string ToString() => Name;
 }
 
-public record Passive(string Name, string OnUseOutput, Action<Inventoriable> actionEveryTurn) : IBehaviour
+public record Passive(string Name, string OnUseOutput, Action<Fightable> actionEveryTurn) : IBehaviour
 {
     public override string ToString() => Name;
 }

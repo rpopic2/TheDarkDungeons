@@ -10,7 +10,7 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
         return (WearEffect[]?)(from p in skills where p is WearEffect select p);
     }
 }
-public partial class Inventoriable
+public partial class Fightable
 {
     public static readonly Item basicActions = new("(기본)", ItemType.Equip, new NonTokenSkill[]{
         new("이동", string.Empty, (i, x, y)=>i.Move(x*y)),

@@ -17,7 +17,7 @@ public static class Game
 
         fights.ForEach(m =>
         {
-            m.passives.Invoke((Inventoriable)m); //tryattack
+            m.passives.Invoke((Fightable)m); //tryattack
         });
         fights.ForEach(m => m.TryAttack());
         fights.ForEach(m => m.TryDefence());

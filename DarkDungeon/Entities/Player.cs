@@ -1,6 +1,6 @@
 namespace Entities;
 
-public class Player : Inventoriable
+public class Player : Fightable
 {
     public const int BASICCAP = 3;
     public const int BASICSTAT = 2;

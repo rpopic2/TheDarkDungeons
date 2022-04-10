@@ -44,13 +44,13 @@ public class Program
         switch (index)
         {
             case 0:
-                player.PickupItem(Inventoriable.sword);
+                player.PickupItem(Fightable.sword);
                 break;
             case 1:
-                player.PickupItem(Inventoriable.dagger);
+                player.PickupItem(Fightable.dagger);
                 break;
             case 2:
-                player.PickupItem(Inventoriable.staff);
+                player.PickupItem(Fightable.staff);
                 break;
             default:
                 break;
@@ -62,7 +62,7 @@ public class Program
         player.SelectPickupToken();
         player.SelectPickupToken();
         player.SelectPickupToken();
-        player.PickupItem(Inventoriable.torch);
+        player.PickupItem(Fightable.torch);
         IO.del();
     }
     //-------------------------
@@ -98,9 +98,9 @@ public class Program
         switch (key.KeyChar)
         {
             case 'y':
-                IO.sel(Inventoriable.bareHand.skills, 0, out int index, out bool cancel, out _, out _);
+                IO.sel(Fightable.bareHand.skills, 0, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
-                player.SelectBehaviour(Inventoriable.bareHand, index);
+                player.SelectBehaviour(Fightable.bareHand, index);
                 break;
             case ' ':
                 player.InteractUnderFoot();
