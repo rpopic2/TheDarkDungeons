@@ -3,10 +3,10 @@ public class Inventory
     public Inventoriable owner;
     public const int INVENSIZE = 5;
     private List<Item?> content;
+    public ref readonly List<Item?> Content => ref content;
     private Dictionary<Item, ItemMetaData> metaDatas;
     private ItemMetaData bareHandMetaData = new();
     public readonly string name;
-    public ref readonly List<Item?> Content => ref content;
 
     public Inventory(Inventoriable owner, string name)
     {
