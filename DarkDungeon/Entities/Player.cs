@@ -73,11 +73,6 @@ public class Player : Fightable
         if (cancel) return;
         PickupToken((TokenType)index);
     }
-    protected override void Move(int x)
-    {
-        bool success = Move(x, out char obj);
-        if (!success) return;
-    }
     public void InteractUnderFoot()
     {
         if (underFoot is null) return;
