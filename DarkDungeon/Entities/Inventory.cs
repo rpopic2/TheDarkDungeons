@@ -84,7 +84,7 @@ public class Inventory
         string result = "";
         for (int i = 0; i < INVENSIZE; i++)
         {
-            if (i >= Count) result += $"({IO.ItemKeys1[i]})";
+            if (i >= Count) result += $"({IO.ITEMKEYS1[i]})";
             else if(content[i] is Item item)
             {
                 string itemName = item.ToString();

@@ -33,7 +33,6 @@ public static class Game
     }
     public static void NewTurn()
     {
-        IO.printCount = 0;
         Turn++;
         Console.Clear();
         IO.pr("History");

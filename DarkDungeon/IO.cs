@@ -2,12 +2,10 @@ public static class IO
 {
     public const ConsoleKey OKKEY = ConsoleKey.Z;
     public const ConsoleKey CANCELKEY = ConsoleKey.X;
-    private const string Emphasis = "=> ";
-    public const string ItemKeys1 = "qwert";
-    private const string delString = "                                                                                       ";
+    private const string EMPHASIS = "=> ";
+    public const string ITEMKEYS1 = "qwert";
+    private const string DELSTRING = "                                                                                       ";
     private static Player player { get => Player.instance; }
-
-    public static int printCount;
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
@@ -76,12 +74,12 @@ public static class IO
     }
     public static bool chki(Char i, int max, out int index)
     {
-        index = ItemKeys1.IndexOf(i);
+        index = ITEMKEYS1.IndexOf(i);
         return index != -1 && index <= max - 1;
     }
     public static bool chki_if(Char i, out int index)
     {
-        index = ItemKeys1.IndexOf(i);
+        index = ITEMKEYS1.IndexOf(i);
         return index != -1 && index <= Inventory.INVENSIZE - 1;
     }
     public static void seli_t(out int result, out bool cancel, out ConsoleModifiers mod) =>
@@ -95,10 +93,9 @@ public static class IO
         {
             _prfo(array); return;
         }
-        if (emphasis) x = Emphasis + x;
+        if (emphasis) x = EMPHASIS + x;
         if (newline) x = "\n" + x;
         Console.WriteLine(x);
-        printCount++;
     }
     ///<summary>Print on the bottom</summary>
     public static void prb(object text, bool emphasis = false, bool newline = false)
@@ -125,7 +122,7 @@ public static class IO
     {
         if (Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
-        pr(delString);
+        pr(DELSTRING);
         Console.SetCursorPosition(0, Console.CursorTop - 1);
     }
     public static void del(int lines)
