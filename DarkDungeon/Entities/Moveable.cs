@@ -22,7 +22,7 @@ public class Moveable : Entity
         bool result = existsTile && !obstructed;
         if (result)
         {
-            stance = new(StanceName.Charge, default);
+            //stance = new(StanceName.Charge, default);
             Pos = newPos;
             current.UpdateMoveable(this);
         }

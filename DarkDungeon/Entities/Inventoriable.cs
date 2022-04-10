@@ -19,6 +19,7 @@ public partial class Inventoriable : Fightable
     private void SelectNonToken(Item item, NonTokenSkill nonToken)
     {
         nonToken.behaviour.Invoke(this);
+        stance.Set(StanceName.Charge, default);
     }
 
     public override void OnBeforeFight()
