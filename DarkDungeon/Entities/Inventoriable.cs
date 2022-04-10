@@ -14,24 +14,23 @@ public partial class Inventoriable : Fightable
         else if (behaviour is Consume consume) SelectConsume(item, consume);
         else if (behaviour is Passive) IO.rk(behaviour.OnUseOutput);
         else throw new Exception("등록되지 않은 행동 종류입니다.");
-
     }
+    public override void OnBeforeFight()
+    {
+        passives.Invoke(this);
+        base.OnBeforeFight();
+    }
+    //requirements : stance 정하기, rk로 프린트하기.
     public void SelectBasicBehaviour(int index, int x, int y)
     {
         IBehaviour behaviour = basicActions.skills[index];
         if (behaviour is NonTokenSkill nonToken)
         {
             string output = behaviour.OnUseOutput;
-            if(output != string.Empty)IO.rk(Name + output);
+            if (output != string.Empty) IO.rk(Name + output);
             stance.Set(StanceName.Charge, default);
             nonToken.behaviour.Invoke(this, x, y);
         }
-    }
-
-    public override void OnBeforeFight()
-    {
-        passives.Invoke(this);
-        base.OnBeforeFight();
     }
     private void SelectSkill(Item item, Skill selected)
     {
