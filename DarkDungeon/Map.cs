@@ -127,16 +127,6 @@ public class Map
         Render();
         return string.Join(" ", rendered);
     }
-    public bool IsVisible(Moveable mov)
-    {
-        if (mov is Player) return true;
-        Position playerPos = Player.instance.Pos;
-        int distance = mov.Pos.x - playerPos.x;
-        if (distance > 0 && playerPos.facing == Facing.Front) return true;
-        else if (distance < 0 && playerPos.facing == Facing.Back) return true;
-        else if (distance == 0) return true;
-        return false;
-    }
     internal bool IsAtEnd(int index)
     {
         if (index <= 0 || index >= length - 1) return true;
