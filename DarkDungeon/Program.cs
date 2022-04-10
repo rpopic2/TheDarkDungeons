@@ -44,13 +44,13 @@ public class Program
         switch (index)
         {
             case 0:
-                player.PickupItem(Item.sword);
+                player.PickupItem(Inventoriable.sword);
                 break;
             case 1:
-                player.PickupItem(Item.dagger);
+                player.PickupItem(Inventoriable.dagger);
                 break;
             case 2:
-                player.PickupItem(Item.staff);
+                player.PickupItem(Inventoriable.staff);
                 break;
             default:
                 break;
@@ -75,11 +75,11 @@ public class Program
         {
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
-                player.SelectBehaviour(Item.basicActions, 0);
+                player.SelectBehaviour(Inventoriable.basicActions, 0);
                 break;
             case ConsoleKey.LeftArrow:
             case ConsoleKey.H:
-                player.SelectBehaviour(Item.basicActions, 1);
+                player.SelectBehaviour(Inventoriable.basicActions, 1);
                 break;
             default:
                 DefaultSwitch(info);
@@ -98,9 +98,9 @@ public class Program
         switch (key.KeyChar)
         {
             case 'y':
-                IO.seli(Item.bareHand.skills, out int index, out bool cancel, out _, out _);
+                IO.seli(Inventoriable.bareHand.skills, out int index, out bool cancel, out _, out _);
                 if (cancel) return;
-                player.SelectBehaviour(Item.bareHand, index);
+                player.SelectBehaviour(Inventoriable.bareHand, index);
                 break;
             case ' ':
                 player.InteractUnderFoot();

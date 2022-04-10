@@ -9,7 +9,7 @@ public class Moveable : Entity
     public Position Pos { get; set; }
 
     public StanceInfo Stance => stance;
-    public virtual void Move(int x) => Move(x, out char obj);
+    protected virtual void Move(int x) => Move(x, out char obj);
     public virtual char ToChar() => Name.ToLower()[0];
 
     protected virtual bool Move(int x, out char obj)

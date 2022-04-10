@@ -72,7 +72,7 @@ public class Inventory
     }
     public ItemMetaData GetMeta(Item item)
     {
-        if(item == Item.bareHand) return bareHandMetaData;
+        if(item == Inventoriable.bareHand) return bareHandMetaData;
         return metaDatas[item];
     }
     public void Consume(Item item)

@@ -9,7 +9,6 @@ public class Player : Inventoriable
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public ISteppable? underFoot => Map.Current.steppables[Pos.x];
     public Exp exp;
-    public int torch = 0;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP, pos: new(0))
     {
         exp = new Exp(this);
@@ -91,7 +90,7 @@ public class Player : Inventoriable
             if (tokens[index] is byte result) return (TokenType)result;
         } while (true);
     }
-    public override void Move(int x)
+    protected override void Move(int x)
     {
         bool success = Move(x, out char obj);
         if (!success) return;
@@ -132,6 +131,6 @@ public class Player : Inventoriable
         IO.rk();
         IO.del(3);
     }
-    public override string ToString() => base.ToString() + $"\nExp : {exp}\tTorch : {torch}";
+    public override string ToString() => base.ToString() + $"\nExp : {exp}";
     public override char ToChar() => MapSymb.player;
 }

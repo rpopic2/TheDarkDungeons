@@ -1,5 +1,5 @@
 namespace Entities;
-public class Inventoriable : Fightable
+public partial class Inventoriable : Fightable
 {
     public Action<Inventoriable> passives = (p) => { };
     public Inventoriable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos) : base(name, level, sol, lun, con, maxHp, cap, pos)
