@@ -42,7 +42,6 @@ public partial class Monster
         else
         {
             SelectBasicBehaviour(1, 1, -1); //pickup offence
-            return;
         }
         if (Target?.Stance.Stance == StanceName.Charge) metaData["isAngry"] = 1;
         else metaData["isAngry"] = 0;
