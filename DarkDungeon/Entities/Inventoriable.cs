@@ -4,16 +4,23 @@ public class Inventoriable : Fightable
     public Action<Inventoriable> passives = (p) => { };
     public Inventoriable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos) : base(name, level, sol, lun, con, maxHp, cap, pos)
     {
-        
+
     }
     public void SelectBehaviour(Item item, int index)
     {
-        if(Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
+        if (Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
         else if (behaviour is Consume consume) SelectConsume(item, consume);
+        else if (behaviour is NonTokenSkill nonToken) SelectNonToken(item, nonToken);
         else IO.rk(behaviour.OnUseOutput);
     }
+
+    private void SelectNonToken(Item item, NonTokenSkill nonToken)
+    {
+        nonToken.behaviour.Invoke(this);
+    }
+
     public override void OnBeforeFight()
     {
         passives.Invoke(this);

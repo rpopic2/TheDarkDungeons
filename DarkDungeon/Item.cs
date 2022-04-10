@@ -1,5 +1,9 @@
 public record Item(string name, ItemType itemType, IBehaviour[] skills)
 {
+    public static readonly Item basicActions = new("(기본)", ItemType.Equip, new NonTokenSkill[]{
+        new("앞이동", "은 이동하기로 했다.", (f)=>f.Move(1)),
+        new("뒤이동", "은 이동하기로 했다.", (f)=>f.Move(-1))
+    });
     public static readonly Item bareHand = new("(맨손)", ItemType.Equip, new Skill[] {
         new("주먹질", TokenType.Offence, StatName.Sol, "은 주먹을 휘둘렀다.", (f)=>f.Throw(1)),
         new("구르기", TokenType.Defence, StatName.Lun, "은 옆으로 굴렀다.", (f)=>f.Dodge())
