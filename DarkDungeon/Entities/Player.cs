@@ -39,7 +39,7 @@ public class Player : Inventoriable
     {
     Select:
         IO.pr($"\n아이템을 얻었다. {item.name}");
-        IO.seli_i(out int index, out bool cancel, out _, out _);
+        IO.seli_if(out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
 

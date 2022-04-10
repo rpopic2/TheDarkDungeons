@@ -43,6 +43,18 @@ public static class IO
             if (cancel) return;
         } while (!found);
     }
+    public static void seli_if(out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
+    {
+        bool found;
+        do
+        {
+            keyInfo = rk(player.Inven);
+            mod = keyInfo.Modifiers;
+            cancel = keyInfo.Key == CANCELKEY;
+            found = chki_if(keyInfo.KeyChar, out index);
+            if (cancel) return;
+        } while (!found);
+    }
     public static void seli_i(out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
     {
         bool found;
@@ -51,7 +63,7 @@ public static class IO
             keyInfo = rk(player.Inven);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == CANCELKEY;
-            found = chki_i(keyInfo.KeyChar, out index);
+            found = chki(keyInfo.KeyChar, player.Inven.Count, out index);
             if (cancel) return;
         } while (!found);
     }
@@ -67,7 +79,7 @@ public static class IO
         index = ItemKeys1.IndexOf(i);
         return index != -1 && index <= max - 1;
     }
-    public static bool chki_i(Char i, out int index)
+    public static bool chki_if(Char i, out int index)
     {
         index = ItemKeys1.IndexOf(i);
         return index != -1 && index <= Inventory.INVENSIZE - 1;
