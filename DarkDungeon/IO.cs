@@ -1,11 +1,11 @@
 public static class IO
 {
+    public const ConsoleKey OKKEY = ConsoleKey.Z;
     public const ConsoleKey CANCELKEY = ConsoleKey.X;
     private const string Emphasis = "=> ";
     public const string ItemKeys1 = "qwert";
     private const string delString = "                                                                                       ";
     private static Player player { get => Player.instance; }
-    public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
 
     public static int printCount;
 
