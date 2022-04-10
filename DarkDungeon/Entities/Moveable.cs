@@ -17,10 +17,15 @@ public class Moveable : Entity
         Map current = Map.Current;
         Position newPos = Pos + x;
         bool existsTile = current.Tiles.TryGet(newPos.x, out obj);
+        if (Pos.facing != newPos.facing)
+        {
+            Pos = !Pos;
+            return true;
+        }
         if (existsTile && current.steppables[newPos.x] is ISteppable step) obj = step.ToChar();
         bool obstructed = current.MoveablePositions.TryGet(newPos.x, out Moveable? mov);
-        bool result = existsTile && !obstructed;
-        if (result)
+        bool canGo = existsTile && !obstructed;
+        if (canGo)
         {
             Pos = newPos;
             current.UpdateMoveable(this);
@@ -37,6 +42,6 @@ public class Moveable : Entity
                 stance.Set(StanceName.None, default);
             }
         }
-        return result;
+        return canGo;
     }
 }
