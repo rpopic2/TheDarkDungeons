@@ -68,7 +68,9 @@ public class Player : Inventoriable
     }
     public void SelectPickupToken()
     {
+        IO.pr("토큰을 선택하십시오.");
         IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
+        IO.del();
         if (cancel) return;
         PickupToken((TokenType)index);
     }
