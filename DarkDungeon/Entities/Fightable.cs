@@ -36,38 +36,24 @@ public partial class Fightable
     }
     public bool IsAlive => !Hp.IsMin;
 
-    protected bool Move(int x)
+    protected void Move(int x)
     {
-        char obj;
-        Map current = Map.Current;
         Position newPos = Pos + x;
-        bool existsTile = current.Tiles.TryGet(newPos.x, out obj);
         if (Pos.facing != newPos.facing)
         {
             Pos = !Pos;
-            return true;
+            return;
         }
-        if (existsTile && current.steppables[newPos.x] is ISteppable step) obj = step.ToChar();
-        bool obstructed = current.FightablePositions.TryGet(newPos.x, out Fightable? mov);
+        Map currentMap = Map.Current;
+        bool existsTile = currentMap.Tiles.TryGet(newPos.x, out _);
+        bool obstructed = currentMap.FightablePositions.TryGet(newPos.x, out _);
         bool canGo = existsTile && !obstructed;
         if (canGo)
         {
             Pos = newPos;
-            current.UpdateFightable(this);
+            currentMap.UpdateFightable(this);
         }
-        else
-        {
-            if (newPos.facing != Pos.facing)
-            {
-                Pos = !Pos;
-                return true;
-            }
-            else
-            {
-                Stance.Set(StanceName.None, default);
-            }
-        }
-        return canGo;
+        else Stance.Set(StanceName.None, default);
     }
     public void TryAttack()
     {
