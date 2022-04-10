@@ -37,11 +37,19 @@ public class Player : Inventoriable
     }
     public void PickupItem(Item item)
     {
+    Select:
         IO.pr($"\n아이템을 얻었다. {item.name}");
         IO.seli_i(out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
-        PickupItem(item, index);
+
+        if (index < Inven.Count && Inven[index] is Item old)
+        {
+            ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
+            if (keyInfo.Key == IO.OKKEY) Inven.Remove(old);
+            else goto Select;
+        }
+        Inven.Add(item);
     }
     public void PickupToken(TokenType token)
     {

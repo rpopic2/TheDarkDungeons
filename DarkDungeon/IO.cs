@@ -5,6 +5,8 @@ public static class IO
     public const string ItemKeys1 = "qwert";
     private const string delString = "                                                                                       ";
     private static Player player { get => Player.instance; }
+    public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
+
     public static int printCount;
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>

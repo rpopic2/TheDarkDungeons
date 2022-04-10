@@ -6,15 +6,6 @@ public class Inventoriable : Fightable
     {
         
     }
-    protected void PickupItem(Item item, int index)
-    {
-        if (index < Inven.Count && Inven[index] is Item old)
-        {
-            ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
-            if(keyInfo.Key != IO.CANCELKEY) Inven.Remove(old);
-        }
-        Inven.Add(item);
-    }
     public void SelectBehaviour(Item item, int index)
     {
         if(Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
