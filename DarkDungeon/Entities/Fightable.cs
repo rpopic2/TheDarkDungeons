@@ -35,8 +35,10 @@ public partial class Fightable
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
     public bool IsAlive => !Hp.IsMin;
-    protected bool Move(int x, out char obj)
+
+    protected bool Move(int x)
     {
+        char obj;
         Map current = Map.Current;
         Position newPos = Pos + x;
         bool existsTile = current.Tiles.TryGet(newPos.x, out obj);

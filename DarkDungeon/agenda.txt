@@ -1,12 +1,12 @@
-main
-[ ] 지금 문제 : 인벤토리에 중복 아이템을 못넣음!
-    [ ] item 그냥 struct record로 하는게 더 나을지도?? value type가 맞을지도.
-    [ ] inventory list 말고 array 쓰는게 맞는듯
+heavy-refactoring
+[ ] Fightable 테스트 커버리지 프로젝트.
+[ ] 이동부터 시작
+
 [ ] Snake
 [ ] Shaman
 [ ] 스킬쓸떄 인수로 숫자 말고 좀 더 freindly한거 없나
 [ ] 데미지타입 시스템?
-
+[ ] 인벤토리에 중복 아이템을 못넣음!
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
 [ ] 가본 무기 : 활, 방패, 반지, 마법책

@@ -20,8 +20,8 @@ public partial class Monster
     {
         int moveX = Stat.rnd.Next(2) == 1 ? 1 : -1;
         int direction = Pos.facing == Facing.Front ? -1 : 1;
-        if (Map.Current.IsAtEnd(Pos.x)) Move(direction, out char obj);
-        else Move(moveX, out char obj);
+        if (Map.Current.IsAtEnd(Pos.x)) Move(direction);
+        else Move(moveX);
     }
     private void _SelectSkill(int item, int skill)
     {

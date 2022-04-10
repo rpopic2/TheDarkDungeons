@@ -13,7 +13,7 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
 public partial class Fightable
 {
     public static readonly Item basicActions = new("(기본)", ItemType.Equip, new NonTokenSkill[]{
-        new("이동", string.Empty, (i, x, y)=>i.Move(x*y, out _)),
+        new("이동", string.Empty, (i, x, y)=>i.Move(x*y)),
         new("숨고르기", "은 숨을 골랐다.", (i,x,y)=>{
             if(i is Player p) p.SelectPickupToken();
             else i.PickupToken((TokenType)x, y);
