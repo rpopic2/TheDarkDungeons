@@ -1,42 +1,23 @@
 main
-[X] Fightable.TryAttack 리팩토링 가능할듯.
-[X] 투검 제대로 구현(원거리 공격 구현)
-[X] 인벤토리 빈곳 qwert 보여주기
-[X] 마공 충전식. =>어차피 토큰 2개씩써서 안하는게 나을듯
-[X] inventoriable.selectskill에서 '은'을 빼서 item에서 쓰게끔.
 [ ] 지금 문제 : 인벤토리에 중복 아이템을 못넣음!
     [ ] item 그냥 struct record로 하는게 더 나을지도?? value type가 맞을지도.
     [ ] inventory list 말고 array 쓰는게 맞는듯
-[X] 시체와 시체루팅
-[X] 맵 맨끝으로가면 corpse[] indexer떄매 튕김
-[X] 시체에서 스페이스 누르면 땅에있는 템 보여줌. 템 없을때까지 계속 보여줌. 취소 가능. 템 다먹으면 시체 삭제.
-[X] 몹들 새 소비 아이템들 드롭하게끔.
-[X] 박쥐는 자체 변수 만들어서 해결해야할듯. 지금도 플레이어 행동에 즉각반응함.
-[X] inventory content 밖으로 보여주면 안될듯?
-[X] stance가 none이 아닌데 스킬쓰면 에러뜨게
-[X] 템 먹다가 replace 취소하면 다시 선택지로 돌아가기.
-[X] 아이템 없는 번호 누르면 튕김
-[X] 포탈도 서있다가 스페이스바 누르면 가는걸로.
 [ ] 포탈 위에 시체 있으면 포탈 사라질듯.->시체가 사라지고 다음으로 이동하게끔?
 [ ] Snake
+[ ] 몬스터 휴식할떄 조금 이상한듯.
+[ ] 스킬쓸떄 인수로 숫자 말고 좀 더 freindly한거 없나
 [ ] Shaman
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
-[ ] item.getmeta 개선
 
-[ ] 이제 그냥 드롭은 없애기. 
+[ ] item.getmeta 개선
+[ ] 이제 그냥 드롭은 없애기. droplist
 [ ] 데미지타입 시스템?
 [ ] IO as flags?k
 [ ] 스킬 고를때 아래에 출력?
 [ ] 가방
 [ ] vul 상태이상으로?
 [ ] 짧게 싸우면 토큰 길게 싸우면 경치?
-[ ] Stance.none 말고 null 쓰기?
-[ ] Damage as object?
 [ ] 투검 바닥에 떨어져있고 줍기
-[ ] Rest to skill?
-[ ] 충전 알고리즘은 나중에 더 고민해야할 듯. 애초에 스킬이라 지금은 stub implementation임
-[ ] 전투시 텍스트가 아직 매끄럽게 안나옴.
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
 [ ] I to show full inventory ui
-[ ] 스페이스바(공) 스킬(소모 등).
 [ ] 가본 무기 : 대검, 단도, 지팡이, 활, 방패, 반지,  마법책
