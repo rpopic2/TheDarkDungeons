@@ -88,7 +88,8 @@ public class Inventory
             else if(content[i] is Item item)
             {
                 string itemName = item.ToString();
-                if (item.itemType == ItemType.Consume) itemName = itemName.Insert(1, $"{GetMeta(item).stack}x");
+                int stack = GetMeta(item).stack;
+                if (stack > 1) itemName = itemName.Insert(1, $"{stack}x");
                 result += itemName;
             }
         }
