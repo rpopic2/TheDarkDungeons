@@ -122,11 +122,9 @@ public class Map
     }
     private void RenderVisible<T>(T[] target)
     {
-        int sight = player.Sight;
-        int front = player.Pos.Front(1);
-        for (int i = 0; i < sight; i++)
+        for (int i = 0; i < player.Sight; i++)
         {
-            int targetTile = player.Pos.isFacingRight ? front + i : front - i;
+            int targetTile = player.Pos.Front(i + 1);
             bool success = target.TryGet(targetTile, out T? obj);
             if (!success) continue;
             if (obj is Fightable mov) rendered[targetTile] = mov.ToChar();
