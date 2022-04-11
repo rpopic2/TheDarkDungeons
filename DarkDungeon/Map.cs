@@ -34,7 +34,11 @@ public class Map
         fightables.Add(player);
         if (spawnMobs) Spawn();
     }
-
+    public Fightable? GetFightableAt(int index)
+    {
+        if (index < 0 || index >= FightablePositions.Length || FightablePositions[index] is null) return null;
+        return FightablePositions[index];
+    }
     public void Spawn()
     {
         List<int> spawnableIndices = GetSpawnableIndices();
@@ -149,7 +153,6 @@ public class Map
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
         int length = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
         Current = new Map(length, Current?.corpseToNext);
-        Player._instance?.UpdateTarget();
     }
 
     private static char[] NewEmptyArray(int length, char fill)

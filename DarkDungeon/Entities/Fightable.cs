@@ -12,8 +12,7 @@ public partial class Fightable
     public Inventory Inven { get; private set; }
 
     public StanceInfo Stance { get; protected set; } = new(default, default);
-    public virtual Fightable? Target { get; protected set; }
-
+    public virtual Fightable? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
     public Action<Fightable>? currentBehav;
     public Item? currentItem;
     public Fightable? lastHit { get; private set; }
@@ -35,7 +34,6 @@ public partial class Fightable
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
     public bool IsAlive => !Hp.IsMin;
-
     protected void Move(Position x)
     {
         Position newPos = Pos + x;
@@ -54,82 +52,6 @@ public partial class Fightable
             currentMap.UpdateFightable(this);
         }
         else Stance.Set(StanceName.None, default);
-    }
-    public void TryAttack()
-    {
-        if (Stance.Stance == StanceName.Offence && currentBehav is not null)
-        {
-            currentBehav.Invoke((Fightable)this);
-            currentBehav = null;
-            return;
-        }
-        if (Target is not Fightable tar) return;
-        if (tar.Stance.Stance == StanceName.Defence) tar.Dodge(0);
-    }
-    public void Throw(int range)
-    {
-        for (int i = 0; i < range; i++)
-        {
-            Map.Current.FightablePositions.TryGet(Pos.Front(i + 1), out Fightable? mov);
-            if (mov is Fightable hit)
-            {
-                int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
-                if (magicCharge > 0)
-                {
-                    Stance.AddAmount(magicCharge);
-                    Inven.GetMeta(currentItem!).magicCharge = 0;
-                }
-                lastHit = hit;
-                hit.Dodge(Stance.Amount);
-                break;
-            }
-        }
-    }
-
-    public void TryDefence()
-    {
-        if (Stance.Stance == StanceName.Defence && currentBehav is not null)
-        {
-            currentBehav.Invoke((Fightable)this);
-            currentBehav = null;
-            return;
-        }
-    }
-    public void Dodge() => Dodge(0);
-    public void Dodge(int damage)
-    {
-        if (Stance.Stance == StanceName.Defence)
-        {
-            damage -= Stance.Amount;
-        }
-        else if (damage > 0 && Stance.Stance == StanceName.Charge)
-        {
-            IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
-            damage = damage.ToVul();
-        }
-        Hp -= damage;
-    }
-    public void OnTurnEnd()
-    {
-        UpdateTarget();
-        Stance.Reset();
-        currentBehav = null;
-    }
-    protected virtual void OnDeath(object? sender, EventArgs e)
-    {
-        IO.pr($"{Name}가 죽었다.", __.newline);
-        Map.Current.UpdateFightable(this);
-    }
-    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {Hp}", __.emphasis);
-    protected void OnDamaged(object? sender, PointArgs e)
-    {
-        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
-    }
-    public void UpdateTarget()
-    {
-        Map.Current.FightablePositions.TryGet(Pos.Front(1), out Fightable? mov);//일단 앞 1칸으로 함.
-        if (mov is Fightable f && this.IsEnemy(f)) Target = mov;
-        else Target = null;
     }
     protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
@@ -192,6 +114,81 @@ public partial class Fightable
         IO.rk($"{Name} {consume.OnUseOutput}");
         consume.behaviour.Invoke(this);
         Inven.Consume(item);
+    }
+    public void TryAttack()
+    {
+        if (Stance.Stance == StanceName.Offence && currentBehav is not null)
+        {
+            currentBehav.Invoke((Fightable)this);
+            currentBehav = null;
+            return;
+        }
+        if (FrontFightable is not Fightable tar) return;
+        if (tar.Stance.Stance == StanceName.Defence) tar.Dodge(0);
+    }
+    public Fightable? RayCast(int range)
+    {
+        Fightable? f;
+        for (int i = 0; i < range; i++)
+        {
+            f = Map.Current.GetFightableAt(Pos.Front(i + 1));
+            if (f is Fightable) return f;
+        }
+        return null;
+    }
+    public void Throw(int range)
+    {
+        Fightable? mov = RayCast(range);
+        if (mov is Fightable hit)
+        {
+            int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
+            if (magicCharge > 0)
+            {
+                Stance.AddAmount(magicCharge);
+                Inven.GetMeta(currentItem!).magicCharge = 0;
+            }
+            lastHit = hit;
+            hit.Dodge(Stance.Amount);
+        }
+    }
+
+    public void TryDefence()
+    {
+        if (Stance.Stance == StanceName.Defence && currentBehav is not null)
+        {
+            currentBehav.Invoke((Fightable)this);
+            currentBehav = null;
+            return;
+        }
+    }
+    public void Dodge() => Dodge(0);
+    public void Dodge(int damage)
+    {
+        if (Stance.Stance == StanceName.Defence)
+        {
+            damage -= Stance.Amount;
+        }
+        else if (damage > 0 && Stance.Stance == StanceName.Charge)
+        {
+            IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
+            damage = damage.ToVul();
+        }
+        Hp -= damage;
+    }
+    public virtual void OnTurnEnd()
+    {
+        Stance.Reset();
+        currentBehav = null;
+    }
+    protected virtual void OnDeath(object? sender, EventArgs e)
+    {
+        IO.pr($"{Name}가 죽었다.", __.newline);
+        Map.Current.UpdateFightable(this);
+    }
+    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {Hp}", __.emphasis);
+    protected void OnDamaged(object? sender, PointArgs e)
+    {
+        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
     public override string ToString() => $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{Toks}\tSol : {Stat[StatName.Sol]}\tLun : {Stat[StatName.Lun]}\tCon : {Stat[StatName.Con]}";

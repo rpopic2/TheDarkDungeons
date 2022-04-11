@@ -15,6 +15,7 @@ public partial class Monster
     public static StatMul batMul = new(sol: 1, lun: 3, con: 2, hp: 2, cap: 3, killExp: 3);
     public static MonsterData bat = new("박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { Fightable.batItem }, new int[] { 1, 1, 0 }, batDropList);
     public static List<MonsterData> data = new() { lunatic, bat };
+    private Fightable? _target;
     public static int Count => data.Count;
     private void BasicMovement()
     {
@@ -26,11 +27,22 @@ public partial class Monster
     {
         SelectBehaviour(Inven[item]!, skill);
     }
+    public override void OnTurnEnd()
+    {
+        UpdateTarget();
+        base.OnTurnEnd();
+    }
+    private void UpdateTarget()
+    {
+        Fightable? target = RayCast(Sight);
+        if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
+        this._target = target;
+    }
     public void BatBehav()
     {
         if (Toks.Count > 0)
         {
-            if (Target is null) BasicMovement();
+            if (_target is null) BasicMovement();
             else
             {
                 if (metaData["isAngry"] == 1 && Toks.Contains(TokenType.Offence)) _SelectSkill(0, 0);
@@ -42,7 +54,7 @@ public partial class Monster
         {
             SelectBasicBehaviour(1, 1, -1); //pickup offence
         }
-        if (Target?.Stance.Stance == StanceName.Charge) metaData["isAngry"] = 1;
+        if (_target?.Stance.Stance == StanceName.Charge) metaData["isAngry"] = 1;
         else metaData["isAngry"] = 0;
     }
     internal void LunaticBehav()
@@ -50,7 +62,7 @@ public partial class Monster
         if (Hp.Cur != Hp.Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
         else if (Toks.Count > 0)
         {
-            if (Target is null) BasicMovement();
+            if (_target is null) BasicMovement();
             else
             {
                 if (Inven.GetMeta(Fightable.holySword).magicCharge > 0 && Toks.Contains(TokenType.Offence)) _SelectSkill(0, 0);
@@ -61,14 +73,6 @@ public partial class Monster
     }
     internal void SnakeBehav()
     {
-        if (Toks.Count > 0)
-        {
-            if (Target is null) BasicMovement();
-            else
-            {
 
-            }
-        }
-        else SelectBasicBehaviour(1, 1, -1); //pickup offence
     }
 }

@@ -6,13 +6,13 @@ public class Player : Fightable
     public const int BASICSTAT = 2;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public ISteppable? underFoot => Map.Current.steppables[Pos.x];
     public Exp exp;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP, pos: new(0))
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
+    public ISteppable? UnderFoot => Map.Current.steppables[Pos.x];
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
@@ -75,9 +75,9 @@ public class Player : Fightable
     }
     public void InteractUnderFoot()
     {
-        if (underFoot is null) return;
-        else if (underFoot is Corpse corpse) PickupCorpse(corpse);
-        else if (underFoot is Portal portal)
+        if (UnderFoot is null) return;
+        else if (UnderFoot is Corpse corpse) PickupCorpse(corpse);
+        else if (UnderFoot is Portal portal)
         {
             Map.NewMap();
             Pos = new Position();

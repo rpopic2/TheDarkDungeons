@@ -1,6 +1,7 @@
 heavy-refactoring
-[ ] Fightable 테스트 커버리지 프로젝트.
-[ ] 이동부터 시작
+[ ] Fightable.Target 새로 생각해야될듯.
+    1. 몬스터를 위한 락온 혹은 애드 개념.
+    2. Game.cs : 39에서 앞에 있는 친구 토큰 보기용으로 쓰는데, 이거 바꿔야할듯.
 
 [ ] Snake
 [ ] Shaman
