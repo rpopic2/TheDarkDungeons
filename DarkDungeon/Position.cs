@@ -7,7 +7,7 @@ public struct Position
         this.x = x;
         this.facing = facing;
     }
-    public int GetFrontIndex(int value) => facing == Facing.Right ? x + value : x - value;
+    public int Front(int value) => (this + new Position(value, facing)).x;
     public bool isFacingRight => facing == Facing.Right;
 
     public static Position operator +(Position a, Position b)

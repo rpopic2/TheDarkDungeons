@@ -123,7 +123,7 @@ public class Map
     private void RenderVisible<T>(T[] target)
     {
         int sight = player.Sight;
-        int front = player.Pos.GetFrontIndex(1);
+        int front = player.Pos.Front(1);
         for (int i = 0; i < sight; i++)
         {
             int targetTile = player.Pos.isFacingRight ? front + i : front - i;

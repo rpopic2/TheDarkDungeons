@@ -70,7 +70,7 @@ public partial class Fightable
     {
         for (int i = 0; i < range; i++)
         {
-            Map.Current.FightablePositions.TryGet(Pos.GetFrontIndex(i + 1), out Fightable? mov);
+            Map.Current.FightablePositions.TryGet(Pos.Front(i + 1), out Fightable? mov);
             if (mov is Fightable hit)
             {
                 int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
@@ -127,7 +127,7 @@ public partial class Fightable
     }
     public void UpdateTarget()
     {
-        Map.Current.FightablePositions.TryGet(Pos.GetFrontIndex(1), out Fightable? mov);
+        Map.Current.FightablePositions.TryGet(Pos.Front(1), out Fightable? mov);//일단 앞 1칸으로 함.
         if (mov is Fightable f && this.IsEnemy(f)) Target = mov;
         else Target = null;
     }
