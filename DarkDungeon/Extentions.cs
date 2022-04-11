@@ -11,10 +11,10 @@ public static class Extensions
             return true;
         }
     }
-    public static int Distance(this Position pos1, Position pos2) => pos2.v - pos1.v;
+    public static int Distance(this Position pos1, Position pos2) => pos2.x - pos1.x;
 
     public static Facing Flip(this Facing facing)
-        => facing == Facing.Front ? Facing.Back : Facing.Front;
+        => facing == Facing.Right ? Facing.Left : Facing.Right;
 
     public static int RoundMult(this int @base, float mult)
     => (int)MathF.Round(@base * mult);

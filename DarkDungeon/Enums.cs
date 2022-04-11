@@ -4,7 +4,7 @@ public enum GamePointOption
 }
 public enum Facing
 {
-    Front, Back
+    Right, Left
 }
 public enum StanceName
 {

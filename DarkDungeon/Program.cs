@@ -75,11 +75,11 @@ public class Program
         {
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
-                player.SelectBasicBehaviour(0, 1, (int)Facing.Front);
+                player.SelectBasicBehaviour(0, 1, (int)Facing.Right);
                 break;
             case ConsoleKey.LeftArrow:
             case ConsoleKey.H:
-                player.SelectBasicBehaviour(0, 1, (int)Facing.Back);
+                player.SelectBasicBehaviour(0, 1, (int)Facing.Left);
                 break;
             default:
                 DefaultSwitch(info);

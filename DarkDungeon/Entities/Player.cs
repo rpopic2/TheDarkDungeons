@@ -6,7 +6,7 @@ public class Player : Fightable
     public const int BASICSTAT = 2;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public ISteppable? underFoot => Map.Current.steppables[Pos.v];
+    public ISteppable? underFoot => Map.Current.steppables[Pos.x];
     public Exp exp;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP, pos: new(0))
     {
@@ -100,7 +100,7 @@ public class Player : Fightable
         }
         if (corpse.droplist.Count() <= 0)
         {
-            Map.Current.steppables[Pos.v] = null;
+            Map.Current.steppables[Pos.x] = null;
         }
     }
     public void ShowStats()

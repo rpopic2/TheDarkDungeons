@@ -41,10 +41,10 @@ public partial class Fightable
         Position newPos = Pos + x;
         Map currentMap = Map.Current;
         bool canGo;
-        if (newPos.v != Pos.v)
+        if (newPos.x != Pos.x)
         {
-            bool existsTile = currentMap.Tiles.TryGet(newPos.v, out _);
-            bool obstructed = currentMap.FightablePositions.TryGet(newPos.v, out _);
+            bool existsTile = currentMap.Tiles.TryGet(newPos.x, out _);
+            bool obstructed = currentMap.FightablePositions.TryGet(newPos.x, out _);
             canGo = existsTile && !obstructed;
         }
         else canGo = true;

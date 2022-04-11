@@ -19,8 +19,8 @@ public partial class Monster
     private void BasicMovement()
     {
         Facing randomFace = (Facing)Stat.rnd.Next(2);
-        if (!Map.Current.IsAtEnd(Pos.v)) Move(new(1, randomFace));
-        else Move(new(1, Facing.Back));
+        if (!Map.Current.IsAtEnd(Pos.x)) Move(new(1, randomFace));
+        else Move(new(1, Facing.Left));
     }
     private void _SelectSkill(int item, int skill)
     {

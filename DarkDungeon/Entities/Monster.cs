@@ -46,7 +46,7 @@ public partial class Monster : Fightable
         behaviour(this);
     }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
-    public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;
+    public override char ToChar() => Pos.facing == Facing.Right ? fowardChar : backwardChar;
 }
 
 

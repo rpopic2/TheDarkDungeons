@@ -46,7 +46,7 @@ public class Map
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
-        Position spawnPoint = new Position(newPos, Facing.Back);
+        Position spawnPoint = new Position(newPos, Facing.Left);
         _Spawn(data, spawnPoint);
     }
     public void _Spawn(MonsterData data, Position spawnPoint)
@@ -63,7 +63,7 @@ public class Map
         {
             if (FightablePositions[i] is null) fullMap.Add(i);
         }
-        int playerX = player.Pos.v;
+        int playerX = player.Pos.x;
         fullMap.Remove(0);
         fullMap.Remove(1);
         fullMap.Remove(playerX);
@@ -78,12 +78,12 @@ public class Map
         if (mov is Fightable fight && !fight.IsAlive)
         {
             temp_deadFightables.Add(fight);
-            FightablePositions[pos.v] = null;
+            FightablePositions[pos.x] = null;
             return;
         }
         int oldIndex = Array.IndexOf(FightablePositions, mov);
         if (oldIndex != -1) FightablePositions[oldIndex] = null;
-        FightablePositions[pos.v] = mov;
+        FightablePositions[pos.x] = mov;
     }
     public void RemoveAndCreateCorpse()
     {
@@ -96,7 +96,7 @@ public class Map
     }
     public void CreateCorpse(Fightable fight)
     {
-        int pos = fight.Pos.v;
+        int pos = fight.Pos.x;
         ISteppable? old = steppables[pos];
 
         Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
@@ -111,7 +111,7 @@ public class Map
         RenderVisible(steppables);
         RenderVisible(FightablePositions);
         //if(debug) RenderAllMobs();
-        rendered[player.Pos.v] = MapSymb.player;
+        rendered[player.Pos.x] = MapSymb.player;
     }
     private void RenderAllMobs()
     {
@@ -126,7 +126,7 @@ public class Map
         int front = player.Pos.GetFrontIndex(1);
         for (int i = 0; i < sight; i++)
         {
-            int targetTile = player.Pos.isFacingFront ? front + i : front - i;
+            int targetTile = player.Pos.isFacingRight ? front + i : front - i;
             bool success = target.TryGet(targetTile, out T? obj);
             if (!success) continue;
             if (obj is Fightable mov) rendered[targetTile] = mov.ToChar();

@@ -1,20 +1,20 @@
 public struct Position
 {
-    public int v;
+    public int x;
     public Facing facing;
     public Position(int x, Facing facing = default)
     {
-        this.v = x;
+        this.x = x;
         this.facing = facing;
     }
-    public int GetFrontIndex(int value) => facing == Facing.Front ? v + value : v - value;
-    public bool isFacingFront => facing == Facing.Front;
+    public int GetFrontIndex(int value) => facing == Facing.Right ? x + value : x - value;
+    public bool isFacingRight => facing == Facing.Right;
 
     public static Position operator +(Position a, Position b)
     {
-        if (a.facing != b.facing) b.v--;
-        int bv = b.facing == Facing.Front ? b.v : -b.v;
-        return new(a.v + bv, b.facing);
+        if (a.facing != b.facing) b.x--;
+        int bv = b.facing == Facing.Right ? b.x : -b.x;
+        return new(a.x + bv, b.facing);
     }
-    public override string ToString() => $"{v} facing {facing.ToString()}";
+    public override string ToString() => $"{x} facing {facing.ToString()}";
 }
