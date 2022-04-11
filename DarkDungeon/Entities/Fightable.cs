@@ -36,18 +36,18 @@ public partial class Fightable
     }
     public bool IsAlive => !Hp.IsMin;
 
-    protected void Move(int x)
+    protected void Move(Position x)
     {
         Position newPos = Pos + x;
-        if (Pos.facing != newPos.facing)
-        {
-            Pos = !Pos;
-            return;
-        }
         Map currentMap = Map.Current;
-        bool existsTile = currentMap.Tiles.TryGet(newPos.x, out _);
-        bool obstructed = currentMap.FightablePositions.TryGet(newPos.x, out _);
-        bool canGo = existsTile && !obstructed;
+        bool canGo;
+        if (newPos.v != Pos.v)
+        {
+            bool existsTile = currentMap.Tiles.TryGet(newPos.v, out _);
+            bool obstructed = currentMap.FightablePositions.TryGet(newPos.v, out _);
+            canGo = existsTile && !obstructed;
+        }
+        else canGo = true;
         if (canGo)
         {
             Pos = newPos;

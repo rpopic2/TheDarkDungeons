@@ -63,7 +63,7 @@ public class Map
         {
             if (FightablePositions[i] is null) fullMap.Add(i);
         }
-        int playerX = player.Pos.x;
+        int playerX = player.Pos.v;
         fullMap.Remove(0);
         fullMap.Remove(1);
         fullMap.Remove(playerX);
@@ -78,11 +78,12 @@ public class Map
         if (mov is Fightable fight && !fight.IsAlive)
         {
             temp_deadFightables.Add(fight);
-            FightablePositions[pos.x] = null;
+            FightablePositions[pos.v] = null;
             return;
         }
-        if (FightablePositions[pos.oldX] == mov) FightablePositions[pos.oldX] = null;
-        FightablePositions[pos.x] = mov;
+        int oldIndex = Array.IndexOf(FightablePositions, mov);
+        if (oldIndex != -1) FightablePositions[oldIndex] = null;
+        FightablePositions[pos.v] = mov;
     }
     public void RemoveAndCreateCorpse()
     {
@@ -95,7 +96,7 @@ public class Map
     }
     public void CreateCorpse(Fightable fight)
     {
-        int pos = fight.Pos.x;
+        int pos = fight.Pos.v;
         ISteppable? old = steppables[pos];
 
         Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
@@ -110,7 +111,7 @@ public class Map
         RenderVisible(steppables);
         RenderVisible(FightablePositions);
         //if(debug) RenderAllMobs();
-        rendered[player.Pos.x] = MapSymb.player;
+        rendered[player.Pos.v] = MapSymb.player;
     }
     private void RenderAllMobs()
     {
