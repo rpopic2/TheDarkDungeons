@@ -8,8 +8,6 @@ public struct Position
         this.facing = facing;
     }
     public int Front(int value) => (this + new Position(value, facing)).x;
-    public bool isFacingRight => facing == Facing.Right;
-
     public static Position operator +(Position a, Position b)
     {
         if (a.facing != b.facing) b.x--;
