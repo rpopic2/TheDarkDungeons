@@ -1,7 +1,7 @@
 public struct Position
 {
-    public int x;
-    public Facing facing;
+    public int x { get; private set; }
+    public Facing facing { get; private set; }
     public Position(int x, Facing facing = default)
     {
         this.x = x;
