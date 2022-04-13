@@ -84,7 +84,8 @@ public static class IO
     {
         Console.Clear();
         //IO.pr("History");
-        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})\t{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom);
+        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})", __.bottom);
+        IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom);
         IO.pr(s_player.Inven, __.bottom);
         IO.pr(Map.Current);
         if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
