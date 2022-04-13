@@ -88,6 +88,7 @@ public class Program
         bool found = IO.chk(key.KeyChar, s_player.Inven.Count, out int i);
         if (found && s_player.Inven[i] is Item item)
         {
+            IO.del(__.bottom);
             IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _);
             if (cancel)
             {

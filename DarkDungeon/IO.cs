@@ -56,7 +56,7 @@ public static class IO
             int x = Console.CursorLeft;
             int y = Console.CursorTop;
             Console.CursorTop = x + Console.WindowHeight - 1;
-            Console.WriteLine(value);
+            Console.Write(value);
             Console.SetCursorPosition(x, y);
             return;
         }
@@ -65,12 +65,25 @@ public static class IO
     ///<summary>Print in Formated Options</summary>
 
 
-    public static void del()
+    public static void del(__ flags = 0)
     {
+        if (flags.HasFlag(__.bottom))
+        {
+            s_del_bottom();
+            return;
+        }
         if (Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
-        pr(DELSTRING);
+        pr(DELSTRING, flags);
         Console.SetCursorPosition(0, Console.CursorTop - 1);
+    }
+    private static void s_del_bottom()
+    {
+        int x = Console.CursorLeft;
+        int y = Console.CursorTop;
+        Console.CursorTop = x + Console.WindowHeight - 1;
+        Console.Write(DELSTRING);
+        Console.SetCursorPosition(x, y);
     }
     public static void del(int lines)
     {
@@ -84,9 +97,9 @@ public static class IO
     {
         Console.Clear();
         //IO.pr("History");
-        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})", __.bottom);
-        IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom);
-        IO.pr(s_player.Inven, __.bottom);
+        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
+        IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
+        IO.pr(s_player.Inven, __.bottom | __.newline);
         IO.pr(Map.Current);
         if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
     }

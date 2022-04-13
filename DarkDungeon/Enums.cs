@@ -19,8 +19,10 @@ public enum __
 {
     emphasis = 1,
     newline = 2,
+    ///<summary>This flag calls Console.Write() by default. To add a line terminator, add a newline flag.</summary>
     bottom = 4,
     fullinven = 8,
+    write = 16,
 }
 public enum DamageType
 {
