@@ -59,7 +59,7 @@ public class Program
         IO.pr("남은 능력치 포인트 : 1");
         player.SelectPickupStat();
         IO.del();
-        player.PickupTokens(3);
+        player.PickupToken(3);
         IO.del();
     }
     //-------------------------

@@ -60,7 +60,7 @@ public class Player : Fightable
         }
         Inven.Add(item);
     }
-    public void PickupTokens(int amount)
+    public void PickupToken(int amount)
     {
         for (int i = amount; i > 0; i--)
         {
@@ -70,15 +70,6 @@ public class Player : Fightable
             if (cancel) return;
             PickupToken((TokenType)index);
         }
-
-    }
-    public void PickupToken()
-    {
-        IO.pr("토큰을 선택하십시오.");
-        IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
-        IO.del();
-        if (cancel) return;
-        PickupToken((TokenType)index);
     }
     public void PickupToken(TokenType token)
     {
