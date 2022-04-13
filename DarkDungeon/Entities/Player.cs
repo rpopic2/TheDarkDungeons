@@ -43,9 +43,20 @@ public class Player : Fightable
 
         if (index < Inven.Count && Inven[index] is Item old)
         {
-            ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
-            if (keyInfo.Key == IO.OKKEY) Inven.Remove(old);
-            else goto Select;
+            do
+            {
+                ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
+                if (keyInfo.Key == IO.OKKEY)
+                {
+                    Inven.Remove(old);
+                    break;
+                }
+                else if (keyInfo.Key == IO.CANCELKEY)
+                {
+                    IO.del();
+                    goto Select;
+                }
+            } while (true);
         }
         Inven.Add(item);
     }

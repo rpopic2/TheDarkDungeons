@@ -1,6 +1,6 @@
 public static class IO
 {
-    public const ConsoleKey OKKEY = ConsoleKey.Z;
+    public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
     public const ConsoleKey CANCELKEY = ConsoleKey.X;
     private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
