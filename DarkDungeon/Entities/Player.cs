@@ -73,7 +73,7 @@ public class Player : Fightable
     }
     public void PickupToken(Tokens tokens)
     {
-        var toks = from t in tokens.Content where t is not null select (TokenType)t;
+        var toks = tokens.Content;
         for (int i = toks.Count(); i > 0; i--)
         {
             TokenType token = toks.ElementAt(i - 1);
