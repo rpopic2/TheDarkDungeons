@@ -34,7 +34,7 @@ public partial class Monster
     }
     private void UpdateTarget()
     {
-        Fightable? target = RayCast(Sight);
+        Fightable? target = _currentMap.RayCast(Pos, Sight);
         if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
         this._target = target;
     }

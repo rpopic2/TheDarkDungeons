@@ -39,6 +39,16 @@ public class Map
         if (index < 0 || index >= FightablePositions.Length || FightablePositions[index] is null) return null;
         return FightablePositions[index];
     }
+    public Fightable? RayCast(Position origin, int range)
+    {
+        Fightable? f;
+        for (int i = 0; i < range; i++)
+        {
+            f = GetFightableAt(origin.Front(i + 1));
+            if (f is Fightable) return f;
+        }
+        return null;
+    }
     public void Spawn()
     {
         List<int> spawnableIndices = GetSpawnableIndices();

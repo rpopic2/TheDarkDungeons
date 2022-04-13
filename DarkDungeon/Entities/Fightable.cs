@@ -34,6 +34,7 @@ public partial class Fightable
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
     public bool IsAlive => !Hp.IsMin;
+    protected Map _currentMap => Map.Current;
     protected void Move(Position x)
     {
         Position newPos = Pos + x;
@@ -125,19 +126,9 @@ public partial class Fightable
         if (FrontFightable is not Fightable tar) return;
         if (tar.Stance.Stance == StanceName.Defence) tar.Dodge(0);
     }
-    public Fightable? RayCast(int range)
-    {
-        Fightable? f;
-        for (int i = 0; i < range; i++)
-        {
-            f = Map.Current.GetFightableAt(Pos.Front(i + 1));
-            if (f is Fightable) return f;
-        }
-        return null;
-    }
     public void Throw(int range)
     {
-        Fightable? mov = RayCast(range);
+        Fightable? mov = _currentMap.RayCast(Pos, range);
         if (mov is Fightable hit)
         {
             int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
