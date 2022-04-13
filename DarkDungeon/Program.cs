@@ -44,17 +44,18 @@ public class Program
         switch (index)
         {
             case 0:
-                player.PickupItem(Fightable.sword);
+                player.Inven.Add(Fightable.sword);
                 break;
             case 1:
-                player.PickupItem(Fightable.dagger);
+                player.Inven.Add(Fightable.dagger);
                 break;
             case 2:
-                player.PickupItem(Fightable.staff);
+                player.Inven.Add(Fightable.staff);
                 break;
             default:
                 break;
         }
+        player.Inven.Add(Fightable.torch);
         IO.pr("남은 능력치 포인트 : 1");
         player.SelectPickupStat();
         IO.del();
@@ -62,7 +63,6 @@ public class Program
         player.SelectPickupToken();
         player.SelectPickupToken();
         player.SelectPickupToken();
-        player.PickupItem(Fightable.torch);
         IO.del();
     }
     //-------------------------
