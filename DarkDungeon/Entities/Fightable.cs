@@ -95,13 +95,13 @@ public partial class Fightable
         if (tokenTry is TokenType token)
         {
             int amount = SetStance(token, selected.statName);
-            string s = $"{Name} {selected.OnUseOutput} ({amount})";
+            string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
-            if (mcharge > 0) s += ($"+({mcharge})");
+            if (mcharge > 0) useOutput += ($"+({mcharge})");
             if (selected.statName == StatName.Con) Inven.GetMeta(item).magicCharge += amount;
             currentBehav = selected.behaviour;
             currentItem = item;
-            IO.rk(s);
+            IO.rk(useOutput);
         }
         else
         {

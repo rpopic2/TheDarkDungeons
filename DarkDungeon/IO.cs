@@ -5,7 +5,7 @@ public static class IO
     private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
     private const string DELSTRING = "                                                                                       ";
-    private static Player player { get => Player.instance; }
+    private static Player s_player { get => Player.instance; }
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
@@ -78,5 +78,15 @@ public static class IO
         {
             del();
         }
+    }
+
+    public static void DrawScreen()
+    {
+        Console.Clear();
+        //IO.pr("History");
+        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})\t{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom);
+        IO.pr(s_player.Inven, __.bottom);
+        IO.pr(Map.Current);
+        if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
     }
 }

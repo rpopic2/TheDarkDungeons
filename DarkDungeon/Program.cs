@@ -4,7 +4,7 @@ public class Program
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(q) 검사", "(w) 암살자", "(e) 마법사" };
     public static readonly string[] stats = new string[] { "(q) 힘/체력", "(w) 정밀/민첩", "(e) 마력/지능" };
-    private static Player player { get => Player.instance; }
+    private static Player s_player { get => Player.instance; }
     public static void Main()
     {
         instance = new Program();
@@ -12,10 +12,10 @@ public class Program
         do
         {
             instance.MainLoop();
-            if (player.Stance.Stance != StanceName.None) Game.ElaspeTurn();
-        } while (player.IsAlive);
-        IO.pr(player);
-        IO.pr($"{player.Name}은 여기에 잠들었다...");
+            if (s_player.Stance.Stance != StanceName.None) Game.ElaspeTurn();
+        } while (s_player.IsAlive);
+        IO.pr(s_player);
+        IO.pr($"{s_player.Name}은 여기에 잠들었다...");
         IO.rk();
     }
     public Program()
@@ -72,11 +72,11 @@ public class Program
         {
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
-                player.SelectBasicBehaviour(0, 1, (int)Facing.Right);
+                s_player.SelectBasicBehaviour(0, 1, (int)Facing.Right);
                 break;
             case ConsoleKey.LeftArrow:
             case ConsoleKey.H:
-                player.SelectBasicBehaviour(0, 1, (int)Facing.Left);
+                s_player.SelectBasicBehaviour(0, 1, (int)Facing.Left);
                 break;
             default:
                 DefaultSwitch(info);
@@ -85,28 +85,36 @@ public class Program
     }
     private void DefaultSwitch(ConsoleKeyInfo key)
     {
-        bool found = IO.chk(key.KeyChar, player.Inven.Count, out int i);
-        if (found && player.Inven[i] is Item item)
+        bool found = IO.chk(key.KeyChar, s_player.Inven.Count, out int i);
+        if (found && s_player.Inven[i] is Item item)
         {
-            IO.sel(item.skills, 0, out int index, out bool cancel, out _, out _);
-            if (cancel) return;
-            player.SelectBehaviour(item, index);
+            IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _);
+            if (cancel)
+            {
+                IO.DrawScreen();
+                return;
+            }
+            s_player.SelectBehaviour(item, index);
         }
         switch (key.KeyChar)
         {
             case 'y':
-                IO.sel(Fightable.bareHand.skills, 0, out int index, out bool cancel, out _, out _);
-                if (cancel) return;
-                player.SelectBehaviour(Fightable.bareHand, index);
+                IO.sel(Fightable.bareHand.skills, __.bottom, out int index, out bool cancel, out _, out _);
+                if (cancel)
+                {
+                    IO.DrawScreen();
+                    return;
+                }
+                s_player.SelectBehaviour(Fightable.bareHand, index);
                 break;
             case ' ':
-                player.InteractUnderFoot();
+                s_player.InteractUnderFoot();
                 break;
             case '.':
-                player.SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
+                s_player.SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
                 break;
             case '/':
-                player.ShowStats();
+                s_player.ShowStats();
                 break;
         }
     }
