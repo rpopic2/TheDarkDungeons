@@ -71,13 +71,23 @@ public class Player : Fightable
             PickupToken((TokenType)index);
         }
     }
+    public void PickupToken(Tokens tokens)
+    {
+        var toks = from t in tokens.Content where t is not null select (TokenType)t;
+        for (int i = toks.Count(); i > 0; i--)
+        {
+            TokenType token = toks.ElementAt(i - 1);
+            IO.pr($"{Tokens.ToString(token)}토큰을 획득하였습니다. ({i})");
+            if (token is TokenType tokenType) PickupToken(tokenType);
+        }
+    }
     public void PickupToken(TokenType token)
     {
         int discard = -1;
-        if (Toks.IsFull)
+        if (tokens.IsFull)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString(token));
-            IO.sel(Toks, 0, out discard, out bool cancel2, out _, out _);
+            IO.sel(tokens, 0, out discard, out bool cancel2, out _, out _);
             IO.del();
             if (cancel2) return;
         }

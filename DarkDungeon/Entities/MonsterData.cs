@@ -40,14 +40,14 @@ public partial class Monster
     }
     public void BatBehav()
     {
-        if (Toks.Count > 0)
+        if (tokens.Count > 0)
         {
             if (_target is null) BasicMovement();
             else
             {
-                if (metaData["isAngry"] == 1 && Toks.Contains(TokenType.Offence)) _SelectSkill(0, 0);
-                else if (Toks.Contains(TokenType.Defence)) _SelectSkill(0, 1);
-                else if (Toks.Contains(TokenType.Offence)) _SelectSkill(0, 0);
+                if (metaData["isAngry"] == 1 && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
+                else if (tokens.Contains(TokenType.Defence)) _SelectSkill(0, 1);
+                else if (tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
             }
         }
         else
@@ -60,13 +60,13 @@ public partial class Monster
     internal void LunaticBehav()
     {
         if (Hp.Cur != Hp.Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
-        else if (Toks.Count > 0)
+        else if (tokens.Count > 0)
         {
             if (_target is null) BasicMovement();
             else
             {
-                if (Inven.GetMeta(Fightable.holySword).magicCharge > 0 && Toks.Contains(TokenType.Offence)) _SelectSkill(0, 0);
-                else if (Toks.Contains(TokenType.Charge)) _SelectSkill(0, 1);
+                if (Inven.GetMeta(Fightable.holySword).magicCharge > 0 && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
+                else if (tokens.Contains(TokenType.Charge)) _SelectSkill(0, 1);
             }
         }
         else SelectBasicBehaviour(1, 1, -1); //pickup offence

@@ -36,7 +36,7 @@ public static class Game
         Console.Clear();
         IO.pr("History");
         if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)", __.bottom);
-        IO.pr($"턴 : {Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})\t{s_player.Toks}\t 상대 : {s_player.FrontFightable?.Toks}", __.bottom);
+        IO.pr($"턴 : {Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})\t{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom);
         IO.pr(s_player.Inven, __.bottom);
         IO.pr(Map.Current);
     }

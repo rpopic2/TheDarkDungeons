@@ -4,7 +4,7 @@ public partial class Fightable
     public readonly string Name;
     public int Level { get; protected set; }
     public GamePoint Hp { get; protected set; }
-    public Tokens Toks { get; private set; }
+    public Tokens tokens { get; private set; }
     protected readonly Stat Stat;
     public int Sight { get; private set; } = 1;
     public Position Pos { get; protected set; }
@@ -27,7 +27,7 @@ public partial class Fightable
         Stat[StatName.Lun] = lun;
         Stat[StatName.Con] = con;
         Inven = new((Fightable)this, "(맨손)");
-        Toks = new(cap);
+        tokens = new(cap);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
@@ -55,12 +55,12 @@ public partial class Fightable
     }
     protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
-        if (Toks.IsFull)
+        if (tokens.IsFull)
         {
-            if (discardIndex != -1) Toks.RemoveAt(discardIndex);
-            else Toks.RemoveAt(Toks.Count - 1);
+            if (discardIndex != -1) tokens.RemoveAt(discardIndex);
+            else tokens.RemoveAt(tokens.Count - 1);
         }
-        Toks.Add(tokenType);
+        tokens.Add(tokenType);
     }
     public int SetStance(TokenType token, StatName statName)
     {
@@ -91,7 +91,7 @@ public partial class Fightable
     }
     private void SelectSkill(Item item, Skill selected)
     {
-        TokenType? tokenTry = Toks.TryUse(selected.TokenType);
+        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
         {
             int amount = SetStance(token, selected.statName);
@@ -181,5 +181,5 @@ public partial class Fightable
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{Toks}\tSol : {Stat[StatName.Sol]}\tLun : {Stat[StatName.Lun]}\tCon : {Stat[StatName.Con]}";
+    public override string ToString() => $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {Stat[StatName.Sol]}\tLun : {Stat[StatName.Lun]}\tCon : {Stat[StatName.Con]}";
 }

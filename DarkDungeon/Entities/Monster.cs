@@ -24,17 +24,14 @@ public partial class Monster : Fightable
         }
         foreach (var token in startTokens)
         {
-            Toks.Add((TokenType)token);
+            tokens.Add((TokenType)token);
         }
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
         base.OnDeath(sender, e);
         player.exp.point += killExp;
-        foreach (var item in Toks.Content)
-        {
-            if (item is not null) player.PickupToken((TokenType)item);
-        }
+        player.PickupToken(tokens);
         // foreach (var item in dropList.list)
         // {
         //     if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);
