@@ -60,6 +60,14 @@ public class Player : Fightable
         }
         Inven.Add(item);
     }
+    public void PickupToken()
+    {
+        IO.pr("토큰을 선택하십시오.");
+        IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
+        IO.del();
+        if (cancel) return;
+        PickupToken((TokenType)index);
+    }
     public void PickupToken(TokenType token)
     {
         int discard = -1;
@@ -71,18 +79,6 @@ public class Player : Fightable
             if (cancel2) return;
         }
         PickupToken(token, discard);
-
-        //IO.pr($"{Tokens.ToString(token)} 토큰을 얻었습니다.");
-        //IO.rk();
-        //IO.del();
-    }
-    public void SelectPickupToken()
-    {
-        IO.pr("토큰을 선택하십시오.");
-        IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
-        IO.del();
-        if (cancel) return;
-        PickupToken((TokenType)index);
     }
     public void InteractUnderFoot()
     {

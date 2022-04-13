@@ -59,10 +59,11 @@ public class Program
         IO.pr("남은 능력치 포인트 : 1");
         player.SelectPickupStat();
         IO.del();
+        
         IO.pr("얻을 토큰 종류를 선택해 주십시오. (3)");
-        player.SelectPickupToken();
-        player.SelectPickupToken();
-        player.SelectPickupToken();
+        player.PickupToken();
+        player.PickupToken();
+        player.PickupToken();
         IO.del();
     }
     //-------------------------

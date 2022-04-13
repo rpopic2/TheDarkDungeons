@@ -15,7 +15,7 @@ public partial class Fightable
     public static readonly Item basicActions = new("(기본)", ItemType.Equip, new NonTokenSkill[]{
         new("이동", string.Empty, (i, x, y)=>i.Move(new(x, (Facing)y))),
         new("숨고르기", "은 숨을 골랐다.", (i,x,y)=>{
-            if(i is Player p) p.SelectPickupToken();
+            if(i is Player p) p.PickupToken();
             else i.PickupToken((TokenType)x, y);
         })
     });
