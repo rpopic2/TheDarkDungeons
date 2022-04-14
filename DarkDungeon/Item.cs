@@ -43,8 +43,8 @@ public partial class Fightable
         new("들이박기", TokenType.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Throw(1); i.Hp -= 1;}),
         new("구르기", TokenType.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>i.Dodge())
         });
-    public static readonly Item tearOfLun = new("<달의 눈물>", ItemType.Consume, new IBehaviour[]{
-        new Consume("사용한다", "은 포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Hp += 3)
+    public static readonly Item tearOfLun = new("<달의 눈물>", ItemType.Consume, new Consume[]{
+        new("사용한다", "은 포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Hp += 3)
     });
     private const int TORCH_BRIGHTNESS = 2;
     public static readonly Item torch = new("(횃불)", ItemType.Equip, new IBehaviour[]{
