@@ -62,13 +62,13 @@ public partial class Fightable
         }
         tokens.Add(tokenType);
     }
-    public int SetStance(TokenType token, StatName statName)
+    private int SetStance(TokenType token, StatName statName)
     {
         int amount = Stat.GetRandom(statName);
         Stance.Set(token.ToStance(), amount);
         return amount;
     }
-    public void SelectBehaviour(Item item, int index)
+    protected void SelectBehaviour(Item item, int index)
     {
         if (Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
@@ -130,7 +130,7 @@ public partial class Fightable
         if (FrontFightable is not Fightable tar) return;
         if (tar.Stance.Stance == StanceName.Defence) tar.Dodge(0);
     }
-    public void Throw(int range)
+    private void Throw(int range)
     {
         Fightable? mov = _currentMap.RayCast(Pos, range);
         if (mov is Fightable hit)
@@ -155,8 +155,8 @@ public partial class Fightable
             return;
         }
     }
-    public void Dodge() => Dodge(0);
-    public void Dodge(int damage)
+    private void Dodge() => Dodge(0);
+    private void Dodge(int damage)
     {
         if (Stance.Stance == StanceName.Defence)
         {
