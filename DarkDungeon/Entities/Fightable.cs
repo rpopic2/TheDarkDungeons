@@ -68,6 +68,17 @@ public partial class Fightable
         Stance.Set(token.ToStance(), amount);
         return amount;
     }
+    public void SelectBehaviour(Item item)
+    {
+        IO.del(__.bottom);
+        IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.name} : ");
+        if (cancel)
+        {
+            IO.DrawScreen();
+            return;
+        }
+        SelectBehaviour(item, index);
+    }
     public void SelectBehaviour(Item item, int index)
     {
         if (Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");

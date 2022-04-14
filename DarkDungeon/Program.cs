@@ -72,6 +72,11 @@ public class Program
         {
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
+                if (info.Modifiers == ConsoleModifiers.Control)
+                {
+                    IO.DrawScreen();
+                    return;
+                }
                 s_player.SelectBasicBehaviour(0, 1, (int)Facing.Right);
                 break;
             case ConsoleKey.LeftArrow:
@@ -88,25 +93,12 @@ public class Program
         bool found = IO.chk(key.KeyChar, s_player.Inven.Count, out int i);
         if (found && s_player.Inven[i] is Item item)
         {
-            IO.del(__.bottom);
-            IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _);
-            if (cancel)
-            {
-                IO.DrawScreen();
-                return;
-            }
-            s_player.SelectBehaviour(item, index);
+            s_player.SelectBehaviour(item);
         }
         switch (key.KeyChar)
         {
             case 'y':
-                IO.sel(Fightable.bareHand.skills, __.bottom, out int index, out bool cancel, out _, out _);
-                if (cancel)
-                {
-                    IO.DrawScreen();
-                    return;
-                }
-                s_player.SelectBehaviour(Fightable.bareHand, index);
+                s_player.SelectBehaviour(Fightable.bareHand);
                 break;
             case ' ':
                 s_player.InteractUnderFoot();

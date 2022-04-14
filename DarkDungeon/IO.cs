@@ -10,14 +10,14 @@ public static class IO
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
-    public static ConsoleKeyInfo rk(object print, __ flags = 0)
+    public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "선택 : ")
     {
-        pr(print, flags);
+        pr(print, flags, title);
         ConsoleKeyInfo info = rk();
         del();
         return info;
     }
-    public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
+    public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
     {
         bool found;
         int max = Inventory.INVENSIZE;
@@ -29,7 +29,7 @@ public static class IO
         }
         do
         {
-            keyInfo = rk(value, flags);
+            keyInfo = rk(value, flags, title);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == CANCELKEY;
             found = chk(keyInfo.KeyChar, max, out index);
@@ -43,11 +43,11 @@ public static class IO
     }
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object value, __ flag = 0)
+    public static void pr(object value, __ flag = 0, string title = "선택 : ")
     {
         if (value is Array array)
         {
-            value = array.ToFString();
+            value = array.ToFString(title);
         }
         if (flag.HasFlag(__.emphasis)) value = EMPHASIS + value;
         if (flag.HasFlag(__.newline)) value = "\n" + value;
@@ -60,7 +60,8 @@ public static class IO
             Console.SetCursorPosition(x, y);
             return;
         }
-        Console.WriteLine(value);
+        if (flag.HasFlag(__.write)) Console.Write(value);
+        else Console.WriteLine(value);
     }
     ///<summary>Print in Formated Options</summary>
 

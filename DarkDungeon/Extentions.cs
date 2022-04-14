@@ -31,9 +31,9 @@ public static class Extensions
         TokenType.Charge => StanceName.Charge,
         _ => StanceName.None
     };
-    public static string ToFString(this Array value, string comment = "선택 :")
+    public static string ToFString(this Array value, string title = "선택 :")
     {
-        string printResult = comment + " /";
+        string printResult = title + " /";
         foreach (var item in value)
         {
             printResult += $" {item} /";
