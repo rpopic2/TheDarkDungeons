@@ -9,7 +9,7 @@ heavy-refactoring
 [X] 검 선택하면 맨 아래줄 지우고(인벤토리) 그리고 스킬이 나오게끔!
 
 [ ] 모바일 콘솔에서 한칸 더띄워지는게 DELSTRING이 길어서 Wrap되서 그러는게 아닐까 -> delstring 빌더?
-[ ] make tokens and invnetory extend ienumerable or sth simmilar
+[x] make tokens and invnetory extend ienumerable or sth simmilar
 [ ] Snake
 [ ] new neutral tokens
 [ ] Shaman

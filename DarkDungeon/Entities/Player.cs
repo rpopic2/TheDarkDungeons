@@ -23,6 +23,17 @@ public class Player : Fightable
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
     }
+    public void SelectBehaviour(Item item)
+    {
+        IO.del(__.bottom);
+        IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.name} : ");
+        if (cancel)
+        {
+            IO.DrawScreen();
+            return;
+        }
+        SelectBehaviour(item, index);
+    }
     public void SelectPickupStat()
     {
         bool cancel;

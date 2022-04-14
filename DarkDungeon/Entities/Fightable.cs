@@ -57,8 +57,8 @@ public partial class Fightable
     {
         if (tokens.IsFull)
         {
-            if (discardIndex != -1) tokens.RemoveAt(discardIndex);
-            else tokens.RemoveAt(tokens.Count - 1);
+            if (discardIndex == -1) discardIndex = tokens.Count - 1;
+            tokens.RemoveAt(discardIndex);
         }
         tokens.Add(tokenType);
     }
@@ -67,17 +67,6 @@ public partial class Fightable
         int amount = Stat.GetRandom(statName);
         Stance.Set(token.ToStance(), amount);
         return amount;
-    }
-    public void SelectBehaviour(Item item)
-    {
-        IO.del(__.bottom);
-        IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.name} : ");
-        if (cancel)
-        {
-            IO.DrawScreen();
-            return;
-        }
-        SelectBehaviour(item, index);
     }
     public void SelectBehaviour(Item item, int index)
     {
