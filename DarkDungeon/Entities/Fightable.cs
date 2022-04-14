@@ -35,24 +35,6 @@ public partial class Fightable
     }
     public bool IsAlive => !Hp.IsMin;
     protected Map _currentMap => Map.Current;
-    protected void Move(Position x)
-    {
-        Position newPos = Pos + x;
-        Map currentMap = Map.Current;
-        bool canGo = true;
-        if (newPos.x != Pos.x)
-        {
-            bool existsTile = currentMap.Tiles.TryGet(newPos.x, out _);
-            bool obstructed = currentMap.FightablePositions.TryGet(newPos.x, out _);
-            canGo = existsTile && !obstructed;
-        }
-        if (canGo)
-        {
-            Pos = newPos;
-            currentMap.UpdateFightable(this);
-        }
-        else Stance.Set(StanceName.None, default);
-    }
     protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
         if (tokens.IsFull)
@@ -89,8 +71,10 @@ public partial class Fightable
         {
             string output = behaviour.OnUseOutput;
             if (output != string.Empty) IO.pr(Name + output);
-            Stance.Set(StanceName.Charge, default);
-            nonToken.nonTokenBehav.Invoke(this, x, y);
+            Stance.Set(StanceName.Charge, x, y);
+            currentBehav = nonToken;
+            currentItem = basicActions;
+            //nonToken.nonTokenBehav.Invoke(this, x, y);
         }
     }
     private void SelectSkill(Item item, Skill selected)
@@ -107,10 +91,7 @@ public partial class Fightable
             currentItem = item;
             IO.rk(useOutput);
         }
-        else
-        {
-            IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
-        }
+        else IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
     }
     private void SelectConsume(Item item, Consume consume)
     {
@@ -123,7 +104,8 @@ public partial class Fightable
     }
     public void InvokeBehaviour()
     {
-        currentBehav?.Behaviour.Invoke(this);
+        if(currentBehav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
+        else currentBehav?.Behaviour.Invoke(this);
     }
     private void Throw(int range)
     {
@@ -153,6 +135,24 @@ public partial class Fightable
             damage = damage.ToVul();
         }
         Hp -= damage;
+    }
+    protected void Move(Position x)
+    {
+        Position newPos = Pos + x;
+        Map currentMap = Map.Current;
+        bool canGo = true;
+        if (newPos.x != Pos.x)
+        {
+            bool existsTile = currentMap.Tiles.TryGet(newPos.x, out _);
+            bool obstructed = currentMap.FightablePositions.TryGet(newPos.x, out _);
+            canGo = existsTile && !obstructed;
+        }
+        if (canGo)
+        {
+            Pos = newPos;
+            currentMap.UpdateFightable(this);
+        }
+        else Stance.Set(StanceName.None, default);
     }
     public virtual void OnTurnEnd()
     {
