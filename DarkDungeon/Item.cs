@@ -12,11 +12,13 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
 }
 public partial class Fightable
 {
+    ///<summary>[0] : 이동(Fightable f, int amout, int(Facing) facing) | [1] : 숨고르기(Fightable f, int(TokenType) tokenType, int discardIndex)
+    ///</summary>
     public static readonly Item basicActions = new("(기본)", ItemType.Equip, new NonTokenSkill[]{
-        new("이동", string.Empty, (i, x, y)=>i.Move(new(x, (Facing)y)), (f)=>{}),
-        new("숨고르기", "은 숨을 골랐다.", (i,x,y)=>{
-            if(i is Player p) p.PickupToken(1);
-            else i.PickupToken((TokenType)x, y);
+        new("이동", string.Empty, (f, x, y)=>f.Move(new(x, (Facing)y)), (f)=>{}),
+        new("숨고르기", "은 숨을 골랐다.", (f,x,y)=>{
+            if(f is Player p) p.PickupToken(1);
+            else f.PickupToken((TokenType)x, y);
         }, (f)=>{})
     });
     public static readonly Item bareHand = new("(맨손)", ItemType.Equip, new Skill[] {

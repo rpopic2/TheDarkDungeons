@@ -62,7 +62,7 @@ public partial class Fightable
         }
         tokens.Add(tokenType);
     }
-    private int SetStance(TokenType token, StatName statName)
+    private int SetStanceAndRndAmount(TokenType token, StatName statName)
     {
         int amount = Stat.GetRandom(statName);
         Stance.Set(token.ToStance(), amount);
@@ -98,7 +98,7 @@ public partial class Fightable
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
         {
-            int amount = SetStance(token, selected.statName);
+            int amount = SetStanceAndRndAmount(token, selected.statName);
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+({mcharge})");
@@ -114,7 +114,7 @@ public partial class Fightable
     }
     private void SelectConsume(Item item, Consume consume)
     {
-        SetStance(TokenType.Charge, default);
+        SetStanceAndRndAmount(TokenType.Charge, default);
         IO.rk($"{Name} {consume.OnUseOutput}");
         //consume.Behaviour.Invoke(this);
         currentBehav = consume;
