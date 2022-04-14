@@ -13,9 +13,9 @@ public partial class Fightable
 
     public StanceInfo Stance { get; protected set; } = new(default, default);
     public virtual Fightable? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
-    public IBehaviour? currentBehav;
-    public Item? currentItem;
-    public Fightable? lastHit { get; private set; }
+    private IBehaviour? currentBehav;
+    private Item? currentItem;
+    private Fightable? lastHit { get; set; }
     public Action<Fightable> passives = (p) => { };
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos)
     {
