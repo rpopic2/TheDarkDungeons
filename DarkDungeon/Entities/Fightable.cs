@@ -13,7 +13,7 @@ public partial class Fightable
 
     public StanceInfo Stance { get; protected set; } = new(default, default);
     public virtual Fightable? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
-    public Action<Fightable>? currentBehav;
+    public IBehaviour? currentBehav;
     public Item? currentItem;
     public Fightable? lastHit { get; private set; }
     public Action<Fightable> passives = (p) => { };
@@ -90,7 +90,7 @@ public partial class Fightable
             string output = behaviour.OnUseOutput;
             if (output != string.Empty) IO.pr(Name + output);
             Stance.Set(StanceName.Charge, default);
-            nonToken.behaviour.Invoke(this, x, y);
+            nonToken.nonTokenBehav.Invoke(this, x, y);
         }
     }
     private void SelectSkill(Item item, Skill selected)
@@ -103,7 +103,7 @@ public partial class Fightable
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+({mcharge})");
             if (selected.statName == StatName.Con) Inven.GetMeta(item).magicCharge += amount;
-            currentBehav = selected.behaviour;
+            currentBehav = selected;
             currentItem = item;
             IO.rk(useOutput);
         }
@@ -116,14 +116,14 @@ public partial class Fightable
     {
         SetStance(TokenType.Charge, default);
         IO.rk($"{Name} {consume.OnUseOutput}");
-        consume.behaviour.Invoke(this);
+        consume.Behaviour.Invoke(this);
         Inven.Consume(item);
     }
     public void TryAttack()
     {
         if (Stance.Stance == StanceName.Offence && currentBehav is not null)
         {
-            currentBehav.Invoke((Fightable)this);
+            currentBehav.Behaviour.Invoke((Fightable)this);
             currentBehav = null;
             return;
         }
@@ -150,7 +150,7 @@ public partial class Fightable
     {
         if (Stance.Stance == StanceName.Defence && currentBehav is not null)
         {
-            currentBehav.Invoke((Fightable)this);
+            currentBehav.Behaviour.Invoke((Fightable)this);
             currentBehav = null;
             return;
         }

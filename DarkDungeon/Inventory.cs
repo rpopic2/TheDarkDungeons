@@ -44,13 +44,13 @@ public class Inventory : ICollection<Item?>
         {
             foreach (WearEffect wear in wears)
             {
-                wear.wear.Invoke(owner);
+                wear.Behaviour.Invoke(owner);
             }
         }
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var pass in passives)
         {
-            owner.passives += pass.actionEveryTurn;
+            owner.passives += pass.Behaviour;
         }
     }
     public void Remove(Item item)
@@ -67,7 +67,7 @@ public class Inventory : ICollection<Item?>
         foreach (var p in passives)
         {
             #pragma warning disable CS8601
-            if (owner.passives is not null) owner.passives -= p.actionEveryTurn;
+            if (owner.passives is not null) owner.passives -= p.Behaviour;
         }
 
         content.Remove(item);
