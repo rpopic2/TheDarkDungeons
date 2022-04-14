@@ -116,19 +116,14 @@ public partial class Fightable
     {
         SetStance(TokenType.Charge, default);
         IO.rk($"{Name} {consume.OnUseOutput}");
-        consume.Behaviour.Invoke(this);
+        //consume.Behaviour.Invoke(this);
+        currentBehav = consume;
+        currentItem = item;
         Inven.Consume(item);
     }
-    public void TryAttack()
+    public void InvokeBehaviour()
     {
-        if (Stance.Stance == StanceName.Offence && currentBehav is not null)
-        {
-            currentBehav.Behaviour.Invoke((Fightable)this);
-            currentBehav = null;
-            return;
-        }
-        if (FrontFightable is not Fightable tar) return;
-        if (tar.Stance.Stance == StanceName.Defence) tar.Dodge(0);
+        currentBehav?.Behaviour.Invoke(this);
     }
     private void Throw(int range)
     {
@@ -143,16 +138,6 @@ public partial class Fightable
             }
             lastHit = hit;
             hit.Dodge(Stance.Amount);
-        }
-    }
-
-    public void TryDefence()
-    {
-        if (Stance.Stance == StanceName.Defence && currentBehav is not null)
-        {
-            currentBehav.Behaviour.Invoke((Fightable)this);
-            currentBehav = null;
-            return;
         }
     }
     private void Dodge() => Dodge(0);
