@@ -150,7 +150,6 @@ public partial class Fightable
             Pos = newPos;
             currentMap.UpdateFightable(this);
         }
-        else Stance.Reset();
     }
     protected virtual void Interact() { }
     public virtual void OnTurnEnd()
