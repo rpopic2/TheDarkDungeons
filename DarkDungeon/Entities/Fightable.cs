@@ -92,7 +92,7 @@ public partial class Fightable
     public void InvokeBehaviour()
     {
         if(Stance.CurrentBehav is not IBehaviour behav) return;
-        if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
+        if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
         else behav.Behaviour.Invoke(this);
     }
     private void Throw(int range)

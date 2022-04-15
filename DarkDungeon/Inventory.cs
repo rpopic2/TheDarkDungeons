@@ -60,7 +60,7 @@ public class Inventory : ICollection<Item?>
         {
             foreach (WearEffect wear in wears)
             {
-                wear.takeOff.Invoke(owner);
+                wear.OnTakeOff.Invoke(owner);
             }
         }
         var passives = from p in item.skills where p is Passive select p as Passive;

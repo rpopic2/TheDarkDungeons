@@ -8,7 +8,7 @@ public record Skill(string Name, StanceName Stance, TokenType TokenType, StatNam
         return result;
     }
 }
-public record NonTokenSkill(string Name, StanceName Stance, string OnUseOutput, Action<Fightable, int, int> nonTokenBehav, Action<Fightable> Behaviour) : IBehaviour;
+public record NonTokenSkill(string Name, StanceName Stance, string OnUseOutput, Action<Fightable, int, int> NonTokenBehav, Action<Fightable> Behaviour) : IBehaviour;
 
 public record Consume(string Name, StanceName Stance, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
 {
@@ -18,7 +18,7 @@ public record Consume(string Name, StanceName Stance, string OnUseOutput, Action
     }
 }
 
-public record WearEffect(string Name, StanceName Stance, string OnUseOutput, Action<Fightable> Behaviour, Action<Fightable> takeOff) : IBehaviour
+public record WearEffect(string Name, StanceName Stance, string OnUseOutput, Action<Fightable> Behaviour, Action<Fightable> OnTakeOff) : IBehaviour
 {
     public override string ToString() => Name;
 }
