@@ -25,7 +25,7 @@ public class Inventory : ICollection<Item?>
 
     public void Add(Item? value)
     {
-        if(value is not Item item) throw new Exception("Cannot add null into inventory.");
+        if (value is not Item item) throw new Exception("Cannot add null into inventory.");
         if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
             GetMeta(item).stack++;
@@ -66,7 +66,7 @@ public class Inventory : ICollection<Item?>
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var p in passives)
         {
-            #pragma warning disable CS8601
+#pragma warning disable CS8601
             if (owner.passives is not null) owner.passives -= p.Behaviour;
         }
 
@@ -79,12 +79,16 @@ public class Inventory : ICollection<Item?>
     }
     public ItemMetaData GetMeta(Item item)
     {
-        if(item == Fightable.bareHand) return bareHandMetaData;
+        if (item == Fightable.bareHand) return bareHandMetaData;
         return metaDatas[item];
     }
     public void Consume(Item item)
     {
-        if (--GetMeta(item).stack <= 0) Remove(item);
+        if (--GetMeta(item).stack <= 0)
+        {
+            Remove(item);
+            IO.pr($"{item.name}을 다 사용했다.");
+        }
     }
     public override string ToString()
     {
@@ -92,7 +96,7 @@ public class Inventory : ICollection<Item?>
         for (int i = 0; i < INVENSIZE; i++)
         {
             if (i >= Count) result += $"({IO.ITEMKEYS1[i]})";
-            else if(content[i] is Item item)
+            else if (content[i] is Item item)
             {
                 string itemName = item.ToString();
                 int stack = GetMeta(item).stack;

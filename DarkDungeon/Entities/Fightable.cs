@@ -112,17 +112,17 @@ public partial class Fightable
             hit.Dodge(Stance.Amount, damageType);
         }
     }
-    private void Dodge() => Dodge(default, default);
     private void Dodge(int damage, DamageType damageType)
     {
-        if (Stance.CurrentBehav?.Stance == StanceName.Defence)
+        bool isDefending = Stance.CurrentBehav?.Stance == StanceName.Defence;
+        if (isDefending)
         {
             DamageType defenceType = default;
             if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
             if (defenceType == DamageType.Slash && damageType == DamageType.Slash)
             {
-                Stance.AddAmount(Stance.Amount.ToVul());
-                IO.pr($"{Name}은 적의 공격을 효과적으로 막아냈다.");
+                IO.pr($"{Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+                damage = damage.ToUnVul();
             }
             damage -= Stance.Amount;
         }
@@ -131,6 +131,7 @@ public partial class Fightable
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
         }
+        if(damage <= 0) IO.rk($"{Name}은 공격을 완전히 막아냈다!");
         Hp -= damage;
     }
     protected void Move(Position x)
