@@ -143,22 +143,25 @@ public partial class Fightable
             damage = damage.ToUnVul();
         }
     }
-    protected void Move(Position x)
+    protected void Move(Position value)
     {
-        Position newPos = Pos + x;
-        Map currentMap = Map.Current;
-        bool canGo = true;
-        if (newPos.x != Pos.x)
-        {
-            bool existsTile = currentMap.Tiles.TryGet(newPos.x, out _);
-            bool obstructed = currentMap.FightablePositions.TryGet(newPos.x, out _);
-            canGo = existsTile && !obstructed;
-        }
+        bool canGo = CanMove(value);
         if (canGo)
         {
-            Pos = newPos;
-            currentMap.UpdateFightable(this);
+            Pos += value;
+            _currentMap.UpdateFightable(this);
         }
+    }
+    public bool CanMove(Position value)
+    {
+        bool canGo = true;
+        if (value.x != Pos.x)
+        {
+            bool existsTile = _currentMap.Tiles.TryGet(value.x, out _);
+            bool obstructed = _currentMap.FightablePositions.TryGet(value.x, out _);
+            canGo = existsTile && !obstructed;
+        }
+        return canGo;
     }
     protected virtual void Interact() { }
     public virtual void OnTurnEnd()

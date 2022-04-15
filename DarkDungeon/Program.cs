@@ -4,6 +4,8 @@ public class Program
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(q) 검사", "(w) 암살자", "(e) 마법사" };
     public static readonly string[] stats = new string[] { "(q) 힘/체력", "(w) 정밀/민첩", "(e) 마력/지능" };
+    public readonly Position MOVELEFT = new(1, Facing.Left);
+    public readonly Position MOVERIGHT = new(1, Facing.Right);
     private static Player s_player { get => Player.instance; }
     public static void Main()
     {
@@ -63,7 +65,6 @@ public class Program
         IO.del();
     }
     //-------------------------
-
     private void MainLoop()
     {
         ConsoleKeyInfo info = IO.rk();
@@ -72,16 +73,12 @@ public class Program
         {
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
-                if (info.Modifiers == ConsoleModifiers.Control)
-                {
-                    IO.DrawScreen();
-                    return;
-                }
-                s_player.SelectBasicBehaviour(0, 1, (int)Facing.Right);
+                if (info.Modifiers == ConsoleModifiers.Control) IO.DrawScreen();
+                else if (s_player.CanMove(MOVERIGHT)) s_player.SelectBasicBehaviour(0, MOVERIGHT.x, (int)MOVERIGHT.facing);
                 break;
             case ConsoleKey.LeftArrow:
             case ConsoleKey.H:
-                s_player.SelectBasicBehaviour(0, 1, (int)Facing.Left);
+                if (s_player.CanMove(MOVELEFT)) s_player.SelectBasicBehaviour(0, MOVELEFT.x, (int)MOVELEFT.facing);
                 break;
             default:
                 DefaultSwitch(info);
@@ -100,10 +97,10 @@ public class Program
             case 'y':
                 s_player.SelectBehaviour(Fightable.bareHand);
                 break;
-            case ' ':
-                s_player.SelectBasicBehaviour(2, 0, 0);
+            case ' ': //상호작용
+                if(s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
                 break;
-            case '.':
+            case '.': //Rest
                 s_player.SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
                 break;
             case '/':
