@@ -87,13 +87,13 @@ public partial class Fightable
     {
         Stance.Set(item, consume);
         IO.rk($"{Name} {consume.OnUseOutput}");
-        //consume.Behaviour.Invoke(this);
         Inven.Consume(item);
     }
     public void InvokeBehaviour()
     {
-        if (Stance.CurrentBehav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
-        else Stance.CurrentBehav?.Behaviour.Invoke(this);
+        if(Stance.CurrentBehav is not IBehaviour behav) return;
+        if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
+        else behav.Behaviour.Invoke(this);
     }
     private void Throw(int range)
     {
