@@ -145,12 +145,12 @@ public partial class Fightable
 
         void EffectiveDefence(ref int damage)
         {
-            IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+            IO.rk($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
             damage = damage.ToUnVul();
         }
         void UneffectiveDefence(ref int damage)
         {
-            IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
+            IO.rk($"{Name}의 {Stance.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
             damage = damage.ToVul();
         }
     }
