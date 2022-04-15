@@ -8,7 +8,7 @@ public static class IO
     private static Player s_player { get => Player.instance; }
     static IO()
     {
-        DELSTRING = new String(' ', Console.WindowWidth);
+        DELSTRING = new String(' ', Console.WindowWidth - 1);
     }
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
