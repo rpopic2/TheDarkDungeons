@@ -114,10 +114,8 @@ public class Player : Fightable
             Pos = new Position();
             Map.Current.UpdateFightable(this);
         }
-
-        Stance.Set(StanceName.Charge, 0);
     }
-    public void PickupCorpse(Corpse corpse)
+    private void PickupCorpse(Corpse corpse)
     {
         while (corpse.droplist.Count > 0)
         {

@@ -12,7 +12,7 @@ public class Program
         do
         {
             instance.MainLoop();
-            if (s_player.Stance.Stance != StanceName.None) Game.ElaspeTurn();
+            if (s_player.Stance.CurrentBehav is not null) Game.ElaspeTurn();
         } while (s_player.IsAlive);
         IO.pr(s_player);
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
@@ -101,7 +101,7 @@ public class Program
                 s_player.SelectBehaviour(Fightable.bareHand);
                 break;
             case ' ':
-                s_player.InteractUnderFoot();
+                s_player.SelectBasicBehaviour(2, 0, 0);
                 break;
             case '.':
                 s_player.SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음

@@ -10,6 +10,7 @@ heavy-refactoring
 [X] Fightable.SelectConsume이 보면 바로 실행됨
 [ ] 기존의 스탠스 없애고 currentItem, currentBehaviour로 하는게 나을듯.
 [ ] 몹들끼리 싸우는 버그있는듯.
+[ ] IBehaviour에 Stance ActionType필요함
 
 [ ] 모바일 콘솔에서 한칸 더띄워지는게 DELSTRING이 길어서 Wrap되서 그러는게 아닐까 -> delstring 빌더?
 [x] make tokens and invnetory extend ienumerable or sth simmilar

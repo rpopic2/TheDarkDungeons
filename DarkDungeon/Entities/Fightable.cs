@@ -11,10 +11,8 @@ public partial class Fightable
 
     public Inventory Inven { get; private set; }
 
-    public StanceInfo Stance { get; protected set; } = new(default, default);
+    public StanceInfo Stance { get; protected set; } = new();
     public virtual Fightable? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
-    private IBehaviour? currentBehav;
-    private Item? currentItem;
     private Fightable? lastHit { get; set; }
     public Action<Fightable> passives = (p) => { };
     public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos)
@@ -46,7 +44,7 @@ public partial class Fightable
     }
     protected void SelectBehaviour(Item item, int index)
     {
-        if (Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
+        if (Stance.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
         else if (behaviour is Consume consume) SelectConsume(item, consume);
@@ -58,6 +56,8 @@ public partial class Fightable
         else throw new Exception("등록되지 않은 행동 종류입니다.");
     }
     //requirements : stance 정하기, rk로 프린트하기.
+    ///<summary>[0] : 이동(Fightable f, int amout, int(Facing) facing) | [1] : 숨고르기(Fightable f, int(TokenType) tokenType, int discardIndex) | [2] : 상호작용
+    ///</summary>
     public void SelectBasicBehaviour(int index, int x, int y)
     {
         IBehaviour behaviour = basicActions.skills[index];
@@ -65,10 +65,7 @@ public partial class Fightable
         {
             string output = behaviour.OnUseOutput;
             if (output != string.Empty) IO.pr(Name + output);
-            Stance.Set(StanceName.Charge, x, y);
-            currentBehav = nonToken;
-            currentItem = basicActions;
-            //nonToken.nonTokenBehav.Invoke(this, x, y);
+            Stance.Set(basicActions, nonToken, x, y);
         }
     }
     private void SelectSkill(Item item, Skill selected)
@@ -77,41 +74,37 @@ public partial class Fightable
         if (tokenTry is TokenType token)
         {
             int amount = Stat.GetRandom(selected.statName);
-            Stance.Set(token.ToStance(), amount);
+            Stance.Set(item, selected, amount);
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+({mcharge})");
             if (selected.statName == StatName.Con) Inven.GetMeta(item).magicCharge += amount;
-            currentBehav = selected;
-            currentItem = item;
             IO.rk(useOutput);
         }
         else IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
     }
     private void SelectConsume(Item item, Consume consume)
     {
-        Stance.Set(StanceName.Charge, 0);
+        Stance.Set(item, consume);
         IO.rk($"{Name} {consume.OnUseOutput}");
         //consume.Behaviour.Invoke(this);
-        currentBehav = consume;
-        currentItem = item;
         Inven.Consume(item);
     }
     public void InvokeBehaviour()
     {
-        if (currentBehav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
-        else currentBehav?.Behaviour.Invoke(this);
+        if (Stance.CurrentBehav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
+        else Stance.CurrentBehav?.Behaviour.Invoke(this);
     }
     private void Throw(int range)
     {
         Fightable? mov = _currentMap.RayCast(Pos, range);
         if (mov is Fightable hit)
         {
-            int magicCharge = Inven.GetMeta(currentItem!).magicCharge;
+            int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
             if (magicCharge > 0)
             {
                 Stance.AddAmount(magicCharge);
-                Inven.GetMeta(currentItem!).magicCharge = 0;
+                Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
             }
             lastHit = hit;
             hit.Dodge(Stance.Amount);
@@ -120,11 +113,11 @@ public partial class Fightable
     private void Dodge() => Dodge(0);
     private void Dodge(int damage)
     {
-        if (Stance.Stance == StanceName.Defence)
+        if (Stance.CurrentBehav?.Stance == StanceName.Defence)
         {
             damage -= Stance.Amount;
         }
-        else if (damage > 0 && Stance.Stance == StanceName.Charge)
+        else if (damage > 0 && Stance.CurrentBehav?.Stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
@@ -147,12 +140,11 @@ public partial class Fightable
             Pos = newPos;
             currentMap.UpdateFightable(this);
         }
-        else Stance.Set(StanceName.None, default);
+        else Stance.Reset();
     }
     public virtual void OnTurnEnd()
     {
         Stance.Reset();
-        currentBehav = null;
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
