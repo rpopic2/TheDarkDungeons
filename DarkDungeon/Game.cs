@@ -1,7 +1,7 @@
 public static class Game
 {
     private static Player s_player { get => Player.instance; }
-    private const int SPAWNRATE = 10;
+    private static int s_spawnrate = 10;
     public static int Turn { get; private set; }
     static Game()
     {
@@ -17,18 +17,17 @@ public static class Game
 
         fights.ForEach(m =>
         {
-            m.passives.Invoke((Fightable)m); //tryattack
+            m.passives.Invoke((Fightable)m); //passives
         });
 
         fights.ForEach(m => m.InvokeBehaviour());
-        //fights.ForEach(m => m.TryDefence());
 
         fights.ForEach(m =>
         {
             m.OnTurnEnd(); //update target and reset stance
         });
         Map.Current.RemoveAndCreateCorpse();
-        if (Map.Current.SpawnMobs && Turn % SPAWNRATE == 0) Map.Current.Spawn();
+        if (Map.Current.SpawnMobs && Turn % s_spawnrate == 0) Map.Current.Spawn();
         NewTurn();
     }
     public static void NewTurn()
