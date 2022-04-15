@@ -102,37 +102,46 @@ public partial class Fightable
         Fightable? mov = _currentMap.RayCast(Pos, range);
         if (mov is Fightable hit)
         {
-            int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
-            if (magicCharge > 0)
-            {
-                Stance.AddAmount(magicCharge);
-                Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
-            }
             lastHit = hit;
+            ConsumeMagicCharge();
             hit.Dodge(Stance.Amount, damageType);
+        }
+    }
+    private void ConsumeMagicCharge()
+    {
+        int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
+        if (magicCharge > 0)
+        {
+            Stance.AddAmount(magicCharge);
+            Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
         }
     }
     private void Dodge(int damage, DamageType damageType)
     {
-        bool isDefending = Stance.CurrentBehav?.Stance == StanceName.Defence;
-        if (isDefending)
+        if (damage <= 0) throw new Exception("데미지는 0과 같거나 작을 수 없습니다.");
+        StanceName? stance = Stance.CurrentBehav?.Stance;
+        if (stance == StanceName.Defence)
         {
-            DamageType defenceType = default;
-            if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
-            if (defenceType == DamageType.Slash && damageType == DamageType.Slash)
-            {
-                IO.pr($"{Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
-                damage = damage.ToUnVul();
-            }
+            CalcDamageType(ref damage, damageType);
             damage -= Stance.Amount;
         }
-        else if (damage > 0 && Stance.CurrentBehav?.Stance == StanceName.Charge)
+        else if (stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
         }
-        if(damage <= 0) IO.rk($"{Name}은 공격을 완전히 막아냈다!");
+        if (damage <= 0) IO.rk($"{Name}은 공격을 완전히 막아냈다!");
         Hp -= damage;
+    }
+    private void CalcDamageType(ref int damage, DamageType damageType)
+    {
+        DamageType defenceType = default;
+        if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
+        if (defenceType == DamageType.Slash && damageType == DamageType.Slash)
+        {
+            IO.pr($"{Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+            damage = damage.ToUnVul();
+        }
     }
     protected void Move(Position x)
     {
