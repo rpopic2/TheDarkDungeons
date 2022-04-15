@@ -91,12 +91,14 @@ public partial class Fightable
     }
     public void InvokeBehaviour()
     {
-        if(Stance.CurrentBehav is not IBehaviour behav) return;
+        if (Stance.CurrentBehav is not IBehaviour behav) return;
         if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
         else behav.Behaviour.Invoke(this);
     }
     private void Throw(int range)
     {
+        DamageType damageType = default;
+        if (Stance.CurrentBehav is Skill skill) damageType = skill.damageType;
         Fightable? mov = _currentMap.RayCast(Pos, range);
         if (mov is Fightable hit)
         {
@@ -107,13 +109,23 @@ public partial class Fightable
                 Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
             }
             lastHit = hit;
-            hit.Dodge(Stance.Amount);
+            hit.Dodge(Stance.Amount, damageType);
         }
     }
-    private void Dodge() => Dodge(0);
-    private void Dodge(int damage)
+    private void Dodge() => Dodge(default, default);
+    private void Dodge(int damage, DamageType damageType)
     {
-        if (Stance.CurrentBehav?.Stance == StanceName.Defence) damage -= Stance.Amount;
+        if (Stance.CurrentBehav?.Stance == StanceName.Defence)
+        {
+            DamageType defenceType = default;
+            if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
+            if (defenceType == DamageType.Slash && damageType == DamageType.Slash)
+            {
+                Stance.AddAmount(Stance.Amount.ToVul());
+                IO.pr($"{Name}은 적의 공격을 효과적으로 막아냈다.");
+            }
+            damage -= Stance.Amount;
+        }
         else if (damage > 0 && Stance.CurrentBehav?.Stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
@@ -139,7 +151,7 @@ public partial class Fightable
         }
         else Stance.Reset();
     }
-    protected virtual void Interact() {}
+    protected virtual void Interact() { }
     public virtual void OnTurnEnd()
     {
         Stance.Reset();
