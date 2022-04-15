@@ -64,7 +64,24 @@ public static class IO
             Console.SetCursorPosition(x, y);
             return;
         }
-        if (flag.HasFlag(__.write)) Console.Write(value);
+        if (flag.HasFlag(__.use_color))
+        {
+            string v = (string)value;
+            string[] splits = v.Split('^');
+            foreach (string item in splits)
+            {
+                if (item.StartsWith('^'))
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }
+                else if (item.StartsWith("^/"))
+                {
+                    Console.ResetColor();
+                }
+                Console.Write(item);
+            }
+        }
+        else if (flag.HasFlag(__.write)) Console.Write(value);
         else Console.WriteLine(value);
     }
     ///<summary>Print in Formated Options</summary>

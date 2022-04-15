@@ -9,16 +9,19 @@ public class Program
     private static Player s_player { get => Player.instance; }
     public static void Main()
     {
-        instance = new Program();
-        Game.NewTurn();
-        do
-        {
-            instance.MainLoop();
-            if (s_player.Stance.CurrentBehav is not null) Game.ElaspeTurn();
-        } while (s_player.IsAlive);
-        IO.pr(s_player);
-        IO.pr($"{s_player.Name}은 여기에 잠들었다...");
-        IO.rk();
+        Console.Write("H");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.Write("I");
+        // instance = new Program();
+        // Game.NewTurn();
+        // do
+        // {
+        //     instance.MainLoop();
+        //     if (s_player.Stance.CurrentBehav is not null) Game.ElaspeTurn();
+        // } while (s_player.IsAlive);
+        // IO.pr(s_player);
+        // IO.pr($"{s_player.Name}은 여기에 잠들었다...");
+        // IO.rk();
     }
     public Program()
     {

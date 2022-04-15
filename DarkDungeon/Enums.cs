@@ -23,6 +23,7 @@ public enum __
     bottom = 4,
     fullinven = 8,
     write = 16,
+    use_color = 32,
 }
 public enum DamageType
 {
