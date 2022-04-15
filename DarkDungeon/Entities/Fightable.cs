@@ -131,7 +131,7 @@ public partial class Fightable
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
         }
-        if (damage <= 0) IO.rk($"{Name}은 공격을 완전히 막아냈다!");
+        if (damage <= 0) IO.rk($"{Name}은 아무런 피해도 받지 않았다!");
         Hp -= damage;
     }
     private void CalcDamageType(ref int damage, DamageType damageType)
