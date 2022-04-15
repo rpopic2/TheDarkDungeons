@@ -1,22 +1,4 @@
-heavy-refactoring
-[X] 레이캐스트 맵으로 이동?
-[X] Fightable.Target 새로 생각해야될듯.
-    [?]1. 몬스터를 위한 락온 혹은 애드 개념.
-    [X]2. Game.cs : 39에서 앞에 있는 친구 토큰 보기용으로 쓰는데, 이거 바꿔야할듯.
-[X] 시작템 굳이 번호지정 필요없을듯!
-[X] 토큰 굳이 byte 리스트로 해야할까??
-[X] sel에 제목 정하기 기능
-[X] 검 선택하면 맨 아래줄 지우고(인벤토리) 그리고 스킬이 나오게끔!
-[X] Fightable.SelectConsume이 보면 바로 실행됨
-[X] IBehaviour에 Stance ActionType필요함
-[X] 기존의 스탠스 없애고 currentItem, currentBehaviour로 하는게 나을듯.
-[x] make tokens and invnetory extend ienumerable or sth simmilar
-[X] 모바일 콘솔에서 한칸 더띄워지는게 DELSTRING이 길어서 Wrap되서 그러는게 아닐까 -> delstring 빌더?
-[X] 몹들끼리 싸우는 버그있는듯.
-[X] 스킬쓸떄 인수로 숫자 말고 좀 더 freindly한거 없나
-[X] 그냥 앞으로 가면 적 피해 안입음 + 막혔는데 앞으로 가기 가능함->이게 기능인듯..
-[X] 갑자기 무기고르면 한칸 띄워짐
-
+damage-types
 [ ] 데미지타입 시스템?
 [ ] 완전히 막았을 때 알림
 [ ] 인트로에 질문 말고 이름만 남거나 둘다 남게끔
