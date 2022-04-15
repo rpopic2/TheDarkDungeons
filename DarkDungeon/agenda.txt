@@ -11,9 +11,9 @@ heavy-refactoring
 [X] IBehaviour에 Stance ActionType필요함
 [X] 기존의 스탠스 없애고 currentItem, currentBehaviour로 하는게 나을듯.
 [x] make tokens and invnetory extend ienumerable or sth simmilar
-[ ] 몹들끼리 싸우는 버그있는듯.
+[X] 모바일 콘솔에서 한칸 더띄워지는게 DELSTRING이 길어서 Wrap되서 그러는게 아닐까 -> delstring 빌더?
+[X] 몹들끼리 싸우는 버그있는듯.
 
-[ ] 모바일 콘솔에서 한칸 더띄워지는게 DELSTRING이 길어서 Wrap되서 그러는게 아닐까 -> delstring 빌더?
 [ ] Snake
 [ ] new neutral tokens
 [ ] Shaman
@@ -23,5 +23,5 @@ heavy-refactoring
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
 [ ] 가본 무기 : 활, 방패, 반지, 마법책
-[ ] I to show full inventory ui
+[ ] i to show full inventory ui
 [ ] color texts

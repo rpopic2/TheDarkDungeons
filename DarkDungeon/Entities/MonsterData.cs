@@ -36,7 +36,7 @@ public partial class Monster
     {
         Fightable? target = _currentMap.RayCast(Pos, Sight);
         if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
-        this._target = target;
+        else this._target = target;
     }
     public void BatBehav()
     {
