@@ -103,11 +103,11 @@ public partial class Fightable
         if (mov is Fightable hit)
         {
             lastHit = hit;
-            ConsumeMagicCharge();
+            AttackMagicCharge();
             hit.Dodge(Stance.Amount, damageType);
         }
 
-        void ConsumeMagicCharge()
+        void AttackMagicCharge()
         {
             int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
             if (magicCharge > 0)
@@ -165,6 +165,7 @@ public partial class Fightable
     }
     public bool CanMove(Position value)
     {
+        value += Pos;
         bool canGo = true;
         if (value.x != Pos.x)
         {
