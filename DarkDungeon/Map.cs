@@ -18,6 +18,7 @@ public class Map
     private readonly char[] empty;
     public readonly int length;
     private const bool debug = false;
+    public bool SpawnMobs {get; private set;}
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
@@ -32,7 +33,7 @@ public class Map
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
         FightablePositions[0] = Player.instance;
         fightables.Add(player);
-        if (spawnMobs) Spawn();
+        this.SpawnMobs = spawnMobs;
     }
     public Fightable? GetFightableAt(int index)
     {

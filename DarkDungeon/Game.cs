@@ -28,7 +28,7 @@ public static class Game
             m.OnTurnEnd(); //update target and reset stance
         });
         Map.Current.RemoveAndCreateCorpse();
-        if (Turn > 0 && Turn % SPAWNRATE == 0) Map.Current.Spawn();
+        if (Map.Current.SpawnMobs && Turn % SPAWNRATE == 0) Map.Current.Spawn();
         NewTurn();
     }
     public static void NewTurn()
