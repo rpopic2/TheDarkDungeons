@@ -4,8 +4,12 @@ public static class IO
     public const ConsoleKey CANCELKEY = ConsoleKey.X;
     private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
-    private const string DELSTRING = "                                                                                       ";
+    private static readonly string DELSTRING = " ";
     private static Player s_player { get => Player.instance; }
+    static IO()
+    {
+        DELSTRING = new String(' ', Console.WindowWidth);
+    }
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
