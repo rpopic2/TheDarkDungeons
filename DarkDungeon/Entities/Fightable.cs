@@ -44,12 +44,6 @@ public partial class Fightable
         }
         tokens.Add(tokenType);
     }
-    private int SetStanceAndRndAmount(TokenType token, StatName statName)
-    {
-        int amount = Stat.GetRandom(statName);
-        Stance.Set(token.ToStance(), amount);
-        return amount;
-    }
     protected void SelectBehaviour(Item item, int index)
     {
         if (Stance.Stance != StanceName.None) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
@@ -82,7 +76,8 @@ public partial class Fightable
         TokenType? tokenTry = tokens.TryUse(selected.TokenType);
         if (tokenTry is TokenType token)
         {
-            int amount = SetStanceAndRndAmount(token, selected.statName);
+            int amount = Stat.GetRandom(selected.statName);
+            Stance.Set(token.ToStance(), amount);
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+({mcharge})");
@@ -95,7 +90,7 @@ public partial class Fightable
     }
     private void SelectConsume(Item item, Consume consume)
     {
-        SetStanceAndRndAmount(TokenType.Charge, default);
+        Stance.Set(StanceName.Charge, 0);
         IO.rk($"{Name} {consume.OnUseOutput}");
         //consume.Behaviour.Invoke(this);
         currentBehav = consume;
@@ -104,7 +99,7 @@ public partial class Fightable
     }
     public void InvokeBehaviour()
     {
-        if(currentBehav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
+        if (currentBehav is NonTokenSkill nonTokenSkill) nonTokenSkill.nonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
         else currentBehav?.Behaviour.Invoke(this);
     }
     private void Throw(int range)
