@@ -139,10 +139,7 @@ public partial class Fightable
         }
         else Stance.Reset();
     }
-    protected virtual void Interact()
-    {
-        
-    }
+    protected virtual void Interact() {}
     public virtual void OnTurnEnd()
     {
         Stance.Reset();
