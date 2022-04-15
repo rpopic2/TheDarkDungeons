@@ -106,14 +106,15 @@ public partial class Fightable
             ConsumeMagicCharge();
             hit.Dodge(Stance.Amount, damageType);
         }
-    }
-    private void ConsumeMagicCharge()
-    {
-        int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
-        if (magicCharge > 0)
+
+        void ConsumeMagicCharge()
         {
-            Stance.AddAmount(magicCharge);
-            Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
+            int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
+            if (magicCharge > 0)
+            {
+                hit.Dodge(magicCharge, DamageType.Magic);
+                Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
+            }
         }
     }
     private void Dodge(int damage, DamageType damageType)
@@ -137,10 +138,20 @@ public partial class Fightable
     {
         DamageType defenceType = default;
         if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
-        if (defenceType == DamageType.Slash && damageType == DamageType.Slash)
+        if (damageType == defenceType) EffectiveDefence(ref damage);
+        else if ((damageType == DamageType.Slash && defenceType == DamageType.Magic) ||
+            (damageType == DamageType.Thrust && defenceType == DamageType.Slash) ||
+            (damageType == DamageType.Magic && defenceType == DamageType.Thrust)) UneffectiveDefence(ref damage);
+
+        void EffectiveDefence(ref int damage)
         {
-            IO.pr($"{Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+            IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
             damage = damage.ToUnVul();
+        }
+        void UneffectiveDefence(ref int damage)
+        {
+            IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
+            damage = damage.ToVul();
         }
     }
     protected void Move(Position value)
