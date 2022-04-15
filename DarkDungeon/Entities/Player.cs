@@ -104,7 +104,7 @@ public class Player : Fightable
         }
         PickupToken(token, discard);
     }
-    public void InteractUnderFoot()
+    protected override void Interact()
     {
         if (UnderFoot is null) return;
         else if (UnderFoot is Corpse corpse) PickupCorpse(corpse);

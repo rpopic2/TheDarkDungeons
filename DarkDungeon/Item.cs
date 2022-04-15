@@ -20,7 +20,7 @@ public partial class Fightable
             else f.PickupToken((TokenType)x, y);
         }, (f)=>{}),
         new("상호작용", StanceName.Charge, string.Empty, (f,x,y)=>{
-            if(f is Player player) player.InteractUnderFoot();
+            if(f is Player player) player.Interact();
         },(f)=>{})
     });
     public static readonly Item bareHand = new("(맨손)", ItemType.Equip, new Skill[] {

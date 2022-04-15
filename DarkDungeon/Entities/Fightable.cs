@@ -113,10 +113,7 @@ public partial class Fightable
     private void Dodge() => Dodge(0);
     private void Dodge(int damage)
     {
-        if (Stance.CurrentBehav?.Stance == StanceName.Defence)
-        {
-            damage -= Stance.Amount;
-        }
+        if (Stance.CurrentBehav?.Stance == StanceName.Defence) damage -= Stance.Amount;
         else if (damage > 0 && Stance.CurrentBehav?.Stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
@@ -141,6 +138,10 @@ public partial class Fightable
             currentMap.UpdateFightable(this);
         }
         else Stance.Reset();
+    }
+    protected virtual void Interact()
+    {
+        
     }
     public virtual void OnTurnEnd()
     {
