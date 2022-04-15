@@ -1,23 +1,27 @@
 public static class IO
 {
-    public const ConsoleKey OKKEY = ConsoleKey.Z;
+    public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
     public const ConsoleKey CANCELKEY = ConsoleKey.X;
     private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
-    private const string DELSTRING = "                                                                                       ";
-    private static Player player { get => Player.instance; }
+    private static readonly string DELSTRING = " ";
+    private static Player s_player { get => Player.instance; }
+    static IO()
+    {
+        DELSTRING = new String(' ', Console.WindowWidth);
+    }
 
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
-    public static ConsoleKeyInfo rk(object print, __ flags = 0)
+    public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "선택 : ")
     {
-        pr(print, flags);
+        pr(print, flags, title);
         ConsoleKeyInfo info = rk();
         del();
         return info;
     }
-    public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo)
+    public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
     {
         bool found;
         int max = Inventory.INVENSIZE;
@@ -29,7 +33,7 @@ public static class IO
         }
         do
         {
-            keyInfo = rk(value, flags);
+            keyInfo = rk(value, flags, title);
             mod = keyInfo.Modifiers;
             cancel = keyInfo.Key == CANCELKEY;
             found = chk(keyInfo.KeyChar, max, out index);
@@ -43,11 +47,11 @@ public static class IO
     }
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object value, __ flag = 0)
+    public static void pr(object value, __ flag = 0, string title = "선택 : ")
     {
         if (value is Array array)
         {
-            value = array.ToFString();
+            value = array.ToFString(title);
         }
         if (flag.HasFlag(__.emphasis)) value = EMPHASIS + value;
         if (flag.HasFlag(__.newline)) value = "\n" + value;
@@ -56,21 +60,35 @@ public static class IO
             int x = Console.CursorLeft;
             int y = Console.CursorTop;
             Console.CursorTop = x + Console.WindowHeight - 1;
-            Console.WriteLine(value);
+            Console.Write(value);
             Console.SetCursorPosition(x, y);
             return;
         }
-        Console.WriteLine(value);
+        if (flag.HasFlag(__.write)) Console.Write(value);
+        else Console.WriteLine(value);
     }
     ///<summary>Print in Formated Options</summary>
 
 
-    public static void del()
+    public static void del(__ flags = 0)
     {
+        if (flags.HasFlag(__.bottom))
+        {
+            s_del_bottom();
+            return;
+        }
         if (Console.CursorTop == 0) return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
-        pr(DELSTRING);
+        pr(DELSTRING, flags);
         Console.SetCursorPosition(0, Console.CursorTop - 1);
+    }
+    private static void s_del_bottom()
+    {
+        int x = Console.CursorLeft;
+        int y = Console.CursorTop;
+        Console.CursorTop = x + Console.WindowHeight - 1;
+        Console.Write(DELSTRING);
+        Console.SetCursorPosition(x, y);
     }
     public static void del(int lines)
     {
@@ -78,5 +96,16 @@ public static class IO
         {
             del();
         }
+    }
+
+    public static void DrawScreen()
+    {
+        Console.Clear();
+        //IO.pr("History");
+        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
+        IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
+        IO.pr(s_player.Inven, __.bottom | __.newline);
+        IO.pr(Map.Current);
+        if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
     }
 }

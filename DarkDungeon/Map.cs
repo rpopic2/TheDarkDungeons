@@ -7,8 +7,8 @@ public class Map
     private char[] tiles;
     public ref readonly char[] Tiles
         => ref tiles;
-    private Moveable?[] moveablePositions;
-    public ref readonly Moveable?[] MoveablePositions => ref moveablePositions;
+    private Fightable?[] fightablePositions;
+    public ref readonly Fightable?[] FightablePositions => ref fightablePositions;
     private List<Fightable> fightables = new();
     public ref readonly List<Fightable> Fightables => ref fightables;
     private List<Fightable> temp_deadFightables = new();
@@ -23,18 +23,32 @@ public class Map
         Current = this;
         this.length = length;
         tiles = NewEmptyArray(length, MapSymb.road);
-        moveablePositions = new Moveable[length];
+        fightablePositions = new Fightable[length];
         empty = NewEmptyArray(length, MapSymb.Empty);
         steppables = new ISteppable?[length];
         rendered = new char[length];
 
         steppables[length - 1] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
-        moveablePositions[0] = Player.instance;
+        FightablePositions[0] = Player.instance;
         fightables.Add(player);
         if (spawnMobs) Spawn();
     }
-
+    public Fightable? GetFightableAt(int index)
+    {
+        if (index < 0 || index >= FightablePositions.Length || FightablePositions[index] is null) return null;
+        return FightablePositions[index];
+    }
+    public Fightable? RayCast(Position origin, int range)
+    {
+        Fightable? f;
+        for (int i = 0; i < range; i++)
+        {
+            f = GetFightableAt(origin.Front(i + 1));
+            if (f is Fightable) return f;
+        }
+        return null;
+    }
     public void Spawn()
     {
         List<int> spawnableIndices = GetSpawnableIndices();
@@ -46,22 +60,22 @@ public class Map
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];
-        Position spawnPoint = new Position(newPos, Facing.Back);
+        Position spawnPoint = new Position(newPos, Facing.Left);
         _Spawn(data, spawnPoint);
     }
     public void _Spawn(MonsterData data, Position spawnPoint)
     {
-        Moveable mov;
+        Fightable mov;
         mov = new Monster(data, spawnPoint);
         fightables.Add((Fightable)mov);
-        UpdateMoveable(mov);
+        UpdateFightable(mov);
     }
     private List<int> GetSpawnableIndices()
     {
         List<int> fullMap = new List<int>(length);
         for (int i = 0; i < length; i++)
         {
-            if (moveablePositions[i] is null) fullMap.Add(i);
+            if (FightablePositions[i] is null) fullMap.Add(i);
         }
         int playerX = player.Pos.x;
         fullMap.Remove(0);
@@ -72,17 +86,18 @@ public class Map
         return fullMap;
     }
 
-    public void UpdateMoveable(Moveable mov)
+    public void UpdateFightable(Fightable mov)
     {
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
         {
             temp_deadFightables.Add(fight);
-            moveablePositions[pos.x] = null;
+            FightablePositions[pos.x] = null;
             return;
         }
-        if (moveablePositions[pos.oldX] == mov) moveablePositions[pos.oldX] = null;
-        moveablePositions[pos.x] = mov;
+        int oldIndex = Array.IndexOf(FightablePositions, mov);
+        if (oldIndex != -1) FightablePositions[oldIndex] = null;
+        FightablePositions[pos.x] = mov;
     }
     public void RemoveAndCreateCorpse()
     {
@@ -108,7 +123,7 @@ public class Map
         empty.CopyTo(rendered, 0);
         RenderVisible(Tiles);
         RenderVisible(steppables);
-        RenderVisible(MoveablePositions);
+        RenderVisible(FightablePositions);
         //if(debug) RenderAllMobs();
         rendered[player.Pos.x] = MapSymb.player;
     }
@@ -116,19 +131,17 @@ public class Map
     {
         for (int i = 0; i < length; i++)
         {
-            if (moveablePositions[i] is Monster m) rendered[i] = m.ToChar();
+            if (FightablePositions[i] is Monster m) rendered[i] = m.ToChar();
         }
     }
     private void RenderVisible<T>(T[] target)
     {
-        int sight = player.sight;
-        int front = player.Pos.GetFrontIndex(1);
-        for (int i = 0; i < sight; i++)
+        for (int i = 0; i < player.Sight; i++)
         {
-            int targetTile = player.Pos.isFacingFront ? front + i : front - i;
+            int targetTile = player.Pos.Front(i + 1);
             bool success = target.TryGet(targetTile, out T? obj);
             if (!success) continue;
-            if (obj is Moveable mov) rendered[targetTile] = mov.ToChar();
+            if (obj is Fightable mov) rendered[targetTile] = mov.ToChar();
             else if (obj is char chr) rendered[targetTile] = chr;
             else if (obj is ISteppable cor) rendered[targetTile] = cor.ToChar();
             else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");
@@ -150,7 +163,6 @@ public class Map
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
         int length = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
         Current = new Map(length, Current?.corpseToNext);
-        Player._instance?.UpdateTarget();
     }
 
     private static char[] NewEmptyArray(int length, char fill)

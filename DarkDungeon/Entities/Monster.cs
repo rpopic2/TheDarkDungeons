@@ -31,10 +31,7 @@ public partial class Monster : Fightable
     {
         base.OnDeath(sender, e);
         player.exp.point += killExp;
-        foreach (var item in tokens.Content)
-        {
-            if (item is not null) player.PickupToken((TokenType)item);
-        }
+        player.PickupToken(tokens);
         // foreach (var item in dropList.list)
         // {
         //     if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);
@@ -46,7 +43,7 @@ public partial class Monster : Fightable
         behaviour(this);
     }
     private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
-    public override char ToChar() => Pos.facing == Facing.Front ? fowardChar : backwardChar;
+    public override char ToChar() => Pos.facing == Facing.Right ? fowardChar : backwardChar;
 }
 
 

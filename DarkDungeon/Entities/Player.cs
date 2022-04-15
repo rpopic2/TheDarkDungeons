@@ -6,13 +6,13 @@ public class Player : Fightable
     public const int BASICSTAT = 2;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public ISteppable? underFoot => Map.Current.steppables[Pos.x];
     public Exp exp;
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, maxHp: 3, cap: BASICCAP, pos: new(0))
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
+    public ISteppable? UnderFoot => Map.Current.steppables[Pos.x];
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
@@ -23,15 +23,26 @@ public class Player : Fightable
         Hp.Max = new Mul(3, Mul.n, Level);
         Hp += Level;
     }
+    public void SelectBehaviour(Item item)
+    {
+        IO.del(__.bottom);
+        IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.name} : ");
+        if (cancel)
+        {
+            IO.DrawScreen();
+            return;
+        }
+        SelectBehaviour(item, index);
+    }
     public void SelectPickupStat()
     {
         bool cancel;
         int index;
         do
         {
-            IO.sel(Program.stats, 0, out index, out cancel, out ConsoleModifiers mod, out _);
+            IO.sel(Program.stats, 0, out index, out cancel, out _, out _);
         } while (cancel);
-        stat[(StatName)index] += 1;
+        Stat[(StatName)index] += 1;
     }
     public void PickupItem(Item item)
     {
@@ -43,11 +54,43 @@ public class Player : Fightable
 
         if (index < Inven.Count && Inven[index] is Item old)
         {
-            ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
-            if (keyInfo.Key == IO.OKKEY) Inven.Remove(old);
-            else goto Select;
+            do
+            {
+                ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
+                if (keyInfo.Key == IO.OKKEY)
+                {
+                    Inven.Remove(old);
+                    break;
+                }
+                else if (keyInfo.Key == IO.CANCELKEY)
+                {
+                    IO.del();
+                    goto Select;
+                }
+            } while (true);
         }
         Inven.Add(item);
+    }
+    public void PickupToken(int amount)
+    {
+        for (int i = amount; i > 0; i--)
+        {
+            IO.pr($"토큰을 선택하십시오. ({i})");
+            IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
+            IO.del();
+            if (cancel) return;
+            PickupToken((TokenType)index);
+        }
+    }
+    public void PickupToken(Tokens tokens)
+    {
+        var toks = tokens.Content;
+        for (int i = toks.Count(); i > 0; i--)
+        {
+            TokenType token = toks.ElementAt(i - 1);
+            IO.pr($"{Tokens.ToString(token)}토큰을 획득하였습니다. ({i})");
+            if (token is TokenType tokenType) PickupToken(tokenType);
+        }
     }
     public void PickupToken(TokenType token)
     {
@@ -59,39 +102,20 @@ public class Player : Fightable
             IO.del();
             if (cancel2) return;
         }
-        _PickupToken(token, discard);
-
-        //IO.pr($"{Tokens.ToString(token)} 토큰을 얻었습니다.");
-        //IO.rk();
-        //IO.del();
+        PickupToken(token, discard);
     }
-    public void SelectPickupToken()
+    protected override void Interact()
     {
-        IO.pr("토큰을 선택하십시오.");
-        IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
-        IO.del();
-        if (cancel) return;
-        PickupToken((TokenType)index);
-    }
-    protected override void Move(int x)
-    {
-        bool success = Move(x, out char obj);
-        if (!success) return;
-    }
-    public void InteractUnderFoot()
-    {
-        if (underFoot is null) return;
-        else if (underFoot is Corpse corpse) PickupCorpse(corpse);
-        else if (underFoot is Portal portal)
+        if (UnderFoot is null) return;
+        else if (UnderFoot is Corpse corpse) PickupCorpse(corpse);
+        else if (UnderFoot is Portal portal)
         {
             Map.NewMap();
             Pos = new Position();
-            Map.Current.UpdateMoveable(this);
+            Map.Current.UpdateFightable(this);
         }
-
-        Stance.Set(StanceName.Charge, 0);
     }
-    public void PickupCorpse(Corpse corpse)
+    private void PickupCorpse(Corpse corpse)
     {
         while (corpse.droplist.Count > 0)
         {

@@ -1,24 +1,25 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 
-public struct Tokens
+public struct Tokens : ICollection<TokenType>
 {
     public static readonly char[] TokenSymbols = { '(', '[', '<' };
     public static readonly string[] TokenPromptNames = { "(q) (공격)", "(w) [방어]", "(e) <충전>" };
 
-    private List<byte?> _array;
+    private List<TokenType> _content;
 
-    public ReadOnlyCollection<byte?> Content => _array.AsReadOnly();
+    public ReadOnlyCollection<TokenType> Content => _content.AsReadOnly();
 
     public Tokens(int cap)
     {
-        _array = new(cap);
+        _content = new(cap);
     }
 
     public override string ToString()
     {
         string result = "토큰 :";
         if (Count <= 0) return result + " EMPTY";
-        foreach (byte? item in _array)
+        foreach (byte? item in _content)
         {
             if (item is byte value) result += " " + TokenSymbols[value];
         }
@@ -28,58 +29,76 @@ public struct Tokens
     {
         return TokenSymbols[(int)token].ToString();
     }
-    public void Add(byte item)
-    {
-        if (Count >= _array.Capacity) throw new IndexOutOfRangeException("Your token hand is full. Cannot add more.");
-        _array.Add(item);
-    }
     public void Add(TokenType item)
     {
-        Add((byte)item);
-    }
-    public void Remove(byte item)
-    {
-        _array.Remove(item);
+        if (Count >= _content.Capacity) throw new IndexOutOfRangeException("Your token hand is full. Cannot add more.");
+        _content.Add(item);
     }
     public void Remove(TokenType item)
     {
-        Remove((byte)item);
+        _content.Remove(item);
     }
     public void RemoveAt(int index)
     {
-        _array.RemoveAt(index);
+        _content.RemoveAt(index);
     }
     public int IndexOf(TokenType tokenType)
     {
-        return _array.IndexOf((byte)tokenType);
+        return _content.IndexOf(tokenType);
     }
     public bool Contains(TokenType tokenType)
     {
-        return _array.Contains((byte)tokenType);
+        return _content.Contains(tokenType);
     }
-    public byte? this[int index]
+    public TokenType? this[int index]
     {
         get
         {
-            if (index >= _array.Count) return null;
-            return _array[index];
+            if (index >= _content.Count) return null;
+            return _content[index];
         }
     }
-    public int Count => _array.Count((i) => i is not null);
-    public bool IsFull => Count >= _array.Capacity;
+    public int Count => _content.Count;
+    public bool IsFull => Count >= _content.Capacity;
+
+    public bool IsReadOnly => ((ICollection<TokenType>)_content).IsReadOnly;
 
     public TokenType? TryUse(TokenType token)
     {
-        byte target = (byte)token;
-        if (_array.IndexOf(target) != -1)
+        if (_content.IndexOf(token) != -1)
         {
-            Remove(target);
+            Remove(token);
             return token;
         }
         else
         {
             return null;
         }
+    }
+
+    public void Clear()
+    {
+        ((ICollection<TokenType>)_content).Clear();
+    }
+
+    public void CopyTo(TokenType[] array, int arrayIndex)
+    {
+        ((ICollection<TokenType>)_content).CopyTo(array, arrayIndex);
+    }
+
+    bool ICollection<TokenType>.Remove(TokenType item)
+    {
+        return ((ICollection<TokenType>)_content).Remove(item);
+    }
+
+    public IEnumerator<TokenType> GetEnumerator()
+    {
+        return ((IEnumerable<TokenType>)_content).GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ((IEnumerable)_content).GetEnumerator();
     }
 }
 

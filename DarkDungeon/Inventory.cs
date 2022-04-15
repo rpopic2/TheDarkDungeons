@@ -1,4 +1,6 @@
-public class Inventory
+using System.Collections;
+
+public class Inventory : ICollection<Item?>
 {
     public Fightable owner;
     public const int INVENSIZE = 5;
@@ -18,8 +20,12 @@ public class Inventory
     public Item? GetFirst()
         => content.First(card => card != null);
     public int Count => content.Count(item => item != null);
-    public void Add(Item item)
+
+    public bool IsReadOnly => ((ICollection<Item?>)content).IsReadOnly;
+
+    public void Add(Item? value)
     {
+        if(value is not Item item) throw new Exception("Cannot add null into inventory.");
         if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
             GetMeta(item).stack++;
@@ -38,13 +44,13 @@ public class Inventory
         {
             foreach (WearEffect wear in wears)
             {
-                wear.wear.Invoke(owner);
+                wear.Behaviour.Invoke(owner);
             }
         }
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var pass in passives)
         {
-            owner.passives += pass.actionEveryTurn;
+            owner.passives += pass.Behaviour;
         }
     }
     public void Remove(Item item)
@@ -54,13 +60,14 @@ public class Inventory
         {
             foreach (WearEffect wear in wears)
             {
-                wear.takeOff.Invoke(owner);
+                wear.OnTakeOff.Invoke(owner);
             }
         }
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var p in passives)
         {
-            if (owner.passives is not null) owner.passives -= p.actionEveryTurn;
+            #pragma warning disable CS8601
+            if (owner.passives is not null) owner.passives -= p.Behaviour;
         }
 
         content.Remove(item);
@@ -98,5 +105,35 @@ public class Inventory
 
         }
         return result + "|" + name;
+    }
+
+    public void Clear()
+    {
+        ((ICollection<Item?>)content).Clear();
+    }
+
+    public bool Contains(Item? item)
+    {
+        return ((ICollection<Item?>)content).Contains(item);
+    }
+
+    public void CopyTo(Item?[] array, int arrayIndex)
+    {
+        ((ICollection<Item?>)content).CopyTo(array, arrayIndex);
+    }
+
+    bool ICollection<Item?>.Remove(Item? item)
+    {
+        return ((ICollection<Item?>)content).Remove(item);
+    }
+
+    public IEnumerator<Item?> GetEnumerator()
+    {
+        return ((IEnumerable<Item?>)content).GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ((IEnumerable)content).GetEnumerator();
     }
 }

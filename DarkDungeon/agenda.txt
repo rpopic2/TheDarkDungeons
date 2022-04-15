@@ -1,14 +1,27 @@
-main
-[ ] 지금 문제 : 인벤토리에 중복 아이템을 못넣음!
-    [ ] item 그냥 struct record로 하는게 더 나을지도?? value type가 맞을지도.
-    [ ] inventory list 말고 array 쓰는게 맞는듯
-[ ] Snake
-[ ] Shaman
-[ ] 스킬쓸떄 인수로 숫자 말고 좀 더 freindly한거 없나
-[ ] 데미지타입 시스템?
+heavy-refactoring
+[X] 레이캐스트 맵으로 이동?
+[X] Fightable.Target 새로 생각해야될듯.
+    [?]1. 몬스터를 위한 락온 혹은 애드 개념.
+    [X]2. Game.cs : 39에서 앞에 있는 친구 토큰 보기용으로 쓰는데, 이거 바꿔야할듯.
+[X] 시작템 굳이 번호지정 필요없을듯!
+[X] 토큰 굳이 byte 리스트로 해야할까??
+[X] sel에 제목 정하기 기능
+[X] 검 선택하면 맨 아래줄 지우고(인벤토리) 그리고 스킬이 나오게끔!
+[X] Fightable.SelectConsume이 보면 바로 실행됨
+[X] IBehaviour에 Stance ActionType필요함
+[X] 기존의 스탠스 없애고 currentItem, currentBehaviour로 하는게 나을듯.
+[x] make tokens and invnetory extend ienumerable or sth simmilar
+[X] 모바일 콘솔에서 한칸 더띄워지는게 DELSTRING이 길어서 Wrap되서 그러는게 아닐까 -> delstring 빌더?
+[X] 몹들끼리 싸우는 버그있는듯.
+[X] 스킬쓸떄 인수로 숫자 말고 좀 더 freindly한거 없나
 
+[ ] Snake
+[ ] new neutral tokens
+[ ] Shaman
+[ ] 데미지타입 시스템?
+[ ] 인벤토리에 중복 아이템을 못넣음!
 [ ] 서로 마주치는 @ . < 상황에서 민이 더 빠른놈이 먼저 움직이게끔 -> 이동 스킬화가 되야 될듯?
 [ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
 [ ] 가본 무기 : 활, 방패, 반지, 마법책
-[ ] I to show full inventory ui
+[ ] i to show full inventory ui
 [ ] color texts

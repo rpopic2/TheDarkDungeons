@@ -185,7 +185,7 @@
 //         map = new(5, false);
 //         MonsterData lunData = Monster.lunatic;
 //         map._Spawn(lunData, new(1, Facing.Back));
-//         return ((Monster)map.MoveablePositions[1]!);
+//         return ((Monster)map.FightablePositions[1]!);
 //     }
 //     private void _StartTurn(Map map)
 //     {
