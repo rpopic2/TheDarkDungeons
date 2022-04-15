@@ -12,13 +12,14 @@ public class StanceInfo
 
     public StanceInfo(StanceName stance, int amount, int amount2 = default)
     {
-        Set(stance, amount);
+        Set(stance, amount, amount2);
     }
     public void Set(StanceName stance, int amount, int amount2 = default)
     {
         last = stance;
         this.stance = stance;
         this.amount = amount;
+        this.amount2 = amount2;
     }
     public void AddAmount(int value)
     {
@@ -28,9 +29,10 @@ public class StanceInfo
     {
         stance = default;
         amount = default;
+        amount2 = default;
     }
     public override string ToString()
     {
-        return $"{Stance}, {Amount}";
+        return $"{Stance}, {Amount}, {Amount2}";
     }
 }
