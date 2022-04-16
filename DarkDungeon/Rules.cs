@@ -3,9 +3,9 @@ public static class Rules
     public const string version = "0.6.160422";
     public const float vulMulp = 1.3f;
     //map
-    public const int MapLengthMin = 5;
-    public const int MapLengthMax = 8;
-    public const float MapWidthByLevel = 0.5f;
+    public static readonly int MapLengthMax = 20;//Console.BufferWidth - 1;
+    public static readonly int MapLengthMin = MapLengthMax / 2;
+    public const float MapWidthByLevel = 3f;
 }
 
 public static class MapSymb

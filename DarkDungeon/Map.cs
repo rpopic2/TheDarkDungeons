@@ -18,7 +18,7 @@ public class Map
     private readonly char[] empty;
     public readonly int Length;
     private const bool debug = false;
-    public bool SpawnMobs {get; private set;}
+    public bool SpawnMobs { get; private set; }
     private readonly string _pushDown;
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
@@ -29,15 +29,13 @@ public class Map
         empty = NewEmptyArray(length, MapSymb.Empty);
         steppables = new ISteppable?[length];
         rendered = new char[length];
-        _pushDown = new('\n', depth -1);
-        int portalIndex = rnd.Next(0, length -1);
+        _pushDown = new('\n', depth - 1);
+        int portalIndex = depth != 0 ? rnd.Next(0, length - 1) : rnd.Next(2, length - 1);
         steppables[portalIndex] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
-        //FightablePositions[0] = Player.instance;
-        //s_player.Pos = new(0);
         fightables.Add(s_player);
         this.SpawnMobs = spawnMobs;
-        if(spawnMobs) Spawn();
+        if (spawnMobs) Spawn();
     }
     public Fightable? GetFightableAt(int index)
     {
@@ -165,8 +163,9 @@ public class Map
     {
         depth++;
         int addMapWidth = depth.FloorMult(Rules.MapWidthByLevel);
-        int newLength = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
-        if(Current is not null && newLength < Current.Length) newLength = Current.Length;
+        int newLength = rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
+        if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
+        if (Current is not null && newLength < Current.Length) newLength = Current.Length;
         Current = new Map(newLength, Current?.corpseToNext);
     }
 

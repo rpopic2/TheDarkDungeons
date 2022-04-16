@@ -75,9 +75,10 @@ public partial class Fightable
             }})
     });
     private const int TORCH_BRIGHTNESS = 2;
+    private const int TORCH_DURATION = 20;
     public static readonly Item torch = new("횃불", ItemType.Equip, new IBehaviour[]{
         new Skill("휘두르기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "횃불을 휘둘렀다.", (i)=>i.Fire(1)),
-        new WearEffect("밝음", StanceName.None, "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.Sight+=TORCH_BRIGHTNESS;p.Inven.GetMeta(torch!).stack=15;}, (p)=>p.Sight-=TORCH_BRIGHTNESS),
+        new WearEffect("밝음", StanceName.None, "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.Sight+=TORCH_BRIGHTNESS;p.Inven.GetMeta(torch!).stack=TORCH_DURATION;}, (p)=>p.Sight-=TORCH_BRIGHTNESS),
         new Passive("꺼져가는 횃불", StanceName.None, "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})
     });
 }
