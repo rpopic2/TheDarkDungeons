@@ -33,7 +33,7 @@ public class Program
 
     private void Intro()
     {
-        IO.rk("Press any key to start...", __.color_on);
+        IO.rk("Press any key to start...", __.color);
 
         IO.pr("캐릭터의 이름은?...");
         string name = Console.ReadLine() ?? "Michael";
@@ -79,7 +79,7 @@ public class Program
         {
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
-                if (info.Modifiers == ConsoleModifiers.Control) IO.DrawScreen();
+                if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
                 else if (s_player.CanMove(MOVERIGHT)) s_player.SelectBasicBehaviour(0, MOVERIGHT.x, (int)MOVERIGHT.facing);
                 break;
             case ConsoleKey.LeftArrow:
@@ -104,8 +104,8 @@ public class Program
             case 'g':
                 s_player.SelectBehaviour(Fightable.bareHand);
                 break;
-            case ' ': //상호작용
-                if (s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
+            case 'i':
+                IO.DrawInventory();
                 break;
             case '.': //Rest
             case 'n':
@@ -114,6 +114,9 @@ public class Program
             case '/':
             case 'm':
                 s_player.ShowStats();
+                break;
+            case ' ': //상호작용
+                if (s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
                 break;
         }
     }
@@ -147,6 +150,6 @@ public class Program
     public static void NewTurn()
     {
         Turn++;
-        IO.DrawScreen();
+        IO.Redraw();
     }
 }

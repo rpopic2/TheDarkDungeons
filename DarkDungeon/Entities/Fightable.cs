@@ -54,7 +54,7 @@ public partial class Fightable
         else if (behaviour is Passive || behaviour is WearEffect)
         {
             IO.rk(behaviour.OnUseOutput);
-            IO.DrawScreen();
+            IO.Redraw();
         }
         else throw new Exception("등록되지 않은 행동 종류입니다.");
     }
@@ -81,7 +81,7 @@ public partial class Fightable
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
-            IO.rk(useOutput, __.color_on);
+            IO.rk(useOutput, __.color);
         }
         else IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
     }
@@ -92,7 +92,7 @@ public partial class Fightable
         {
             int amount = Stat.GetRandom(StatName.Con);
             Stance.Set(item, charge, amount);
-            IO.rk($"{Name}{charge.OnUseOutput} ^b({Stance.Amount})^/", __.color_on);
+            IO.rk($"{Name}{charge.OnUseOutput} ^b({Stance.Amount})^/", __.color);
         }
         else IO.rk($"{Tokens.ToString(TokenType.Charge)} 토큰이 없습니다.");
     }

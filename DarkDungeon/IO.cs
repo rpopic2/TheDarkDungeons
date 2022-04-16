@@ -26,7 +26,7 @@ public static class IO
         {
             Console.CursorTop = x + Console.WindowHeight - 1;
         }
-        if (flag.HasFlag(__.color_on))
+        if (flag.HasFlag(__.color))
         {
             string v = (string)value;
             string[] splits = v.Split('^', StringSplitOptions.RemoveEmptyEntries);
@@ -118,17 +118,31 @@ public static class IO
             del();
         }
     }
-
-    public static void DrawScreen()
+    public static void Redraw()
     {
         Console.Clear();
         //IO.pr("History");
         GamePoint hp = s_player.Hp;
         string tempHp = hp.Cur <= hp.Max / 2 ? $"^r{hp.ToString()}^/" : hp.ToString();
-        IO.pr($"턴 : {Program.Turn}  깊이 : {Map.level}\tHP : {tempHp}  Level : {s_player.Level} ({s_player.exp})", __.bottom | __.newline | __.color_on);
+        IO.pr($"턴 : {Program.Turn}  깊이 : {Map.level}\tHP : {tempHp}  Level : {s_player.Level} ({s_player.exp})", __.bottom | __.newline | __.color);
         IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
         IO.pr(s_player.Inven, __.bottom);
         IO.pr(Map.Current);
         if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
+    }
+    internal static void DrawInventory()
+    {
+        Console.Clear();
+        foreach (Item item in s_player.Inven.OfType<Item>())
+        {
+            IO.pr($"{item.Name} | 종류 : {item.itemType} ", __.color);
+            foreach (IBehaviour behav in item.skills)
+            {
+                IO.pr($"\t{behav.ToString()} {behav.Stance}", __.color);
+            }
+            IO.pr("\n");
+        }
+        IO.rk();
+        Redraw();
     }
 }

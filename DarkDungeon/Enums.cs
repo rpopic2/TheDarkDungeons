@@ -23,7 +23,7 @@ public enum __
     bottom = 4,
     fullinven = 8,
     ///<summary>^b=Blue, ^r=Red, ^g=Green ^/ =reset</summary>
-    color_on = 16,
+    color = 16,
 }
 public enum DamageType
 {
