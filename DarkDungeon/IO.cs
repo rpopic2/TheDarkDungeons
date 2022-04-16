@@ -54,7 +54,7 @@ public static class IO
             value = array.ToFString(title);
         }
         if (flag.HasFlag(__.emphasis)) value = EMPHASIS + value;
-        if (flag.HasFlag(__.newline)) value = "\n" + value;
+        if (flag.HasFlag(__.newline)) value += "\n";
         if (flag.HasFlag(__.bottom))
         {
             int x = Console.CursorLeft;
@@ -74,9 +74,15 @@ public static class IO
                 else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
                 else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
                 else if (item.StartsWith("/")) Console.ResetColor();
+                else
+                {
+                    Console.Write(item);
+                    continue;
+                }
                 Console.Write(item.Substring(1));
             }
             Console.ResetColor();
+            Console.WriteLine();
         }
         else if (flag.HasFlag(__.write)) Console.Write(value);
         else Console.WriteLine(value);

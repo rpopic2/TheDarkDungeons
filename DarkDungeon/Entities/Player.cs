@@ -40,7 +40,7 @@ public class Player : Fightable
         int index;
         do
         {
-            IO.sel(Program.stats, 0, out index, out cancel, out _, out _);
+            IO.sel(Program.stats, __.color_on, out index, out cancel, out _, out _);
         } while (cancel);
         Stat[(StatName)index] += 1;
     }
