@@ -3,7 +3,7 @@ public class Map
     private static Player s_player { get => Player.instance; }
     public static Map Current = default!;
     public static Random rnd = new Random();
-    public static int level;
+    public static int depth;
     private char[] tiles;
     public ref readonly char[] Tiles
         => ref tiles;
@@ -29,7 +29,7 @@ public class Map
         empty = NewEmptyArray(length, MapSymb.Empty);
         steppables = new ISteppable?[length];
         rendered = new char[length];
-        _pushDown = new('\n', level -1);
+        _pushDown = new('\n', depth -1);
         int portalIndex = rnd.Next(0, length -1);
         steppables[portalIndex] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
@@ -163,8 +163,8 @@ public class Map
     }
     public static void NewMap()
     {
-        level++;
-        int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
+        depth++;
+        int addMapWidth = depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
         if(Current is not null && newLength < Current.Length) newLength = Current.Length;
         Current = new Map(newLength, Current?.corpseToNext);

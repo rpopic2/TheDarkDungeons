@@ -69,7 +69,7 @@ public partial class Fightable
                 f.Inven.Consume(boneOfTheDeceased!);
                 f.IsAlive = true;
                 f.Hp += f.Hp.Max;
-                Map.level --;
+                Map.depth --;
                 Map.NewMap();
                 IO.rk($"{f.Name}은 부활하였다.");
             }})
