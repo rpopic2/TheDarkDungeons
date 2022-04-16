@@ -44,7 +44,7 @@ public partial class Fightable
         new("투검", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>{i.Throw(3); i.lastHit?.Inven.Add(dagger!); i.Inven.Remove(dagger!);})
     });
     public static readonly Item batItem = new("(박쥐)", ItemType.Equip, new Skill[] {
-        new("들이박기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Throw(1); if(i.IsAlive)i.Hp -= 1;}),
+        new("들이박기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Throw(1); i.Hp -= 1;}),
         new("구르기", StanceName.Defence, TokenType.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})
         });
     public static readonly Item tearOfLun = new("<달의 눈물>", ItemType.Consume, new Consume[]{
