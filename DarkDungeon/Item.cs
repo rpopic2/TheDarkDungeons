@@ -44,6 +44,13 @@ public partial class Fightable
         new("휘두르기", StanceName.Offence,  TokenType.Offence, StatName.Sol, DamageType.Slash, "은 단검을 휘둘렀다.", (i)=>i.Throw(1)),
         new("투검", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>{i.Throw(3); i.lastHit?.Inven.Add(dagger!); i.Inven.Remove(dagger!);})
     });
+    public static readonly Item bow = new("(활)", ItemType.Equip, new Skill[] {
+        new("쏘기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>{
+            if(i.Inven.Contains(arrow)) {i.Throw(3) ; i.Inven.Remove(arrow!);}
+            else{ i.Stance.Reset(); IO.rk("화살이 없다!");}
+            }),
+    });
+    public static readonly Item arrow = new("(화살)", ItemType.Consume, new IBehaviour[] { });
     public static readonly Item batItem = new("(박쥐)", ItemType.Equip, new Skill[] {
         new("들이박기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Throw(1); i.Hp -= 1;}),
         new("구르기", StanceName.Defence, TokenType.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})

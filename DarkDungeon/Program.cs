@@ -49,6 +49,8 @@ public class Program
                 break;
             case 1:
                 player.Inven.Add(Fightable.dagger);
+                player.Inven.Add(Fightable.bow);
+                player.Inven.Add(Fightable.arrow);
                 break;
             case 2:
                 player.Inven.Add(Fightable.staff);
