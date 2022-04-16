@@ -134,8 +134,8 @@ public partial class Fightable
     {
         if (Inven.Contains(item))
         {
-            Inven.Remove(item);
             Attack(range);
+            Inven.Remove(item);
             lastHit?.Inven.Add(dagger!);
         }
         else
