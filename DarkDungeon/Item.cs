@@ -33,9 +33,9 @@ public partial class Fightable
         new("베기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Fire(1)),
         new("칼로막기", StanceName.Defence, TokenType.Defence, StatName.Sol, DamageType.Slash, "은 칼로 막기 자세를 취했다.", (i)=>{})
         });
-    public static readonly Item holySword = new("광란의 신성검", ItemType.Equip, new Skill[] {
-        new("베기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Fire(1)),
-        new("광란의기도", StanceName.Charge, TokenType.Charge, StatName.Con, DamageType.Magic, "은 미친 듯이 기도하였고 칼이 빛나기 시작했다.", (i)=>{})
+    public static readonly Item holySword = new("광란의 신성검", ItemType.Equip, new IBehaviour[] {
+        new Skill("베기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Fire(1)),
+        new Charge("광란의기도", StatName.Con, DamageType.Magic, "은 미친 듯이 기도하였고 칼이 빛나기 시작했다.", (i)=>{i.Charge(holySword!);})
         });
     public static readonly Item staff = new("지팡이", ItemType.Equip, new Skill[] {
         new("휘두르기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 지팡이를 휘둘렀다.", (i)=>i.Fire(1)),

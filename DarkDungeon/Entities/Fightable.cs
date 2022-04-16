@@ -168,11 +168,12 @@ public partial class Fightable
         IO.pr("마법부여할 대상을 선택해 주십시오.");
         IO.sel(Inven, 0, out int index, out _, out _, out _);
         IO.del();
-        if (Inven[index] is Item item)
-        {
-            Inven.GetMeta(item).magicCharge += Stance.Amount;
-            IO.rk($"{item}에 마법부여를 하였다.");
-        }
+        if (Inven[index] is Item item) Charge(item);
+    }
+    private void Charge(Item item)
+    {
+        Inven.GetMeta(item).magicCharge += Stance.Amount;
+        IO.rk($"{item}에 마법부여를 하였다.");
     }
     private void CalcDamageType(ref int damage, DamageType damageType, Fightable attacker)
     {
