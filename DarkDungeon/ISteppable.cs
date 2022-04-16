@@ -10,7 +10,7 @@ public record struct Corpse(string name, List<Item?> droplist) : ISteppable
 }
 public record struct Portal() : ISteppable
 {
-    public string name { get; set; } = "포탈";
+    public string name { get; set; } = "구멍";
     public char ToChar() => MapSymb.portal;
 }
 
