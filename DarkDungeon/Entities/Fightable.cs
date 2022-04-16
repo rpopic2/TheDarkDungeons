@@ -108,7 +108,7 @@ public partial class Fightable
         if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
         else behav.Behaviour.Invoke(this);
     }
-    private void Fire(int range)
+    private void Attack(int range)
     {
         DamageType damageType = default;
         if (Stance.CurrentBehav is Skill skill) damageType = skill.damageType;
@@ -135,7 +135,7 @@ public partial class Fightable
         if (Inven.Contains(item))
         {
             Inven.Remove(item);
-            Fire(range);
+            Attack(range);
             lastHit?.Inven.Add(dagger!);
         }
         else
