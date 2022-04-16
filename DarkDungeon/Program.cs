@@ -98,6 +98,7 @@ public class Program
         switch (key.KeyChar)
         {
             case 'y':
+            case 'g':
                 s_player.SelectBehaviour(Fightable.bareHand);
                 break;
             case ' ': //상호작용

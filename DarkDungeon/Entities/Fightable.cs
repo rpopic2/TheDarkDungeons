@@ -24,7 +24,7 @@ public partial class Fightable
         Stat[StatName.Sol] = sol;
         Stat[StatName.Lun] = lun;
         Stat[StatName.Con] = con;
-        Inven = new((Fightable)this, "(맨손)");
+        Inven = new((Fightable)this, "(맨손(g))");
         tokens = new(cap);
         Stance = new(this);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
