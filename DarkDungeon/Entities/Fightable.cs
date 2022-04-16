@@ -165,12 +165,12 @@ public partial class Fightable
     }
     public bool CanMove(Position value)
     {
-        value += Pos;
+        Position temp = Pos + value;
         bool canGo = true;
-        if (value.x != Pos.x)
+        if (temp.x != Pos.x)
         {
-            bool existsTile = _currentMap.Tiles.TryGet(value.x, out _);
-            bool obstructed = _currentMap.FightablePositions.TryGet(value.x, out _);
+            bool existsTile = _currentMap.Tiles.TryGet(temp.x, out _);
+            bool obstructed = _currentMap.FightablePositions.TryGet(temp.x, out _);
             canGo = existsTile && !obstructed;
         }
         return canGo;
