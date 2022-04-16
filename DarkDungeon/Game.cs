@@ -20,8 +20,10 @@ public static class Game
         {
             m.passives.Invoke((Fightable)m); //passives
         });
-
-        fights.ForEach(m => m.InvokeBehaviour());
+        var firsts = from f in fights where f.Stance.CurrentBehav?.Stance == StanceName.Charge select f;
+        var lasts = fights.Except(firsts);
+        firsts.ToList().ForEach(m => m.InvokeBehaviour());
+        lasts.ToList().ForEach(m => m.InvokeBehaviour());
 
         fights.ForEach(m =>
         {
