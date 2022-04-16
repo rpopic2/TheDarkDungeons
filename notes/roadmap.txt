@@ -1,10 +1,6 @@
 monsters
 
-io system
-
 map system
-
-skills system
 
 new inventory system.
 
