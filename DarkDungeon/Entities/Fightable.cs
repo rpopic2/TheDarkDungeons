@@ -134,7 +134,7 @@ public partial class Fightable
         }
         if (damage <= 0)
         {
-            IO.rk($"{Name}은 아무런 피해도 받지 않았다!");
+            IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
         }
         Hp -= damage;
     }
@@ -152,7 +152,7 @@ public partial class Fightable
         {
             IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
             damage = damage.ToUnVul();
-            if (damage <= Stance.Amount)
+            if (damageType != DamageType.Thrust && damage <= Stance.Amount)
             {
                 IO.pr($"그리고 패리로 적을 스턴 상태에 빠뜨렸다!");
                 attacker.Stance.SetStun();

@@ -1,10 +1,10 @@
 damage-types
+[X] 패리
 [ ] 포션이 좀더 빨라야할듯
-[ ] 패리
 [ ] 인벤토리에 중복 아이템을 못넣음!
-[ ] 항상 Console.Clear을 call해야할까? Resouce 낭비 아닐까?
+
 [ ] Snake
-[ ] new neutral tokens
 [ ] Shaman
 [ ] 가본 무기 : 활, 방패, 반지, 마법책
 [ ] i to show full inventory ui
+[ ] new neutral tokens?
