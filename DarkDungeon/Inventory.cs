@@ -87,7 +87,7 @@ public class Inventory : ICollection<Item?>
         if (--GetMeta(item).stack <= 0)
         {
             Remove(item);
-            IO.pr($"{item.name}을 다 사용했다.");
+            IO.pr($"{owner.Name}은 {item.name}을 다 사용했다.");
         }
     }
     public override string ToString()
