@@ -12,8 +12,9 @@ public class StanceInfo
     }
     public void Set(Item item, IBehaviour behaviour, int amount = default, int amount2 = default)
     {
-        if(IsStun)
+        if (IsStun)
         {
+            ProcessStun();
             return;
         }
         this.CurrentItem = item;
@@ -32,10 +33,7 @@ public class StanceInfo
         Amount = default;
         Amount2 = default;
     }
-    public void SetStun()
-    {
-        IsStun = true;
-    }
+    public void SetStun() => IsStun = true;
     public void ProcessStun()
     {
         Reset();
@@ -45,6 +43,6 @@ public class StanceInfo
     }
     public override string ToString()
     {
-        return $"{Amount}, {Amount2}";
+        return $"{CurrentItem?.name}, {Amount}, {Amount2}";
     }
 }
