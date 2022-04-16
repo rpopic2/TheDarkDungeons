@@ -104,9 +104,11 @@ public class Program
                 if(s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
                 break;
             case '.': //Rest
+            case 'n':
                 s_player.SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
                 break;
             case '/':
+            case 'm':
                 s_player.ShowStats();
                 break;
         }

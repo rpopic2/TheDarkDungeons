@@ -1,6 +1,6 @@
 public class Map
 {
-    private static Player player { get => Player.instance; }
+    private static Player s_player { get => Player.instance; }
     public static Map Current = default!;
     public static Random rnd = new Random();
     public static int level;
@@ -32,8 +32,8 @@ public class Map
         steppables[length - 1] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
         FightablePositions[0] = Player.instance;
-        player.Pos = new(0);
-        fightables.Add(player);
+        s_player.Pos = new(0);
+        fightables.Add(s_player);
         this.SpawnMobs = spawnMobs;
         if(spawnMobs) Spawn();
     }
@@ -79,7 +79,7 @@ public class Map
         {
             if (FightablePositions[i] is null) fullMap.Add(i);
         }
-        int playerX = player.Pos.x;
+        int playerX = s_player.Pos.x;
         fullMap.Remove(0);
         fullMap.Remove(1);
         fullMap.Remove(playerX);
@@ -127,7 +127,7 @@ public class Map
         RenderVisible(steppables);
         RenderVisible(FightablePositions);
         //if(debug) RenderAllMobs();
-        rendered[player.Pos.x] = MapSymb.player;
+        rendered[s_player.Pos.x] = MapSymb.player;
     }
     private void RenderAllMobs()
     {
@@ -138,9 +138,9 @@ public class Map
     }
     private void RenderVisible<T>(T[] target)
     {
-        for (int i = 0; i < player.Sight; i++)
+        for (int i = 0; i < s_player.Sight; i++)
         {
-            int targetTile = player.Pos.Front(i + 1);
+            int targetTile = s_player.Pos.Front(i + 1);
             bool success = target.TryGet(targetTile, out T? obj);
             if (!success) continue;
             if (obj is Fightable mov) rendered[targetTile] = mov.ToChar();
