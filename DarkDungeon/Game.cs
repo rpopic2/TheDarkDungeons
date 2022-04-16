@@ -12,7 +12,8 @@ public static class Game
         var fights = Map.Current.Fightables;
         fights.ForEach(f =>
         {
-            f.DoTurn();
+            if (f.Stance.IsStun)  f.Stance.ProcessStun();
+            else f.DoTurn();
         });
 
         fights.ForEach(m =>

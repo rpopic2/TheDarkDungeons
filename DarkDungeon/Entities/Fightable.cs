@@ -46,11 +46,6 @@ public partial class Fightable
     public virtual void DoTurn() {}
     protected void SelectBehaviour(Item item, int index)
     {
-        if (Stance.IsStun)
-        {
-            Stance.ProcessStun();
-            return;
-        }
         if (Stance.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
@@ -67,11 +62,6 @@ public partial class Fightable
     ///</summary>
     public void SelectBasicBehaviour(int index, int x, int y)
     {
-        if (Stance.IsStun)
-        {
-            Stance.ProcessStun();
-            return;
-        }
         IBehaviour behaviour = basicActions.skills[index];
         if (behaviour is NonTokenSkill nonToken)
         {
