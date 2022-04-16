@@ -191,5 +191,5 @@ public partial class Fightable
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {Stat[StatName.Sol]}\tLun : {Stat[StatName.Lun]}\tCon : {Stat[StatName.Con]}";
+    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {Hp}\t{tokens}\t^r힘/체력 : {Stat[StatName.Sol]}\t^g집중/민첩 : {Stat[StatName.Lun]}\t^b마력/지능 : {Stat[StatName.Con]}^/";
 }

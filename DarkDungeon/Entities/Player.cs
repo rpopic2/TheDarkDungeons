@@ -134,7 +134,7 @@ public class Player : Fightable
     }
     public void ShowStats()
     {
-        IO.pr(this);
+        IO.pr(this.ToString(), __.color_on);
         IO.rk();
         IO.del(3);
     }
