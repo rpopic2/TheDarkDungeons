@@ -22,9 +22,8 @@ public enum __
     ///<summary>This flag calls Console.Write() by default. To add a line terminator, add a newline flag.</summary>
     bottom = 4,
     fullinven = 8,
-    write = 16,
     ///<summary>^b=Blue, ^r=Red, ^g=Green ^/ =reset</summary>
-    color_on = 32,
+    color_on = 16,
 }
 public enum DamageType
 {

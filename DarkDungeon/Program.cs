@@ -3,7 +3,7 @@ public class Program
 {
     public static Program instance = default!;
     public static readonly string[] classes = new string[] { "(q) 검사", "(w) 암살자", "(e) 마법사" };
-    public static readonly string[] stats = new string[] { "^r(q) 힘/체력", "^g(w) 정밀/민첩", "^b(e) 마력/지능" };
+    public static readonly string[] stats = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
     public readonly Position MOVELEFT = new(1, Facing.Left);
     public readonly Position MOVERIGHT = new(1, Facing.Right);
     private static Player s_player { get => Player.instance; }
