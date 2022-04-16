@@ -16,19 +16,21 @@ public static class Game
             else f.DoTurn();
         });
 
-        fights.ForEach(m =>
-        {
-            m.passives.Invoke((Fightable)m); //passives
-        });
+
         var firsts = from f in fights where f.Stance.CurrentBehav?.Stance == StanceName.Charge select f;
         var lasts = fights.Except(firsts);
         firsts.ToList().ForEach(m => m.InvokeBehaviour());
         lasts.ToList().ForEach(m => m.InvokeBehaviour());
-
+        
+        fights.ForEach(m =>
+        {
+            m.passives.Invoke((Fightable)m); //passives
+        });
         fights.ForEach(m =>
         {
             m.OnTurnEnd(); //update target and reset stance
         });
+
         Map.Current.RemoveAndCreateCorpse();
         if (Map.Current.SpawnMobs && Turn % s_spawnrate == 0) Map.Current.Spawn();
         NewTurn();

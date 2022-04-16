@@ -32,6 +32,7 @@ public class Map
         steppables[length - 1] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
         FightablePositions[0] = Player.instance;
+        player.Pos = new(0);
         fightables.Add(player);
         this.SpawnMobs = spawnMobs;
         if(spawnMobs) Spawn();

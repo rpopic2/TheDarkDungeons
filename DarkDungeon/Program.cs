@@ -55,6 +55,7 @@ public class Program
                 break;
             case 2:
                 player.Inven.Add(Fightable.staff);
+                player.Inven.Add(Fightable.boneOfTheDeceased);
                 break;
             default:
                 break;

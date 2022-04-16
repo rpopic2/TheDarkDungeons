@@ -62,6 +62,18 @@ public partial class Fightable
     public static readonly Item tearOfLun = new("<달의 눈물>", ItemType.Consume, new Consume[]{
         new("사용한다", StanceName.Charge, "은 포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Hp += 3)
     });
+    public static readonly Item boneOfTheDeceased = new("<망자의 뼈>", ItemType.Consume, new Passive[]{
+        new("망자의 뼈", StanceName.None, "죽은 뼈지만 마치 살아 움직이는 듯한 기분이 든다.", (f)=>{
+            if(!f.IsAlive) 
+            {
+                f.Inven.Consume(boneOfTheDeceased!); 
+                f.IsAlive = true; 
+                f.Hp += f.Hp.Max; 
+                Map.level --; 
+                Map.NewMap();
+                IO.rk($"{f.Name}은 부활하였다.");
+            }})
+    });
     private const int TORCH_BRIGHTNESS = 2;
     public static readonly Item torch = new("(횃불)", ItemType.Equip, new IBehaviour[]{
         new Skill("휘두르기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "횃불을 휘둘렀다.", (i)=>i.Throw(1)),
