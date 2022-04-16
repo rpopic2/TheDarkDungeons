@@ -18,6 +18,14 @@ public record Skill(string Name, StanceName Stance, TokenType TokenType, StatNam
         };
     }
 }
+public record Charge(string Name, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
+{
+    public StanceName Stance { get; init; } = StanceName.Charge;
+    public override string ToString()
+    {
+        return Name;
+    }
+}
 public record NonTokenSkill(string Name, StanceName Stance, string OnUseOutput, Action<Fightable, int, int> NonTokenBehav, Action<Fightable> Behaviour) : IBehaviour;
 
 public record Consume(string Name, StanceName Stance, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour

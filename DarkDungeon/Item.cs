@@ -14,7 +14,7 @@ public record Item(string Name, ItemType itemType, IBehaviour[] skills)
 public partial class Fightable
 {
     public static NonTokenSkill Stun = new("기절", StanceName.Charge, "은 기절 상태이다!", (f, x, y) => { }, (i) => { });
-    public static readonly Item basicActions = new("기본)", ItemType.Equip, new NonTokenSkill[]{
+    public static readonly Item basicActions = new("기본", ItemType.Equip, new NonTokenSkill[]{
         new("이동", StanceName.Charge, string.Empty, (f, x, y)=>
             f.Move(new(x, (Facing)y)), (f)=>{}),
         new("숨고르기",StanceName.Charge, "은 숨을 골랐다.", (f,x,y)=>{
@@ -41,6 +41,9 @@ public partial class Fightable
         new("휘두르기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 지팡이를 휘둘렀다.", (i)=>i.Fire(1)),
         new("별빛부름", StanceName.Charge, TokenType.Charge, StatName.Con, DamageType.Magic, "은 신비한 별빛을 불러내어 지팡이를 휘감았다.", (i)=>{})
         });
+    public static readonly Item magicBook = new("마법책", ItemType.Equip, new IBehaviour[]{
+        new Charge("화염부름", StatName.Con, DamageType.Magic, "가 마법책에 쓰인 주문을 외우자 허공에 화염이 나타났다.", (f)=>{f.Charge();}),
+    });
     public static readonly Item dagger = new("단검", ItemType.Equip, new Skill[] {
         new("휘두르기", StanceName.Offence,  TokenType.Offence, StatName.Sol, DamageType.Slash, "은 단검을 휘둘렀다.", (i)=>i.Fire(1)),
         new("투검", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>i.Throw(3, dagger!))

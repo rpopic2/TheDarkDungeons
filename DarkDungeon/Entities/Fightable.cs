@@ -49,6 +49,7 @@ public partial class Fightable
         if (Stance.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
+        else if (behaviour is Charge charge) SelectCharge(item, charge);
         else if (behaviour is Consume consume) SelectConsume(item, consume);
         else if (behaviour is Passive || behaviour is WearEffect)
         {
@@ -80,10 +81,20 @@ public partial class Fightable
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+({mcharge})");
-            if (selected.statName == StatName.Con) Inven.GetMeta(item).magicCharge += amount;
             IO.rk(useOutput);
         }
         else IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
+    }
+    private void SelectCharge(Item item, Charge charge)
+    {
+        TokenType? tokenTry = tokens.TryUse(TokenType.Charge);
+        if (tokenTry is TokenType token)
+        {
+            int amount = Stat.GetRandom(StatName.Con);
+            Stance.Set(item, charge, amount);
+            IO.rk(Name + charge.OnUseOutput);
+        }
+        else IO.rk($"{Tokens.ToString(TokenType.Charge)} 토큰이 없습니다.");
     }
     private void SelectConsume(Item item, Consume consume)
     {
@@ -129,7 +140,7 @@ public partial class Fightable
         }
         else
         {
-            Stance.Reset(); 
+            Stance.Reset();
             IO.rk($"{item.Name}이 없다!");
         }
     }
@@ -151,6 +162,17 @@ public partial class Fightable
             IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
         }
         Hp -= damage;
+    }
+    private void Charge()
+    {
+        IO.pr("마법부여할 대상을 선택해 주십시오.");
+        IO.sel(Inven, 0, out int index, out _, out _, out _);
+        IO.del();
+        if (Inven[index] is Item item)
+        {
+            Inven.GetMeta(item).magicCharge += Stance.Amount;
+            IO.rk($"{item}에 마법부여를 하였다.");
+        }
     }
     private void CalcDamageType(ref int damage, DamageType damageType, Fightable attacker)
     {

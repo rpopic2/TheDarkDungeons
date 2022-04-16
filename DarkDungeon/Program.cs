@@ -55,7 +55,7 @@ public class Program
                 break;
             case 2:
                 player.Inven.Add(Fightable.staff);
-                player.Inven.Add(Fightable.boneOfTheDeceased);
+                player.Inven.Add(Fightable.magicBook);
                 break;
             default:
                 break;
