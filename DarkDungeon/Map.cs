@@ -19,6 +19,7 @@ public class Map
     public readonly int length;
     private const bool debug = false;
     public bool SpawnMobs {get; private set;}
+    private readonly string _pushDown;
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
@@ -28,6 +29,7 @@ public class Map
         empty = NewEmptyArray(length, MapSymb.Empty);
         steppables = new ISteppable?[length];
         rendered = new char[length];
+        _pushDown = new('\n', level -1);
 
         steppables[length - 1] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
@@ -152,7 +154,7 @@ public class Map
     public override string ToString()
     {
         Render();
-        return string.Join(" ", rendered);
+        return _pushDown + string.Join(" ", rendered);
     }
     internal bool IsAtEnd(int index)
     {
