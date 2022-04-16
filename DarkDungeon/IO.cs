@@ -64,22 +64,19 @@ public static class IO
             Console.SetCursorPosition(x, y);
             return;
         }
-        if (flag.HasFlag(__.use_color))
+        if (flag.HasFlag(__.color_on))
         {
             string v = (string)value;
-            string[] splits = v.Split('^');
+            string[] splits = v.Split('^', StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in splits)
             {
-                if (item.StartsWith('^'))
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                }
-                else if (item.StartsWith("^/"))
-                {
-                    Console.ResetColor();
-                }
-                Console.Write(item);
+                if (item.StartsWith("b")) Console.ForegroundColor = ConsoleColor.Blue;
+                else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
+                else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
+                else if (item.StartsWith("/")) Console.ResetColor();
+                Console.Write(item.Substring(1));
             }
+            Console.ResetColor();
         }
         else if (flag.HasFlag(__.write)) Console.Write(value);
         else Console.WriteLine(value);
