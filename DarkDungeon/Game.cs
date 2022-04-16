@@ -10,9 +10,9 @@ public static class Game
     internal static void ElaspeTurn()
     {
         var fights = Map.Current.Fightables;
-        fights.ForEach(m =>
+        fights.ForEach(f =>
         {
-            if (m is Monster mon) mon.DoTurn(); //mob ai
+            f.DoTurn();
         });
 
         fights.ForEach(m =>

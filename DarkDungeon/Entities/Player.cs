@@ -13,6 +13,13 @@ public class Player : Fightable
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
     public ISteppable? UnderFoot => Map.Current.steppables[Pos.x];
+    public override void DoTurn()
+    {
+        do
+        {
+            Program.instance.MainLoop();
+        } while (Stance.CurrentBehav is null);
+    }
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩

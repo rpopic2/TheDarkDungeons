@@ -13,8 +13,7 @@ public class Program
         Game.NewTurn();
         do
         {
-            instance.MainLoop();
-            if (s_player.Stance.CurrentBehav is not null) Game.ElaspeTurn();
+            Game.ElaspeTurn();
         } while (s_player.IsAlive);
         IO.pr(s_player);
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
@@ -65,7 +64,7 @@ public class Program
         IO.del();
     }
     //-------------------------
-    private void MainLoop()
+    public void MainLoop()
     {
         ConsoleKeyInfo info = IO.rk();
         ConsoleKey key = info.Key;

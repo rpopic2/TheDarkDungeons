@@ -43,6 +43,7 @@ public partial class Fightable
         }
         tokens.Add(tokenType);
     }
+    public virtual void DoTurn() {}
     protected void SelectBehaviour(Item item, int index)
     {
         if (Stance.IsStun)
