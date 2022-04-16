@@ -11,7 +11,7 @@ public partial class Fightable
 
     public Inventory Inven { get; private set; }
 
-    public StanceInfo Stance { get; protected set; } = new();
+    public StanceInfo Stance { get; init; }
     public virtual Fightable? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
     private Fightable? lastHit { get; set; }
     public Action<Fightable> passives = (p) => { };
@@ -26,6 +26,7 @@ public partial class Fightable
         Stat[StatName.Con] = con;
         Inven = new((Fightable)this, "(맨손)");
         tokens = new(cap);
+        Stance = new(this);
         Hp = new GamePoint(maxHp, GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
@@ -156,16 +157,15 @@ public partial class Fightable
             (damageType == DamageType.Magic && defenceType == DamageType.Thrust)) UneffectiveDefence(ref damage);
 
         damage -= Stance.Amount;
-        if (damageType == defenceType && damage <= 0)
-        {
-            IO.pr($"{Name}은 적의 공격을 받아넘겨 적의 빈틈을 발견했다.");
-            attacker.Stance.SetStun();
-        }
-
         void EffectiveDefence(ref int damage)
         {
             IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
             damage = damage.ToUnVul();
+            if (damage <= Stance.Amount)
+            {
+                IO.pr($"그리고 패리로 적을 스턴 상태에 빠뜨렸다!");
+                attacker.Stance.SetStun();
+            }
         }
         void UneffectiveDefence(ref int damage)
         {

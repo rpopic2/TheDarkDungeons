@@ -5,6 +5,11 @@ public class StanceInfo
     public Item? CurrentItem { get; private set; }
     public IBehaviour? CurrentBehav { get; private set; }
     public bool IsStun { get; private set; }
+    private Fightable _owner;
+    public StanceInfo(Fightable owner)
+    {
+        _owner = owner;
+    }
     public void Set(Item item, IBehaviour behaviour, int amount = default, int amount2 = default)
     {
         if(IsStun)
@@ -34,7 +39,7 @@ public class StanceInfo
     public void ProcessStun()
     {
         Reset();
-        IO.rk("스턴 상태!");
+        IO.rk($"{_owner.Name}은 스턴 상태이다!");
         CurrentBehav = Fightable.Stun;
         IsStun = false;
     }
