@@ -16,14 +16,14 @@ public class Map
     private Corpse? corpseToNext;
     private char[] rendered;
     private readonly char[] empty;
-    public readonly int length;
+    public readonly int Length;
     private const bool debug = false;
     public bool SpawnMobs {get; private set;}
     private readonly string _pushDown;
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
-        this.length = length;
+        this.Length = length;
         tiles = NewEmptyArray(length, MapSymb.road);
         fightablePositions = new Fightable[length];
         empty = NewEmptyArray(length, MapSymb.Empty);
@@ -33,8 +33,8 @@ public class Map
 
         steppables[length - 1] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
-        FightablePositions[0] = Player.instance;
-        s_player.Pos = new(0);
+        //FightablePositions[0] = Player.instance;
+        //s_player.Pos = new(0);
         fightables.Add(s_player);
         this.SpawnMobs = spawnMobs;
         if(spawnMobs) Spawn();
@@ -76,8 +76,8 @@ public class Map
     }
     private List<int> GetSpawnableIndices()
     {
-        List<int> fullMap = new List<int>(length);
-        for (int i = 0; i < length; i++)
+        List<int> fullMap = new List<int>(Length);
+        for (int i = 0; i < Length; i++)
         {
             if (FightablePositions[i] is null) fullMap.Add(i);
         }
@@ -133,7 +133,7 @@ public class Map
     }
     private void RenderAllMobs()
     {
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < Length; i++)
         {
             if (FightablePositions[i] is Monster m) rendered[i] = m.ToChar();
         }
@@ -158,15 +158,16 @@ public class Map
     }
     internal bool IsAtEnd(int index)
     {
-        if (index <= 0 || index >= length - 1) return true;
+        if (index <= 0 || index >= Length - 1) return true;
         return false;
     }
     public static void NewMap()
     {
         level++;
         int addMapWidth = level.FloorMult(Rules.MapWidthByLevel);
-        int length = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
-        Current = new Map(length, Current?.corpseToNext);
+        int newLength = rnd.Next(Rules.MapLengthMin + addMapWidth, Rules.MapLengthMax + addMapWidth);
+        if(Current is not null && newLength < Current.Length) newLength = Current.Length;
+        Current = new Map(newLength, Current?.corpseToNext);
     }
 
     private static char[] NewEmptyArray(int length, char fill)

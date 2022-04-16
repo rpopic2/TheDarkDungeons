@@ -4,9 +4,11 @@ main
 [X] 가본 무기 : 반지, 마법책->마법의 타겟
 [X] i to show full inventory ui
 [ ] 인벤토리에 중복 아이템을 못넣음!
+[ ] 하향이동
+[ ] 이제 0에서 부활하는게 아니라 아랫층 같은 위치에서 부활해야함.
+[ ] 단검 안나가는 버그있음!
 
 [ ] Snake
 [ ] Shaman
 [ ] new neutral tokens?
 [ ] 10 levels + boss fight
-[ ] 하향이동

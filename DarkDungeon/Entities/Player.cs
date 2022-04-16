@@ -118,7 +118,6 @@ public class Player : Fightable
         else if (UnderFoot is Portal portal)
         {
             Map.NewMap();
-            Pos = new Position();
             Map.Current.UpdateFightable(this);
         }
     }
