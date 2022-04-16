@@ -30,8 +30,8 @@ public class Map
         steppables = new ISteppable?[length];
         rendered = new char[length];
         _pushDown = new('\n', level -1);
-
-        steppables[length - 1] = new Portal();
+        int portalIndex = rnd.Next(0, length -1);
+        steppables[portalIndex] = new Portal();
         if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
         //FightablePositions[0] = Player.instance;
         //s_player.Pos = new(0);

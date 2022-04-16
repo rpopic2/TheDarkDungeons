@@ -13,6 +13,6 @@ public static class MapSymb
     public const char player = '@';
     public const char road = '.';
     public const char Empty = ' ';
-    public const char portal = '_';
+    public const char portal = ',';
     public const char corpse = 'x';
 }
