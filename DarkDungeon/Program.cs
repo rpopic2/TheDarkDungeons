@@ -35,7 +35,7 @@ public class Program
 
         IO.pr("캐릭터의 이름은?...");
         string name = Console.ReadLine() ?? "Michael";
-        IO.del();
+        IO.del(2);
         IO.pr($"{name}의 직업은?...");
         int index = 0;
         IO.sel(classes, 0, out index, out bool cancel, out _, out _);
