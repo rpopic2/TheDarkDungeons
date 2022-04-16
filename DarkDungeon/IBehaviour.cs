@@ -4,8 +4,18 @@ public record Skill(string Name, StanceName Stance, TokenType TokenType, StatNam
     public override string ToString()
     {
         string result = parenthesis[(int)TokenType];
-        result = result.Insert(1, Name);
+        string tempName = Name.Insert(0, GetColor());
+        tempName += "^/";
+        result = result.Insert(1, tempName);
         return result;
+
+        string GetColor() => statName switch
+        {
+            StatName.Sol => "^r",
+            StatName.Lun => "^g",
+            StatName.Con => "^b",
+            _ => "^/"
+        };
     }
 }
 public record NonTokenSkill(string Name, StanceName Stance, string OnUseOutput, Action<Fightable, int, int> NonTokenBehav, Action<Fightable> Behaviour) : IBehaviour;
