@@ -7,13 +7,16 @@ public class Program
     public readonly Position MOVELEFT = new(1, Facing.Left);
     public readonly Position MOVERIGHT = new(1, Facing.Right);
     private static Player s_player { get => Player.instance; }
+    private static int s_spawnrate = 10;
+    public static int Turn { get; private set; }
     public static void Main()
     {
         instance = new Program();
-        Game.NewTurn();
+        IO.rk($"{s_player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
+        NewTurn();
         do
         {
-            Game.ElaspeTurn();
+            ElaspeTurn();
         } while (s_player.IsAlive);
         IO.pr(s_player);
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
@@ -102,7 +105,7 @@ public class Program
                 s_player.SelectBehaviour(Fightable.bareHand);
                 break;
             case ' ': //상호작용
-                if(s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
+                if (s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
                 break;
             case '.': //Rest
             case 'n':
@@ -113,5 +116,37 @@ public class Program
                 s_player.ShowStats();
                 break;
         }
+    }
+    internal static void ElaspeTurn()
+    {
+        var fights = Map.Current.Fightables;
+        fights.ForEach(f =>
+        {
+            if (f.Stance.IsStun) f.Stance.ProcessStun();
+            else f.DoTurn();
+        });
+
+        var firsts = from f in fights where f.Stance.CurrentBehav?.Stance == StanceName.Charge select f;
+        var lasts = fights.Except(firsts);
+        firsts.ToList().ForEach(m => m.InvokeBehaviour());
+        lasts.ToList().ForEach(m => m.InvokeBehaviour());
+
+        fights.ForEach(m =>
+        {
+            m.passives.Invoke((Fightable)m); //passives
+        });
+        fights.ForEach(m =>
+        {
+            m.OnTurnEnd(); //update target and reset stance
+        });
+
+        Map.Current.RemoveAndCreateCorpse();
+        if (Map.Current.SpawnMobs && Turn % s_spawnrate == 0) Map.Current.Spawn();
+        NewTurn();
+    }
+    public static void NewTurn()
+    {
+        Turn++;
+        IO.DrawScreen();
     }
 }

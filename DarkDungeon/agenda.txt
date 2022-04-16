@@ -1,12 +1,12 @@
 main
 [X] 일단 활과 화살 억지로는 되는데 필요 아이템(화살) 체크하는게 필요할듯? 그리고 자동으로 그 아이템(화살)소모까지.
 [X] 아이템이름 주변에 괄호 자동으로하기
+[X] 가본 무기 : 반지, 마법책->마법의 타겟
 [ ] 인벤토리에 중복 아이템을 못넣음!
+[ ] i to show full inventory ui
 
 [ ] Snake
 [ ] Shaman
-[ ] 가본 무기 : 반지, 마법책->마법의 타겟
-[ ] i to show full inventory ui
 [ ] new neutral tokens?
 [ ] 10 levels + boss fight
 [ ] 하향이동
