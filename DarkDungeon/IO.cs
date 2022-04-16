@@ -10,7 +10,53 @@ public static class IO
     {
         DELSTRING = new String(' ', Console.WindowWidth - 1);
     }
-
+    ///<summary>Print.
+    ///Equals to Console.WriteLine(x);</summary>
+    public static void pr(object value, __ flag = 0, string title = "선택 : ")
+    {
+        int x = Console.CursorLeft;
+        int y = Console.CursorTop;
+        if (value is Array array)
+        {
+            value = array.ToFString(title);
+        }
+        if (flag.HasFlag(__.emphasis)) value = EMPHASIS + value;
+        if (flag.HasFlag(__.newline)) value += "\n";
+        if (flag.HasFlag(__.bottom))
+        {
+            Console.CursorTop = x + Console.WindowHeight - 1;
+        }
+        if (flag.HasFlag(__.color_on))
+        {
+            string v = (string)value;
+            string[] splits = v.Split('^', StringSplitOptions.RemoveEmptyEntries);
+            foreach (string item in splits)
+            {
+                if (item.StartsWith("b")) Console.ForegroundColor = ConsoleColor.Blue;
+                else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
+                else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
+                else if (item.StartsWith("/")) Console.ResetColor();
+                else
+                {
+                    Console.Write(item);
+                    continue;
+                }
+                Console.Write(item.Substring(1));
+            }
+            Console.ResetColor();
+            if (!flag.HasFlag(__.bottom)) Console.WriteLine();
+            else Console.SetCursorPosition(x, y);
+        }
+        else
+        {
+            if (flag.HasFlag(__.bottom))
+            {
+                Console.Write(value);
+                Console.SetCursorPosition(x, y);
+            }
+            else Console.WriteLine(value);
+        }
+    }
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
@@ -45,31 +91,6 @@ public static class IO
         index = ITEMKEYS1.IndexOf(i);
         return index != -1 && index <= max - 1;
     }
-    ///<summary>Print.
-    ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object value, __ flag = 0, string title = "선택 : ")
-    {
-        if (value is Array array)
-        {
-            value = array.ToFString(title);
-        }
-        if (flag.HasFlag(__.emphasis)) value = EMPHASIS + value;
-        if (flag.HasFlag(__.newline)) value = "\n" + value;
-        if (flag.HasFlag(__.bottom))
-        {
-            int x = Console.CursorLeft;
-            int y = Console.CursorTop;
-            Console.CursorTop = x + Console.WindowHeight - 1;
-            Console.Write(value);
-            Console.SetCursorPosition(x, y);
-            return;
-        }
-        if (flag.HasFlag(__.write)) Console.Write(value);
-        else Console.WriteLine(value);
-    }
-    ///<summary>Print in Formated Options</summary>
-
-
     public static void del(__ flags = 0)
     {
         if (flags.HasFlag(__.bottom))
@@ -102,9 +123,11 @@ public static class IO
     {
         Console.Clear();
         //IO.pr("History");
-        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {s_player.Hp}  Level : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
+        GamePoint hp = s_player.Hp;
+        string tempHp = hp.Cur <= hp.Max / 2 ? $"^r{hp.ToString()}^/" : hp.ToString();
+        IO.pr($"턴 : {Game.Turn}  깊이 : {Map.level}\tHP : {tempHp}  Level : {s_player.Level} ({s_player.exp})", __.bottom | __.newline | __.color_on);
         IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
-        IO.pr(s_player.Inven, __.bottom | __.newline);
+        IO.pr(s_player.Inven, __.bottom);
         IO.pr(Map.Current);
         if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
     }

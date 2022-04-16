@@ -26,7 +26,7 @@ public class Player : Fightable
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);
-        IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.name} : ");
+        IO.sel(item.skills, __.bottom | __.color_on, out int index, out bool cancel, out _, out _, $"{item.name} : ");
         if (cancel)
         {
             IO.DrawScreen();
@@ -40,7 +40,7 @@ public class Player : Fightable
         int index;
         do
         {
-            IO.sel(Program.stats, 0, out index, out cancel, out _, out _);
+            IO.sel(Program.stats, __.color_on, out index, out cancel, out _, out _);
         } while (cancel);
         Stat[(StatName)index] += 1;
     }
@@ -134,7 +134,7 @@ public class Player : Fightable
     }
     public void ShowStats()
     {
-        IO.pr(this);
+        IO.pr(this.ToString(), __.color_on);
         IO.rk();
         IO.del(3);
     }

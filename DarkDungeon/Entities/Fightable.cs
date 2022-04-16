@@ -102,54 +102,78 @@ public partial class Fightable
         Fightable? mov = _currentMap.RayCast(Pos, range);
         if (mov is Fightable hit)
         {
+            lastHit = hit;
+            AttackMagicCharge();
+            hit.Dodge(Stance.Amount, damageType);
+        }
+
+        void AttackMagicCharge()
+        {
             int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
             if (magicCharge > 0)
             {
-                Stance.AddAmount(magicCharge);
+                hit.Dodge(magicCharge, DamageType.Magic);
                 Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
             }
-            lastHit = hit;
-            hit.Dodge(Stance.Amount, damageType);
         }
     }
     private void Dodge(int damage, DamageType damageType)
     {
-        bool isDefending = Stance.CurrentBehav?.Stance == StanceName.Defence;
-        if (isDefending)
+        if (damage <= 0) throw new Exception("데미지는 0과 같거나 작을 수 없습니다.");
+        StanceName? stance = Stance.CurrentBehav?.Stance;
+        if (stance == StanceName.Defence)
         {
-            DamageType defenceType = default;
-            if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
-            if (defenceType == DamageType.Slash && damageType == DamageType.Slash)
-            {
-                IO.pr($"{Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
-                damage = damage.ToUnVul();
-            }
+            CalcDamageType(ref damage, damageType);
             damage -= Stance.Amount;
         }
-        else if (damage > 0 && Stance.CurrentBehav?.Stance == StanceName.Charge)
+        else if (stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
         }
-        if(damage <= 0) IO.rk($"{Name}은 공격을 완전히 막아냈다!");
+        if (damage <= 0) IO.rk($"{Name}은 아무런 피해도 받지 않았다!");
         Hp -= damage;
     }
-    protected void Move(Position x)
+    private void CalcDamageType(ref int damage, DamageType damageType)
     {
-        Position newPos = Pos + x;
-        Map currentMap = Map.Current;
-        bool canGo = true;
-        if (newPos.x != Pos.x)
+        DamageType defenceType = default;
+        if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
+        if (damageType == defenceType) EffectiveDefence(ref damage);
+        else if ((damageType == DamageType.Slash && defenceType == DamageType.Magic) ||
+            (damageType == DamageType.Thrust && defenceType == DamageType.Slash) ||
+            (damageType == DamageType.Magic && defenceType == DamageType.Thrust)) UneffectiveDefence(ref damage);
+
+        void EffectiveDefence(ref int damage)
         {
-            bool existsTile = currentMap.Tiles.TryGet(newPos.x, out _);
-            bool obstructed = currentMap.FightablePositions.TryGet(newPos.x, out _);
-            canGo = existsTile && !obstructed;
+            IO.rk($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+            damage = damage.ToUnVul();
         }
+        void UneffectiveDefence(ref int damage)
+        {
+            IO.rk($"{Name}의 {Stance.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
+            damage = damage.ToVul();
+        }
+    }
+    protected void Move(Position value)
+    {
+        bool canGo = CanMove(value);
         if (canGo)
         {
-            Pos = newPos;
-            currentMap.UpdateFightable(this);
+            Pos += value;
+            _currentMap.UpdateFightable(this);
         }
+    }
+    public bool CanMove(Position value)
+    {
+        Position temp = Pos + value;
+        bool canGo = true;
+        if (temp.x != Pos.x)
+        {
+            bool existsTile = _currentMap.Tiles.TryGet(temp.x, out _);
+            bool obstructed = _currentMap.FightablePositions.TryGet(temp.x, out _);
+            canGo = existsTile && !obstructed;
+        }
+        return canGo;
     }
     protected virtual void Interact() { }
     public virtual void OnTurnEnd()
@@ -158,6 +182,7 @@ public partial class Fightable
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
+        if(!IsAlive) return;
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
     }
@@ -167,5 +192,5 @@ public partial class Fightable
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"Name : {Name}\tLevel : {Level}\nHp : {Hp}\t{tokens}\tSol : {Stat[StatName.Sol]}\tLun : {Stat[StatName.Lun]}\tCon : {Stat[StatName.Con]}";
+    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {Hp}\t{tokens}\t^r힘/체력 : {Stat[StatName.Sol]}\t^g집중/민첩 : {Stat[StatName.Lun]}\t^b마력/지능 : {Stat[StatName.Con]}^/";
 }
