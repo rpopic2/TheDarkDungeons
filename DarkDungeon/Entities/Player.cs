@@ -33,7 +33,7 @@ public class Player : Fightable
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);
-        IO.sel(item.skills, __.bottom | __.color_on, out int index, out bool cancel, out _, out _, $"{item.name} : ");
+        IO.sel(item.skills, __.bottom | __.color_on, out int index, out bool cancel, out _, out _, $"{item.Name} : ");
         if (cancel)
         {
             IO.DrawScreen();
@@ -54,7 +54,7 @@ public class Player : Fightable
     public void PickupItem(Item item)
     {
     Select:
-        IO.pr($"\n아이템을 얻었다. {item.name}");
+        IO.pr($"\n아이템을 얻었다. {item.Name}");
         IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
@@ -63,7 +63,7 @@ public class Player : Fightable
         {
             do
             {
-                ConsoleKeyInfo keyInfo = IO.rk($"{old.name}이 버려집니다. 계속하시겠습니까?");
+                ConsoleKeyInfo keyInfo = IO.rk($"{old.Name}이 버려집니다. 계속하시겠습니까?");
                 if (keyInfo.Key == IO.OKKEY)
                 {
                     Inven.Remove(old);

@@ -43,7 +43,7 @@ public partial class Fightable
         }
         tokens.Add(tokenType);
     }
-    public virtual void DoTurn() {}
+    public virtual void DoTurn() { }
     protected void SelectBehaviour(Item item, int index)
     {
         if (Stance.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
@@ -97,7 +97,7 @@ public partial class Fightable
         if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, Stance.Amount, Stance.Amount2);
         else behav.Behaviour.Invoke(this);
     }
-    private void Throw(int range)
+    private void Fire(int range)
     {
         DamageType damageType = default;
         if (Stance.CurrentBehav is Skill skill) damageType = skill.damageType;
@@ -117,6 +117,20 @@ public partial class Fightable
                 hit.Dodge(magicCharge, DamageType.Magic, this);
                 Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
             }
+        }
+    }
+    private void Throw(int range, Item item)
+    {
+        if (Inven.Contains(item))
+        {
+            Inven.Remove(item);
+            Fire(range);
+            lastHit?.Inven.Add(dagger!);
+        }
+        else
+        {
+            Stance.Reset(); 
+            IO.rk($"{item.Name}이 없다!");
         }
     }
     private void Dodge(int damage, DamageType damageType, Fightable attacker)

@@ -43,6 +43,6 @@ public class StanceInfo
     }
     public override string ToString()
     {
-        return $"{CurrentItem?.name}, {Amount}, {Amount2}";
+        return $"{CurrentItem?.Name}, {Amount}, {Amount2}";
     }
 }
