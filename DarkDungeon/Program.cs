@@ -46,6 +46,7 @@ public class Program
         {
             case 0:
                 player.Inven.Add(Fightable.sword);
+                player.Inven.Add(Fightable.shield);
                 break;
             case 1:
                 player.Inven.Add(Fightable.dagger);

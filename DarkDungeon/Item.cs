@@ -50,6 +50,10 @@ public partial class Fightable
             else{ i.Stance.Reset(); IO.rk("화살이 없다!");}
             }),
     });
+    public static readonly Item shield = new("(방패)", ItemType.Equip, new Skill[]{
+        new("방패밀기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 방패를 앞으로 세게 밀쳤다.", (i)=>i.Throw(1)),
+        new("방패막기", StanceName.Defence, TokenType.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.Stance.AddAmount(2))
+    });
     public static readonly Item arrow = new("(화살)", ItemType.Consume, new IBehaviour[] { });
     public static readonly Item batItem = new("(박쥐)", ItemType.Equip, new Skill[] {
         new("들이박기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Throw(1); i.Hp -= 1;}),
