@@ -34,6 +34,7 @@ public class Map
         FightablePositions[0] = Player.instance;
         fightables.Add(player);
         this.SpawnMobs = spawnMobs;
+        if(spawnMobs) Spawn();
     }
     public Fightable? GetFightableAt(int index)
     {

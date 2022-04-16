@@ -182,6 +182,7 @@ public partial class Fightable
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
+        if(!IsAlive) return;
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
     }

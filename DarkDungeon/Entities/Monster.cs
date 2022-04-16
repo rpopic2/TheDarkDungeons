@@ -29,6 +29,7 @@ public partial class Monster : Fightable
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
+        if(!IsAlive) return;
         base.OnDeath(sender, e);
         player.exp.point += killExp;
         player.PickupToken(tokens);
