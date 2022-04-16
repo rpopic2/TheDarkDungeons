@@ -12,6 +12,7 @@ public record Item(string name, ItemType itemType, IBehaviour[] skills)
 }
 public partial class Fightable
 {
+    public static NonTokenSkill Stun = new("기절", StanceName.Charge, "은 기절 상태이다!", (f, x, y) => { }, (i) => { });
     public static readonly Item basicActions = new("(기본)", ItemType.Equip, new NonTokenSkill[]{
         new("이동", StanceName.Charge, string.Empty, (f, x, y)=>
             f.Move(new(x, (Facing)y)), (f)=>{}),

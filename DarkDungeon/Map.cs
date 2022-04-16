@@ -57,7 +57,7 @@ public class Map
         if (spawnableIndices.Count <= 0) return;
 
         int randomInt = rnd.Next(0, Monster.Count);
-        MonsterData data = Monster.data[1];
+        MonsterData data = Monster.data[0];
 
         int index = rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[index];

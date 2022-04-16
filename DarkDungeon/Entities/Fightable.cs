@@ -31,7 +31,7 @@ public partial class Fightable
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
-    public bool IsAlive => !Hp.IsMin;
+    public bool IsAlive { get; private set; } = true;
     protected Map _currentMap => Map.Current;
     protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
@@ -44,6 +44,11 @@ public partial class Fightable
     }
     protected void SelectBehaviour(Item item, int index)
     {
+        if (Stance.IsStun)
+        {
+            Stance.ProcessStun();
+            return;
+        }
         if (Stance.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
@@ -60,6 +65,11 @@ public partial class Fightable
     ///</summary>
     public void SelectBasicBehaviour(int index, int x, int y)
     {
+        if (Stance.IsStun)
+        {
+            Stance.ProcessStun();
+            return;
+        }
         IBehaviour behaviour = basicActions.skills[index];
         if (behaviour is NonTokenSkill nonToken)
         {
@@ -104,7 +114,7 @@ public partial class Fightable
         {
             lastHit = hit;
             AttackMagicCharge();
-            hit.Dodge(Stance.Amount, damageType);
+            hit.Dodge(Stance.Amount, damageType, this);
         }
 
         void AttackMagicCharge()
@@ -112,29 +122,31 @@ public partial class Fightable
             int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
             if (magicCharge > 0)
             {
-                hit.Dodge(magicCharge, DamageType.Magic);
+                hit.Dodge(magicCharge, DamageType.Magic, this);
                 Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
             }
         }
     }
-    private void Dodge(int damage, DamageType damageType)
+    private void Dodge(int damage, DamageType damageType, Fightable attacker)
     {
         if (damage <= 0) throw new Exception("데미지는 0과 같거나 작을 수 없습니다.");
         StanceName? stance = Stance.CurrentBehav?.Stance;
         if (stance == StanceName.Defence)
         {
-            CalcDamageType(ref damage, damageType);
-            damage -= Stance.Amount;
+            CalcDamageType(ref damage, damageType, attacker);
         }
         else if (stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
         }
-        if (damage <= 0) IO.rk($"{Name}은 아무런 피해도 받지 않았다!");
+        if (damage <= 0)
+        {
+            IO.rk($"{Name}은 아무런 피해도 받지 않았다!");
+        }
         Hp -= damage;
     }
-    private void CalcDamageType(ref int damage, DamageType damageType)
+    private void CalcDamageType(ref int damage, DamageType damageType, Fightable attacker)
     {
         DamageType defenceType = default;
         if (Stance.CurrentBehav is Skill skill) defenceType = skill.damageType;
@@ -143,14 +155,21 @@ public partial class Fightable
             (damageType == DamageType.Thrust && defenceType == DamageType.Slash) ||
             (damageType == DamageType.Magic && defenceType == DamageType.Thrust)) UneffectiveDefence(ref damage);
 
+        damage -= Stance.Amount;
+        if (damageType == defenceType && damage <= 0)
+        {
+            IO.pr($"{Name}은 적의 공격을 받아넘겨 적의 빈틈을 발견했다.");
+            attacker.Stance.SetStun();
+        }
+
         void EffectiveDefence(ref int damage)
         {
-            IO.rk($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+            IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
             damage = damage.ToUnVul();
         }
         void UneffectiveDefence(ref int damage)
         {
-            IO.rk($"{Name}의 {Stance.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
+            IO.pr($"{Name}의 {Stance.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
             damage = damage.ToVul();
         }
     }
@@ -182,7 +201,8 @@ public partial class Fightable
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {
-        if(!IsAlive) return;
+        if (!IsAlive) return;
+        IsAlive = false;
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
     }
