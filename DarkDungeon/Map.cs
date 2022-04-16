@@ -1,73 +1,60 @@
 public class Map
 {
-    private static Player s_player { get => Player.instance; }
+    private static Random s_rnd = new Random();
     public static Map Current = default!;
-    public static Random rnd = new Random();
-    public static int depth;
-    private char[] tiles;
-    public ref readonly char[] Tiles
-        => ref tiles;
-    private Fightable?[] fightablePositions;
-    public ref readonly Fightable?[] FightablePositions => ref fightablePositions;
-    private List<Fightable> fightables = new();
-    public ref readonly List<Fightable> Fightables => ref fightables;
-    private List<Fightable> temp_deadFightables = new();
-    public ISteppable?[] steppables;
-    private Corpse? corpseToNext;
-    private char[] rendered;
-    private readonly char[] empty;
+    public static int Depth;
     public readonly int Length;
-    private const bool debug = false;
-    public bool SpawnMobs { get; private set; }
+    public readonly bool SpawnMobs;
     private readonly string _pushDown;
+    private readonly char[] _empty;
+    private char[] _tiles;
+    public ISteppable?[] Steppables;
+    private List<Fightable> _fightables = new();
+    private Fightable?[] _fightablePositions;
+    private List<Fightable> _tempDeadFightables = new();
+    private char[] _rendered;
+    private Corpse? _fallenCorpse;
+    // private const bool _debug = false;
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
         this.Length = length;
-        tiles = Extensions.NewFilledArray(length, MapSymb.road);
-        fightablePositions = new Fightable[length];
-        empty = Extensions.NewFilledArray(length, MapSymb.Empty);
-        steppables = new ISteppable?[length];
-        rendered = new char[length];
-        _pushDown = new('\n', depth - 1);
-        int portalIndex = depth != 0 ? rnd.Next(0, length - 1) : rnd.Next(2, length - 1);
-        steppables[portalIndex] = new Portal();
-        if (corpseFromPrev is Corpse corpse) steppables[0] = corpse;
-        fightables.Add(s_player);
         this.SpawnMobs = spawnMobs;
+        _pushDown = new('\n', Depth - 1);
+
+        _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
+        _tiles = Extensions.NewFilledArray(length, MapSymb.road);
+        Steppables = new ISteppable?[length];
+        _fightablePositions = new Fightable[length];
+        _rendered = new char[length];
+
+        int portalIndex = Depth != 0 ? s_rnd.Next(0, length - 1) : s_rnd.Next(2, length - 1);
+        Steppables[portalIndex] = new Portal();
+        if (corpseFromPrev is Corpse corpse) Steppables[s_player.Pos.x] = corpse;
+        _fightables.Add(s_player);
         if (spawnMobs) Spawn();
     }
-    public Fightable? GetFightableAt(int index)
-    {
-        if (index < 0 || index >= FightablePositions.Length || FightablePositions[index] is null) return null;
-        return FightablePositions[index];
-    }
-    public Fightable? RayCast(Position origin, int range)
-    {
-        Fightable? f;
-        for (int i = 0; i < range; i++)
-        {
-            f = GetFightableAt(origin.Front(i + 1));
-            if (f is Fightable) return f;
-        }
-        return null;
-    }
+    private static Player s_player { get => Player.instance; }
+    public ref readonly Fightable?[] FightablePositions => ref _fightablePositions;
+    public ref readonly List<Fightable> Fightables => ref _fightables;
+    public ref readonly char[] Tiles
+    => ref _tiles;
     public void Spawn()
     {
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
 
-        int randomData = rnd.Next(0, Monster.Count);
+        int randomData = s_rnd.Next(0, Monster.Count);
         MonsterData data = Monster.data[randomData];
 
-        int randomIndex = rnd.Next(0, spawnableIndices.Count);
+        int randomIndex = s_rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[randomIndex];
-        Facing randomFace = (Facing)rnd.Next(0, 2);
+        Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
 
         Fightable mov;
         mov = new Monster(data, spawnPoint);
-        fightables.Add((Fightable)mov);
+        _fightables.Add((Fightable)mov);
         UpdateFightable(mov);
 
         List<int> GetSpawnableIndices()
@@ -91,7 +78,7 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Fightable fight && !fight.IsAlive)
         {
-            temp_deadFightables.Add(fight);
+            _tempDeadFightables.Add(fight);
             FightablePositions[pos.x] = null;
             return;
         }
@@ -101,32 +88,61 @@ public class Map
     }
     public void RemoveAndCreateCorpse()
     {
-        foreach (var item in temp_deadFightables)
+        foreach (var item in _tempDeadFightables)
         {
-            fightables.Remove(item);
+            _fightables.Remove(item);
             CreateCorpse(item);
         }
-        temp_deadFightables.Clear();
+        _tempDeadFightables.Clear();
 
         void CreateCorpse(Fightable fight)
         {
             int pos = fight.Pos.x;
-            ISteppable? old = steppables[pos];
+            ISteppable? old = Steppables[pos];
 
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
-            if (old is Corpse cor) steppables[pos] = cor + temp;
-            else if (old is Portal) corpseToNext = temp;
-            else steppables[pos] = temp;
+            if (old is Corpse cor) Steppables[pos] = cor + temp;
+            else if (old is Portal) _fallenCorpse = temp;
+            else Steppables[pos] = temp;
         }
+    }
+    public Fightable? GetFightableAt(int index)
+    {
+        if (index < 0 || index >= FightablePositions.Length || FightablePositions[index] is null) return null;
+        return FightablePositions[index];
+    }
+    public Fightable? RayCast(Position origin, int range)
+    {
+        Fightable? f;
+        for (int i = 0; i < range; i++)
+        {
+            f = GetFightableAt(origin.Front(i + 1));
+            if (f is Fightable) return f;
+        }
+        return null;
+    }
+    internal bool IsAtEnd(int index)
+    {
+        if (index <= 0 || index >= Length - 1) return true;
+        return false;
+    }
+    public static void NewMap()
+    {
+        Depth++;
+        int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
+        int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
+        if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
+        if (Current is not null && newLength < Current.Length) newLength = Current.Length;
+        Current = new Map(newLength, Current?._fallenCorpse);
     }
     private void Render()
     {
-        empty.CopyTo(rendered, 0);
+        _empty.CopyTo(_rendered, 0);
         RenderVisible(Tiles);
-        RenderVisible(steppables);
+        RenderVisible(Steppables);
         RenderVisible(FightablePositions);
         //if(debug) RenderAllMobs();
-        rendered[s_player.Pos.x] = MapSymb.player;
+        _rendered[s_player.Pos.x] = MapSymb.player;
 
         void RenderVisible<T>(T[] target)
         {
@@ -135,9 +151,9 @@ public class Map
                 int targetTile = s_player.Pos.Front(i + 1);
                 bool success = target.TryGet(targetTile, out T? obj);
                 if (!success) continue;
-                if (obj is Fightable mov) rendered[targetTile] = mov.ToChar();
-                else if (obj is char chr) rendered[targetTile] = chr;
-                else if (obj is ISteppable cor) rendered[targetTile] = cor.ToChar();
+                if (obj is Fightable mov) _rendered[targetTile] = mov.ToChar();
+                else if (obj is char chr) _rendered[targetTile] = chr;
+                else if (obj is ISteppable cor) _rendered[targetTile] = cor.ToChar();
                 else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");
             }
         }
@@ -153,20 +169,6 @@ public class Map
     public override string ToString()
     {
         Render();
-        return _pushDown + string.Join(" ", rendered);
-    }
-    internal bool IsAtEnd(int index)
-    {
-        if (index <= 0 || index >= Length - 1) return true;
-        return false;
-    }
-    public static void NewMap()
-    {
-        depth++;
-        int addMapWidth = depth.FloorMult(Rules.MapWidthByLevel);
-        int newLength = rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
-        if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
-        if (Current is not null && newLength < Current.Length) newLength = Current.Length;
-        Current = new Map(newLength, Current?.corpseToNext);
+        return _pushDown + string.Join(" ", _rendered);
     }
 }

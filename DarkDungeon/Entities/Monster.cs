@@ -7,7 +7,7 @@ public partial class Monster : Fightable
     private char fowardChar, backwardChar;
     private Action<Monster> behaviour;
     private Dictionary<string, int> metaData = new();
-    public Monster(MonsterData data, Position spawnPoint) : base(data.name, Map.depth, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap, spawnPoint)
+    public Monster(MonsterData data, Position spawnPoint) : base(data.name, Map.Depth, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap, spawnPoint)
     {
         dropList = data.dropList;
         killExp = data.stat.killExp;

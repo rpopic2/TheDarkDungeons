@@ -12,7 +12,7 @@ public class Player : Fightable
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
-    public ISteppable? UnderFoot => Map.Current.steppables[Pos.x];
+    public ISteppable? UnderFoot => Map.Current.Steppables[Pos.x];
     public override void DoTurn()
     {
         do
@@ -135,7 +135,7 @@ public class Player : Fightable
         }
         if (corpse.droplist.Count() <= 0)
         {
-            Map.Current.steppables[Pos.x] = null;
+            Map.Current.Steppables[Pos.x] = null;
         }
     }
     public void ShowStats()
