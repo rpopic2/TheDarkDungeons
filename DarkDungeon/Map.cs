@@ -135,6 +135,7 @@ public class Map
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
         if (Current is not null && newLength < Current.Length) newLength = Current.Length;
         Current = new Map(newLength, Current?._fallenCorpse);
+        if (Depth > 1) IO.rk($"{s_player.Name}은 레벨 {Depth}에 도달했다.");
     }
     private void Render()
     {
