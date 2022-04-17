@@ -121,7 +121,7 @@ public class Map
         }
         return null;
     }
-    internal bool IsAtEnd(int index)
+    public bool IsAtEnd(int index)
     {
         if (index <= 0 || index >= Length - 1) return true;
         return false;

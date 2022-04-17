@@ -128,7 +128,7 @@ public static class IO
         IO.pr(Map.Current);
         if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
     }
-    internal static void ShowHelp()
+    public static void ShowHelp()
     {
         Console.Clear();
         IO.pr("qwert : 아이템 사용 | i : 인벤토리\n , 혹은 b : 맨손 | . 혹은 n : 휴식\n좌우 화살표 혹은 h, l : 이동\n/ 혹은 m : 내 정보 보기 | ? : 이 도움말 보기\n x : 취소 | spacebar : Ok, 상호작용");
@@ -141,7 +141,7 @@ public static class IO
         IO.rk();
         Redraw();
     }
-    internal static void DrawInventory()
+    public static void DrawInventory()
     {
         Console.Clear();
         foreach (Item item in s_player.Inven.OfType<Item>())

@@ -57,7 +57,7 @@ public partial class Monster
         if (_target?.Stance.CurrentBehav?.Stance == StanceName.Charge) metaData["isAngry"] = 1;
         else metaData["isAngry"] = 0;
     }
-    internal void LunaticBehav()
+    public void LunaticBehav()
     {
         if (GetHp().Cur != GetHp().Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
         else if (tokens.Count > 0)
@@ -71,7 +71,7 @@ public partial class Monster
         }
         else SelectBasicBehaviour(1, 1, -1); //pickup offence
     }
-    internal void SnakeBehav()
+    public void SnakeBehav()
     {
 
     }
