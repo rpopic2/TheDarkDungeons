@@ -50,6 +50,16 @@ public class GamePoint
             x.OnOverflow?.Invoke(x, EventArgs.Empty);
         return x;
     }
+    public void IncreaseMax(int value)
+    {
+        Max += value;
+        Cur += value;
+    }
+    public void DecreaseMax(int value)
+    {
+        Max -= value;
+        if(Cur > Max) Cur = Max;
+    }
     public bool IsMin => Cur == Min;
     public override string ToString()
     {

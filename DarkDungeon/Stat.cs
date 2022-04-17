@@ -19,7 +19,11 @@ public class Stat
         set
         {
             _data[(int)index] = value;
-            if (index == StatName.Sol) Hp.Max = SolToHp();
+            if (index == StatName.Sol)
+            {
+                if (value > 0) Hp.IncreaseMax(SolToHp() - Hp.Max);
+                if (value < 0) Hp.DecreaseMax(Hp.Max - SolToHp());
+            }
         }
     }
     public void WearStat(StatName stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
