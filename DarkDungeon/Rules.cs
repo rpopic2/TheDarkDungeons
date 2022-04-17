@@ -3,7 +3,7 @@ public static class Rules
     public const string version = "0.6.160422";
     public const float vulMulp = 1.3f;
     //map
-    public static readonly int MapLengthMax = 20;//Console.BufferWidth - 1;
+    public static readonly int MapLengthMax = 25;//Console.BufferWidth - 1;
     public static readonly int MapLengthMin = MapLengthMax / 2;
     public const float MapWidthByLevel = 3f;
 }
