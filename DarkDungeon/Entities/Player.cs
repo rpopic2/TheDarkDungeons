@@ -61,7 +61,7 @@ public class Player : Fightable
                     break;
                 case '/':
                 case 'm':
-                    ShowStats();
+                    IO.ShowStats();
                     break;
                 case '?':
                     IO.ShowHelp();
@@ -71,15 +71,6 @@ public class Player : Fightable
                     break;
             }
         }
-    }
-    private void OnLvUp(object? sender, EventArgs e)
-    {
-        //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
-        Level++;
-        exp.UpdateMax();
-        IO.pr($"{Level}레벨이 되었다.", __.emphasis);
-        SelectPickupStat();
-        Stat.Heal(GetHp().Max / 2);
     }
     public void SelectBehaviour(Item item)
     {
@@ -200,11 +191,14 @@ public class Player : Fightable
             Map.Current.Steppables[Pos.x] = null;
         }
     }
-    public void ShowStats()
+    private void OnLvUp(object? sender, EventArgs e)
     {
-        IO.pr(this.ToString(), __.color);
-        IO.rk();
-        IO.del(3);
+        //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
+        Level++;
+        exp.UpdateMax();
+        IO.pr($"{Level}레벨이 되었다.", __.emphasis);
+        SelectPickupStat();
+        Stat.Heal(GetHp().Max / 2);
     }
     public override string ToString() => base.ToString() + $"\nExp : {exp}";
     public override char ToChar() => MapSymb.player;

@@ -135,6 +135,12 @@ public static class IO
         IO.rk();
         Redraw();
     }
+    public static void ShowStats()
+    {
+        IO.pr(s_player.ToString(), __.color);
+        IO.rk();
+        Redraw();
+    }
     internal static void DrawInventory()
     {
         Console.Clear();
