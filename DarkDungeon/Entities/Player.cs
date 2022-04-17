@@ -41,6 +41,7 @@ public class Player : Fightable
                     SelectBehaviour(Fightable.bareHand);
                     break;
                 case ConsoleKey.N:
+                case ConsoleKey.OemPeriod:
                 case ConsoleKey.Delete: //Rest
                     SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
                     break;

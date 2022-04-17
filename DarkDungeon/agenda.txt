@@ -1,6 +1,6 @@
 main
 [ ] isStun, isPoisoned는 Stat으로 옮기는게 맞지않나
-[ ] 몹 애드
+[X] 몹 애드
 
 [?] 몹 안움직이는 버그있는듯. 특히 아랫층 내려가서 광신도 만나면
 [ ] gamepoint refactoring + exp refactoring
