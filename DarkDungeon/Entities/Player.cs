@@ -77,7 +77,7 @@ public class Player : Fightable
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);
-        IO.sel(item.skills, __.bottom | __.color, out int index, out bool cancel, out _, out _, $"{item.Name} : ");
+        IO.sel("" + item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.Name} : ");
         if (cancel)
         {
             IO.Redraw();
@@ -99,8 +99,8 @@ public class Player : Fightable
         int index;
         do
         {
-            IO.pr($"{Stat}", __.color);
-            IO.sel(_STATPROMPT, __.color, out index, out _, out _, out _);
+            IO.pr($"{Stat}");
+            IO.sel(_STATPROMPT, 0, out index, out _, out _, out _);
             IO.del();
         } while (index == -1);
         Stat[(StatName)index] += 1;
@@ -196,7 +196,7 @@ public class Player : Fightable
     public void SelectStartItem()
     {
         Corpse corpse = new("누군가", new() { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
-        while(Inven.Count < 3)
+        while (Inven.Count < 3)
         {
             IO.sel(corpse.droplist.ToArray(), 0, out int index, out bool cancel, out _, out _);
             if (cancel) break;

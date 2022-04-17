@@ -26,9 +26,9 @@ public static class IO
         {
             Console.CursorTop = x + Console.WindowHeight - 1;
         }
-        if (flag.HasFlag(__.color))
+        string v = value.ToString() ?? string.Empty;
+        if (v.Contains("^"))
         {
-            string v = (string)value;
             string[] splits = v.Split('^', StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in splits)
             {
@@ -36,7 +36,7 @@ public static class IO
                 else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
                 else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
                 else if (item.StartsWith("/")) Console.ResetColor();
-                else
+                else if(!item.StartsWith('c'))
                 {
                     Console.Write(item);
                     continue;
@@ -119,7 +119,7 @@ public static class IO
     {
         Console.Clear();
         //pr("History");
-        pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\tLevel : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline | __.color);
+        pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\tLevel : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline);
         pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         pr(Map.Current);
@@ -133,7 +133,7 @@ public static class IO
     }
     public static void ShowStats()
     {
-        rk(s_player.ToString(), __.color);
+        rk(s_player.ToString());
         Redraw();
     }
     public static void DrawInventory()
@@ -141,10 +141,10 @@ public static class IO
         Console.Clear();
         foreach (Item item in s_player.Inven.OfType<Item>())
         {
-            pr($"{item.Name} | 종류 : {item.itemType} ", __.color);
+            pr($"{item.Name} | 종류 : {item.itemType} ");
             foreach (IBehaviour behav in item.skills)
             {
-                pr($"\t{behav.ToString()} {behav.Stance}", __.color);
+                pr($"\t{behav.ToString()} {behav.Stance}");
             }
             pr("\n");
         }

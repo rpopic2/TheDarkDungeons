@@ -12,7 +12,7 @@ public class Program
         {
             ElaspeTurn();
         } while (s_player.IsAlive);
-        IO.pr(s_player.ToString(), __.color);
+        IO.pr(s_player.ToString());
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
         IO.rk();
     }
@@ -57,7 +57,7 @@ public class Program
     }
     private void Intro()
     {
-        IO.rk("Press any key to start...", __.color);
+        IO.rk("Press any key to start...");
 
         string name;
         do
@@ -70,8 +70,8 @@ public class Program
         IO.pr($"{name}의 직업은?...");
         int classIndex = 0;
         string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
-        IO.sel(classes, __.color, out classIndex, out bool cancel, out _, out _);
-        if (classIndex != -1) IO.pr(classes[classIndex], __.color);
+        IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _);
+        if (classIndex != -1) IO.pr(classes[classIndex]);
 
         Player player = Player._instance = new Player(name);
         Map.NewMap();

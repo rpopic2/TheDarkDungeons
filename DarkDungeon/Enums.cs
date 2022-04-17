@@ -27,7 +27,6 @@ public enum __
     bottom = 4,
     fullinven = 8,
     ///<summary>^b=Blue, ^r=Red, ^g=Green ^/ =reset</summary>
-    color = 16,
 }
 public enum DamageType
 {

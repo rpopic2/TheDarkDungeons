@@ -77,7 +77,7 @@ public partial class Fightable
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
-            IO.rk(useOutput, __.color);
+            IO.rk(useOutput);
         }
         else IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
     }
@@ -88,7 +88,7 @@ public partial class Fightable
         {
             int amount = Stat.GetRandom(StatName.Con);
             Stance.Set(item, charge, amount);
-            IO.rk($"{Name}{charge.OnUseOutput} ^b({Stance.Amount})^/", __.color);
+            IO.rk($"{Name}{charge.OnUseOutput} ^b({Stance.Amount})^/");
         }
         else IO.rk($"{Tokens.ToString(TokenType.Charge)} 토큰이 없습니다.");
     }
