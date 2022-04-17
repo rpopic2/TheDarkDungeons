@@ -1,13 +1,12 @@
 namespace Entities;
-
 public class Player : Fightable
 {
-    private static readonly string[] _STATPROMPT = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
     public const int BASICCAP = 3;
     public const int BASICSTAT = 0;
+    private static readonly string[] _STATPROMPT = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public Exp exp;
+    public Exp exp { get; init; }
     public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, cap: BASICCAP, pos: new(0))
     {
         exp = new Exp(this);
@@ -68,7 +67,7 @@ public class Player : Fightable
                 SelectBehaviour(item2);
                 return;
             }
-            
+
             switch (key.KeyChar)
             {
                 case 'i':
@@ -207,6 +206,7 @@ public class Player : Fightable
     }
     public void SelectStartItem()
     {
+        IO.pr("자유 직업을 선택하였습니다.");
         Corpse corpse = new("누군가", new() { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
         while (Inven.Count < 3)
         {
