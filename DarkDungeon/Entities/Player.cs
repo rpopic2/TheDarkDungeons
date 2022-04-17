@@ -13,31 +13,32 @@ public class Player : Fightable
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
     public ISteppable? UnderFoot => Map.Current.Steppables[Pos.x];
-    public override void DoTurn()
+    public override void SelectAction()
     {
         do
         {
-            SelectPlayerAction();
+            Selection();
         } while (Stance.CurrentBehav is null);
-    }
-    public void SelectPlayerAction()
-    {
-        ConsoleKeyInfo info = IO.rk();
-        ConsoleKey key = info.Key;
-        switch (key)
+
+        void Selection()
         {
-            case ConsoleKey.RightArrow:
-            case ConsoleKey.L:
-                if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
-                else if (CanMove(Position.MOVERIGHT)) SelectBasicBehaviour(0, Position.MOVERIGHT.x, (int)Position.MOVERIGHT.facing);
-                break;
-            case ConsoleKey.LeftArrow:
-            case ConsoleKey.H:
-                if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
-                break;
-            default:
-                DefaultSwitch(info);
-                break;
+            ConsoleKeyInfo info = IO.rk();
+            ConsoleKey key = info.Key;
+            switch (key)
+            {
+                case ConsoleKey.RightArrow:
+                case ConsoleKey.L:
+                    if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
+                    else if (CanMove(Position.MOVERIGHT)) SelectBasicBehaviour(0, Position.MOVERIGHT.x, (int)Position.MOVERIGHT.facing);
+                    break;
+                case ConsoleKey.LeftArrow:
+                case ConsoleKey.H:
+                    if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
+                    break;
+                default:
+                    DefaultSwitch(info);
+                    break;
+            }
         }
         void DefaultSwitch(ConsoleKeyInfo key)
         {

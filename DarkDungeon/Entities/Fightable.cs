@@ -39,7 +39,7 @@ public partial class Fightable
         }
         tokens.Add(tokenType);
     }
-    public virtual void DoTurn() { }
+    public virtual void SelectAction() { }
     protected void SelectBehaviour(Item item, int index)
     {
         if (Stance.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");

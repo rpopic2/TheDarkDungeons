@@ -34,7 +34,7 @@ public class Program
         fights.ForEach(f =>
         {
             if (f.Stance.IsStun) f.Stance.ProcessStun();
-            else f.DoTurn();
+            else f.SelectAction();
         });
 
         var firsts = from f in fights where f.Stance.CurrentBehav?.Stance == StanceName.Charge select f;

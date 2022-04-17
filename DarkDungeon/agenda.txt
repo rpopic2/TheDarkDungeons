@@ -7,7 +7,7 @@ main
 [ ] Snake
 [ ] Shaman
 [ ] 10 levels + boss fight
-[ ] gamepoint refactoring
+[ ] gamepoint refactoring + exp refactoring
 [ ] 빈 이름 안받아요
 [ ] 1층에서는 맨처음에 구멍 안뚫리게
 [ ] IO에서 새 버퍼 만드는 함수들 통일

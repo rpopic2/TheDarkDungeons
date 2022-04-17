@@ -38,7 +38,7 @@ public partial class Monster : Fightable
         //     if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);
         // }
     }
-    public override void DoTurn()
+    public override void SelectAction()
     {
         if (!IsAlive) return;
         behaviour(this);
