@@ -38,9 +38,8 @@ public class Program
 
         var firsts = from f in fights where f.Stance.CurrentBehav?.Stance == StanceName.Charge select f;
         var lasts = fights.Except(firsts);
-        firsts.ToList().ForEach(m => m.InvokeBehaviour());
-        lasts.ToList().ForEach(m => m.InvokeBehaviour());
-
+        foreach (Fightable item in firsts) item.InvokeBehaviour();
+        foreach (Fightable item in lasts) item.InvokeBehaviour();
         fights.ForEach(m =>
         {
             m.passives.Invoke((Fightable)m); //passives

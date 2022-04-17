@@ -8,12 +8,11 @@ main
 [X] 시작 클래스 안고르면 템 자유, 토큰 자유하게.
 [?] 몹 안움직이는 버그있는듯. 특히 아랫층 내려가서 광신도 만나면
 [X] color 인수 따로 받지 말고 ^c로 시작하면 되게끔.
-[ ] gamepoint refactoring + exp refactoring
-[ ] IEnumberable을 array로 변환하는거 최대한 자제하기
-[ ] 데미지 0이면 이걸 하기엔 힘이 부족하다 등.
-[ ] 도움말 개선
+[X] 도움말 개선
+[X] IEnumberable을 array로 변환하는거 최대한 자제하기
 [ ] 
 
+[ ] gamepoint refactoring + exp refactoring
 [ ] new neutral tokens
 [ ] Snake
 [ ] Shaman
