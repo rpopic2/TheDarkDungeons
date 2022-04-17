@@ -27,56 +27,9 @@ public class Program
         Intro();
         Console.Clear();
         IO.rk($"{s_player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
-        NewTurn();
+        IO.Redraw();
         IO.pr("?을 눌러 도움말 표시.");
     }
-
-    private void Intro()
-    {
-        string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
-        IO.rk("Press any key to start...", __.color);
-
-        IO.pr("캐릭터의 이름은?...");
-        string name = Console.ReadLine() ?? "Michael";
-        IO.del(2);
-        IO.pr($"{name}의 직업은?...");
-        int index = 0;
-        IO.sel(classes, __.color, out index, out bool cancel, out _, out _);
-        IO.pr(classes[index], __.color);
-        Player player = Player._instance = new Player(name);
-        Map.NewMap();
-
-        switch (index)
-        {
-            case 0:
-                player.Inven.Add(Fightable.sword);
-                player.Inven.Add(Fightable.shield);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
-                break;
-            case 1:
-                player.Inven.Add(Fightable.dagger);
-                player.Inven.Add(Fightable.bow);
-                player.Inven.Add(Fightable.arrow);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Defence);
-                break;
-            case 2:
-                player.Inven.Add(Fightable.staff);
-                player.Inven.Add(Fightable.magicBook);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Charge);
-                break;
-            default:
-                break;
-        }
-        player.Inven.Add(Fightable.torch);
-        player.SelectPickupStat(3);
-    }
-    //-------------------------
     public void MainLoop()
     {
         ConsoleKeyInfo info = IO.rk();
@@ -154,11 +107,52 @@ public class Program
 
         Map.Current.RemoveAndCreateCorpse();
         if (Map.Current.SpawnMobs && Turn % s_spawnrate == 0) Map.Current.Spawn();
-        NewTurn();
-    }
-    public static void NewTurn()
-    {
         Turn++;
         IO.Redraw();
+    }
+    private void Intro()
+    {
+        string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
+        IO.rk("Press any key to start...", __.color);
+
+        IO.pr("캐릭터의 이름은?...");
+        string name = Console.ReadLine() ?? "Michael";
+        IO.del(2);
+        IO.pr($"{name}의 직업은?...");
+        int index = 0;
+        IO.sel(classes, __.color, out index, out bool cancel, out _, out _);
+        IO.pr(classes[index], __.color);
+        Player player = Player._instance = new Player(name);
+        Map.NewMap();
+
+        switch (index)
+        {
+            case 0:
+                player.Inven.Add(Fightable.sword);
+                player.Inven.Add(Fightable.shield);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
+                break;
+            case 1:
+                player.Inven.Add(Fightable.dagger);
+                player.Inven.Add(Fightable.bow);
+                player.Inven.Add(Fightable.arrow);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Defence);
+                break;
+            case 2:
+                player.Inven.Add(Fightable.staff);
+                player.Inven.Add(Fightable.magicBook);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Charge);
+                break;
+            default:
+                break;
+        }
+        player.Inven.Add(Fightable.torch);
+        player.SelectPickupStat(3);
     }
 }
