@@ -139,6 +139,7 @@ public static class IO
         pr("\n , = 맨손    . = 휴식");
         pr("\n / = 내 정보 보기, ? : 이 도움말 보기");
         pr("\n x = 취소, spacebar = Ok 상호작용");
+        pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
 
         pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기", __.bottom);
         ConsoleKeyInfo consoleKeyInfo = rk();
@@ -153,9 +154,10 @@ public static class IO
         pr("숫자패드 키 도움말 (Num Lock 끄고 플레이)\n");
         pr("\n 좌우 화살표(4, 6) = 좌우 이동");
         pr("\n End(1) = 1번 아이템(혹은 선택지), PgDn(2) = 2번 아이템, Home(7) = 3번 아이템, PgUp(9) = 4번 아이템, + = 5번 아이템 / * : 인벤토리");
-        pr("\n 0 = 맨손, DEL = 휴식");
+        pr("\n Ins(0) = 맨손, DEL = 휴식");
         pr("\n / = 내 정보 보기, 5(NumLock 켜고) : 이 도움말 보기");
         pr("\n - = 취소, Enter = Ok 상호작용");
+        pr("\n 0(NumLock 켜고) = 새로고침 (맵이 이상하면 누르기)");
         rk();
         Redraw();
     }
@@ -169,6 +171,8 @@ public static class IO
         pr("\n b = 맨손, n = 휴식");
         pr("\n m = 내 정보 보기, ? : 이 도움말 보기");
         pr("\n x = 취소, spacebar = Ok 상호작용");
+        pr("\n 0 = 새로고침 (맵이 이상하면 누르기)");
+
         rk();
         Redraw();
     }

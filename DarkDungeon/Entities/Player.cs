@@ -31,6 +31,10 @@ public class Player : Fightable
                     if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
                     else if (CanMove(Position.MOVERIGHT)) SelectBasicBehaviour(0, Position.MOVERIGHT.x, (int)Position.MOVERIGHT.facing);
                     break;
+                case ConsoleKey.NumPad0:
+                case ConsoleKey.D0:
+                    IO.Redraw();
+                    break;
                 case ConsoleKey.LeftArrow:
                 case ConsoleKey.H:
                     if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
