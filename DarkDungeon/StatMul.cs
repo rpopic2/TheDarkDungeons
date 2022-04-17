@@ -1,4 +1,4 @@
-public record StatMul(int sol, int lun, int con, int cap, int killExp);
+public record StatMul(int sol, int lun, int con, int cap, int killExp, int Sight);
 public record struct Mul(int @base, float multiplier, int scaler)
 {
     public static int lv => Map.Depth;

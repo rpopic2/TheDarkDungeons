@@ -17,4 +17,11 @@ public struct Position
         return new(a.x + bv, b.facing);
     }
     public override string ToString() => $"{x} facing {facing.ToString()}";
+
+    public Facing LookAt(int v)
+    {
+        if (x > v) return Facing.Left;
+        else if (x < v) return Facing.Right;
+        else return facing;
+    }
 }

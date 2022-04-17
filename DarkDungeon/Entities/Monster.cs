@@ -8,6 +8,7 @@ public partial class Monster : Fightable
     private Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint) : base(name: data.name, level: Map.Depth, sol: data.stat.sol, lun:data.stat.lun, con:data.stat.con, cap:data.stat.cap, pos:spawnPoint)
     {
+        Sight = data.stat.Sight;
         killExp = data.stat.killExp;
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;

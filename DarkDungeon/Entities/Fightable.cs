@@ -5,7 +5,7 @@ public partial class Fightable
     public int Level { get; protected set; }
     public Tokens tokens { get; private set; }
     protected readonly Stat Stat;
-    public int Sight { get; private set; } = 1;
+    public int Sight { get; protected set; } = 1;
     public Position Pos { get; protected set; }
 
     public Inventory Inven { get; private set; }
