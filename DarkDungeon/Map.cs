@@ -142,7 +142,7 @@ public class Map
         RenderVisible(Tiles);
         RenderVisible(Steppables);
         RenderVisible(FightablePositions);
-        if(true) RenderAllMobs();//debug
+        //if(true) RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
 
         void RenderVisible<T>(T[] target)
@@ -160,10 +160,7 @@ public class Map
         }
         void RenderAllMobs()
         {
-            for (int i = 0; i < Length; i++)
-            {
-                if (FightablePositions[i] is Monster m) _rendered[i] = m.ToChar();
-            }
+            for (int i = 0; i < Length; i++) if (FightablePositions[i] is Monster m) _rendered[i] = m.ToChar();
         }
     }
 
