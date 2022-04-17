@@ -97,6 +97,7 @@ public class Player : Fightable
             TokenType token = toks.ElementAt(i - 1);
             IO.pr($"{Tokens.ToString(token)}토큰을 획득하였습니다. ({i})");
             if (token is TokenType tokenType) PickupToken(tokenType);
+            IO.del();
         }
     }
     public void PickupToken(TokenType token)
