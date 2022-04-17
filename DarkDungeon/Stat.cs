@@ -35,11 +35,11 @@ public class Stat
     }
     public void Damage(int value)
     {
-        Hp += value;
+        Hp -= value;
     }
     public void Heal(int value)
     {
-        Hp -= value;
+        Hp += value;
     }
     public override string ToString()
     {
