@@ -1,6 +1,5 @@
 public static class Rules
 {
-    public const string version = "0.6.160422";
     public const float vulMulp = 1.3f;
     //map
     public static readonly int MapLengthMax = 25;//Console.BufferWidth - 1;

@@ -1,6 +1,7 @@
 ﻿global using Entities;
 public class Program
 {
+    public const string VERSION = "0.6.170422";
     public static Program instance = default!;
     private static Player s_player { get => Player.instance; }
     private static int s_spawnrate = 10;
@@ -20,7 +21,7 @@ public class Program
     {
         instance = this;
         Console.Clear();
-        IO.pr("The Dungeons of the Mine " + Rules.version);
+        IO.pr("The Dungeon of the Mine " + VERSION);
         Intro();
         Console.Clear();
         IO.rk($"{s_player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
