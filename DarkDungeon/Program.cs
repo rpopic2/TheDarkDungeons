@@ -2,7 +2,6 @@
 public class Program
 {
     public static Program instance = default!;
-    public static readonly string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
     public static readonly string[] stats = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
     public readonly Position MOVELEFT = new(1, Facing.Left);
     public readonly Position MOVERIGHT = new(1, Facing.Right);
@@ -33,6 +32,7 @@ public class Program
 
     private void Intro()
     {
+        string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
         IO.rk("Press any key to start...", __.color);
 
         IO.pr("캐릭터의 이름은?...");
@@ -41,7 +41,7 @@ public class Program
         IO.pr($"{name}의 직업은?...");
         int index = 0;
         IO.sel(classes, __.color, out index, out bool cancel, out _, out _);
-        IO.pr(classes[index]);
+        IO.pr(classes[index], __.color);
         Player player = Player._instance = new Player(name);
         Map.NewMap();
 
@@ -64,9 +64,7 @@ public class Program
                 break;
         }
         player.Inven.Add(Fightable.torch);
-        IO.pr("남은 능력치 포인트 : 1");
-        player.SelectPickupStat();
-        IO.del();
+        player.SelectPickupStat(3);
         player.PickupToken(3);
         IO.del();
     }

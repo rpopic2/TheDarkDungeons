@@ -146,7 +146,7 @@ public partial class Fightable
     }
     private void Dodge(int damage, DamageType damageType, Fightable attacker)
     {
-        if (damage <= 0) throw new Exception("데미지는 0과 같거나 작을 수 없습니다.");
+        if (damage < 0) throw new Exception("데미지는 0보다 작을 수 없습니다.");
         StanceName? stance = Stance.CurrentBehav?.Stance;
         if (stance == StanceName.Defence)
         {

@@ -9,7 +9,12 @@ public class Stat
         set => _data[(int)index] = value;
     }
     public void ModifyStat(StatName stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
-    public int GetRandom(StatName stat) => rnd.Next(MIN, this[stat]);
+    public int GetRandom(StatName stat)
+    {
+        int max = this[stat];
+        if (max <= MIN) return 0;
+        else return rnd.Next(MIN, max);
+    }
 }
 public enum StatName
 {

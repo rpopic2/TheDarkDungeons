@@ -3,7 +3,7 @@ namespace Entities;
 public class Player : Fightable
 {
     public const int BASICCAP = 3;
-    public const int BASICSTAT = 2;
+    public const int BASICSTAT = 0;
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp;
@@ -41,14 +41,21 @@ public class Player : Fightable
         }
         SelectBehaviour(item, index);
     }
+    public void SelectPickupStat(int times)
+    {
+        for (int i = 0; i < times; i++)
+        {
+            IO.pr($"남은 능력치 포인트 : {times - i}");
+            SelectPickupStat();
+        }
+    }
     public void SelectPickupStat()
     {
-        bool cancel;
         int index;
         do
         {
-            IO.sel(Program.stats, __.color, out index, out cancel, out _, out _);
-        } while (cancel);
+            IO.sel(Program.stats, __.color, out index, out _, out _, out _);
+        } while (index == -1);
         Stat[(StatName)index] += 1;
     }
     public void PickupItem(Item item)
