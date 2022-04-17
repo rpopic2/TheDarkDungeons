@@ -218,7 +218,6 @@ public class Player : Fightable
     }
     public void SelectStartItem()
     {
-        IO.pr("자유 직업을 선택하였습니다.");
         Corpse corpse = new("누군가", new() { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
         while (Inven.Count < 3)
         {

@@ -66,13 +66,39 @@ public class Program
             name = Console.ReadLine() ?? "Michael";
             IO.del(2);
         } while (name == string.Empty);
-
+    ClassSelect:
         IO.pr($"{name}의 직업은?...");
         int classIndex = 0;
-        string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
-        IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _);
-        if (classIndex != -1) IO.pr(classes[classIndex]);
+        string[] classes = new string[] { "^r(q) 전사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
+        IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _); ;
+        string classString = classes[classIndex];
+        
+        switch (classIndex)
+        {
+            case 0:
+                IO.pr($"{classString} : 난이도 쉬움. (초보 추천) 근접 거리에서 용맹히 싸우는 직업이다.");
+                break;
+            case 1:
+                IO.pr($"{classString} : 난이도 보통. (초보 비추천) 적이 저항하지 못하고 본인이 당했는지도 모르게끔 암살한다.");
+                break;
+            case 2:
+                IO.pr($"{classString} : 난이도 어려움. (초보 비추천) 창의력을 발휘하여야 하는 강력한 마법을 쓰는 직업이다.");
+                break;
+            default:
+                IO.pr("자유 직업을 선택하였습니다.");
+                break;
+        }
+    Confirm:
+        ConsoleKeyInfo keyInfo = IO.rk("스페이스바 : 확인, x : 취소");
+        if (keyInfo.Key.IsCancel())
+        {
+            IO.del(2);
+            goto ClassSelect;
+        }
+        else if (!keyInfo.Key.IsOK()) goto Confirm;
+        else IO.del();
 
+        if (classIndex != -1) IO.pr(classString);
         Player player = Player._instance = new Player(name);
         Map.NewMap();
 
