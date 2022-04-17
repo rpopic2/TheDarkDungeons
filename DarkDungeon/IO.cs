@@ -128,6 +128,7 @@ public static class IO
     public static void ShowHelp()
     {
         Console.Clear();
+        pr("키 도움말\n");
         pr("\n 좌우 화살표 = 이동");
         pr("\n q = 1번 아이템(혹은 선택지), w = 2번 아이템, e = 3번 아이템, r = 4번 아이템, t = 5번 아이템 / i : 인벤토리");
         pr("\n , = 맨손    . = 휴식");
@@ -135,6 +136,26 @@ public static class IO
         pr("\n x = 취소, spacebar = Ok 상호작용");
 
         pr("여기에서 m : 모바일 단축키 보기, n : 숫자 키패드 단축키 보기", __.bottom);
+        ConsoleKeyInfo consoleKeyInfo = rk();
+        if (consoleKeyInfo.KeyChar == 'm') ShowMobileHelp();
+        else if (consoleKeyInfo.KeyChar == 'n') ShowNumpadHelp();
+        else Redraw();
+    }
+
+    private static void ShowNumpadHelp()
+    {
+        Redraw();
+    }
+
+    public static void ShowMobileHelp()
+    {
+        Console.Clear();
+        pr("모바일 키 도움말\n");
+        pr("\n h, l = 좌우 이동");
+        pr("\n q = 1번 아이템(혹은 선택지), w = 2번 아이템, e = 3번 아이템, r = 4번 아이템, t = 5번 아이템 / i : 인벤토리");
+        pr("\n b = 맨손, n = 휴식");
+        pr("\n m = 내 정보 보기, ? : 이 도움말 보기");
+        pr("\n x = 취소, spacebar = Ok 상호작용");
         rk();
         Redraw();
     }
