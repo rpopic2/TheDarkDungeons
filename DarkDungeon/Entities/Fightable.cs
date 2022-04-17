@@ -63,7 +63,7 @@ public partial class Fightable
         if (behaviour is NonTokenSkill nonToken)
         {
             string output = behaviour.OnUseOutput;
-            if (output != string.Empty) IO.pr(Name + output);
+            if (output != string.Empty) IO.rk(Name + output);
             Stance.Set(basicActions, nonToken, x, y);
         }
     }
@@ -131,6 +131,7 @@ public partial class Fightable
     {
         if (Inven.Contains(item))
         {
+            IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
             Inven.Remove(item);
             lastHit?.Inven.Add(dagger!);

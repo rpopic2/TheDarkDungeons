@@ -147,11 +147,18 @@ public class Player : Fightable
     {
         for (int i = amount; i > 0; i--)
         {
-            IO.pr($"토큰을 선택하십시오. ({i})");
-            IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
-            IO.del();
-            if (cancel) return;
-            PickupToken((TokenType)index);
+            if (!Tokens.useUnifiedToken)
+            {
+                IO.pr($"토큰을 선택하십시오. ({i})");
+                IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
+                IO.del();
+                if (cancel) return;
+                PickupToken((TokenType)index);
+            }
+            else
+            {
+                PickupToken((TokenType)0);
+            }
         }
     }
     public void PickupToken(Tokens tokens)
@@ -168,7 +175,7 @@ public class Player : Fightable
     public void PickupToken(TokenType token)
     {
         int discard = -1;
-        if (tokens.IsFull)
+        if (tokens.IsFull && !Tokens.useUnifiedToken)
         {
             IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString(token));
             IO.sel(tokens, 0, out discard, out bool cancel2, out _, out _);

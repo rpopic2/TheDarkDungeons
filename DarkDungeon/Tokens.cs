@@ -25,7 +25,7 @@ public class Tokens : ICollection<TokenType>
         }
         return result;
     }
-    private bool useUnifiedToken = true;
+    public static readonly bool useUnifiedToken = true;
     public TokenType? TryUse(TokenType token)
     {
         if (useUnifiedToken && Count > 0)
