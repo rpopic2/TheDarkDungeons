@@ -36,7 +36,7 @@ public static class IO
                 else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
                 else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
                 else if (item.StartsWith("/")) Console.ResetColor();
-                else if(!item.StartsWith('c'))
+                else if (!item.StartsWith('c'))
                 {
                     Console.Write(item);
                     continue;
@@ -63,7 +63,7 @@ public static class IO
     public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "선택 : ")
     {
         pr(print, flags, title);
-        ConsoleKeyInfo info = Console.ReadKey(true);;
+        ConsoleKeyInfo info = Console.ReadKey(true); ;
         del();
         return info;
     }
@@ -128,7 +128,14 @@ public static class IO
     public static void ShowHelp()
     {
         Console.Clear();
-        rk("qwert : 아이템 사용 | i : 인벤토리\n , 혹은 b : 맨손 | . 혹은 n : 휴식\n좌우 화살표 혹은 h, l : 이동\n/ 혹은 m : 내 정보 보기 | ? : 이 도움말 보기\n x : 취소 | spacebar : Ok, 상호작용");
+        pr("\n 좌우 화살표 = 이동");
+        pr("\n q = 1번 아이템(혹은 선택지), w = 2번 아이템, e = 3번 아이템, r = 4번 아이템, t = 5번 아이템 / i : 인벤토리");
+        pr("\n , = 맨손    . = 휴식");
+        pr("\n / = 내 정보 보기, ? : 이 도움말 보기");
+        pr("\n x = 취소, spacebar = Ok 상호작용");
+
+        pr("여기에서 m : 모바일 단축키 보기, n : 숫자 키패드 단축키 보기", __.bottom);
+        rk();
         Redraw();
     }
     public static void ShowStats()
