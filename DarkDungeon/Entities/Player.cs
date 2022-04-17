@@ -2,6 +2,7 @@ namespace Entities;
 
 public class Player : Fightable
 {
+    private static readonly string[] _STATPROMPT = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
     public const int BASICCAP = 3;
     public const int BASICSTAT = 0;
     public static Player? _instance;
@@ -99,7 +100,7 @@ public class Player : Fightable
         do
         {
             IO.pr($"{Stat}", __.color);
-            IO.sel(Program.stats, __.color, out index, out _, out _, out _);
+            IO.sel(_STATPROMPT, __.color, out index, out _, out _, out _);
             IO.del();
         } while (index == -1);
         Stat[(StatName)index] += 1;

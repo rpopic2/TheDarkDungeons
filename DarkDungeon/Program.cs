@@ -2,7 +2,6 @@
 public class Program
 {
     public static Program instance = default!;
-    public static readonly string[] stats = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
     private static Player s_player { get => Player.instance; }
     private static int s_spawnrate = 10;
     public static int Turn { get; private set; }
