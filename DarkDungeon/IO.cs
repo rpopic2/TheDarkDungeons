@@ -124,7 +124,7 @@ public static class IO
     {
         Console.Clear();
         //pr("History");
-        pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\tLevel : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline);
+        pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline);
         pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         pr(Map.Current);
