@@ -1,9 +1,8 @@
 public static class IO
 {
-    public const ConsoleKey OKKEY = ConsoleKey.Spacebar;
-    public const ConsoleKey CANCELKEY = ConsoleKey.X;
     private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
+    public static readonly ConsoleKey[] ITEMKEYS_PAD = new ConsoleKey[] { ConsoleKey.End, ConsoleKey.PageDown, ConsoleKey.Home, ConsoleKey.PageUp, ConsoleKey.OemPlus };
     private static readonly string DELSTRING = " ";
     private static Player s_player { get => Player.instance; }
     static IO()
@@ -81,14 +80,20 @@ public static class IO
         {
             keyInfo = rk(value, flags, title);
             mod = keyInfo.Modifiers;
-            cancel = keyInfo.Key == CANCELKEY;
+            cancel = keyInfo.Key.IsCancel();
             found = chk(keyInfo.KeyChar, max, out index);
+            if (index == -1) found = IO.chkp(keyInfo.Key, max, out index);
             if (cancel) return;
         } while (!found);
     }
     public static bool chk(Char i, int max, out int index)
     {
         index = ITEMKEYS1.IndexOf(i);
+        return index != -1 && index <= max - 1;
+    }
+    public static bool chkp(ConsoleKey i, int max, out int index)
+    {
+        index = Array.IndexOf(ITEMKEYS_PAD, i);
         return index != -1 && index <= max - 1;
     }
     public static void del(__ flags = 0)
@@ -135,7 +140,7 @@ public static class IO
         pr("\n / = 내 정보 보기, ? : 이 도움말 보기");
         pr("\n x = 취소, spacebar = Ok 상호작용");
 
-        pr("여기에서 m : 모바일 단축키 보기, n : 숫자 키패드 단축키 보기", __.bottom);
+        pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기", __.bottom);
         ConsoleKeyInfo consoleKeyInfo = rk();
         if (consoleKeyInfo.KeyChar == 'm') ShowMobileHelp();
         else if (consoleKeyInfo.KeyChar == 'n') ShowNumpadHelp();
@@ -144,6 +149,14 @@ public static class IO
 
     private static void ShowNumpadHelp()
     {
+        Console.Clear();
+        pr("숫자패드 키 도움말 (Num Lock 끄고 플레이)\n");
+        pr("\n 좌우 화살표(4, 6) = 좌우 이동");
+        pr("\n End(1) = 1번 아이템(혹은 선택지), PgDn(2) = 2번 아이템, Home(7) = 3번 아이템, PgUp(9) = 4번 아이템, + = 5번 아이템 / * : 인벤토리");
+        pr("\n 0 = 맨손, DEL = 휴식");
+        pr("\n / = 내 정보 보기, 5(NumLock 켜고) : 이 도움말 보기");
+        pr("\n - = 취소, Enter = Ok 상호작용");
+        rk();
         Redraw();
     }
 

@@ -36,6 +36,18 @@ public class Player : Fightable
                 case ConsoleKey.H:
                     if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
                     break;
+                case ConsoleKey.B:
+                case ConsoleKey.Insert:
+                    SelectBehaviour(Fightable.bareHand);
+                    break;
+                case ConsoleKey.N:
+                case ConsoleKey.Delete: //Rest
+                    SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
+                    break;
+                case ConsoleKey.Spacebar: //상호작용
+                case ConsoleKey.Enter: //상호작용
+                    if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
+                    break;
                 default:
                     DefaultSwitch(info);
                     break;
@@ -47,29 +59,28 @@ public class Player : Fightable
             if (found && Inven[i] is Item item)
             {
                 SelectBehaviour(item);
+                return;
             }
+            bool found2 = IO.chkp(key.Key, Inven.Count, out int i2);
+            if (found2 && Inven[i2] is Item item2)
+            {
+                SelectBehaviour(item2);
+                return;
+            }
+            
             switch (key.KeyChar)
             {
-                case 'b':
-                case ',':
-                    SelectBehaviour(Fightable.bareHand);
-                    break;
                 case 'i':
+                case '*':
                     IO.DrawInventory();
-                    break;
-                case '.': //Rest
-                case 'n':
-                    SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
                     break;
                 case '/':
                 case 'm':
                     IO.ShowStats();
                     break;
                 case '?':
+                case '5':
                     IO.ShowHelp();
-                    break;
-                case ' ': //상호작용
-                    if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
                     break;
             }
         }
@@ -118,12 +129,12 @@ public class Player : Fightable
             do
             {
                 ConsoleKeyInfo keyInfo = IO.rk($"{old.Name}이 버려집니다. 계속하시겠습니까?");
-                if (keyInfo.Key == IO.OKKEY)
+                if (keyInfo.Key.IsOK())
                 {
                     Inven.Remove(old);
                     break;
                 }
-                else if (keyInfo.Key == IO.CANCELKEY)
+                else if (keyInfo.Key.IsCancel())
                 {
                     IO.del();
                     goto Select;

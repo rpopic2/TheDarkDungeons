@@ -65,4 +65,12 @@ public static class Extensions
         }
         return result;
     }
+    public static bool IsOK(this ConsoleKey key)
+    {
+        return key == ConsoleKey.Spacebar || key == ConsoleKey.Enter;
+    }
+    public static bool IsCancel(this ConsoleKey key)
+    {
+        return key == ConsoleKey.X || key == ConsoleKey.OemMinus || key == ConsoleKey.Escape;
+    }
 }
