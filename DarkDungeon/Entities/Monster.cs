@@ -12,7 +12,7 @@ public partial class Monster : Fightable
     cap: data.stat.cap, pos: spawnPoint)
     {
         Sight = data.stat.Sight;
-        int killExp = new Mul(data.stat.killExp, 1.5f, Map.Depth);
+        killExp = new Mul(data.stat.killExp, 1.5f, Map.Depth);
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
