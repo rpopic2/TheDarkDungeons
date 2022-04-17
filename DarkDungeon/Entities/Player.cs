@@ -110,9 +110,9 @@ public class Player : Fightable
         int index;
         do
         {
-            IO.pr($"{Stat}");
+            IO.pr($"현재 : {Stat}\n");
             IO.sel(_STATPROMPT, 0, out index, out _, out _, out _);
-            IO.del();
+            IO.del(2);
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
