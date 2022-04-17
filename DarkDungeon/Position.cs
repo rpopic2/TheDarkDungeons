@@ -1,5 +1,7 @@
 public struct Position
 {
+    public static readonly Position MOVELEFT = new(1, Facing.Left);
+    public static readonly Position MOVERIGHT = new(1, Facing.Right);
     public int x { get; private set; }
     public Facing facing { get; private set; }
     public Position(int x, Facing facing = default)

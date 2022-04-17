@@ -3,8 +3,6 @@ public class Program
 {
     public static Program instance = default!;
     public static readonly string[] stats = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
-    public readonly Position MOVELEFT = new(1, Facing.Left);
-    public readonly Position MOVERIGHT = new(1, Facing.Right);
     private static Player s_player { get => Player.instance; }
     private static int s_spawnrate = 10;
     public static int Turn { get; private set; }
@@ -30,59 +28,7 @@ public class Program
         IO.Redraw();
         IO.pr("?을 눌러 도움말 표시.");
     }
-    public void MainLoop()
-    {
-        ConsoleKeyInfo info = IO.rk();
-        ConsoleKey key = info.Key;
-        switch (key)
-        {
-            case ConsoleKey.RightArrow:
-            case ConsoleKey.L:
-                if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
-                else if (s_player.CanMove(MOVERIGHT)) s_player.SelectBasicBehaviour(0, MOVERIGHT.x, (int)MOVERIGHT.facing);
-                break;
-            case ConsoleKey.LeftArrow:
-            case ConsoleKey.H:
-                if (s_player.CanMove(MOVELEFT)) s_player.SelectBasicBehaviour(0, MOVELEFT.x, (int)MOVELEFT.facing);
-                break;
-            default:
-                DefaultSwitch(info);
-                break;
-        }
-    }
-    private void DefaultSwitch(ConsoleKeyInfo key)
-    {
-        bool found = IO.chk(key.KeyChar, s_player.Inven.Count, out int i);
-        if (found && s_player.Inven[i] is Item item)
-        {
-            s_player.SelectBehaviour(item);
-        }
-        switch (key.KeyChar)
-        {
-            case 'b':
-            case ',':
-                s_player.SelectBehaviour(Fightable.bareHand);
-                break;
-            case 'i':
-                IO.DrawInventory();
-                break;
-            case '.': //Rest
-            case 'n':
-                s_player.SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
-                break;
-            case '/':
-            case 'm':
-                s_player.ShowStats();
-                break;
-            case '?':
-                IO.ShowHelp();
-                break;
-            case ' ': //상호작용
-                if (s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
-                break;
-        }
-    }
-    internal static void ElaspeTurn()
+    private static void ElaspeTurn()
     {
         var fights = Map.Current.Fightables;
         fights.ForEach(f =>

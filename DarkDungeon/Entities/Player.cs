@@ -17,8 +17,60 @@ public class Player : Fightable
     {
         do
         {
-            Program.instance.MainLoop();
+            SelectPlayerAction();
         } while (Stance.CurrentBehav is null);
+    }
+    public void SelectPlayerAction()
+    {
+        ConsoleKeyInfo info = IO.rk();
+        ConsoleKey key = info.Key;
+        switch (key)
+        {
+            case ConsoleKey.RightArrow:
+            case ConsoleKey.L:
+                if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
+                else if (CanMove(Position.MOVERIGHT)) SelectBasicBehaviour(0, Position.MOVERIGHT.x, (int)Position.MOVERIGHT.facing);
+                break;
+            case ConsoleKey.LeftArrow:
+            case ConsoleKey.H:
+                if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
+                break;
+            default:
+                DefaultSwitch(info);
+                break;
+        }
+        void DefaultSwitch(ConsoleKeyInfo key)
+        {
+            bool found = IO.chk(key.KeyChar, Inven.Count, out int i);
+            if (found && Inven[i] is Item item)
+            {
+                SelectBehaviour(item);
+            }
+            switch (key.KeyChar)
+            {
+                case 'b':
+                case ',':
+                    SelectBehaviour(Fightable.bareHand);
+                    break;
+                case 'i':
+                    IO.DrawInventory();
+                    break;
+                case '.': //Rest
+                case 'n':
+                    SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
+                    break;
+                case '/':
+                case 'm':
+                    ShowStats();
+                    break;
+                case '?':
+                    IO.ShowHelp();
+                    break;
+                case ' ': //상호작용
+                    if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
+                    break;
+            }
+        }
     }
     private void OnLvUp(object? sender, EventArgs e)
     {
