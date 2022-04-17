@@ -63,7 +63,7 @@ public static class IO
     public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "선택 : ")
     {
         pr(print, flags, title);
-        ConsoleKeyInfo info = rk();
+        ConsoleKeyInfo info = Console.ReadKey(true);;
         del();
         return info;
     }
