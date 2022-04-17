@@ -2,6 +2,7 @@ public class Map
 {
     private static Random s_rnd = new Random();
     public static Map Current = default!;
+    ///<summary>is 1 by default</summary>
     public static int Depth;
     public readonly int Length;
     public readonly bool SpawnMobs;
@@ -28,7 +29,7 @@ public class Map
         _fightablePositions = new Fightable[length];
         _rendered = new char[length];
 
-        int portalIndex = Depth != 0 ? s_rnd.Next(0, length - 1) : s_rnd.Next(2, length - 1);
+        int portalIndex = Depth != 1 ? s_rnd.Next(0, length - 1) : s_rnd.Next(2, length - 1);
         Steppables[portalIndex] = new Portal();
         if (corpseFromPrev is Corpse corpse) Steppables[s_player.Pos.x] = corpse;
         _fightables.Add(s_player);
