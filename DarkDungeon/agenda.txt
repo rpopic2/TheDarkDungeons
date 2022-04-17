@@ -8,6 +8,7 @@ main
 [ ] Shaman
 [ ] 10 levels + boss fight
 [ ] gamepoint refactoring
+[ ] 빈 이름 안받아요
 [ ] 
 
 [ ] 사다리 -> 만들려면 먼저 사다리랑 시체 겹치는거 생각해야됨. -> 사다리 메모리 문제도 있고 생각좀 해봐야할듯

@@ -50,22 +50,31 @@ public class Program
             case 0:
                 player.Inven.Add(Fightable.sword);
                 player.Inven.Add(Fightable.shield);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
                 break;
             case 1:
                 player.Inven.Add(Fightable.dagger);
                 player.Inven.Add(Fightable.bow);
                 player.Inven.Add(Fightable.arrow);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Defence);
                 break;
             case 2:
                 player.Inven.Add(Fightable.staff);
                 player.Inven.Add(Fightable.magicBook);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Offence);
+                player.PickupToken(TokenType.Charge);
                 break;
             default:
                 break;
         }
         player.Inven.Add(Fightable.torch);
         player.SelectPickupStat(3);
-        player.PickupToken(3);
+        //player.PickupToken(3);
         IO.del();
     }
     //-------------------------
