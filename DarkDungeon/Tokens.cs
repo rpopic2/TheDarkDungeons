@@ -25,6 +25,24 @@ public struct Tokens : ICollection<TokenType>
         }
         return result;
     }
+    private bool useUnifiedToken = true;
+    public TokenType? TryUse(TokenType token)
+    {
+        if (useUnifiedToken && Count > 0)
+        {
+            RemoveAt(0);
+            return token;
+        }
+        if (_content.IndexOf(token) != -1)
+        {
+            Remove(token);
+            return token;
+        }
+        else
+        {
+            return null;
+        }
+    }
     public static string ToString(TokenType token)
     {
         return TokenSymbols[(int)token].ToString();
@@ -60,27 +78,7 @@ public struct Tokens : ICollection<TokenType>
     }
     public int Count => _content.Count;
     public bool IsFull => Count >= _content.Capacity;
-
     public bool IsReadOnly => ((ICollection<TokenType>)_content).IsReadOnly;
-    private bool useUnifiedToken = true;
-    public TokenType? TryUse(TokenType token)
-    {
-        if(useUnifiedToken && Count > 0) 
-        {
-            RemoveAt(0);
-            return token;
-        }
-        if (_content.IndexOf(token) != -1)
-        {
-            Remove(token);
-            return token;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
     public void Clear()
     {
         ((ICollection<TokenType>)_content).Clear();
