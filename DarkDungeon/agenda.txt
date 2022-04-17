@@ -15,10 +15,10 @@ main
 [ ] 도움말 개선
 [ ] 
 
+[ ] new neutral tokens
 [ ] Snake
 [ ] Shaman
 [ ] 10 levels + boss fight
 [ ] ISteppable 겹치기 가능하게
 [ ] 사다리 -> 그냥 윗층으로만 올라감. 올라가면 다시 못내려감? or 사다리로 연결했으면 최소한 2개만 연결되게끔. or그냥 되게끔
 [ ] 인벤토리에 중복 아이템을 못넣음!
-[ ] new neutral tokens?
