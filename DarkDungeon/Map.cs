@@ -158,10 +158,10 @@ public class Map
                 else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");
             }
         }
-        void RenderAllMobs()
-        {
-            for (int i = 0; i < Length; i++) if (FightablePositions[i] is Monster m) _rendered[i] = m.ToChar();
-        }
+        // void RenderAllMobs()
+        // {
+        //     for (int i = 0; i < Length; i++) if (FightablePositions[i] is Monster m) _rendered[i] = m.ToChar();
+        // }
     }
 
     public override string ToString()
