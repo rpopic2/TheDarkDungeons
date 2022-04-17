@@ -15,7 +15,7 @@ public partial class Fightable
     public virtual Fightable? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
     private Fightable? lastHit { get; set; }
     public Action<Fightable> passives = (p) => { };
-    public Fightable(string name, int level, int sol, int lun, int con, int maxHp, int cap, Position pos)
+    public Fightable(string name, int level, int sol, int lun, int con, int cap, Position pos)
     {
         Pos = pos;
         this.Level = level;
@@ -27,13 +27,14 @@ public partial class Fightable
         Inven = new((Fightable)this, "(맨손(g))");
         tokens = new(cap);
         Stance = new(this);
-        Hp = new GamePoint(maxHp, GamePointOption.Reserving);
+        Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);
         Hp.OnOverflow += new EventHandler(OnDeath);
         Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
         Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
     public bool IsAlive { get; private set; } = true;
     protected Map _currentMap => Map.Current;
+    protected int SolToHp() => 1 + Stat[StatName.Sol].RoundMult(0.8f);
     protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
         if (tokens.IsFull)

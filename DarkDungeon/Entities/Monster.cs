@@ -7,7 +7,7 @@ public partial class Monster : Fightable
     private char fowardChar, backwardChar;
     private Action<Monster> behaviour;
     private Dictionary<string, int> metaData = new();
-    public Monster(MonsterData data, Position spawnPoint) : base(data.name, Map.Depth, data.stat.sol, data.stat.lun, data.stat.con, data.stat.hp, data.stat.cap, spawnPoint)
+    public Monster(MonsterData data, Position spawnPoint) : base(name: data.name, level: Map.Depth, sol: data.stat.sol, lun:data.stat.lun, con:data.stat.con, cap:data.stat.cap, pos:spawnPoint)
     {
         dropList = data.dropList;
         killExp = data.stat.killExp;
@@ -29,7 +29,7 @@ public partial class Monster : Fightable
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {
-        if(!IsAlive) return;
+        if (!IsAlive) return;
         base.OnDeath(sender, e);
         player.exp.point += killExp;
         player.PickupToken(tokens);
