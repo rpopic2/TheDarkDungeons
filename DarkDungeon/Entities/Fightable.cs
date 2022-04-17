@@ -230,11 +230,11 @@ public partial class Fightable
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
     }
-    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp}", __.emphasis);
+    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
     protected void OnDamaged(object? sender, PointArgs e)
     {
-        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp}", __.emphasis);
+        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp}\t{tokens}\t{Stat}";
+    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t{tokens}\t{Stat}";
 }
