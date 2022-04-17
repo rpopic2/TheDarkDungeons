@@ -62,9 +62,14 @@ public struct Tokens : ICollection<TokenType>
     public bool IsFull => Count >= _content.Capacity;
 
     public bool IsReadOnly => ((ICollection<TokenType>)_content).IsReadOnly;
-
+    private bool useUnifiedToken = true;
     public TokenType? TryUse(TokenType token)
     {
+        if(useUnifiedToken && Count > 0) 
+        {
+            RemoveAt(0);
+            return token;
+        }
         if (_content.IndexOf(token) != -1)
         {
             Remove(token);

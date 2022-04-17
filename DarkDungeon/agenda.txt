@@ -1,12 +1,12 @@
 main
 [ ] isStun, isPoisoned는 Stat으로 옮기는게 맞지않나
 [X] 몹 애드
+[X] Snake
+[ ] Shaman
 
 [?] 몹 안움직이는 버그있는듯. 특히 아랫층 내려가서 광신도 만나면
 [ ] gamepoint refactoring + exp refactoring
 [ ] new neutral tokens
-[ ] Snake
-[ ] Shaman
 [ ] 10 levels + boss fight
 [ ] ISteppable 겹치기 가능하게
 [ ] 사다리 -> 그냥 윗층으로만 올라감. 올라가면 다시 못내려감? or 사다리로 연결했으면 최소한 2개만 연결되게끔. or그냥 되게끔
