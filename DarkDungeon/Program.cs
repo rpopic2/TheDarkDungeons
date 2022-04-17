@@ -57,22 +57,29 @@ public class Program
     }
     private void Intro()
     {
-        string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
         IO.rk("Press any key to start...", __.color);
 
-        IO.pr("캐릭터의 이름은?...");
-        string name = Console.ReadLine() ?? "Michael";
-        IO.del(2);
+        string name;
+        do
+        {
+            IO.pr("캐릭터의 이름은?...");
+            name = Console.ReadLine() ?? "Michael";
+            IO.del(2);
+        } while (name == string.Empty);
+
         IO.pr($"{name}의 직업은?...");
-        int index = 0;
-        IO.sel(classes, __.color, out index, out bool cancel, out _, out _);
-        IO.pr(classes[index], __.color);
+        int classIndex = 0;
+        string[] classes = new string[] { "^r(q) 검사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
+        IO.sel(classes, __.color, out classIndex, out bool cancel, out _, out _);
+        if (classIndex != -1) IO.pr(classes[classIndex], __.color);
+
         Player player = Player._instance = new Player(name);
         Map.NewMap();
 
-        switch (index)
+        switch (classIndex)
         {
             case 0:
+                player.Inven.Add(Fightable.torch);
                 player.Inven.Add(Fightable.sword);
                 player.Inven.Add(Fightable.shield);
                 player.PickupToken(TokenType.Offence);
@@ -80,6 +87,7 @@ public class Program
                 player.PickupToken(TokenType.Offence);
                 break;
             case 1:
+                player.Inven.Add(Fightable.torch);
                 player.Inven.Add(Fightable.dagger);
                 player.Inven.Add(Fightable.bow);
                 player.Inven.Add(Fightable.arrow);
@@ -88,6 +96,7 @@ public class Program
                 player.PickupToken(TokenType.Defence);
                 break;
             case 2:
+                player.Inven.Add(Fightable.torch);
                 player.Inven.Add(Fightable.staff);
                 player.Inven.Add(Fightable.magicBook);
                 player.PickupToken(TokenType.Offence);
@@ -95,6 +104,8 @@ public class Program
                 player.PickupToken(TokenType.Charge);
                 break;
             default:
+                player.SelectStartItem();
+                player.PickupToken(3);
                 break;
         }
         player.Inven.Add(Fightable.torch);

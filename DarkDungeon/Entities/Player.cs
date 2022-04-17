@@ -193,6 +193,20 @@ public class Player : Fightable
             Map.Current.Steppables[Pos.x] = null;
         }
     }
+    public void SelectStartItem()
+    {
+        Corpse corpse = new("누군가", new() { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
+        while(Inven.Count < 3)
+        {
+            IO.sel(corpse.droplist.ToArray(), 0, out int index, out bool cancel, out _, out _);
+            if (cancel) break;
+            if (corpse.droplist[index] is Item item)
+            {
+                PickupItem(item);
+                corpse.droplist.Remove(item);
+            }
+        }
+    }
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
