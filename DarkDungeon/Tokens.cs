@@ -101,8 +101,3 @@ public struct Tokens : ICollection<TokenType>
         return ((IEnumerable)_content).GetEnumerator();
     }
 }
-
-public enum TokenType
-{
-    Offence, Defence, Charge
-}

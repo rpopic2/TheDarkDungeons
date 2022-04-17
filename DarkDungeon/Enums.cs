@@ -16,8 +16,13 @@ public enum ItemType
 }
 public enum StatName
 {
-    Sol, Lun, Con
+    Sol, Lun, Con, None
 }
+public enum TokenType
+{
+    Offence, Defence, Charge
+}
+
 [Flags]
 public enum __
 {

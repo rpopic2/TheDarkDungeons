@@ -3,13 +3,11 @@ public partial class Monster : Fightable
 {
     private int killExp;
     protected static Player player { get => Player.instance; }
-    protected DropList dropList;
     private char fowardChar, backwardChar;
     private Action<Monster> behaviour;
     private Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint) : base(name: data.name, level: Map.Depth, sol: data.stat.sol, lun:data.stat.lun, con:data.stat.con, cap:data.stat.cap, pos:spawnPoint)
     {
-        dropList = data.dropList;
         killExp = data.stat.killExp;
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
@@ -49,4 +47,4 @@ public partial class Monster : Fightable
 
 
 
-public record struct DropList(params (Item item, int outOf)[] list);
+public record DropList(params (Item item, int outOf)[] list);

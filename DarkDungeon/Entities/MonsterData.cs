@@ -1,5 +1,5 @@
 namespace Entities;
-public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, Item[] startItem, int[] startToken, DropList dropList);
+public record MonsterData(string name, char fowardChar, char backwardChar, StatMul stat, Action<Monster> behaviour, Item[] startItem, int[] startToken);
 public partial class Monster
 {
     private static DropList lunDropList = new(
@@ -8,12 +8,13 @@ public partial class Monster
         (Fightable.holySword, 10));
     private static DropList batDropList = new(
         (Fightable.batItem, 10));
-    private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, hp: 3, cap: 4, killExp: 4);
-    public static MonsterData lunatic = new("광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { Fightable.holySword, Fightable.tearOfLun }, new int[] { 2, 0, 2, 0 }, lunDropList);
-    private static StatMul snakeMul = new(sol: 2, lun: 1, con: 2, hp: 2, cap: 2, killExp: 5);
-    public static MonsterData snake = new("뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { Fightable.bareHand }, new int[] { 2, 0, 0 }, snakeDropList);
-    public static StatMul batMul = new(sol: 1, lun: 3, con: 2, hp: 2, cap: 3, killExp: 3);
-    public static MonsterData bat = new("박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { Fightable.batItem }, new int[] { 1, 1, 0 }, batDropList);
+    private static StatMul lunaticMul = new(sol: 1, lun: 1, con: 3, cap: 4, killExp: 3);
+    public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { Fightable.holySword, Fightable.tearOfLun }, startToken: new int[] { 2, 0, 2, 0 });
+    public static StatMul batMul = new(sol: 1, lun: 3, con: 2, cap: 3, killExp: 4);
+    public static MonsterData bat = new(name: "박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { Fightable.batItem }, startToken: new int[] { 1, 1, 0 });
+    private static StatMul snakeMul = new(sol: 2, lun: 2, con: 1, cap: 3, killExp: 3);
+    public static MonsterData snake = new(name: "뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { Fightable.snakeItem }, startToken: new int[] { 2, 0, 0 });
+
     public static List<MonsterData> data = new() { lunatic, bat };
     private Fightable? _target;
     public static int Count => data.Count;
@@ -52,7 +53,7 @@ public partial class Monster
         }
         else
         {
-            SelectBasicBehaviour(1, 1, -1); //pickup offence
+            SelectBasicBehaviour(1, 0, -1); //pickup offence
         }
         if (_target?.Stance.CurrentBehav?.Stance == StanceName.Charge) metaData["isAngry"] = 1;
         else metaData["isAngry"] = 0;
@@ -69,10 +70,19 @@ public partial class Monster
                 else if (tokens.Contains(TokenType.Charge)) _SelectSkill(0, 1);
             }
         }
-        else SelectBasicBehaviour(1, 1, -1); //pickup offence
+        else SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
     public void SnakeBehav()
     {
-
+        if (tokens.Count > 0)
+        {
+            if (_target is null) BasicMovement();
+            else
+            {
+                if (Inven.GetMeta(Fightable.snakeItem).magicCharge > 0 && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 1);
+                else if (tokens.Contains(TokenType.Charge)) _SelectSkill(0, 0);
+            }
+        }
+        else SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
 }
