@@ -1,4 +1,4 @@
-public struct Exp
+public class Exp
 {
     private const float lvCurve = 1.25f;
     private const int lvMultiplier = 7;
