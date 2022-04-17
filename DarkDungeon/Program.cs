@@ -108,7 +108,6 @@ public class Program
                 player.PickupToken(3);
                 break;
         }
-        player.Inven.Add(Fightable.torch);
         player.SelectPickupStat(3);
     }
 }
