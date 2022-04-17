@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 
-public struct Tokens : ICollection<TokenType>
+public class Tokens : ICollection<TokenType>
 {
     public static readonly char[] TokenSymbols = { '(', '[', '<' };
     public static readonly string[] TokenPromptNames = { "(q) (공격)", "(w) [방어]", "(e) <충전>" };
