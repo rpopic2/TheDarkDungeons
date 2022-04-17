@@ -27,8 +27,7 @@ public class Player : Fightable
         exp.UpdateMax();
         IO.pr($"{Level}레벨이 되었다.", __.emphasis);
         SelectPickupStat();
-        Hp.Max = SolToHp();
-        Hp += Level;
+        Stat.Heal(GetHp().Max / 2);
     }
     public void SelectBehaviour(Item item)
     {
@@ -55,7 +54,7 @@ public class Player : Fightable
         int index;
         do
         {
-            IO.pr($"현재 : Hp : {Hp}  {Stat}", __.color);
+            IO.pr($"현재 : Hp : {GetHp}  {Stat}", __.color);
             IO.sel(Program.stats, __.color, out index, out _, out _, out _);
             IO.del();
         } while (index == -1);

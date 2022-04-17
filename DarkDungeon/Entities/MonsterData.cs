@@ -59,7 +59,7 @@ public partial class Monster
     }
     internal void LunaticBehav()
     {
-        if (Hp.Cur != Hp.Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
+        if (GetHp().Cur != GetHp().Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
         else if (tokens.Count > 0)
         {
             if (_target is null) BasicMovement();

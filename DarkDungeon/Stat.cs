@@ -3,17 +3,39 @@ public class Stat
     public const int MIN = 1;
     private int[] _data = new int[3];
     public Random rnd = new Random();
+    public GamePoint Hp;
+    public Stat(int sol, int lun, int con)
+    {
+        Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);
+        this[StatName.Sol] = sol;
+        this[StatName.Lun] = lun;
+        this[StatName.Con] = con;
+    }
+    protected int SolToHp() => 1 + this[StatName.Sol].RoundMult(0.8f);
+
     public int this[StatName index]
     {
         get => _data[(int)index];
-        set => _data[(int)index] = value;
+        set
+        {
+            _data[(int)index] = value;
+            if (index == StatName.Sol) Hp.Max = SolToHp();
+        }
     }
-    public void ModifyStat(StatName stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
+    public void WearStat(StatName stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
     public int GetRandom(StatName stat)
     {
         int max = this[stat];
         if (max <= MIN) return 0;
         else return rnd.Next(MIN, max);
+    }
+    public void Damage(int value)
+    {
+        Hp += value;
+    }
+    public void Heal(int value)
+    {
+        Hp -= value;
     }
     public override string ToString()
     {

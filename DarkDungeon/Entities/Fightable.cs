@@ -3,7 +3,6 @@ public partial class Fightable
 {
     public readonly string Name;
     public int Level { get; protected set; }
-    public GamePoint Hp { get; protected set; }
     public Tokens tokens { get; private set; }
     protected readonly Stat Stat;
     public int Sight { get; private set; } = 1;
@@ -20,21 +19,17 @@ public partial class Fightable
         Pos = pos;
         this.Level = level;
         Name = name;
-        Stat = new();
-        Stat[StatName.Sol] = sol;
-        Stat[StatName.Lun] = lun;
-        Stat[StatName.Con] = con;
+        Stat = new(sol, lun, con);
         Inven = new((Fightable)this, "(맨손(g))");
         tokens = new(cap);
         Stance = new(this);
-        Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);
-        Hp.OnOverflow += new EventHandler(OnDeath);
-        Hp.OnIncrease += new EventHandler<PointArgs>(OnHeal);
-        Hp.OnDecrease += new EventHandler<PointArgs>(OnDamaged);
+        GetHp().OnOverflow += new EventHandler(OnDeath);
+        GetHp().OnIncrease += new EventHandler<PointArgs>(OnHeal);
+        GetHp().OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
     public bool IsAlive { get; private set; } = true;
+    public GamePoint GetHp() => Stat.Hp;
     protected Map _currentMap => Map.Current;
-    protected int SolToHp() => 1 + Stat[StatName.Sol].RoundMult(0.8f);
     protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
         if (tokens.IsFull)
@@ -162,7 +157,7 @@ public partial class Fightable
         {
             IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
         }
-        Hp -= damage;
+        Stat.Damage(damage);
     }
     private void Charge()
     {
@@ -235,11 +230,11 @@ public partial class Fightable
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
     }
-    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {Hp}", __.emphasis);
+    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp}", __.emphasis);
     protected void OnDamaged(object? sender, PointArgs e)
     {
-        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {Hp}", __.emphasis);
+        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {Hp}\t{tokens}\t{Stat}";
+    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp}\t{tokens}\t{Stat}";
 }
