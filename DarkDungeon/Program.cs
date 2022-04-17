@@ -25,7 +25,7 @@ public class Program
         Console.Clear();
         IO.rk($"{s_player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
         IO.Redraw();
-        IO.pr("?을 눌러 도움말 표시.");
+        IO.pr("\n?을 눌러 도움말 표시.");
     }
     private static void ElaspeTurn()
     {

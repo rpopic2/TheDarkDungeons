@@ -15,7 +15,7 @@ public partial class Monster
     private static StatMul snakeMul = new(sol: 2, lun: 2, con: 1, cap: 3, killExp: 3);
     public static MonsterData snake = new(name: "뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { Fightable.snakeItem }, startToken: new int[] { 2, 0, 0 });
 
-    public static List<MonsterData> data = new() { lunatic, bat };
+    public static List<MonsterData> data = new() { /*lunatic, bat,*/ snake };
     private Fightable? _target;
     public static int Count => data.Count;
     private void BasicMovement()

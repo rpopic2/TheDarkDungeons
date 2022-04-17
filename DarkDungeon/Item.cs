@@ -55,11 +55,11 @@ public partial class Fightable
         new("방패막기", StanceName.Defence, TokenType.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.Stance.AddAmount(2))
     });
     public static readonly Item arrow = new("화살", ItemType.Consume, new IBehaviour[] { });
-    public static readonly Item batItem = new("박쥐 시체", ItemType.Equip, new Skill[] {
+    public static readonly Item batItem = new("박쥐의 날개", ItemType.Equip, new Skill[] {
         new("들이박기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Attack(1); i.Stat.Damage(1);}),
         new("구르기", StanceName.Defence, TokenType.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})
         });
-    public static readonly Item snakeItem = new("뱀 시체", ItemType.Equip, new IBehaviour[] {
+    public static readonly Item snakeItem = new("뱀의 이빨", ItemType.Equip, new IBehaviour[] {
         new Charge("독니", StatName.None, DamageType.Normal, "은 하악 소리를 내며 위협적인 이빨을 드러냈다. 독이 흐르는 듯 하다.", (i)=>i.Charge(snakeItem!)),
         new Skill("물기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Thrust, "은 그 커다란 이빨로 적을 깨물었다!", (i)=>i.Attack(1))
     });
