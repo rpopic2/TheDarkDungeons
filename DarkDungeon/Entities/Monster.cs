@@ -34,7 +34,7 @@ public partial class Monster : Fightable
         if (!IsAlive) return;
         base.OnDeath(sender, e);
         player.exp.point += killExp;
-        player.PickupToken(tokens);
+        //player.PickupToken(tokens);
         // foreach (var item in dropList.list)
         // {
         //     if (DropOutOf(stat.rnd, item.outOf)) player.PickupItem(item.item);
