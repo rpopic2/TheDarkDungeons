@@ -159,7 +159,7 @@ public partial class Fightable
             IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
         }
         Stat.Damage(damage);
-        if (metaData.isPoisoned) Stance.IsPoisoned = true;
+        if (metaData.isPoisoned) Stance.Poisoned += 2;
     }
     private void Charge()
     {
@@ -228,11 +228,11 @@ public partial class Fightable
     protected virtual void Interact() { }
     public virtual void OnTurnEnd()
     {
-        if (Stance.IsPoisoned)
+        if (Stance.Poisoned > 0)
         {
             IO.pr($"{Name}은 중독 상태이다!", __.emphasis);
             Stat.Damage(1);
-            Stance.IsPoisoned = false;
+            Stance.Poisoned--;
         }
         Stance.Reset();
     }

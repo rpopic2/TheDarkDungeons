@@ -12,7 +12,7 @@ public partial class Monster
     public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { Fightable.holySword, Fightable.tearOfLun }, startToken: new int[] { 2, 0, 2, 0 });
     public static StatMul batMul = new(sol: 1, lun: 3, con: 2, cap: 3, killExp: 4);
     public static MonsterData bat = new(name: "박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { Fightable.batItem }, startToken: new int[] { 1, 1, 0 });
-    private static StatMul snakeMul = new(sol: 2, lun: 2, con: 1, cap: 3, killExp: 3);
+    private static StatMul snakeMul = new(sol: 1, lun: 3, con: 1, cap: 3, killExp: 3);
     public static MonsterData snake = new(name: "뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { Fightable.snakeItem }, startToken: new int[] { 2, 0, 0 });
 
     public static List<MonsterData> data = new() { /*lunatic, bat,*/ snake };
