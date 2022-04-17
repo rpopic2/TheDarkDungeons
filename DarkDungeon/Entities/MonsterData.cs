@@ -79,7 +79,7 @@ public partial class Monster
             if (_target is null) BasicMovement();
             else
             {
-                if (Inven.GetMeta(Fightable.snakeItem).magicCharge > 0 && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 1);
+                if (Inven.GetMeta(Fightable.snakeItem).isPoisoned && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 1);
                 else if (tokens.Contains(TokenType.Charge)) _SelectSkill(0, 0);
             }
         }

@@ -112,16 +112,17 @@ public partial class Fightable
         if (mov is Fightable hit)
         {
             lastHit = hit;
-            AttackMagicCharge();
-            hit.Dodge(Stance.Amount, damageType, this);
+            ItemMetaData metaData = Inven.GetMeta(Stance.CurrentItem!);
+            AttackMagicCharge(metaData);
+            hit.Dodge(Stance.Amount, damageType, this, metaData);
         }
 
-        void AttackMagicCharge()
+        void AttackMagicCharge(ItemMetaData metaData)
         {
-            int magicCharge = Inven.GetMeta(Stance.CurrentItem!).magicCharge;
+            int magicCharge = metaData.magicCharge;
             if (magicCharge > 0)
             {
-                hit.Dodge(magicCharge, DamageType.Magic, this);
+                hit.Dodge(magicCharge, DamageType.Magic, this, metaData);
                 Inven.GetMeta(Stance.CurrentItem!).magicCharge = 0;
             }
         }
@@ -140,7 +141,7 @@ public partial class Fightable
             IO.rk($"{item.Name}이 없다!");
         }
     }
-    private void Dodge(int damage, DamageType damageType, Fightable attacker)
+    private void Dodge(int damage, DamageType damageType, Fightable attacker, ItemMetaData metaData)
     {
         if (damage < 0) throw new Exception("데미지는 0보다 작을 수 없습니다.");
         StanceName? stance = Stance.CurrentBehav?.Stance;
@@ -158,6 +159,7 @@ public partial class Fightable
             IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
         }
         Stat.Damage(damage);
+        if (metaData.isPoisoned) Stance.IsPoisoned = true;
     }
     private void Charge()
     {
@@ -170,6 +172,11 @@ public partial class Fightable
     {
         Inven.GetMeta(item).magicCharge += Stance.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");
+    }
+    private void PoisonItem(Item item)
+    {
+        Inven.GetMeta(item).isPoisoned = true;
+        IO.rk($"{item}은 독으로 젖어 있다.");
     }
     private void CalcDamageType(ref int damage, DamageType damageType, Fightable attacker)
     {
@@ -221,6 +228,12 @@ public partial class Fightable
     protected virtual void Interact() { }
     public virtual void OnTurnEnd()
     {
+        if (Stance.IsPoisoned)
+        {
+            IO.pr($"{Name}은 중독 상태이다!", __.emphasis);
+            Stat.Damage(1);
+            Stance.IsPoisoned = false;
+        }
         Stance.Reset();
     }
     protected virtual void OnDeath(object? sender, EventArgs e)

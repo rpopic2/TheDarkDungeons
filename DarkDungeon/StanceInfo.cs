@@ -5,6 +5,7 @@ public class StanceInfo
     public Item? CurrentItem { get; private set; }
     public IBehaviour? CurrentBehav { get; private set; }
     public bool IsStun { get; private set; }
+    public bool IsPoisoned { get; set; }
     private Fightable _owner;
     public StanceInfo(Fightable owner)
     {
