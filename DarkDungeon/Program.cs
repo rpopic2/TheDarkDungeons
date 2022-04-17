@@ -74,8 +74,6 @@ public class Program
         }
         player.Inven.Add(Fightable.torch);
         player.SelectPickupStat(3);
-        //player.PickupToken(3);
-        IO.del();
     }
     //-------------------------
     public void MainLoop()
@@ -107,8 +105,8 @@ public class Program
         }
         switch (key.KeyChar)
         {
-            case 'y':
-            case 'g':
+            case 'b':
+            case ',':
                 s_player.SelectBehaviour(Fightable.bareHand);
                 break;
             case 'i':
@@ -121,6 +119,9 @@ public class Program
             case '/':
             case 'm':
                 s_player.ShowStats();
+                break;
+            case '?':
+                IO.ShowHelp();
                 break;
             case ' ': //상호작용
                 if (s_player.UnderFoot is not null) s_player.SelectBasicBehaviour(2, 0, 0);
