@@ -113,32 +113,27 @@ public static class IO
     }
     public static void del(int lines)
     {
-        for (int i = 0; i < lines; i++)
-        {
-            del();
-        }
+        for (int i = 0; i < lines; i++) del();
     }
     public static void Redraw()
     {
         Console.Clear();
-        //IO.pr("History");
-        IO.pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\tLevel : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline | __.color);
-        IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
-        IO.pr(s_player.Inven, __.bottom);
-        IO.pr(Map.Current);
-        if (s_player.UnderFoot is ISteppable step) IO.pr(step.name + " 위에 서 있다. (spacebar)");
+        //pr("History");
+        pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\tLevel : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline | __.color);
+        pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
+        pr(s_player.Inven, __.bottom);
+        pr(Map.Current);
+        if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (spacebar)");
     }
     public static void ShowHelp()
     {
         Console.Clear();
-        IO.pr("qwert : 아이템 사용 | i : 인벤토리\n , 혹은 b : 맨손 | . 혹은 n : 휴식\n좌우 화살표 혹은 h, l : 이동\n/ 혹은 m : 내 정보 보기 | ? : 이 도움말 보기\n x : 취소 | spacebar : Ok, 상호작용");
-        IO.rk();
+        rk("qwert : 아이템 사용 | i : 인벤토리\n , 혹은 b : 맨손 | . 혹은 n : 휴식\n좌우 화살표 혹은 h, l : 이동\n/ 혹은 m : 내 정보 보기 | ? : 이 도움말 보기\n x : 취소 | spacebar : Ok, 상호작용");
         Redraw();
     }
     public static void ShowStats()
     {
-        IO.pr(s_player.ToString(), __.color);
-        IO.rk();
+        rk(s_player.ToString(), __.color);
         Redraw();
     }
     public static void DrawInventory()
@@ -146,14 +141,14 @@ public static class IO
         Console.Clear();
         foreach (Item item in s_player.Inven.OfType<Item>())
         {
-            IO.pr($"{item.Name} | 종류 : {item.itemType} ", __.color);
+            pr($"{item.Name} | 종류 : {item.itemType} ", __.color);
             foreach (IBehaviour behav in item.skills)
             {
-                IO.pr($"\t{behav.ToString()} {behav.Stance}", __.color);
+                pr($"\t{behav.ToString()} {behav.Stance}", __.color);
             }
-            IO.pr("\n");
+            pr("\n");
         }
-        IO.rk();
+        rk();
         Redraw();
     }
 }
