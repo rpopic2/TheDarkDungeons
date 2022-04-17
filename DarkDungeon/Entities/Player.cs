@@ -54,7 +54,7 @@ public class Player : Fightable
         int index;
         do
         {
-            IO.pr($"현재 : Hp : {GetHp}  {Stat}", __.color);
+            IO.pr($"{Stat}", __.color);
             IO.sel(Program.stats, __.color, out index, out _, out _, out _);
             IO.del();
         } while (index == -1);

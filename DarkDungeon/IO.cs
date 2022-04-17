@@ -122,9 +122,7 @@ public static class IO
     {
         Console.Clear();
         //IO.pr("History");
-        GamePoint hp = s_player.GetHp();
-        string tempHp = hp.Cur <= hp.Max / 2 ? $"^r{hp.ToString()}^/" : hp.ToString();
-        IO.pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\tHP : {tempHp}  Level : {s_player.Level} ({s_player.exp})", __.bottom | __.newline | __.color);
+        IO.pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\tLevel : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline | __.color);
         IO.pr($"{s_player.tokens}\t 상대 : {s_player.FrontFightable?.tokens}", __.bottom | __.newline);
         IO.pr(s_player.Inven, __.bottom);
         IO.pr(Map.Current);
