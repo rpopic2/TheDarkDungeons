@@ -30,7 +30,7 @@ public class Stat
     public int GetRandom(StatName stat)
     {
         int max = this[stat];
-        if (max <= MIN) return 0;
+        if (max <= 0) return 0;
         else return rnd.Next(MIN, max);
     }
     public void Damage(int value)
