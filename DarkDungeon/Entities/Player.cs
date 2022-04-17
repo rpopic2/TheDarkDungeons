@@ -47,6 +47,7 @@ public class Player : Fightable
         {
             IO.pr($"남은 능력치 포인트 : {times - i}");
             SelectPickupStat();
+            IO.del();
         }
     }
     public void SelectPickupStat()
@@ -54,7 +55,9 @@ public class Player : Fightable
         int index;
         do
         {
+            IO.pr($"현재 : Hp : {Hp}  {Stat}", __.color);
             IO.sel(Program.stats, __.color, out index, out _, out _, out _);
+            IO.del();
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }

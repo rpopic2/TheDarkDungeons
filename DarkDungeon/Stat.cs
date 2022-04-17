@@ -15,8 +15,8 @@ public class Stat
         if (max <= MIN) return 0;
         else return rnd.Next(MIN, max);
     }
-}
-public enum StatName
-{
-    Sol, Lun, Con
+    public override string ToString()
+    {
+        return $"^r힘/체력 : {this[StatName.Sol]} ^g집중/민첩 : {this[StatName.Lun]} ^b마력/지능 : {this[StatName.Con]}^/";
+    }
 }

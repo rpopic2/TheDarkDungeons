@@ -14,6 +14,10 @@ public enum ItemType
 {
     Equip, Consume
 }
+public enum StatName
+{
+    Sol, Lun, Con
+}
 [Flags]
 public enum __
 {
