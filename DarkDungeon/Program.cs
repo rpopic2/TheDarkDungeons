@@ -11,14 +11,11 @@ public class Program
     public static void Main()
     {
         instance = new Program();
-        IO.rk($"{s_player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
-        NewTurn();
-        IO.pr("?을 눌러 도움말 표시.");
         do
         {
             ElaspeTurn();
         } while (s_player.IsAlive);
-        IO.pr(s_player);
+        IO.pr(s_player.ToString(), __.color);
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
         IO.rk();
     }
@@ -29,6 +26,9 @@ public class Program
         IO.pr("The Dungeons of the Mine " + Rules.version);
         Intro();
         Console.Clear();
+        IO.rk($"{s_player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
+        NewTurn();
+        IO.pr("?을 눌러 도움말 표시.");
     }
 
     private void Intro()
