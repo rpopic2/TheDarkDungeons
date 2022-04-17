@@ -49,7 +49,7 @@ public partial class Fightable
         new("투검", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>i.Throw(3, dagger!))
     });
     public static readonly Item bow = new("활", ItemType.Equip, new Skill[] {
-        new("쏘기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});
+        new("쏘기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});
     public static readonly Item shield = new("방패", ItemType.Equip, new Skill[]{
         new("방패밀기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 방패를 앞으로 세게 밀쳤다.", (i)=>i.Attack(1)),
         new("방패막기", StanceName.Defence, TokenType.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.Stance.AddAmount(2))
