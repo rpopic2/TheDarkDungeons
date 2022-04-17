@@ -159,8 +159,8 @@ public partial class Fightable
         {
             IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
         }
+        else if (metaData.isPoisoned) Stance.Poisoned += 2;
         Stat.Damage(damage);
-        if (metaData.isPoisoned) Stance.Poisoned += 2;
     }
     private void Charge()
     {
@@ -221,7 +221,7 @@ public partial class Fightable
         if (temp.x != Pos.x)
         {
             bool existsTile = _currentMap.Tiles.TryGet(temp.x, out _);
-            bool obstructed = _currentMap.FightablePositions.TryGet(temp.x, out _);
+            bool obstructed = _currentMap.GetFightableAt(temp.x) is not null;
             canGo = existsTile && !obstructed;
         }
         return canGo;
