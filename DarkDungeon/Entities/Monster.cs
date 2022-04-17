@@ -6,13 +6,14 @@ public partial class Monster : Fightable
     private char fowardChar, backwardChar;
     private Action<Monster> behaviour;
     private Dictionary<string, int> metaData = new();
+    private const float DIFFICULTY = 1.5f;
     public Monster(MonsterData data, Position spawnPoint)
     : base(name: data.name, level: Map.Depth,
-    sol: new Mul(data.stat.sol, 1.5f, Map.Depth), lun: new Mul(data.stat.lun, 1.5f, Map.Depth), con: new Mul(data.stat.con, 1.5f, Map.Depth),
+    sol: new Mul(data.stat.sol, DIFFICULTY, Map.Depth), lun: new Mul(data.stat.lun, DIFFICULTY, Map.Depth), con: new Mul(data.stat.con, DIFFICULTY, Map.Depth),
     cap: data.stat.cap, pos: spawnPoint)
     {
         Sight = data.stat.Sight;
-        killExp = new Mul(data.stat.killExp, 1.5f, Map.Depth);
+        killExp = new Mul(data.stat.killExp, DIFFICULTY, Map.Depth);
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
