@@ -217,5 +217,5 @@ public class Player : Fightable
         Stat.Heal(GetHp().Max / 2);
     }
     public override string ToString() => base.ToString() + $"\nExp : {exp}";
-    public override char ToChar() => MapSymb.player;
+    public override char ToChar() => IsAlive ? MapSymb.player : MapSymb.corpse;
 }

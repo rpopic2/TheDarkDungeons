@@ -143,7 +143,7 @@ public class Map
         RenderVisible(Steppables);
         RenderVisible(FightablePositions);
         //if(debug) RenderAllMobs();
-        _rendered[s_player.Pos.x] = MapSymb.player;
+        _rendered[s_player.Pos.x] = s_player.ToChar();
 
         void RenderVisible<T>(T[] target)
         {
