@@ -10,9 +10,9 @@ public class Map
     private readonly char[] _empty;
     private char[] _tiles;
     public ISteppable?[] Steppables;
-    private List<Fightable> _fightables = new();
+    private List<Fightable> _fightables;
     private Fightable?[] _fightablePositions;
-    private List<Fightable> _tempDeadFightables = new();
+    private List<Fightable> _tempDeadFightables;
     private char[] _rendered;
     private Corpse? _fallenCorpse;
     // private const bool _debug = false;
@@ -26,8 +26,10 @@ public class Map
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
         _tiles = Extensions.NewFilledArray(length, MapSymb.road);
         Steppables = new ISteppable?[length];
+        _fightables = new();
         _fightablePositions = new Fightable[length];
         _rendered = new char[length];
+        _tempDeadFightables = new();
 
         int portalIndex = Depth != 1 ? s_rnd.Next(0, length - 1) : s_rnd.Next(2, length - 1);
         Steppables[portalIndex] = new Portal();
