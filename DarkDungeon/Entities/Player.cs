@@ -124,6 +124,11 @@ public class Player : Fightable
     {
     Select:
         IO.pr($"\n아이템을 얻었다. {item.Name}");
+        if (Inven.Count != Inventory.INVENSIZE)
+        {
+            Inven.Add(item);
+            return;
+        }
         IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
