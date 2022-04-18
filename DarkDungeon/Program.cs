@@ -71,7 +71,7 @@ public class Program
         int classIndex = 0;
         string[] classes = new string[] { "^r(q) 전사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
         IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _); ;
-        string classString = classes[classIndex];
+        string? classString = classes[classIndex];
         
         switch (classIndex)
         {

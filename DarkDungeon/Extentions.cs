@@ -1,5 +1,3 @@
-using System;
-
 public static class Extensions
 {
     public static bool TryGet<T>(this T[] source, int index, out T? obj)
