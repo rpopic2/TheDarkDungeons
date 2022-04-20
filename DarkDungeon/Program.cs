@@ -53,6 +53,7 @@ public class Program
         Map.Current.RemoveAndCreateCorpse();
         if (Map.Current.SpawnMobs && Turn % s_spawnrate == 0) Map.Current.Spawn();
         Turn++;
+        if(Map.Current.LoadNewMap) Map.NewMap();
         IO.Redraw();
     }
     private void Intro()

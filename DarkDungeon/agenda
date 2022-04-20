@@ -1,10 +1,11 @@
 main
-[ ] isStun, isPoisoned는 Stat으로 옮기는게 맞지않나
 [X] 몹 애드
 [X] Snake
+[X] 몬스터의 세기가 깊이의존
+[ ] 몬스터의 세기가 랜덤
+[ ] isStun, isPoisoned는 Stat으로 옮기는게 맞지않나
 [ ] Shaman
 [ ] 템 먹을때 사용성 패치 필요
-[ ] 몬스터의 세기가 랜덤. + 깊이의존
 [ ] 블랙박스화된 통합토큰 처리
 [ ] 공격받으면 애드
 [ ] 저거 원인 : 아래층 내려가면 위에있던 친구들 fightablepositions에 복사되서 내려옴. 그 친구들은 fighables에 없으니까 턴진행이안됨.
