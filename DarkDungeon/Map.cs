@@ -37,10 +37,6 @@ public class Map
         _fightables.Add(s_player);
         if (spawnMobs) Spawn();
     }
-    private void InitArrays()
-    {
-        
-    }
     private static Player s_player { get => Player.instance; }
     public ref readonly Fightable?[] FightablePositions => ref _fightablePositions;
     public ref readonly List<Fightable> Fightables => ref _fightables;
