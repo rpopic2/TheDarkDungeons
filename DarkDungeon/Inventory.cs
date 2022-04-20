@@ -104,10 +104,6 @@ public class Inventory : ICollection<Item?>
                 result += itemName;
             }
         }
-        foreach (Item? item in content)
-        {
-
-        }
         return result + "|" + name;
     }
 

@@ -27,8 +27,8 @@ public partial class Fightable
         GetHp().OnIncrease += new EventHandler<PointArgs>(OnHeal);
         GetHp().OnDecrease += new EventHandler<PointArgs>(OnDamaged);
     }
-    public bool IsAlive { get; private set; } = true;
     public GamePoint GetHp() => Stat.Hp;
+    public bool IsAlive { get; private set; } = true;
     protected Map _currentMap => Map.Current;
     protected void PickupToken(TokenType tokenType, int discardIndex = -1)
     {
@@ -111,8 +111,8 @@ public partial class Fightable
         Fightable? mov = _currentMap.RayCast(Pos, range);
         if (mov is Fightable hit)
         {
-            lastHit = hit;
             ItemMetaData metaData = Inven.GetMeta(Stance.CurrentItem!);
+            lastHit = hit;
             AttackMagicCharge(metaData);
             hit.Dodge(Stance.Amount, damageType, this, metaData);
         }
@@ -146,19 +146,14 @@ public partial class Fightable
     {
         if (damage < 0) throw new Exception("데미지는 0보다 작을 수 없습니다.");
         StanceName? stance = Stance.CurrentBehav?.Stance;
-        if (stance == StanceName.Defence)
-        {
-            CalcDamageType(ref damage, damageType, attacker);
-        }
+        if (stance == StanceName.Defence) CalcDamageType(ref damage, damageType, attacker);
         else if (stance == StanceName.Charge)
         {
             IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
         }
-        if (damage <= 0)
-        {
-            IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
-        }
+
+        if (damage <= 0) IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
         else if (metaData.isPoisoned) Stance.Poisoned += 2;
         Stat.Damage(damage);
     }

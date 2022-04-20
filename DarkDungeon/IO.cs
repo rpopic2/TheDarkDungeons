@@ -15,46 +15,43 @@ public static class IO
     {
         int x = Console.CursorLeft;
         int y = Console.CursorTop;
-        if (value is Array array)
+        string stringValue;
+        if (value is Array arrayValue) stringValue = arrayValue.ToFString(title);
+        else stringValue = value.ToString() ?? string.Empty;
+        if (flag.HasFlag(__.emphasis)) stringValue = EMPHASIS + stringValue;
+        if (flag.HasFlag(__.newline)) stringValue += "\n";
+        if (flag.HasFlag(__.bottom)) Console.CursorTop = x + Console.WindowHeight - 1;
+        if (stringValue.Contains("^"))
         {
-            value = array.ToFString(title);
-        }
-        if (flag.HasFlag(__.emphasis)) value = EMPHASIS + value;
-        if (flag.HasFlag(__.newline)) value += "\n";
-        if (flag.HasFlag(__.bottom))
-        {
-            Console.CursorTop = x + Console.WindowHeight - 1;
-        }
-        string v = value.ToString() ?? string.Empty;
-        if (v.Contains("^"))
-        {
-            string[] splits = v.Split('^', StringSplitOptions.RemoveEmptyEntries);
-            foreach (string item in splits)
-            {
-                if (item.StartsWith("b")) Console.ForegroundColor = ConsoleColor.Blue;
-                else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
-                else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
-                else if (item.StartsWith("/")) Console.ResetColor();
-                else if (!item.StartsWith('c'))
-                {
-                    Console.Write(item);
-                    continue;
-                }
-                Console.Write(item.Substring(1));
-            }
-            Console.ResetColor();
+            pr_Color(stringValue, flag);
             if (!flag.HasFlag(__.bottom)) Console.WriteLine();
             else Console.SetCursorPosition(x, y);
+            return;
         }
-        else
+        else if (flag.HasFlag(__.bottom))
         {
-            if (flag.HasFlag(__.bottom))
-            {
-                Console.Write(value);
-                Console.SetCursorPosition(x, y);
-            }
-            else Console.WriteLine(value);
+            Console.Write(stringValue);
+            Console.SetCursorPosition(x, y);
         }
+        else Console.WriteLine(stringValue);
+    }
+    private static void pr_Color(string value, __ flags)
+    {
+        string[] splits = value.Split('^', StringSplitOptions.RemoveEmptyEntries);
+        foreach (string item in splits)
+        {
+            if (item.StartsWith("b")) Console.ForegroundColor = ConsoleColor.Blue;
+            else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
+            else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
+            else if (item.StartsWith("/")) Console.ResetColor();
+            else if (!item.StartsWith('c'))
+            {
+                Console.Write(item);
+                continue;
+            }
+            Console.Write(item.Substring(1));
+        }
+        Console.ResetColor();
     }
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
