@@ -1,9 +1,9 @@
 public record Skill(string Name, StanceName Stance, TokenType TokenType, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
 {
-    public static readonly string[] parenthesis = { "()", "[]", "<>" };
+    public static readonly string[] parenthesis = { "", "[]", "()", "<>", "{}" };
     public override string ToString()
     {
-        string result = parenthesis[(int)TokenType];
+        string result = parenthesis[(int)damageType];
         string tempName = Name.Insert(0, GetColor());
         tempName += "^/";
         result = result.Insert(1, tempName);
@@ -23,7 +23,8 @@ public record Charge(string Name, StatName statName, DamageType damageType, stri
     public StanceName Stance { get; init; } = StanceName.Charge;
     public override string ToString()
     {
-        return Name;
+        string result = Skill.parenthesis[(int)damageType];
+        return result.Insert(1, Name);
     }
 }
 public record NonTokenSkill(string Name, StanceName Stance, string OnUseOutput, Action<Fightable, int, int> NonTokenBehav, Action<Fightable> Behaviour) : IBehaviour;
