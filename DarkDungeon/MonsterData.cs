@@ -79,13 +79,13 @@ public partial class Monster
             if (_followTarget is null) BasicMovement();
             else
             {
-                if (metaData.ContainsKey("hissed"))
+                if (!metaData.ContainsKey("hissed"))
                 {
                     _SelectSkill(0, 0); //hiss
                     metaData["hissed"] = 1;
                     return;
                 }
-                if (_followTarget.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).isPoisoned)
+                else if (_followTarget.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).isPoisoned)
                 {
                     _SelectSkill(0, 1); //bite
                 }
