@@ -137,6 +137,7 @@ public static class IO
         pr("\n / = 내 정보 보기, ? : 이 도움말 보기");
         pr("\n x = 취소, spacebar = Ok 상호작용");
         pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
+        pr("=> 먹히지 않는 키가 있으면 모바일이나 숫자패드 단축키로 시도해 보십시오.");
 
         pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기", __.bottom);
         ConsoleKeyInfo consoleKeyInfo = rk();
