@@ -125,7 +125,7 @@ public static class IO
         pr($"기력 : {s_player.Tokens}\t 상대 : {s_player.FrontFightable?.Tokens}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         pr(Map.Current);
-        if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (spacebar)");
+        if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (spacebar로 상호작용)");
     }
     public static void ShowHelp()
     {
