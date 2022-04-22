@@ -41,14 +41,14 @@ public partial class Monster
     }
     public void BatBehav()
     {
-        if (tokens.Count > 0)
+        if (Tokens.Cur > 0)
         {
             if (_followTarget is null) BasicMovement();
             else
             {
-                if (metaData["isAngry"] == 1 && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
-                else if (tokens.Contains(TokenType.Defence)) _SelectSkill(0, 1);
-                else if (tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
+                if (metaData["isAngry"] == 1) _SelectSkill(0, 0); //들이박기
+                else if (Tokens.Cur <= 1) _SelectSkill(0, 0); //들이박기
+                else _SelectSkill(0, 1); //구르기
             }
         }
         else
@@ -61,37 +61,38 @@ public partial class Monster
     public void LunaticBehav()
     {
         if (GetHp().Cur != GetHp().Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
-        else if (tokens.Count > 0)
+        else if (Tokens.Cur > 0)
         {
             if (_followTarget is null) BasicMovement();
             else
             {
-                if (Inven.GetMeta(Fightable.holySword).magicCharge > 0 && tokens.Contains(TokenType.Offence)) _SelectSkill(0, 0);
-                else if (tokens.Contains(TokenType.Charge)) _SelectSkill(0, 1);
+                if (Inven.GetMeta(Fightable.holySword).magicCharge > 0) _SelectSkill(0, 0);
+                else _SelectSkill(0, 1);
             }
         }
         else SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
     public void SnakeBehav()
     {
-        if (tokens.Count > 0)
+        if (Tokens.Cur > 0)
         {
             if (_followTarget is null) BasicMovement();
             else
             {
-                if (tokens.Contains(TokenType.Charge))
+                if (metaData["hissed"] is int i && i == 0)
                 {
-                    _SelectSkill(0, 0);
+                    _SelectSkill(0, 0); //hiss
+                    metaData["hissed"] = 1;
                     return;
                 }
-                if (_followTarget.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).isPoisoned && tokens.Contains(TokenType.Offence))
+                if (_followTarget.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).isPoisoned)
                 {
-                    _SelectSkill(0, 1);
+                    _SelectSkill(0, 1); //bite
                 }
                 else
                 {
                     Facing newFacing = Pos.LookAt(_followTarget.Pos.x);
-                    SelectBasicBehaviour(0, 1, (int)newFacing);
+                    SelectBasicBehaviour(0, 1, (int)newFacing); //move
                 }
             }
         }

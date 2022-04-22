@@ -43,7 +43,6 @@ public class Stat
     }
     public override string ToString()
     {
-        string tempHp = Hp.Cur <= Hp.Max / 2 ? $"^r{Hp.ToString()}^/" : Hp.ToString();
-        return $"HP : {tempHp}  ^r힘/체력 : {this[StatName.Sol]} ^g집중/민첩 : {this[StatName.Lun]} ^b마력/지능 : {this[StatName.Con]}^/";
+        return $"HP : {Hp}  ^r힘/체력 : {this[StatName.Sol]} ^g집중/민첩 : {this[StatName.Lun]} ^b마력/지능 : {this[StatName.Con]}^/";
     }
 }

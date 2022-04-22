@@ -58,11 +58,14 @@ public class GamePoint
     public void DecreaseMax(int value)
     {
         Max -= value;
-        if(Cur > Max) Cur = Max;
+        if (Cur > Max) Cur = Max;
     }
     public bool IsMin => Cur == Min;
+    public bool IsMax => Cur == Max;
     public override string ToString()
     {
+        string temp = $"{Cur}/{Max}";
+        if (Option == GamePointOption.Reserving && Cur <= Max / 2) temp = $"^r{Cur}/{Max}^/";
         return $"{Cur}/{Max}";
     }
 }

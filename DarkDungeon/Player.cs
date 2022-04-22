@@ -152,47 +152,6 @@ public class Player : Fightable
         }
         Inven.Add(item);
     }
-    public void PickupToken(int amount)
-    {
-        for (int i = amount; i > 0; i--)
-        {
-            if (!Tokens.useUnifiedToken)
-            {
-                IO.pr($"토큰을 선택하십시오. ({i})");
-                IO.sel(Tokens.TokenPromptNames, 0, out int index, out bool cancel, out _, out _);
-                IO.del();
-                if (cancel) return;
-                PickupToken((TokenType)index);
-            }
-            else
-            {
-                PickupToken((TokenType)0);
-            }
-        }
-    }
-    public void PickupToken(Tokens tokens)
-    {
-        var toks = tokens.Content;
-        for (int i = toks.Count(); i > 0; i--)
-        {
-            TokenType token = toks.ElementAt(i - 1);
-            IO.pr($"{Tokens.ToString(token)}토큰을 획득하였습니다. ({i})");
-            if (token is TokenType tokenType) PickupToken(tokenType);
-            IO.del();
-        }
-    }
-    public void PickupToken(TokenType token)
-    {
-        int discard = -1;
-        if (tokens.IsFull && !Tokens.useUnifiedToken)
-        {
-            IO.pr("손패가 꽉 찼습니다. 버릴 토큰을 고르십시오. " + Tokens.ToString(token));
-            IO.sel(tokens, 0, out discard, out bool cancel2, out _, out _);
-            IO.del();
-            if (cancel2) return;
-        }
-        PickupToken(token, discard);
-    }
     protected override void Interact()
     {
         if (UnderFoot is null) return;

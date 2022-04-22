@@ -1,7 +1,7 @@
 ﻿global using Entities;
 public class Program
 {
-    public const string VERSION = "0.6.200422";
+    public const string VERSION = "0.6.220422";
     public static Program instance = default!;
     private static Player s_player { get => Player.instance; }
     private static int s_spawnrate = 10;
@@ -109,26 +109,20 @@ public class Program
                 player.Inven.Add(Fightable.sword);
                 player.Inven.Add(Fightable.shield);
                 player.Inven.Add(Fightable.torch);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
+                player.PickupToken(3);
                 break;
             case 1:
                 player.Inven.Add(Fightable.dagger);
                 player.Inven.Add(Fightable.bow);
                 player.Inven.Add(Fightable.arrow);
                 player.Inven.Add(Fightable.torch);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Defence);
+                player.PickupToken(3);
                 break;
             case 2:
                 player.Inven.Add(Fightable.staff);
                 player.Inven.Add(Fightable.magicBook);
                 player.Inven.Add(Fightable.torch);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Offence);
-                player.PickupToken(TokenType.Charge);
+                player.PickupToken(3);
                 break;
             default:
                 player.SelectStartItem();

@@ -3,7 +3,7 @@ public partial class Fightable
 {
     public readonly string Name;
     public int Level { get; protected set; }
-    public Tokens tokens { get; private set; }
+    public GamePoint Tokens { get; protected set; }
     protected readonly Stat Stat;
     public int Sight { get; protected set; } = 1;
     public Position Pos { get; protected set; }
@@ -21,7 +21,7 @@ public partial class Fightable
         Name = name;
         Stat = new(sol, lun, con);
         Inven = new((Fightable)this, "(맨손(,))(휴식(.))");
-        tokens = new(cap);
+        Tokens = new(cap, GamePointOption.Reserving);
         Stance = new(this);
         GetHp().OnOverflow += new EventHandler(OnDeath);
         GetHp().OnIncrease += new EventHandler<PointArgs>(OnHeal);
@@ -30,14 +30,9 @@ public partial class Fightable
     public GamePoint GetHp() => Stat.Hp;
     public bool IsAlive { get; private set; } = true;
     protected Map _currentMap => Map.Current;
-    protected void PickupToken(TokenType tokenType, int discardIndex = -1)
+    public void PickupToken(int amount)
     {
-        if (tokens.IsFull)
-        {
-            if (discardIndex == -1) discardIndex = tokens.Count - 1;
-            tokens.RemoveAt(discardIndex);
-        }
-        tokens.Add(tokenType);
+        Tokens += amount;
     }
     public virtual void SelectAction() { }
     protected void SelectBehaviour(Item item, int index)
@@ -69,9 +64,9 @@ public partial class Fightable
     }
     private void SelectSkill(Item item, Skill selected)
     {
-        TokenType? tokenTry = tokens.TryUse(selected.TokenType);
-        if (tokenTry is TokenType token)
+        if (Tokens.Cur > 0)
         {
+            Tokens -= 1;
             int amount = Stat.GetRandom(selected.statName);
             Stance.Set(item, selected, amount);
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
@@ -79,18 +74,18 @@ public partial class Fightable
             if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
             IO.rk(useOutput);
         }
-        else IO.rk($"{Tokens.TokenSymbols[(int)selected.TokenType]} 토큰이 없습니다.");
+        else IO.rk($"{(global::Tokens.TokenSymbols[(int)selected.TokenType])} 토큰이 없습니다.");
     }
     private void SelectCharge(Item item, Charge charge)
     {
-        TokenType? tokenTry = tokens.TryUse(TokenType.Charge);
-        if (tokenTry is TokenType token)
+        if (Tokens.Cur > 0)
         {
+            Tokens -= 1;
             int amount = Stat.GetRandom(StatName.Con);
             Stance.Set(item, charge, amount);
             IO.rk($"{Name}{charge.OnUseOutput} ^b({Stance.Amount})^/");
         }
-        else IO.rk($"{Tokens.ToString(TokenType.Charge)} 토큰이 없습니다.");
+        else IO.rk($"{(global::Tokens.ToString(TokenType.Charge))} 토큰이 없습니다.");
     }
     private void SelectConsume(Item item, Consume consume)
     {
@@ -245,5 +240,5 @@ public partial class Fightable
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t{tokens}\t{Stat}";
+    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t기력 : {Tokens}\t{Stat}";
 }

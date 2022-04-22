@@ -27,7 +27,7 @@ public partial class Monster : Fightable
         }
         foreach (var token in startTokens)
         {
-            tokens.Add((TokenType)token);
+            Tokens += 1;
         }
     }
     protected override void OnDeath(object? sender, EventArgs e)
