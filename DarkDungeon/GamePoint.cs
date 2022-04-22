@@ -66,7 +66,7 @@ public class GamePoint
     {
         string temp = $"{Cur}/{Max}";
         if (Option == GamePointOption.Reserving && Cur <= Max / 2) temp = $"^r{Cur}/{Max}^/";
-        return $"{Cur}/{Max}";
+        return temp;
     }
 }
 
