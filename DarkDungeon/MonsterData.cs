@@ -79,7 +79,7 @@ public partial class Monster
             if (_followTarget is null) BasicMovement();
             else
             {
-                if (metaData["hissed"] is int i && i == 0)
+                if (metaData.ContainsKey("hissed"))
                 {
                     _SelectSkill(0, 0); //hiss
                     metaData["hissed"] = 1;
