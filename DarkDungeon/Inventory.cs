@@ -47,10 +47,11 @@ public class Inventory : ICollection<Item?>
                 wear.Behaviour.Invoke(owner);
             }
         }
-        var passives = from p in item.skills where p is Passive select p as Passive;
+        var passives = item.skills.OfType<Passive>();
+        var invocationList = owner.passives.GetInvocationList();
         foreach (var pass in passives)
         {
-            owner.passives += pass.Behaviour;
+            if(!invocationList.Contains(pass.Behaviour)) owner.passives += pass.Behaviour;
         }
     }
     public void Remove(Item item)
