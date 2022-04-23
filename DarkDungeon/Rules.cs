@@ -6,6 +6,8 @@ public static class Rules
     public static readonly int MapLengthMin = MapLengthMax / 2;
     public const float MapWidthByLevel = 3f;
     public const float LEVEL_DIFFICULTY = 1.3f;
+    public static int s_Spawnrate = 12;
+
 }
 
 public static class MapSymb
