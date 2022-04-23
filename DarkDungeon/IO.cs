@@ -132,9 +132,9 @@ public static class IO
         Console.Clear();
         pr("\n키 도움말\n");
         pr("\n 좌우 화살표 = 이동");
-        pr("\n qwert : 아이템 사용 / i : 인벤토리");
+        pr("\n qwert : 아이템 사용");
         pr("\n , = 맨손 사용   . = 휴식");
-        pr("\n\n / = 내 정보 보기, ? : 이 도움말 보기");
+        pr("\n\n\n / = 내 정보 보기, i : 인벤토리, ? : 이 도움말 보기");
         pr("\n x = 취소, spacebar = Ok, z = 상호작용");
         pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
 

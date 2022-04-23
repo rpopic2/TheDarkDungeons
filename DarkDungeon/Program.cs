@@ -97,7 +97,7 @@ public class Program
             goto ClassSelect;
         }
         else if (!keyInfo.Key.IsOK()) goto Confirm;
-        else IO.del();
+        else IO.del(2);
 
         if (classIndex != -1) IO.pr(classString);
         Player player = Player._instance = new Player(name);
@@ -131,6 +131,7 @@ public class Program
                 player.PickupToken(3);
                 break;
         }
+        IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
         player.SelectPickupStat(3);
     }
 }
