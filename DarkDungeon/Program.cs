@@ -73,7 +73,7 @@ public class Program
         string[] classes = new string[] { "^r(q) 전사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
         IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _); ;
         string? classString = classes[classIndex];
-        
+
         switch (classIndex)
         {
             case 0:
@@ -114,6 +114,7 @@ public class Program
             case 1:
                 player.Inven.Add(Fightable.dagger);
                 player.Inven.Add(Fightable.bow);
+                player.Inven.Add(Fightable.arrow);
                 player.Inven.Add(Fightable.arrow);
                 player.Inven.Add(Fightable.torch);
                 player.PickupToken(3);
