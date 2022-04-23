@@ -12,10 +12,12 @@ public partial class Monster
     public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { Fightable.holySword, Fightable.tearOfLun }, startToken: new int[] { 2, 0, 2, 0 });
     public static StatMul batMul = new(sol: 1, lun: 3, con: 2, cap: 3, killExp: 4, Sight: 1);
     public static MonsterData bat = new(name: "박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { Fightable.batItem }, startToken: new int[] { 1, 1, 0 });
-    private static StatMul snakeMul = new(sol: 1, lun: 3, con: 1, cap: 3, killExp: 3, Sight: 3);
+    private static StatMul snakeMul = new(sol: 1, lun: 3, con: 1, cap: 3, killExp: 5, Sight: 3);
     public static MonsterData snake = new(name: "뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { Fightable.snakeItem }, startToken: new int[] { 2, 0, 0 });
+    private static StatMul shamanMul = new(sol: 0, lun: 1, con: 1, cap: 4, killExp: 4, Sight: 4);
+    public static MonsterData shaman = new(name: "정령술사", '}', '{', shamanMul, (m) => m.ShamanBehav(), new Item[] { Fightable.spiritStaff, Fightable.torch }, startToken: new int[] { 2, 0, 2 });
 
-    public static List<MonsterData> data = new() { lunatic, bat, snake };
+    public static List<MonsterData> data = new() { lunatic, bat, shaman, snake };
     private Fightable? _followTarget;
     public static int Count => data.Count;
     private void BasicMovement()
@@ -97,5 +99,20 @@ public partial class Monster
             }
         }
         else SelectBasicBehaviour(1, 0, -1); //pickup offence
+    }
+    private void ShamanBehav()
+    {
+        if (Tokens.Cur < 0)
+        {
+            SelectBasicBehaviour(1, 0, -1); //pickup offence
+            return;
+        }
+        else if(_followTarget is null)
+        {
+            BasicMovement();
+            return;
+        }
+        else if(Inven.GetMeta(Fightable.spiritStaff).magicCharge > 0) _SelectSkill(0, 0);
+        else _SelectSkill(0, 1);
     }
 }
