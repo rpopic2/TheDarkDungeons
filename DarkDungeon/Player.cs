@@ -122,35 +122,43 @@ public class Player : Fightable
     }
     public void PickupItem(Item item)
     {
-    Select:
         IO.pr($"\n아이템을 얻었다. {item.Name}");
-        if (Inven.Count != Inventory.INVENSIZE)
+        if (item.itemType == ItemType.Consume && Inven.Contains(item))
         {
             Inven.Add(item);
             return;
         }
-        IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
-        IO.del();
-        if (cancel) return;
-
-        if (index < Inven.Count && Inven[index] is Item old)
+        else if (Inven.Count < Inventory.INVENSIZE)
         {
-            do
-            {
-                ConsoleKeyInfo keyInfo = IO.rk($"{old.Name}이 버려집니다. 계속하시겠습니까?");
-                if (keyInfo.Key.IsOK())
-                {
-                    Inven.Remove(old);
-                    break;
-                }
-                else if (keyInfo.Key.IsCancel())
-                {
-                    IO.del();
-                    goto Select;
-                }
-            } while (true);
+            Inven.Add(item);
+            return;
         }
-        Inven.Add(item);
+        else SelectDiscard();
+        void SelectDiscard()
+        {
+            IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
+            IO.del();
+            if (cancel) return;
+
+            if (index < Inven.Count && Inven[index] is Item old)
+            {
+                do
+                {
+                    ConsoleKeyInfo keyInfo = IO.rk($"{old.Name}이 버려집니다. 계속하시겠습니까?");
+                    if (keyInfo.Key.IsOK())
+                    {
+                        Inven.Remove(old);
+                        break;
+                    }
+                    else if (keyInfo.Key.IsCancel())
+                    {
+                        IO.del();
+                        SelectDiscard();
+                    }
+                } while (true);
+            }
+            Inven.Add(item);
+        }
     }
     protected override void Interact()
     {
