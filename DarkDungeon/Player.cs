@@ -126,14 +126,13 @@ public class Player : Fightable
         if (item.itemType == ItemType.Consume && Inven.Contains(item))
         {
             Inven.Add(item);
-            return;
         }
         else if (Inven.Count < Inventory.INVENSIZE)
         {
             Inven.Add(item);
-            return;
         }
         else SelectDiscard();
+        IO.Redraw();
         void SelectDiscard()
         {
             IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
