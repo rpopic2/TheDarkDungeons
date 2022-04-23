@@ -48,7 +48,7 @@ public class Player : Fightable
                 case ConsoleKey.Delete: //Rest
                     SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
                     break;
-                case ConsoleKey.Spacebar: //상호작용
+                case ConsoleKey.Z: //상호작용
                 case ConsoleKey.Enter: //상호작용
                     if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
                     break;

@@ -125,7 +125,7 @@ public static class IO
         pr($"기력 : {s_player.Tokens}\t 상대 : {s_player.FrontFightable?.Tokens}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         pr(Map.Current);
-        if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (spacebar로 상호작용)");
+        if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
     }
     public static void ShowHelp()
     {
@@ -133,9 +133,9 @@ public static class IO
         pr("키 도움말\n");
         pr("\n 좌우 화살표 = 이동");
         pr("\n q = 1번 아이템(혹은 선택지), w = 2번 아이템, e = 3번 아이템, r = 4번 아이템, t = 5번 아이템 / i : 인벤토리");
-        pr("\n , = 맨손    . = 휴식");
+        pr("\n , = 맨손    . = 휴식, z = 상호작용");
         pr("\n / = 내 정보 보기, ? : 이 도움말 보기");
-        pr("\n x = 취소, spacebar = Ok 상호작용");
+        pr("\n x = 취소, spacebar = Ok");
         pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
         pr("=> 먹히지 않는 키가 있으면 모바일이나 숫자패드 단축키로 시도해 보십시오.");
 
