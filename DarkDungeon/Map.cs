@@ -48,8 +48,9 @@ public class Map
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
 
+        int min = Math.Max(0, Depth - 2);
         int max = Math.Min(Depth + 1, Monster.Count);
-        int randomData = s_rnd.Next(0, max);
+        int randomData = s_rnd.Next(min, max);
         MonsterData data = Monster.data[randomData];
 
         int randomIndex = s_rnd.Next(0, spawnableIndices.Count);
