@@ -130,19 +130,19 @@ public static class IO
     public static void ShowHelp()
     {
         Console.Clear();
-        pr("키 도움말\n");
+        pr("\n키 도움말\n");
         pr("\n 좌우 화살표 = 이동");
         pr("\n q = 1번 아이템(혹은 선택지), w = 2번 아이템, e = 3번 아이템, r = 4번 아이템, t = 5번 아이템 / i : 인벤토리");
-        pr("\n , = 맨손    . = 휴식, z = 상호작용");
+        pr("\n , = 맨손    . = 휴식");
         pr("\n / = 내 정보 보기, ? : 이 도움말 보기");
-        pr("\n x = 취소, spacebar = Ok");
+        pr("\n x = 취소, spacebar = Ok, z = 상호작용");
         pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
-        pr("=> 먹히지 않는 키가 있으면 모바일이나 숫자패드 단축키로 시도해 보십시오.");
 
+        pr("=> 먹히지 않는 키가 있으면 모바일이나 숫자패드 단축키로 시도해 보십시오.", __.bottom | __.newline);
         pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기", __.bottom);
         ConsoleKeyInfo consoleKeyInfo = rk();
         if (consoleKeyInfo.KeyChar == 'm') ShowMobileHelp();
-        else if (consoleKeyInfo.KeyChar == 'n') ShowNumpadHelp();
+        else if (consoleKeyInfo.KeyChar == '5') ShowNumpadHelp();
         else Redraw();
     }
 
@@ -154,7 +154,7 @@ public static class IO
         pr("\n End(1) = 1번 아이템(혹은 선택지), PgDn(2) = 2번 아이템, Home(7) = 3번 아이템, PgUp(9) = 4번 아이템, + = 5번 아이템 / * : 인벤토리");
         pr("\n Ins(0) = 맨손, DEL = 휴식");
         pr("\n / = 내 정보 보기, 5(NumLock 켜고) : 이 도움말 보기");
-        pr("\n - = 취소, Enter = Ok 상호작용");
+        pr("\n - = 취소, Enter = Ok, z = 상호작용");
         pr("\n 0(NumLock 켜고) = 새로고침 (맵이 이상하면 누르기)");
         rk();
         Redraw();
