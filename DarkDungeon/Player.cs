@@ -135,6 +135,7 @@ public class Player : Fightable
         IO.Redraw();
         void SelectDiscard()
         {
+            IO.pr($"인벤토리가 꽉 찼습니다. 버릴 아이템을 골라 주십시오.");
             IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
             IO.del();
             if (cancel) return;
