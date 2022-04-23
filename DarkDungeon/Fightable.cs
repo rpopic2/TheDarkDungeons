@@ -74,7 +74,7 @@ public partial class Fightable
             if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
             IO.rk(useOutput);
         }
-        else IO.rk($"{(global::Tokens.TokenSymbols[(int)selected.TokenType])} 토큰이 없습니다.");
+        else IO.rk("기력이 없습니다.");
     }
     private void SelectCharge(Item item, Charge charge)
     {
@@ -85,7 +85,7 @@ public partial class Fightable
             Stance.Set(item, charge, amount);
             IO.rk($"{Name}{charge.OnUseOutput} ^b({Stance.Amount})^/");
         }
-        else IO.rk($"{(global::Tokens.ToString(TokenType.Charge))} 토큰이 없습니다.");
+        else IO.rk("기력이 없습니다.");
     }
     private void SelectConsume(Item item, Consume consume)
     {
