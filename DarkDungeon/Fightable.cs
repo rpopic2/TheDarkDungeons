@@ -128,7 +128,7 @@ public partial class Fightable
         {
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
-            Inven.Remove(item);
+            Inven.Consume(item);
             lastHit?.Inven.Add(item!);
         }
         else
