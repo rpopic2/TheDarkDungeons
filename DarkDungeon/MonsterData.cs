@@ -102,7 +102,7 @@ public partial class Monster
     }
     private void ShamanBehav()
     {
-        if (Tokens.Cur < 0)
+        if (Tokens.Cur <= 0)
         {
             SelectBasicBehaviour(1, 0, -1); //pickup offence
             return;
