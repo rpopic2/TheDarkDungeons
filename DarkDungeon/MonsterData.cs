@@ -17,7 +17,7 @@ public partial class Monster
     private static StatMul shamanMul = new(sol: 0, lun: 1, con: 1, cap: 4, killExp: 4, Sight: 4);
     public static MonsterData shaman = new(name: "정령술사", '}', '{', shamanMul, (m) => m.ShamanBehav(), new Item[] { Fightable.spiritStaff, Fightable.torch }, startToken: new int[] { 2, 0, 2 });
 
-    public static List<MonsterData> data = new() { lunatic, bat, shaman, snake };
+    public static List<MonsterData> data = new() { bat, shaman, lunatic, snake };
     private Fightable? _followTarget;
     public static int Count => data.Count;
     private void BasicMovement()
