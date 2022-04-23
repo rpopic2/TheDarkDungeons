@@ -32,6 +32,7 @@ public partial class Monster : Fightable
     protected override void OnDeath(object? sender, EventArgs e)
     {
         if (!IsAlive) return;
+        if(DropOutOf(Stat.rnd, 5)) Inven.Add(Fightable.boneOfTheDeceased);
         base.OnDeath(sender, e);
         player.exp.point += killExp;
     }
