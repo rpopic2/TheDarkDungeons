@@ -33,12 +33,16 @@ public static class Extensions
     };
     public static string ToFString(this Array value, string title = "선택 :")
     {
-        string printResult = title + " /";
-        foreach (var item in value)
+        string printResult = title + " ";
+        for (int i = 0; i < value.Length; i++)
         {
-            printResult += $" {item} /";
+            printResult += value.GetValue(i)?.ToString()?.AppendKeyName(i);
         }
         return printResult;
+    }
+    public static string AppendKeyName(this string value, int index)
+    {
+        return $"{IO.ITEMKEYS1[index]}{value} ";
     }
     public static int ToVul(this int damage)
     {

@@ -96,14 +96,16 @@ public class Inventory : ICollection<Item?>
         string result = "";
         for (int i = 0; i < INVENSIZE; i++)
         {
-            if (i >= Count) result += "(맨손)";
+            string itemName = string.Empty;
+            if (i >= Count) itemName = "(맨손)";
             else if (content[i] is Item item)
             {
-                string itemName = item.ToString();
+                itemName = item.ToString();
                 int stack = GetMeta(item).stack;
                 if (stack > 1) itemName = itemName.Insert(1, $"{stack}x");
-                result += itemName;
+                result += itemName.AppendKeyName(i);
             }
+            result += itemName.AppendKeyName(i);
         }
         return result + "|" + name;
     }
