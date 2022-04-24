@@ -69,6 +69,7 @@ public static class IO
         do
         {
             found = selOnce(value, flags, out index, out cancel, out mod, out keyInfo, title);
+            if(cancel) return;
         } while (!found);
     }
     public static bool selOnce(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")

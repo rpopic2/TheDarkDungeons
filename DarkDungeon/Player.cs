@@ -198,7 +198,7 @@ public class Player : Fightable
         while (corpse.droplist.Count > 0)
         {
             IO.sel(corpse.droplist.ToArray(), 0, out int index, out bool cancel, out _, out _);
-            if (cancel) break;
+            if (cancel) return;
             if (corpse.droplist[index] is Item item)
             {
                 PickupItem(item);
