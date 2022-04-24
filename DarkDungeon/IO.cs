@@ -79,7 +79,6 @@ public static class IO
         if (!flags.HasFlag(__.fullinven))
         {
             if (value is Array a) max = a.Length;
-            else if (value is Tokens t) max = t.Count;
             else if (value is Inventory inv) max = inv.Count;
         }
         keyInfo = rk(value, flags, title);

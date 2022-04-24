@@ -25,46 +25,46 @@ public partial class Fightable
         },(f)=>{})
     });
     public static readonly Item bareHand = new("맨손", ItemType.Equip, new Skill[] {
-        new("주먹질", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 주먹을 휘둘렀다.", (i)=>i.Attack(1)),
-        new("구르기", StanceName.Defence, TokenType.Defence, StatName.Lun, DamageType.Thrust, "은 옆으로 굴렀다.", (i)=>{})
+        new("주먹질", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 주먹을 휘둘렀다.", (i)=>i.Attack(1)),
+        new("구르기", StanceName.Defence, StatName.Lun, DamageType.Thrust, "은 옆으로 굴렀다.", (i)=>{})
         });
     public static readonly Item sword = new("검", ItemType.Equip, new Skill[] {
-        new("베기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Attack(1)),
-        new("칼로막기", StanceName.Defence, TokenType.Defence, StatName.Sol, DamageType.Slash, "은 칼로 막기 자세를 취했다.", (i)=>{})
+        new("베기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Attack(1)),
+        new("칼로막기", StanceName.Defence, StatName.Sol, DamageType.Slash, "은 칼로 막기 자세를 취했다.", (i)=>{})
         });
     public static readonly Item holySword = new("광란의 신성검", ItemType.Equip, new IBehaviour[] {
-        new Skill("베기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Attack(1)),
+        new Skill("베기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Attack(1)),
         new Charge("광란의기도", StatName.Con, DamageType.Magic, "은 미친 듯이 기도하였고 칼이 빛나기 시작했다.", (i)=>{i.Charge(holySword!);})
         });
-        public static readonly Item staff = new("지팡이", ItemType.Equip, new Skill[] {
-        new("때리기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 지팡이로 앞을 떄렸다.", (i)=>i.Attack(1)),
-        new("별빛부름", StanceName.Charge, TokenType.Charge, StatName.Con, DamageType.Magic, "은 신비한 별빛을 불러내어 지팡이를 휘감았다.", (i)=>{})
+        public static readonly Item staff = new("지팡이", ItemType.Equip, new IBehaviour[] {
+        new Skill("때리기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 지팡이로 앞을 떄렸다.", (i)=>i.Attack(1)),
+        new Charge("별빛부름", StatName.Con, DamageType.Magic, "은 신비한 별빛을 불러내어 지팡이를 휘감았다.", (i)=>{i.Charge(staff!);})
         });
     public static readonly Item spiritStaff = new("정령 깃든 지팡이", ItemType.Equip, new IBehaviour[] {
-        new Skill("휘두르기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "은 지팡이를 휘둘렀다.", (i)=>i.Attack(4)),
+        new Skill("휘두르기", StanceName.Offence, StatName.Lun, DamageType.Normal, "은 지팡이를 휘둘렀다.", (i)=>i.Attack(4)),
         new Charge("정령부름", StatName.Con, DamageType.Magic, "은 정령을 불러내었고 그 힘이 지팡이에 깃들었다.", (i)=>{i.Charge(spiritStaff!);})
         });
     public static readonly Item magicBook = new("마법책", ItemType.Equip, new IBehaviour[]{
         new Charge("화염부름", StatName.Con, DamageType.Magic, "가 마법책에 쓰인 주문을 외우자 허공에 화염이 나타났다.", (f)=>{f.Charge();}),
     });
     public static readonly Item dagger = new("단검", ItemType.Equip, new Skill[] {
-        new("휘두르기", StanceName.Offence,  TokenType.Offence, StatName.Sol, DamageType.Slash, "은 단검을 휘둘렀다.", (i)=>i.Attack(1)),
-        new("투검", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>i.Throw(3, dagger!))
+        new("휘두르기", StanceName.Offence,  StatName.Sol, DamageType.Slash, "은 단검을 휘둘렀다.", (i)=>i.Attack(1)),
+        new("투검", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>i.Throw(3, dagger!))
     });
     public static readonly Item bow = new("활", ItemType.Equip, new Skill[] {
-        new("쏘기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});
+        new("쏘기", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});
     public static readonly Item shield = new("방패", ItemType.Equip, new Skill[]{
-        new("방패밀기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 방패를 앞으로 세게 밀쳤다.", (i)=>i.Attack(1)),
-        new("방패막기", StanceName.Defence, TokenType.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.Status.AddAmount(2))
+        new("방패밀기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 방패를 앞으로 세게 밀쳤다.", (i)=>i.Attack(1)),
+        new("방패막기", StanceName.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.Status.AddAmount(2))
     });
     public static readonly Item arrow = new("화살", ItemType.Consume, new IBehaviour[] { });
     public static readonly Item batItem = new("박쥐의 날개", ItemType.Equip, new Skill[] {
-        new("들이박기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Attack(1); i.Stat.Damage(1);}),
-        new("구르기", StanceName.Defence, TokenType.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})
+        new("들이박기", StanceName.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Attack(1); i.Stat.Damage(1);}),
+        new("구르기", StanceName.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})
         });
     public static readonly Item snakeItem = new("뱀의 이빨", ItemType.Equip, new IBehaviour[] {
         new Charge("독니", StatName.None, DamageType.Normal, "은 하악 소리를 내며 위협적인 이빨을 드러냈다. 독이 흐르는 듯 하다.", (i)=>i.PoisonItem(snakeItem!)),
-        new Skill("물기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i)=>i.Attack(1))
+        new Skill("물기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i)=>i.Attack(1))
     });
     public static readonly Item tearOfLun = new("달의 눈물", ItemType.Consume, new Consume[]{
         new("사용한다", StanceName.Charge, "은 포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Stat.Heal(3))
@@ -84,7 +84,7 @@ public partial class Fightable
     private const int TORCH_BRIGHTNESS = 2;
     private const int TORCH_DURATION = 20;
     public static readonly Item torch = new("횃불", ItemType.Equip, new IBehaviour[]{
-        new Skill("휘두르기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "횃불을 휘둘렀다.", (i)=>i.Attack(1)),
+        new Skill("휘두르기", StanceName.Offence, StatName.Sol, DamageType.Normal, "횃불을 휘둘렀다.", (i)=>i.Attack(1)),
         new WearEffect("밝음", StanceName.None, "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.Sight=1+TORCH_BRIGHTNESS;p.Inven.GetMeta(torch!).stack=TORCH_DURATION;}, (p)=>p.Sight=1),
         new Passive("꺼져가는 횃불", StanceName.None, "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})
     });
