@@ -26,7 +26,7 @@ public partial class Fightable
     });
     public static readonly Item bareHand = new("맨손", ItemType.Equip, new Skill[] {
         new("주먹질", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Normal, "은 주먹을 휘둘렀다.", (i)=>i.Attack(1)),
-        new("구르기", StanceName.Offence, TokenType.Defence, StatName.Lun, DamageType.Thrust, "은 옆으로 굴렀다.", (i)=>{})
+        new("구르기", StanceName.Defence, TokenType.Defence, StatName.Lun, DamageType.Thrust, "은 옆으로 굴렀다.", (i)=>{})
         });
     public static readonly Item sword = new("검", ItemType.Equip, new Skill[] {
         new("베기", StanceName.Offence, TokenType.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Attack(1)),
