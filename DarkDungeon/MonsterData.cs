@@ -48,7 +48,11 @@ public partial class Monster
             if (_followTarget is null) BasicMovement();
             else
             {
-                if (metaData["isAngry"] == 1) _SelectSkill(0, 0); //들이박기
+                if (metaData["isAngry"] == 1)
+                {
+                    _SelectSkill(0, 0);
+                    metaData["isAngry"] = 0;
+                }  //들이박기
                 else if (Tokens.Cur <= 1) _SelectSkill(0, 0); //들이박기
                 else _SelectSkill(0, 1); //구르기
             }
@@ -107,12 +111,12 @@ public partial class Monster
             SelectBasicBehaviour(1, 0, -1); //pickup offence
             return;
         }
-        else if(_followTarget is null)
+        else if (_followTarget is null)
         {
             BasicMovement();
             return;
         }
-        else if(Inven.GetMeta(Fightable.spiritStaff).magicCharge > 0) _SelectSkill(0, 0);
+        else if (Inven.GetMeta(Fightable.spiritStaff).magicCharge > 0) _SelectSkill(0, 0);
         else _SelectSkill(0, 1);
     }
 }
