@@ -67,7 +67,7 @@ public partial class Fightable
         new Skill("물기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i)=>i.Attack(1))
     });
     public static readonly Item poison = new("독", ItemType.Consume, new IBehaviour[] {
-        new Charge("독 바르기", StatName.None, DamageType.Normal, "은 독을 무기에 바르기로 했다.", (f)=>f.PoisonItem())
+        new Charge("독 바르기", StatName.None, DamageType.Normal, "은 독을 무기에 바르기로 했다.", (f)=>{f.PoisonItem(); f.Inven.Consume(poison!);})
     });
     public static readonly Item tearOfLun = new("달의 눈물", ItemType.Consume, new Consume[]{
         new("사용한다", StanceName.Charge, "은 포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Stat.Heal(3))
