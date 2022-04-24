@@ -17,4 +17,5 @@ public static class MapSymb
     public const char Empty = ' ';
     public const char portal = ',';
     public const char corpse = 'x';
+    public const char playerCorpse = 'X';
 }
