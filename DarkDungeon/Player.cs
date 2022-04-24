@@ -39,10 +39,6 @@ public class Player : Fightable
                 case ConsoleKey.H:
                     if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
                     break;
-                case ConsoleKey.B:
-                case ConsoleKey.Insert:
-                    SelectBehaviour(Fightable.bareHand);
-                    break;
                 case ConsoleKey.N:
                 case ConsoleKey.OemPeriod:
                 case ConsoleKey.Delete: //Rest
@@ -59,17 +55,23 @@ public class Player : Fightable
         }
         void DefaultSwitch(ConsoleKeyInfo key)
         {
-            bool found = IO.chk(key.KeyChar, Inven.Count, out int i);
-            if (found && Inven[i] is Item item)
+            bool found = IO.chk(key.KeyChar, Inventory.INVENSIZE, out int i);
+            if (!found) IO.chkp(key.Key, Inventory.INVENSIZE, out i);
+            FindKey();
+            bool FindKey()
             {
-                SelectBehaviour(item);
-                return;
-            }
-            bool found2 = IO.chkp(key.Key, Inven.Count, out int i2);
-            if (found2 && Inven[i2] is Item item2)
-            {
-                SelectBehaviour(item2);
-                return;
+                if (!found) return false;
+                if (i >= Inven.Count)
+                {
+                    SelectBehaviour(bareHand);
+                    return true;
+                }
+                else if (Inven[i] is Item item)
+                {
+                    SelectBehaviour(item);
+                    return true;
+                }
+                return false;
             }
 
             switch (key.KeyChar)
