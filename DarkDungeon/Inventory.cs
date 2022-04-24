@@ -103,7 +103,6 @@ public class Inventory : ICollection<Item?>
                 itemName = item.ToString();
                 int stack = GetMeta(item).stack;
                 if (stack > 1) itemName = itemName.Insert(1, $"{stack}x");
-                result += itemName.AppendKeyName(i);
             }
             result += itemName.AppendKeyName(i);
         }
