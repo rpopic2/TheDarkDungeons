@@ -12,7 +12,8 @@ public partial class Fightable
 
     public FightableStatus Status { get; init; }
     public virtual Fightable? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
-    private Fightable? lastHit { get; set; }
+    private Fightable? _lastHit { get; set; }
+    protected Fightable? _lastAttacker { get; set; }
     public Action<Fightable> passives = (p) => { };
     public Fightable(string name, int level, int sol, int lun, int con, int cap, Position pos)
     {
@@ -107,7 +108,7 @@ public partial class Fightable
         if (mov is Fightable hit)
         {
             ItemMetaData metaData = Inven.GetMeta(Status.CurrentItem!);
-            lastHit = hit;
+            _lastHit = hit;
             AttackMagicCharge(metaData);
             hit.Dodge(Status.Amount, damageType, this, metaData);
         }
@@ -129,7 +130,7 @@ public partial class Fightable
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
             Inven.Consume(item);
-            lastHit?.Inven.Add(item!);
+            _lastHit?.Inven.Add(item!);
         }
         else
         {
@@ -140,6 +141,7 @@ public partial class Fightable
     private void Dodge(int damage, DamageType damageType, Fightable attacker, ItemMetaData metaData)
     {
         if (damage < 0) throw new Exception("데미지는 0보다 작을 수 없습니다.");
+        _lastAttacker = attacker;
         StanceName? stance = Status.CurrentBehav?.Stance;
         if (stance == StanceName.Defence) CalcDamageType(ref damage, damageType, attacker);
         else if (stance == StanceName.Charge)

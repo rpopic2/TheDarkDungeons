@@ -37,6 +37,10 @@ public partial class Monster
     }
     private void UpdateTarget()
     {
+        if(_lastAttacker is not null)
+        {
+            _followTarget = _lastAttacker;
+        }
         Fightable? target = _currentMap.RayCast(Pos, Sight);
         if (target is not Fightable || !this.IsEnemy(target)) this._followTarget = null;
         else this._followTarget = target;
