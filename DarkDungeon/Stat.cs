@@ -29,6 +29,7 @@ public class Stat
     public void WearStat(StatName stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
     public int GetRandom(StatName stat)
     {
+        if(stat == StatName.None) return 0;
         int max = this[stat];
         if (max <= 0) return 0;
         else return rnd.Next(MIN, max);

@@ -113,7 +113,7 @@ public class Program
                 player.Inven.Add(Fightable.arrow);
                 player.Inven.Add(Fightable.arrow);
                 player.Inven.Add(Fightable.torch);
-                player.Inven.Add(Fightable.torch);
+                player.Inven.Add(Fightable.assBareHand);
                 player.PickupToken(3);
                 break;
             case 2:

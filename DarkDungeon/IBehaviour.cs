@@ -1,6 +1,6 @@
 public record Skill(string Name, StanceName Stance, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
 {
-    public static readonly string[] parenthesis = { "", "[]", "()", "<>", "{}" };
+    public static readonly string[] parenthesis = { "  ", "[]", "()", "<>", "{}" };
     public override string ToString()
     {
         string result = parenthesis[(int)damageType];
