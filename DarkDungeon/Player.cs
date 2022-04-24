@@ -57,21 +57,18 @@ public class Player : Fightable
         {
             bool found = IO.chk(key.KeyChar, Inventory.INVENSIZE, out int i);
             if (!found) IO.chkp(key.Key, Inventory.INVENSIZE, out i);
-            FindKey();
-            bool FindKey()
+            if (found)
             {
-                if (!found) return false;
                 if (i >= Inven.Count)
                 {
                     SelectBehaviour(bareHand);
-                    return true;
+                    return;
                 }
                 else if (Inven[i] is Item item)
                 {
                     SelectBehaviour(item);
-                    return true;
+                    return;
                 }
-                return false;
             }
 
             switch (key.KeyChar)
