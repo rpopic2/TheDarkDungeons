@@ -2,12 +2,12 @@ namespace Entities;
 public class Player : Fightable
 {
     public const int BASICCAP = 3;
-    public const int BASICSTAT = 0;
+    public const int BASICSTAT = 1;
     private static readonly string[] _STATPROMPT = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp { get; init; }
-    public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: BASICSTAT, cap: BASICCAP, pos: new(0))
+    public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: default, cap: BASICCAP, pos: new(0))
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
