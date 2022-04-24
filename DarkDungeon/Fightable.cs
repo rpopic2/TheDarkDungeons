@@ -20,7 +20,7 @@ public partial class Fightable
         this.Level = level;
         Name = name;
         Stat = new(sol, lun, con);
-        Inven = new((Fightable)this, "(맨손(,))(휴식(.))");
+        Inven = new((Fightable)this, "(휴식(.))");
         Tokens = new(cap, GamePointOption.Reserving);
         Status = new(this);
         GetHp().OnOverflow += new EventHandler(OnDeath);

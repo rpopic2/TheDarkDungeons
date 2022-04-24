@@ -96,7 +96,7 @@ public class Inventory : ICollection<Item?>
         string result = "";
         for (int i = 0; i < INVENSIZE; i++)
         {
-            if (i >= Count) result += $"({IO.ITEMKEYS1[i]})";
+            if (i >= Count) result += "(맨손)";
             else if (content[i] is Item item)
             {
                 string itemName = item.ToString();
