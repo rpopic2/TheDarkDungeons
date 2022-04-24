@@ -120,11 +120,14 @@ public class Player : Fightable
     public void SelectPickupStat()
     {
         int index;
+        string[] selection = new string[3];
         do
         {
-            IO.pr($"현재 : {Stat}\n");
-            IO.sel(_STATPROMPT, 0, out index, out _, out _, out _);
-            IO.del(2);
+            for (int i = 0; i < _STATPROMPT.Length; i++)
+            {
+                selection[i] = $"{_STATPROMPT[i]} : {Stat[(StatName)i]}";
+            }
+            IO.sel(selection, 0, out index, out _, out _, out _);
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
