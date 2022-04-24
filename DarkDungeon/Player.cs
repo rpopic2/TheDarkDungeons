@@ -3,7 +3,7 @@ public class Player : Fightable
 {
     public const int BASICCAP = 3;
     public const int BASICSTAT = 1;
-    private static readonly string[] _STATPROMPT = new string[] { "^r(q) 힘/체력^/", "^g(w) 정밀/민첩^/", "^b(e) 마력/지능^/" };
+    private static readonly string[] _STATPROMPT = new string[] { "^r (힘/체력)^/", "^g (정밀/민첩)^/", "^b (마력/지능)^/" };
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp { get; init; }
@@ -125,7 +125,7 @@ public class Player : Fightable
         {
             for (int i = 0; i < _STATPROMPT.Length; i++)
             {
-                selection[i] = $"{_STATPROMPT[i]} : {Stat[(StatName)i]}";
+                selection[i] = $"{_STATPROMPT[i]} : {Stat[(StatName)i]} / ";
             }
             IO.sel(selection, 0, out index, out _, out _, out _);
         } while (index == -1);

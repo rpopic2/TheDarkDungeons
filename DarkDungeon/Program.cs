@@ -66,7 +66,7 @@ public class Program
     ClassSelect:
         IO.pr($"{name}의 직업은?...");
         int classIndex = 0;
-        string[] classes = new string[] { "^r(q) 전사^/", "^g(w) 암살자^/", "^b(e) 마법사^/" };
+        string[] classes = new string[] { "^r (전사)^/", "^g (암살자)^/", "^b (마법사)^/" };
         IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _); ;
         string? classString = classes[classIndex];
 
