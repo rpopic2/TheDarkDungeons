@@ -30,23 +30,20 @@ public class Program
     private static void ElaspeTurn()
     {
         var fights = Map.Current.Fightables;
+        //onbeforeturn
         fights.ForEach(f =>
         {
-            if (f.Status.Stun > 0) f.Status.ProcessStun();
-            else f.SelectAction();
+            f.OnBeforeTurn();
         });
-
+        //onturn
         var firsts = from f in fights where f.Status.CurrentBehav?.Stance == StanceName.Charge select f;
         var lasts = fights.Except(firsts);
         foreach (Fightable item in firsts) item.InvokeBehaviour();
         foreach (Fightable item in lasts) item.InvokeBehaviour();
+        //onturnend
         fights.ForEach(m =>
         {
-            m.passives.Invoke((Fightable)m); //passives
-        });
-        fights.ForEach(m =>
-        {
-            m.OnTurnEnd(); //update target and reset stance
+            m.OnTurnEnd(); //update target and reset stance, onturnend
         });
 
         Map.Current.RemoveAndCreateCorpse();

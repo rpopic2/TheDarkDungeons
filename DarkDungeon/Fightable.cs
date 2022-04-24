@@ -217,8 +217,14 @@ public partial class Fightable
         return canGo;
     }
     protected virtual void Interact() { }
+    public void OnBeforeTurn()
+    {
+        if (Status.Stun > 0) Status.ProcessStun();
+        else SelectAction();
+    }
     public virtual void OnTurnEnd()
     {
+        passives.Invoke(this);
         if (Status.Poison > 0)
         {
             IO.pr($"{Name}은 중독 상태이다!", __.emphasis);
