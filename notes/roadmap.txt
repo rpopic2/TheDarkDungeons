@@ -1,10 +1,17 @@
-monsters
+0.6
 
-map system
+item mods
 
-new inventory system.
+light sources
 
+0.7 ~
 10 levels + boss fight
+
+ladders, mineshaft, other horizontal movements. (문 등 같은 깊이에서 들어가는거도)
+
+options
+
+merchants
 
 npcs
 
