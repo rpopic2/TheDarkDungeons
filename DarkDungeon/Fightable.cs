@@ -152,14 +152,11 @@ public partial class Fightable
         else if (metaData.isPoisoned) Status.SetPoison(2);
         Stat.Damage(damage);
     }
-    private void Charge()
+    protected virtual void Charge()
     {
-        IO.pr("마법부여할 대상을 선택해 주십시오.");
-        IO.sel(Inven, 0, out int index, out _, out _, out _);
-        IO.del();
-        if (Inven[index] is Item item) Charge(item);
+        Inven.GetMeta(Status.CurrentItem!).magicCharge += Status.Amount;
     }
-    private void Charge(Item item)
+    protected void Charge(Item item)
     {
         Inven.GetMeta(item).magicCharge += Status.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");

@@ -42,7 +42,7 @@ public partial class Fightable
         });
     public static readonly Item spiritStaff = new("정령 깃든 지팡이", ItemType.Equip, new IBehaviour[] {
         new Skill("휘두르기", StanceName.Offence, TokenType.Offence, StatName.Lun, DamageType.Normal, "은 지팡이를 휘둘렀다.", (i)=>i.Attack(4)),
-        new Charge("정령부름", StatName.Con, DamageType.Magic, "은 정령을 불러내었고 그 힘이 지팡이에 깃들었다.", (i)=>{i.Charge(Fightable.spiritStaff!);})
+        new Charge("정령부름", StatName.Con, DamageType.Magic, "은 정령을 불러내었고 그 힘이 지팡이에 깃들었다.", (i)=>{i.Charge(spiritStaff!);})
         });
     public static readonly Item magicBook = new("마법책", ItemType.Equip, new IBehaviour[]{
         new Charge("화염부름", StatName.Con, DamageType.Magic, "가 마법책에 쓰인 주문을 외우자 허공에 화염이 나타났다.", (f)=>{f.Charge();}),
