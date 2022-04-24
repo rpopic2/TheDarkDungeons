@@ -24,6 +24,12 @@ public class Player : Fightable
         {
             ConsoleKeyInfo info = IO.rk();
             ConsoleKey key = info.Key;
+            if (key.IsCancel())
+            {
+                DiscardItem();
+                IO.Redraw();
+                return;
+            }
             switch (key)
             {
                 case ConsoleKey.RightArrow:
@@ -133,33 +139,38 @@ public class Player : Fightable
         {
             Inven.Add(item);
         }
-        else SelectDiscard();
-        IO.Redraw();
-        void SelectDiscard()
+        else
         {
-            IO.pr($"인벤토리가 꽉 찼습니다. 버릴 아이템을 골라 주십시오.");
-            IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
-            IO.del();
-            if (cancel) return;
-
-            if (index < Inven.Count && Inven[index] is Item old)
-            {
-                do
-                {
-                    ConsoleKeyInfo keyInfo = IO.rk($"{old.Name}이 버려집니다. 계속하시겠습니까?");
-                    if (keyInfo.Key.IsOK())
-                    {
-                        Inven.Remove(old);
-                        break;
-                    }
-                    else if (keyInfo.Key.IsCancel())
-                    {
-                        IO.del();
-                        SelectDiscard();
-                    }
-                } while (true);
-            }
+            IO.pr("인벤토리가 꽉 찼습니다.");
+            DiscardItem();
             Inven.Add(item);
+            IO.del();
+        }
+        IO.Redraw();
+    }
+    public void DiscardItem()
+    {
+        IO.pr("버릴 아이템을 골라 주십시오.");
+        IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
+        IO.del();
+        if (cancel) return;
+
+        if (index < Inven.Count && Inven[index] is Item old)
+        {
+            do
+            {
+                ConsoleKeyInfo keyInfo = IO.rk($"{old.Name}이 버려집니다. 계속하시겠습니까?");
+                if (keyInfo.Key.IsOK())
+                {
+                    Inven.Remove(old);
+                    break;
+                }
+                else if (keyInfo.Key.IsCancel())
+                {
+                    IO.del();
+                    DiscardItem();
+                }
+            } while (true);
         }
     }
     protected override void Interact()
