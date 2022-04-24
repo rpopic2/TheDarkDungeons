@@ -32,11 +32,11 @@ public class Program
         var fights = Map.Current.Fightables;
         fights.ForEach(f =>
         {
-            if (f.Stance.IsStun) f.Stance.ProcessStun();
+            if (f.Status.Stun > 0) f.Status.ProcessStun();
             else f.SelectAction();
         });
 
-        var firsts = from f in fights where f.Stance.CurrentBehav?.Stance == StanceName.Charge select f;
+        var firsts = from f in fights where f.Status.CurrentBehav?.Stance == StanceName.Charge select f;
         var lasts = fights.Except(firsts);
         foreach (Fightable item in firsts) item.InvokeBehaviour();
         foreach (Fightable item in lasts) item.InvokeBehaviour();

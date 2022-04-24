@@ -18,7 +18,7 @@ public class Player : Fightable
         do
         {
             Selection();
-        } while (Stance.CurrentBehav is null);
+        } while (Status.CurrentBehav is null);
 
         void Selection()
         {

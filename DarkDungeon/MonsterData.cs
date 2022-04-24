@@ -61,7 +61,7 @@ public partial class Monster
         {
             SelectBasicBehaviour(1, 0, -1); //pickup offence
         }
-        if (_followTarget?.Stance.CurrentBehav?.Stance == StanceName.Charge) metaData["isAngry"] = 1;
+        if (_followTarget?.Status.CurrentBehav?.Stance == StanceName.Charge) metaData["isAngry"] = 1;
         else metaData["isAngry"] = 0;
     }
     public void LunaticBehav()

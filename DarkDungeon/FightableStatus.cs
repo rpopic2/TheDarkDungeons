@@ -1,19 +1,19 @@
-public class StanceInfo
+public class FightableStatus
 {
     public int Amount { get; private set; }
     public int Amount2 { get; private set; }
     public Item? CurrentItem { get; private set; }
     public IBehaviour? CurrentBehav { get; private set; }
-    public bool IsStun { get; private set; }
-    public int Poisoned { get; set; }
+    public int Stun { get; private set; }
+    public int Poison { get; private set; }
     private Fightable _owner;
-    public StanceInfo(Fightable owner)
+    public FightableStatus(Fightable owner)
     {
         _owner = owner;
     }
     public void Set(Item item, IBehaviour behaviour, int amount = default, int amount2 = default)
     {
-        if (IsStun)
+        if (Stun > 0)
         {
             ProcessStun();
             return;
@@ -34,13 +34,19 @@ public class StanceInfo
         Amount = default;
         Amount2 = default;
     }
-    public void SetStun() => IsStun = true;
+    public void SetStun(int value) => Stun += value;
+    public void SetPoison(int value) => Poison += value;
     public void ProcessStun()
     {
         Reset();
         IO.rk($"{_owner.Name}은 스턴 상태이다!");
         CurrentBehav = Fightable.Stun;
-        IsStun = false;
+        Stun--;
+    }
+    public void ProcessPoison()
+    {
+        _owner.Stat.Damage(1);
+        Poison--;
     }
     public override string ToString()
     {
