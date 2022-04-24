@@ -3,7 +3,7 @@ public partial class Fightable
 {
     public readonly string Name;
     public int Level { get; protected set; }
-    public GamePoint Tokens { get; protected set; }
+    public GamePoint Energy { get; protected set; }
     public readonly Stat Stat;
     public int Sight { get; protected set; } = 1;
     public Position Pos { get; protected set; }
@@ -21,7 +21,7 @@ public partial class Fightable
         Name = name;
         Stat = new(sol, lun, con);
         Inven = new((Fightable)this, "(휴식(.))");
-        Tokens = new(cap, GamePointOption.Reserving);
+        Energy = new(cap, GamePointOption.Reserving);
         Status = new(this);
         GetHp().OnOverflow += new EventHandler(OnDeath);
         GetHp().OnIncrease += new EventHandler<PointArgs>(OnHeal);
@@ -32,7 +32,7 @@ public partial class Fightable
     protected Map _currentMap => Map.Current;
     public void PickupToken(int amount)
     {
-        Tokens += amount;
+        Energy += amount;
     }
     public virtual void SelectAction() { }
     protected void SelectBehaviour(Item item, int index)
@@ -64,9 +64,9 @@ public partial class Fightable
     }
     private void SelectSkill(Item item, Skill selected)
     {
-        if (Tokens.Cur > 0)
+        if (Energy.Cur > 0)
         {
-            Tokens -= 1;
+            Energy -= 1;
             int amount = Stat.GetRandom(selected.statName);
             Status.Set(item, selected, amount);
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
@@ -78,9 +78,9 @@ public partial class Fightable
     }
     private void SelectCharge(Item item, Charge charge)
     {
-        if (Tokens.Cur > 0)
+        if (Energy.Cur > 0)
         {
-            Tokens -= 1;
+            Energy -= 1;
             int amount = Stat.GetRandom(StatName.Con);
             Status.Set(item, charge, amount);
             IO.rk($"{Name}{charge.OnUseOutput} ^b({Status.Amount})^/");
@@ -197,6 +197,7 @@ public partial class Fightable
     }
     protected void Move(Position value)
     {
+        if (Energy.IsMin) { IO.rk($"{Name}은 움직일 기력도 없다!"); return; }
         bool canGo = CanMove(value);
         if (canGo)
         {
@@ -245,5 +246,5 @@ public partial class Fightable
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t기력 : {Tokens}\t{Stat}";
+    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t기력 : {Energy}\t{Stat}";
 }

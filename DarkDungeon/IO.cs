@@ -122,9 +122,10 @@ public static class IO
         Console.Clear();
         //pr("History");
         pr($"턴 : {Program.Turn}  깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})  Hp : {s_player.GetHp()}", __.bottom | __.newline);
-        pr($"기력 : {s_player.Tokens}\t 상대 : {s_player.FrontFightable?.Tokens}", __.bottom | __.newline);
+        pr($"기력 : {s_player.Energy}\t 상대 : {s_player.FrontFightable?.Energy}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         pr(Map.Current);
+        if (s_player.Energy.IsInjured) pr("기력이 떨어진 상태다. 휴식하는게 좋겠다.");
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
     }
     public static void ShowHelp()

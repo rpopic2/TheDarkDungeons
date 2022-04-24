@@ -43,7 +43,7 @@ public partial class Monster
     }
     public void BatBehav()
     {
-        if (Tokens.Cur > 0)
+        if (Energy.Cur > 0)
         {
             if (_followTarget is null) BasicMovement();
             else
@@ -53,7 +53,7 @@ public partial class Monster
                     _SelectSkill(0, 0);
                     metaData["isAngry"] = 0;
                 }  //들이박기
-                else if (Tokens.Cur <= 1) _SelectSkill(0, 0); //들이박기
+                else if (Energy.Cur <= 1) _SelectSkill(0, 0); //들이박기
                 else _SelectSkill(0, 1); //구르기
             }
         }
@@ -67,7 +67,7 @@ public partial class Monster
     public void LunaticBehav()
     {
         if (GetHp().Cur != GetHp().Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
-        else if (Tokens.Cur > 0)
+        else if (Energy.Cur > 0)
         {
             if (_followTarget is null) BasicMovement();
             else
@@ -80,7 +80,7 @@ public partial class Monster
     }
     public void SnakeBehav()
     {
-        if (Tokens.Cur > 0)
+        if (Energy.Cur > 0)
         {
             if (_followTarget is null) BasicMovement();
             else
@@ -107,7 +107,7 @@ public partial class Monster
     }
     private void ShamanBehav()
     {
-        if (Tokens.Cur <= 0)
+        if (Energy.Cur <= 0)
         {
             SelectBasicBehaviour(1, 0, -1); //pickup offence
             return;

@@ -62,10 +62,11 @@ public class GamePoint
     }
     public bool IsMin => Cur == Min;
     public bool IsMax => Cur == Max;
+    public bool IsInjured =>  Cur <= Max / 3;
     public override string ToString()
     {
         string temp = $"{Cur}/{Max}";
-        if (Option == GamePointOption.Reserving && Cur <= Max / 2) temp = $"^r{Cur}/{Max}^/";
+        if (Option == GamePointOption.Reserving && IsInjured) temp = $"^r{Cur}/{Max}^/";
         return temp;
     }
 }
