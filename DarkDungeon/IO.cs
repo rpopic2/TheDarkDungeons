@@ -135,6 +135,7 @@ public static class IO
         pr(s_player.Inven, __.bottom);
         pr(Map.Current);
         if (s_player.Energy.IsInjured) pr("기력이 떨어진 상태다. 휴식하는게 좋겠다.");
+        else if (s_player.Energy.IsMin) IO.rk($"{s_player.Name}은 움직일 기력도 없다!");
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
     }
     public static void ShowHelp()

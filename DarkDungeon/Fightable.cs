@@ -203,7 +203,7 @@ public partial class Fightable
     }
     public bool CanMove(Position value)
     {
-        if (Energy.IsMin) { IO.rk($"{Name}은 움직일 기력도 없다!"); return false; }
+        if (Energy.IsMin) return false;
         Position temp = Pos + value;
         bool canGo = true;
         if (temp.x != Pos.x)
