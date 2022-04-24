@@ -74,6 +74,9 @@ public class Player : Fightable
 
             switch (key.KeyChar)
             {
+                case '.':
+                    SelectBasicBehaviour(1, 0, -1);
+                    break;
                 case 'i':
                 case '*':
                     IO.DrawInventory();
