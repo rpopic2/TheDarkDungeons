@@ -38,8 +38,8 @@ public class Program
         //onturn
         var firsts = from f in fights where f.Status.CurrentBehav?.Stance == StanceName.Charge select f;
         var lasts = fights.Except(firsts);
-        foreach (Fightable item in firsts) item.InvokeBehaviour();
-        foreach (Fightable item in lasts) item.InvokeBehaviour();
+        foreach (Fightable item in firsts) item.OnTurn();
+        foreach (Fightable item in lasts) item.OnTurn();
         //onturnend
         fights.ForEach(m =>
         {

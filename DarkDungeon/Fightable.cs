@@ -93,7 +93,7 @@ public partial class Fightable
         IO.rk($"{Name} {consume.OnUseOutput}");
         Inven.Consume(item);
     }
-    public void InvokeBehaviour()
+    public void OnTurn()
     {
         if (Status.CurrentBehav is not IBehaviour behav) throw new Exception($"턴이 흘렀는데도 {Name}이 아무 행동도 선택하지 않았습니다.");
         if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, Status.Amount, Status.Amount2);
