@@ -91,10 +91,9 @@ public partial class Monster
                     metaData["hissed"] = 1;
                     return;
                 }
-                else if (_followTarget.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).isPoisoned)
+                else if (_followTarget.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).poison > 0)
                 {
                     _SelectSkill(0, 1); //bite
-                    Inven.GetMeta(Fightable.snakeItem).isPoisoned = false;
                 }
                 else
                 {

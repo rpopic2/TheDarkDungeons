@@ -149,7 +149,7 @@ public partial class Fightable
         }
 
         if (damage <= 0) IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
-        else if (metaData.isPoisoned) Status.SetPoison(2);
+        else if (metaData.poison-- > 0) Status.SetPoison(2);
         Stat.Damage(damage);
     }
     protected virtual void Charge()
@@ -163,11 +163,11 @@ public partial class Fightable
     }
     protected virtual void PoisonItem()
     {
-        Inven.GetMeta(Status.CurrentItem!).isPoisoned = true;
+        Inven.GetMeta(Status.CurrentItem!).poison++;
     }
     protected void PoisonItem(Item item)
     {
-        Inven.GetMeta(item).isPoisoned = true;
+        Inven.GetMeta(item).poison++;
         IO.rk($"{item}은 독으로 젖어 있다.");
     }
     private void CalcDamageType(ref int damage, DamageType damageType, Fightable attacker)
