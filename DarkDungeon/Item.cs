@@ -63,8 +63,11 @@ public partial class Fightable
         new("구르기", StanceName.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})
         });
     public static readonly Item snakeItem = new("뱀의 이빨", ItemType.Equip, new IBehaviour[] {
-        new Charge("독니", StatName.None, DamageType.Normal, "은 하악 소리를 내며 위협적인 이빨을 드러냈다. 독이 흐르는 듯 하다.", (i)=>i.PoisonItem(snakeItem!)),
+        new Charge("독니", StatName.None, DamageType.Normal, "의 하악 소리가 울려퍼지며 위협적인 이빨을 드러냈다. 독이 흐르는 듯 하다.", (i)=>i.PoisonItem(snakeItem!)),
         new Skill("물기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i)=>i.Attack(1))
+    });
+    public static readonly Item poison = new("독", ItemType.Consume, new IBehaviour[] {
+        new Charge("독 바르기", StatName.None, DamageType.Normal, "은 독을 무기에 바르기로 했다.", (f)=>f.PoisonItem())
     });
     public static readonly Item tearOfLun = new("달의 눈물", ItemType.Consume, new Consume[]{
         new("사용한다", StanceName.Charge, "은 포션을 상처 부위에 떨어뜨렸고, 이윽고 상처가 씻은 듯이 아물었다.", (p)=>p.Stat.Heal(3))

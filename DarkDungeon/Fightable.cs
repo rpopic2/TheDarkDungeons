@@ -161,7 +161,11 @@ public partial class Fightable
         Inven.GetMeta(item).magicCharge += Status.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");
     }
-    private void PoisonItem(Item item)
+    protected virtual void PoisonItem()
+    {
+        Inven.GetMeta(Status.CurrentItem!).isPoisoned = true;
+    }
+    protected void PoisonItem(Item item)
     {
         Inven.GetMeta(item).isPoisoned = true;
         IO.rk($"{item}은 독으로 젖어 있다.");

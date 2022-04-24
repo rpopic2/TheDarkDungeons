@@ -183,6 +183,13 @@ public class Player : Fightable
         IO.del();
         if (Inven[index] is Item item) Charge(item);
     }
+    protected override void PoisonItem()
+    {
+        IO.pr("독을 바를 대상을 선택해 주십시오.");
+        IO.sel(Inven, 0, out int index, out _, out _, out _);
+        IO.del();
+        if (Inven[index] is Item item) PoisonItem(item);
+    }
     protected override void Interact()
     {
         if (UnderFoot is null) return;
