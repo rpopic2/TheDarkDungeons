@@ -23,7 +23,7 @@ public class Program
         IO.pr("The Dungeon of the Mine " + VERSION);
         Intro();
         Console.Clear();
-        IO.rk($"{s_player.Name}은 광산 입구로 들어갔다. 계속 들어가다 보니 빛이 희미해졌다.");
+        IO.rk($"{s_player.Name}은 횃불에 의지한 채 동굴 속으로 걸어 들어갔다.");
         IO.Redraw();
         IO.pr("\n?을 눌러 도움말 표시.");
     }
