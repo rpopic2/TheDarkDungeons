@@ -1,4 +1,4 @@
-public record Skill(string Name, StanceName Stance, TokenType TokenType, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
+public record Skill(string Name, StanceName Stance, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
 {
     public static readonly string[] parenthesis = { "", "[]", "()", "<>", "{}" };
     public override string ToString()

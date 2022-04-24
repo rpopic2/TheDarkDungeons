@@ -20,17 +20,6 @@ public static class Extensions
     => (int)MathF.Round(@base * mult);
     public static int FloorMult(this int @base, float mult)
     => (int)MathF.Floor(@base * mult);
-    public static char ParseKey(this string option)
-        => Char.ToLower(option[option.IndexOf('(') + 1]);
-    public static char[] ParseKeys(this string[] options)
-        => Array.ConvertAll(options, new Converter<string, char>(ParseKey));
-    public static StanceName ToStance(this TokenType token) => token switch
-    {
-        TokenType.Offence => StanceName.Offence,
-        TokenType.Defence => StanceName.Defence,
-        TokenType.Charge => StanceName.Charge,
-        _ => StanceName.None
-    };
     public static string ToFString(this Array value, string title = "선택 :")
     {
         string printResult = title + " ";
