@@ -92,7 +92,9 @@ public static class IO
     public static bool chk(Char i, int max, out int index)
     {
         index = ITEMKEYS1.IndexOf(i);
-        return index != -1 && index <= max - 1;
+        bool found = index != -1 && index <= max - 1;
+        if(!found) index = -1;
+        return found;
     }
     public static bool chkp(ConsoleKey i, int max, out int index)
     {
