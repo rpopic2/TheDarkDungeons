@@ -94,6 +94,7 @@ public partial class Monster
                 else if (_followTarget.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).isPoisoned)
                 {
                     _SelectSkill(0, 1); //bite
+                    Inven.GetMeta(Fightable.snakeItem).isPoisoned = false;
                 }
                 else
                 {
