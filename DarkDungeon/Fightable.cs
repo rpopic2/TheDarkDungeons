@@ -152,22 +152,16 @@ public partial class Fightable
         else if (metaData.poison-- > 0) Status.SetPoison(2);
         Stat.Damage(damage);
     }
-    protected virtual void Charge()
+    protected virtual void Charge(Item? item = null)
     {
-        Inven.GetMeta(Status.CurrentItem!).magicCharge += Status.Amount;
-    }
-    protected void Charge(Item item)
-    {
-        Inven.GetMeta(item).magicCharge += Status.Amount;
+        if (item is null) Inven.GetMeta(Status.CurrentItem!).magicCharge += Status.Amount;
+        else Inven.GetMeta(item).magicCharge += Status.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");
     }
-    protected virtual void PoisonItem()
+    protected virtual void PoisonItem(Item? item = null)
     {
-        Inven.GetMeta(Status.CurrentItem!).poison++;
-    }
-    protected void PoisonItem(Item item)
-    {
-        Inven.GetMeta(item).poison++;
+        if (item is null) Inven.GetMeta(Status.CurrentItem!).poison++;
+        else Inven.GetMeta(item).poison++;
         IO.rk($"{item}은 독으로 젖어 있다.");
     }
     private void CalcDamageType(ref int damage, DamageType damageType, Fightable attacker)
