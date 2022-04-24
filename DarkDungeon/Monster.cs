@@ -32,7 +32,6 @@ public partial class Monster : Fightable
     protected override void OnDeath(object? sender, EventArgs e)
     {
         if (!IsAlive) return;
-        if(DropOutOf(Stat.rnd, 5)) Inven.Add(Fightable.boneOfTheDeceased);
         base.OnDeath(sender, e);
         player.exp.point += killExp;
     }
@@ -41,7 +40,7 @@ public partial class Monster : Fightable
         if (!IsAlive) return;
         behaviour(this);
     }
-    private static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
+    public static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Right ? fowardChar : backwardChar;
 }
 

@@ -105,7 +105,8 @@ public class Map
         {
             int pos = fight.Pos.x;
             ISteppable? old = Steppables[pos];
-
+            var drops = fight.Inven.Content;
+            if (Monster.DropOutOf(fight.Stat.rnd, 5)) drops.Add(Fightable.boneOfTheDeceased);
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
             if (old is Corpse cor) Steppables[pos] = cor + temp;
             else if (old is Portal) _fallenCorpse = temp;

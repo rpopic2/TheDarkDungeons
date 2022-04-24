@@ -4,7 +4,7 @@ public partial class Fightable
     public readonly string Name;
     public int Level { get; protected set; }
     public GamePoint Tokens { get; protected set; }
-    protected readonly Stat Stat;
+    public readonly Stat Stat;
     public int Sight { get; protected set; } = 1;
     public Position Pos { get; protected set; }
 
