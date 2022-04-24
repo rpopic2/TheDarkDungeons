@@ -100,8 +100,8 @@ public class Player : Fightable
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);
-        IO.sel(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.Name}으로 무엇을 할까 : ");
-        if (cancel)
+        IO.selOnce(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.Name}으로 무엇을 할까 : ");
+        if (index == -1 || cancel)
         {
             IO.Redraw();
             return;

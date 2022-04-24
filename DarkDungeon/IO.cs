@@ -66,6 +66,14 @@ public static class IO
     public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
     {
         bool found;
+        do
+        {
+            found = selOnce(value, flags, out index, out cancel, out mod, out keyInfo, title);
+        } while (!found);
+    }
+    public static bool selOnce(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
+    {
+        bool found;
         int max = Inventory.INVENSIZE;
         if (!flags.HasFlag(__.fullinven))
         {
@@ -73,15 +81,13 @@ public static class IO
             else if (value is Tokens t) max = t.Count;
             else if (value is Inventory inv) max = inv.Count;
         }
-        do
-        {
-            keyInfo = rk(value, flags, title);
-            mod = keyInfo.Modifiers;
-            cancel = keyInfo.Key.IsCancel();
-            found = chk(keyInfo.KeyChar, max, out index);
-            if (index == -1) found = IO.chkp(keyInfo.Key, max, out index);
-            if (cancel) return;
-        } while (!found);
+        keyInfo = rk(value, flags, title);
+        mod = keyInfo.Modifiers;
+        cancel = keyInfo.Key.IsCancel();
+        found = chk(keyInfo.KeyChar, max, out index);
+        if (index == -1) found = IO.chkp(keyInfo.Key, max, out index);
+        if (cancel) return false;
+        return found;
     }
     public static bool chk(Char i, int max, out int index)
     {
