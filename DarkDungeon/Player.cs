@@ -154,7 +154,7 @@ public class Player : Fightable
     public void DiscardItem()
     {
         IO.pr("버릴 아이템을 골라 주십시오.");
-        IO.sel(Inven, __.fullinven, out int index, out bool cancel, out _, out _);
+        IO.sel(Inven.Content.ToArray(), __.fullinven, out int index, out bool cancel, out _, out _);
         IO.del();
         if (cancel) return;
 
