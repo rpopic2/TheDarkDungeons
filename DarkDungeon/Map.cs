@@ -1,5 +1,6 @@
 public class Map
 {
+    public static List<MonsterData> monsterData = new() { Monster.bat, Monster.shaman, Monster.lunatic, Monster.snake };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
     ///<summary>is 1 by default</summary>
@@ -49,9 +50,9 @@ public class Map
         if (spawnableIndices.Count <= 0) return;
 
         int min = Math.Max(0, Depth - 2);
-        int max = Math.Min(Depth + 1, Monster.Count);
+        int max = Math.Min(Depth + 1, Map.monsterData.Count);
         int randomData = s_rnd.Next(min, max);
-        MonsterData data = Monster.data[randomData];
+        MonsterData data = Map.monsterData[randomData];
 
         int randomIndex = s_rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[randomIndex];
