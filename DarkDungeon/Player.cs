@@ -131,7 +131,7 @@ public class Player : Fightable
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
-    public void PickupItem(Item item)
+    public bool PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
         if (item.itemType == ItemType.Consume && Inven.Contains(item))
@@ -145,18 +145,24 @@ public class Player : Fightable
         else
         {
             IO.pr("인벤토리가 꽉 찼습니다.");
-            DiscardItem();
-            Inven.Add(item);
+            bool discarded = DiscardItem();
+            if (discarded) Inven.Add(item);
+            else
+            {
+                IO.del(3);
+                return false;
+            }
             IO.del();
         }
         IO.Redraw();
+        return true;
     }
-    public void DiscardItem()
+    public bool DiscardItem()
     {
         IO.pr("버릴 아이템을 골라 주십시오.");
         IO.sel(Inven.Content.ToArray(), __.fullinven, out int index, out bool cancel, out _, out _);
         IO.del();
-        if (cancel) return;
+        if (cancel) return false;
 
         if (index < Inven.Count && Inven[index] is Item old)
         {
@@ -166,15 +172,17 @@ public class Player : Fightable
                 if (keyInfo.Key.IsOK())
                 {
                     Inven.Remove(old);
-                    break;
+                    return true;
                 }
-                else if (keyInfo.Key.IsCancel())
-                {
-                    IO.del();
-                    DiscardItem();
-                }
+                // else if (keyInfo.Key.IsCancel())
+                // {
+                //     IO.del();
+                //     DiscardItem();
+                //     return false;
+                // }
             } while (true);
         }
+        return false;
     }
     protected override void Charge(Item? item = null)
     {
@@ -208,8 +216,8 @@ public class Player : Fightable
             if (cancel) return;
             if (corpse.droplist[index] is Item item)
             {
-                PickupItem(item);
-                corpse.droplist.Remove(item);
+                bool pickedUp = PickupItem(item);
+                if (pickedUp) corpse.droplist.Remove(item);
             }
         }
         if (corpse.droplist.Count() <= 0)
