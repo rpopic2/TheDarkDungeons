@@ -18,7 +18,7 @@ public partial class Monster
     {
         int randomFace = Stat.rnd.Next(2);
         if (!Map.Current.IsAtEnd(Pos.x)) SelectBasicBehaviour(0, 1, randomFace);
-        else SelectBasicBehaviour(0, 1, 1);//Move(new(1, Facing.Left));
+        else SelectBasicBehaviour(0, 1, 1);// = Move(new(1, Facing.Left));
     }
     private void _SelectSkill(int item, int skill)
     {
