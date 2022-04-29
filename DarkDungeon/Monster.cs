@@ -16,17 +16,9 @@ public partial class Monster : Fightable
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
-        OnSpawn(data.startItem, data.startToken);
-    }
-    public void OnSpawn(Item[] items, int[] startTokens)
-    {
-        foreach (var newItem in items)
+        foreach (var newItem in data.startItem)
         {
             Inven.Add(newItem);
-        }
-        foreach (var token in startTokens)
-        {
-            Energy += 1;
         }
     }
     protected override void OnDeath(object? sender, EventArgs e)

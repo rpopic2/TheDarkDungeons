@@ -1,5 +1,5 @@
 namespace Entities;
-public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Action<Monster> behaviour, Item[] startItem, int[] startToken);
+public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Action<Monster> behaviour, Item[] startItem);
 public partial class Monster
 {
     private static DropList lunDropList = new(
@@ -9,13 +9,13 @@ public partial class Monster
     private static DropList batDropList = new(
         (Fightable.batItem, 10));
     private static StatInfo lunaticMul = new(sol: 1, lun: 1, con: 3, cap: 4, killExp: 3, Sight: 1);
-    public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { holySword, tearOfLun }, startToken: new int[] { 2, 0, 2, 0 });
+    public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { holySword, tearOfLun });
     public static StatInfo batMul = new(sol: 1, lun: 3, con: 2, cap: 3, killExp: 4, Sight: 1);
-    public static MonsterData bat = new(name: "박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { batItem }, startToken: new int[] { 1, 1, 0 });
+    public static MonsterData bat = new(name: "박쥐", 'b', 'd', batMul, (m) => m.BatBehav(), new Item[] { batItem });
     private static StatInfo snakeMul = new(sol: 1, lun: 3, con: 1, cap: 3, killExp: 5, Sight: 3);
-    public static MonsterData snake = new(name: "뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { snakeItem, poison }, startToken: new int[] { 2, 0, 0 });
+    public static MonsterData snake = new(name: "뱀", 'S', '2', snakeMul, (m) => m.SnakeBehav(), new Item[] { snakeItem, poison });
     private static StatInfo shamanMul = new(sol: 0, lun: 1, con: 1, cap: 4, killExp: 4, Sight: 3);
-    public static MonsterData shaman = new(name: "정령술사", '}', '{', shamanMul, (m) => m.ShamanBehav(), new Item[] { spiritStaff, torch }, startToken: new int[] { 2, 0, 2 });
+    public static MonsterData shaman = new(name: "정령술사", '}', '{', shamanMul, (m) => m.ShamanBehav(), new Item[] { spiritStaff, torch });
 
     public static List<MonsterData> data = new() { bat, shaman, lunatic, snake };
     private Fightable? _followTarget;
