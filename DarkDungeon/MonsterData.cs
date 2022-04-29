@@ -2,12 +2,6 @@ namespace Entities;
 public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Action<Monster> behaviour, Item[] startItem);
 public partial class Monster
 {
-    private static DropList lunDropList = new(
-        (Fightable.holySword, 10));
-    private static DropList snakeDropList = new(
-        (Fightable.holySword, 10));
-    private static DropList batDropList = new(
-        (Fightable.batItem, 10));
     private static StatInfo lunaticMul = new(sol: 1, lun: 1, con: 3, cap: 4, killExp: 3, Sight: 1);
     public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticMul, (m) => m.LunaticBehav(), new Item[] { holySword, tearOfLun });
     public static StatInfo batMul = new(sol: 1, lun: 3, con: 2, cap: 3, killExp: 4, Sight: 1);
