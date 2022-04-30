@@ -15,14 +15,14 @@ public partial class Fightable
     private Fightable? _lastHit { get; set; }
     protected Fightable? _lastAttacker { get; set; }
     public Action<Fightable> passives = (p) => { };
-    public Fightable(string name, int level, int sol, int lun, int con, int cap, Position pos)
+    public Fightable(string name, int level, Stat stat, int energy, Position pos)
     {
         Pos = pos;
         this.Level = level;
         Name = name;
-        Stat = new(sol, lun, con);
+        Stat = stat;
         Inven = new((Fightable)this, " .(휴식)");
-        Energy = new(cap, GamePointOption.Reserving);
+        Energy = new(energy, GamePointOption.Reserving);
         Status = new(this);
         GetHp().OnOverflow += new EventHandler(OnDeath);
         GetHp().OnIncrease += new EventHandler<PointArgs>(OnHeal);

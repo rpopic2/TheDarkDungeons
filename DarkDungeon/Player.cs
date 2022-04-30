@@ -7,7 +7,7 @@ public class Player : Fightable
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp { get; init; }
-    public Player(string name) : base(name, level: 1, sol: BASICSTAT, lun: BASICSTAT, con: default, cap: BASICCAP, pos: new(0))
+    public Player(string name) : base(name, level: 1, new(BASICSTAT, BASICSTAT, default), energy: BASICCAP, pos: new(0))
     {
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);

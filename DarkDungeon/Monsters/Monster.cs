@@ -10,8 +10,8 @@ public partial class Monster : Fightable
     private Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint)
     : base(name: data.name, level: Map.Depth,
-    sol: new Mul(data.stat.sol, Rules.LEVEL_DIFFICULTY, Map.Depth), lun: new Mul(data.stat.lun, Rules.LEVEL_DIFFICULTY, Map.Depth), con: new Mul(data.stat.con, Rules.LEVEL_DIFFICULTY, Map.Depth),
-    cap: data.stat.energy, pos: spawnPoint)
+    stat: new(data.stat.SolDifficulty, data.stat.LunDifficulty, data.stat.ConDifficulty),
+    energy: data.stat.energy, pos: spawnPoint)
     {
         Sight = data.stat.Sight;
         killExp = new Mul(data.stat.killExp, Rules.LEVEL_DIFFICULTY, Map.Depth);
