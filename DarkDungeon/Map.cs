@@ -58,9 +58,11 @@ public class Map
         int newPos = spawnableIndices[randomIndex];
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
-
+        
+        ISpawnable[] temp = { new Bat(new()) };
+        
         Monster mov;
-        mov = new Bat(spawnPoint);
+        mov = temp[0].Instantiate(spawnPoint);
         _fightables.Add(mov);
         UpdateFightable(mov);
 

@@ -1,8 +1,9 @@
 namespace Entities;
-public class Bat : Monster
+public class Bat : Monster, ISpawnable
 {
-    public static StatInfo batStat = new(stat: new(1, 3, 2), energy: 3, killExp: 4, Sight: 1);
-    public static MonsterData data = new(name: "박쥐", 'b', 'd', batStat, new Item[] { Fightable.batItem });
+    private static StatInfo stat = new(stat: new(1, 3, 2), energy: 3, killExp: 4, Sight: 1);
+    private static MonsterData data = new(name: "박쥐", 'b', 'd', stat, new Item[] { Fightable.batItem });
+    public Monster Instantiate(Position spawnPoint) => new Bat(spawnPoint);
 
     public Bat(Position spawnPoint) : base(data, spawnPoint) { metaData.Add("isAngry", 0); }
     protected override void OnEnergyDeplete()
