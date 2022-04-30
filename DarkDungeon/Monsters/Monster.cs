@@ -1,13 +1,12 @@
 namespace Entities;
-public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Action<Monster> behaviour, Item[] startItem);
+public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Item[] startItem);
 public partial class Monster : Fightable
 {
     private int killExp;
     protected static Player player { get => Player.instance; }
     private char fowardChar, backwardChar;
-    private Action<Monster> behaviour;
-    private Fightable? _followTarget;
-    private Dictionary<string, int> metaData = new();
+    protected Fightable? _followTarget;
+    protected Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint)
     : base(name: data.name, level: Map.Depth, stat: new(data.stat.SolDifficulty, data.stat.LunDifficulty, data.stat.ConDifficulty),
     energy: data.stat.energy, pos: spawnPoint)
@@ -16,7 +15,6 @@ public partial class Monster : Fightable
         killExp = data.stat.KillExpDifficulty;
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
-        behaviour = data.behaviour;
         foreach (var newItem in data.startItem)
         {
             Inven.Add(newItem);
@@ -25,15 +23,29 @@ public partial class Monster : Fightable
     public override void SelectAction()
     {
         if (!IsAlive) return;
-        behaviour(this);
+        if(Energy.Cur <= 0) OnEnergyDeplete();
+        else if(_followTarget is not null) OnFollowTarget();
+        else OnNothing();
     }
-    private void BasicMovement()
+    protected virtual void OnEnergyDeplete()
+    {
+
+    }
+    protected virtual void OnFollowTarget()
+    {
+        
+    }
+    protected virtual void OnNothing()
+    {
+        
+    }
+    protected void BasicMovement()
     {
         int randomFace = Stat.rnd.Next(2);
         if (!Map.Current.IsAtEnd(Pos.x)) SelectBasicBehaviour(0, 1, randomFace);
         else SelectBasicBehaviour(0, 1, 1);// = Move(new(1, Facing.Left));
     }
-    private void _SelectSkill(int item, int skill)
+    protected void _SelectSkill(int item, int skill)
     {
         SelectBehaviour(Inven[item]!, skill);
     }

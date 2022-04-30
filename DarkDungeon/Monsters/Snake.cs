@@ -2,7 +2,7 @@ namespace Entities;
 public partial class Monster
 {
     private static StatInfo snakeStat = new(stat: new(1, 3, 1), energy: 3, killExp: 5, Sight: 3);
-    public static MonsterData snake = new(name: "뱀", 'S', '2', snakeStat, (m) => m.SnakeBehav(), new Item[] { snakeItem, poison });
+    public static MonsterData snake = new(name: "뱀", 'S', '2', snakeStat, new Item[] { snakeItem, poison });
 
     public void SnakeBehav()
     {
