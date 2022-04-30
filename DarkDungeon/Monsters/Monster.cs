@@ -9,8 +9,7 @@ public partial class Monster : Fightable
     private Fightable? _followTarget;
     private Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint)
-    : base(name: data.name, level: Map.Depth,
-    stat: new(data.stat.SolDifficulty, data.stat.LunDifficulty, data.stat.ConDifficulty),
+    : base(name: data.name, level: Map.Depth, stat: new(data.stat.SolDifficulty, data.stat.LunDifficulty, data.stat.ConDifficulty),
     energy: data.stat.energy, pos: spawnPoint)
     {
         Sight = data.stat.Sight;
@@ -22,12 +21,6 @@ public partial class Monster : Fightable
         {
             Inven.Add(newItem);
         }
-    }
-    protected override void OnDeath(object? sender, EventArgs e)
-    {
-        if (!IsAlive) return;
-        base.OnDeath(sender, e);
-        player.exp.point += killExp;
     }
     public override void SelectAction()
     {
@@ -58,6 +51,12 @@ public partial class Monster : Fightable
         Fightable? target = _currentMap.RayCast(Pos, Sight);
         if (target is not Fightable || !this.IsEnemy(target)) this._followTarget = null;
         else this._followTarget = target;
+    }
+    protected override void OnDeath(object? sender, EventArgs e)
+    {
+        if (!IsAlive) return;
+        base.OnDeath(sender, e);
+        player.exp.point += killExp;
     }
     public static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Right ? fowardChar : backwardChar;
