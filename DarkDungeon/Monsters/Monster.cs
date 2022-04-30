@@ -14,7 +14,7 @@ public partial class Monster : Fightable
     energy: data.stat.energy, pos: spawnPoint)
     {
         Sight = data.stat.Sight;
-        killExp = new Mul(data.stat.killExp, Rules.LEVEL_DIFFICULTY, Map.Depth);
+        killExp = data.stat.KillExpDifficulty;
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
         behaviour = data.behaviour;
