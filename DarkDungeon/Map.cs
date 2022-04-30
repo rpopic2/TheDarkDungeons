@@ -1,6 +1,7 @@
 public class Map
 {
     public static List<MonsterData> monsterData = new() { Monster.shaman, Monster.lunatic, Monster.snake };
+    public static ISpawnable[] NewMonsterData = { new Bat(new()) };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
     ///<summary>is 1 by default</summary>
@@ -58,11 +59,10 @@ public class Map
         int newPos = spawnableIndices[randomIndex];
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
-        
-        ISpawnable[] temp = { new Bat(new()) };
-        
+
+
         Monster mov;
-        mov = temp[0].Instantiate(spawnPoint);
+        mov = NewMonsterData[randomIndex].Instantiate(spawnPoint);
         _fightables.Add(mov);
         UpdateFightable(mov);
 
