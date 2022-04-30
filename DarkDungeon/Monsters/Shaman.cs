@@ -1,7 +1,7 @@
 namespace Entities;
 public partial class Monster
 {
-    private static StatInfo shamanStat = new(sol: 0, lun: 1, con: 1, energy: 4, killExp: 4, Sight: 3);
+    private static StatInfo shamanStat = new(stat: new(0, 1, 1), energy: 4, killExp: 4, Sight: 3);
     public static MonsterData shaman = new(name: "정령술사", '}', '{', shamanStat, (m) => m.ShamanBehav(), new Item[] { spiritStaff, torch });
 
     private void ShamanBehav()

@@ -2,7 +2,7 @@ namespace Entities;
 public partial class Monster
 {
 
-    public static StatInfo batStat = new(sol: 1, lun: 3, con: 2, energy: 3, killExp: 4, Sight: 1);
+    public static StatInfo batStat = new(stat: new(1, 3, 2), energy: 3, killExp: 4, Sight: 1);
     public static MonsterData bat = new(name: "박쥐", 'b', 'd', batStat, (m) => m.BatBehav(), new Item[] { Fightable.batItem });
     public void BatBehav()
     {

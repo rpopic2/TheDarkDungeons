@@ -1,8 +1,8 @@
-public record StatInfo(int sol, int lun, int con, int energy, int killExp, int Sight)
+public record StatInfo(Stat stat, int energy, int killExp, int Sight)
 {
-    public int SolDifficulty => ApplyDifficulty(sol);
-    public int LunDifficulty => ApplyDifficulty(lun);
-    public int ConDifficulty => ApplyDifficulty(con);
+    public int SolDifficulty => ApplyDifficulty(stat[StatName.Sol]);
+    public int LunDifficulty => ApplyDifficulty(stat[StatName.Lun]);
+    public int ConDifficulty => ApplyDifficulty(stat[StatName.Con]);
     private static int ApplyDifficulty(int stat) => (int)(stat + MathF.Floor(Rules.LEVEL_DIFFICULTY * Map.Depth));
 }
 public record struct Mul(int @base, float multiplier, int scaler)

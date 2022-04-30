@@ -1,7 +1,7 @@
 namespace Entities;
 public partial class Monster
 {
-    private static StatInfo lunaticStat = new(sol: 1, lun: 1, con: 3, energy: 4, killExp: 3, Sight: 1);
+    private static StatInfo lunaticStat = new(stat: new(1, 1, 3), energy: 4, killExp: 3, Sight: 1);
     public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticStat, (m) => m.LunaticBehav(), new Item[] { holySword, tearOfLun });
     public void LunaticBehav()
     {
