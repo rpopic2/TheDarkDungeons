@@ -1,8 +1,13 @@
 namespace Entities;
-public partial class Monster
+public class Lunatic : Monster, ISpawnable
 {
-    private static StatInfo lunaticStat = new(stat: new(1, 1, 3), energy: 4, killExp: 3, Sight: 1);
-    public static MonsterData lunatic = new(name: "광신도", '>', '<', lunaticStat, new Item[] { holySword, tearOfLun });
+    private static StatInfo stat = new(stat: new(1, 1, 3), energy: 4, killExp: 3, Sight: 1);
+    private static MonsterData data = new(name: "광신도", '>', '<', stat, new Item[] { Fightable.holySword, Fightable.tearOfLun });
+
+    public Lunatic(Position spawnPoint) : base(data, spawnPoint)
+    {
+    }
+
     public void LunaticBehav()
     {
         if (GetHp().Cur != GetHp().Max && Inven.Content.Contains(Fightable.tearOfLun)) _SelectSkill(1, 0);
@@ -16,5 +21,10 @@ public partial class Monster
             }
         }
         else SelectBasicBehaviour(1, 0, -1); //pickup offence
+    }
+
+    public Monster Instantiate(Position spawnPoint)
+    {
+        return new Lunatic(spawnPoint);
     }
 }
