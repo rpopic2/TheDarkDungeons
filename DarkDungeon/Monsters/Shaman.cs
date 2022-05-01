@@ -1,7 +1,7 @@
 namespace Entities;
 public class Shaman : Monster, ISpawnable
 {
-    private static StatInfo stat = new(stat: new(0, 1, 1), energy: 4, killExp: 4, Sight: 3);
+    private static StatInfo stat = new(stat: new(0, 1, 1), energy: 4, killExp: 4);
     public static MonsterData data = new(name: "정령술사", '}', '{', stat, new Item[] { spiritStaff, torch });
 
     public Shaman(Position spawnPoint) : base(data, spawnPoint) { }

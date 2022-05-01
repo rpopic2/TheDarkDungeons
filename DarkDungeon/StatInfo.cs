@@ -1,4 +1,4 @@
-public record StatInfo(Stat stat, int energy, int killExp, int Sight)
+public record StatInfo(Status stat, int energy, int killExp)
 {
     public int SolDifficulty => ApplyDifficulty(stat[StatName.Sol]);
     public int LunDifficulty => ApplyDifficulty(stat[StatName.Lun]);

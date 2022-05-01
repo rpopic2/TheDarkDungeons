@@ -4,8 +4,8 @@ public partial class Fightable
     public readonly string Name;
     public int Level { get; protected set; }
     public GamePoint Energy { get; protected set; }
-    public readonly Stat Stat;
-    public int Sight { get; protected set; } = 1;
+    public readonly Status Stat;
+    public int Sight => Stat.Sight;
     public Position Pos { get; protected set; }
 
     public Inventory Inven { get; private set; }
@@ -15,7 +15,7 @@ public partial class Fightable
     private Fightable? _lastHit { get; set; }
     protected Fightable? _lastAttacker { get; set; }
     public Action<Fightable> passives = (p) => { };
-    public Fightable(string name, int level, Stat stat, int energy, Position pos)
+    public Fightable(string name, int level, Status stat, int energy, Position pos)
     {
         Pos = pos;
         this.Level = level;

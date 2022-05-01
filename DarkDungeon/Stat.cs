@@ -1,10 +1,12 @@
-public class Stat
+public class Status
 {
     public const int MIN = 1;
-    private readonly int[] _data = new int[3];
+    public const int BASIC_SIGHT = 1;
     public readonly Random rnd = new Random();
+    private readonly int[] _data = new int[3];
     public GamePoint Hp { get; private set; }
-    public Stat(int sol, int lun, int con)
+    public int Sight { get; private set; } = BASIC_SIGHT;
+    public Status(int sol, int lun, int con)
     {
         Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);
         this[StatName.Sol] = sol;
@@ -40,6 +42,14 @@ public class Stat
     public void Heal(int value)
     {
         Hp += value;
+    }
+    public void AddSight(int value)
+    {
+        Sight += value;
+    }
+    public void ResetSight()
+    {
+        Sight = BASIC_SIGHT;
     }
     public override string ToString()
     {

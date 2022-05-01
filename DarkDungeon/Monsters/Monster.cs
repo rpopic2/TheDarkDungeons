@@ -11,7 +11,6 @@ public abstract class Monster : Fightable
     : base(name: data.name, level: Map.Depth, stat: new(data.stat.SolDifficulty, data.stat.LunDifficulty, data.stat.ConDifficulty),
     energy: data.stat.energy, pos: spawnPoint)
     {
-        Sight = data.stat.Sight;
         killExp = data.stat.KillExpDifficulty;
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;

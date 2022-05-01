@@ -1,7 +1,7 @@
 namespace Entities;
 public class Lunatic : Monster, ISpawnable
 {
-    private static StatInfo stat = new(stat: new(1, 1, 3), energy: 4, killExp: 3, Sight: 1);
+    private static StatInfo stat = new(stat: new(1, 1, 3), energy: 4, killExp: 3);
     private static MonsterData data = new(name: "광신도", '>', '<', stat, new Item[] { Fightable.holySword, Fightable.tearOfLun });
 
     public Lunatic(Position spawnPoint) : base(data, spawnPoint) { }
