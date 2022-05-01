@@ -15,6 +15,7 @@ public static class Extensions
 
     public static Facing Flip(this Facing facing)
         => facing == Facing.Right ? Facing.Left : Facing.Right;
+    public static int ApplyDifficulty(this int stat) => (int)(stat + MathF.Floor(Rules.LEVEL_DIFFICULTY * Map.Depth));
 
     public static int RoundMult(this int @base, float mult)
     => (int)MathF.Round(@base * mult);

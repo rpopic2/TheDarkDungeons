@@ -2,8 +2,9 @@ public class Status
 {
     public const int MIN = 1;
     public const int BASIC_SIGHT = 1;
+    public const int STAT_COUNT = 3;
     public readonly Random rnd = new Random();
-    private readonly int[] _data = new int[3];
+    private readonly int[] _data = new int[STAT_COUNT];
     public GamePoint Hp { get; private set; }
     public int Sight { get; private set; } = BASIC_SIGHT;
     public Status(int sol, int lun, int con)
@@ -13,10 +14,14 @@ public class Status
         this[StatName.Lun] = lun;
         this[StatName.Con] = con;
     }
-    private static int ApplyDifficulty(int stat) => (int)(stat + MathF.Floor(Rules.LEVEL_DIFFICULTY * Map.Depth));
     public Status GetDifficultyStat()
     {
-        return new(ApplyDifficulty(_data[0]), ApplyDifficulty(_data[1]), ApplyDifficulty(_data[2]));
+        int[] tempData = new int[STAT_COUNT];
+        for (int i = 0; i < STAT_COUNT; i++)
+        {
+            tempData[i] = _data[i].ApplyDifficulty();
+        }
+        return new(tempData[0], tempData[1], tempData[2]);
     }
     protected int SolToHp() => 1 + this[StatName.Sol].RoundMult(0.8f);
 

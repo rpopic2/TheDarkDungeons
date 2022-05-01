@@ -22,8 +22,8 @@ public abstract class Monster : Fightable
     public override void SelectAction()
     {
         if (!IsAlive) return;
-        if(Energy.Cur <= 0) OnEnergyDeplete();
-        else if(_followTarget is not null) OnFollowTarget();
+        if (Energy.Cur <= 0) OnEnergyDeplete();
+        else if (_followTarget is not null) OnFollowTarget();
         else OnNothing();
     }
     protected abstract void OnEnergyDeplete();
