@@ -1,7 +1,7 @@
 public class Map
 {
     private const int BOSS_DEPTH = 10;
-    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Shaman(new()), new Lunatic(new()), new Snake(new()) };
+    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Shaman(new()), new Lunatic(new()), new Snake(new()), new Rat(new()) };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
     ///<summary>is 1 by default</summary>
@@ -24,7 +24,6 @@ public class Map
         Current = this;
         this.Length = length;
         this.SpawnMobs = spawnMobs;
-        SpawnMobs = false;
         _pushDown = new('\n', Depth - 1);
 
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
@@ -44,7 +43,7 @@ public class Map
             this.SpawnMobs = false;
             Spawn();
         }
-        //if (spawnMobs) Spawn();
+        if (SpawnMobs) Spawn();
     }
     private static Player s_player { get => Player.instance; }
     public ref readonly Fightable?[] FightablePositions => ref _fightablePositions;
