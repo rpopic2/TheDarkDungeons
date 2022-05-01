@@ -1,6 +1,7 @@
 public class Map
 {
-    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Rat(new()), new Lunatic(new()), new Snake(new()), new Shaman(new()) };
+    private const int BOSS_DEPTH = 10;
+    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Shaman(new()), new Lunatic(new()), new Snake(new()) };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
     ///<summary>is 1 by default</summary>
@@ -23,6 +24,7 @@ public class Map
         Current = this;
         this.Length = length;
         this.SpawnMobs = spawnMobs;
+        SpawnMobs = false;
         _pushDown = new('\n', Depth - 1);
 
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
@@ -37,7 +39,12 @@ public class Map
         Steppables[portalIndex] = new Portal();
         if (corpseFromPrev is Corpse corpse) Steppables[s_player.Pos.x] = corpse;
         _fightables.Add(s_player);
-        if (spawnMobs) Spawn();
+        if (Depth == BOSS_DEPTH)
+        {
+            this.SpawnMobs = false;
+            Spawn();
+        }
+        //if (spawnMobs) Spawn();
     }
     private static Player s_player { get => Player.instance; }
     public ref readonly Fightable?[] FightablePositions => ref _fightablePositions;
@@ -49,16 +56,18 @@ public class Map
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
 
-        int min = Math.Max(0, Depth - 2);
         int max = Math.Min(Depth + 1, NewMonsterData.Length);
+        int min = Math.Max(0, max - 2);
+
         int randomIndex = s_rnd.Next(min, max);
         int newPos = spawnableIndices[randomIndex];
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
 
-
+        ISpawnable data = NewMonsterData[randomIndex];
         Monster mov;
-        mov = NewMonsterData[randomIndex].Instantiate(spawnPoint);
+        mov = data.Instantiate(spawnPoint);
+        if (Depth == BOSS_DEPTH) mov = new QuietKnight(spawnPoint);
         _fightables.Add(mov);
         UpdateFightable(mov);
 

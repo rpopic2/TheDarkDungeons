@@ -201,6 +201,19 @@ public partial class Fightable
             _currentMap.UpdateFightable(this);
         }
     }
+    protected void Dash(Position value)
+    {
+        Position temp = new(1, value.facing);
+        for(int i = 0; i < value.x; i++)
+        {
+            if(CanMove(temp))
+            {
+                Pos += temp;
+                _currentMap.UpdateFightable(this);
+            }
+        }
+
+    }
     public bool CanMove(Position value)
     {
         if (Energy.IsMin) return false;
