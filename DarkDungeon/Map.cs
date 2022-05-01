@@ -1,6 +1,6 @@
 public class Map
 {
-    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Lunatic(new()) };
+    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Lunatic(new()), new Snake(new()) };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
     ///<summary>is 1 by default</summary>
@@ -51,9 +51,7 @@ public class Map
 
         int min = Math.Max(0, Depth - 2);
         int max = Math.Min(Depth + 1, NewMonsterData.Length);
-        int randomData = s_rnd.Next(min, max);
-
-        int randomIndex = s_rnd.Next(0, spawnableIndices.Count);
+        int randomIndex = s_rnd.Next(min, max);
         int newPos = spawnableIndices[randomIndex];
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);

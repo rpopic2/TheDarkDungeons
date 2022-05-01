@@ -1,6 +1,6 @@
 namespace Entities;
 public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Item[] startItem);
-public partial class Monster : Fightable
+public abstract partial class Monster : Fightable
 {
     private int killExp;
     protected static Player player { get => Player.instance; }
@@ -27,18 +27,9 @@ public partial class Monster : Fightable
         else if(_followTarget is not null) OnFollowTarget();
         else OnNothing();
     }
-    protected virtual void OnEnergyDeplete()
-    {
-
-    }
-    protected virtual void OnFollowTarget()
-    {
-        
-    }
-    protected virtual void OnNothing()
-    {
-        
-    }
+    protected abstract void OnEnergyDeplete();
+    protected abstract void OnFollowTarget();
+    protected abstract void OnNothing();
     protected void BasicMovement()
     {
         int randomFace = Stat.rnd.Next(2);
