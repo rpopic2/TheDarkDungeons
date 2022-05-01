@@ -1,9 +1,9 @@
 public class Stat
 {
     public const int MIN = 1;
-    private int[] _data = new int[3];
-    public Random rnd = new Random();
-    public GamePoint Hp;
+    private readonly int[] _data = new int[3];
+    public readonly Random rnd = new Random();
+    public GamePoint Hp { get; private set; }
     public Stat(int sol, int lun, int con)
     {
         Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);
@@ -28,7 +28,7 @@ public class Stat
     }
     public int GetRandom(StatName stat)
     {
-        if(stat == StatName.None) return 0;
+        if (stat == StatName.None) return 0;
         int max = this[stat];
         if (max <= 0) return 0;
         else return rnd.Next(MIN, max);
