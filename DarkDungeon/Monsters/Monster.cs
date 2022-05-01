@@ -19,6 +19,8 @@ public abstract class Monster : Fightable
             Inven.Add(newItem);
         }
     }
+    protected int DistanceToTarget => _followTarget?.Pos.Distance(Pos) ?? 0;
+
     public override void SelectAction()
     {
         if (!IsAlive) return;
