@@ -5,7 +5,10 @@ public class Bat : Monster, ISpawnable
     private static MonsterData data = new(name: "박쥐", 'b', 'd', stat, new Item[] { Fightable.batItem });
     public Monster Instantiate(Position spawnPoint) => new Bat(spawnPoint);
 
-    public Bat(Position spawnPoint) : base(data, spawnPoint) { metaData.Add("isAngry", 0); }
+    public Bat(Position spawnPoint) : base(data, spawnPoint)
+    {
+        metaData.Add("isAngry", 0);
+    }
     protected override void OnEnergyDeplete()
     {
         SelectBasicBehaviour(1, 0, -1); //pickup offence
