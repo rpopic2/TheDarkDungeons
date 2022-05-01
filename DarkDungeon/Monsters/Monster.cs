@@ -1,6 +1,6 @@
 namespace Entities;
 public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Item[] startItem);
-public abstract partial class Monster : Fightable
+public abstract class Monster : Fightable
 {
     private int killExp;
     protected static Player player { get => Player.instance; }

@@ -1,6 +1,6 @@
 public class Map
 {
-    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Lunatic(new()), new Snake(new()) };
+    public static ISpawnable[] NewMonsterData = { new Bat(new()), new Lunatic(new()), new Snake(new()), new Shaman(new()) };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
     ///<summary>is 1 by default</summary>
