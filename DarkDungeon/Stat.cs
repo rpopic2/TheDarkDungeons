@@ -13,6 +13,11 @@ public class Status
         this[StatName.Lun] = lun;
         this[StatName.Con] = con;
     }
+    private static int ApplyDifficulty(int stat) => (int)(stat + MathF.Floor(Rules.LEVEL_DIFFICULTY * Map.Depth));
+    public Status GetDifficultyStat()
+    {
+        return new(ApplyDifficulty(_data[0]), ApplyDifficulty(_data[1]), ApplyDifficulty(_data[2]));
+    }
     protected int SolToHp() => 1 + this[StatName.Sol].RoundMult(0.8f);
 
     public int this[StatName index]

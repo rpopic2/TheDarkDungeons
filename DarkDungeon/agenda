@@ -4,7 +4,7 @@ main 0.6.010522
     2. 팔로우타겟이 없을 때의 행동
     3. 팔로우타겟이 있을 떄의 행동
 [ ] Stat과 statInfo통일
-[ ] move fightable.sight to Stat
+[X] move fightable.sight to Stat
 [ ] 화살 하나 맞추고 두개 맞춰놓으면 하나 증발함
 [ ] Player.cs를 유저 인풋과 그냥 파이터블 상속하는 두개로 나눠야할듯.
 [ ] Player.Charge와 Player.PoisonItem 리팩토링 하기 (중복)

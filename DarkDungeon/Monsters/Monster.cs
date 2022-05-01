@@ -8,7 +8,7 @@ public abstract class Monster : Fightable
     protected Fightable? _followTarget;
     protected Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint)
-    : base(name: data.name, level: Map.Depth, stat: new(data.stat.SolDifficulty, data.stat.LunDifficulty, data.stat.ConDifficulty),
+    : base(name: data.name, level: Map.Depth, stat: data.stat.stat.GetDifficultyStat(),
     energy: data.stat.energy, pos: spawnPoint)
     {
         killExp = data.stat.KillExpDifficulty;
