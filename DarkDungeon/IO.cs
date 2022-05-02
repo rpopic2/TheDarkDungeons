@@ -193,9 +193,11 @@ public static class IO
     public static void DrawInventory()
     {
         Console.Clear();
-        foreach (Item item in s_player.Inven.OfType<Item>())
+        Inventory Inven = s_player.Inven;
+        foreach (Item item in Inven.OfType<Item>())
         {
-            pr($"{item.Name} | 종류 : {item.itemType} ");
+            ItemMetaData metaData = Inven.GetMeta(item);
+            pr($"{item.Name} | 종류 : {item.itemType} {metaData} ");
             foreach (IBehaviour behav in item.skills)
             {
                 pr($"\t{behav.ToString()} {behav.Stance}");

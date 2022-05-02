@@ -67,8 +67,9 @@ public partial class Fightable
     {
         if (Energy.Cur > 0)
         {
+            ItemMetaData metaData = Inven.GetMeta(item);
             Energy -= 1;
-            int amount = Stat.GetRandom(selected.statName);
+            int amount = Stat.GetRandom(selected.statName, metaData.Mastery);
             Status.Set(item, selected, amount);
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
@@ -81,8 +82,9 @@ public partial class Fightable
     {
         if (Energy.Cur > 0)
         {
+            ItemMetaData metaData = Inven.GetMeta(item);
             Energy -= 1;
-            int amount = Stat.GetRandom(StatName.Con);
+            int amount = Stat.GetRandom(StatName.Con, metaData.Mastery);
             Status.Set(item, charge, amount);
             IO.rk($"{Name}{charge.OnUseOutput} ^b({Status.Amount})^/");
         }
@@ -111,6 +113,7 @@ public partial class Fightable
             _lastHit = hit;
             AttackMagicCharge(metaData);
             hit.Dodge(Status.Amount, damageType, this, metaData);
+            metaData.GainExp();
         }
 
         void AttackMagicCharge(ItemMetaData metaData)
@@ -204,9 +207,9 @@ public partial class Fightable
     protected void Dash(Position value)
     {
         Position temp = new(1, value.facing);
-        for(int i = 0; i < value.x; i++)
+        for (int i = 0; i < value.x; i++)
         {
-            if(CanMove(temp))
+            if (CanMove(temp))
             {
                 Pos += temp;
                 _currentMap.UpdateFightable(this);

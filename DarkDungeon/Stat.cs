@@ -38,12 +38,13 @@ public class Status
             }
         }
     }
-    public int GetRandom(StatName stat)
+    public int GetRandom(StatName stat, int min = MIN)
     {
         if (stat == StatName.None) return 0;
         int max = this[stat];
+        if (min < MIN) min = MIN;
         if (max <= 0) return 0;
-        else return rnd.Next(MIN, max);
+        else return rnd.Next(min, max);
     }
     public void Damage(int value)
     {
