@@ -197,7 +197,7 @@ public class Player : Fightable
         IO.sel(Inven, 0, out int index, out _, out _, out _);
         IO.del();
         if (index == -1) return;
-        if (Inven[index] is Item item2) PoisonItem(item2);
+        if (Inven[index] is Item item2) base.PoisonItem(item2);
     }
     protected override void Interact()
     {

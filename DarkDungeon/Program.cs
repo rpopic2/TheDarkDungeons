@@ -98,7 +98,6 @@ public class Program
         if (classIndex != -1) IO.pr(classString);
         Player player = Player._instance = new Player(name);
         Map.NewMap();
-        player.Inven.Add(Fightable.poison);
 
         switch (classIndex)
         {
