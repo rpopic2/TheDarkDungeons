@@ -3,6 +3,7 @@ public class Snake : Monster, ISpawnable
 {
     private static StatInfo stat = new(stat: new(1, 3, 1), energy: 3, killExp: 5);
     public static MonsterData data = new(name: "뱀", 'S', '2', stat, new Item[] { Fightable.snakeItem, Fightable.poison });
+    private bool _hissed = false;
 
     public Snake(Position spawnPoint) : base(data, spawnPoint) { }
 
@@ -12,20 +13,19 @@ public class Snake : Monster, ISpawnable
     }
     protected override void OnFollowTarget()
     {
-        if (!metaData.ContainsKey("hissed"))
+        if (!_hissed)
         {
             _SelectSkill(0, 0); //hiss
             metaData["hissed"] = 1;
             return;
         }
-        else if (_followTarget!.Pos.Distance(Pos) <= 1 && Inven.GetMeta(Fightable.snakeItem).poison > 0)
+        else if (_followTarget!.Pos.Distance(Pos) <= 1)
         {
             _SelectSkill(0, 1); //bite
         }
         else
         {
-            Facing newFacing = Pos.LookAt(_followTarget.Pos.x);
-            SelectBasicBehaviour(0, 1, (int)newFacing); //move
+            FollowFollowTarget();
         }
     }
     protected override void OnNothing()

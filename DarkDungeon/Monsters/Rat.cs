@@ -17,8 +17,7 @@ public class Rat : Monster, ISpawnable
         else if (distance == 1) _SelectSkill(0, 0);
         else
         {
-            Facing newFacing = Pos.LookAt(_followTarget!.Pos.x);
-            SelectBasicBehaviour(0, 1, (int)newFacing); //mov
+            FollowFollowTarget();
         }
     }
     protected override void OnNothing()

@@ -56,6 +56,12 @@ public abstract class Monster : Fightable
         if (target is not Fightable || !this.IsEnemy(target)) this._followTarget = null;
         else this._followTarget = target;
     }
+    protected void FollowFollowTarget()
+    {
+        if(_followTarget is null) return;
+        Facing newFacing = Pos.LookAt(_followTarget.Pos.x);
+        SelectBasicBehaviour(0, 1, (int)newFacing); //move
+    }
     protected override void OnDeath(object? sender, EventArgs e)
     {
         if (!IsAlive) return;
