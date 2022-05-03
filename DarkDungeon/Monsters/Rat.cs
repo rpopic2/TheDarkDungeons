@@ -10,14 +10,14 @@ public class Rat : Monster, ISpawnable
     {
         SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
-    protected override void OnFollowTarget()
+    protected override void OnTarget()
     {
         int distance = DistanceToTarget;
         if (distance == 2) _SelectSkill(0, 1);
         else if (distance == 1) _SelectSkill(0, 0);
         else
         {
-            FollowFollowTarget();
+            FollowTarget();
         }
     }
     protected override void OnNothing()

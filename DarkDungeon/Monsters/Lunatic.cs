@@ -14,7 +14,7 @@ public class Lunatic : Monster, ISpawnable
     {
         SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
-    protected override void OnFollowTarget()
+    protected override void OnTarget()
     {
         if (Inven.GetMeta(Fightable.holySword).magicCharge > 0) _SelectSkill(0, 0);
         else _SelectSkill(0, 1);

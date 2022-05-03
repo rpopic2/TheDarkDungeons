@@ -25,11 +25,11 @@ public abstract class Monster : Fightable
     {
         if (!IsAlive) return;
         if (Energy.Cur <= 0) OnEnergyDeplete();
-        else if (_target is not null) OnFollowTarget();
+        else if (_target is not null) OnTarget();
         else OnNothing();
     }
     protected abstract void OnEnergyDeplete();
-    protected abstract void OnFollowTarget();
+    protected abstract void OnTarget();
     protected abstract void OnNothing();
     protected void BasicMovement()
     {
@@ -56,7 +56,7 @@ public abstract class Monster : Fightable
         if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
         else this._target = target;
     }
-    protected void FollowFollowTarget()
+    protected void FollowTarget()
     {
         if(_target is null) return;
         Facing newFacing = Pos.LookAt(_target.Pos.x);

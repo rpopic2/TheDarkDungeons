@@ -13,7 +13,7 @@ public class Bat : Monster, ISpawnable
     {
         SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
-    protected override void OnFollowTarget()
+    protected override void OnTarget()
     {
         if (metaData["isAngry"] == 1)
         {

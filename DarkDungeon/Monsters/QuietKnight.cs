@@ -26,7 +26,7 @@ public class QuietKnight : Monster, ISpawnable
     {
         SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
-    protected override void OnFollowTarget()
+    protected override void OnTarget()
     {
         int distance = DistanceToTarget;
         if (distance > 2)

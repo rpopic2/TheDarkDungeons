@@ -6,7 +6,7 @@ public class Shaman : Monster, ISpawnable
 
     public Shaman(Position spawnPoint) : base(data, spawnPoint) { }
     
-    protected override void OnFollowTarget()
+    protected override void OnTarget()
     {
         if (Inven.GetMeta(Fightable.spiritStaff).magicCharge > 0) _SelectSkill(0, 0);
         else _SelectSkill(0, 1);
