@@ -19,7 +19,7 @@ public class Snake : Monster, ISpawnable
             metaData["hissed"] = 1;
             return;
         }
-        else if (_followTarget!.Pos.Distance(Pos) <= 1)
+        else if (_target!.Pos.Distance(Pos) <= 1)
         {
             _SelectSkill(0, 1); //bite
         }

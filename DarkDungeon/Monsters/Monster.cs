@@ -5,7 +5,7 @@ public abstract class Monster : Fightable
     private int killExp;
     protected static Player player { get => Player.instance; }
     private char fowardChar, backwardChar;
-    protected Fightable? _followTarget;
+    protected Fightable? _target;
     protected Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint)
     : base(name: data.name, level: Map.Depth, stat: data.stat.stat.GetDifficultyStat(),
@@ -19,13 +19,13 @@ public abstract class Monster : Fightable
             Inven.Add(newItem);
         }
     }
-    protected int DistanceToTarget => _followTarget?.Pos.Distance(Pos) ?? 0;
+    protected int DistanceToTarget => _target?.Pos.Distance(Pos) ?? 0;
 
     public override void SelectAction()
     {
         if (!IsAlive) return;
         if (Energy.Cur <= 0) OnEnergyDeplete();
-        else if (_followTarget is not null) OnFollowTarget();
+        else if (_target is not null) OnFollowTarget();
         else OnNothing();
     }
     protected abstract void OnEnergyDeplete();
@@ -50,16 +50,16 @@ public abstract class Monster : Fightable
     {
         if (_lastAttacker is not null)
         {
-            _followTarget = _lastAttacker;
+            _target = _lastAttacker;
         }
         Fightable? target = _currentMap.RayCast(Pos, Sight);
-        if (target is not Fightable || !this.IsEnemy(target)) this._followTarget = null;
-        else this._followTarget = target;
+        if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
+        else this._target = target;
     }
     protected void FollowFollowTarget()
     {
-        if(_followTarget is null) return;
-        Facing newFacing = Pos.LookAt(_followTarget.Pos.x);
+        if(_target is null) return;
+        Facing newFacing = Pos.LookAt(_target.Pos.x);
         SelectBasicBehaviour(0, 1, (int)newFacing); //move
     }
     protected override void OnDeath(object? sender, EventArgs e)
