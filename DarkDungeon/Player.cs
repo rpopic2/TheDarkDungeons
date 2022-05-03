@@ -196,6 +196,7 @@ public class Player : Fightable
         IO.pr("독을 바를 대상을 선택해 주십시오.");
         IO.sel(Inven, 0, out int index, out _, out _, out _);
         IO.del();
+        if (index == -1) return;
         if (Inven[index] is Item item2) PoisonItem(item2);
     }
     protected override void Interact()
