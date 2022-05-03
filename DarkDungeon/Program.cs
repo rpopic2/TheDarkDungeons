@@ -1,7 +1,7 @@
 ﻿global using Entities;
 public class Program
 {
-    public const string VERSION = "0.6.240422";
+    public const string VERSION = "0.6.030522";
     public static Program instance = default!;
     private static Player s_player { get => Player.instance; }
     public static int Turn { get; private set; }
@@ -98,6 +98,7 @@ public class Program
         if (classIndex != -1) IO.pr(classString);
         Player player = Player._instance = new Player(name);
         Map.NewMap();
+        player.Inven.Add(Fightable.poison);
 
         switch (classIndex)
         {
