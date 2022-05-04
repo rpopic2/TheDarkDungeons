@@ -134,22 +134,7 @@ public class Player : Fightable
     public bool PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
-        if (Inven.Count < Inventory.INVENSIZE)
-        {
-            Inven.Add(item);
-        }
-        else
-        {
-            IO.pr("인벤토리가 꽉 찼습니다.");
-            bool discarded = DiscardItem();
-            if (discarded) Inven.Add(item);
-            else
-            {
-                IO.del(3);
-                return false;
-            }
-            IO.del();
-        }
+        Inven.Add(item);
         IO.Redraw();
         return true;
     }
