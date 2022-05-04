@@ -32,7 +32,7 @@ public class Inventory : ICollection<Item?>
             GetMeta(item).stack++;
             success = true;
         }
-        success = false;
+        else success = false;
     }
     public void Add(Item? value) =>Add(value, out _);
     private bool Store(Item item)
