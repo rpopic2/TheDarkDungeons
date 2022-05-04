@@ -134,9 +134,9 @@ public class Player : Fightable
     public bool PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
-        Inven.Add(item);
+        Inven.Add(item, out bool success);
         IO.Redraw();
-        return true;
+        return success;
     }
     public bool DiscardItem()
     {

@@ -23,37 +23,45 @@ public class Inventory : ICollection<Item?>
 
     public bool IsReadOnly => ((ICollection<Item?>)content).IsReadOnly;
 
-    public void Add(Item? value)
+    public void Add(Item? value, out bool success)
     {
         if (value is not Item item) throw new Exception("Cannot add null into inventory.");
-        if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
+        if (item.itemType == ItemType.Equip) success = Store(item);
+        else if (content.IndexOf(item) != -1)
         {
             GetMeta(item).stack++;
-            return;
+            success = true;
         }
-        else
+        success = false;
+    }
+    public void Add(Item? value) =>Add(value, out _);
+    private bool Store(Item item)
+    {
+        if (Count >= INVENSIZE && owner is Player p)
         {
-            if (Count >= INVENSIZE && owner is Player p)
-            {
-                IO.pr("인벤토리가 꽉 찼습니다");
-                p.DiscardItem();
-            }
-            if (Count < INVENSIZE && content.IndexOf(item) == -1)
-            {
-                content.Add(item);
-                metaDatas.Add(item, new());
-            }
-            else return;
+            IO.pr("인벤토리가 꽉 찼습니다");
+            p.DiscardItem();
+            if (Count >= INVENSIZE) return false;
         }
-
-        var wears = from p in item.skills where p is WearEffect select p;
-        if (wears is not null)
+        if (content.IndexOf(item) == -1)
         {
-            foreach (WearEffect wear in wears)
-            {
-                wear.Behaviour.Invoke(owner);
-            }
+            content.Add(item);
+            metaDatas.Add(item, new());
+            PutOn(item);
+            RegisterPassives(item);
         }
+        return true;
+    }
+    private void PutOn(Item item)
+    {
+        var wears = item.skills.OfType<WearEffect>();
+        foreach (WearEffect wear in wears)
+        {
+            wear.Behaviour.Invoke(owner);
+        }
+    }
+    private void RegisterPassives(Item item)
+    {
         var passives = item.skills.OfType<Passive>();
         var invocationList = owner.passives.GetInvocationList();
         foreach (var pass in passives)
@@ -71,11 +79,12 @@ public class Inventory : ICollection<Item?>
                 wear.OnTakeOff.Invoke(owner);
             }
         }
+
+        var ownerPassive = owner.passives;
         var passives = from p in item.skills where p is Passive select p as Passive;
         foreach (var p in passives)
         {
-#pragma warning disable CS8601
-            if (owner.passives is not null) owner.passives -= p.Behaviour;
+            if (ownerPassive is not null) ownerPassive -= p.Behaviour;
         }
 
         content.Remove(item);
