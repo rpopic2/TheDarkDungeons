@@ -93,7 +93,7 @@ public partial class Fightable
     });
     private const int TORCH_BRIGHTNESS = 2;
     private const int TORCH_DURATION = 20;
-    public static readonly Item torch = new("횃불", ItemType.Equip, new IBehaviour[]{
+    public static readonly Item torch = new("횃불", ItemType.Consume, new IBehaviour[]{
         new Skill("휘두르기", StanceName.Offence, StatName.Sol, DamageType.Normal, "횃불을 휘둘렀다.", (i)=>i.Attack(1)),
         new WearEffect("밝음", StanceName.None, "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.Stat.AddSight(TORCH_BRIGHTNESS);p.Inven.GetMeta(torch!).stack=TORCH_DURATION;}, (p)=>p.Stat.ResetSight()),
         new Passive("꺼져가는 횃불", StanceName.None, "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})

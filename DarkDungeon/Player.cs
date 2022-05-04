@@ -134,11 +134,7 @@ public class Player : Fightable
     public bool PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
-        if (item.itemType == ItemType.Consume && Inven.Contains(item))
-        {
-            Inven.Add(item);
-        }
-        else if (Inven.Count < Inventory.INVENSIZE)
+        if (Inven.Count < Inventory.INVENSIZE)
         {
             Inven.Add(item);
         }
