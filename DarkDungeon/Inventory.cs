@@ -47,26 +47,18 @@ public class Inventory : ICollection<Item?>
         {
             content.Add(item);
             metaDatas.Add(item, new());
-            PutOn(item);
+            Wear(item);
             RegisterPassives(item);
         }
         return true;
     }
-    private void PutOn(Item item)
+    private void Wear(Item item)
     {
-        var wears = item.skills.OfType<WearEffect>();
-        foreach (WearEffect wear in wears)
-        {
-            wear.Behaviour.Invoke(owner);
-        }
+        item.ForEachWear((w)=>w.Behaviour.Invoke(owner));
     }
     private void TakeOff(Item item)
     {
-        var wears = item.skills.OfType<WearEffect>();
-        foreach (WearEffect wear in wears)
-        {
-            wear.OnTakeOff.Invoke(owner);
-        }
+        item.ForEachWear((w)=>w.OnTakeOff.Invoke(owner));
     }
     private void RegisterPassives(Item item)
     {
@@ -117,7 +109,7 @@ public class Inventory : ICollection<Item?>
         for (int i = 0; i < INVENSIZE; i++)
         {
             string itemName = string.Empty;
-            if (i >= Count) itemName = DEFAULY_NAME;
+            if (i >= Count) itemName = "(맨손)";
             else if (content[i] is Item item)
             {
                 itemName = item.ToString();
