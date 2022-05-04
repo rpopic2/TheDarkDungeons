@@ -1,8 +1,4 @@
-main 0.6.040522
-[X] 횃불 여러개 들면 시야가 오히려 연장됨 => 패시브회수가 제대로 안되는 느낌
-[X] 횃불 있고 인벤 꽉차있으면 꽉찬 인벤이라 버릴거물어봄
-[X] 각 몬스터 클래스마다 싱글톤 만들어서 (베이스 몬스터에 원본) 새 몬스터 반환
-[X] inventory.add 메서드 분리 필요
+main 0.6.050522
 [ ] refactor inventory.delete
 [ ] duplecate code between usages of Player.Pickupitem
 [ ] 화살 하나 맞추고 두개 맞춰놓으면 하나 증발함
