@@ -1,0 +1,5 @@
+Try to keep lines of methods under 15
+Try to keep number of conditions under 4
+Do not copy codes (unless you are taking tiny steps while tdd-ing)
+Try to keep number of parameters under 4
+Do not write long classes
