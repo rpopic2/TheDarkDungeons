@@ -6,10 +6,10 @@ public record Item(string Name, ItemType itemType, IBehaviour[] skills)
         string temp = itemType == ItemType.Equip ? "()" : "<>";
         return temp.Insert(1, Name);
     }
-    public void ForEachWear(Action<WearEffect> action)
+    public void ForEach<T>(Action<T> action) where T : IBehaviour
     {
-        var wears = skills.OfType<WearEffect>();
-        foreach (WearEffect wear in wears) action(wear);
+        var behav = skills.OfType<T>();
+        foreach (T wear in behav) action(wear);
     }
 }
 public partial class Fightable

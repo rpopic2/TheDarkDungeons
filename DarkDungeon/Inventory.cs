@@ -34,7 +34,7 @@ public class Inventory : ICollection<Item?>
         }
         else success = false;
     }
-    public void Add(Item? value) =>Add(value, out _);
+    public void Add(Item? value) => Add(value, out _);
     private bool Store(Item item)
     {
         if (Count >= INVENSIZE && owner is Player p)
@@ -54,20 +54,19 @@ public class Inventory : ICollection<Item?>
     }
     private void Wear(Item item)
     {
-        item.ForEachWear((w)=>w.Behaviour.Invoke(owner));
+        item.ForEach<WearEffect>((w) => w.Behaviour.Invoke(owner));
     }
     private void TakeOff(Item item)
     {
-        item.ForEachWear((w)=>w.OnTakeOff.Invoke(owner));
+        item.ForEach<WearEffect>((w) => w.OnTakeOff.Invoke(owner));
     }
     private void RegisterPassives(Item item)
     {
-        var passives = item.skills.OfType<Passive>();
         var invocationList = owner.passives.GetInvocationList();
-        foreach (var pass in passives)
+        item.ForEach<Passive>((p) =>
         {
-            if (!invocationList.Contains(pass.Behaviour)) owner.passives += pass.Behaviour;
-        }
+            if (!invocationList.Contains(p.Behaviour)) owner.passives += p.Behaviour;
+        });
     }
     private void UnregisterPassives(Item item)
     {
