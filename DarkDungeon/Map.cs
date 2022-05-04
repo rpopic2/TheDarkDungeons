@@ -1,6 +1,7 @@
 public class Map
 {
-    public static List<MonsterData> monsterData = new() { Monster.bat, Monster.shaman, Monster.lunatic, Monster.snake };
+    private const int BOSS_DEPTH = 5;
+    public static ISpawnable[] NewMonsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
     ///<summary>is 1 by default</summary>
@@ -37,7 +38,12 @@ public class Map
         Steppables[portalIndex] = new Portal();
         if (corpseFromPrev is Corpse corpse) Steppables[s_player.Pos.x] = corpse;
         _fightables.Add(s_player);
-        if (spawnMobs) Spawn();
+        if (Depth == BOSS_DEPTH)
+        {
+            this.SpawnMobs = false;
+            Spawn();
+        }
+        if (SpawnMobs) Spawn();
     }
     private static Player s_player { get => Player.instance; }
     public ref readonly Fightable?[] FightablePositions => ref _fightablePositions;
@@ -49,19 +55,19 @@ public class Map
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
 
-        int min = Math.Max(0, Depth - 2);
-        int max = Math.Min(Depth + 1, Map.monsterData.Count);
-        int randomData = s_rnd.Next(min, max);
-        MonsterData data = Map.monsterData[randomData];
+        int max = Math.Min(Depth + 1, NewMonsterData.Length);
+        int min = Math.Max(0, max - 2);
 
-        int randomIndex = s_rnd.Next(0, spawnableIndices.Count);
+        int randomIndex = s_rnd.Next(min, max);
         int newPos = spawnableIndices[randomIndex];
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
 
-        Fightable mov;
-        mov = new Monster(data, spawnPoint);
-        _fightables.Add((Fightable)mov);
+        ISpawnable data = NewMonsterData[randomIndex];
+        Monster mov;
+        mov = data.Instantiate(spawnPoint);
+        if (Depth == BOSS_DEPTH) mov = new QuietKnight(spawnPoint);
+        _fightables.Add(mov);
         UpdateFightable(mov);
 
         List<int> GetSpawnableIndices()

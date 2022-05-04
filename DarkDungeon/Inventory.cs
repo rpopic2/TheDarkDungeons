@@ -29,14 +29,21 @@ public class Inventory : ICollection<Item?>
         if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
             GetMeta(item).stack++;
+            return;
         }
         else
         {
-            if (content.IndexOf(item) == -1)
+            if (Count >= INVENSIZE && owner is Player p)
+            {
+                IO.pr("인벤토리가 꽉 찼습니다");
+                p.DiscardItem();
+            }
+            if (Count < INVENSIZE && content.IndexOf(item) == -1)
             {
                 content.Add(item);
                 metaDatas.Add(item, new());
             }
+            else return;
         }
 
         var wears = from p in item.skills where p is WearEffect select p;
@@ -51,7 +58,7 @@ public class Inventory : ICollection<Item?>
         var invocationList = owner.passives.GetInvocationList();
         foreach (var pass in passives)
         {
-            if(!invocationList.Contains(pass.Behaviour)) owner.passives += pass.Behaviour;
+            if (!invocationList.Contains(pass.Behaviour)) owner.passives += pass.Behaviour;
         }
     }
     public void Remove(Item item)

@@ -1,15 +1,27 @@
-public class Stat
+public class Status
 {
     public const int MIN = 1;
-    private int[] _data = new int[3];
-    public Random rnd = new Random();
-    public GamePoint Hp;
-    public Stat(int sol, int lun, int con)
+    public const int BASIC_SIGHT = 1;
+    public const int STAT_COUNT = 3;
+    public readonly Random rnd = new Random();
+    private readonly int[] _data = new int[STAT_COUNT];
+    public GamePoint Hp { get; private set; }
+    public int Sight { get; private set; } = BASIC_SIGHT;
+    public Status(int sol, int lun, int con)
     {
         Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);
         this[StatName.Sol] = sol;
         this[StatName.Lun] = lun;
         this[StatName.Con] = con;
+    }
+    public Status GetDifficultyStat()
+    {
+        int[] tempData = new int[STAT_COUNT];
+        for (int i = 0; i < STAT_COUNT; i++)
+        {
+            tempData[i] = _data[i].ApplyDifficulty();
+        }
+        return new(tempData[0], tempData[1], tempData[2]);
     }
     protected int SolToHp() => 1 + this[StatName.Sol].RoundMult(0.8f);
 
@@ -26,13 +38,13 @@ public class Stat
             }
         }
     }
-    public void WearStat(StatName stats, int amount, bool isWearing) => this[stats] += isWearing ? amount : -amount;
-    public int GetRandom(StatName stat)
+    public int GetRandom(StatName stat, int min = MIN)
     {
-        if(stat == StatName.None) return 0;
+        if (stat == StatName.None) return 0;
         int max = this[stat];
+        if (min < MIN) min = MIN;
         if (max <= 0) return 0;
-        else return rnd.Next(MIN, max);
+        else return rnd.Next(min, max);
     }
     public void Damage(int value)
     {
@@ -41,6 +53,14 @@ public class Stat
     public void Heal(int value)
     {
         Hp += value;
+    }
+    public void AddSight(int value)
+    {
+        Sight += value;
+    }
+    public void ResetSight()
+    {
+        Sight = BASIC_SIGHT;
     }
     public override string ToString()
     {

@@ -1,39 +1,43 @@
 namespace Entities;
-public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Action<Monster> behaviour, Item[] startItem);
-public partial class Monster : Fightable
+public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Item[] startItem);
+public abstract class Monster : Fightable
 {
     private int killExp;
     protected static Player player { get => Player.instance; }
     private char fowardChar, backwardChar;
-    private Action<Monster> behaviour;
-    private Fightable? _followTarget;
-    private Dictionary<string, int> metaData = new();
+    protected Fightable? _target;
+    protected Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint)
-    : base(name: data.name, level: Map.Depth, stat: new(data.stat.SolDifficulty, data.stat.LunDifficulty, data.stat.ConDifficulty),
+    : base(name: data.name, level: Map.Depth, stat: data.stat.stat.GetDifficultyStat(),
     energy: data.stat.energy, pos: spawnPoint)
     {
-        Sight = data.stat.Sight;
         killExp = data.stat.KillExpDifficulty;
         fowardChar = data.fowardChar;
         backwardChar = data.backwardChar;
-        behaviour = data.behaviour;
         foreach (var newItem in data.startItem)
         {
             Inven.Add(newItem);
         }
     }
+    protected int DistanceToTarget => _target?.Pos.Distance(Pos) ?? 0;
+
     public override void SelectAction()
     {
         if (!IsAlive) return;
-        behaviour(this);
+        if (Energy.Cur <= 0) OnEnergyDeplete();
+        else if (_target is not null) OnTarget();
+        else OnNothing();
     }
-    private void BasicMovement()
+    protected abstract void OnEnergyDeplete();
+    protected abstract void OnTarget();
+    protected abstract void OnNothing();
+    protected void BasicMovement()
     {
         int randomFace = Stat.rnd.Next(2);
         if (!Map.Current.IsAtEnd(Pos.x)) SelectBasicBehaviour(0, 1, randomFace);
         else SelectBasicBehaviour(0, 1, 1);// = Move(new(1, Facing.Left));
     }
-    private void _SelectSkill(int item, int skill)
+    protected void _SelectSkill(int item, int skill)
     {
         SelectBehaviour(Inven[item]!, skill);
     }
@@ -46,11 +50,17 @@ public partial class Monster : Fightable
     {
         if (_lastAttacker is not null)
         {
-            _followTarget = _lastAttacker;
+            _target = _lastAttacker;
         }
         Fightable? target = _currentMap.RayCast(Pos, Sight);
-        if (target is not Fightable || !this.IsEnemy(target)) this._followTarget = null;
-        else this._followTarget = target;
+        if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
+        else this._target = target;
+    }
+    protected void FollowTarget()
+    {
+        if(_target is null) return;
+        Facing newFacing = Pos.LookAt(_target.Pos.x);
+        SelectBasicBehaviour(0, 1, (int)newFacing); //move
     }
     protected override void OnDeath(object? sender, EventArgs e)
     {

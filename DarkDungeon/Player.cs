@@ -134,26 +134,7 @@ public class Player : Fightable
     public bool PickupItem(Item item)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
-        if (item.itemType == ItemType.Consume && Inven.Contains(item))
-        {
-            Inven.Add(item);
-        }
-        else if (Inven.Count < Inventory.INVENSIZE)
-        {
-            Inven.Add(item);
-        }
-        else
-        {
-            IO.pr("인벤토리가 꽉 찼습니다.");
-            bool discarded = DiscardItem();
-            if (discarded) Inven.Add(item);
-            else
-            {
-                IO.del(3);
-                return false;
-            }
-            IO.del();
-        }
+        Inven.Add(item);
         IO.Redraw();
         return true;
     }
@@ -196,7 +177,8 @@ public class Player : Fightable
         IO.pr("독을 바를 대상을 선택해 주십시오.");
         IO.sel(Inven, 0, out int index, out _, out _, out _);
         IO.del();
-        if (Inven[index] is Item item2) PoisonItem(item2);
+        if (index == -1) return;
+        if (Inven[index] is Item item2) base.PoisonItem(item2);
     }
     protected override void Interact()
     {

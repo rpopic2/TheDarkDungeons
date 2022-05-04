@@ -68,6 +68,11 @@ public partial class Fightable
         new Charge("독니", StatName.None, DamageType.Normal, "의 하악 소리가 울려퍼지며 위협적인 이빨을 드러냈다. 독이 흐르는 듯 하다.", (i)=>i.PoisonItem(snakeItem!)),
         new Skill("물기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i)=>i.Attack(1))
     });
+    public static Skill bite = new Skill("물기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i) => i.Attack(1));
+
+    public static readonly Item ratItem = new("쥐의 이빨", ItemType.Equip, new IBehaviour[]{
+            bite, new Skill("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "는 찍찍 소리를 내며 거대한 이빨을 드러내고 있다. 쥐가 달려든다!", (i)=>{i.Dash(new Position(2, i.Pos.facing));i.Attack(2);i._lastHit?.Status.SetStun(1);})
+            });
     public static readonly Item poison = new("독", ItemType.Consume, new IBehaviour[] {
         new Charge("독 바르기", StatName.None, DamageType.Normal, "은 독을 무기에 바르기로 했다.", (f)=>{f.PoisonItem(); f.Inven.Consume(poison!);})
     });
@@ -88,9 +93,9 @@ public partial class Fightable
     });
     private const int TORCH_BRIGHTNESS = 2;
     private const int TORCH_DURATION = 20;
-    public static readonly Item torch = new("횃불", ItemType.Equip, new IBehaviour[]{
+    public static readonly Item torch = new("횃불", ItemType.Consume, new IBehaviour[]{
         new Skill("휘두르기", StanceName.Offence, StatName.Sol, DamageType.Normal, "횃불을 휘둘렀다.", (i)=>i.Attack(1)),
-        new WearEffect("밝음", StanceName.None, "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.Sight=1+TORCH_BRIGHTNESS;p.Inven.GetMeta(torch!).stack=TORCH_DURATION;}, (p)=>p.Sight=1),
+        new WearEffect("밝음", StanceName.None, "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.Stat.AddSight(TORCH_BRIGHTNESS);p.Inven.GetMeta(torch!).stack=TORCH_DURATION;}, (p)=>p.Stat.ResetSight()),
         new Passive("꺼져가는 횃불", StanceName.None, "횃불은 언젠가는 꺼질 것이다.", (p)=>{p.Inven.Consume(torch!);})
     });
 }
