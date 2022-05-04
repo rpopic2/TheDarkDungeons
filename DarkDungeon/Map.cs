@@ -1,6 +1,6 @@
 public class Map
 {
-    private const int BOSS_DEPTH = 10;
+    private const int BOSS_DEPTH = 5;
     public static ISpawnable[] NewMonsterData = { new Bat(new()), new Shaman(new()), new Lunatic(new()), new Snake(new()), new Rat(new()) };
     private static Random s_rnd = new Random();
     public static Map Current = default!;
