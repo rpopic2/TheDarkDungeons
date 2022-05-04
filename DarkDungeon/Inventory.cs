@@ -60,6 +60,14 @@ public class Inventory : ICollection<Item?>
             wear.Behaviour.Invoke(owner);
         }
     }
+    private void TakeOff(Item item)
+    {
+        var wears = item.skills.OfType<WearEffect>();
+        foreach (WearEffect wear in wears)
+        {
+            wear.OnTakeOff.Invoke(owner);
+        }
+    }
     private void RegisterPassives(Item item)
     {
         var passives = item.skills.OfType<Passive>();
@@ -69,23 +77,19 @@ public class Inventory : ICollection<Item?>
             if (!invocationList.Contains(pass.Behaviour)) owner.passives += pass.Behaviour;
         }
     }
-    public void Remove(Item item)
+    private void UnregisterPassives(Item item)
     {
-        var wears = from p in item.skills where p is WearEffect select p;
-        if (wears is not null)
-        {
-            foreach (WearEffect wear in wears)
-            {
-                wear.OnTakeOff.Invoke(owner);
-            }
-        }
-
-        var ownerPassive = owner.passives;
-        var passives = from p in item.skills where p is Passive select p as Passive;
+        var ownerPassives = owner.passives;
+        var passives = item.skills.OfType<Passive>();
         foreach (var p in passives)
         {
-            if (ownerPassive is not null) ownerPassive -= p.Behaviour;
+            ownerPassives -= p.Behaviour;
         }
+    }
+    public void Remove(Item item)
+    {
+        TakeOff(item);
+        UnregisterPassives(item);
 
         content.Remove(item);
         metaDatas.Remove(item);
@@ -113,7 +117,7 @@ public class Inventory : ICollection<Item?>
         for (int i = 0; i < INVENSIZE; i++)
         {
             string itemName = string.Empty;
-            if (i >= Count) itemName = "(맨손)";
+            if (i >= Count) itemName = DEFAULY_NAME;
             else if (content[i] is Item item)
             {
                 itemName = item.ToString();
