@@ -21,9 +21,9 @@ public static class Extensions
     => (int)MathF.Round(@base * mult);
     public static int FloorMult(this int @base, float mult)
     => (int)MathF.Floor(@base * mult);
-    public static string ToFString(this Array value, string title = "선택 :")
+    public static string ToFString(this Array value)
     {
-        string printResult = title + " ";
+        string printResult = string.Empty;
         if(value.Length <= 0) printResult += "아무것도 없다.";
         for (int i = 0; i < value.Length; i++)
         {
@@ -66,6 +66,6 @@ public static class Extensions
     }
     public static bool IsCancel(this ConsoleKey key)
     {
-        return key == ConsoleKey.X || key == ConsoleKey.L || key == ConsoleKey.H || key == ConsoleKey.OemMinus || key == ConsoleKey.Escape;
+        return key == ConsoleKey.X || key == ConsoleKey.OemMinus || key == ConsoleKey.Escape;
     }
 }

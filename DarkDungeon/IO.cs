@@ -11,14 +11,14 @@ public static class IO
     }
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object value, __ flag = 0, string title = "선택 : ")
+    public static void pr(object value, __ flag = 0, string title = "")
     {
         int x = Console.CursorLeft;
         int y = Console.CursorTop;
-        string stringValue;
-        if (value is Array arrayValue) stringValue = arrayValue.ToFString(title);
-        else stringValue = value.ToString() ?? string.Empty;
-        if (flag.HasFlag(__.emphasis)) stringValue = EMPHASIS + stringValue;
+        string stringValue = title;
+        if (value is Array arrayValue) stringValue += arrayValue.ToFString();
+        else stringValue += value.ToString() ?? string.Empty;
+        if (flag.HasFlag(__.emphasis)) stringValue += EMPHASIS + stringValue;
         if (flag.HasFlag(__.newline)) stringValue += "\n";
         if (flag.HasFlag(__.bottom)) Console.CursorTop = x + Console.WindowHeight - 1;
         if (stringValue.Contains("^"))
@@ -56,14 +56,14 @@ public static class IO
     ///<summary>Console.ReadKey. Intercept is true.</summary>
     public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
-    public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "선택 : ")
+    public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "")
     {
         pr(print, flags, title);
         ConsoleKeyInfo info = Console.ReadKey(true); ;
         del(flags);
         return info;
     }
-    public static void sel(object value, out int index, __ flags = 0, string title = "선택 :")
+    public static void sel(object value, out int index, __ flags = 0, string title = "선택 : ")
     => sel(value, flags, out index, out _, out _, out _, title);
     public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
     {

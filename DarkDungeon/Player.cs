@@ -146,7 +146,7 @@ public class Player : Fightable
     public bool DiscardItem()
     {
     Start:
-        int index = SelectIndexOfItem("버릴 아이템을 선택해 주십시오");
+        int index = SelectIndexOfItem("버릴 아이템을 선택해 주십시오 : ");
         if (index <= -1) return false;
         Item selected = Inven[index]!;
 
