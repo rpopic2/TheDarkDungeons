@@ -71,11 +71,7 @@ public class Inventory : ICollection<Item?>
     private void UnregisterPassives(Item item)
     {
         var ownerPassives = owner.passives;
-        var passives = item.skills.OfType<Passive>();
-        foreach (var p in passives)
-        {
-            ownerPassives -= p.Behaviour;
-        }
+        item.ForEach<Passive>((p) => ownerPassives -= p.Behaviour);
     }
     public void Remove(Item item)
     {
