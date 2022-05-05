@@ -140,9 +140,7 @@ public class Player : Fightable
     }
     public int SelectIndexOfItem(string message)
     {
-        IO.pr(message);
-        IO.sel(Inven, 0, out int index, out bool cancel, out _, out _);
-        IO.del();
+        IO.sel(Inven, out int index, 0, message);
         return index;
     }
     public bool DiscardItem()

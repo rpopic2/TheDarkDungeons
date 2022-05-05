@@ -63,13 +63,15 @@ public static class IO
         del(flags);
         return info;
     }
+    public static void sel(object value, out int index, __ flags = 0, string title = "선택 :")
+    => sel(value, flags, out index, out _, out _, out _, title);
     public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
     {
         bool found;
         do
         {
             found = selOnce(value, flags, out index, out cancel, out mod, out keyInfo, title);
-            if(cancel) return;
+            if (cancel) return;
         } while (!found);
     }
     public static bool selOnce(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
@@ -93,7 +95,7 @@ public static class IO
     {
         index = ITEMKEYS1.IndexOf(i);
         bool found = index != -1 && index <= max - 1;
-        if(!found) index = -1;
+        if (!found) index = -1;
         return found;
     }
     public static bool chkp(ConsoleKey i, int max, out int index)
