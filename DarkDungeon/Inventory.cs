@@ -13,9 +13,9 @@ public class Inventory : ICollection<Item?>
     public Inventory(Fightable owner, string name)
     {
         this.owner = owner;
+        this.name = name;
         content = new(INVENSIZE);
         metaDatas = new(INVENSIZE);
-        this.name = name;
     }
     public Item? GetFirst()
         => content.First(card => card != null);
