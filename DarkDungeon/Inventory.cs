@@ -25,17 +25,16 @@ public class Inventory : ICollection<Item?>
 
     public void Add(Item? value, out bool added)
     {
-        if (value is not Item item) throw new Exception("Cannot add null into inventory.");
-        if (item.itemType == ItemType.Equip)
-        {
-            added = Store(item);
-        }
-        else if (content.IndexOf(item) != -1)
+        if (value is not Item item) throw new Exception("Trying to put non-Item objext into Inventory.");
+        if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
             GetMeta(item).stack++;
             added = true;
         }
-        else added = false;
+        else
+        {
+            added = Store(item);
+        }
     }
     public void Add(Item? value) => Add(value, out _);
     private bool Store(Item item)
