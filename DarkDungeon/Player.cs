@@ -138,32 +138,29 @@ public class Player : Fightable
         IO.Redraw();
         return success;
     }
+    public int SelectIndexOfItem(string message)
+    {
+        IO.pr(message);
+        IO.sel(Inven, 0, out int index, out bool cancel, out _, out _);
+        IO.del();
+        return index;
+    }
     public bool DiscardItem()
     {
-        IO.pr("버릴 아이템을 골라 주십시오.");
-        IO.sel(Inven.Content.ToArray(), __.fullinven, out int index, out bool cancel, out _, out _);
-        IO.del();
-        if (cancel) return false;
+    Start:
+        int index = SelectIndexOfItem("버릴 아이템을 선택해 주십시오");
+        if (index <= -1) return false;
+        Item selected = Inven[index]!;
 
-        if (index < Inven.Count && Inven[index] is Item old)
+    Confirm:
+        ConsoleKey key = IO.rk($"{selected.Name}이 버려집니다. 계속하시겠습니까?").Key;
+        if (key.IsOK())
         {
-            do
-            {
-                ConsoleKeyInfo keyInfo = IO.rk($"{old.Name}이 버려집니다. 계속하시겠습니까?");
-                if (keyInfo.Key.IsOK())
-                {
-                    Inven.Remove(old);
-                    return true;
-                }
-                // else if (keyInfo.Key.IsCancel())
-                // {
-                //     IO.del();
-                //     DiscardItem();
-                //     return false;
-                // }
-            } while (true);
+            Inven.Remove(selected);
+            return true;
         }
-        return false;
+        else if (key.IsCancel()) goto Start;
+        else goto Confirm;
     }
     protected override void Charge(Item? item = null)
     {

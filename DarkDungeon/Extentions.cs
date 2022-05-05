@@ -65,6 +65,6 @@ public static class Extensions
     }
     public static bool IsCancel(this ConsoleKey key)
     {
-        return key == ConsoleKey.X || key == ConsoleKey.OemMinus || key == ConsoleKey.Escape;
+        return key == ConsoleKey.X || key == ConsoleKey.L || key == ConsoleKey.H || key == ConsoleKey.OemMinus || key == ConsoleKey.Escape;
     }
 }
