@@ -23,16 +23,19 @@ public class Inventory : ICollection<Item?>
 
     public bool IsReadOnly => ((ICollection<Item?>)content).IsReadOnly;
 
-    public void Add(Item? value, out bool success)
+    public void Add(Item? value, out bool added)
     {
         if (value is not Item item) throw new Exception("Cannot add null into inventory.");
-        if (item.itemType == ItemType.Equip) success = Store(item);
+        if (item.itemType == ItemType.Equip)
+        {
+            added = Store(item);
+        }
         else if (content.IndexOf(item) != -1)
         {
             GetMeta(item).stack++;
-            success = true;
+            added = true;
         }
-        else success = false;
+        else added = false;
     }
     public void Add(Item? value) => Add(value, out _);
     private bool Store(Item item)
@@ -65,8 +68,13 @@ public class Inventory : ICollection<Item?>
         var invocationList = owner.passives.GetInvocationList();
         item.ForEach<Passive>((p) =>
         {
-            if (!invocationList.Contains(p.Behaviour)) owner.passives += p.Behaviour;
+            if (!OwnerHasPassive(p)) owner.passives += p.Behaviour;
         });
+
+        bool OwnerHasPassive(Passive passive)
+        {
+            return invocationList.Contains(passive.Behaviour);
+        }
     }
     private void UnregisterPassives(Item item)
     {
