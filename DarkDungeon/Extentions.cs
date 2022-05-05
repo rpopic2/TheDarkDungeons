@@ -24,6 +24,7 @@ public static class Extensions
     public static string ToFString(this Array value, string title = "선택 :")
     {
         string printResult = title + " ";
+        if(value.Length <= 0) printResult += "아무것도 없다.";
         for (int i = 0; i < value.Length; i++)
         {
             printResult += value.GetValue(i)?.ToString()?.AppendKeyName(i);
