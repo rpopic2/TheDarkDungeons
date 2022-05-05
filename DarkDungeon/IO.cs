@@ -18,7 +18,7 @@ public static class IO
         string stringValue = title;
         if (value is Array arrayValue) stringValue += arrayValue.ToFString();
         else stringValue += value.ToString() ?? string.Empty;
-        if (flag.HasFlag(__.emphasis)) stringValue += EMPHASIS + stringValue;
+        if (flag.HasFlag(__.emphasis)) stringValue = EMPHASIS + stringValue;
         if (flag.HasFlag(__.newline)) stringValue += "\n";
         if (flag.HasFlag(__.bottom)) Console.CursorTop = x + Console.WindowHeight - 1;
         if (stringValue.Contains("^"))
