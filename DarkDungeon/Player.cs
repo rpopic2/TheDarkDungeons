@@ -189,16 +189,17 @@ public class Player : Fightable
     {
         while (corpse.droplist.Count > 0)
         {
-            PickAnItemFromCorpse(corpse);
+            PickAnItemFromCorpse(corpse, out bool cancel);
+            if(cancel) return;
         }
         if (corpse.droplist.Count() <= 0)
         {
             Map.Current.Steppables[Pos.x] = null;
         }
     }
-    private void PickAnItemFromCorpse(Corpse corpse)
+    private void PickAnItemFromCorpse(Corpse corpse, out bool cancel)
     {
-            IO.sel(corpse.droplist.ToArray(), 0, out int index, out bool cancel, out _, out _);
+            IO.sel(corpse.droplist.ToArray(), 0, out int index, out  cancel, out _, out _);
             if (cancel) return;
             if (corpse.droplist[index] is Item item)
             {
@@ -211,7 +212,7 @@ public class Player : Fightable
         Corpse corpse = new("누군가", new() { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
         while (Inven.Count < 3)
         {
-            PickAnItemFromCorpse(corpse);
+            PickAnItemFromCorpse(corpse, out _);
         }
     }
     private void OnLvUp(object? sender, EventArgs e)
