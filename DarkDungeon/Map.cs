@@ -25,7 +25,7 @@ public class Map
         this.Length = length;
         this.SpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
-        _pushDown = new('\n', Depth - 1);
+        _pushDown = new('\n', push);
 
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
         _tiles = Extensions.NewFilledArray(length, MapSymb.road);
