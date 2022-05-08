@@ -24,6 +24,7 @@ public class Map
         Current = this;
         this.Length = length;
         this.SpawnMobs = spawnMobs;
+        int push = (int)MathF.Max(Depth - 1, 0);
         _pushDown = new('\n', Depth - 1);
 
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
