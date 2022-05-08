@@ -15,6 +15,11 @@ public class Bat : Monster, ISpawnable
     }
     protected override void OnTarget()
     {
+        if (DistanceToTarget > 1)
+        {
+            FollowTarget();
+            return;
+        }
         if (metaData["isAngry"] == 1)
         {
             _SelectSkill(0, 0);

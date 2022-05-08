@@ -51,6 +51,7 @@ public abstract class Monster : Fightable
         if (_lastAttacker is not null)
         {
             _target = _lastAttacker;
+            return;
         }
         Fightable? target = _currentMap.RayCast(Pos, Sight);
         if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
