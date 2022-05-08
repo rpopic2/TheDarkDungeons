@@ -3,33 +3,33 @@ public abstract partial class Creature
     public readonly string Name;
     public int Level { get; protected set; }
     public readonly Status Stat;
+    public bool IsAlive { get; private set; } = true;
     public GamePoint Energy { get; protected set; }
     public Position Pos { get; protected set; }
     public int Sight => Stat.Sight;
 
     public Inventory Inven { get; private set; }
     public CurrentAction CurAction { get; init; }
-    public virtual Creature? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
     private Creature? _lastHit { get; set; }
     protected Creature? _lastAttacker { get; set; }
     public Action<Creature> passives = (p) => { };
 
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {
-        Pos = pos;
-        this.Level = level;
         Name = name;
+        Level = level;
         Stat = stat;
-        Inven = new(this, " .(휴식)");
         Energy = new(energy, GamePointOption.Reserving);
+        Pos = pos;
+        Inven = new(this, " .(휴식)");
         CurAction = new(this);
-        GetHp().OnOverflow += new EventHandler(OnDeath);
-        GetHp().OnIncrease += new EventHandler<PointArgs>(OnHeal);
-        GetHp().OnDecrease += new EventHandler<PointArgs>(OnDamaged);
+        GetHp().OnOverflow += new(OnDeath);
+        GetHp().OnIncrease += new(OnHeal);
+        GetHp().OnDecrease += new(OnDamaged);
     }
     public GamePoint GetHp() => Stat.Hp;
-    public bool IsAlive { get; private set; } = true;
     protected Map _currentMap => Map.Current;
+    public virtual Creature? FrontFightable => _currentMap.GetFightableAt(Pos.Front(1));
     public void GainEnergy(int amount)
     {
         Energy += amount;
@@ -214,7 +214,6 @@ public abstract partial class Creature
                 _currentMap.UpdateFightable(this);
             }
         }
-
     }
     public bool CanMove(Position value)
     {
@@ -252,8 +251,8 @@ public abstract partial class Creature
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
     }
-    protected void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
-    protected void OnDamaged(object? sender, PointArgs e)
+    private void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
+    private void OnDamaged(object? sender, PointArgs e)
     {
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
     }
