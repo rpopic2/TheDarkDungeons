@@ -28,8 +28,4 @@ public class Bat : Monster, ISpawnable
         else if (Energy.Cur <= 1) _SelectSkill(0, 0); //들이박기
         else _SelectSkill(0, 1); //구르기
     }
-    protected override void OnNothing()
-    {
-        BasicMovement();
-    }
 }

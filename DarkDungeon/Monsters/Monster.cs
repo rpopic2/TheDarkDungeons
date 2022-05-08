@@ -30,7 +30,7 @@ public abstract class Monster : Fightable
     }
     protected abstract void OnEnergyDeplete();
     protected abstract void OnTarget();
-    protected abstract void OnNothing();
+    protected virtual void OnNothing() => BasicMovement();
     protected void BasicMovement()
     {
         int randomFace = Stat.rnd.Next(2);

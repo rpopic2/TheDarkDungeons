@@ -20,10 +20,6 @@ public class Rat : Monster, ISpawnable
             FollowTarget();
         }
     }
-    protected override void OnNothing()
-    {
-        BasicMovement();
-    }
 
     public Monster Instantiate(Position spawnPoint) => new Rat(spawnPoint);
 }

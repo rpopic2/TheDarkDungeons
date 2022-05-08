@@ -29,10 +29,6 @@ public class Snake : Monster, ISpawnable
             _SelectSkill(0, 1); //bite
         }
     }
-    protected override void OnNothing()
-    {
-        BasicMovement();
-    }
 
     public Monster Instantiate(Position spawnPoint) => new Snake(spawnPoint);
 }
