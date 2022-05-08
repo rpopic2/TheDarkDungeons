@@ -4,6 +4,7 @@ public class Snake : Monster, ISpawnable
     private static StatInfo stat = new(stat: new(1, 3, 1), energy: 3, killExp: 5);
     public static MonsterData data = new(name: "뱀", 'S', '2', stat, new Item[] { Fightable.snakeItem, Fightable.poison });
     private bool _hissed = false;
+    protected int Range = 1;
 
     public Snake(Position spawnPoint) : base(data, spawnPoint) { }
 
@@ -16,16 +17,16 @@ public class Snake : Monster, ISpawnable
         if (!_hissed)
         {
             _SelectSkill(0, 0); //hiss
-            metaData["hissed"] = 1;
+            _hissed = true;
             return;
         }
-        else if (_target!.Pos.Distance(Pos) <= 1)
+        else if (DistanceToTarget > Range)
         {
-            _SelectSkill(0, 1); //bite
+            FollowTarget();
         }
         else
         {
-            FollowTarget();
+            _SelectSkill(0, 1); //bite
         }
     }
     protected override void OnNothing()
