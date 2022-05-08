@@ -6,7 +6,6 @@ public abstract class Monster : Fightable
     protected static Player player { get => Player.instance; }
     private char fowardChar, backwardChar;
     protected Fightable? _target;
-    protected Dictionary<string, int> metaData = new();
     public Monster(MonsterData data, Position spawnPoint)
     : base(name: data.name, level: Map.Depth, stat: data.stat.stat.GetDifficultyStat(),
     energy: data.stat.energy, pos: spawnPoint)

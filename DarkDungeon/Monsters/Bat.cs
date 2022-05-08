@@ -4,10 +4,10 @@ public class Bat : Monster, ISpawnable
     private static StatInfo stat = new(stat: new(1, 3, 2), energy: 3, killExp: 4);
     private static MonsterData data = new(name: "박쥐", 'b', 'd', stat, new Item[] { Fightable.batItem });
     public Monster Instantiate(Position spawnPoint) => new Bat(spawnPoint);
+    private bool isAngry;
 
     public Bat(Position spawnPoint) : base(data, spawnPoint)
     {
-        metaData.Add("isAngry", 0);
     }
     protected override void OnEnergyDeplete()
     {
@@ -20,12 +20,13 @@ public class Bat : Monster, ISpawnable
             FollowTarget();
             return;
         }
-        if (metaData["isAngry"] == 1)
+        if (isAngry)
         {
             _SelectSkill(0, 0);
-            metaData["isAngry"] = 0;
+            isAngry = false;
         }  //들이박기
         else if (Energy.Cur <= 1) _SelectSkill(0, 0); //들이박기
         else _SelectSkill(0, 1); //구르기
+        if (_target!.Status.CurrentBehav?.Stance == StanceName.Charge) isAngry = true;
     }
 }
