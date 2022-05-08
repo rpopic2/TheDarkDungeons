@@ -1,4 +1,3 @@
-namespace Entities;
 public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Item[] startItem);
 public abstract class Monster : Creature
 {

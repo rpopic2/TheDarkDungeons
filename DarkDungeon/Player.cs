@@ -1,4 +1,3 @@
-namespace Entities;
 public class Player : Creature
 {
     public const int BASICCAP = 3;
@@ -18,7 +17,7 @@ public class Player : Creature
         do
         {
             Selection();
-        } while (Status.CurrentBehav is null);
+        } while (CurAction.CurrentBehav is null);
 
         void Selection()
         {

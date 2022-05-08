@@ -1,4 +1,3 @@
-namespace Entities;
 public abstract partial class Creature
 {
     public readonly string Name;
@@ -9,8 +8,7 @@ public abstract partial class Creature
     public Position Pos { get; protected set; }
 
     public Inventory Inven { get; private set; }
-
-    public CurrentAction Status { get; init; }
+    public CurrentAction CurAction { get; init; }
     public virtual Creature? FrontFightable => Map.Current.GetFightableAt(Pos.Front(1));
     private Creature? _lastHit { get; set; }
     protected Creature? _lastAttacker { get; set; }
@@ -23,7 +21,7 @@ public abstract partial class Creature
         Stat = stat;
         Inven = new((Creature)this, " .(휴식)");
         Energy = new(energy, GamePointOption.Reserving);
-        Status = new(this);
+        CurAction = new(this);
         GetHp().OnOverflow += new EventHandler(OnDeath);
         GetHp().OnIncrease += new EventHandler<PointArgs>(OnHeal);
         GetHp().OnDecrease += new EventHandler<PointArgs>(OnDamaged);
@@ -38,7 +36,7 @@ public abstract partial class Creature
     public abstract void SelectAction();
     protected void SelectBehaviour(Item item, int index)
     {
-        if (Status.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
+        if (CurAction.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Skill skill) SelectSkill(item, skill);
         else if (behaviour is Charge charge) SelectCharge(item, charge);
@@ -60,7 +58,7 @@ public abstract partial class Creature
         {
             string output = behaviour.OnUseOutput;
             if (output != string.Empty) IO.rk(Name + output);
-            Status.Set(basicActions, nonToken, x, y);
+            CurAction.Set(basicActions, nonToken, x, y);
         }
     }
     private void SelectSkill(Item item, Skill selected)
@@ -70,7 +68,7 @@ public abstract partial class Creature
             ItemMetaData metaData = Inven.GetMeta(item);
             Energy -= 1;
             int amount = Stat.GetRandom(selected.statName, metaData.Mastery);
-            Status.Set(item, selected, amount);
+            CurAction.Set(item, selected, amount);
             string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
             int mcharge = Inven.GetMeta(item).magicCharge;
             if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
@@ -85,34 +83,34 @@ public abstract partial class Creature
             ItemMetaData metaData = Inven.GetMeta(item);
             Energy -= 1;
             int amount = Stat.GetRandom(StatName.Con, metaData.Mastery);
-            Status.Set(item, charge, amount);
-            IO.rk($"{Name}{charge.OnUseOutput} ^b({Status.Amount})^/");
+            CurAction.Set(item, charge, amount);
+            IO.rk($"{Name}{charge.OnUseOutput} ^b({CurAction.Amount})^/");
         }
         else IO.rk("기력이 없습니다.");
     }
     private void SelectConsume(Item item, Consume consume)
     {
-        Status.Set(item, consume);
+        CurAction.Set(item, consume);
         IO.rk($"{Name} {consume.OnUseOutput}");
         Inven.Consume(item);
     }
     public void OnTurn()
     {
-        if (Status.CurrentBehav is not IBehaviour behav) throw new Exception($"턴이 흘렀는데도 {Name}이 아무 행동도 선택하지 않았습니다.");
-        if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, Status.Amount, Status.Amount2);
+        if (CurAction.CurrentBehav is not IBehaviour behav) throw new Exception($"턴이 흘렀는데도 {Name}이 아무 행동도 선택하지 않았습니다.");
+        if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, CurAction.Amount, CurAction.Amount2);
         else behav.Behaviour.Invoke(this);
     }
     private void Attack(int range)
     {
         DamageType damageType = default;
-        if (Status.CurrentBehav is Skill skill) damageType = skill.damageType;
+        if (CurAction.CurrentBehav is Skill skill) damageType = skill.damageType;
         Creature? mov = _currentMap.RayCast(Pos, range);
         if (mov is Creature hit)
         {
-            ItemMetaData metaData = Inven.GetMeta(Status.CurrentItem!);
+            ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!);
             _lastHit = hit;
             AttackMagicCharge(metaData);
-            hit.Dodge(Status.Amount, damageType, this, metaData);
+            hit.Dodge(CurAction.Amount, damageType, this, metaData);
             metaData.GainExp();
         }
 
@@ -122,7 +120,7 @@ public abstract partial class Creature
             if (magicCharge > 0)
             {
                 hit.Dodge(magicCharge, DamageType.Magic, this, metaData);
-                Inven.GetMeta(Status.CurrentItem!).magicCharge = 0;
+                Inven.GetMeta(CurAction.CurrentItem!).magicCharge = 0;
             }
         }
     }
@@ -137,7 +135,7 @@ public abstract partial class Creature
         }
         else
         {
-            Status.Reset();
+            CurAction.Reset();
             IO.rk($"{item.Name}이 없다!");
         }
     }
@@ -145,7 +143,7 @@ public abstract partial class Creature
     {
         if (damage < 0) throw new Exception("데미지는 0보다 작을 수 없습니다.");
         _lastAttacker = attacker;
-        StanceName? stance = Status.CurrentBehav?.Stance;
+        StanceName? stance = CurAction.CurrentBehav?.Stance;
         if (stance == StanceName.Defence) CalcDamageType(ref damage, damageType, attacker);
         else if (stance == StanceName.Charge)
         {
@@ -154,44 +152,44 @@ public abstract partial class Creature
         }
 
         if (damage <= 0) IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
-        else if (metaData.poison-- > 0) Status.SetPoison(2);
+        else if (metaData.poison-- > 0) CurAction.SetPoison(2);
         Stat.Damage(damage);
     }
     protected virtual void Charge(Item? item = null)
     {
-        if (item is null) Inven.GetMeta(Status.CurrentItem!).magicCharge += Status.Amount;
-        else Inven.GetMeta(item).magicCharge += Status.Amount;
+        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).magicCharge += CurAction.Amount;
+        else Inven.GetMeta(item).magicCharge += CurAction.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");
     }
     protected virtual void PoisonItem(Item? item = null)
     {
-        if (item is null) Inven.GetMeta(Status.CurrentItem!).poison++;
+        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).poison++;
         else Inven.GetMeta(item).poison++;
         IO.rk($"{item}은 독으로 젖어 있다.");
     }
     private void CalcDamageType(ref int damage, DamageType damageType, Creature attacker)
     {
         DamageType defenceType = default;
-        if (Status.CurrentBehav is Skill skill) defenceType = skill.damageType;
+        if (CurAction.CurrentBehav is Skill skill) defenceType = skill.damageType;
         if (damageType == defenceType) EffectiveDefence(ref damage);
         else if ((damageType == DamageType.Slash && defenceType == DamageType.Magic) ||
             (damageType == DamageType.Thrust && defenceType == DamageType.Slash) ||
             (damageType == DamageType.Magic && defenceType == DamageType.Thrust)) UneffectiveDefence(ref damage);
 
-        damage -= Status.Amount;
+        damage -= CurAction.Amount;
         void EffectiveDefence(ref int damage)
         {
-            IO.pr($"{Name}의 {Status.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+            IO.pr($"{Name}의 {CurAction.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
             damage = damage.ToUnVul();
-            if (damageType != DamageType.Thrust && damage <= Status.Amount)
+            if (damageType != DamageType.Thrust && damage <= CurAction.Amount)
             {
                 IO.pr($"그리고 패리로 적을 스턴 상태에 빠뜨렸다!");
-                attacker.Status.SetStun(1);
+                attacker.CurAction.SetStun(1);
             }
         }
         void UneffectiveDefence(ref int damage)
         {
-            IO.pr($"{Name}의 {Status.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
+            IO.pr($"{Name}의 {CurAction.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
             damage = damage.ToVul();
         }
     }
@@ -233,18 +231,18 @@ public abstract partial class Creature
     protected virtual void Interact() { }
     public void OnBeforeTurn()
     {
-        if (Status.Stun > 0) Status.ProcessStun();
+        if (CurAction.Stun > 0) CurAction.ProcessStun();
         else SelectAction();
     }
     public virtual void OnTurnEnd()
     {
         passives.Invoke(this);
-        if (Status.Poison > 0)
+        if (CurAction.Poison > 0)
         {
             IO.pr($"{Name}은 중독 상태이다!", __.emphasis);
-            Status.ProcessPoison();
+            CurAction.ProcessPoison();
         }
-        Status.Reset();
+        CurAction.Reset();
     }
     protected virtual void OnDeath(object? sender, EventArgs e)
     {

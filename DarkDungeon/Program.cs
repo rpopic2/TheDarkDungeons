@@ -36,7 +36,7 @@ public class Program
             f.OnBeforeTurn();
         });
         //onturn
-        var firsts = from f in fights where f.Status.CurrentBehav?.Stance == StanceName.Charge select f;
+        var firsts = from f in fights where f.CurAction.CurrentBehav?.Stance == StanceName.Charge select f;
         var lasts = fights.Except(firsts);
         foreach (Creature item in firsts) item.OnTurn();
         foreach (Creature item in lasts) item.OnTurn();

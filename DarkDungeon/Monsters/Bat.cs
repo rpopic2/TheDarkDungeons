@@ -1,4 +1,3 @@
-namespace Entities;
 public class Bat : Monster, ISpawnable
 {
     private static StatInfo stat = new(stat: new(1, 3, 2), energy: 3, killExp: 4);
@@ -27,6 +26,6 @@ public class Bat : Monster, ISpawnable
         }  //들이박기
         else if (Energy.Cur <= 1) _SelectSkill(0, 0); //들이박기
         else _SelectSkill(0, 1); //구르기
-        if (_target!.Status.CurrentBehav?.Stance == StanceName.Charge) isAngry = true;
+        if (_target!.CurAction.CurrentBehav?.Stance == StanceName.Charge) isAngry = true;
     }
 }

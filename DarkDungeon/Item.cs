@@ -1,4 +1,3 @@
-namespace Entities;
 public record Item(string Name, ItemType itemType, IBehaviour[] skills)
 {
     public override string ToString()
@@ -58,7 +57,7 @@ public partial class Creature
         new("쏘기", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});
     public static readonly Item shield = new("방패", ItemType.Equip, new Skill[]{
         new("방패밀기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 방패를 앞으로 세게 밀쳤다.", (i)=>i.Attack(1)),
-        new("방패막기", StanceName.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.Status.AddAmount(2))
+        new("방패막기", StanceName.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.CurAction.AddAmount(2))
     });
     public static readonly Item arrow = new("화살", ItemType.Consume, new IBehaviour[] { });
     public static readonly Item batItem = new("박쥐의 날개", ItemType.Equip, new Skill[] {
@@ -72,7 +71,7 @@ public partial class Creature
     public static Skill bite = new Skill("물기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i) => i.Attack(1));
 
     public static readonly Item ratItem = new("쥐의 이빨", ItemType.Equip, new IBehaviour[]{
-            bite, new Skill("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "는 찍찍 소리를 내며 거대한 이빨을 드러내고 있다. 쥐가 달려든다!", (i)=>{i.Dash(new Position(2, i.Pos.facing));i.Attack(2);i._lastHit?.Status.SetStun(1);})
+            bite, new Skill("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "는 찍찍 소리를 내며 거대한 이빨을 드러내고 있다. 쥐가 달려든다!", (i)=>{i.Dash(new Position(2, i.Pos.facing));i.Attack(2);i._lastHit?.CurAction.SetStun(1);})
             });
     public static readonly Item poison = new("독", ItemType.Consume, new IBehaviour[] {
         new Charge("독 바르기", StatName.None, DamageType.Normal, "은 독을 무기에 바르기로 했다.", (f)=>{f.PoisonItem(); f.Inven.Consume(poison!);})

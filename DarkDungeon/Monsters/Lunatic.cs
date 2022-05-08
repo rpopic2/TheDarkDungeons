@@ -1,4 +1,3 @@
-namespace Entities;
 public class Lunatic : Monster, ISpawnable
 {
     private static StatInfo stat = new(stat: new(1, 1, 3), energy: 4, killExp: 3);
