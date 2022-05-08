@@ -2,10 +2,10 @@ public abstract partial class Creature
 {
     public readonly string Name;
     public int Level { get; protected set; }
-    public GamePoint Energy { get; protected set; }
     public readonly Status Stat;
-    public int Sight => Stat.Sight;
+    public GamePoint Energy { get; protected set; }
     public Position Pos { get; protected set; }
+    public int Sight => Stat.Sight;
 
     public Inventory Inven { get; private set; }
     public CurrentAction CurAction { get; init; }
@@ -13,13 +13,14 @@ public abstract partial class Creature
     private Creature? _lastHit { get; set; }
     protected Creature? _lastAttacker { get; set; }
     public Action<Creature> passives = (p) => { };
+
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {
         Pos = pos;
         this.Level = level;
         Name = name;
         Stat = stat;
-        Inven = new((Creature)this, " .(휴식)");
+        Inven = new(this, " .(휴식)");
         Energy = new(energy, GamePointOption.Reserving);
         CurAction = new(this);
         GetHp().OnOverflow += new EventHandler(OnDeath);
