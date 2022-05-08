@@ -105,7 +105,7 @@ public class Program
                 player.Inven.Add(Fightable.sword);
                 player.Inven.Add(Fightable.shield);
                 player.Inven.Add(Fightable.torch);
-                player.PickupToken(3);
+                player.GainEnergy(3);
                 break;
             case 1:
                 player.Inven.Add(Fightable.dagger);
@@ -114,17 +114,17 @@ public class Program
                 player.Inven.Add(Fightable.arrow);
                 player.Inven.Add(Fightable.torch);
                 player.Inven.Add(Fightable.assBareHand);
-                player.PickupToken(3);
+                player.GainEnergy(3);
                 break;
             case 2:
                 player.Inven.Add(Fightable.staff);
                 player.Inven.Add(Fightable.magicBook);
                 player.Inven.Add(Fightable.torch);
-                player.PickupToken(3);
+                player.GainEnergy(3);
                 break;
             default:
                 player.SelectStartItem();
-                player.PickupToken(3);
+                player.GainEnergy(3);
                 break;
         }
         IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");

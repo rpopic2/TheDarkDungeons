@@ -19,7 +19,7 @@ public partial class Fightable
         new("이동", StanceName.Charge, string.Empty, (f, x, y)=>
             f.Move(new(x, (Facing)y)), (f)=>{}),
         new("숨고르기",StanceName.Charge, "은 숨을 골랐다.", (f,x,y)=>{
-            f.PickupToken(1);
+            f.GainEnergy(1);
         }, (f)=>{}),
         new("상호작용", StanceName.Charge, string.Empty, (f,x,y)=>{
             if(f is Player player) player.Interact();

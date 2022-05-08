@@ -31,7 +31,7 @@ public partial class Fightable
     public GamePoint GetHp() => Stat.Hp;
     public bool IsAlive { get; private set; } = true;
     protected Map _currentMap => Map.Current;
-    public void PickupToken(int amount)
+    public void GainEnergy(int amount)
     {
         Energy += amount;
     }
