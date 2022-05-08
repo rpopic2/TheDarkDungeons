@@ -12,9 +12,9 @@ public class Map
     private readonly char[] _empty;
     private char[] _tiles;
     public ISteppable?[] Steppables;
-    private List<Fightable> _fightables;
-    private Fightable?[] _fightablePositions;
-    private List<Fightable> _tempDeadFightables;
+    private List<Creature> _fightables;
+    private Creature?[] _fightablePositions;
+    private List<Creature> _tempDeadFightables;
     private char[] _rendered;
     private Corpse? _fallenCorpse;
     public bool LoadNewMap = false;
@@ -31,7 +31,7 @@ public class Map
         _tiles = Extensions.NewFilledArray(length, MapSymb.road);
         Steppables = new ISteppable?[length];
         _fightables = new();
-        _fightablePositions = new Fightable[length];
+        _fightablePositions = new Creature[length];
         _rendered = new char[length];
         _tempDeadFightables = new();
 
@@ -47,8 +47,8 @@ public class Map
         if (SpawnMobs) Spawn();
     }
     private static Player s_player { get => Player.instance; }
-    public ref readonly Fightable?[] FightablePositions => ref _fightablePositions;
-    public ref readonly List<Fightable> Fightables => ref _fightables;
+    public ref readonly Creature?[] FightablePositions => ref _fightablePositions;
+    public ref readonly List<Creature> Fightables => ref _fightables;
     public ref readonly char[] Tiles
     => ref _tiles;
     public void Spawn()
@@ -87,10 +87,10 @@ public class Map
             return fullMap;
         }
     }
-    public void UpdateFightable(Fightable mov)
+    public void UpdateFightable(Creature mov)
     {
         Position pos = mov.Pos;
-        if (mov is Fightable fight && !fight.IsAlive)
+        if (mov is Creature fight && !fight.IsAlive)
         {
             _tempDeadFightables.Add(fight);
             FightablePositions[pos.x] = null;
@@ -109,30 +109,30 @@ public class Map
         }
         _tempDeadFightables.Clear();
 
-        void CreateCorpse(Fightable fight)
+        void CreateCorpse(Creature fight)
         {
             int pos = fight.Pos.x;
             ISteppable? old = Steppables[pos];
             var drops = fight.Inven.Content;
-            if (Monster.DropOutOf(fight.Stat.rnd, 5)) drops.Add(Fightable.boneOfTheDeceased);
+            if (Monster.DropOutOf(fight.Stat.rnd, 5)) drops.Add(Creature.boneOfTheDeceased);
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
             if (old is Corpse cor) Steppables[pos] = cor + temp;
             else if (old is Portal) _fallenCorpse = temp;
             else Steppables[pos] = temp;
         }
     }
-    public Fightable? GetFightableAt(int index)
+    public Creature? GetFightableAt(int index)
     {
         if (index < 0 || index >= FightablePositions.Length || FightablePositions[index] is null) return null;
         return FightablePositions[index];
     }
-    public Fightable? RayCast(Position origin, int range)
+    public Creature? RayCast(Position origin, int range)
     {
-        Fightable? f;
+        Creature? f;
         for (int i = 0; i < range; i++)
         {
             f = GetFightableAt(origin.Front(i + 1));
-            if (f is Fightable) return f;
+            if (f is Creature) return f;
         }
         return null;
     }
@@ -167,7 +167,7 @@ public class Map
                 int targetTile = s_player.Pos.Front(i + 1);
                 bool success = target.TryGet(targetTile, out T? obj);
                 if (!success) continue;
-                if (obj is Fightable mov) _rendered[targetTile] = mov.ToChar();
+                if (obj is Creature mov) _rendered[targetTile] = mov.ToChar();
                 else if (obj is char chr) _rendered[targetTile] = chr;
                 else if (obj is ISteppable cor) _rendered[targetTile] = cor.ToChar();
                 else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");

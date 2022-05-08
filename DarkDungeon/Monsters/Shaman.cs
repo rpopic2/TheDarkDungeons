@@ -8,7 +8,7 @@ public class Shaman : Monster, ISpawnable
     
     protected override void OnTarget()
     {
-        if (Inven.GetMeta(Fightable.spiritStaff).magicCharge > 0) _SelectSkill(0, 0);
+        if (Inven.GetMeta(Creature.spiritStaff).magicCharge > 0) _SelectSkill(0, 0);
         else _SelectSkill(0, 1);
     }
     protected override void OnEnergyDeplete()

@@ -1,11 +1,11 @@
 namespace Entities;
 public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Item[] startItem);
-public abstract class Monster : Fightable
+public abstract class Monster : Creature
 {
     private int killExp;
     protected static Player player { get => Player.instance; }
     private char fowardChar, backwardChar;
-    protected Fightable? _target;
+    protected Creature? _target;
     public Monster(MonsterData data, Position spawnPoint)
     : base(name: data.name, level: Map.Depth, stat: data.stat.stat.GetDifficultyStat(),
     energy: data.stat.energy, pos: spawnPoint)
@@ -52,8 +52,8 @@ public abstract class Monster : Fightable
             _target = _lastAttacker;
             return;
         }
-        Fightable? target = _currentMap.RayCast(Pos, Sight);
-        if (target is not Fightable || !this.IsEnemy(target)) this._target = null;
+        Creature? target = _currentMap.RayCast(Pos, Sight);
+        if (target is not Creature || !this.IsEnemy(target)) this._target = null;
         else this._target = target;
     }
     protected void FollowTarget()

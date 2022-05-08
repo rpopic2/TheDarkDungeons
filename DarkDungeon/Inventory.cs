@@ -2,7 +2,7 @@ using System.Collections;
 
 public class Inventory : ICollection<Item?>
 {
-    public Fightable owner;
+    public Creature owner;
     public const int INVENSIZE = 5;
     private List<Item?> content;
     public ref readonly List<Item?> Content => ref content;
@@ -10,7 +10,7 @@ public class Inventory : ICollection<Item?>
     private ItemMetaData bareHandMetaData = new();
     public readonly string name;
 
-    public Inventory(Fightable owner, string name)
+    public Inventory(Creature owner, string name)
     {
         this.owner = owner;
         this.name = name;
@@ -94,7 +94,7 @@ public class Inventory : ICollection<Item?>
     }
     public ItemMetaData GetMeta(Item item)
     {
-        if (item == Fightable.bareHand) return bareHandMetaData;
+        if (item == Creature.bareHand) return bareHandMetaData;
         return metaDatas[item];
     }
     public void Consume(Item item)

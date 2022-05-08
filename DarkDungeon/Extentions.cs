@@ -46,7 +46,7 @@ public static class Extensions
         int result = (int)MathF.Round(damage / Rules.vulMulp);
         return result == damage ? --result : result;
     }
-    public static bool IsEnemy(this Fightable p1, Fightable p2)
+    public static bool IsEnemy(this Creature p1, Creature p2)
     {
         if (p1 is Player && p2 is Monster) return true;
         if (p1 is Monster && p2 is Player) return true;

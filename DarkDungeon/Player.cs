@@ -1,5 +1,5 @@
 namespace Entities;
-public class Player : Fightable
+public class Player : Creature
 {
     public const int BASICCAP = 3;
     public const int BASICSTAT = 1;

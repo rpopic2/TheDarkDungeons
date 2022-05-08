@@ -38,8 +38,8 @@ public class Program
         //onturn
         var firsts = from f in fights where f.Status.CurrentBehav?.Stance == StanceName.Charge select f;
         var lasts = fights.Except(firsts);
-        foreach (Fightable item in firsts) item.OnTurn();
-        foreach (Fightable item in lasts) item.OnTurn();
+        foreach (Creature item in firsts) item.OnTurn();
+        foreach (Creature item in lasts) item.OnTurn();
         //onturnend
         fights.ForEach(m =>
         {
@@ -102,24 +102,24 @@ public class Program
         switch (classIndex)
         {
             case 0:
-                player.Inven.Add(Fightable.sword);
-                player.Inven.Add(Fightable.shield);
-                player.Inven.Add(Fightable.torch);
+                player.Inven.Add(Creature.sword);
+                player.Inven.Add(Creature.shield);
+                player.Inven.Add(Creature.torch);
                 player.GainEnergy(3);
                 break;
             case 1:
-                player.Inven.Add(Fightable.dagger);
-                player.Inven.Add(Fightable.bow);
-                player.Inven.Add(Fightable.arrow);
-                player.Inven.Add(Fightable.arrow);
-                player.Inven.Add(Fightable.torch);
-                player.Inven.Add(Fightable.assBareHand);
+                player.Inven.Add(Creature.dagger);
+                player.Inven.Add(Creature.bow);
+                player.Inven.Add(Creature.arrow);
+                player.Inven.Add(Creature.arrow);
+                player.Inven.Add(Creature.torch);
+                player.Inven.Add(Creature.assBareHand);
                 player.GainEnergy(3);
                 break;
             case 2:
-                player.Inven.Add(Fightable.staff);
-                player.Inven.Add(Fightable.magicBook);
-                player.Inven.Add(Fightable.torch);
+                player.Inven.Add(Creature.staff);
+                player.Inven.Add(Creature.magicBook);
+                player.Inven.Add(Creature.torch);
                 player.GainEnergy(3);
                 break;
             default:

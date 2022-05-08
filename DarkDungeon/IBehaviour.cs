@@ -1,4 +1,4 @@
-public record Skill(string Name, StanceName Stance, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
+public record Skill(string Name, StanceName Stance, StatName statName, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour
 {
     public static readonly string[] parenthesis = { "  ", "[]", "()", "<>", "{}" };
     public override string ToString()
@@ -18,7 +18,7 @@ public record Skill(string Name, StanceName Stance, StatName statName, DamageTyp
         };
     }
 }
-public record Charge(string Name, StatName statName, DamageType damageType, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
+public record Charge(string Name, StatName statName, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour
 {
     public StanceName Stance { get; init; } = StanceName.Charge;
     public override string ToString()
@@ -38,9 +38,9 @@ public record Charge(string Name, StatName statName, DamageType damageType, stri
         };
     }
 }
-public record NonTokenSkill(string Name, StanceName Stance, string OnUseOutput, Action<Fightable, int, int> NonTokenBehav, Action<Fightable> Behaviour) : IBehaviour;
+public record NonTokenSkill(string Name, StanceName Stance, string OnUseOutput, Action<Creature, int, int> NonTokenBehav, Action<Creature> Behaviour) : IBehaviour;
 
-public record Consume(string Name, StanceName Stance, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
+public record Consume(string Name, StanceName Stance, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour
 {
     public override string ToString()
     {
@@ -48,12 +48,12 @@ public record Consume(string Name, StanceName Stance, string OnUseOutput, Action
     }
 }
 
-public record WearEffect(string Name, StanceName Stance, string OnUseOutput, Action<Fightable> Behaviour, Action<Fightable> OnTakeOff) : IBehaviour
+public record WearEffect(string Name, StanceName Stance, string OnUseOutput, Action<Creature> Behaviour, Action<Creature> OnTakeOff) : IBehaviour
 {
     public override string ToString() => Name;
 }
 
-public record Passive(string Name, StanceName Stance, string OnUseOutput, Action<Fightable> Behaviour) : IBehaviour
+public record Passive(string Name, StanceName Stance, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour
 {
     public override string ToString() => Name;
 }
@@ -63,5 +63,5 @@ public interface IBehaviour
     public StanceName Stance { get; }
     public string Name { get; }
     public string OnUseOutput { get; }
-    public Action<Fightable> Behaviour { get; }
+    public Action<Creature> Behaviour { get; }
 }

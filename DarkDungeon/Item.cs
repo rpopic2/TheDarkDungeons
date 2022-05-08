@@ -12,7 +12,7 @@ public record Item(string Name, ItemType itemType, IBehaviour[] skills)
         foreach (T wear in behav) action(wear);
     }
 }
-public partial class Fightable
+public partial class Creature
 {
     public static readonly NonTokenSkill Stun = new("기절", StanceName.Charge, "은 기절 상태이다!", (f, x, y) => { }, (i) => { });
     public static readonly Item basicActions = new("기본", ItemType.Equip, new NonTokenSkill[]{

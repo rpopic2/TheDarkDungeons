@@ -45,7 +45,7 @@ public class QuietKnight : Monster, ISpawnable
 
     public Monster Instantiate(Position spawnPoint) => new QuietKnight(spawnPoint);
 }
-public partial class Fightable
+public partial class Creature
 {
     public readonly static Item mutedSword = new("무음의 검", ItemType.Equip, new IBehaviour[]
      {
