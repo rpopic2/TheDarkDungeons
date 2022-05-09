@@ -38,7 +38,7 @@ public class Map
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
-            Spawn();
+            Spawn(new QuietKnight(new()));
         }
 
         void SetupSteppables(Corpse? corpseFromPrev)
@@ -52,39 +52,38 @@ public class Map
     public ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
-    public void Spawn()
+    public void SpawnRandom()
     {
-        List<int> spawnableIndices = getSpawnableIndices();
-        if (spawnableIndices.Count <= 0) return;
-
         int max = Math.Min(Depth + 1, s_monsterData.Length);
         int min = Math.Max(0, max - 2);
-
         int randomIndex = s_rnd.Next(min, max);
-        int newPos = spawnableIndices[randomIndex];
+        ISpawnable data = s_monsterData[randomIndex];
+        Spawn(data);
+    }
+    private void Spawn(ISpawnable prefab)
+    {
+        List<int> spawnableIndices = GetSpawnableIndices();
+        if (spawnableIndices.Count <= 0) return;
+        int randomPos = s_rnd.Next(0, spawnableIndices.Count);
+        int newPos = spawnableIndices[randomPos];
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
-
-        ISpawnable data = s_monsterData[randomIndex];
-        Monster mov;
-        mov = data.Instantiate(spawnPoint);
-        if (Depth == BOSS_DEPTH) mov = new QuietKnight(spawnPoint);
+        Monster mov = prefab.Instantiate(spawnPoint);
         _creatures.Add(mov);
         UpdateFightable(mov);
-
-        List<int> getSpawnableIndices()
+    }
+    private List<int> GetSpawnableIndices()
+    {
+        List<int> spawnables = new List<int>(Length);
+        for (int i = 0; i < Length; i++)
         {
-            List<int> fullMap = new List<int>(Length);
-            for (int i = 0; i < Length; i++)
-            {
-                if (_creaturesByPos[i] is null) fullMap.Add(i);
-            }
-            int playerX = s_player.Pos.x;
-            fullMap.Remove(playerX);
-            fullMap.Remove(playerX - 1);
-            fullMap.Remove(playerX + 1);
-            return fullMap;
+            if (_creaturesByPos[i] is null) spawnables.Add(i);
         }
+        int playerX = s_player.Pos.x;
+        spawnables.Remove(playerX);
+        spawnables.Remove(playerX - 1);
+        spawnables.Remove(playerX + 1);
+        return spawnables;
     }
     public void UpdateFightable(Creature mov)
     {

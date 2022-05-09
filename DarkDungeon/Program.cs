@@ -47,7 +47,7 @@ public class Program
         });
 
         Map.Current.RemoveAndCreateCorpse();
-        if (Map.Current.DoSpawnMobs && Turn % Rules.Spawnrate == 0) Map.Current.Spawn();
+        if (Map.Current.DoSpawnMobs && Turn % Rules.Spawnrate == 0) Map.Current.SpawnRandom();
         Turn++;
         if(Map.Current.DoLoadNewMap) Map.NewMap();
         IO.Redraw();
