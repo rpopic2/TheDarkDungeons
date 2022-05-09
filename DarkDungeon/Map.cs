@@ -18,7 +18,6 @@ public class Map
     private readonly char[] _rendered;
     private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
-    // private const bool _debug = false;
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
