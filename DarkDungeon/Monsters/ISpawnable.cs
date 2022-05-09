@@ -1,7 +1,4 @@
-namespace Entities
+public interface ISpawnable
 {
-    public interface ISpawnable
-    {
-        Monster Instantiate(Position spawnPoint);
-    }
+    Monster Instantiate(Position spawnPoint);
 }

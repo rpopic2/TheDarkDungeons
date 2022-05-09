@@ -1,5 +1,4 @@
-﻿global using Entities;
-public class Program
+﻿public class Program
 {
     public const string VERSION = "0.6.090522";
     public static Program instance = default!;
