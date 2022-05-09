@@ -23,7 +23,7 @@ public class Map
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
-        Program.OnTurn += () => ElaspeTurn();
+        Program.OnTurn += () => OnTurn();
         this.Length = length;
         this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
@@ -53,11 +53,11 @@ public class Map
         }
     }
     private static Player s_player { get => Player.instance; }
-    public ref readonly List<Creature> Creatures => ref _creatures;
+    private ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
 
-    private void ElaspeTurn()
+    private void OnTurn()
     {
         var currentCreatures = Current.Creatures;
         //onbeforeturn
