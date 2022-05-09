@@ -25,11 +25,14 @@ public class Map
         this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
         _pushDown = new('\n', push);
-        _empty = _tiles = _rendered = new char[length];
+        _empty = new char[length];
+        _tiles = new char[length];
+        _rendered = new char[length];
         Array.Fill(_empty, MapSymb.Empty);
-        Array.Fill(_tiles, MapSymb.Empty);
+        Array.Fill(_tiles, MapSymb.road);
         _steppables = new ISteppable?[length];
-        _creatures = _tempDeadCreatures = new();
+        _creatures = new();
+        _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
         SetupSteppables(corpseFromPrev);
         _creatures.Add(s_player);

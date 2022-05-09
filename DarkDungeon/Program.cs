@@ -21,7 +21,8 @@ public class Program
         instance = this;
         Console.Clear();
         IO.pr("The Dungeon of the Mine " + VERSION);
-        Intro();
+        CreatePlayer();
+        Map.NewMap();
         Console.Clear();
         IO.rk($"{s_player.Name}은 횃불에 의지한 채 동굴 속으로 걸어 들어갔다.");
         IO.Redraw();
@@ -52,7 +53,7 @@ public class Program
         if(Map.Current.DoLoadNewMap) Map.NewMap();
         IO.Redraw();
     }
-    private void Intro()
+    private void CreatePlayer()
     {
         IO.rk("Press any key to start...");
 
@@ -97,8 +98,6 @@ public class Program
 
         if (classIndex != -1) IO.pr(classString);
         Player player = Player._instance = new Player(name);
-        Map.NewMap();
-
         switch (classIndex)
         {
             case 0:
