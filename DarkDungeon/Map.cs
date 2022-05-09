@@ -10,13 +10,13 @@ public class Map
     public readonly bool DoSpawnMobs;
     private readonly string _pushDown;
     private readonly char[] _empty;
-    private char[] _tiles;
-    private ISteppable?[] _steppables;
-    private List<Creature> _fightables;
-    private Creature?[] _fightablePositions;
-    private List<Creature> _tempDeadFightables;
-    private char[] _rendered;
-    private Corpse? _fallenCorpse;
+    private readonly char[] _tiles;
+    private readonly ISteppable?[] _steppables;
+    private readonly List<Creature> _fightables;
+    private readonly Creature?[] _fightablePositions;
+    private readonly List<Creature> _tempDeadFightables;
+    private readonly char[] _rendered;
+    private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
     // private const bool _debug = false;
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
@@ -26,7 +26,6 @@ public class Map
         this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
         _pushDown = new('\n', push);
-
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
         _tiles = Extensions.NewFilledArray(length, MapSymb.road);
         _steppables = new ISteppable?[length];
@@ -34,15 +33,18 @@ public class Map
         _fightablePositions = new Creature[length];
         _rendered = new char[length];
         _tempDeadFightables = new();
-
-        int portalIndex = Depth != 1 ? s_rnd.Next(0, length - 1) : s_rnd.Next(2, length - 1);
-        _steppables[portalIndex] = new Portal();
-        if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
+        SetupSteppables(corpseFromPrev);
         _fightables.Add(s_player);
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
             Spawn();
+        }
+        void SetupSteppables(Corpse? corpseFromPrev)
+        {
+            int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
+            _steppables[portalIndex] = new Portal();
+            if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
         }
     }
     private static Player s_player { get => Player.instance; }
@@ -116,7 +118,7 @@ public class Map
             if (Monster.DropOutOf(fight.Stat.rnd, 5)) drops.Add(Creature.boneOfTheDeceased);
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
             if (old is Corpse cor) _steppables[pos] = cor + temp;
-            else if (old is Portal) _fallenCorpse = temp;
+            else if (old is Portal) _corpseToPass = temp;
             else _steppables[pos] = temp;
         }
     }
@@ -147,7 +149,7 @@ public class Map
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
         if (Current is not null && newLength < Current.Length) newLength = Current.Length;
-        Current = new Map(newLength, Current?._fallenCorpse);
+        Current = new Map(newLength, Current?._corpseToPass);
         if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
     private void Render()
