@@ -26,13 +26,12 @@ public class Map
         this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
         _pushDown = new('\n', push);
-        _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
-        _tiles = Extensions.NewFilledArray(length, MapSymb.road);
+        _empty = _tiles = _rendered = new char[length];
+        Array.Fill(_empty, MapSymb.Empty);
+        Array.Fill(_tiles, MapSymb.Empty);
         _steppables = new ISteppable?[length];
-        _creatures = new();
+        _creatures = _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
-        _rendered = new char[length];
-        _tempDeadCreatures = new();
         SetupSteppables(corpseFromPrev);
         _creatures.Add(s_player);
         if (Depth == BOSS_DEPTH)
@@ -152,13 +151,13 @@ public class Map
     private void Render()
     {
         _empty.CopyTo(_rendered, 0);
-        RenderVisible(Tiles);
-        RenderVisible(_steppables);
-        RenderVisible(_creaturesByPos);
+        renderVisible(Tiles);
+        renderVisible(_steppables);
+        renderVisible(_creaturesByPos);
         //if(true) RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
 
-        void RenderVisible<T>(T[] target)
+        void renderVisible<T>(T[] target)
         {
             for (int i = 0; i < s_player.Sight; i++)
             {

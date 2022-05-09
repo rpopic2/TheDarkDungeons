@@ -52,15 +52,6 @@ public static class Extensions
         if (p1 is Monster && p2 is Player) return true;
         return false;
     }
-    public static char[] NewFilledArray(int length, char fill)
-    {
-        char[] result = new char[length];
-        for (int i = 0; i < length; i++)
-        {
-            result[i] = fill;
-        }
-        return result;
-    }
     public static bool IsOK(this ConsoleKey key)
     {
         return key == ConsoleKey.Spacebar || key == ConsoleKey.Enter;
