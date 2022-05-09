@@ -1,7 +1,7 @@
 ﻿global using Entities;
 public class Program
 {
-    public const string VERSION = "0.6.050522";
+    public const string VERSION = "0.6.090522";
     public static Program instance = default!;
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
