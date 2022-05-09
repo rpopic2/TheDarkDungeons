@@ -1,7 +1,8 @@
 public class Map
 {
-    public static int Turn { get; private set; }
     private const int BOSS_DEPTH = 5;
+    private static int Turn { get; set; }
+    private static int Spawnrate = 11;
     public static Map Current = default!;
     private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
     private static Random s_rnd = new Random();
@@ -22,6 +23,7 @@ public class Map
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
+        Program.OnTurn += () => ElaspeTurn();
         this.Length = length;
         this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
@@ -40,7 +42,7 @@ public class Map
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
-            Spawn(new QuietKnight(new()));
+            Spawn(new QuietKnight(default));
         }
 
         void SetupSteppables(Corpse? corpseFromPrev)
@@ -55,7 +57,7 @@ public class Map
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
 
-    public void ElaspeTurn()
+    private void ElaspeTurn()
     {
         var currentCreatures = Current.Creatures;
         //onbeforeturn
@@ -75,9 +77,9 @@ public class Map
         });
 
         ReplaceToCorpse();
-        if (DoSpawnMobs && Turn % Rules.Spawnrate == 0) SpawnRandom();
+        if (DoSpawnMobs && Turn % Spawnrate == 0) SpawnRandom();
         Turn++;
-        if(DoLoadNewMap) NewMap();
+        if (DoLoadNewMap) NewMap();
         IO.Redraw();
     }
     public void SpawnRandom()

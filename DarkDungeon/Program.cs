@@ -4,12 +4,13 @@ public class Program
     public const string VERSION = "0.6.050522";
     public static Program instance = default!;
     private static Player s_player { get => Player.instance; }
+    public static Action? OnTurn;
     public static void Main()
     {
         instance = new Program();
         do
         {
-            Map.Current.ElaspeTurn();
+            OnTurn?.Invoke();
         } while (s_player.IsAlive);
         IO.pr(s_player.ToString());
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
