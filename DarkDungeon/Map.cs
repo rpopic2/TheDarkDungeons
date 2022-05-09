@@ -118,7 +118,7 @@ public class Map
             else _steppables[pos] = temp;
         }
     }
-    public Creature? GetFightableAt(int index)
+    public Creature? GetCreature(int index)
     {
         if (index < 0 || index >= _creaturesByPos.Length || _creaturesByPos[index] is null) return null;
         return _creaturesByPos[index];
@@ -128,7 +128,7 @@ public class Map
         Creature? f;
         for (int i = 0; i < range; i++)
         {
-            f = GetFightableAt(origin.Front(i + 1));
+            f = GetCreature(origin.Front(i + 1));
             if (f is Creature) return f;
         }
         return null;
