@@ -4,13 +4,12 @@ public class Program
     public const string VERSION = "0.6.050522";
     public static Program instance = default!;
     private static Player s_player { get => Player.instance; }
-    public static int Turn { get; private set; }
     public static void Main()
     {
         instance = new Program();
         do
         {
-            ElaspeTurn();
+            Map.Current.ElaspeTurn();
         } while (s_player.IsAlive);
         IO.pr(s_player.ToString());
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
@@ -27,31 +26,6 @@ public class Program
         IO.rk($"{s_player.Name}은 횃불에 의지한 채 동굴 속으로 걸어 들어갔다.");
         IO.Redraw();
         IO.pr("\n?을 눌러 도움말 표시.");
-    }
-    private static void ElaspeTurn()
-    {
-        var fights = Map.Current.Creatures;
-        //onbeforeturn
-        fights.ForEach(f =>
-        {
-            f.OnBeforeTurn();
-        });
-        //onturn
-        var firsts = from f in fights where f.CurAction.CurrentBehav?.Stance == StanceName.Charge select f;
-        var lasts = fights.Except(firsts);
-        foreach (Creature item in firsts) item.OnTurn();
-        foreach (Creature item in lasts) item.OnTurn();
-        //onturnend
-        fights.ForEach(m =>
-        {
-            m.OnTurnEnd(); //update target and reset stance, onturnend
-        });
-
-        Map.Current.ReplaceToCorpse();
-        if (Map.Current.DoSpawnMobs && Turn % Rules.Spawnrate == 0) Map.Current.SpawnRandom();
-        Turn++;
-        if(Map.Current.DoLoadNewMap) Map.NewMap();
-        IO.Redraw();
     }
     private void CreatePlayer()
     {

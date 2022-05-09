@@ -1,5 +1,6 @@
 public class Map
 {
+    public static int Turn { get; private set; }
     private const int BOSS_DEPTH = 5;
     public static Map Current = default!;
     private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
@@ -53,6 +54,32 @@ public class Map
     public ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
+
+    public void ElaspeTurn()
+    {
+        var currentCreatures = Current.Creatures;
+        //onbeforeturn
+        currentCreatures.ForEach(f =>
+        {
+            f.OnBeforeTurn();
+        });
+        //onturn
+        var firsts = from f in currentCreatures where f.CurAction.CurrentBehav?.Stance == StanceName.Charge select f;
+        var lasts = currentCreatures.Except(firsts);
+        foreach (Creature item in firsts) item.OnTurn();
+        foreach (Creature item in lasts) item.OnTurn();
+        //onturnend
+        currentCreatures.ForEach(m =>
+        {
+            m.OnTurnEnd(); //update target and reset stance, onturnend
+        });
+
+        ReplaceToCorpse();
+        if (DoSpawnMobs && Turn % Rules.Spawnrate == 0) SpawnRandom();
+        Turn++;
+        if(DoLoadNewMap) NewMap();
+        IO.Redraw();
+    }
     public void SpawnRandom()
     {
         int max = Math.Min(Depth + 1, s_monsterData.Length);
