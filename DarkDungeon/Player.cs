@@ -181,7 +181,7 @@ public class Player : Creature
         else if (UnderFoot is Portal portal)
         {
             IO.pr($"{Name}은 구멍 속으로 떨어졌다!");
-            Map.Current.LoadNewMap = true;
+            _currentMap.DoLoadNewMap = true;
         }
     }
     private void PickupCorpse(Corpse corpse)

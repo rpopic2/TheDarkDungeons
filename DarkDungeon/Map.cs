@@ -17,7 +17,7 @@ public class Map
     private List<Creature> _tempDeadFightables;
     private char[] _rendered;
     private Corpse? _fallenCorpse;
-    public bool LoadNewMap = false;
+    public bool DoLoadNewMap = false;
     // private const bool _debug = false;
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {

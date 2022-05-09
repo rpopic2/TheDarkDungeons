@@ -49,7 +49,7 @@ public class Program
         Map.Current.RemoveAndCreateCorpse();
         if (Map.Current.DoSpawnMobs && Turn % Rules.Spawnrate == 0) Map.Current.Spawn();
         Turn++;
-        if(Map.Current.LoadNewMap) Map.NewMap();
+        if(Map.Current.DoLoadNewMap) Map.NewMap();
         IO.Redraw();
     }
     private void Intro()
