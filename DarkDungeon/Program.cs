@@ -47,7 +47,7 @@ public class Program
             m.OnTurnEnd(); //update target and reset stance, onturnend
         });
 
-        Map.Current.RemoveAndCreateCorpse();
+        Map.Current.ReplaceToCorpse();
         if (Map.Current.DoSpawnMobs && Turn % Rules.Spawnrate == 0) Map.Current.SpawnRandom();
         Turn++;
         if(Map.Current.DoLoadNewMap) Map.NewMap();

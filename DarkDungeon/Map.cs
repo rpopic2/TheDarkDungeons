@@ -99,8 +99,9 @@ public class Map
         if (oldIndex != -1) _creaturesByPos[oldIndex] = null;
         _creaturesByPos[pos.x] = mov;
     }
-    public void RemoveAndCreateCorpse()
+    public void ReplaceToCorpse()
     {
+        if (_tempDeadCreatures.Count <= 0) return;
         foreach (var item in _tempDeadCreatures)
         {
             _creatures.Remove(item);
