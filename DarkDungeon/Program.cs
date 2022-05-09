@@ -44,7 +44,7 @@ public class Program
         int classIndex = 0;
         string[] classes = new string[] { "^r (전사)^/", "^g (암살자)^/", "^b (마법사)^/" };
         IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _); ;
-        string? classString = classes[classIndex];
+        string classString = classes.ElementAtOrDefault(classIndex) ?? "자유전직";
 
         switch (classIndex)
         {
@@ -58,7 +58,7 @@ public class Program
                 IO.pr($"{classString} : 난이도 어려움. (초보 비추천) 창의력을 발휘하여야 하는 강력한 마법을 쓰는 직업이다.");
                 break;
             default:
-                IO.pr("자유 직업을 선택하였습니다.");
+                IO.pr(classString);
                 break;
         }
     Confirm:
@@ -73,35 +73,40 @@ public class Program
 
         if (classIndex != -1) IO.pr(classString);
         Player player = Player._instance = new Player(name);
+        AddStartItems(classIndex);
+        IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
+        player.SelectPickupStat(3);
+    }
+    private void AddStartItems(int classIndex)
+    {
+        Inventory playerInven = s_player.Inven;
         switch (classIndex)
         {
             case 0:
-                player.Inven.Add(Creature.sword);
-                player.Inven.Add(Creature.shield);
-                player.Inven.Add(Creature.torch);
-                player.GainEnergy(3);
+                playerInven.Add(Creature.sword);
+                playerInven.Add(Creature.shield);
+                playerInven.Add(Creature.torch);
+                s_player.GainEnergy(3);
                 break;
             case 1:
-                player.Inven.Add(Creature.dagger);
-                player.Inven.Add(Creature.bow);
-                player.Inven.Add(Creature.arrow);
-                player.Inven.Add(Creature.arrow);
-                player.Inven.Add(Creature.torch);
-                player.Inven.Add(Creature.assBareHand);
-                player.GainEnergy(3);
+                playerInven.Add(Creature.dagger);
+                playerInven.Add(Creature.bow);
+                playerInven.Add(Creature.arrow);
+                playerInven.Add(Creature.arrow);
+                playerInven.Add(Creature.torch);
+                playerInven.Add(Creature.assBareHand);
+                s_player.GainEnergy(3);
                 break;
             case 2:
-                player.Inven.Add(Creature.staff);
-                player.Inven.Add(Creature.magicBook);
-                player.Inven.Add(Creature.torch);
-                player.GainEnergy(3);
+                playerInven.Add(Creature.staff);
+                playerInven.Add(Creature.magicBook);
+                playerInven.Add(Creature.torch);
+                s_player.GainEnergy(3);
                 break;
             default:
-                player.SelectStartItem();
-                player.GainEnergy(3);
+                s_player.SelectStartItem();
+                s_player.GainEnergy(3);
                 break;
         }
-        IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
-        player.SelectPickupStat(3);
     }
 }

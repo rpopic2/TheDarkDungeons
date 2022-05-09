@@ -1,7 +1,7 @@
 public class Map
 {
     private const int BOSS_DEPTH = 5;
-    private static int Turn { get; set; }
+    public static int Turn { get; private set; }
     private static int Spawnrate = 11;
     public static Map Current = default!;
     private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
