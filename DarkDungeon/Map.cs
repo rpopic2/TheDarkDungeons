@@ -1,17 +1,17 @@
 public class Map
 {
     private const int BOSS_DEPTH = 5;
-    public static ISpawnable[] NewMonsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
-    private static Random s_rnd = new Random();
     public static Map Current = default!;
+    private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
+    private static Random s_rnd = new Random();
     ///<summary>is 1 by default</summary>
     public static int Depth;
     public readonly int Length;
-    public readonly bool SpawnMobs;
+    public readonly bool DoSpawnMobs;
     private readonly string _pushDown;
     private readonly char[] _empty;
     private char[] _tiles;
-    public ISteppable?[] Steppables;
+    private ISteppable?[] _steppables;
     private List<Creature> _fightables;
     private Creature?[] _fightablePositions;
     private List<Creature> _tempDeadFightables;
@@ -23,39 +23,39 @@ public class Map
     {
         Current = this;
         this.Length = length;
-        this.SpawnMobs = spawnMobs;
+        this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
         _pushDown = new('\n', push);
 
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
         _tiles = Extensions.NewFilledArray(length, MapSymb.road);
-        Steppables = new ISteppable?[length];
+        _steppables = new ISteppable?[length];
         _fightables = new();
         _fightablePositions = new Creature[length];
         _rendered = new char[length];
         _tempDeadFightables = new();
 
         int portalIndex = Depth != 1 ? s_rnd.Next(0, length - 1) : s_rnd.Next(2, length - 1);
-        Steppables[portalIndex] = new Portal();
-        if (corpseFromPrev is Corpse corpse) Steppables[s_player.Pos.x] = corpse;
+        _steppables[portalIndex] = new Portal();
+        if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
         _fightables.Add(s_player);
         if (Depth == BOSS_DEPTH)
         {
-            this.SpawnMobs = false;
+            this.DoSpawnMobs = false;
             Spawn();
         }
     }
     private static Player s_player { get => Player.instance; }
     public ref readonly Creature?[] FightablePositions => ref _fightablePositions;
     public ref readonly List<Creature> Fightables => ref _fightables;
-    public ref readonly char[] Tiles
-    => ref _tiles;
+    public ref readonly char[] Tiles => ref _tiles;
+    public ISteppable? GetSteppable(int index) => _steppables[index];
     public void Spawn()
     {
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
 
-        int max = Math.Min(Depth + 1, NewMonsterData.Length);
+        int max = Math.Min(Depth + 1, s_monsterData.Length);
         int min = Math.Max(0, max - 2);
 
         int randomIndex = s_rnd.Next(min, max);
@@ -63,7 +63,7 @@ public class Map
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
 
-        ISpawnable data = NewMonsterData[randomIndex];
+        ISpawnable data = s_monsterData[randomIndex];
         Monster mov;
         mov = data.Instantiate(spawnPoint);
         if (Depth == BOSS_DEPTH) mov = new QuietKnight(spawnPoint);
@@ -111,13 +111,13 @@ public class Map
         void CreateCorpse(Creature fight)
         {
             int pos = fight.Pos.x;
-            ISteppable? old = Steppables[pos];
+            ISteppable? old = _steppables[pos];
             var drops = fight.Inven.Content;
             if (Monster.DropOutOf(fight.Stat.rnd, 5)) drops.Add(Creature.boneOfTheDeceased);
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
-            if (old is Corpse cor) Steppables[pos] = cor + temp;
+            if (old is Corpse cor) _steppables[pos] = cor + temp;
             else if (old is Portal) _fallenCorpse = temp;
-            else Steppables[pos] = temp;
+            else _steppables[pos] = temp;
         }
     }
     public Creature? GetFightableAt(int index)
@@ -154,7 +154,7 @@ public class Map
     {
         _empty.CopyTo(_rendered, 0);
         RenderVisible(Tiles);
-        RenderVisible(Steppables);
+        RenderVisible(_steppables);
         RenderVisible(FightablePositions);
         //if(true) RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
@@ -176,6 +176,14 @@ public class Map
         // {
         //     for (int i = 0; i < Length; i++) if (FightablePositions[i] is Monster m) _rendered[i] = m.ToChar();
         // }
+    }
+    public void OnCorpsePickUp(Corpse corpse)
+    {
+        if (corpse.droplist.Count() <= 0)
+        {
+            int index = Array.IndexOf(_steppables, corpse);
+            _steppables[index] = null;
+        }
     }
 
     public override string ToString()

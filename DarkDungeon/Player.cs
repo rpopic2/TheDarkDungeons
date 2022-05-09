@@ -11,7 +11,7 @@ public class Player : Creature
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
-    public ISteppable? UnderFoot => Map.Current.Steppables[Pos.x];
+    public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
     public override void SelectAction()
     {
         do
@@ -191,10 +191,7 @@ public class Player : Creature
             PickAnItemFromCorpse(corpse, out bool cancel);
             if(cancel) return;
         }
-        if (corpse.droplist.Count() <= 0)
-        {
-            Map.Current.Steppables[Pos.x] = null;
-        }
+        _currentMap.OnCorpsePickUp(corpse);
     }
     private void PickAnItemFromCorpse(Corpse corpse, out bool cancel)
     {
