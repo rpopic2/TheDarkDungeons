@@ -1,8 +1,6 @@
 main 0.6.090522
 [X] Map 생성시 스폰 없애자 
 [ ] (현재)15j원칙, 4파라미터, 4분기점, 테스트 커버리지
-[ ] Creature(old fightable) 대대적인 리팩토링 프로젝트. + test coverage
-[ ] map.cs program.cs also need refactoring
 [ ] current map.steppables field
 [ ] program elaspeturn to map.cs
 [ ] 아 화살 씹히는 이유 알아냄 시체에서 스택구현이 안돼서그럼 ㅋㅋ
