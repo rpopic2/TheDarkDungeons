@@ -3,6 +3,8 @@ main 0.6.090522
 [ ] Creature(old fightable) 대대적인 리팩토링 프로젝트. + test coverage
 [ ] map.cs program.cs also need refactoring
 [ ] current map.steppables field
+[ ] program elaspeturn to map.cs
+[ ] map.spawn을 다듬고 끝나면 생성자에보스 스폰 다듬기
 [ ] 
 [ ] 횃불 먹어도 스택이 안돌아옴
 [ ] 일단 토치에 대한건 시체에 있는 토치 먹어도 스택이 1밖에 안차는건 시체 넘어가며 메타데이터가 없어져서그럼.

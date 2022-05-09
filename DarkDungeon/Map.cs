@@ -40,6 +40,7 @@ public class Map
             this.DoSpawnMobs = false;
             Spawn();
         }
+
         void SetupSteppables(Corpse? corpseFromPrev)
         {
             int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
@@ -48,13 +49,12 @@ public class Map
         }
     }
     private static Player s_player { get => Player.instance; }
-    public ref readonly Creature?[] CreaturesByPos => ref _creaturesByPos;
     public ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
     public void Spawn()
     {
-        List<int> spawnableIndices = GetSpawnableIndices();
+        List<int> spawnableIndices = getSpawnableIndices();
         if (spawnableIndices.Count <= 0) return;
 
         int max = Math.Min(Depth + 1, s_monsterData.Length);
@@ -72,16 +72,14 @@ public class Map
         _creatures.Add(mov);
         UpdateFightable(mov);
 
-        List<int> GetSpawnableIndices()
+        List<int> getSpawnableIndices()
         {
             List<int> fullMap = new List<int>(Length);
             for (int i = 0; i < Length; i++)
             {
-                if (CreaturesByPos[i] is null) fullMap.Add(i);
+                if (_creaturesByPos[i] is null) fullMap.Add(i);
             }
             int playerX = s_player.Pos.x;
-            fullMap.Remove(0);
-            fullMap.Remove(1);
             fullMap.Remove(playerX);
             fullMap.Remove(playerX - 1);
             fullMap.Remove(playerX + 1);
@@ -94,12 +92,12 @@ public class Map
         if (mov is Creature fight && !fight.IsAlive)
         {
             _tempDeadCreatures.Add(fight);
-            CreaturesByPos[pos.x] = null;
+            _creaturesByPos[pos.x] = null;
             return;
         }
-        int oldIndex = Array.IndexOf(CreaturesByPos, mov);
-        if (oldIndex != -1) CreaturesByPos[oldIndex] = null;
-        CreaturesByPos[pos.x] = mov;
+        int oldIndex = Array.IndexOf(_creaturesByPos, mov);
+        if (oldIndex != -1) _creaturesByPos[oldIndex] = null;
+        _creaturesByPos[pos.x] = mov;
     }
     public void RemoveAndCreateCorpse()
     {
@@ -124,8 +122,8 @@ public class Map
     }
     public Creature? GetFightableAt(int index)
     {
-        if (index < 0 || index >= CreaturesByPos.Length || CreaturesByPos[index] is null) return null;
-        return CreaturesByPos[index];
+        if (index < 0 || index >= _creaturesByPos.Length || _creaturesByPos[index] is null) return null;
+        return _creaturesByPos[index];
     }
     public Creature? RayCast(Position origin, int range)
     {
@@ -157,7 +155,7 @@ public class Map
         _empty.CopyTo(_rendered, 0);
         RenderVisible(Tiles);
         RenderVisible(_steppables);
-        RenderVisible(CreaturesByPos);
+        RenderVisible(_creaturesByPos);
         //if(true) RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
 
