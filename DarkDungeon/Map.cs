@@ -44,7 +44,6 @@ public class Map
             this.SpawnMobs = false;
             Spawn();
         }
-        if (SpawnMobs) Spawn();
     }
     private static Player s_player { get => Player.instance; }
     public ref readonly Creature?[] FightablePositions => ref _fightablePositions;
