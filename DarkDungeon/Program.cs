@@ -29,7 +29,7 @@ public class Program
     }
     private static void ElaspeTurn()
     {
-        var fights = Map.Current.Fightables;
+        var fights = Map.Current.Creatures;
         //onbeforeturn
         fights.ForEach(f =>
         {

@@ -12,9 +12,9 @@ public class Map
     private readonly char[] _empty;
     private readonly char[] _tiles;
     private readonly ISteppable?[] _steppables;
-    private readonly List<Creature> _fightables;
-    private readonly Creature?[] _fightablePositions;
-    private readonly List<Creature> _tempDeadFightables;
+    private readonly List<Creature> _creatures;
+    private readonly Creature?[] _creaturesByPos;
+    private readonly List<Creature> _tempDeadCreatures;
     private readonly char[] _rendered;
     private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
@@ -29,12 +29,12 @@ public class Map
         _empty = Extensions.NewFilledArray(length, MapSymb.Empty);
         _tiles = Extensions.NewFilledArray(length, MapSymb.road);
         _steppables = new ISteppable?[length];
-        _fightables = new();
-        _fightablePositions = new Creature[length];
+        _creatures = new();
+        _creaturesByPos = new Creature[length];
         _rendered = new char[length];
-        _tempDeadFightables = new();
+        _tempDeadCreatures = new();
         SetupSteppables(corpseFromPrev);
-        _fightables.Add(s_player);
+        _creatures.Add(s_player);
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
@@ -48,8 +48,8 @@ public class Map
         }
     }
     private static Player s_player { get => Player.instance; }
-    public ref readonly Creature?[] FightablePositions => ref _fightablePositions;
-    public ref readonly List<Creature> Fightables => ref _fightables;
+    public ref readonly Creature?[] CreaturesByPos => ref _creaturesByPos;
+    public ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
     public void Spawn()
@@ -69,7 +69,7 @@ public class Map
         Monster mov;
         mov = data.Instantiate(spawnPoint);
         if (Depth == BOSS_DEPTH) mov = new QuietKnight(spawnPoint);
-        _fightables.Add(mov);
+        _creatures.Add(mov);
         UpdateFightable(mov);
 
         List<int> GetSpawnableIndices()
@@ -77,7 +77,7 @@ public class Map
             List<int> fullMap = new List<int>(Length);
             for (int i = 0; i < Length; i++)
             {
-                if (FightablePositions[i] is null) fullMap.Add(i);
+                if (CreaturesByPos[i] is null) fullMap.Add(i);
             }
             int playerX = s_player.Pos.x;
             fullMap.Remove(0);
@@ -93,22 +93,22 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Creature fight && !fight.IsAlive)
         {
-            _tempDeadFightables.Add(fight);
-            FightablePositions[pos.x] = null;
+            _tempDeadCreatures.Add(fight);
+            CreaturesByPos[pos.x] = null;
             return;
         }
-        int oldIndex = Array.IndexOf(FightablePositions, mov);
-        if (oldIndex != -1) FightablePositions[oldIndex] = null;
-        FightablePositions[pos.x] = mov;
+        int oldIndex = Array.IndexOf(CreaturesByPos, mov);
+        if (oldIndex != -1) CreaturesByPos[oldIndex] = null;
+        CreaturesByPos[pos.x] = mov;
     }
     public void RemoveAndCreateCorpse()
     {
-        foreach (var item in _tempDeadFightables)
+        foreach (var item in _tempDeadCreatures)
         {
-            _fightables.Remove(item);
+            _creatures.Remove(item);
             CreateCorpse(item);
         }
-        _tempDeadFightables.Clear();
+        _tempDeadCreatures.Clear();
 
         void CreateCorpse(Creature fight)
         {
@@ -124,8 +124,8 @@ public class Map
     }
     public Creature? GetFightableAt(int index)
     {
-        if (index < 0 || index >= FightablePositions.Length || FightablePositions[index] is null) return null;
-        return FightablePositions[index];
+        if (index < 0 || index >= CreaturesByPos.Length || CreaturesByPos[index] is null) return null;
+        return CreaturesByPos[index];
     }
     public Creature? RayCast(Position origin, int range)
     {
@@ -157,7 +157,7 @@ public class Map
         _empty.CopyTo(_rendered, 0);
         RenderVisible(Tiles);
         RenderVisible(_steppables);
-        RenderVisible(FightablePositions);
+        RenderVisible(CreaturesByPos);
         //if(true) RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
 
