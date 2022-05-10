@@ -20,6 +20,20 @@ public class InventoryTest
         Assert.Equal(2, inven.GetMeta(Creature.arrow).stack);
     }
     [Fact]
+    public void TestAddEquipOnFull()
+    {
+        inven.Add(Creature.torch);
+        inven.Add(Creature.sword);
+        inven.Add(Creature.tearOfLun);
+        inven.Add(Creature.shield);
+        inven.Add(Creature.spiritStaff);
+
+        inven.Add(Creature.dagger, out bool added);
+        Assert.Equal(5, inven.Count);
+        if (added) Assert.Contains(Creature.dagger, inven);
+        else Assert.DoesNotContain(Creature.dagger, inven);
+    }
+    [Fact]
     public void TestRemove()
     {
         player.Inven.Add(Creature.arrow);
@@ -49,5 +63,5 @@ public class InventoryTest
         inven.Consume(Creature.arrow);
         Assert.Equal(1, inven.GetMeta(Creature.arrow).stack);
     }
-    
+
 }
