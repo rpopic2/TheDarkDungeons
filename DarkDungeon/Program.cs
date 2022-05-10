@@ -30,14 +30,7 @@
     private void CreatePlayer()
     {
         IO.rk("Press any key to start...");
-
-        string name;
-        do
-        {
-            IO.pr("캐릭터의 이름은?...");
-            name = Console.ReadLine() ?? "Michael";
-            IO.del(2);
-        } while (name == string.Empty);
+        string name = ChooseName();
     ClassSelect:
         IO.pr($"{name}의 직업은?...");
         int classIndex = 0;
@@ -79,6 +72,17 @@
                     break;
             }
         }
+    }
+    private string ChooseName()
+    {
+        string name;
+        do
+        {
+            IO.pr("캐릭터의 이름은?...");
+            name = Console.ReadLine() ?? "Michael";
+            IO.del(2);
+        } while (name == string.Empty);
+        return name;
     }
     private void AddStartItems(int classIndex)
     {
