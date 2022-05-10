@@ -49,7 +49,7 @@ public class Inventory : ICollection<Item?>
         {
             content.Add(item);
             metaDatas.Add(item, new());
-            if(item.itemType == ItemType.Consume) GetMeta(item).stack = stack;
+            if (item.itemType == ItemType.Consume) GetMeta(item).stack = stack;
             Wear(item);
             RegisterPassives(item);
         }
@@ -65,7 +65,6 @@ public class Inventory : ICollection<Item?>
     }
     private void RegisterPassives(Item item)
     {
-        var invocationList = owner.passives.GetInvocationList();
         item.ForEach<Passive>((p) =>
         {
             if (!OwnerHasPassive(p)) owner.passives += p.Behaviour;
@@ -73,13 +72,14 @@ public class Inventory : ICollection<Item?>
 
         bool OwnerHasPassive(Passive passive)
         {
+            var invocationList = owner.passives.GetInvocationList();
             return invocationList.Contains(passive.Behaviour);
         }
     }
     private void UnregisterPassives(Item item)
     {
-        var ownerPassives = owner.passives;
-        item.ForEach<Passive>((p) => ownerPassives -= p.Behaviour);
+#pragma warning disable
+        item.ForEach<Passive>(p => owner.passives -= p.Behaviour);
     }
     public void Remove(Item item)
     {
