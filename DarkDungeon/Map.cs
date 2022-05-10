@@ -61,7 +61,7 @@ public class Map
     {
         var currentCreatures = Current.Creatures;
         currentCreatures.ForEach(f => f.OnBeforeTurn());
-        OnRealTurn();
+        OnActualTurn();
         currentCreatures.ForEach(m => m.OnTurnEnd()); //update target and reset stance, onturnend
 
         ReplaceToCorpse();
@@ -70,7 +70,7 @@ public class Map
         if (DoLoadNewMap) NewMap();
         IO.Redraw();
     }
-    private void OnRealTurn()
+    private void OnActualTurn()
     {
         var currentCreatures = Creatures;
         var firsts = from f in currentCreatures where f.CurAction.CurrentBehav?.Stance == StanceName.Charge select f;
