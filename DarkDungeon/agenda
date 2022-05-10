@@ -1,8 +1,8 @@
 main 0.6.090522
 [X] Map 생성시 스폰 없애자 
 [X] program elaspeturn to map.cs
-[ ] creature, map, program, PLAYER, monster
-[ ] (현재)15j원칙, 4파라미터, 4분기점, 테스트 커버리지
+[ ] creature, map, program, player, monster
+[ ] 15j원칙, 4파라미터, 4분기점, 테스트 커버리지
 [ ] 아 화살 씹히는 이유 알아냄 시체에서 스택구현이 안돼서그럼 ㅋㅋ
 [ ] Map.OnTurn refactor. actually make creature to subscribe to onturn
 [ ] 

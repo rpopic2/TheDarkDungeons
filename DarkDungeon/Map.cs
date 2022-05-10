@@ -71,10 +71,7 @@ public class Map
         foreach (Creature item in firsts) item.OnTurn();
         foreach (Creature item in lasts) item.OnTurn();
         //onturnend
-        currentCreatures.ForEach(m =>
-        {
-            m.OnTurnEnd(); //update target and reset stance, onturnend
-        });
+        currentCreatures.ForEach(m => m.OnTurnEnd()); //update target and reset stance, onturnend
 
         ReplaceToCorpse();
         if (DoSpawnMobs && Turn % Spawnrate == 0) SpawnRandom();

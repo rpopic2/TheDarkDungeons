@@ -70,7 +70,3 @@ public abstract class Monster : Creature
     public static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Right ? fowardChar : backwardChar;
 }
-
-
-
-public record DropList(params (Item item, int outOf)[] list);
