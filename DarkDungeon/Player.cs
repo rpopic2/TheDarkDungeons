@@ -1,4 +1,4 @@
-public class Player : Creature
+public partial class Player : Creature
 {
     public const int BASICCAP = 3;
     public const int BASICSTAT = 1;
@@ -12,90 +12,6 @@ public class Player : Creature
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
-    public override void SelectAction()
-    {
-        do
-        {
-            Selection();
-        } while (CurAction.CurrentBehav is null);
-
-        void Selection()
-        {
-            ConsoleKeyInfo info = IO.rk();
-            ConsoleKey key = info.Key;
-            if (key.IsCancel())
-            {
-                DiscardItem();
-                IO.Redraw();
-                return;
-            }
-            switch (key)
-            {
-                case ConsoleKey.RightArrow:
-                case ConsoleKey.L:
-                    if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
-                    else if (CanMove(Position.MOVERIGHT)) SelectBasicBehaviour(0, Position.MOVERIGHT.x, (int)Position.MOVERIGHT.facing);
-                    break;
-                case ConsoleKey.NumPad0:
-                case ConsoleKey.D0:
-                    IO.Redraw();
-                    break;
-                case ConsoleKey.LeftArrow:
-                case ConsoleKey.H:
-                    if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
-                    break;
-                case ConsoleKey.N:
-                case ConsoleKey.OemPeriod:
-                case ConsoleKey.Delete: //Rest
-                    SelectBasicBehaviour(1, 0, -1); //x, y로 아무거나 넣어도 똑같음
-                    break;
-                case ConsoleKey.Z: //상호작용
-                case ConsoleKey.Enter: //상호작용
-                    if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
-                    break;
-                default:
-                    DefaultSwitch(info);
-                    break;
-            }
-        }
-        void DefaultSwitch(ConsoleKeyInfo key)
-        {
-            bool found = IO.chk(key.KeyChar, Inventory.INVENSIZE, out int i);
-            if (!found) IO.chkp(key.Key, Inventory.INVENSIZE, out i);
-            if (found)
-            {
-                if (i >= Inven.Count)
-                {
-                    SelectBehaviour(bareHand);
-                    return;
-                }
-                else if (Inven[i] is Item item)
-                {
-                    SelectBehaviour(item);
-                    return;
-                }
-            }
-
-            switch (key.KeyChar)
-            {
-                case '.':
-                    SelectBasicBehaviour(1, 0, -1);
-                    break;
-                case 'i':
-                case '*':
-                    IO.DrawInventory();
-                    break;
-                case '/':
-                case 'm':
-                    IO.ShowStats();
-                    break;
-                case '?':
-                case '5':
-                    IO.ShowHelp();
-                    break;
-            }
-        }
-    }
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);
@@ -137,7 +53,7 @@ public class Player : Creature
         IO.Redraw();
         return success;
     }
-    public int SelectIndexOfItem(string message)
+    private int SelectIndexOfItem(string message)
     {
         IO.sel(Inven, out int index, 0, message);
         return index;
@@ -148,7 +64,6 @@ public class Player : Creature
         int index = SelectIndexOfItem("버릴 아이템을 선택해 주십시오 : ");
         if (index <= -1) return false;
         Item selected = Inven[index]!;
-
     Confirm:
         ConsoleKey key = IO.rk($"{selected.Name}이 버려집니다. 계속하시겠습니까?").Key;
         if (key.IsOK())
