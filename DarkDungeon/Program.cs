@@ -31,8 +31,16 @@
     {
         IO.rk("Press any key to start...");
         string name = ChooseName();
-    ClassSelect:
         IO.pr($"{name}의 직업은?...");
+        int classIndex = ChooseClass();
+        Player player = Player._instance = new Player(name);
+        AddStartItems(classIndex);
+        IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
+        player.SelectPickupStat(3);
+    }
+    private int ChooseClass()
+    {
+    ClassSelect:
         int classIndex = 0;
         string[] classes = new string[] { "^r (전사)^/", "^g (암살자)^/", "^b (마법사)^/" };
         IO.sel(classes, out classIndex); ;
@@ -43,17 +51,12 @@
         ConsoleKeyInfo keyInfo = IO.rk("스페이스바 : 확인, x : 취소");
         if (keyInfo.Key.IsCancel())
         {
-            IO.del(3);
+            IO.del(2);
             goto ClassSelect;
         }
         else if (!keyInfo.Key.IsOK()) goto Confirm;
-        else IO.del(2);
-
-        Player player = Player._instance = new Player(name);
-        AddStartItems(classIndex);
-        IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
-        player.SelectPickupStat(3);
-
+        IO.del(2);
+        return classIndex;
     }
     private string ChooseName()
     {
