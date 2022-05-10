@@ -23,7 +23,7 @@ public class Map
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
-        Program.OnTurn += () => OnTurn();
+        Program.OnTurn = () => OnTurn();
         this.Length = length;
         this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
@@ -67,7 +67,7 @@ public class Map
         ReplaceToCorpse();
         if (DoSpawnMobs && Turn % Spawnrate == 0) SpawnRandom();
         Turn++;
-        if (DoLoadNewMap) NewMap();
+        if (Current.DoLoadNewMap) NewMap();
         IO.Redraw();
     }
     private void OnActualTurn()
@@ -138,9 +138,8 @@ public class Map
         {
             int pos = fight.Pos.x;
             ISteppable? old = _steppables[pos];
-            var drops = fight.Inven.Content;
-            if (Monster.DropOutOf(fight.Stat.rnd, 5)) drops.Add(Creature.boneOfTheDeceased);
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven);
+            if (Monster.DropOutOf(fight.Stat.rnd, 5)) temp.droplist.Add(Creature.boneOfTheDeceased);
             if (old is Corpse cor) _steppables[pos] = cor + temp;
             else if (old is Portal) _corpseToPass = temp;
             else _steppables[pos] = temp;
