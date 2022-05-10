@@ -1,7 +1,7 @@
 main 0.6.100522
 [X] Player.cs를 유저 인풋과 그냥 파이터블 상속하는 두개로 나눠야할듯.
 [X] Test cover Inven.cs
-[ ] 시체 스택구현
+[X] 시체 스택구현
 [ ] Map.OnTurn refactor. actually make creature to subscribe to onturn
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속
 [ ] 패시브들 수거가 안돼서 튕기는 느낌이 있는듯=> 방식을 템창에 있는 모든 패시브에 실행?
