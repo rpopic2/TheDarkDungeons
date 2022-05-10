@@ -1,11 +1,10 @@
 main 0.6.100522
 [X] Player.cs를 유저 인풋과 그냥 파이터블 상속하는 두개로 나눠야할듯.
-[ ] 아 화살 씹히는 이유 알아냄 시체에서 스택구현이 안돼서그럼 ㅋㅋ
+[ ] Test cover Inven.cs
 [ ] 시체 스택구현
 [ ] Map.OnTurn refactor. actually make creature to subscribe to onturn
-[ ] 
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속
-[ ] 패시브들 수거가 안돼서 튕기는 느낌이 있는듯
+[ ] 패시브들 수거가 안돼서 튕기는 느낌이 있는듯=> 방식을 템창에 있는 모든 패시브에 실행?
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
 
@@ -13,10 +12,9 @@ main 0.6.100522
 [ ] 시체에서 실제 템을 집어야 턴 소모하는걸로?
 [ ] non intractive mode?
 [ ] Player.Charge와 Player.PoisonItem 리팩토링 하기 (중복)
-자동충전
+[ ] 기력 이동시 자동충전
 [ ] Player.cs try to refactor all sel's
 [ ] Stat과 statInfo통일
-
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 방밀이 스턴을 먹임.
 [ ] 법사 템좀 바꿔줘야할듯->불뎀 추가.
