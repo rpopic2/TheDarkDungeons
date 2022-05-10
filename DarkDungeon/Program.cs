@@ -35,10 +35,11 @@
         IO.pr($"{name}의 직업은?...");
         int classIndex = 0;
         string[] classes = new string[] { "^r (전사)^/", "^g (암살자)^/", "^b (마법사)^/" };
-        IO.sel(classes, 0, out classIndex, out bool cancel, out _, out _); ;
-        string classString = classes.ElementAtOrDefault(classIndex) ?? "자유전직";
+        IO.sel(classes, out classIndex); ;
+        string className = classes.ElementAtOrDefault(classIndex) ?? "자유전직";
     Confirm:
-        ShowClassDescription();
+        string classDesc = GetClassDesc(classIndex);
+        IO.pr($"{className} : {classDesc}");
         ConsoleKeyInfo keyInfo = IO.rk("스페이스바 : 확인, x : 취소");
         if (keyInfo.Key.IsCancel())
         {
@@ -48,30 +49,11 @@
         else if (!keyInfo.Key.IsOK()) goto Confirm;
         else IO.del(2);
 
-        if (classIndex != -1) IO.pr(classString);
         Player player = Player._instance = new Player(name);
         AddStartItems(classIndex);
         IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
         player.SelectPickupStat(3);
 
-        void ShowClassDescription()
-        {
-            switch (classIndex)
-            {
-                case 0:
-                    IO.pr($"{classString} : 난이도 쉬움. (초보 추천) 근접 거리에서 용맹히 싸우는 직업이다.");
-                    break;
-                case 1:
-                    IO.pr($"{classString} : 난이도 보통. (초보 비추천) 적이 저항하지 못하고 본인이 당했는지도 모르게끔 암살한다.");
-                    break;
-                case 2:
-                    IO.pr($"{classString} : 난이도 어려움. (초보 비추천) 창의력을 발휘하여야 하는 강력한 마법을 쓰는 직업이다.");
-                    break;
-                default:
-                    IO.pr(classString);
-                    break;
-            }
-        }
     }
     private string ChooseName()
     {
@@ -83,6 +65,26 @@
             IO.del(2);
         } while (name == string.Empty);
         return name;
+    }
+    private string GetClassDesc(int index)
+    {
+        string desc;
+        switch (index)
+        {
+            case 0:
+                desc = "난이도 쉬움. (초보 추천) 근접 거리에서 용맹히 싸우는 직업이다.";
+                break;
+            case 1:
+                desc = " 난이도 보통. (초보 비추천) 적이 저항하지 못하고 본인이 당했는지도 모르게끔 암살한다.";
+                break;
+            case 2:
+                desc = "난이도 어려움. (초보 비추천) 창의력을 발휘하여야 하는 강력한 마법을 쓰는 직업이다.";
+                break;
+            default:
+                desc = "자유 직업을 선택하였습니다";
+                break;
+        }
+        return desc;
     }
     private void AddStartItems(int classIndex)
     {
