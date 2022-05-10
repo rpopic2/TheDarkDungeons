@@ -59,7 +59,7 @@ public class Map
 
     private void OnTurn()
     {
-        var currentCreatures = Current.Creatures;
+        var currentCreatures = Creatures;
         currentCreatures.ForEach(f => f.OnBeforeTurn());
         OnActualTurn();
         currentCreatures.ForEach(m => m.OnTurnEnd()); //update target and reset stance, onturnend
@@ -169,6 +169,7 @@ public class Map
     public static void NewMap()
     {
         Depth++;
+        Program.OnTurn -= () => Current.OnTurn();
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
