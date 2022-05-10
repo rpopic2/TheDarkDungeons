@@ -23,21 +23,21 @@ public class Inventory : ICollection<Item?>
 
     public bool IsReadOnly => ((ICollection<Item?>)content).IsReadOnly;
 
-    public void Add(Item? value, out bool added)
+    public void Add(Item? value, int stack, out bool added)
     {
         if (value is not Item item) throw new Exception("Trying to put non-Item objext into Inventory.");
         if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
-            GetMeta(item).stack++;
+            GetMeta(item).stack += stack;
             added = true;
         }
         else
         {
-            added = Store(item);
+            added = Store(item, stack);
         }
     }
-    public void Add(Item? value) => Add(value, out _);
-    private bool Store(Item item)
+    public void Add(Item? value) => Add(value, 1, out _);
+    private bool Store(Item item, int stack)
     {
         if (Count >= INVENSIZE && owner is Player p)
         {
@@ -49,6 +49,7 @@ public class Inventory : ICollection<Item?>
         {
             content.Add(item);
             metaDatas.Add(item, new());
+            if(item.itemType == ItemType.Consume) GetMeta(item).stack = stack;
             Wear(item);
             RegisterPassives(item);
         }

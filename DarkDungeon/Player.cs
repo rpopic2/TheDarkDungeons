@@ -46,10 +46,10 @@ public partial class Player : Creature
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
-    public bool PickupItem(Item item)
+    public bool PickupItem(Item item, int stack = 1)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
-        Inven.Add(item, out bool success);
+        Inven.Add(item, stack, out bool success);
         IO.Redraw();
         return success;
     }
@@ -110,17 +110,20 @@ public partial class Player : Creature
     }
     private void PickAnItemFromCorpse(Corpse corpse, out bool cancel)
     {
-            IO.sel(corpse.droplist.ToArray(), 0, out int index, out  cancel, out _, out _);
+            IO.sel(corpse.droplist, 0, out int index, out  cancel, out _, out _);
             if (cancel) return;
             if (corpse.droplist[index] is Item item)
             {
-                bool pickedUp = PickupItem(item);
+                int stack = corpse.droplist.GetMeta(item).stack;
+                IO.rk(stack);
+                bool pickedUp = PickupItem(item, stack);
                 if (pickedUp) corpse.droplist.Remove(item);
             }
     }
     public void SelectStartItem()
     {
-        Corpse corpse = new("누군가", new() { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
+         Corpse corpse = new("누군가", new(Player.instance,"시체"));
+ corpse.droplist.Content.AddRange(new Item[]{ torch, sword, shield, dagger, bow, arrow, staff, magicBook });
         while (Inven.Count < 3)
         {
             PickAnItemFromCorpse(corpse, out _);

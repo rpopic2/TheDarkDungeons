@@ -1,9 +1,9 @@
-public record struct Corpse(string name, List<Item?> droplist) : ISteppable
+public record struct Corpse(string name, Inventory droplist) : ISteppable
 {
     public char ToChar() => MapSymb.corpse;
     public static Corpse operator +(Corpse old, Corpse newOne)
     {
-        old.droplist.AddRange(newOne.droplist);
+        old.droplist.Content.AddRange(newOne.droplist);
         old.name += $", {newOne.name}";
         return old;
     }

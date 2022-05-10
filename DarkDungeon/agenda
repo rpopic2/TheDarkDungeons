@@ -1,6 +1,6 @@
 main 0.6.100522
 [X] Player.cs를 유저 인풋과 그냥 파이터블 상속하는 두개로 나눠야할듯.
-[ ] Test cover Inven.cs
+[X] Test cover Inven.cs
 [ ] 시체 스택구현
 [ ] Map.OnTurn refactor. actually make creature to subscribe to onturn
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속

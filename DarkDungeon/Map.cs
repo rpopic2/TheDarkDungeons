@@ -140,7 +140,7 @@ public class Map
             ISteppable? old = _steppables[pos];
             var drops = fight.Inven.Content;
             if (Monster.DropOutOf(fight.Stat.rnd, 5)) drops.Add(Creature.boneOfTheDeceased);
-            Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven.Content);
+            Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven);
             if (old is Corpse cor) _steppables[pos] = cor + temp;
             else if (old is Portal) _corpseToPass = temp;
             else _steppables[pos] = temp;
