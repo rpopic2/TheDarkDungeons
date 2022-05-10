@@ -60,17 +60,8 @@ public class Map
     private void OnTurn()
     {
         var currentCreatures = Current.Creatures;
-        //onbeforeturn
-        currentCreatures.ForEach(f =>
-        {
-            f.OnBeforeTurn();
-        });
-        //onturn
-        var firsts = from f in currentCreatures where f.CurAction.CurrentBehav?.Stance == StanceName.Charge select f;
-        var lasts = currentCreatures.Except(firsts);
-        foreach (Creature item in firsts) item.OnTurn();
-        foreach (Creature item in lasts) item.OnTurn();
-        //onturnend
+        currentCreatures.ForEach(f => f.OnBeforeTurn());
+        OnRealTurn();
         currentCreatures.ForEach(m => m.OnTurnEnd()); //update target and reset stance, onturnend
 
         ReplaceToCorpse();
@@ -78,6 +69,14 @@ public class Map
         Turn++;
         if (DoLoadNewMap) NewMap();
         IO.Redraw();
+    }
+    private void OnRealTurn()
+    {
+        var currentCreatures = Creatures;
+        var firsts = from f in currentCreatures where f.CurAction.CurrentBehav?.Stance == StanceName.Charge select f;
+        var lasts = currentCreatures.Except(firsts);
+        foreach (Creature item in firsts) item.OnTurn();
+        foreach (Creature item in lasts) item.OnTurn();
     }
     public void SpawnRandom()
     {
