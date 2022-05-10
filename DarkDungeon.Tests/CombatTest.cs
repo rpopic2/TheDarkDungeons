@@ -1,4 +1,3 @@
-using Entities;
 using Xunit;
 
 public class CombatTest

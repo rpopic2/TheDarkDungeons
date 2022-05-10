@@ -17,7 +17,7 @@ public class InventoryTest
         player.Inven.Add(Creature.arrow);
 
         Assert.Equal(Creature.arrow, player.Inven[0]);
-        Assert.Equal(2, player.Inven[0]?.stack);
+        Assert.Equal(2, inven.GetMeta(Creature.arrow).stack);
     }
     [Fact]
     public void TestRemove()
@@ -39,8 +39,15 @@ public class InventoryTest
     {
         inven.Add(Creature.arrow);
         inven.Consume(Creature.arrow);
-        Assert.Equal(1, inven[0]!.stack);
-        //Assert.Empty(inven);
+        Assert.Empty(inven);
+    }
+    [Fact]
+    public void TestConsumeStacked()
+    {
+        inven.Add(Creature.arrow);
+        inven.Add(Creature.arrow);
+        inven.Consume(Creature.arrow);
+        Assert.Equal(1, inven.GetMeta(Creature.arrow).stack);
     }
     
 }
