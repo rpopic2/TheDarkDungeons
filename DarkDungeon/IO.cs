@@ -18,7 +18,6 @@ public static class IO
         {
             IO.IsInteractive = false;
         }
-        IO.pr(IsInteractive);
     }
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
@@ -75,7 +74,7 @@ public static class IO
     }
     public static ConsoleKeyInfo rk()
     {
-        if(IsInteractive) return Console.ReadKey();
+        if(IsInteractive) return Console.ReadKey(true);
         else return new ConsoleKeyInfo('q', ConsoleKey.Q, false, false, false);
     }
     public static void sel(object value, out int index, __ flags = 0, string title = "선택 : ")
