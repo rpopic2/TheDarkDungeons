@@ -41,7 +41,7 @@ public class Map
         _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
         SetupSteppables(corpseFromPrev);
-        if(s_player is not null) _creatures.Add(s_player);
+        if (Player._instance is not null) _creatures.Add(s_player);
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
@@ -55,7 +55,8 @@ public class Map
             if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
         }
     }
-    public void RegisterPlayer(){
+    public void RegisterPlayer()
+    {
         _creatures.Add(s_player);
     }
     private static Player s_player { get => Player.instance; }
@@ -166,11 +167,13 @@ public class Map
     public static void NewMap()
     {
         Depth++;
-        Program.OnTurn -= () => Current.OnTurnElapse();
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
-        if (Current is not null && newLength < Current.Length) newLength = Current.Length;
+        if (Current is not null && newLength < Current.Length) {
+            newLength = Current.Length;
+            Program.OnTurn -= () => Current.OnTurnElapse();
+        }
         Current = new Map(newLength, Current?._corpseToPass);
         if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }

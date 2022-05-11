@@ -65,14 +65,18 @@ public static class IO
         Console.ResetColor();
     }
     ///<summary>Console.ReadKey. Intercept is true.</summary>
-    public static ConsoleKeyInfo rk() => Console.ReadKey(true);
 
     public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "")
     {
         pr(print, flags, title);
-        ConsoleKeyInfo info = Console.ReadKey(true); ;
+        ConsoleKeyInfo info = rk();
         del(flags);
         return info;
+    }
+    public static ConsoleKeyInfo rk()
+    {
+        if(IsInteractive) return Console.ReadKey();
+        else return new ConsoleKeyInfo('q', ConsoleKey.Q, false, false, false);
     }
     public static void sel(object value, out int index, __ flags = 0, string title = "선택 : ")
     => sel(value, flags, out index, out _, out _, out _, title);

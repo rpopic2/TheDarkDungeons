@@ -7,14 +7,14 @@
     public static void Main()
     {
         Console.Clear();
-       // Program instance = new Program();
-        //do
-        //{
-        //    OnTurn?.Invoke();
-        //} while (s_player.IsAlive);
-        //IO.pr(s_player.ToString());
-        //IO.pr($"{s_player.Name}은 여기에 잠들었다...");
-        //IO.rk();
+        Program instance = new Program();
+        do
+        {
+            OnTurn?.Invoke();
+        } while (s_player.IsAlive);
+        IO.pr(s_player.ToString());
+        IO.pr($"{s_player.Name}은 여기에 잠들었다...");
+        IO.rk();
     }
     public Program()
     {
@@ -58,6 +58,7 @@
     }
     private string ChooseName()
     {
+        if(!IO.IsInteractive) return "TestPlayer";
         string name;
         do
         {
