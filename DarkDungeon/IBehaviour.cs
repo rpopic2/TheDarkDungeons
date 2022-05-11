@@ -1,4 +1,4 @@
-public record Skill(string Name, StanceName Stance, StatName statName, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour
+public record Skill(string Name, StanceName Stance, StatName StatDepend, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour, IEnergyConsume
 {
     public static readonly string[] parenthesis = { "  ", "[]", "()", "<>", "{}" };
     public override string ToString()
@@ -9,7 +9,7 @@ public record Skill(string Name, StanceName Stance, StatName statName, DamageTyp
         result = result.Insert(1, tempName);
         return result;
 
-        string GetColor() => statName switch
+        string GetColor() => StatDepend switch
         {
             StatName.Sol => "^r",
             StatName.Lun => "^g",
@@ -18,7 +18,7 @@ public record Skill(string Name, StanceName Stance, StatName statName, DamageTyp
         };
     }
 }
-public record Charge(string Name, StatName statName, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour
+public record Charge(string Name, StatName StatDepend, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour, IEnergyConsume
 {
     public StanceName Stance { get; init; } = StanceName.Charge;
     public override string ToString()
@@ -29,7 +29,7 @@ public record Charge(string Name, StatName statName, DamageType damageType, stri
         result = result.Insert(1, tempName);
         return result;
 
-        string GetColor() => statName switch
+        string GetColor() => StatDepend switch
         {
             StatName.Sol => "^r",
             StatName.Lun => "^g",
@@ -64,4 +64,8 @@ public interface IBehaviour
     public string Name { get; }
     public string OnUseOutput { get; }
     public Action<Creature> Behaviour { get; }
+}
+public interface IEnergyConsume : IBehaviour
+{
+    public StatName StatDepend { get; }
 }

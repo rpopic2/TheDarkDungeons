@@ -36,8 +36,7 @@ public abstract partial class Creature
     {
         if (CurAction.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
-        if (behaviour is Skill skill) SelectSkill(item, skill);
-        else if (behaviour is Charge charge) SelectCharge(item, charge);
+        if (behaviour is IEnergyConsume energyConsume) SelectSkill(item, energyConsume);
         else if (behaviour is Consume consume) SelectConsume(item, consume);
         else if (behaviour is Passive || behaviour is WearEffect)
         {
@@ -59,38 +58,38 @@ public abstract partial class Creature
             CurAction.Set(basicActions, nonToken, x, y);
         }
     }
-    private void SelectSkill(Item item, Skill selected)
+    private void SelectSkill(Item item, IEnergyConsume behav)
     {
-        if (Energy.Cur > 0)
-        {
-            ItemMetaData metaData = Inven.GetMeta(item);
-            Energy -= 1;
-            int amount = Stat.GetRandom(selected.statName, metaData.Mastery);
-            CurAction.Set(item, selected, amount);
-            string useOutput = $"{Name} {selected.OnUseOutput} ({amount})";
-            int mcharge = Inven.GetMeta(item).magicCharge;
-            if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
-            IO.rk(useOutput);
-        }
-        else IO.rk("기력이 없습니다.");
-    }
-    private void SelectCharge(Item item, Charge charge)
-    {
-        if (Energy.Cur > 0)
-        {
-            ItemMetaData metaData = Inven.GetMeta(item);
-            Energy -= 1;
-            int amount = Stat.GetRandom(StatName.Con, metaData.Mastery);
-            CurAction.Set(item, charge, amount);
-            IO.rk($"{Name}{charge.OnUseOutput} ^b({CurAction.Amount})^/");
-        }
-        else IO.rk("기력이 없습니다.");
+        ConsumeEnergy(out bool success);
+        if(!success) return;
+        int mastery = Inven.GetMeta(item).Mastery;
+        int amount = Stat.GetRandom(behav.StatDepend, mastery);
+        CurAction.Set(item, behav, amount);
+        PrintSkillSelct();
     }
     private void SelectConsume(Item item, Consume consume)
     {
         CurAction.Set(item, consume);
         IO.rk($"{Name} {consume.OnUseOutput}");
         Inven.Consume(item);
+    }
+    private void PrintSkillSelct()
+    {
+        string useOutput = $"{Name} {CurAction.CurrentBehav?.OnUseOutput} ({CurAction.Amount})";
+        int mcharge = Inven.GetMeta(CurAction.CurrentItem!).magicCharge;
+        if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
+        IO.rk(useOutput);
+    }
+    private void ConsumeEnergy(out bool success)
+    {
+        if (Energy.Cur > 0)
+        {
+            IO.rk("기력이 없습니다.");
+            success = false;
+            return;
+        }
+        Energy -= 1;
+        success = true;
     }
     public void OnTurn()
     {
