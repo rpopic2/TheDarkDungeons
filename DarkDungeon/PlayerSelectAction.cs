@@ -1,6 +1,6 @@
 public partial class Player
 {
-    public override void SelectAction()
+    public override void LetSelectBehaviour()
     {
         do
         {

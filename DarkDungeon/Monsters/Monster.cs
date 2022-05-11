@@ -19,7 +19,7 @@ public abstract class Monster : Creature
     }
     protected int DistanceToTarget => _target?.Pos.Distance(Pos) ?? 0;
 
-    public override void SelectAction()
+    public override void LetSelectBehaviour()
     {
         if (!IsAlive) return;
         if (Energy.Cur <= 0) OnEnergyDeplete();
