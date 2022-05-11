@@ -30,10 +30,7 @@ public abstract partial class Creature
     public GamePoint GetHp() => Stat.Hp;
     protected Map _currentMap => Map.Current;
     public virtual Creature? FrontFightable => _currentMap.GetCreature(Pos.Front(1));
-    public void GainEnergy(int amount)
-    {
-        Energy += amount;
-    }
+    public void GainEnergy(int amount) => Energy += amount;
     public abstract void SelectAction();
     protected void SelectBehaviour(Item item, int index)
     {
