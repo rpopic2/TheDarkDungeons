@@ -51,23 +51,11 @@ public partial class Player
     {
         bool found = IO.chk(key.KeyChar, Inventory.INVENSIZE, out int i);
         if (!found) IO.chkp(key.Key, Inventory.INVENSIZE, out i);
-        if (found)
-        {
-            if (i >= Inven.Count)
-            {
-                SelectBehaviour(bareHand);
-                return;
-            }
-            else if (Inven[i] is Item item)
-            {
-                SelectBehaviour(item);
-                return;
-            }
-        }
+        if (found) ChooseIndex(i);
 
         switch (key.KeyChar)
         {
-            case '.':
+            case '.'://rest
                 SelectBasicBehaviour(1, 0, -1);
                 break;
             case 'i':
@@ -82,6 +70,19 @@ public partial class Player
             case '5':
                 IO.ShowHelp();
                 break;
+        }
+    }
+    private void ChooseIndex(int i)
+    {
+        if (i >= Inven.Count)
+        {
+            SelectBehaviour(bareHand);
+            return;
+        }
+        else if (Inven[i] is Item item)
+        {
+            SelectBehaviour(item);
+            return;
         }
     }
 }
