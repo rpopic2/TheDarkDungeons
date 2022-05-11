@@ -23,7 +23,7 @@ public partial class Player
             case ConsoleKey.RightArrow:
             case ConsoleKey.L:
                 if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
-                else if (CanMove(Position.MOVERIGHT)) SelectBasicBehaviour(0, Position.MOVERIGHT.x, (int)Position.MOVERIGHT.facing);
+                else ChooseMove(Facing.Right);
                 break;
             case ConsoleKey.NumPad0:
             case ConsoleKey.D0:
@@ -31,7 +31,7 @@ public partial class Player
                 break;
             case ConsoleKey.LeftArrow:
             case ConsoleKey.H:
-                if (CanMove(Position.MOVELEFT)) SelectBasicBehaviour(0, Position.MOVELEFT.x, (int)Position.MOVELEFT.facing);
+                ChooseMove(Facing.Left);
                 break;
             case ConsoleKey.N:
             case ConsoleKey.OemPeriod:
@@ -71,6 +71,11 @@ public partial class Player
                 IO.ShowHelp();
                 break;
         }
+    }
+    private void ChooseMove(Facing facing)
+    {
+        Position newDir = facing == Facing.Left ? Position.MOVELEFT : Position.MOVERIGHT;
+        if (CanMove(newDir)) SelectBasicBehaviour(0, newDir.x, (int)newDir.facing);
     }
     private void ChooseIndex(int i)
     {
