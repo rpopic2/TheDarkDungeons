@@ -1,26 +1,23 @@
 main 0.6.110522
+[X] Creature.SelectCharge, SelectSkill duplicates.
+[ ] Creature, Map, Player 테스트커버 우선순위
 [ ] Map.OnTurn refactor. actually make creature to subscribe to onturn
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
-[ ] Creature, Map, Player 테스트커버 우선순위
-[ ] Creature.SelectCharge, SelectSkill duplicates.
 
 [ ] print를 여러 줄을 한번 호출로 뽑으면 더 빠를까?
 [ ] press any key를 이용해서 인터렉티브인지 확인가능하다 플레이어 만들어진 시점에서 저 키를 눌렀으면 인터렉티브임
 [ ] 시체에서 실제 템을 집어야 턴 소모하는걸로?
 [ ] non intractive mode?
 [ ] Player.Charge와 Player.PoisonItem 리팩토링 하기 (중복)
-[ ] 기력 이동시 자동충전
 [ ] Player.cs try to refactor all sel's
 [ ] Stat과 statInfo통일
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 방밀이 스턴을 먹임.
 [ ] 법사 템좀 바꿔줘야할듯->불뎀 추가.
-[ ] 템들 전부다 개별 클래스로 독립?
 [ ] 겜 끌때 끄는 키 만들기(그래서 쉘 돌아왔을때 안보이는거 없어지게)
 [ ] ISteppable 겹치기 가능하게
-[ ] 기본 핸드 변경 (암살자의 손처럼) 이것도 나중엔 레벨업 스킬로 들어올 예정.
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
 
 0.6

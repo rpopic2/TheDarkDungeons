@@ -74,6 +74,8 @@ public static class IO
             if (cancel) return;
         } while (!found);
     }
+    public static bool selOnce(object value, out int index, __ flags = 0, string title = "선택 :")
+        => selOnce(value, flags, out index, out _, out _, out _, title);
     public static bool selOnce(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ")
     {
         bool found;

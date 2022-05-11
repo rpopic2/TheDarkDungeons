@@ -15,8 +15,8 @@ public partial class Player : Creature
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);
-        IO.selOnce(item.skills, __.bottom, out int index, out bool cancel, out _, out _, $"{item.Name}으로 무엇을 할까 : ");
-        if (index == -1 || cancel)
+        IO.selOnce(item.skills, out int index, __.bottom, $"{item.Name}으로 무엇을 할까 : ");
+        if (index == -1)
         {
             IO.Redraw();
             return;
@@ -42,7 +42,7 @@ public partial class Player : Creature
             {
                 selection[i] = $"{_STATPROMPT[i]} : {Stat[(StatName)i]} / ";
             }
-            IO.sel(selection, 0, out index, out _, out _, out _);
+            IO.sel(selection, out index);
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
@@ -77,14 +77,14 @@ public partial class Player : Creature
     protected override void Charge(Item? item = null)
     {
         IO.pr("마법부여할 대상을 선택해 주십시오.");
-        IO.sel(Inven, 0, out int index, out _, out _, out _);
+        IO.sel(Inven, out int index);
         IO.del();
         if (Inven[index] is Item item2) Charge(item2);
     }
     protected override void PoisonItem(Item? item = null)
     {
         IO.pr("독을 바를 대상을 선택해 주십시오.");
-        IO.sel(Inven, 0, out int index, out _, out _, out _);
+        IO.sel(Inven, out int index);
         IO.del();
         if (index == -1) return;
         if (Inven[index] is Item item2) base.PoisonItem(item2);
@@ -104,25 +104,26 @@ public partial class Player : Creature
         while (corpse.droplist.Count > 0)
         {
             PickAnItemFromCorpse(corpse, out bool cancel);
-            if(cancel) return;
+            if (cancel) return;
         }
         _currentMap.OnCorpsePickUp(corpse);
     }
     private void PickAnItemFromCorpse(Corpse corpse, out bool cancel)
     {
-            IO.sel(corpse.droplist, 0, out int index, out  cancel, out _, out _);
-            if (cancel) return;
-            if (corpse.droplist[index] is Item item)
-            {
-                int stack = corpse.droplist.GetMeta(item).stack;
-                bool pickedUp = PickupItem(item, stack);
-                if (pickedUp) corpse.droplist.Remove(item);
-            }
+        IO.sel(corpse.droplist, out int index);
+        cancel = index == -1;
+        if (cancel) return;
+        if (corpse.droplist[index] is Item item)
+        {
+            int stack = corpse.droplist.GetMeta(item).stack;
+            bool pickedUp = PickupItem(item, stack);
+            if (pickedUp) corpse.droplist.Remove(item);
+        }
     }
     public void SelectStartItem()
     {
-         Corpse corpse = new("누군가", new(Player.instance,"시체"));
- corpse.droplist.Content.AddRange(new Item[]{ torch, sword, shield, dagger, bow, arrow, staff, magicBook });
+        Corpse corpse = new("누군가", new(Player.instance, "시체"));
+        corpse.droplist.Content.AddRange(new Item[] { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
         while (Inven.Count < 3)
         {
             PickAnItemFromCorpse(corpse, out _);
