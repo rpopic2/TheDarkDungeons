@@ -20,7 +20,9 @@ public class Map
     private readonly char[] _rendered;
     private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
+    public Action OnTurnPre = () => { };
     public Action OnTurn = () => { };
+    public Action OnTurnEnd = () => { };
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;

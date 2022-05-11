@@ -91,12 +91,6 @@ public abstract partial class Creature
         Energy -= 1;
         success = true;
     }
-    public void OnTurn()
-    {
-        if (CurAction.CurrentBehav is not IBehaviour behav) throw new Exception($"턴이 흘렀는데도 {Name}이 아무 행동도 선택하지 않았습니다.");
-        if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, CurAction.Amount, CurAction.Amount2);
-        else behav.Behaviour.Invoke(this);
-    }
     private void Attack(int range)
     {
         DamageType damageType = default;
@@ -229,6 +223,12 @@ public abstract partial class Creature
     {
         if (CurAction.Stun > 0) CurAction.ProcessStun();
         else LetSelectBehaviour();
+    }
+    public void OnTurn()
+    {
+        if (CurAction.CurrentBehav is not IBehaviour behav) throw new Exception($"턴이 흘렀는데도 {Name}이 아무 행동도 선택하지 않았습니다.");
+        if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, CurAction.Amount, CurAction.Amount2);
+        else behav.Behaviour.Invoke(this);
     }
     public virtual void OnTurnEnd()
     {
