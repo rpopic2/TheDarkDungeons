@@ -4,6 +4,7 @@ main 0.6.110522
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
 [ ] Creature, Map, Player 테스트커버 우선순위
+[ ] Creature.SelectCharge, SelectSkill duplicates.
 
 [ ] print를 여러 줄을 한번 호출로 뽑으면 더 빠를까?
 [ ] press any key를 이용해서 인터렉티브인지 확인가능하다 플레이어 만들어진 시점에서 저 키를 눌렀으면 인터렉티브임
