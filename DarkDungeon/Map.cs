@@ -20,10 +20,11 @@ public class Map
     private readonly char[] _rendered;
     private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
+    public Action OnTurn = () => { };
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
-        Program.OnTurn = () => OnTurn();
+        Program.OnTurn = () => OnTurnElapse();
         this.Length = length;
         this.DoSpawnMobs = spawnMobs;
         int push = (int)MathF.Max(Depth - 1, 0);
@@ -57,7 +58,7 @@ public class Map
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
 
-    private void OnTurn()
+    private void OnTurnElapse()
     {
         var currentCreatures = Creatures;
         currentCreatures.ForEach(f => f.OnBeforeTurn());
@@ -168,7 +169,7 @@ public class Map
     public static void NewMap()
     {
         Depth++;
-        Program.OnTurn -= () => Current.OnTurn();
+        Program.OnTurn -= () => Current.OnTurnElapse();
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
