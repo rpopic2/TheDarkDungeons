@@ -31,7 +31,7 @@ public abstract partial class Creature
     protected Map _currentMap => Map.Current;
     public virtual Creature? FrontFightable => _currentMap.GetCreature(Pos.Front(1));
     public void GainEnergy(int amount) => Energy += amount;
-    public abstract void LetSelectAction();
+    public abstract void LetSelectBehaviour();
     protected void SelectBehaviour(Item item, int index)
     {
         if (CurAction.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
@@ -49,7 +49,7 @@ public abstract partial class Creature
     //requirements : stance 정하기, rk로 프린트하기.
     ///<summary>[0] : 이동(Fightable f, int amout, int(Facing) facing) | [1] : 숨고르기(Fightable f, int(TokenType) tokenType, int discardIndex) | [2] : 상호작용
     ///</summary>
-    public void SelectBasicBehaviour(int index, int x, int y)
+    protected void SelectBasicBehaviour(int index, int x, int y)
     {
         IBehaviour behaviour = basicActions.skills[index];
         if (behaviour is NonTokenSkill nonToken)
@@ -229,7 +229,7 @@ public abstract partial class Creature
     public void OnBeforeTurn()
     {
         if (CurAction.Stun > 0) CurAction.ProcessStun();
-        else LetSelectAction();
+        else LetSelectBehaviour();
     }
     public virtual void OnTurnEnd()
     {

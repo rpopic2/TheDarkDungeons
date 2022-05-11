@@ -27,8 +27,8 @@ public class InventoryTest
         inven.Add(Creature.tearOfLun);
         inven.Add(Creature.shield);
         inven.Add(Creature.spiritStaff);
-
-        inven.Add(Creature.dagger, out bool added);
+//todo change this to an automated test
+        inven.Add(Creature.dagger, 1, out bool added);
         Assert.Equal(5, inven.Count);
         if (added) Assert.Contains(Creature.dagger, inven);
         else Assert.DoesNotContain(Creature.dagger, inven);
