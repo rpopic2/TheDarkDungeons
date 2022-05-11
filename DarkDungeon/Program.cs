@@ -1,27 +1,26 @@
 ﻿public class Program
 {
     public const string VERSION = "0.6.100522";
-    public static Program instance = default!;
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
+    public static bool IsInteractive = true;
     public static void Main()
     {
-        instance = new Program();
-        do
-        {
-            OnTurn?.Invoke();
-        } while (s_player.IsAlive);
-        IO.pr(s_player.ToString());
-        IO.pr($"{s_player.Name}은 여기에 잠들었다...");
-        IO.rk();
+        Console.Clear();
+       // Program instance = new Program();
+        //do
+        //{
+        //    OnTurn?.Invoke();
+        //} while (s_player.IsAlive);
+        //IO.pr(s_player.ToString());
+        //IO.pr($"{s_player.Name}은 여기에 잠들었다...");
+        //IO.rk();
     }
     public Program()
     {
-        instance = this;
-        Console.Clear();
-        IO.pr("The Dungeon of the Mine " + VERSION);
-        CreatePlayer();
         Map.NewMap();
+        CreatePlayer();
+        Map.Current.RegisterPlayer();
         Console.Clear();
         IO.rk($"{s_player.Name}은 횃불에 의지한 채 동굴 속으로 걸어 들어갔다.");
         IO.Redraw();
@@ -29,7 +28,6 @@
     }
     private void CreatePlayer()
     {
-        IO.rk("Press any key to start...");
         string name = ChooseName();
         IO.pr($"{name}의 직업은?...");
         int classIndex = ChooseClass();

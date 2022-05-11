@@ -1,5 +1,6 @@
 public static class IO
 {
+    public static bool IsInteractive = true;
     private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
     public static readonly ConsoleKey[] ITEMKEYS_PAD = new ConsoleKey[] { ConsoleKey.End, ConsoleKey.PageDown, ConsoleKey.Home, ConsoleKey.PageUp, ConsoleKey.OemPlus };
@@ -8,6 +9,16 @@ public static class IO
     static IO()
     {
         DELSTRING = new String(' ', Console.WindowWidth - 1);
+        IO.pr("The Dungeon of the Mine " + Program.VERSION);
+        try
+        {
+            IO.rk("Press any key to start...");
+        }
+        catch (InvalidOperationException)
+        {
+            IO.IsInteractive = false;
+        }
+        IO.pr(IsInteractive);
     }
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>

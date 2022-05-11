@@ -41,7 +41,7 @@ public class Map
         _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
         SetupSteppables(corpseFromPrev);
-        _creatures.Add(s_player);
+        if(s_player is not null) _creatures.Add(s_player);
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
@@ -55,6 +55,9 @@ public class Map
             if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
         }
     }
+    public void RegisterPlayer(){
+        _creatures.Add(s_player);
+    }
     private static Player s_player { get => Player.instance; }
     private ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
@@ -62,24 +65,16 @@ public class Map
 
     private void OnTurnElapse()
     {
-        var currentCreatures = Creatures;
-        currentCreatures.ForEach(f => f.OnBeforeTurn());
-        OnActualTurn();
-        currentCreatures.ForEach(m => m.OnTurnEnd()); //update target and reset stance, onturnend
+        OnTurnPre.Invoke();
+        OnTurn.Invoke();
+        OnTurnEnd.Invoke();//update target and reset stance, onturnend
+        OnTurn = delegate { };
 
         ReplaceToCorpse();
         if (DoSpawnMobs && Turn % Spawnrate == 0) SpawnRandom();
         Turn++;
         if (Current.DoLoadNewMap) NewMap();
         IO.Redraw();
-    }
-    private void OnActualTurn()
-    {
-        var currentCreatures = Creatures;
-        var firsts = from f in currentCreatures where f.CurAction.CurrentBehav?.Stance == StanceName.Charge select f;
-        var lasts = currentCreatures.Except(firsts);
-        foreach (Creature item in firsts) item.OnTurn();
-        foreach (Creature item in lasts) item.OnTurn();
     }
     public void SpawnRandom()
     {

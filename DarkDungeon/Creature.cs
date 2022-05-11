@@ -13,6 +13,8 @@ public abstract partial class Creature
     private Creature? _lastHit { get; set; }
     protected Creature? _lastAttacker { get; set; }
     public Action<Creature> passives = (p) => { };
+    private Action _turnPre = delegate { };
+    private Action _turnEnd = delegate { };
 
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {
@@ -26,6 +28,11 @@ public abstract partial class Creature
         GetHp().OnOverflow += new(OnDeath);
         GetHp().OnIncrease += new(OnHeal);
         GetHp().OnDecrease += new(OnDamaged);
+        _turnPre = () => OnTurnPre();
+        _turnEnd = () => OnTurnEnd();
+        _currentMap.OnTurnPre += _turnPre;
+        _currentMap.OnTurnEnd += _turnEnd;
+
     }
     public GamePoint GetHp() => Stat.Hp;
     protected Map _currentMap => Map.Current;
@@ -61,7 +68,7 @@ public abstract partial class Creature
     private void SelectSkill(Item item, IEnergyConsume behav)
     {
         ConsumeEnergy(out bool success);
-        if(!success) return;
+        if (!success) return;
         int mastery = Inven.GetMeta(item).Mastery;
         int amount = Stat.GetRandom(behav.StatDepend, mastery);
         CurAction.Set(item, behav, amount);
@@ -219,7 +226,7 @@ public abstract partial class Creature
         return canGo;
     }
     protected virtual void Interact() { }
-    public void OnBeforeTurn()
+    public void OnTurnPre()
     {
         if (CurAction.Stun > 0) CurAction.ProcessStun();
         else LetSelectBehaviour();
@@ -246,6 +253,9 @@ public abstract partial class Creature
         IsAlive = false;
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
+#pragma warning disable CS8601
+        _currentMap.OnTurnPre -= _turnPre;
+        _currentMap.OnTurnEnd -= _turnEnd;
     }
     private void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
     private void OnDamaged(object? sender, PointArgs e)
