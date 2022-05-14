@@ -6,15 +6,6 @@
          "request": "attach",
          "processId": "${pid}"
        }
-     },
-     "launch": {
-       "adapter": "netcoredbg",
-       "configuration": {
-         "request": "launch",
-         "program": "/home/rpopic2/TheDarkDungeons/DarkDungeon/bin/Debug/net6.0/TheDarkDungeons.dll",
-         "args": [],
-         "stopAtEntry": false
-       }
      }
    }
  }

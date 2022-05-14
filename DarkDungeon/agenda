@@ -1,5 +1,14 @@
 main 0.6.110522
 [X] Creature.SelectCharge, SelectSkill duplicates.
+[ ] 활로 박쥐 쏘면 박쥐 시체에 화살 복사됨
+[ ] 정확히는 활로 박쥐를 쏴 죽이면 박쥐 시체가 복사됨.
+[ ] 정령술사에게도 같은 현상이 발견됨. 하지만 항상 일어나는 일은 아닌 듯?
+[ ] move & dash duplicate code!
+[ ] 정확히는 시체가 두번 생성되는 거였고 시체 변환되는 즉시 파이터블 리스트에서
+제외해야되나
+[ ] 아랫층 내려가면 게임 진행이 안됨
+[ ] gitignore .swp
+
 [ ] Creature, Map, Player 테스트커버 우선순위
 [ ] Map.OnTurn refactor. actually make creature to subscribe to onturn
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속

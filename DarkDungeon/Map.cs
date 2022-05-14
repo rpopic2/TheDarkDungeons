@@ -115,6 +115,7 @@ public class Map
         Position pos = mov.Pos;
         if (mov is Creature fight && !fight.IsAlive)
         {
+            if (_tempDeadCreatures.Contains(fight)) return;
             _tempDeadCreatures.Add(fight);
             _creaturesByPos[pos.x] = null;
             return;
