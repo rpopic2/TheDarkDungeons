@@ -21,7 +21,7 @@ public class Map
     private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
     public Action OnTurnPre = () => { };
-    public Action OnTurn = () => { };
+    private Action _onTurn = () => { };
     public Action OnTurnEnd = () => { };
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
@@ -63,13 +63,18 @@ public class Map
     private ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
+    public void AddToOnTurn(Action action)
+    {
+        if(!_onTurn.GetInvocationList().Contains(action)) return;
+        _onTurn += action;
+    }
 
     private void OnTurnElapse()
     {
         OnTurnPre.Invoke();
-        OnTurn.Invoke();
+        _onTurn.Invoke();
         OnTurnEnd.Invoke();//update target and reset stance, onturnend
-        OnTurn = delegate { };
+        _onTurn = delegate { };
 
         ReplaceToCorpse();
         if (DoSpawnMobs && Turn % Spawnrate == 0) SpawnRandom();

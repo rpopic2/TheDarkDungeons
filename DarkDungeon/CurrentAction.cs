@@ -22,7 +22,7 @@ public class CurrentAction
         this.CurrentBehav = behaviour;
         this.Amount = amount;
         this.Amount2 = amount2;
-        Map.Current.OnTurn += () => _owner.OnTurn();
+        Map.Current.AddToOnTurn(_owner.OnTurn);
     }
     public void AddAmount(int value)
     {
