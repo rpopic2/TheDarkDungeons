@@ -194,8 +194,7 @@ public abstract partial class Creature
     }
     protected void Move(Position value)
     {
-        bool canGo = CanMove(value);
-        if (canGo)
+        if (CanMove(value))
         {
             Pos += value;
             _currentMap.UpdateFightable(this);
@@ -203,14 +202,10 @@ public abstract partial class Creature
     }
     protected void Dash(Position value)
     {
-        Position temp = new(1, value.facing);
+        Position movingDir = new(1, value.facing);
         for (int i = 0; i < value.x; i++)
         {
-            if (CanMove(temp))
-            {
-                Pos += temp;
-                _currentMap.UpdateFightable(this);
-            }
+            Move(movingDir);
         }
     }
     public bool CanMove(Position value)
