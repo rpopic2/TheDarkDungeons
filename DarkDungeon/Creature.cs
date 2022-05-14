@@ -90,7 +90,7 @@ public abstract partial class Creature
     }
     private void ConsumeEnergy(out bool success)
     {
-        if (Energy.Cur > 0)
+        if (Energy.Cur <= 0)
         {
             IO.rk("기력이 없습니다.");
             success = false;
