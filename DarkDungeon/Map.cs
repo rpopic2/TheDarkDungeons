@@ -65,7 +65,6 @@ public class Map
     public ISteppable? GetSteppable(int index) => _steppables[index];
     public void AddToOnTurn(Action action)
     {
-        if(!_onTurn.GetInvocationList().Contains(action)) return;
         _onTurn += action;
     }
 

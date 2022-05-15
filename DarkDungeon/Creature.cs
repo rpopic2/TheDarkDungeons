@@ -30,7 +30,7 @@ public abstract partial class Creature
         GetHp().OnDecrease += new(OnDamaged);
         _turnPre = () => OnTurnPre();
         _turnEnd = () => OnTurnEnd();
-        if(Map.Current is null) return;
+        if (Map.Current is null) return;
         _currentMap.OnTurnPre += _turnPre;
         _currentMap.OnTurnEnd += _turnEnd;
 
