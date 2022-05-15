@@ -1,9 +1,8 @@
 main 0.6.150522
-[ ] 아랫층 내려가면 게임 진행이 안됨
-[ ] make event onnewlevel so player can subscribe to the new map
 [ ] Map._creatures is now unnessary
+[ ] how to make sure every moster has registered to onturn?
 [ ] encapsulate onturnpre and onturnend
-[ ] 만약 째는 스킬이면 온턴 앞에 붙여주기
+[ ] 만약 째는 스킬이면 온턴 앞에 붙여주기 prepend.
 
 [ ] Creature, Map, Player 테스트커버 우선순위
 [ ] non intractive mode?

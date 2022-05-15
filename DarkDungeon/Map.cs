@@ -14,7 +14,6 @@ public class Map
     private readonly char[] _empty;
     private readonly char[] _tiles;
     private readonly ISteppable?[] _steppables;
-    private readonly List<Creature> _creatures;
     private readonly Creature?[] _creaturesByPos;
     private readonly List<Creature> _tempDeadCreatures;
     private readonly char[] _rendered;
@@ -38,15 +37,10 @@ public class Map
         Array.Fill(_empty, MapSymb.Empty);
         Array.Fill(_tiles, MapSymb.road);
         _steppables = new ISteppable?[length];
-        _creatures = new();
         _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
 
         SetupSteppables(corpseFromPrev);
-        if (Player._instance is not null)
-        {
-            Current.RegisterPlayer();
-        }
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
@@ -61,12 +55,7 @@ public class Map
             if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
         }
     }
-    public void RegisterPlayer()
-    {
-        _creatures.Add(s_player);
-    }
     private static Player s_player { get => Player.instance; }
-    private ref readonly List<Creature> Creatures => ref _creatures;
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
     public void AddToOnTurn(Action action)
@@ -104,7 +93,6 @@ public class Map
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
         Monster mov = prefab.Instantiate(spawnPoint);
-        _creatures.Add(mov);
         UpdateFightable(mov);
     }
     private List<int> GetSpawnableIndices()
@@ -139,7 +127,6 @@ public class Map
         if (_tempDeadCreatures.Count <= 0) return;
         foreach (var item in _tempDeadCreatures)
         {
-            _creatures.Remove(item);
             CreateCorpse(item);
         }
         _tempDeadCreatures.Clear();
