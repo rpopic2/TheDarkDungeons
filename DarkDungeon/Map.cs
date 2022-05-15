@@ -41,7 +41,6 @@ public class Map
         _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
         SetupSteppables(corpseFromPrev);
-        if (Player._instance is not null) _creatures.Add(s_player);
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
