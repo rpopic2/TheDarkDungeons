@@ -1,6 +1,6 @@
 ﻿public class Program
 {
-    public const string VERSION = "0.6.100522";
+    public const string VERSION = "0.6.150522";
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
     public static bool IsInteractive = true;
@@ -20,7 +20,6 @@
     {
         Map.NewMap();
         CreatePlayer();
-        Map.Current.RegisterPlayer();
         Console.Clear();
         IO.rk($"{s_player.Name}은 횃불에 의지한 채 동굴 속으로 걸어 들어갔다.");
         IO.Redraw();
@@ -35,6 +34,7 @@
         AddStartItems(classIndex);
         IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
         player.SelectPickupStat(3);
+        Map.Current.RegisterPlayer();
     }
     private int ChooseClass()
     {
