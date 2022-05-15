@@ -1,10 +1,9 @@
 main 0.6.150522
-[ ] Map._creatures is now unnessary
-[ ] how to make sure every moster has registered to onturn?
 [ ] encapsulate onturnpre and onturnend
 [ ] 만약 째는 스킬이면 온턴 앞에 붙여주기 prepend.
+[ ] 그냥 비어있는 몹들 더미용으로 만들때 전용 함수가 필요할듯.
 
-[ ] Creature, Map, Player 테스트커버 우선순위
+[ ] Creature, Map, Player 이 순서로 테스트커버 우선순위
 [ ] non intractive mode?
 
 [ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
