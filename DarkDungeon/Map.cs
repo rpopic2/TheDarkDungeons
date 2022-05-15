@@ -20,6 +20,7 @@ public class Map
     private readonly char[] _rendered;
     private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
+    public static Action OnNewMap = () => { };
     public Action OnTurnPre = () => { };
     private Action _onTurn = () => { };
     public Action OnTurnEnd = () => { };
@@ -40,12 +41,18 @@ public class Map
         _creatures = new();
         _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
+
         SetupSteppables(corpseFromPrev);
+        if (Player._instance is not null)
+        {
+            Current.RegisterPlayer();
+        }
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
             Spawn(new QuietKnight(default));
         }
+        OnNewMap.Invoke();
 
         void SetupSteppables(Corpse? corpseFromPrev)
         {
@@ -174,7 +181,8 @@ public class Map
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
-        if (Current is not null && newLength < Current.Length) {
+        if (Current is not null && newLength < Current.Length)
+        {
             newLength = Current.Length;
             Program.OnTurn -= () => Current.OnTurnElapse();
         }

@@ -13,8 +13,8 @@ public abstract partial class Creature
     private Creature? _lastHit { get; set; }
     protected Creature? _lastAttacker { get; set; }
     public Action<Creature> passives = (p) => { };
-    private Action _turnPre = delegate { };
-    private Action _turnEnd = delegate { };
+    protected Action _turnPre = delegate { };
+    protected Action _turnEnd = delegate { };
 
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {

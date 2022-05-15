@@ -8,10 +8,16 @@ public partial class Player : Creature
     public Exp exp { get; init; }
     public Player(string name) : base(name, level: 1, new(BASICSTAT, BASICSTAT, default), energy: BASICCAP, pos: new(0))
     {
+        Map.OnNewMap += () => OnNewMap();
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
+    private void OnNewMap()
+    {
+        _currentMap.OnTurnPre += _turnPre;
+        _currentMap.OnTurnEnd += _turnEnd;
+    }
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);

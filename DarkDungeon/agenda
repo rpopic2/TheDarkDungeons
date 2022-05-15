@@ -1,19 +1,20 @@
 main 0.6.150522
-[ ] 갑자기 이동이 안된다..
 [ ] 아랫층 내려가면 게임 진행이 안됨
-[ ] 이게 정확히는 Map.RegisterPlayer()의문제임. encapsulate it, call it on new map
+[ ] make event onnewlevel so player can subscribe to the new map
+[ ] Map._creatures is now unnessary
 [ ] encapsulate onturnpre and onturnend
-[ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
 [ ] 만약 째는 스킬이면 온턴 앞에 붙여주기
 
 [ ] Creature, Map, Player 테스트커버 우선순위
+[ ] non intractive mode?
+
+[ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] Player.cs try to refactor all sel's
 [ ] Stat과 statInfo통일
 
 [ ] 시체에서 실제 템을 집어야 턴 소모하는걸로?
-[ ] non intractive mode?
 [ ] Player.Charge와 Player.PoisonItem 리팩토링 하기 (중복)
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 법사 템좀 바꿔줘야할듯->불뎀 추가.
