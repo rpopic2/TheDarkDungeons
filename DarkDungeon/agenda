@@ -1,6 +1,6 @@
 main 0.6.150522
+[X] 만약 째는 스킬이면 온턴 앞에 붙여주기 prepend.
 [ ] encapsulate onturnpre and onturnend
-[ ] 만약 째는 스킬이면 온턴 앞에 붙여주기 prepend.
 [ ] 그냥 비어있는 몹들 더미용으로 만들때 전용 함수가 필요할듯.
 
 [ ] Creature, Map, Player 이 순서로 테스트커버 우선순위
@@ -11,6 +11,8 @@ main 0.6.150522
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] Player.cs try to refactor all sel's
 [ ] Stat과 statInfo통일
+
+[ ] lightline 이렇게 두지 말고 포크를 합시다
 
 [ ] 시체에서 실제 템을 집어야 턴 소모하는걸로?
 [ ] Player.Charge와 Player.PoisonItem 리팩토링 하기 (중복)

@@ -58,9 +58,10 @@ public class Map
     private static Player s_player { get => Player.instance; }
     public ref readonly char[] Tiles => ref _tiles;
     public ISteppable? GetSteppable(int index) => _steppables[index];
-    public void AddToOnTurn(Action action)
+    public void AddToOnTurn(Action action, bool isPrepend)
     {
-        _onTurn += action;
+        if (isPrepend) _onTurn = action + _onTurn;
+        else _onTurn += action;
     }
 
     private void OnTurnElapse()
