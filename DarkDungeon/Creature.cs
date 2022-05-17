@@ -31,8 +31,8 @@ public abstract partial class Creature
         _turnPre = () => OnTurnPre();
         _turnEnd = () => OnTurnEnd();
         if (Map.Current is null) return;
-        _currentMap.OnTurnPre += _turnPre;
-        _currentMap.OnTurnEnd += _turnEnd;
+        _currentMap.AddToOnTurnPre(_turnPre);
+        _currentMap.AddToOnTurnEnd(_turnEnd);
 
     }
     public GamePoint GetHp() => Stat.Hp;
@@ -250,8 +250,8 @@ public abstract partial class Creature
         IO.pr($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
 #pragma warning disable CS8601
-        _currentMap.OnTurnPre -= _turnPre;
-        _currentMap.OnTurnEnd -= _turnEnd;
+        _currentMap.RemoveFromOnTurnPre(_turnPre);
+        _currentMap.RemoveFromOnTurnEnd(_turnEnd);
     }
     private void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
     private void OnDamaged(object? sender, PointArgs e)

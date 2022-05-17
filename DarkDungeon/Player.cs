@@ -15,8 +15,8 @@ public partial class Player : Creature
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
     private void OnNewMap()
     {
-        _currentMap.OnTurnPre += _turnPre;
-        _currentMap.OnTurnEnd += _turnEnd;
+        _currentMap.AddToOnTurnPre(_turnPre);
+        _currentMap.AddToOnTurnEnd(_turnEnd);
     }
     public void SelectBehaviour(Item item)
     {

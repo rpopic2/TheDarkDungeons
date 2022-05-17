@@ -20,9 +20,9 @@ public class Map
     private Corpse? _corpseToPass;
     public bool DoLoadNewMap = false;
     public static Action OnNewMap = () => { };
-    public Action OnTurnPre = () => { };
+    private Action _onTurnPre = () => { };
     private Action _onTurn = () => { };
-    public Action OnTurnEnd = () => { };
+    private Action _onTurnEnd = () => { };
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
         Current = this;
@@ -63,12 +63,17 @@ public class Map
         if (isPrepend) _onTurn = action + _onTurn;
         else _onTurn += action;
     }
+    public void AddToOnTurnPre(Action action) => _onTurnPre += action;
+    public void AddToOnTurnEnd(Action action) => _onTurnEnd += action;
+#pragma warning disable CS8601
+    public void RemoveFromOnTurnPre(Action action) => _onTurnPre -= action;
+    public void RemoveFromOnTurnEnd(Action action) => _onTurnEnd -= action;
 
     private void OnTurnElapse()
     {
-        OnTurnPre.Invoke();
+        _onTurnPre.Invoke();
         _onTurn.Invoke();
-        OnTurnEnd.Invoke();//update target and reset stance, onturnend
+        _onTurnEnd.Invoke();//update target and reset stance, onturnend
         _onTurn = delegate { };
 
         ReplaceToCorpse();
