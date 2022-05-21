@@ -5,6 +5,9 @@ main 0.6.210522
 [ ] Map.IsAtEnd rename to IsEnd
 [ ] extension.tryget is out _ necessary?
 [ ] Creature.OnTurnPre : change to private
+[ ] Fix tests in CombatTest to noninteractive.
+[ ] 턴이 흘렀는데도 아무 액션 선택 안하는게 가능함.
+[ ] Energy consumption : make a energy class that derives from gamepoint.
 
 [ ] lightline 이렇게 두지 말고 포크를 합시다
 

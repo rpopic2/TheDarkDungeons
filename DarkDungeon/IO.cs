@@ -30,7 +30,7 @@ public static class IO
         else stringValue += value.ToString() ?? string.Empty;
         if (flag.HasFlag(__.emphasis)) stringValue = EMPHASIS + stringValue;
         if (flag.HasFlag(__.newline)) stringValue += "\n";
-        if (flag.HasFlag(__.bottom)) Console.CursorTop = x + Console.WindowHeight - 1;
+        if (flag.HasFlag(__.bottom) && IsInteractive) Console.CursorTop = x + Console.WindowHeight - 1;
         if (stringValue.Contains("^"))
         {
             pr_Color(stringValue, flag);

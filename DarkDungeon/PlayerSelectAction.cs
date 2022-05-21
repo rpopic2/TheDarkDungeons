@@ -2,6 +2,7 @@ public partial class Player
 {
     public override void LetSelectBehaviour()
     {
+        if (!IO.IsInteractive) return;
         do
         {
             Selection();
