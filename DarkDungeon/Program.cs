@@ -3,7 +3,6 @@
     public const string VERSION = "0.6.210522";
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
-    public static bool IsInteractive = true;
     public static void Main()
     {
         Console.Clear();
