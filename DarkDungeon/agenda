@@ -1,12 +1,13 @@
 main 0.6.210522
 [ ] 그냥 비어있는 몹들 더미용으로 만들때 전용 함수가 필요할듯.
 [ ] non intractive tests
-
 [ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] Player.cs try to refactor all sel's
 [ ] Stat과 statInfo통일
+[ ] Map.IsAtEnd rename to IsEnd
+[ ] extension.tryget is out _ necessary?
 
 [ ] lightline 이렇게 두지 말고 포크를 합시다
 

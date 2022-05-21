@@ -210,7 +210,6 @@ public abstract partial class Creature
     }
     public bool CanMove(Position value)
     {
-        if (Energy.IsMin) return false;
         Position temp = Pos + value;
         bool canGo = true;
         if (temp.x != Pos.x)

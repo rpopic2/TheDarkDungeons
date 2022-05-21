@@ -82,24 +82,25 @@ public class Map
         if (Current.DoLoadNewMap) NewMap();
         IO.Redraw();
     }
-    public void SpawnRandom()
+    public Monster? SpawnRandom()
     {
         int max = Math.Min(Depth + 1, s_monsterData.Length);
         int min = Math.Max(0, max - 2);
         int randomIndex = s_rnd.Next(min, max);
         ISpawnable data = s_monsterData[randomIndex];
-        Spawn(data);
+        return Spawn(data);
     }
-    private void Spawn(ISpawnable prefab)
+    private Monster? Spawn(ISpawnable prefab)
     {
         List<int> spawnableIndices = GetSpawnableIndices();
-        if (spawnableIndices.Count <= 0) return;
+        if (spawnableIndices.Count <= 0) return null;
         int randomPos = s_rnd.Next(0, spawnableIndices.Count);
         int newPos = spawnableIndices[randomPos];
         Facing randomFace = (Facing)s_rnd.Next(0, 2);
         Position spawnPoint = new Position(newPos, randomFace);
         Monster mov = prefab.Instantiate(spawnPoint);
         UpdateFightable(mov);
+        return mov;
     }
     private List<int> GetSpawnableIndices()
     {
