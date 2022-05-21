@@ -1,10 +1,6 @@
-main 0.6.150522
-[X] 만약 째는 스킬이면 온턴 앞에 붙여주기 prepend.
-[X] encapsulate onturnpre and onturnend
+main 0.6.210522
 [ ] 그냥 비어있는 몹들 더미용으로 만들때 전용 함수가 필요할듯.
-
-[ ] Creature, Map, Player 이 순서로 테스트커버 우선순위
-[ ] non intractive mode?
+[ ] non intractive tests
 
 [ ] 기력 없으면 인풋 안받는게 아니라 걸어가면서 충전되게끔 혹은 비전투시
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속
