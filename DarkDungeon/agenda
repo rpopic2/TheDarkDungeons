@@ -1,9 +1,9 @@
 main 0.6.220522
-[ ] How to select non-interactive player action
-[ ] when walking,if Energy != max, if moved last turn, restore 1 energy each move.
+[X] when walking,if Energy != max, if moved last turn, restore 1 energy each move.
 [X] Map.IsAtEnd rename to IsEnd
-[ ] extension.tryget is out _ necessary?
-[ ] Creature.OnTurnPre : change to private
+[X] bug: moving consumes energy
+[ ] How to select non-interactive player action
+[X] Creature.OnTurnPre : change to private
 
 [ ] Fix tests in CombatTest to noninteractive.
 [ ] 턴이 흘렀는데도 아무 액션 선택 안하는게 가능함.

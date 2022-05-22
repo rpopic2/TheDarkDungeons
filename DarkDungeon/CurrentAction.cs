@@ -20,8 +20,11 @@ public class CurrentAction
             ProcessStun();
             return;
         }
-        ConsumeEnergy(out bool success);
-        if (!success) return;
+        if (behaviour is IEnergyConsume)
+        {
+            ConsumeEnergy(out bool success);
+            if (!success) return;
+        }
         this.CurrentItem = item;
         this.CurrentBehav = behaviour;
         this.Amount = amount;

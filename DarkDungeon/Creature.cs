@@ -187,9 +187,9 @@ public abstract partial class Creature
         {
             Pos += value;
             _currentMap.UpdateFightable(this);
-            if (Energy.Cur != Energy.Max)
+            if (Energy.Cur != Energy.Max && DidMoveLastTurn)
             {
-
+                CurAction.GainEnergy(1);
             }
             DidMoveLastTurn = true;
         }
@@ -215,7 +215,7 @@ public abstract partial class Creature
         return canGo;
     }
     protected virtual void Interact() { }
-    public void OnTurnPre()
+    private void OnTurnPre()
     {
         if (CurAction.Stun > 0) CurAction.ProcessStun();
         else LetSelectBehaviour();
@@ -226,7 +226,7 @@ public abstract partial class Creature
         if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, CurAction.Amount, CurAction.Amount2);
         else behav.Behaviour.Invoke(this);
     }
-    public virtual void OnTurnEnd()
+    protected virtual void OnTurnEnd()
     {
         passives.Invoke(this);
         if (CurAction.Poison > 0)

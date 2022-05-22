@@ -39,7 +39,7 @@ public abstract class Monster : Creature
     {
         SelectBehaviour(Inven[item]!, skill);
     }
-    public override void OnTurnEnd()
+    protected override void OnTurnEnd()
     {
         UpdateTarget();
         base.OnTurnEnd();
