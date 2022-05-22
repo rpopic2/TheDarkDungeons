@@ -59,9 +59,9 @@ public class MovementTest
         Player player = Player._instance = new Player("testPlayer");
         Map map = new(2,null,false);
         player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
-        Assert.Equal(false, player.DidMoveLastTurn);
+        Assert.False(player.DidMoveLastTurn);
         Program.OnTurn?.Invoke();
-        Assert.Equal(true, player.DidMoveLastTurn);
+        Assert.True(player.DidMoveLastTurn);
     }
 
 }

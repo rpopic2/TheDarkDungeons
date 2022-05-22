@@ -33,16 +33,17 @@ public class Inventory : ICollection<Item?>
         }
         else
         {
-            added = Store(item, stack);
+            ItemMetaData metaData = new();
+            metaData.stack = stack;
+            added = Store(item, metaData);
         }
     }
     public void Add(Item item, ItemMetaData metaData)
     {
-        content.Add(item);
-        metaDatas.Add(item, metaData);
+        Store(item, metaData);
     }
     public void Add(Item? value) => Add(value, 1, out _);
-    private bool Store(Item item, int stack)
+    private bool Store(Item item, ItemMetaData metaData)
     {
         if (Count >= INVENSIZE && owner is Player p)
         {
@@ -53,8 +54,7 @@ public class Inventory : ICollection<Item?>
         if (content.IndexOf(item) == -1)
         {
             content.Add(item);
-            metaDatas.Add(item, new());
-            if (item.itemType == ItemType.Consume) GetMeta(item).stack = stack;
+            metaDatas.Add(item, metaData);
             Wear(item);
             RegisterPassives(item);
         }

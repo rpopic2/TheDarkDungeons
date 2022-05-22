@@ -118,10 +118,9 @@ public abstract partial class Creature
         {
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
+            ItemMetaData metaData = Inven.GetMeta(item);
             Inven.Consume(item);
-            ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!);
-            metaData.GainExp();
-            _lastHit?.Inven.Add(item!);
+            _lastHit?.Inven.Add(item!, metaData);
         }
         else
         {

@@ -21,9 +21,8 @@ public class CombatTest : IDisposable
     {
         player!.PickupItem(Creature.dagger);
         Shaman shaman = new(new(1, Facing.Right));
-        player!.CurAction.Set(player.Inven[0]!, Creature.dagger.skills[0]);
+        player!.CurAction.Set(player.Inven[0]!, Creature.dagger.skills[0], 3);
         Program.OnTurn?.Invoke();
-        Assert.False(shaman.IsAlive);
         Assert.NotEqual(0, player.Inven.GetMeta(Creature.dagger).CurExp);
     }
     [Fact]
@@ -43,7 +42,7 @@ public class CombatTest : IDisposable
 
         Corpse corpse = (Corpse)player.UnderFoot!;
         ItemMetaData metaData = corpse.droplist.GetMeta(Creature.dagger);
-        //Assert.NotEqual(0, metaData.CurExp);
+        Assert.Equal(1, metaData.CurExp);
 
         //player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[2]);
         //Assert.Null(player.UnderFoot); 
