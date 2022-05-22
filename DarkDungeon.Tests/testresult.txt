@@ -1,0 +1,90 @@
+Starting tests...
+Sun May 22 17:21:02 KST 2022
+/home/sakura/TheDarkDungeons/DarkDungeon.Tests/MovementTest.cs(62,9): warning xUnit2004: Do not use Assert.Equal() to check for boolean conditions. [/home/sakura/TheDarkDungeons/DarkDungeon.Tests/DarkDungeon.Tests.csproj]
+/home/sakura/TheDarkDungeons/DarkDungeon.Tests/MovementTest.cs(64,9): warning xUnit2004: Do not use Assert.Equal() to check for boolean conditions. [/home/sakura/TheDarkDungeons/DarkDungeon.Tests/DarkDungeon.Tests.csproj]
+
+Build succeeded.
+
+/home/sakura/TheDarkDungeons/DarkDungeon.Tests/MovementTest.cs(62,9): warning xUnit2004: Do not use Assert.Equal() to check for boolean conditions. [/home/sakura/TheDarkDungeons/DarkDungeon.Tests/DarkDungeon.Tests.csproj]
+/home/sakura/TheDarkDungeons/DarkDungeon.Tests/MovementTest.cs(64,9): warning xUnit2004: Do not use Assert.Equal() to check for boolean conditions. [/home/sakura/TheDarkDungeons/DarkDungeon.Tests/DarkDungeon.Tests.csproj]
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.74
+Found test file CurrentActionTest
+Found test file EnergyTest
+Found test file MapTest
+Found test file MovementTest
+-------------- CurrentActionTest --------------
+Test run for /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (.NETCoreApp,Version=v6.0)
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+  Failed CurrentActionTest.MustSelectActionOnTurnMonster [3 ms]
+  Error Message:
+   Assert.Null() Failure
+Expected: (null)
+Actual:   이름 : TestPlayer	레벨 : 1
+Hp : 2/2	기력 : 3/3	HP : 2/2  ^r힘/체력 : 1 ^g집중/민첩 : 1 ^b마력/지능 : 0^/
+Exp : 0/8
+  Stack Trace:
+     at CurrentActionTest.MustSelectActionOnTurnMonster() in /home/sakura/TheDarkDungeons/DarkDungeon.Tests/CurrentActionTest.cs:line 18
+
+Failed!  - Failed:     1, Passed:     1, Skipped:     0, Total:     2, Duration: 21 ms - /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (net6.0)
+-------------- EnergyTest --------------
+Test run for /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (.NETCoreApp,Version=v6.0)
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+  Failed EnergyTest.ConsumeEnergyTest [< 1 ms]
+  Error Message:
+   System.Exception : Player은 논 인터렉티브 모드에서 CurAction.Set으로 먼저 행동 설정을 해야 합니다.
+  Stack Trace:
+     at Player.LetSelectBehaviour() in /home/sakura/TheDarkDungeons/DarkDungeon/PlayerSelectAction.cs:line 7
+   at Creature.OnTurnPre() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 221
+   at Creature.<.ctor>b__41_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 32
+   at Map.OnTurnElapse() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 74
+   at Map.<.ctor>b__25_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 29
+   at EnergyTest.ConsumeEnergyTest() in /home/sakura/TheDarkDungeons/DarkDungeon.Tests/EnergyTest.cs:line 10
+  Failed EnergyTest.DontConsumeIfIsNotIEnergyConsume [< 1 ms]
+  Error Message:
+   System.Exception : Player은 논 인터렉티브 모드에서 CurAction.Set으로 먼저 행동 설정을 해야 합니다.
+  Stack Trace:
+     at Player.LetSelectBehaviour() in /home/sakura/TheDarkDungeons/DarkDungeon/PlayerSelectAction.cs:line 7
+   at Creature.OnTurnPre() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 221
+   at Creature.<.ctor>b__41_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 32
+   at Map.OnTurnElapse() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 74
+   at Map.<.ctor>b__25_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 29
+   at EnergyTest.DontConsumeIfIsNotIEnergyConsume() in /home/sakura/TheDarkDungeons/DarkDungeon.Tests/EnergyTest.cs:line 18
+
+Failed!  - Failed:     2, Passed:     1, Skipped:     0, Total:     3, Duration: 14 ms - /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (net6.0)
+-------------- MapTest --------------
+Test run for /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (.NETCoreApp,Version=v6.0)
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+  Failed MapTest.NonInteractiveTurnElapse [19 ms]
+  Error Message:
+   System.Exception : Player은 논 인터렉티브 모드에서 CurAction.Set으로 먼저 행동 설정을 해야 합니다.
+  Stack Trace:
+     at Player.LetSelectBehaviour() in /home/sakura/TheDarkDungeons/DarkDungeon/PlayerSelectAction.cs:line 7
+   at Creature.OnTurnPre() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 221
+   at Creature.<.ctor>b__41_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 32
+   at Map.OnTurnElapse() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 74
+   at Map.<.ctor>b__25_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 29
+   at MapTest.NonInteractiveTurnElapse() in /home/sakura/TheDarkDungeons/DarkDungeon.Tests/MapTest.cs:line 11
+
+Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: < 1 ms - /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (net6.0)
+-------------- MovementTest --------------
+Test run for /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (.NETCoreApp,Version=v6.0)
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+  Failed MovementTest.CheckDidPlayerMoveLastTurn [2 ms]
+  Error Message:
+   System.Exception : Player은 논 인터렉티브 모드에서 CurAction.Set으로 먼저 행동 설정을 해야 합니다.
+  Stack Trace:
+     at Player.LetSelectBehaviour() in /home/sakura/TheDarkDungeons/DarkDungeon/PlayerSelectAction.cs:line 7
+   at Creature.OnTurnPre() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 221
+   at Creature.<.ctor>b__41_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Creature.cs:line 32
+   at Map.OnTurnElapse() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 74
+   at Map.<.ctor>b__25_0() in /home/sakura/TheDarkDungeons/DarkDungeon/Map.cs:line 29
+   at MovementTest.CheckDidPlayerMoveLastTurn() in /home/sakura/TheDarkDungeons/DarkDungeon.Tests/MovementTest.cs:line 63
+
+Failed!  - Failed:     1, Passed:     6, Skipped:     0, Total:     7, Duration: 19 ms - /home/sakura/TheDarkDungeons/DarkDungeon.Tests/bin/Debug/net6.0/DarkDungeon.Tests.dll (net6.0)

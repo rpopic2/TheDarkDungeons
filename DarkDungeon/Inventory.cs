@@ -36,6 +36,11 @@ public class Inventory : ICollection<Item?>
             added = Store(item, stack);
         }
     }
+    public void Add(Item item, ItemMetaData metaData)
+    {
+        content.Add(item);
+        metaDatas.Add(item, metaData);
+    }
     public void Add(Item? value) => Add(value, 1, out _);
     private bool Store(Item item, int stack)
     {

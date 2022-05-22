@@ -8,10 +8,11 @@ public class ItemMetaData
     public int Mastery { get; private set; } = 0;
     private int reqExp = REQEXP_BASE;
     private int curExp = 0;
+    public int CurExp { get => curExp; }
     public void GainExp()
     {
         curExp++;
-        if(curExp >= reqExp)
+        if (curExp >= reqExp)
         {
             curExp -= reqExp;
             Mastery++;
