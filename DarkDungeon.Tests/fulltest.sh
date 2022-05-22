@@ -2,6 +2,7 @@
 # auto dotnet test runner by rpopic2
 # last edit 22 May 2022
 echo Starting tests...
+date
 dotnet build -v=q --nologo
 rm testlist 2> /dev/null
 list=$(find .. -name \*Test.cs)
@@ -15,4 +16,4 @@ for testitem2 in `cat testlist`; do
     echo -------------- $testitem2 -------------- 
     dotnet test --nologo --verbosity=q --no-build --filter=$testitem2
 done
-rm testlist
+rm testlist 2> /dev/null

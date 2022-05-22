@@ -179,6 +179,7 @@ public class Map
         {
             newLength = Current.Length;
             Program.OnTurn -= () => Current.OnTurnElapse();
+            Program.OnTurn = null;
         }
         Current = new Map(newLength, Current?._corpseToPass);
         if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
