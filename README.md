@@ -14,7 +14,3 @@ j for down, k for climbing up
 i to open inventory
 q, w, e, r, t to choose what’s on the screen
 tab or x to use bare hand
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/chaeripicker/TheDarkDungeons)
-
-https://gitpod.io/teams/join?inviteId=3de96673-9ac8-4c1b-b9b3-60956fcd9274
