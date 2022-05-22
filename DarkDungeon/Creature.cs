@@ -6,6 +6,7 @@ public abstract partial class Creature
     public bool IsAlive { get; private set; } = true;
     public Position Pos { get; protected set; }
     public int Sight => Stat.Sight;
+    public int Energy => CurAction.Energy.Cur;
 
     public Inventory Inven { get; private set; }
     public CurrentAction CurAction { get; init; }
@@ -14,7 +15,6 @@ public abstract partial class Creature
     public Action<Creature> passives = (p) => { };
     protected Action _turnPre = delegate { };
     protected Action _turnEnd = delegate { };
-    public int Energy => CurAction.Energy.Cur;
 
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {
