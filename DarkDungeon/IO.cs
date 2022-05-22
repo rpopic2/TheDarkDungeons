@@ -13,7 +13,7 @@ public static class IO
         try
         {
             ConsoleKeyInfo info = IO.rk("Press any key to start...");
-            if(info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
+            if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
         }
         catch (InvalidOperationException)
         {
@@ -75,7 +75,7 @@ public static class IO
     }
     public static ConsoleKeyInfo rk()
     {
-        if(IsInteractive) return Console.ReadKey(true);
+        if (IsInteractive) return Console.ReadKey(true);
         else return new ConsoleKeyInfo('q', ConsoleKey.Q, false, false, false);
     }
     public static void sel(object value, out int index, __ flags = 0, string title = "선택 : ")
