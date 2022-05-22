@@ -4,12 +4,12 @@ main 0.6.220522
 [X] bug: moving consumes energy
 [X] Creature.OnTurnPre : change to private
 [X] 정확히는 consumetest에 ConsumeEnergy 테스트가 선행되어야 함.
+[X] make a key that switches into noninteractive mode.
 
+[ ] make all test run automatiacally.
 [ ] Fix tests in CombatTest to noninteractive.
 [ ] 턴이 흘렀는데도 아무 액션 선택 안하는게 가능함.
-[ ] Make Energy a distinct class
-[ ] make a key that switches into noninteractive mode.
-
+[ ] Make Energy a distinct class?
 
 [ ] 그냥 비어있는 몹들 더미용으로 만들때 전용 함수가 필요할듯.
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속
