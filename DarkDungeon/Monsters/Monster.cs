@@ -22,7 +22,7 @@ public abstract class Monster : Creature
     public override void LetSelectBehaviour()
     {
         if (!IsAlive) return;
-        if (Energy <= 0) OnEnergyDeplete();
+        if (Energy.Cur <= 0) OnEnergyDeplete();
         else if (_target is not null) OnTarget();
         else OnNothing();
     }

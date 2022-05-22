@@ -6,7 +6,7 @@ public abstract partial class Creature
     public bool IsAlive { get; private set; } = true;
     public Position Pos { get; protected set; }
     public int Sight => Stat.Sight;
-    public int Energy => CurAction.Energy.Cur;
+    public GamePoint Energy => CurAction.Energy;
 
     public Inventory Inven { get; private set; }
     public CurrentAction CurAction { get; init; }
