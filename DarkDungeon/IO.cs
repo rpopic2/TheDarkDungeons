@@ -9,6 +9,14 @@ public static class IO
     static IO()
     {
         DELSTRING = new String(' ', Console.WindowWidth - 1);
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            if (assembly.FullName?.StartsWith("xunit") ?? false)
+            {
+                IO.IsInteractive = false;
+                return;
+            }
+        }
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
         try
         {
