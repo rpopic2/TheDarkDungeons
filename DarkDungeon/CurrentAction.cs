@@ -54,6 +54,7 @@ public class CurrentAction
         _owner.Stat.Damage(1);
         Poison--;
     }
+    public void GainEnergy(int amount) => Energy += amount;
     private void ConsumeEnergy(out bool success)
     {
         if (Energy.Cur <= 0)
