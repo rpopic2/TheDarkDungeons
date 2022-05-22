@@ -25,6 +25,7 @@ public class Map
     private Action _onTurnEnd = () => { };
     public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
     {
+        Console.WriteLine("New Map");
         Current = this;
         Program.OnTurn = () => OnTurnElapse();
         this.Length = length;
