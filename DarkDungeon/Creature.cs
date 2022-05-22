@@ -185,6 +185,10 @@ public abstract partial class Creature
         {
             Pos += value;
             _currentMap.UpdateFightable(this);
+            if(Energy.Cur != Energy.Max)
+            {
+                
+            }
         }
     }
     protected void Dash(Position value)
