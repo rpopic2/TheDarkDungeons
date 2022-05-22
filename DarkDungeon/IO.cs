@@ -32,6 +32,7 @@ public static class IO
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object value, __ flag = 0, string title = "")
     {
+        if (!IsInteractive) return;
         int x = Console.CursorLeft;
         int y = Console.CursorTop;
         string stringValue = title;
@@ -39,7 +40,7 @@ public static class IO
         else stringValue += value.ToString() ?? string.Empty;
         if (flag.HasFlag(__.emphasis)) stringValue = EMPHASIS + stringValue;
         if (flag.HasFlag(__.newline)) stringValue += "\n";
-        if (flag.HasFlag(__.bottom) && IsInteractive) Console.CursorTop = x + Console.WindowHeight - 1;
+        if (flag.HasFlag(__.bottom)) Console.CursorTop = x + Console.WindowHeight - 1;
         if (stringValue.Contains("^"))
         {
             pr_Color(stringValue, flag);
@@ -154,6 +155,7 @@ public static class IO
     }
     public static void Redraw()
     {
+        if (!IsInteractive) return;
         Console.Clear();
         //pr("History");
         string? energyStatus = default;

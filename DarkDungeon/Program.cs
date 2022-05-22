@@ -5,7 +5,6 @@
     public static Action? OnTurn;
     public static void Main()
     {
-        Console.Clear();
         Program instance = new Program();
         do
         {
