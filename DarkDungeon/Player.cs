@@ -53,10 +53,19 @@ public partial class Player : Creature
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
+    public bool PickupItem(Item item, ItemMetaData metaData)
+    {
+        IO.pr($"\n아이템을 얻었다. {item.Name}");
+        Inven.Add(item, metaData, out bool success);
+        IO.Redraw();
+        return success;
+    }
     public bool PickupItem(Item item, int stack = 1)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
-        Inven.Add(item, stack, out bool success);
+        ItemMetaData metaData = new();
+        metaData.stack = stack;
+        Inven.Add(item, metaData, out bool success);
         IO.Redraw();
         return success;
     }

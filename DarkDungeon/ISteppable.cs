@@ -7,6 +7,12 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
         old.name += $", {newOne.name}";
         return old;
     }
+
+    public void GetItemAndMeta(int index, out Item? item, out ItemMetaData? metaData)
+    {
+        item = droplist[index];
+        metaData = droplist.GetMeta(item);
+    }
 }
 public record struct Portal() : ISteppable
 {

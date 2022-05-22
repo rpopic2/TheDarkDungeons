@@ -144,18 +144,6 @@ public abstract partial class Creature
         else if (metaData.poison-- > 0) CurAction.SetPoison(2);
         Stat.Damage(damage);
     }
-    protected virtual void Charge(Item? item = null)
-    {
-        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).magicCharge += CurAction.Amount;
-        else Inven.GetMeta(item).magicCharge += CurAction.Amount;
-        IO.rk($"{item}에 마법부여를 하였다.");
-    }
-    protected virtual void PoisonItem(Item? item = null)
-    {
-        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).poison++;
-        else Inven.GetMeta(item).poison++;
-        IO.rk($"{item}은 독으로 젖어 있다.");
-    }
     private void CalcDamageType(ref int damage, DamageType damageType, Creature attacker)
     {
         DamageType defenceType = default;
@@ -181,6 +169,18 @@ public abstract partial class Creature
             IO.pr($"{Name}의 {CurAction.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
             damage = damage.ToVul();
         }
+    }
+    protected virtual void Charge(Item? item = null)
+    {
+        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).magicCharge += CurAction.Amount;
+        else Inven.GetMeta(item).magicCharge += CurAction.Amount;
+        IO.rk($"{item}에 마법부여를 하였다.");
+    }
+    protected virtual void PoisonItem(Item? item = null)
+    {
+        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).poison++;
+        else Inven.GetMeta(item).poison++;
+        IO.rk($"{item}은 독으로 젖어 있다.");
     }
     protected void Move(Position value)
     {
