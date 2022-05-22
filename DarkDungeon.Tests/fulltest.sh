@@ -15,3 +15,4 @@ for testitem2 in `cat testlist`; do
     echo -------------- $testitem2 -------------- 
     dotnet test --nologo --verbosity=q --no-build --filter=$testitem2
 done
+rm testlist
