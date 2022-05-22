@@ -16,6 +16,8 @@ public abstract partial class Creature
     protected Action _turnPre = delegate { };
     protected Action _turnEnd = delegate { };
 
+    public bool DidMoveLastTurn { get; private set; }
+
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {
         Name = name;
@@ -85,7 +87,7 @@ public abstract partial class Creature
         if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
         IO.rk(useOutput);
     }
-    
+
     private void Attack(int range)
     {
         DamageType damageType = default;
@@ -185,10 +187,11 @@ public abstract partial class Creature
         {
             Pos += value;
             _currentMap.UpdateFightable(this);
-            if(Energy.Cur != Energy.Max)
+            if (Energy.Cur != Energy.Max)
             {
-                
+
             }
+            DidMoveLastTurn = true;
         }
     }
     protected void Dash(Position value)

@@ -13,6 +13,7 @@ public partial class Player : Creature
         exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
+
     private void OnNewMap()
     {
         _currentMap.AddToOnTurnPre(_turnPre);

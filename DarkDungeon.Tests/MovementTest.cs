@@ -43,4 +43,25 @@ public class MovementTest
         canMove = bat.CanMove(new(2, Facing.Right));
         Assert.False(canMove);
     }
+    [Fact]
+    public void TestPlayerMovement()
+    {
+
+        Player player = Player._instance = new Player("testPlayer");
+        Map map = new(2,null,false);
+        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        Program.OnTurn?.Invoke();
+        Assert.Equal(1, player.Pos.x);
+    }
+    [Fact]
+    public void CheckDidPlayerMoveLastTurn()
+    {
+        Player player = Player._instance = new Player("testPlayer");
+        Map map = new(2,null,false);
+        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        Assert.Equal(false, player.DidMoveLastTurn);
+        Program.OnTurn?.Invoke();
+        Assert.Equal(true, player.DidMoveLastTurn);
+    }
+
 }
