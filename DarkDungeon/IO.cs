@@ -12,7 +12,8 @@ public static class IO
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
         try
         {
-            IO.rk("Press any key to start...");
+            ConsoleKeyInfo info = IO.rk("Press any key to start...");
+            if(info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
         }
         catch (InvalidOperationException)
         {
