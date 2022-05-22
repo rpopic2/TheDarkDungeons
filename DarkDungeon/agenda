@@ -14,6 +14,7 @@ main 0.6.210522
 [ ] ㄴ Creature.SelectSkill이 외부 인터페이스로 노출되도록 해야 함.
 [ ] CurrentAction.cs 에 Energy 포함되어있고 amount는 애초에 그냥 set parameter로 넣는식으로 하면 될듯.
 [ ] 한마디로 Creature에서 독립하기
+[ ] make curaction fields methods private
 
 [ ] 그냥 비어있는 몹들 더미용으로 만들때 전용 함수가 필요할듯.
 [ ] 단검 던지면 단검 경치 날라감=> 경치를 메타가 아니라 플레이어에게 귀속

@@ -9,6 +9,6 @@ public class EnergyTest
         player.CurAction.Set(Creature.sword, Creature.sword.skills[0]);
 
         Program.OnTurn?.Invoke();
-        Assert.NotEqual(player.Energy.Max, player.Energy.Cur);
+        Assert.NotEqual(player.CurAction.Energy.Max, player.Energy);
     }
 }

@@ -4,7 +4,6 @@ public abstract partial class Creature
     public int Level { get; protected set; }
     public readonly Status Stat;
     public bool IsAlive { get; private set; } = true;
-    public GamePoint Energy { get; protected set; }
     public Position Pos { get; protected set; }
     public int Sight => Stat.Sight;
 
@@ -15,16 +14,16 @@ public abstract partial class Creature
     public Action<Creature> passives = (p) => { };
     protected Action _turnPre = delegate { };
     protected Action _turnEnd = delegate { };
+    public int Energy => CurAction.Energy.Cur;
 
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {
         Name = name;
         Level = level;
         Stat = stat;
-        Energy = new(energy, GamePointOption.Reserving);
         Pos = pos;
         Inven = new(this, " .(휴식)");
-        CurAction = new(this);
+        CurAction = new(this, energy);
         GetHp().OnOverflow += new(OnDeath);
         GetHp().OnIncrease += new(OnHeal);
         GetHp().OnDecrease += new(OnDamaged);
@@ -38,7 +37,7 @@ public abstract partial class Creature
     public GamePoint GetHp() => Stat.Hp;
     protected Map _currentMap => Map.Current;
     public virtual Creature? FrontFightable => _currentMap.GetCreature(Pos.Front(1));
-    public void GainEnergy(int amount) => Energy += amount;
+    public void GainEnergy(int amount) => CurAction.Energy += amount;
     public abstract void LetSelectBehaviour();
     protected void SelectBehaviour(Item item, int index)
     {
@@ -68,8 +67,6 @@ public abstract partial class Creature
     }
     private void SelectSkill(Item item, IEnergyConsume behav)
     {
-        ConsumeEnergy(out bool success);
-        if (!success) return;
         int mastery = Inven.GetMeta(item).Mastery;
         int amount = Stat.GetRandom(behav.StatDepend, mastery);
         CurAction.Set(item, behav, amount);
@@ -88,17 +85,7 @@ public abstract partial class Creature
         if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
         IO.rk(useOutput);
     }
-    private void ConsumeEnergy(out bool success)
-    {
-        if (Energy.Cur <= 0)
-        {
-            IO.rk("기력이 없습니다.");
-            success = false;
-            return;
-        }
-        Energy -= 1;
-        success = true;
-    }
+    
     private void Attack(int range)
     {
         DamageType damageType = default;
@@ -258,5 +245,5 @@ public abstract partial class Creature
         if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
-    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t기력 : {Energy}\t{Stat}";
+    public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t기력 : {CurAction.Energy}\t{Stat}";
 }
