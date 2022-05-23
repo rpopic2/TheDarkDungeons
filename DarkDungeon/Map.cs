@@ -23,7 +23,7 @@ public class Map
     private Action _onTurnPre = () => { };
     private Action _onTurn = () => { };
     private Action _onTurnEnd = () => { };
-    public Map(int length, bool spawnMobs = true, Corpse? corpseFromPrev = null)
+    public Map(int length, bool spawnMobs = true, bool createPortal = true, Corpse? corpseFromPrev = null)
     {
         Current = this;
         Program.OnTurn = () => OnTurnElapse();
@@ -50,13 +50,15 @@ public class Map
 
         void SetupSteppables(Corpse? corpseFromPrev)
         {
+            if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
+            if (!createPortal) return;
             int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
             _steppables[portalIndex] = new Portal();
-            if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
         }
     }
     private static Player s_player { get => Player.instance; }
     public ref readonly char[] Tiles => ref _tiles;
+    public ref readonly ISteppable?[] Steppables => ref _steppables;
     public ISteppable? GetSteppable(int index) => _steppables[index];
     public void AddToOnTurn(Action action, bool isPrepend)
     {
@@ -181,7 +183,7 @@ public class Map
             Program.OnTurn -= () => Current.OnTurnElapse();
             Program.OnTurn = null;
         }
-        Current = new Map(newLength, true, Current?._corpseToPass);
+        Current = new Map(newLength, true, true, Current?._corpseToPass);
         if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
     private void Render()
