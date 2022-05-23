@@ -1,9 +1,14 @@
 main 0.6.230522
+[ ] Damage consistancy test.
+[ ] ㄴ this leads to successful dodge test.
+[ ] set monsters action
 [ ] GainExpByHit failing randomly due to random damage : any way to set damage fixed?
 [ ] ㄴ give stat non-interactive might be a workargound
-[ ] Better interface for CurAction.Set
+[ ] Better interface for CurAction.Set : redundant repeat in item name
 [ ] Inventory.Getmeta does not support nullable?
 [ ] Map option to not make portals
+[ ] ISteppable(14,37) possible null reference argument
+[ ] Program.ElaspeTurn();
 
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] Make Energy a distinct class?
