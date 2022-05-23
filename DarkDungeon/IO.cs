@@ -1,3 +1,4 @@
+namespace DarkDungeon;
 public static class IO
 {
     public static bool IsInteractive = true;
