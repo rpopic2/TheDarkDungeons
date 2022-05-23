@@ -16,7 +16,7 @@ public class MapTest : IDisposable
     public void CreateMapWithPortal()
     {
         ISteppable?[] steppables = map.Steppables;
-        Assert.NotEqual(-1, Array.LastIndexOf<ISteppable?>(steppables, new Portal()));
+        Assert.Equal(-1, Array.LastIndexOf<ISteppable?>(steppables, new Portal()));
     }
     [Fact]
     public void CreatePortallessMap()
