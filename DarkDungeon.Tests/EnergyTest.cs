@@ -1,8 +1,21 @@
+using System;
 using Xunit;
-public class EnergyTest
+public class EnergyTest : IDisposable
 {
-    private Map map = new Map(5, false);
-    private Player player = Player._instance = new Player("TestPlayer");
+    private Map? map;
+    private Player? _player;
+    private Player player => _player!;
+
+    public void Dispose()
+    {
+        map = null;
+        _player = null;
+    }
+    public EnergyTest()
+    {
+        _player = Player._instance = new Player("TestPlayer");
+        map = new Map(5, false);
+    }
     [Fact]
     public void ConsumeEnergyTest()
     {
@@ -10,6 +23,7 @@ public class EnergyTest
         Program.OnTurn?.Invoke();
         Assert.NotEqual(player.Energy.Max, player.Energy.Cur);
     }
+
     [Fact]
     public void DontConsumeIfIsNotIEnergyConsume()
     {
@@ -24,7 +38,7 @@ public class EnergyTest
     {
         ConsumeEnergyTest();
         Assert.Equal(2, player.Energy.Cur);
-        
+
         player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
         Program.OnTurn?.Invoke();
         Assert.Equal(2, player.Energy.Cur);
