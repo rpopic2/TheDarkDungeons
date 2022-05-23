@@ -40,10 +40,10 @@ public class InventoryTest : IDisposable
 
         Corpse corpse = (Corpse)player.UnderFoot!;
         corpse.GetItemAndMeta(0, out Item? item, out ItemMetaData? metaData);
-        Assert.False(player.Inven.Contains(item));
+        Assert.DoesNotContain(item, player.Inven);
         if(item is null || metaData is null) throw new NullReferenceException();
         player.PickupItem(item, metaData);
-        Assert.True(player.Inven.Contains(item));
+        Assert.Contains(item, player.Inven);
     }
     [Fact]
     public void GetMetaTest()
