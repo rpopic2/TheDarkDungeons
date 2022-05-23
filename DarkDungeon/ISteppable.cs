@@ -10,8 +10,9 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
 
     public void GetItemAndMeta(int index, out Item? item, out ItemMetaData? metaData)
     {
-        item = droplist[index];
-        metaData = droplist.GetMeta(item);
+        item = droplist.ElementAtOrDefault(index);
+        if(item is not null) metaData = droplist.GetMeta(item);
+        else metaData = null;
     }
 }
 public record struct Portal() : ISteppable

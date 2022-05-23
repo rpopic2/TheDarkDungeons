@@ -2,13 +2,15 @@ main 0.6.230522
 [X] Damage consistancy test.
 [X] set monsters action ->works with testmob
 [X] GainExpByHit failing randomly due to random damage : any way to set damage fixed?
-[ ] Better interface for CurAction.Set : redundant repeat in item name
+[X] Better interface for CurAction.Set : redundant repeat in item name
+[X] Program.ElaspeTurn();, make OnTurn private
+[X] TestMonTest.cs
+[X] Monster.OnNotning -> abstract?
 [ ] Inventory.Getmeta does not support nullable?
-[ ] Map option to not make portals
+[v] Map option to not make portals
 [ ] ISteppable(14,37) possible null reference argument
-[v] Program.ElaspeTurn();, make OnTurn private
-[ ] Monster.OnNotning -> abstract?
-[ ] TestMonTest.cs
+[ ] Map.replacecorpse why is this public?
+[ ] Corpse.GetItemAndMeta does not work if coprse is empty
 
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] Make Energy a distinct class?
