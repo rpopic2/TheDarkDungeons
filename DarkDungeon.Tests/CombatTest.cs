@@ -63,34 +63,4 @@ public class CombatTest : IDisposable
         Program.OnTurn?.Invoke();
         Assert.Equal(testMon.GetHp().Max - damage, testMon.GetHp().Cur);
     }
-    [Fact]
-    public void TestMonsterGiveItem()
-    {
-        TestMonster testMonster = new(new(1, Facing.Right));
-        testMonster.GiveItem(Creature.sword);
-        Assert.Equal(Creature.sword, testMonster.Inven[0]);
-    }
-    [Fact]
-    public void TestMonSetAction()
-    {
-        TestMonster testMon = new(new(1, Facing.Right));
-        testMon.GiveItem(Creature.sword);
-        testMon.SetAction(Creature.sword, 0);
-        Assert.Equal(Creature.sword.skills[0], testMon.CurAction.CurrentBehav);
-    }
-    [Fact]
-    public void TestMonPreformSetAction()
-    {
-        TestMonster testMon = new(new(1, Facing.Right));
-        testMon.GiveItem(Creature.sword);
-        testMon.SetAction(Creature.sword, 0);
-        Program.OnTurn?.Invoke();
-        Assert.Equal(testMon.Energy.Max - 1, testMon.Energy.Cur);
-    }
-    [Fact]
-    public void TestMonPositionTest()
-    {
-        TestMonster testMon = new(new(1, Facing.Right));
-        Assert.Equal(testMon, map!.GetCreature(1));
-    }
 }
