@@ -3,16 +3,17 @@ using Xunit;
 public class InventoryTest : IDisposable
 {
     Map? map;
-    Player? player;
+    Player? _player;
+    Player player => _player!;
     public InventoryTest()
     {
         map = new(5, false, false);
-        player = Player._instance = new Player("test");
+        _player = Player._instance = new Player("test");
     }
     public void Dispose()
     {
         map = null;
-        player = Player._instance = null;
+        _player = Player._instance = null;
         Program.OnTurn = null;
     }
     [Fact]
@@ -36,11 +37,27 @@ public class InventoryTest : IDisposable
 
         player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
         Program.OnTurn?.Invoke();
+
         Corpse corpse = (Corpse)player.UnderFoot!;
         corpse.GetItemAndMeta(0, out Item? item, out ItemMetaData? metaData);
         Assert.False(player.Inven.Contains(item));
         if(item is null || metaData is null) throw new NullReferenceException();
         player.PickupItem(item, metaData);
         Assert.True(player.Inven.Contains(item));
+    }
+    [Fact]
+    public void GetMetaTest()
+    {
+        ItemMetaData metaData = new();
+        metaData.GainExp();
+        player.Inven.Add(Creature.shield, metaData);
+
+        Assert.Equal(metaData, player.Inven.GetMeta(Creature.shield));
+        Assert.Equal(1, player.Inven.GetMeta(Creature.shield).CurExp);
+    }
+    [Fact]
+    public void GetInvalidMetaData()
+    {
+        Assert.Null(player.Inven.GetMeta(Creature.shield));
     }
 }

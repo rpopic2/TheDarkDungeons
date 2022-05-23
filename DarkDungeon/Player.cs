@@ -131,7 +131,7 @@ public partial class Player : Creature
         if (cancel) return;
         if (corpse.droplist[index] is Item item)
         {
-            int stack = corpse.droplist.GetMeta(item).stack;
+            int stack = corpse.droplist.GetMeta(item)!.stack;
             bool pickedUp = PickupItem(item, stack);
             if (pickedUp) corpse.droplist.Remove(item);
         }

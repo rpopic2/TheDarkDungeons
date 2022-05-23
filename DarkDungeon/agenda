@@ -11,7 +11,7 @@ main 0.6.230522
 [X] Map.replacecorpse why is this public?
 [ ] Inventory.Getmeta does not support nullable?
 [ ] ISteppable(14,37) possible null reference argument
-[ ] Map.GetCreatureAt can be changed to ElementAtOrDefault?
+[X] Map.GetCreatureAt can be changed to ElementAtOrDefault?
 
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] Make Energy a distinct class?

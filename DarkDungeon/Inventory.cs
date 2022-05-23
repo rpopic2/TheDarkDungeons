@@ -28,7 +28,7 @@ public class Inventory : ICollection<Item?>
         if (value is not Item item) throw new Exception("Trying to put non-Item objext into Inventory.");
         if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
-            GetMeta(item).stack += metaData.stack;
+            GetMeta(item)!.stack += metaData.stack;
             added = true;
         }
         else added = Store(item, metaData);
@@ -93,10 +93,11 @@ public class Inventory : ICollection<Item?>
     {
         get => content[index];
     }
-    public ItemMetaData GetMeta(Item item)
+    public ItemMetaData? GetMeta(Item item)
     {
         if (item == Creature.bareHand) return bareHandMetaData;
-        return metaDatas[item];
+        if(metaDatas.ContainsKey(item)) return metaDatas[item];
+        else return null;
     }
     public void Consume(Item item)
     {
