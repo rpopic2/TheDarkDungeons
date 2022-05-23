@@ -21,6 +21,7 @@ public class MapTest : IDisposable
     [Fact]
     public void CreatePortallessMap()
     {
+        _map = new Map(5, false, false);
         ISteppable?[] steppables = map.Steppables;
         int portalIndex = Array.LastIndexOf<ISteppable?>(steppables, new Portal());
         Assert.Equal(-1, portalIndex);
@@ -37,6 +38,17 @@ public class MapTest : IDisposable
     [Fact]
     public void GetElementAtTest()
     {
-
+        Player player = Player._instance = new Player("TestPlayer");
+        map.UpdateFightable(player);
+        Assert.NotNull(map.GetCreatureAt(0));
+    }
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(10)]
+    public void GetElementAtTestInvalidIndex(int index)
+    {
+        Player player = Player._instance = new Player("TestPlayer");
+        map.UpdateFightable(player);
+        Assert.Null(map.GetCreatureAt(index));
     }
 }

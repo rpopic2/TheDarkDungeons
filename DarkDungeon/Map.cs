@@ -151,11 +151,7 @@ public class Map
             else _steppables[pos] = temp;
         }
     }
-    public Creature? GetCreatureAt(int index)
-    {
-        if (index < 0 || index >= _creaturesByPos.Length || _creaturesByPos[index] is null) return null;
-        return _creaturesByPos[index];
-    }
+    public Creature? GetCreatureAt(int index) => _creaturesByPos.ElementAtOrDefault(index);
     public Creature? RayCast(Position origin, int range)
     {
         Creature? f;

@@ -7,7 +7,7 @@ public class MovementTest
         Bat testBat = new Bat(default);
         Map map = new(2, false);
         map.UpdateFightable(testBat);
-        Assert.Equal(map.GetCreature(0), testBat);
+        Assert.Equal(map.GetCreatureAt(0), testBat);
         return testBat;
     }
     [Fact]
@@ -30,7 +30,7 @@ public class MovementTest
     public void TestObstructedOnEmptyTile()
     {
         Map map = new(2, false);
-        bool isObstructed = map.GetCreature(0) is null;
+        bool isObstructed = map.GetCreatureAt(0) is null;
         Assert.True(isObstructed);
     }
     [Fact]

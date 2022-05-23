@@ -43,6 +43,6 @@ public class TestMonsterTest : IDisposable
     public void TestMonPositionTest()
     {
         TestMonster testMon = new(new(1, Facing.Right));
-        Assert.Equal(testMon, map!.GetCreature(1));
+        Assert.Equal(testMon, map!.GetCreatureAt(1));
     }
 }
