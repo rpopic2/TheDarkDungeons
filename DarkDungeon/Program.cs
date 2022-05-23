@@ -23,6 +23,7 @@
         IO.Redraw();
         IO.pr("\n?을 눌러 도움말 표시.");
     }
+    public static void ElaspeTurn() => OnTurn?.Invoke();
     private void CreatePlayer()
     {
         string name = ChooseName();
