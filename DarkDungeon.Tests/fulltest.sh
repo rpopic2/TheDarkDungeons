@@ -11,7 +11,7 @@ for testitem in $list; do
     echo $tempname >> testlist
     echo Found test file $tempname
 done
-
+clear
 for testitem2 in `cat testlist`; do
     echo -------------- $testitem2 -------------- 
     dotnet test --nologo --verbosity=q --no-build --filter=$testitem2

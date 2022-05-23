@@ -13,6 +13,10 @@ public class CurrentAction
         _owner = owner;
         Energy = new(energy, GamePointOption.Reserving);
     }
+    public void Set(Item item, int index, int amount = default, int amount2 = default)
+    {
+        Set(item, item.skills[index], amount, amount2);
+    }
     public void Set(Item item, IBehaviour behaviour, int amount = default, int amount2 = default)
     {
         if (Stun > 0)
