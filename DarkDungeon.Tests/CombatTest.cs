@@ -82,5 +82,6 @@ public class CombatTest : IDisposable
         testMon.GiveItem(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
+        Assert.Equal(testMon.Energy.Max - 1, testMon.Energy.Cur);
     }
 }

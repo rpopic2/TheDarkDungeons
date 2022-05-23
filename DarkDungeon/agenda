@@ -9,6 +9,7 @@ main 0.6.230522
 [ ] Map option to not make portals
 [ ] ISteppable(14,37) possible null reference argument
 [ ] Program.ElaspeTurn();
+[ ] Monster.OnNotning -> abstract?
 
 [ ] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] Make Energy a distinct class?

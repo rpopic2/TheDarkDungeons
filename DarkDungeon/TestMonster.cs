@@ -18,6 +18,10 @@ public class TestMonster : Monster, ISpawnable
     {
         throw new NotImplementedException();
     }
+    protected override void OnNothing()
+    {
+
+    }
 
     public void GiveItem(Item item)
     {
