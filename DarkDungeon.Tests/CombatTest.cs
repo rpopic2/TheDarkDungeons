@@ -20,7 +20,7 @@ public class CombatTest : IDisposable
     public void GainExpByHit()
     {
         player!.PickupItem(Creature.dagger);
-        Shaman shaman = new(new(1, Facing.Right));
+        TestMonster testMon = new(new(1, Facing.Right));
         player!.CurAction.Set(player.Inven[0]!, Creature.dagger.skills[0], 3);
         Program.OnTurn?.Invoke();
         Assert.NotEqual(0, player.Inven.GetMeta(Creature.dagger).CurExp);
@@ -49,16 +49,19 @@ public class CombatTest : IDisposable
 
         Assert.Equal(1, metaData2.CurExp);
     }
-    [Fact]
-    public void SetDamageByCurActionSet()
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    public void SetDamageByCurActionSet(int damage)
     {
         player!.PickupItem(Creature.sword);
-        player.CurAction.Set(Creature.sword, Creature.sword.skills[0], 1);
+        player.CurAction.Set(Creature.sword, Creature.sword.skills[0], damage);
         TestMonster testMon = new(new(1, Facing.Right));
         testMon.GiveItem(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
-        Assert.Equal(1, testMon.GetHp().Cur);
+        Assert.Equal(testMon.GetHp().Max - damage, testMon.GetHp().Cur);
     }
     [Fact]
     public void TestMonsterGiveItem()
