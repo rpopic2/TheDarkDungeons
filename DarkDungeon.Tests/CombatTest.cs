@@ -54,11 +54,11 @@ public class CombatTest : IDisposable
     {
         player!.PickupItem(Creature.sword);
         player.CurAction.Set(Creature.sword, Creature.sword.skills[0], 1);
-        Lunatic lunatic = new(new(1, Facing.Right));
-        lunatic.CurAction.Set(Creature.holySword, Creature.holySword.skills[0], 3);
+        TestMonster testMon = new(new(1, Facing.Right));
+        testMon.GiveItem(Creature.sword);
+        testMon.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
-
-        Assert.Equal(1, lunatic.GetHp().Cur);
+        Assert.Equal(1, testMon.GetHp().Cur);
     }
     [Fact]
     public void TestMonsterGiveItem()
@@ -83,5 +83,11 @@ public class CombatTest : IDisposable
         testMon.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
         Assert.Equal(testMon.Energy.Max - 1, testMon.Energy.Cur);
+    }
+    [Fact]
+    public void TestMonPositionTest()
+    {
+        TestMonster testMon = new(new(1, Facing.Right));
+        Assert.Equal(testMon, map!.GetCreature(1));
     }
 }
