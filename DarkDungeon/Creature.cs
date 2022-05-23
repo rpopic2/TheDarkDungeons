@@ -38,7 +38,7 @@ public abstract partial class Creature
     }
     public GamePoint GetHp() => Stat.Hp;
     protected Map _currentMap => Map.Current;
-    public virtual Creature? FrontFightable => _currentMap.GetCreature(Pos.Front(1));
+    public virtual Creature? FrontFightable => _currentMap.GetCreatureAt(Pos.Front(1));
     public void GainEnergy(int amount) => CurAction.GainEnergy(amount);
     public abstract void LetSelectBehaviour();
     protected void SelectBehaviour(Item item, int index)
@@ -210,7 +210,7 @@ public abstract partial class Creature
         if (temp.x != Pos.x)
         {
             bool existsTile = _currentMap.Tiles.TryGet(temp.x, out _);
-            bool obstructed = _currentMap.GetCreature(temp.x) is not null;
+            bool obstructed = _currentMap.GetCreatureAt(temp.x) is not null;
             canGo = existsTile && !obstructed;
         }
         return canGo;

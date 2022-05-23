@@ -131,7 +131,7 @@ public class Map
         if (oldIndex != -1) _creaturesByPos[oldIndex] = null;
         _creaturesByPos[pos.x] = mov;
     }
-    public void ReplaceToCorpse()
+    private void ReplaceToCorpse()
     {
         if (_tempDeadCreatures.Count <= 0) return;
         foreach (var item in _tempDeadCreatures)
@@ -151,7 +151,7 @@ public class Map
             else _steppables[pos] = temp;
         }
     }
-    public Creature? GetCreature(int index)
+    public Creature? GetCreatureAt(int index)
     {
         if (index < 0 || index >= _creaturesByPos.Length || _creaturesByPos[index] is null) return null;
         return _creaturesByPos[index];
@@ -161,7 +161,7 @@ public class Map
         Creature? f;
         for (int i = 0; i < range; i++)
         {
-            f = GetCreature(origin.Front(i + 1));
+            f = GetCreatureAt(origin.Front(i + 1));
             if (f is Creature) return f;
         }
         return null;
