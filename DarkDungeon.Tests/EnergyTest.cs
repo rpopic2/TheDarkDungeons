@@ -1,7 +1,7 @@
 using Xunit;
 public class EnergyTest
 {
-    private Map map = new Map(5, null, false);
+    private Map map = new Map(5, false);
     private Player player = Player._instance = new Player("TestPlayer");
     [Fact]
     public void ConsumeEnergyTest()

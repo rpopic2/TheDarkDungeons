@@ -6,7 +6,7 @@ public class InventoryTest : IDisposable
     Player? player;
     public InventoryTest()
     {
-        map = new(5, null, false);
+        map = new(5, false);
         player = Player._instance = new Player("test");
     }
     public void Dispose()

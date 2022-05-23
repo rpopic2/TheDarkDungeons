@@ -6,7 +6,7 @@ public class CombatTest : IDisposable
     Player? player;
     public CombatTest()
     {
-        map = new(3, null, false);
+        map = new(3, false);
         player = Player._instance = new Player("test");
     }
     public void Dispose()

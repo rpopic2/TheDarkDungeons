@@ -28,4 +28,9 @@ public class Bat : Monster, ISpawnable
         else _SelectSkill(0, 1); //구르기
         if (_target!.CurAction.CurrentBehav?.Stance == StanceName.Charge) isAngry = true;
     }
+
+    protected override void OnNothing()
+    {
+        BasicMovement();
+    }
 }

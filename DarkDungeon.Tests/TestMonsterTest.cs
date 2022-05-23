@@ -7,7 +7,7 @@ public class TestMonsterTest : IDisposable
     TestMonster testMon => _testMon!;
     public TestMonsterTest()
     {
-        map = new(3, null, false);
+        map = new(3, false);
         _testMon = new(new(1, Facing.Right));
     }
     public void Dispose()

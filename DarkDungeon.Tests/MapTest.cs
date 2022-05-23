@@ -4,7 +4,7 @@ public class MapTest
     [Fact]
     public void NonInteractiveTurnElapse()
     {
-        Map map = new Map(5, null, false);
+        Map map = new Map(5, true);
         Player player = Player._instance = new Player("TestPlayer");
         Assert.Equal(0, Map.Turn);
 

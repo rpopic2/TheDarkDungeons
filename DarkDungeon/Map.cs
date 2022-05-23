@@ -23,7 +23,7 @@ public class Map
     private Action _onTurnPre = () => { };
     private Action _onTurn = () => { };
     private Action _onTurnEnd = () => { };
-    public Map(int length, Corpse? corpseFromPrev, bool spawnMobs = true)
+    public Map(int length, bool spawnMobs = true, Corpse? corpseFromPrev = null)
     {
         Current = this;
         Program.OnTurn = () => OnTurnElapse();
@@ -181,7 +181,7 @@ public class Map
             Program.OnTurn -= () => Current.OnTurnElapse();
             Program.OnTurn = null;
         }
-        Current = new Map(newLength, Current?._corpseToPass);
+        Current = new Map(newLength, true, Current?._corpseToPass);
         if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
     private void Render()
