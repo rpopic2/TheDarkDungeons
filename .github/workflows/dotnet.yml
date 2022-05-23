@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: dotnet build DarkDungeon.Tests/ --no-restore
     - name: Test
-      run: dotnet test DarkDungeon.Tests/ --no-build --verbosity normal
+      run: DarkDungeon.Tests/fulltest.sh
