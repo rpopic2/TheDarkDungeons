@@ -1,3 +1,5 @@
+using System;
+
 public class TestMonster : Monster, ISpawnable
 {
     public static StatInfo TestMonStat = new(new(1, 1, 1), 3, 1);
