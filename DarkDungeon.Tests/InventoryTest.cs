@@ -24,7 +24,7 @@ public class InventoryTest : IDisposable
         metaData.GainExp();
         Assert.NotEqual(0, metaData.CurExp);
         inven.Add(Creature.dagger, metaData);
-        Assert.NotEqual(0, inven.GetMeta(Creature.dagger).CurExp);
+        Assert.NotEqual(0, inven.GetMeta(Creature.dagger)!.CurExp);
     }
     [Fact]
     public void PickupCorpseItemNonInteractive()
@@ -53,7 +53,7 @@ public class InventoryTest : IDisposable
         player.Inven.Add(Creature.shield, metaData);
 
         Assert.Equal(metaData, player.Inven.GetMeta(Creature.shield));
-        Assert.Equal(1, player.Inven.GetMeta(Creature.shield).CurExp);
+        Assert.Equal(1, player.Inven.GetMeta(Creature.shield)!.CurExp);
     }
     [Fact]
     public void GetInvalidMetaData()
