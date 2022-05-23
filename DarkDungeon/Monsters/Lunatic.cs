@@ -13,6 +13,12 @@ public class Lunatic : Monster, ISpawnable
     {
         SelectBasicBehaviour(1, 0, -1); //pickup offence
     }
+
+    protected override void OnNothing()
+    {
+        BasicMovement();
+    }
+
     protected override void OnTarget()
     {
         if (Inven.GetMeta(Creature.holySword).magicCharge > 0) _SelectSkill(0, 0);

@@ -30,4 +30,9 @@ public class Snake : Monster, ISpawnable
     }
 
     public Monster Instantiate(Position spawnPoint) => new Snake(spawnPoint);
+
+    protected override void OnNothing()
+    {
+        BasicMovement();
+    }
 }

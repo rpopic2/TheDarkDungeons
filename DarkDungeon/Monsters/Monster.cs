@@ -28,7 +28,7 @@ public abstract class Monster : Creature
     }
     protected abstract void OnEnergyDeplete();
     protected abstract void OnTarget();
-    protected virtual void OnNothing() => BasicMovement();
+    protected abstract void OnNothing();
     protected void BasicMovement()
     {
         int randomFace = Stat.rnd.Next(2);

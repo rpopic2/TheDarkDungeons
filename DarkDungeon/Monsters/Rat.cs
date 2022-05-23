@@ -22,4 +22,9 @@ public class Rat : Monster, ISpawnable
     }
 
     public Monster Instantiate(Position spawnPoint) => new Rat(spawnPoint);
+
+    protected override void OnNothing()
+    {
+        BasicMovement();
+    }
 }

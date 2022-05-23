@@ -1,6 +1,7 @@
 #!/bin/bash
 # auto dotnet test runner by rpopic2
 # last edit 22 May 2022
+clear
 echo Starting tests...
 date
 dotnet build -v=q --nologo
@@ -11,7 +12,6 @@ for testitem in $list; do
     echo $tempname >> testlist
     echo Found test file $tempname
 done
-clear
 for testitem2 in `cat testlist`; do
     echo -------------- $testitem2 -------------- 
     dotnet test --nologo --verbosity=q --no-build --filter=$testitem2
