@@ -69,7 +69,7 @@ public abstract partial class Creature
     }
     private void SelectSkill(Item item, IEnergyConsume behav)
     {
-        int mastery = Inven.GetMeta(item).Mastery;
+        int mastery = Inven.GetMeta(item)!.Mastery;
         int amount = Stat.GetRandom(behav.StatDepend, mastery);
         CurAction.Set(item, behav, amount);
         PrintSkillSelct();
@@ -83,7 +83,7 @@ public abstract partial class Creature
     private void PrintSkillSelct()
     {
         string useOutput = $"{Name} {CurAction.CurrentBehav?.OnUseOutput} ({CurAction.Amount})";
-        int mcharge = Inven.GetMeta(CurAction.CurrentItem!).magicCharge;
+        int mcharge = Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge;
         if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
         IO.rk(useOutput);
     }
@@ -95,7 +95,7 @@ public abstract partial class Creature
         Creature? mov = _currentMap.RayCast(Pos, range);
         if (mov is Creature hit)
         {
-            ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!);
+            ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!)!;
             _lastHit = hit;
             AttackMagicCharge(metaData);
             hit.Dodge(CurAction.Amount, damageType, this, metaData);
@@ -108,7 +108,7 @@ public abstract partial class Creature
             if (magicCharge > 0)
             {
                 hit.Dodge(magicCharge, DamageType.Magic, this, metaData);
-                Inven.GetMeta(CurAction.CurrentItem!).magicCharge = 0;
+                Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge = 0;
             }
         }
     }
@@ -118,7 +118,7 @@ public abstract partial class Creature
         {
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
-            ItemMetaData metaData = Inven.GetMeta(item);
+            ItemMetaData metaData = Inven.GetMeta(item)!;
             Inven.Consume(item);
             _lastHit?.Inven.Add(item!, metaData);
         }
@@ -172,14 +172,14 @@ public abstract partial class Creature
     }
     protected virtual void Charge(Item? item = null)
     {
-        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).magicCharge += CurAction.Amount;
-        else Inven.GetMeta(item).magicCharge += CurAction.Amount;
+        if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge += CurAction.Amount;
+        else Inven.GetMeta(item)!.magicCharge += CurAction.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");
     }
     protected virtual void PoisonItem(Item? item = null)
     {
-        if (item is null) Inven.GetMeta(CurAction.CurrentItem!).poison++;
-        else Inven.GetMeta(item).poison++;
+        if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.poison++;
+        else Inven.GetMeta(item)!.poison++;
         IO.rk($"{item}은 독으로 젖어 있다.");
     }
     protected void Move(Position value)

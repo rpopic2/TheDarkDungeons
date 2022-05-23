@@ -226,7 +226,7 @@ public static class IO
         Inventory Inven = s_player.Inven;
         foreach (Item item in Inven.OfType<Item>())
         {
-            ItemMetaData metaData = Inven.GetMeta(item);
+            ItemMetaData metaData = Inven.GetMeta(item)!;
             pr($"{item.Name} | 종류 : {item.itemType} {metaData} ");
             foreach (IBehaviour behav in item.skills)
             {

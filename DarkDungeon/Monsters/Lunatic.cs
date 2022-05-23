@@ -21,7 +21,7 @@ public class Lunatic : Monster, ISpawnable
 
     protected override void OnTarget()
     {
-        if (Inven.GetMeta(Creature.holySword).magicCharge > 0) _SelectSkill(0, 0);
+        if (Inven.GetMeta(Creature.holySword)!.magicCharge > 0) _SelectSkill(0, 0);
         else _SelectSkill(0, 1);
     }
 }
