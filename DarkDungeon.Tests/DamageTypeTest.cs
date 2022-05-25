@@ -49,7 +49,7 @@ public class DamageTypeTest : IDisposable
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
     [Fact]
-    public void SlashToSlash()
+    public void TestEffective()
     {
         player.CurAction.Set(Creature.sword, 0, BASE_DMG);//slash dmg
         testMon.CurAction.Set(Creature.sword, 1, BASE_DEF);//slash def 5
@@ -69,5 +69,14 @@ public class DamageTypeTest : IDisposable
         int damageDelt = BASE_DMG - BASE_DEF;
         int expectedHp = MON_MAXHP - damageDelt;
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
+    }
+    [Fact]
+    public void SlashToMagic()
+    {
+        player.CurAction.Set(Creature.sword, 0, BASE_DMG);
+        testMon.SetAction(Creature.wand, 1, BASE_DEF);
+        Program.ElaspeTurn();
+        int demageDelt = BASE_DMG.ToVul() - BASE_DEF;
+        Assert.Equal(MON_MAXHP - demageDelt, testMon.GetHp().Cur);
     }
 }

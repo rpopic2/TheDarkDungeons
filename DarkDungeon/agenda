@@ -10,7 +10,7 @@ main 0.6.250522
 [ ] able to set maxhp = 0 or uner 0?
 
 [v] 데미지타입 계산 제대로 안되는 듯. 테스트?
-[ ] Magic Defences
+[X] Magic Defences
 [ ] need to del setatction without amount parameter : always need to set amount to avoid bugs 
 [ ] MagicAttackTest에서 맨 첫재줄로 플ㄹ레이어 업데이트 안해주면 테스트가 왜
 실패할까?
