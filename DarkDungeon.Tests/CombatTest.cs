@@ -65,8 +65,26 @@ public class CombatTest : IDisposable
         Assert.Equal(testMon.GetHp().Max - damage, testMon.GetHp().Cur);
     }
     [Fact]
-    public void MagicDefence()
+    public void MagicChargeTest()
     {
+        TestMonster testMon = new(new(1, Facing.Left));
+        testMon.SetStat(StatName.Con, 10);
+
+        testMon.GiveItem(Creature.spiritStaff);
+
+        player.CurAction.Set(Creature.basicActions, 1);
+        testMon.SetAction(Creature.spiritStaff, 1, 10);
+        Program.ElaspeTurn();
+
+        Assert.NotEqual(0, testMon.Inven.GetMeta(Creature.spiritStaff)!.magicCharge);
+
+        // Assert.False(player.GetHp().IsMax);
+
+    }
+    [Fact]
+    public void MagicAttackTest()
+    {
+        Map.Current.UpdateFightable(player);
         TestMonster testMon = new(new(1, Facing.Left));
         testMon.SetStat(StatName.Con, 10);
 
@@ -74,14 +92,35 @@ public class CombatTest : IDisposable
         testMon.GiveItem(Creature.spiritStaff);
 
         player.CurAction.Set(Creature.basicActions, 1);
-        testMon.SetAction(Creature.spiritStaff, 1);
+        testMon.SetAction(Creature.spiritStaff, 1, 10);
         Program.ElaspeTurn();
 
-        // player.CurAction.Set(Creature.wand, 1, 0);
         player.CurAction.Set(Creature.basicActions, 1);
-        testMon.SetAction(Creature.spiritStaff, 0);
+        testMon.SetAction(Creature.spiritStaff, 0, 10);
         Program.ElaspeTurn();
 
-        Assert.True(player.GetHp().IsMax);
+        Assert.False(player.IsAlive);
+        Assert.Equal(0, player.GetHp().Cur);
+    }
+    [Fact]
+    public void MagicDefenceTest()
+    {
+        Map.Current.UpdateFightable(player);
+        TestMonster testMon = new(new(1, Facing.Left));
+        testMon.SetStat(StatName.Con, 10);
+
+        player.Inven.Add(Creature.wand);
+        testMon.GiveItem(Creature.spiritStaff);
+
+        player.CurAction.Set(Creature.basicActions, 1);
+        testMon.SetAction(Creature.spiritStaff, 1, 10);
+        Program.ElaspeTurn();
+
+        player.CurAction.Set(Creature.wand, 1, 10);
+        testMon.SetAction(Creature.spiritStaff, 0, 10);
+        Program.ElaspeTurn();
+
+        Assert.True(player.IsAlive);
+        Assert.NotEqual(0, player.GetHp().Cur);
     }
 }

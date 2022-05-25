@@ -18,7 +18,7 @@ public class TestMonster : Monster, ISpawnable
 
     protected override void OnTarget()
     {
-        throw new NotImplementedException();
+         
     }
     protected override void OnNothing() { }
 
