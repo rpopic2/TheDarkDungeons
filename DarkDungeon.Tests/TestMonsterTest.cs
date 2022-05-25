@@ -42,10 +42,21 @@ public class TestMonsterTest : IDisposable
     {
         Assert.Equal(testMon, map!.GetCreatureAt(1));
     }
-    [Fact]
-    public void SetHpTest()
+    [Theory]
+    [InlineData(10)]
+    // [InlineData(0)]
+    // [InlineData(-1)]
+    public void SetHpTest(int v)
     {
-       testMon.SetHp(10);
-       Assert.Equal(10, testMon.GetHp().Cur); 
+       testMon.SetHp(v);
+       Assert.Equal(v, testMon.GetHp().Cur); 
     }
+    [Theory]
+    [InlineData(10)]
+    public void SetConTest(int con)
+    {
+        testMon.SetStat(StatName.Con, con);
+        Assert.Equal(con, testMon.Stat[StatName.Con]);
+    }
+    
 }

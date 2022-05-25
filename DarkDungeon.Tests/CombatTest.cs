@@ -64,4 +64,24 @@ public class CombatTest : IDisposable
         Program.OnTurn?.Invoke();
         Assert.Equal(testMon.GetHp().Max - damage, testMon.GetHp().Cur);
     }
+    [Fact]
+    public void MagicDefence()
+    {
+        TestMonster testMon = new(new(1, Facing.Left));
+        testMon.SetStat(StatName.Con, 10);
+
+        player.Inven.Add(Creature.wand);
+        testMon.GiveItem(Creature.spiritStaff);
+
+        player.CurAction.Set(Creature.basicActions, 1);
+        testMon.SetAction(Creature.spiritStaff, 1);
+        Program.ElaspeTurn();
+
+        // player.CurAction.Set(Creature.wand, 1, 0);
+        player.CurAction.Set(Creature.basicActions, 1);
+        testMon.SetAction(Creature.spiritStaff, 0);
+        Program.ElaspeTurn();
+
+        Assert.True(player.GetHp().IsMax);
+    }
 }
