@@ -133,6 +133,7 @@ public static class IO
     }
     public static void del(__ flags = 0)
     {
+        if (!IsInteractive) return;
         if (flags.HasFlag(__.bottom))
         {
             s_del_bottom();
