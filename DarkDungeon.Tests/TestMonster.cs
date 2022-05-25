@@ -31,4 +31,10 @@ public class TestMonster : Monster, ISpawnable
     {
         CurAction.Set(item, item.skills[skillIndex]);
     }
+
+    internal void SetHp(int v)
+    {
+        int increment = v - Stat.Hp.Cur;
+        Stat.Hp.IncreaseMax(increment);
+    }
 }

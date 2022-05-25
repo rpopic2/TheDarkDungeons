@@ -25,7 +25,6 @@ public class TestMonsterTest : IDisposable
     [Fact]
     public void TestMonSetAction()
     {
-        TestMonster testMon = new(new(1, Facing.Right));
         testMon.GiveItem(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
         Assert.Equal(Creature.sword.skills[0], testMon.CurAction.CurrentBehav);
@@ -33,7 +32,6 @@ public class TestMonsterTest : IDisposable
     [Fact]
     public void TestMonPreformSetAction()
     {
-        TestMonster testMon = new(new(1, Facing.Right));
         testMon.GiveItem(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
@@ -42,7 +40,12 @@ public class TestMonsterTest : IDisposable
     [Fact]
     public void TestMonPositionTest()
     {
-        TestMonster testMon = new(new(1, Facing.Right));
         Assert.Equal(testMon, map!.GetCreatureAt(1));
+    }
+    [Fact]
+    public void SetHpTest()
+    {
+       testMon.SetHp(10);
+       Assert.Equal(10, testMon.GetHp().Cur); 
     }
 }
