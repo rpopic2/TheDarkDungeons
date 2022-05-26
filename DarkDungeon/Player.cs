@@ -109,7 +109,7 @@ public partial class Player : Creature
     {
         if (UnderFoot is null) return;
         else if (UnderFoot is Corpse corpse) PickupCorpse(corpse);
-        else if (UnderFoot is Portal portal)
+        else if (UnderFoot is Pit portal)
         {
             IO.pr($"{Name}은 구멍 속으로 떨어졌다!");
             _currentMap.DoLoadNewMap = true;

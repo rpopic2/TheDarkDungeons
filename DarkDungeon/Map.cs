@@ -147,7 +147,7 @@ public class Map
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven);
             if (Monster.DropOutOf(fight.Stat.rnd, 5)) temp.droplist.Add(Creature.boneOfTheDeceased);
             if (old is Corpse cor) _steppables[pos] = cor + temp;
-            else if (old is Portal) _corpseToPass = temp;
+            else if (old is Pit) _corpseToPass = temp;
             else _steppables[pos] = temp;
         }
     }
@@ -179,7 +179,7 @@ public class Map
             Program.OnTurn -= () => Current.OnTurnElapse();
             Program.OnTurn = null;
         }
-        Current = new Map(newLength, true, new Portal(), Current?._corpseToPass);
+        Current = new Map(newLength, true, new Pit(), Current?._corpseToPass);
         if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
     private void Render()
