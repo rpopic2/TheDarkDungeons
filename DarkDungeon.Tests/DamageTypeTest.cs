@@ -93,6 +93,7 @@ public class DamageTypeTest : IDisposable
     [Fact]
     public void ThrustToSlash() //uneffective
     {
-
+        SetupDamageTest(Creature.dagger, 1, Creature.sword, 1);
+        AssertNotEffective();
     }
 }
