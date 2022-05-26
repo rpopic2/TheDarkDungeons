@@ -19,6 +19,7 @@ public static class IO
                 return;
             }
         }
+        Console.WriteLine();
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
         try
         {
