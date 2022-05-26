@@ -48,7 +48,7 @@ public class Program
         ConsoleKeyInfo keyInfo = IO.rk("스페이스바 : 확인, x : 취소");
         if (keyInfo.Key.IsCancel())
         {
-            IO.del(2);
+            IO.del(1);
             goto ClassSelect;
         }
         else if (!keyInfo.Key.IsOK()) goto Confirm;
