@@ -48,35 +48,52 @@ public class DamageTypeTest : IDisposable
         int expectedHp = MON_MAXHP - BASE_DMG.ToVul();
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
-    [Fact]
-    public void TestEffective()
+    private void SetupTest(Item item1, int skill1, Item item2, int skill2)
     {
-        player.CurAction.Set(Creature.sword, 0, BASE_DMG);//slash dmg
-        testMon.CurAction.Set(Creature.sword, 1, BASE_DEF);//slash def 5
-
+        player.CurAction.Set(item1, skill1, BASE_DMG);//slash dmg
+        testMon.CurAction.Set(item2, skill2, BASE_DEF);//slash def 5
+    }
+    private void AssertEffective()
+    {
         Program.ElaspeTurn();
         int damageDelt = BASE_DMG.ToUnVul() - BASE_DEF;
         int expectedHp = MON_MAXHP - damageDelt;
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
-    [Fact]
-    public void SlashToThrust()
+    private void AssertNormal()
     {
-        player.CurAction.Set(Creature.sword, 0, BASE_DMG);//slash dmg
-        testMon.CurAction.Set(Creature.bareHand, 1, BASE_DEF);//thrust def 5
-
         Program.ElaspeTurn();
         int damageDelt = BASE_DMG - BASE_DEF;
         int expectedHp = MON_MAXHP - damageDelt;
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
-    [Fact]
-    public void SlashToMagic()
+    private void AssertNotEffective()
     {
-        player.CurAction.Set(Creature.sword, 0, BASE_DMG);
-        testMon.SetAction(Creature.wand, 1, BASE_DEF);
         Program.ElaspeTurn();
         int demageDelt = BASE_DMG.ToVul() - BASE_DEF;
         Assert.Equal(MON_MAXHP - demageDelt, testMon.GetHp().Cur);
+    }
+    [Fact]
+    public void SlashToSlash() //effective
+    {
+        SetupTest(Creature.sword, 0, Creature.sword, 1);
+        AssertEffective();
+    }
+    [Fact]
+    public void SlashToThrust() //normal
+    {
+        SetupTest(Creature.sword, 0, Creature.bareHand, 1);
+        AssertNormal();
+    }
+    [Fact]
+    public void SlashToMagic() //uneffective
+    {
+        SetupTest(Creature.sword, 0, Creature.wand, 1);
+        AssertNotEffective();
+    }
+    [Fact]
+    public void ThrustToSlash() //uneffective
+    {
+
     }
 }
