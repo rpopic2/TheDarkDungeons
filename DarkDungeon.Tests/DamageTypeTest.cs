@@ -48,7 +48,7 @@ public class DamageTypeTest : IDisposable
         int expectedHp = MON_MAXHP - BASE_DMG.ToVul();
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
-    private void SetupTest(Item item1, int skill1, Item item2, int skill2)
+    private void SetupDamageTest(Item item1, int skill1, Item item2, int skill2)
     {
         player.CurAction.Set(item1, skill1, BASE_DMG);//slash dmg
         testMon.CurAction.Set(item2, skill2, BASE_DEF);//slash def 5
@@ -56,40 +56,38 @@ public class DamageTypeTest : IDisposable
     }
     private void AssertEffective()
     {
-        int damageDelt = BASE_DMG.ToUnVul() - BASE_DEF;
-        _AssertDamage(damageDelt);
+        _AssertDamage(BASE_DMG.ToUnVul());
     }
     private void AssertNormal()
     {
-        int damageDelt = BASE_DMG - BASE_DEF;
-        _AssertDamage(damageDelt);
+        _AssertDamage(BASE_DMG);
     }
     private void AssertNotEffective()
     {
-        int damageDelt = BASE_DMG.ToVul() - BASE_DEF;
-        _AssertDamage(damageDelt);
+        _AssertDamage(BASE_DMG.ToVul());
     }
-    private void _AssertDamage(int damageDelt)
+    private void _AssertDamage(int originalDmg)
     {
+        int damageDelt = originalDmg - BASE_DEF;
         int expectedHp = MON_MAXHP - damageDelt;
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
     [Fact]
     public void SlashToSlash() //effective
     {
-        SetupTest(Creature.sword, 0, Creature.sword, 1);
+        SetupDamageTest(Creature.sword, 0, Creature.sword, 1);
         AssertEffective();
     }
     [Fact]
     public void SlashToThrust() //normal
     {
-        SetupTest(Creature.sword, 0, Creature.bareHand, 1);
+        SetupDamageTest(Creature.sword, 0, Creature.bareHand, 1);
         AssertNormal();
     }
     [Fact]
     public void SlashToMagic() //uneffective
     {
-        SetupTest(Creature.sword, 0, Creature.wand, 1);
+        SetupDamageTest(Creature.sword, 0, Creature.wand, 1);
         AssertNotEffective();
     }
     [Fact]
