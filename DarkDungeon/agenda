@@ -7,9 +7,10 @@ main 0.6.250522
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
 [ ] 선택에서 취소하면 한줄 더나옴 (시체 먹을때 등)
 [ ] 시체 몇턴 뒤면 사라지게?
-[ ] able to set maxhp = 0 or uner 0?
+[ ] able to set maxhp = 0 or under 0?
 
 [v] 데미지타입 계산 제대로 안되는 듯. 테스트?
+[ ] It turns out to be thrustToSlash has problem.
 [X] Magic Defences
 [ ] need to del setatction without amount parameter : always need to set amount to avoid bugs 
 [ ] MagicAttackTest에서 맨 첫재줄로 플ㄹ레이어 업데이트 안해주면 테스트가 왜

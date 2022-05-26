@@ -149,9 +149,9 @@ public abstract partial class Creature
         DamageType defenceType = default;
         if (CurAction.CurrentBehav is Skill skill) defenceType = skill.damageType;
         if (damageType == defenceType) EffectiveDefence(ref damage);
-        else if ((damageType == DamageType.Slash && defenceType == DamageType.Magic) ||
-            (damageType == DamageType.Thrust && defenceType == DamageType.Slash) ||
-            (damageType == DamageType.Magic && defenceType == DamageType.Thrust)) UneffectiveDefence(ref damage);
+        else if (damageType == DamageType.Slash && defenceType == DamageType.Magic) UneffectiveDefence(ref damage);
+        else if (damageType == DamageType.Thrust && defenceType == DamageType.Slash) UneffectiveDefence(ref damage);
+        else if (damageType == DamageType.Magic && defenceType == DamageType.Thrust) UneffectiveDefence(ref damage);
 
         damage -= CurAction.Amount;
         void EffectiveDefence(ref int damage)
