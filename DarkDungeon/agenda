@@ -16,10 +16,12 @@ main 0.6.260522
 [X] make IPortal to make sure no portlals are created in the map
 [X] creating maps in original code won't have any portals.
 [X] create portals by chance, create door by chance.
-[ ] make door interactable
 [X] seperate Map.ctor spawnboss, setupsteppables
 [X] IPortal should derive from ISteppable
+[v] make door interactable
 [ ] shorthand of player moving?
+[ ] Player.cs 120 not implemented.
+[ ] create new map on new turn test should be first.
 
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔

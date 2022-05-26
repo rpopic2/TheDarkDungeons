@@ -114,6 +114,11 @@ public partial class Player : Creature
             IO.pr($"{Name}은 구멍 속으로 떨어졌다!");
             _currentMap.DoLoadNewMap = true;
         }
+        else if (UnderFoot is Door door)
+        {
+            IO.pr($"{Name}은 이쪽 길로 가기로 했다.");
+            throw new NotImplementedException();
+        }
     }
     private void PickupCorpse(Corpse corpse)
     {
