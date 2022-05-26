@@ -66,4 +66,19 @@ public class MapTest : IDisposable
         map.UpdateFightable(player);
         Assert.Null(map.GetCreatureAt(index));
     }
+    [Fact]
+    public void PlayerInteractPit()
+    {
+        Assert.Equal(0, Map.Depth);
+        Player player = Player._instance = new Player("TestPlayer");
+        map.UpdateFightable(player);
+        int portalIndex = Array.FindIndex(map.Steppables, (p) => p is Pit);
+        Assert.NotEqual(-1, portalIndex);
+        player.CurAction.Set(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
+        Program.ElaspeTurn();
+        Assert.True(player.UnderFoot is Pit);
+        player.CurAction.Set(Creature.basicActions, 2);
+        Program.ElaspeTurn();
+        Assert.Equal(1, Map.Depth);
+    }
 }
