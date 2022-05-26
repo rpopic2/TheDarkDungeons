@@ -51,4 +51,11 @@ public class MapTest : IDisposable
         map.UpdateFightable(player);
         Assert.Null(map.GetCreatureAt(index));
     }
+    [Fact]
+    public void SpawnDoors()
+    {
+       _map = new(5, false, PortalType.Door); 
+       bool containsDoor = Array.Exists(map.Steppables, (s)=>s is Door);
+       Assert.True(containsDoor);
+    }
 }

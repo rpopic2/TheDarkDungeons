@@ -14,6 +14,10 @@ public enum ItemType
 {
     Equip, Consume
 }
+public enum PortalType
+{
+    Door,
+}
 public enum StatName
 {
     Sol, Lun, Con, None

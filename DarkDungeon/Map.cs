@@ -56,6 +56,38 @@ public class Map
             _steppables[portalIndex] = new Portal();
         }
     }
+    public Map(int length, bool spawnMobs, PortalType portalType, Corpse? corpseFromPrev = null)
+    {
+        Current = this;
+        Program.OnTurn = () => OnTurnElapse();
+        this.Length = length;
+        this.DoSpawnMobs = spawnMobs;
+        int push = (int)MathF.Max(Depth - 1, 0);
+        _pushDown = new('\n', push);
+        _empty = new char[length];
+        _tiles = new char[length];
+        _rendered = new char[length];
+        Array.Fill(_empty, MapSymb.Empty);
+        Array.Fill(_tiles, MapSymb.road);
+        _steppables = new ISteppable?[length];
+        _tempDeadCreatures = new();
+        _creaturesByPos = new Creature[length];
+
+        SetupSteppables(corpseFromPrev);
+        if (Depth == BOSS_DEPTH)
+        {
+            this.DoSpawnMobs = false;
+            Spawn(new QuietKnight(default));
+        }
+        OnNewMap.Invoke();
+
+        void SetupSteppables(Corpse? corpseFromPrev)
+        {
+            if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
+            int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
+            _steppables![portalIndex] = new Door();
+        }
+    }
     private static Player s_player { get => Player.instance; }
     public ref readonly char[] Tiles => ref _tiles;
     public ref readonly ISteppable?[] Steppables => ref _steppables;

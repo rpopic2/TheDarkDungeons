@@ -1,7 +1,11 @@
 main 0.6.250522
+[X] Magic Defences
+[X] player.frontfightable -> frontcreature
+[X] newline at the start of io
+[X] help message 필수 단축키
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 화살 이제 박히면 소모 안박히면 소모안함
-[ ] 방 이동
+[v] 방 이동
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
 [ ] 법사 템좀 바꿔줘야할듯->불뎀 추가.
 [ ] |_ need to refactor status effects first
@@ -13,14 +17,12 @@ main 0.6.250522
 
 [v] 데미지타입 계산 제대로 안되는 듯. 테스트?
 [ ] It turns out to be thrustToSlash has problem.
-[X] Magic Defences
-[ ] need to del setatction without amount parameter : always need to set amount to avoid bugs 
+[X] need to del setatction without amount parameter : always need to set amount to avoid bugs 
 [ ] MagicAttackTest에서 맨 첫재줄로 플레이어 업데이트 안해주면 테스트가 왜 실패할까?
 [ ] able to set maxhp = 0 or under 0?
-
-[X] help message 필수 단축키
 [ ] 직업 고를때 이미 스탯 찍혀있고 스탯 보여주기.
 [ ] 기본 추가체력은 레벨의존
+[ ] 자유전직 안됨
 
 0.6
 [X] 무기 숙련도 최소뎀

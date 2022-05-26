@@ -57,7 +57,7 @@ public class Program
     }
     private string ChooseName()
     {
-        if(!IO.IsInteractive) return "TestPlayer";
+        if (!IO.IsInteractive) return "TestPlayer";
         string name;
         do
         {

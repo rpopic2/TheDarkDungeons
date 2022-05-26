@@ -20,6 +20,12 @@ public record struct Portal() : ISteppable
     public string name { get; set; } = "구멍";
     public char ToChar() => MapSymb.portal;
 }
+public record struct Door() : ISteppable
+{
+    public string name { get; set; } = "갈래길";
+
+    public char ToChar()=> MapSymb.door;
+}
 
 public interface ISteppable
 {
