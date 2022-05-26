@@ -4,13 +4,17 @@ public class MapTest : IDisposable
 {
     Map? _map;
     Map map => _map!;
+    Player? _player;
+    Player player => _player!;
     public MapTest()
     {
         _map = new Map(5, false, new Pit());
+        _player = Player._instance = new Player("TestPlayer");
     }
     public void Dispose()
     {
         _map = null;
+        _player = null;
     }
     [Fact]
     public void CreateMapWithPit()
@@ -44,7 +48,6 @@ public class MapTest : IDisposable
     [Fact]
     public void NonInteractiveTurnElapse()
     {
-        Player player = Player._instance = new Player("TestPlayer");
         Assert.Equal(0, Map.Turn);
 
         Program.OnTurn?.Invoke();
@@ -53,7 +56,6 @@ public class MapTest : IDisposable
     [Fact]
     public void GetElementAtTest()
     {
-        Player player = Player._instance = new Player("TestPlayer");
         map.UpdateFightable(player);
         Assert.NotNull(map.GetCreatureAt(0));
     }
@@ -62,7 +64,6 @@ public class MapTest : IDisposable
     [InlineData(10)]
     public void GetElementAtTestInvalidIndex(int index)
     {
-        Player player = Player._instance = new Player("TestPlayer");
         map.UpdateFightable(player);
         Assert.Null(map.GetCreatureAt(index));
     }
@@ -70,15 +71,16 @@ public class MapTest : IDisposable
     public void PlayerInteractPit()
     {
         Assert.Equal(0, Map.Depth);
-        Player player = Player._instance = new Player("TestPlayer");
         map.UpdateFightable(player);
         int portalIndex = Array.FindIndex(map.Steppables, (p) => p is Pit);
         Assert.NotEqual(-1, portalIndex);
         player.CurAction.Set(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
         Program.ElaspeTurn();
+
         Assert.True(player.UnderFoot is Pit);
         player.CurAction.Set(Creature.basicActions, 2);
         Program.ElaspeTurn();
+
         Assert.Equal(1, Map.Depth);
     }
 }
