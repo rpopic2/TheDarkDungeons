@@ -23,7 +23,7 @@ public class Map
     private Action _onTurnPre = () => { };
     private Action _onTurn = () => { };
     private Action _onTurnEnd = () => { };
-    public Map(int length, bool spawnMobs = true, ISteppable? portal = null, Corpse? corpseFromPrev = null)
+    public Map(int length, bool spawnMobs = true, IPortal? portal = null, Corpse? corpseFromPrev = null)
     {
         Current = this;
         Program.OnTurn = () => OnTurnElapse();
@@ -40,31 +40,30 @@ public class Map
         _tempDeadCreatures = new();
         _creaturesByPos = new Creature[length];
 
-        SetupSteppables(corpseFromPrev);
+        SetupSteppables(portal, corpseFromPrev);
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
             Spawn(new QuietKnight(default));
         }
         OnNewMap.Invoke();
-
-        void SetupSteppables(Corpse? corpseFromPrev)
-        {
-            if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
-            if (portal is null) return;
-            if (portal is RandomPortal)
-            {
-                bool spawnPit = s_rnd.Next(0, 3) == 0;
-                portal = spawnPit ? new Pit() : new Door();
-            }
-            int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
-            _steppables![portalIndex] = portal;
-        }
     }
     private static Player s_player { get => Player.instance; }
     public ref readonly char[] Tiles => ref _tiles;
     public ref readonly ISteppable?[] Steppables => ref _steppables;
     public ISteppable? GetSteppable(int index) => _steppables[index];
+    private void SetupSteppables(IPortal? portal, Corpse? corpseFromPrev)
+    {
+        if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
+        if (portal is null) return;
+        if (portal is RandomPortal)
+        {
+            bool spawnPit = s_rnd.Next(0, 3) == 0;
+            portal = spawnPit ? new Pit() : new Door();
+        }
+        int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
+        _steppables![portalIndex] = portal;
+    }
     public void AddToOnTurn(Action action, bool isPrepend)
     {
         if (isPrepend) _onTurn = action + _onTurn;

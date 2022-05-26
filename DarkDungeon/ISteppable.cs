@@ -35,7 +35,7 @@ public record struct RandomPortal() : ISteppable, IPortal
     }
 }
 
-public interface IPortal
+public interface IPortal : ISteppable
 {
 
 }

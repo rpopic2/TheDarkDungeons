@@ -1,4 +1,4 @@
-main 0.6.250522
+main 0.6.260522
 [X] Magic Defences
 [X] player.frontfightable -> frontcreature
 [X] newline at the start of io
@@ -18,6 +18,7 @@ main 0.6.250522
 [X] create portals by chance, create door by chance.
 [ ] make door interactable
 [ ] seperate Map.ctor spawnboss, setupsteppables
+[ ] IPortal should derive from ISteppable
 
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
