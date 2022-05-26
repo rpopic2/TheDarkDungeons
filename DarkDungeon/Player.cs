@@ -36,7 +36,7 @@ public partial class Player : Creature
         {
             IO.pr($"남은 능력치 포인트 : {times - i}");
             SelectPickupStat();
-            IO.del(2);
+            IO.del(1);
         }
     }
     public void SelectPickupStat()

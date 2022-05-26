@@ -52,7 +52,7 @@ public class Program
             goto ClassSelect;
         }
         else if (!keyInfo.Key.IsOK()) goto Confirm;
-        IO.del(2);
+        IO.del(1);
         return classIndex;
     }
     private string ChooseName()
