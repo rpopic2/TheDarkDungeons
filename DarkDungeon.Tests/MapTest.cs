@@ -54,9 +54,9 @@ public class MapTest : IDisposable
     [Fact]
     public void SpawnPortal()
     {
-       _map = new(5, false, new Door()); 
-       bool containsDoor = Array.Exists(map.Steppables, (s)=>s is Door);
-       Assert.True(containsDoor);
+       _map = new(5, false, new Portal()); 
+       bool containsPortal = Array.Exists(map.Steppables, (s)=>s is Portal);
+       Assert.True(containsPortal);
     }
     [Fact]
     public void SpawnDoors()

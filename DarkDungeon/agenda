@@ -11,6 +11,11 @@ main 0.6.250522
 [ ] |_ need to refactor status effects first
 [ ] 선택에서 취소하면 한줄 더나옴 (시체 먹을때 등)
 
+[X] duplicate constructor
+[X] cannot spawn portal with new method
+[ ] creating maps won't have any portals.
+[ ] make IPortal to make sure no portlals are created in the map
+
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
 [ ] 시체 몇턴 뒤면 사라지게?

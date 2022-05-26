@@ -23,10 +23,13 @@ public record struct Portal() : ISteppable
 public record struct Door() : ISteppable
 {
     public string name { get; set; } = "갈래길";
-
     public char ToChar()=> MapSymb.door;
 }
 
+public interface IPortal
+{
+
+}
 public interface ISteppable
 {
     public char ToChar();
