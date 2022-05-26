@@ -6,7 +6,7 @@ public class MapTest : IDisposable
     Map map => _map!;
     public MapTest()
     {
-        _map = new Map(5, false, true);
+        _map = new Map(5, false, new Portal());
     }
     public void Dispose()
     {
@@ -21,7 +21,7 @@ public class MapTest : IDisposable
     [Fact]
     public void CreatePortallessMap()
     {
-        _map = new Map(5, false, false);
+        _map = new Map(5, false, null);
         ISteppable?[] steppables = map.Steppables;
         int portalIndex = Array.LastIndexOf<ISteppable?>(steppables, new Portal());
         Assert.Equal(-1, portalIndex);
@@ -52,9 +52,16 @@ public class MapTest : IDisposable
         Assert.Null(map.GetCreatureAt(index));
     }
     [Fact]
+    public void SpawnPortal()
+    {
+       _map = new(5, false, new Door()); 
+       bool containsDoor = Array.Exists(map.Steppables, (s)=>s is Door);
+       Assert.True(containsDoor);
+    }
+    [Fact]
     public void SpawnDoors()
     {
-       _map = new(5, false, PortalType.Door); 
+       _map = new(5, false, new Door()); 
        bool containsDoor = Array.Exists(map.Steppables, (s)=>s is Door);
        Assert.True(containsDoor);
     }

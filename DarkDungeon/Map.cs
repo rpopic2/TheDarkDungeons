@@ -23,7 +23,7 @@ public class Map
     private Action _onTurnPre = () => { };
     private Action _onTurn = () => { };
     private Action _onTurnEnd = () => { };
-    public Map(int length, bool spawnMobs = true, bool createPortal = true, Corpse? corpseFromPrev = null)
+    public Map(int length, bool spawnMobs = true, ISteppable? portal = null, Corpse? corpseFromPrev = null)
     {
         Current = this;
         Program.OnTurn = () => OnTurnElapse();
@@ -51,41 +51,9 @@ public class Map
         void SetupSteppables(Corpse? corpseFromPrev)
         {
             if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
-            if (!createPortal) return;
+            if (portal is null) return;
             int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
-            _steppables[portalIndex] = new Portal();
-        }
-    }
-    public Map(int length, bool spawnMobs, PortalType portalType, Corpse? corpseFromPrev = null)
-    {
-        Current = this;
-        Program.OnTurn = () => OnTurnElapse();
-        this.Length = length;
-        this.DoSpawnMobs = spawnMobs;
-        int push = (int)MathF.Max(Depth - 1, 0);
-        _pushDown = new('\n', push);
-        _empty = new char[length];
-        _tiles = new char[length];
-        _rendered = new char[length];
-        Array.Fill(_empty, MapSymb.Empty);
-        Array.Fill(_tiles, MapSymb.road);
-        _steppables = new ISteppable?[length];
-        _tempDeadCreatures = new();
-        _creaturesByPos = new Creature[length];
-
-        SetupSteppables(corpseFromPrev);
-        if (Depth == BOSS_DEPTH)
-        {
-            this.DoSpawnMobs = false;
-            Spawn(new QuietKnight(default));
-        }
-        OnNewMap.Invoke();
-
-        void SetupSteppables(Corpse? corpseFromPrev)
-        {
-            if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
-            int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
-            _steppables![portalIndex] = new Door();
+            _steppables![portalIndex] = portal;
         }
     }
     private static Player s_player { get => Player.instance; }
@@ -211,7 +179,7 @@ public class Map
             Program.OnTurn -= () => Current.OnTurnElapse();
             Program.OnTurn = null;
         }
-        Current = new Map(newLength, true, true, Current?._corpseToPass);
+        Current = new Map(newLength, true, new Portal(), Current?._corpseToPass);
         if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
     private void Render()
