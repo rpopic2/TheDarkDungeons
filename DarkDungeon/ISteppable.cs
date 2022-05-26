@@ -15,15 +15,24 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
         else metaData = null;
     }
 }
-public record struct Pit() : ISteppable
+public record struct Pit() : ISteppable, IPortal
 {
     public string name { get; set; } = "구멍";
     public char ToChar() => MapSymb.portal;
 }
-public record struct Door() : ISteppable
+public record struct Door() : ISteppable, IPortal
 {
     public string name { get; set; } = "갈래길";
     public char ToChar()=> MapSymb.door;
+}
+public record struct RandomPortal() : ISteppable, IPortal
+{
+    public string name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public char ToChar()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public interface IPortal

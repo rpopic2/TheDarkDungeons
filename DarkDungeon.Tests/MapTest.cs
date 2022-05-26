@@ -6,25 +6,40 @@ public class MapTest : IDisposable
     Map map => _map!;
     public MapTest()
     {
-        _map = new Map(5, false, new Portal());
+        _map = new Map(5, false, new Pit());
     }
     public void Dispose()
     {
         _map = null;
     }
     [Fact]
-    public void CreateMapWithPortal()
+    public void CreateMapWithPit()
     {
         ISteppable?[] steppables = map.Steppables;
-        Assert.NotEqual(-1, Array.LastIndexOf<ISteppable?>(steppables, new Portal()));
+        bool containsPit = Array.Exists(map.Steppables, (s) => s is Pit);
+        Assert.True(containsPit);
+    }
+    [Fact]
+    public void CreateMapWithDoor()
+    {
+        _map = new(5, false, new Door());
+        bool containsDoor = Array.Exists(map.Steppables, (s) => s is Door);
+        Assert.True(containsDoor);
+    }
+    [Fact]
+    public void CreateNextPortalRandomly()
+    {
+        _map = new(5, false, new RandomPortal());
+        bool containsPortal = Array.Exists(map.Steppables, (s) => s is IPortal);
+        Assert.True(containsPortal);
     }
     [Fact]
     public void CreatePortallessMap()
     {
         _map = new Map(5, false, null);
         ISteppable?[] steppables = map.Steppables;
-        int portalIndex = Array.LastIndexOf<ISteppable?>(steppables, new Portal());
-        Assert.Equal(-1, portalIndex);
+        bool containsPortal = Array.Exists(map.Steppables, (s) => s is IPortal);
+        Assert.False(containsPortal);
     }
     [Fact]
     public void NonInteractiveTurnElapse()
@@ -50,19 +65,5 @@ public class MapTest : IDisposable
         Player player = Player._instance = new Player("TestPlayer");
         map.UpdateFightable(player);
         Assert.Null(map.GetCreatureAt(index));
-    }
-    [Fact]
-    public void SpawnPortal()
-    {
-       _map = new(5, false, new Portal()); 
-       bool containsPortal = Array.Exists(map.Steppables, (s)=>s is Portal);
-       Assert.True(containsPortal);
-    }
-    [Fact]
-    public void SpawnDoors()
-    {
-       _map = new(5, false, new Door()); 
-       bool containsDoor = Array.Exists(map.Steppables, (s)=>s is Door);
-       Assert.True(containsDoor);
     }
 }

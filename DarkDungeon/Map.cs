@@ -52,6 +52,11 @@ public class Map
         {
             if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
             if (portal is null) return;
+            if (portal is RandomPortal)
+            {
+                bool spawnPit = s_rnd.Next(0, 3) == 0;
+                portal = spawnPit ? new Pit() : new Door();
+            }
             int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
             _steppables![portalIndex] = portal;
         }

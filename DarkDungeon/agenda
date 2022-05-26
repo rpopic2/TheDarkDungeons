@@ -13,8 +13,11 @@ main 0.6.250522
 
 [X] duplicate constructor
 [X] cannot spawn portal with new method
-[ ] creating maps won't have any portals.
-[ ] make IPortal to make sure no portlals are created in the map
+[X] make IPortal to make sure no portlals are created in the map
+[ ] creating maps in original code won't have any portals.
+[ ] create portals by chance, create door by chance.
+[ ] make door interactable
+[ ] seperate Map.ctor spawnboss, setupsteppables
 
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
