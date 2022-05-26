@@ -52,26 +52,27 @@ public class DamageTypeTest : IDisposable
     {
         player.CurAction.Set(item1, skill1, BASE_DMG);//slash dmg
         testMon.CurAction.Set(item2, skill2, BASE_DEF);//slash def 5
+        Program.ElaspeTurn();
     }
     private void AssertEffective()
     {
-        Program.ElaspeTurn();
         int damageDelt = BASE_DMG.ToUnVul() - BASE_DEF;
-        int expectedHp = MON_MAXHP - damageDelt;
-        Assert.Equal(expectedHp, testMon.GetHp().Cur);
+        _AssertDamage(damageDelt);
     }
     private void AssertNormal()
     {
-        Program.ElaspeTurn();
         int damageDelt = BASE_DMG - BASE_DEF;
-        int expectedHp = MON_MAXHP - damageDelt;
-        Assert.Equal(expectedHp, testMon.GetHp().Cur);
+        _AssertDamage(damageDelt);
     }
     private void AssertNotEffective()
     {
-        Program.ElaspeTurn();
-        int demageDelt = BASE_DMG.ToVul() - BASE_DEF;
-        Assert.Equal(MON_MAXHP - demageDelt, testMon.GetHp().Cur);
+        int damageDelt = BASE_DMG.ToVul() - BASE_DEF;
+        _AssertDamage(damageDelt);
+    }
+    private void _AssertDamage(int damageDelt)
+    {
+        int expectedHp = MON_MAXHP - damageDelt;
+        Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
     [Fact]
     public void SlashToSlash() //effective
