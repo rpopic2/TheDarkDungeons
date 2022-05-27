@@ -6,6 +6,7 @@ echo $DIR
 clear
 echo Starting tests...
 date
+echo Building project...
 dotnet build $DIR -v=q --nologo
 rm testlist 2> /dev/null
 list=$(find .. -name \*Test.cs)
