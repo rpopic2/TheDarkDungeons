@@ -1,4 +1,4 @@
-main 0.6.260522
+main 0.6.270522
 [X] Magic Defences
 [X] player.frontfightable -> frontcreature
 [X] newline at the start of io
@@ -22,6 +22,7 @@ main 0.6.260522
 [ ] shorthand of player moving?
 [ ] Player.cs 120 not implemented.
 [ ] create new map on new turn test should be first.
+[ ] encapsulate Map.Depth (static)
 
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔

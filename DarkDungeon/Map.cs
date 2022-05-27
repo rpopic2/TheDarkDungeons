@@ -173,7 +173,7 @@ public class Map
     }
     public static void NewMap()
     {
-        Depth++;
+        if(s_player.UnderFoot is Pit) Depth++;
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;

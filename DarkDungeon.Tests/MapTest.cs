@@ -98,4 +98,25 @@ public class MapTest : IDisposable
         Assert.NotEqual(current, Map.Current);
         Assert.Equal(0, Map.Depth);
     }
+    [Fact]
+    public void TestNewDepthNextTurn()
+    {
+        int depth = Map.Depth;
+        Map oldMap = map;
+        map.DoLoadNewMap = true;
+        Program.ElaspeTurn();
+        Assert.Equal(depth + 1, Map.Depth);
+        Assert.NotSame(oldMap, Map.Current);
+    }
+    [Fact]
+    public void TestNextRoomNextTurn()
+    {
+        int oldDepth = Map.Depth;
+    //    map.OnPortal();
+        
+        map.DoLoadNewMap = true;
+        Program.ElaspeTurn();
+        Assert.Equal(oldDepth, Map.Depth);
+        Assert.NotSame(map, Map.Current);
+    }
 }
