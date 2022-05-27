@@ -117,8 +117,9 @@ public partial class Player : Creature
         else if (UnderFoot is Door door)
         {
             IO.pr($"{Name}은 이쪽 길로 가기로 했다.");
-            throw new NotImplementedException();
+            _currentMap.DoLoadNewMap = true;
         }
+
     }
     private void PickupCorpse(Corpse corpse)
     {
