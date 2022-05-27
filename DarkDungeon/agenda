@@ -18,11 +18,11 @@ main 0.6.270522
 [X] create portals by chance, create door by chance.
 [X] seperate Map.ctor spawnboss, setupsteppables
 [X] IPortal should derive from ISteppable
-[v] make door interactable
+[X] make door interactable
 [ ] shorthand of player moving?
-[ ] Player.cs 120 not implemented.
-[ ] create new map on new turn test should be first.
-[ ] encapsulate Map.Depth (static)
+[X] Player.cs 120 not implemented.
+[X] create new map on new turn test should be first.
+[X] encapsulate Map.Depth (static)
 
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
