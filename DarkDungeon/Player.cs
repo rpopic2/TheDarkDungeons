@@ -6,11 +6,13 @@ public partial class Player : Creature
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp { get; init; }
-    public Player(string name) : base(name, level: 1, new(BASICSTAT, BASICSTAT, default), energy: BASICCAP, pos: new(0))
+    public Player(string name, int classIndex) : base(name, level: 1, new(BASICSTAT, BASICSTAT, default), energy: BASICCAP, pos: new(0))
     {
         Map.OnNewMap += () => OnNewMap();
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
+        if(classIndex == -1) SelectPickupStat(3);
+        else Stat[(StatName)classIndex] += 3;
     }
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
 

@@ -30,10 +30,8 @@ public class Program
         string name = ChooseName();
         IO.pr($"{name}의 직업은?...");
         int classIndex = ChooseClass();
-        Player player = Player._instance = new Player(name);
+        Player player = Player._instance = new Player(name, classIndex);
         AddStartItems(classIndex);
-        IO.pr("초보자 도움말 : 능력치는 하나에 집중 투자하는것이 더 쉽습니다.");
-        player.SelectPickupStat(3);
     }
     private int ChooseClass()
     {
