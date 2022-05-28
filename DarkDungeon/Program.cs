@@ -96,7 +96,6 @@ public class Program
                 playerInven.Add(Creature.sword);
                 playerInven.Add(Creature.shield);
                 playerInven.Add(Creature.torch);
-                s_player.GainEnergy(3);
                 break;
             case 1:
                 playerInven.Add(Creature.dagger);
@@ -105,17 +104,14 @@ public class Program
                 playerInven.Add(Creature.arrow);
                 playerInven.Add(Creature.torch);
                 playerInven.Add(Creature.assBareHand);
-                s_player.GainEnergy(3);
                 break;
             case 2:
                 playerInven.Add(Creature.staff);
                 playerInven.Add(Creature.magicBook);
                 playerInven.Add(Creature.torch);
-                s_player.GainEnergy(3);
                 break;
             default:
                 s_player.SelectStartItem();
-                s_player.GainEnergy(3);
                 break;
         }
     }
