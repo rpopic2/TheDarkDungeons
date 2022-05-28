@@ -43,4 +43,9 @@ public class TestMonster : Monster, ISpawnable
     {
         Stat[statName] = v;
     }
+
+    internal void LevelUp()
+    {
+        Level ++;
+    }
 }

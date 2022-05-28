@@ -58,5 +58,12 @@ public class TestMonsterTest : IDisposable
         testMon.SetStat(StatName.Con, con);
         Assert.Equal(con, testMon.Stat[StatName.Con]);
     }
+    [Fact]
+    public void TestLvUp()
+    {
+        Assert.Equal(0, testMon.Level);
+        testMon.LevelUp();
+        Assert.Equal(1, testMon.Level);
+    }
     
 }

@@ -6,7 +6,7 @@ public partial class Player : Creature
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp { get; init; }
-    public Player(string name, int classIndex) : base(name, level: 1, Status.BasicStatus, energy: BASICCAP, pos: new(0))
+    public Player(string name, int classIndex = 0) : base(name, level: 1, Status.BasicStatus, energy: BASICCAP, pos: new(0))
     {
         Map.OnNewMap += () => OnNewMap();
         exp = new Exp(this);
