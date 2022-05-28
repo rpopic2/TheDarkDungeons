@@ -37,16 +37,19 @@ public class Program
     {
     ClassSelect:
         int classIndex = 0;
-        string[] classes = new string[] { "^r (듀얼리스트)^/", "^g (암살자)^/", "^b (현자)^/" };
-        IO.sel(classes, out classIndex); ;
+        string[] classes = new string[] { "^r (전사)^/", "^g (암살자)^/", "^b (마법사)^/" };
+        IO.sel(classes, out classIndex, 0, "(x로 자유전직) ");
         string className = classes.ElementAtOrDefault(classIndex) ?? "자유전직";
     Confirm:
         string classDesc = GetClassDesc(classIndex);
         IO.pr($"{className} : {classDesc}");
+        Status stat = Status.BasicStatus;
+        if (classIndex != -1) stat[(StatName)classIndex] += 3;
+        IO.pr($"기본 스탯 : {stat}");
         ConsoleKeyInfo keyInfo = IO.rk("스페이스바 : 확인, x : 취소");
         if (keyInfo.Key.IsCancel())
         {
-            IO.del(1);
+            IO.del(2);
             goto ClassSelect;
         }
         else if (!keyInfo.Key.IsOK()) goto Confirm;
@@ -71,16 +74,16 @@ public class Program
         switch (index)
         {
             case 0:
-                desc = "난이도 쉬움. 근접 거리에서 용맹히 싸우는 직업이다.";
+                desc = "난이도 보통. 근접 거리에서 용맹히 싸우는 직업이다.";
                 break;
             case 1:
-                desc = " 난이도 보통. 적이 저항하지 못하고 본인이 당했는지도 모르게끔 암살한다.";
+                desc = " 난이도 쉬움. 적이 저항하지 못하고 본인이 당했는지도 모르게끔 암살한다.";
                 break;
             case 2:
                 desc = "난이도 어려움. 창의력을 발휘하여 강력한 마법을 쓰는 직업이다.";
                 break;
             default:
-                desc = "자유 직업을 선택하였습니다";
+                desc = "초보 비추천. 스탯과 아이템을 당신이 직접 고를 수 있다.";
                 break;
         }
         return desc;
