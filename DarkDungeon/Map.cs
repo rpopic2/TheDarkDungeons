@@ -173,7 +173,7 @@ public class Map
     }
     public static void NewMap()
     {
-        if(s_player.UnderFoot is Pit) Depth++;
+        if(Player._instance is not null && s_player.UnderFoot is Pit) Depth++;
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
@@ -184,7 +184,7 @@ public class Map
             Program.OnTurn = null;
         }
         Current = new Map(newLength, true, new RandomPortal(), Current?._corpseToPass);
-        if (Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
+        if (Player._instance is not null && Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
     private void Render()
     {
