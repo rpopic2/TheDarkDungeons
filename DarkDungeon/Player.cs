@@ -11,7 +11,7 @@ public partial class Player : Creature
         Map.OnNewMap += () => OnNewMap();
         exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
-        if(classIndex == -1) SelectPickupStat(3);
+        if (classIndex == -1) SelectPickupStat(3);
         else Stat[(StatName)classIndex] += 3;
     }
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
@@ -62,13 +62,13 @@ public partial class Player : Creature
         IO.Redraw();
         return success;
     }
-    public bool PickupItem(Item item, int stack = 1)
+    public bool PickupItem(Item item, int stack = 1, bool redraw = true)
     {
         IO.pr($"\n아이템을 얻었다. {item.Name}");
         ItemMetaData metaData = new();
         metaData.stack = stack;
         Inven.Add(item, metaData, out bool success);
-        IO.Redraw();
+        if (redraw) IO.Redraw();
         return success;
     }
     private int SelectIndexOfItem(string message)
@@ -145,7 +145,7 @@ public partial class Player : Creature
         if (corpse.droplist[index] is Item item)
         {
             int stack = corpse.droplist.GetMeta(item)?.stack ?? 1;
-            bool pickedUp = PickupItem(item, stack);
+            bool pickedUp = PickupItem(item, stack, false);
             if (pickedUp) corpse.droplist.Remove(item);
         }
     }
