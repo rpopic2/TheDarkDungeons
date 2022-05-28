@@ -15,6 +15,9 @@ public class Status
         this[StatName.Lun] = lun;
         this[StatName.Con] = con;
     }
+
+    public static int LevelToBaseHp(int level) => level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE);
+
     public Status GetDifficultyStat()
     {
         int[] tempData = new int[STAT_COUNT];

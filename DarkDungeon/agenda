@@ -16,6 +16,7 @@ main 0.6.270522
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
 [ ] 시체 몇턴 뒤면 사라지게?
+[v] StatTest.HpScalesWithLevel wip
 
 [ ] 시작떄 먹은 횃불 발동이 안됨.
 [ ] 기본 추가체력은 레벨의존
