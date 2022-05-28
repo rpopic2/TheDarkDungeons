@@ -131,7 +131,7 @@ public class Inventory : ICollection<Item?>
     }
 
     public bool Contains(Item? item)
-    {
+    { 
         return ((ICollection<Item?>)content).Contains(item);
     }
 
