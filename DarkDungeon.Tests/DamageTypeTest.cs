@@ -101,7 +101,15 @@ public class DamageTypeTest : IDisposable
         AssertNotEffective();
     }
     [Fact]
-    public void ThrustToThrust()
+    public void ThrustToThrust()//effective
     {
+        SetupDamageTest(Creature.dagger, 1, Creature.bareHand, 1);
+        AssertEffective();
+    }
+    [Fact]
+    public void ThrustToMagic()
+    {
+        SetupDamageTest(Creature.dagger, 1, Creature.wand, 1);
+        AssertNormal();
     }
 }
