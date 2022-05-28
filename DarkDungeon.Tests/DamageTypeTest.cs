@@ -112,4 +112,16 @@ public class DamageTypeTest : IDisposable
         SetupDamageTest(Creature.dagger, 1, Creature.wand, 1);
         AssertNormal();
     }
+    [Fact]
+    public void MagicToSlash()
+    {
+        player.Inven.Add(Creature.spiritStaff);
+        player.CurAction.Set(Creature.spiritStaff, 1);
+        Program.ElaspeTurn();
+
+        // player.CurAction.Set(Creature.staff, 0, BASE_DMG);//slash def 5
+        // testMon.CurAction.Set(Creature.sword, 0, BASE_DEF);//slash def 5
+        // Program.ElaspeTurn();
+        // AssertNormal();
+    }
 }

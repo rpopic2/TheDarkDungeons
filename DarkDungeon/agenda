@@ -4,7 +4,6 @@ main 0.6.270522
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
 [ ] Add fire tick damage
 [ ] ㄴneed to refactor status effects first
-[ ] 선택에서 취소하면 한줄 더나옴 (시체 먹을때 등)
 [ ] shorthand of player moving?
 
 [ ] ISteppable 겹치기 가능하게
@@ -12,6 +11,8 @@ main 0.6.270522
 [ ] 시체 몇턴 뒤면 사라지게?
 
 [v] 데미지타입 계산 제대로 안되는 듯. 테스트?
+[ ] 마법딜 테스트 
+[ ] 일단 마법 차징이 아예 안되는듯함 정확히는 플레이어가 차징을 못함.
 [ ] MagicAttackTest에서 맨 첫재줄로 플레이어 업데이트 안해주면 테스트가 왜 실패할까?
 [ ] able to set maxhp = 0 or under 0?
 [ ] 직업 고를때 이미 스탯 찍혀있고 스탯 보여주기.

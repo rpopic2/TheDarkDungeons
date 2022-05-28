@@ -92,6 +92,11 @@ public partial class Player : Creature
     }
     protected override void Charge(Item? item = null)
     {
+        if (item is not null)
+        {
+            base.Charge(item);
+            return;
+        }
         IO.pr("마법부여할 대상을 선택해 주십시오.");
         IO.sel(Inven, out int index);
         IO.del();
@@ -132,7 +137,7 @@ public partial class Player : Creature
     }
     private void PickAnItemFromCorpse(Corpse corpse, out bool cancel)
     {
-        IO.sel(corpse.droplist, out int index, 0 ,"주울 아이템 선택 : ");
+        IO.sel(corpse.droplist, out int index, 0, "주울 아이템 선택 : ");
         cancel = index == -1;
         if (cancel) return;
         if (corpse.droplist[index] is Item item)
