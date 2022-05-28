@@ -9,6 +9,7 @@ public class CombatTest : IDisposable
     {
         map = new(3, false);
         _player = Player._instance = new Player("test");
+        Map.Current.UpdateFightable(player);
     }
     public void Dispose()
     {
@@ -84,7 +85,6 @@ public class CombatTest : IDisposable
     [Fact]
     public void MagicAttackTest()
     {
-        Map.Current.UpdateFightable(player);
         TestMonster testMon = new(new(1, Facing.Left));
         testMon.SetStat(StatName.Con, 10);
 
@@ -105,7 +105,6 @@ public class CombatTest : IDisposable
     [Fact]
     public void MagicDefenceTest()
     {
-        Map.Current.UpdateFightable(player);
         TestMonster testMon = new(new(1, Facing.Left));
         testMon.SetStat(StatName.Con, 10);
 

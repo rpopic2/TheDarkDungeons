@@ -117,7 +117,7 @@ public class Inventory : ICollection<Item?>
             else if (content[i] is Item item)
             {
                 itemName = item.ToString();
-                int stack = GetMeta(item).stack;
+                int stack = GetMeta(item)?.stack ?? 0;
                 if (stack > 1) itemName = itemName.Insert(1, $"{stack}x");
             }
             result += itemName.AppendKeyName(i);
