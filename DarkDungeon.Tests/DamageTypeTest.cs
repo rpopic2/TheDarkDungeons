@@ -4,8 +4,8 @@ public class DamageTypeTest : IDisposable
 {
     Map? map;
     Player? _player;
-    TestMonster? _testMon;
     Player player => _player!;
+    TestMonster? _testMon;
     TestMonster testMon => _testMon!;
     private const int MON_MAXHP = 20;
     private const int BASE_DMG = 10;
@@ -115,13 +115,28 @@ public class DamageTypeTest : IDisposable
     [Fact]
     public void MagicToSlash()
     {
-        player.Inven.Add(Creature.spiritStaff);
-        player.CurAction.Set(Creature.spiritStaff, 1);
-        Program.ElaspeTurn();
-
-        // player.CurAction.Set(Creature.staff, 0, BASE_DMG);//slash def 5
-        // testMon.CurAction.Set(Creature.sword, 0, BASE_DEF);//slash def 5
-        // Program.ElaspeTurn();
-        // AssertNormal();
+        SetupDamageTest(Creature.staff, 1, Creature.basicActions, 1);
+        SetupDamageTest(Creature.staff, 0, Creature.sword, 1);
+        int firstDamageDelt = BASE_DMG - BASE_DEF;
+        int secondDamageDelt = BASE_DMG - BASE_DEF;
+        Assert.Equal(testMon.GetHp().Max - firstDamageDelt - secondDamageDelt, testMon.GetHp().Cur);
+    }
+    [Fact]
+    public void MagicToThrust()
+    {
+        SetupDamageTest(Creature.staff, 1, Creature.basicActions, 1);
+        SetupDamageTest(Creature.staff, 0, Creature.bareHand, 1);
+        int firstDamageDelt = BASE_DMG.ToVul() - BASE_DEF;//magic -> thrust not effective
+        int secondDamageDelt = BASE_DMG - BASE_DEF;//normal -> thrust normal
+        Assert.Equal(testMon.GetHp().Max - firstDamageDelt - secondDamageDelt, testMon.GetHp().Cur);
+    }
+    [Fact]
+    public void MagicToMagic()
+    {
+        SetupDamageTest(Creature.staff, 1, Creature.basicActions, 1);
+        SetupDamageTest(Creature.staff, 0, Creature.wand, 1);
+        int firstDamageDelt = BASE_DMG.ToUnVul() - BASE_DEF;//magic -> magic effective
+        int secondDamageDelt = BASE_DMG - BASE_DEF;//normal -> magic normal
+        Assert.Equal(testMon.GetHp().Max - firstDamageDelt - secondDamageDelt, testMon.GetHp().Cur);
     }
 }
