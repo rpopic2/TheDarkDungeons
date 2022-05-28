@@ -145,17 +145,32 @@ public partial class Player : Creature
         if (corpse.droplist[index] is Item item)
         {
             int stack = corpse.droplist.GetMeta(item)?.stack ?? 1;
-            bool pickedUp = PickupItem(item, stack, false);
+            bool pickedUp = PickupItem(item, stack);
             if (pickedUp) corpse.droplist.Remove(item);
         }
     }
     public void SelectStartItem()
     {
         Corpse corpse = new("누군가", new(Player.instance, "시체"));
-        corpse.droplist.Content.AddRange(new Item[] { torch, sword, shield, dagger, bow, arrow, staff, magicBook });
+        corpse.droplist.Content.Add(torch);
+        corpse.droplist.Content.Add(sword);
+        corpse.droplist.Content.Add(shield);
+        corpse.droplist.Content.Add(dagger);
+        corpse.droplist.Content.Add(bow);
+        ItemMetaData arrowMeta = new();
+        arrowMeta.stack = 3;
+        corpse.droplist.Content.Add(arrow);
+        corpse.droplist.Content.Add(staff);
+        corpse.droplist.Content.Add(magicBook);
         while (Inven.Count < 3)
         {
-            PickAnItemFromCorpse(corpse, out _);
+            IO.sel(corpse.droplist, out int index, 0, "아이템 선택 : ");
+            if (corpse.droplist[index] is Item item)
+            {
+                Inven.Add(item);
+                corpse.droplist.Remove(item);
+            }
+            PickAnItemFromCorpse(corpse, out bool cancel);
         }
     }
     private void OnLvUp(object? sender, EventArgs e)
