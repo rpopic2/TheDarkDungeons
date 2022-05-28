@@ -132,7 +132,7 @@ public partial class Player : Creature
     }
     private void PickAnItemFromCorpse(Corpse corpse, out bool cancel)
     {
-        IO.sel(corpse.droplist, out int index);
+        IO.sel(corpse.droplist, out int index, 0 ,"주울 아이템 선택 : ");
         cancel = index == -1;
         if (cancel) return;
         if (corpse.droplist[index] is Item item)

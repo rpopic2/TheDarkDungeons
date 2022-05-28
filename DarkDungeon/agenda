@@ -2,8 +2,8 @@ main 0.6.270522
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 화살 이제 박히면 소모 안박히면 소모안함
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
-[ ] 법사 템좀 바꿔줘야할듯->불뎀 추가.
-[ ] |_ need to refactor status effects first
+[ ] Add fire tick damage
+[ ] ㄴneed to refactor status effects first
 [ ] 선택에서 취소하면 한줄 더나옴 (시체 먹을때 등)
 [ ] shorthand of player moving?
 
