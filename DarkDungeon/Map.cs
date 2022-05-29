@@ -151,7 +151,7 @@ public class Map
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven);
             if (Monster.DropOutOf(fight.Stat.rnd, 5)) temp.droplist.Add(Creature.boneOfTheDeceased);
             if (old is Corpse cor) _steppables[pos] = cor + temp;
-            else if (old is Pit) _corpseToPass = temp;
+            else if (old is IPortal) _corpseToPass = temp;
             else _steppables[pos] = temp;
         }
     }

@@ -1,11 +1,11 @@
 main 0.6.290522
+[X] 시체가 방문 없앰
+[X] exp neeExperiencePoint : GamePoint
 [X] exp -> stat
 [X] level -> stat?
 [X] inven.getstack
 [X] 알면 좋은 키 도움말
 [ ] 시작떄 먹은 횃불 발동이 안됨.
-[ ] 시체가 방문 없앰
-[ ] exp neeExperiencePoint : GamePoint
 
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 화살 이제 박히면 소모 안박히면 소모안함
@@ -13,7 +13,6 @@ main 0.6.290522
 [ ] Add fire tick damage
 [ ] ㄴneed to refactor status effects first
 [ ] ISteppable 겹치기 가능하게
-[ ] 근접에서 원거리 쓰면 효과 떨어지게끔
 [ ] 시체 몇턴 뒤면 사라지게?
 
 [ ] /key to examine things
