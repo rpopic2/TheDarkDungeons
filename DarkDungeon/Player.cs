@@ -180,7 +180,13 @@ public partial class Player : Creature
         exp.UpdateMax();
         IO.pr($"{Level}레벨이 되었다.", __.emphasis);
         SelectPickupStat();
+        SetHp(Status.LevelToBaseHp(Level) + Stat[StatName.Sol]);
         Stat.Heal(GetHp().Max / 2);
+    }
+    private void SetHp(int v)
+    {
+        int increment = v - Stat.Hp.Cur;
+        Stat.Hp.IncreaseMax(increment);
     }
     public override string ToString() => base.ToString() + $"\nExp : {exp}";
     public override char ToChar() => IsAlive ? MapSymb.player : MapSymb.playerCorpse;

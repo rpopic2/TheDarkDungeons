@@ -41,7 +41,7 @@ public class InventoryTest : IDisposable
         Corpse corpse = (Corpse)player.UnderFoot!;
         corpse.GetItemAndMeta(0, out Item? item, out ItemMetaData? metaData);
         Assert.DoesNotContain(item, player.Inven);
-        if(item is null || metaData is null) throw new NullReferenceException();
+        if (item is null || metaData is null) throw new NullReferenceException();
         player.PickupItem(item, metaData);
         Assert.Contains(item, player.Inven);
     }
@@ -59,5 +59,14 @@ public class InventoryTest : IDisposable
     public void GetInvalidMetaData()
     {
         Assert.Null(player.Inven.GetMeta(Creature.shield));
+    }
+    [Fact]
+    public void GetStackOfItem()
+    {
+        ItemMetaData metaData = new();
+        metaData.stack = 2;
+        player.Inven.Add(Creature.arrow, metaData);
+        int stack = player.Inven.GetStack(Creature.arrow);
+        Assert.Equal(2, stack);
     }
 }

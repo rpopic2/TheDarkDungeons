@@ -1,29 +1,21 @@
 main 0.6.290522
-[X] 기본 추가체력은 레벨의존
-[X] StatTest.HpScalesWithLevel wip
-[X] 자유전직 되긴하는데 템고를때 맵이 왜보임
-[X] 직업 고를때 이미 스탯 찍혀있고 스탯 보여주기.
-[X] 자유전직 안됨
-[X] 데미지타입 계산 제대로 안되는 듯. 테스트?
-[X] 마법딜 테스트 
-[X] 일단 마법 차징이 아예 안되는듯함 정확히는 플레이어가 차징을 못함.
-[X] MagicAttackTest에서 맨 첫재줄로 플레이어 업데이트 안해주면 테스트가 왜 실패할까?
+[X] inven.getstack
+[X] 알면 좋은 키 도움말
+[ ] 시작떄 먹은 횃불 발동이 안됨.
+[ ] 시체가 방문 없앰
+[ ] exp and level -> stat?
+
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 화살 이제 박히면 소모 안박히면 소모안함
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
 [ ] Add fire tick damage
 [ ] ㄴneed to refactor status effects first
-[ ] shorthand of player moving?
-
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
 [ ] 시체 몇턴 뒤면 사라지게?
 
-[ ] 시작떄 먹은 횃불 발동이 안됨.
-[ ] 시체가 방문 없앰
-[ ] 알면 좋은 키 도움말
-[ ] inven.getstack
 [ ] /key to examine things
+[ ] shorthand of player moving?
 
 0.6
 [X] 무기 숙련도 최소뎀

@@ -99,6 +99,7 @@ public class Inventory : ICollection<Item?>
         if(metaDatas.ContainsKey(item)) return metaDatas[item];
         else return null;
     }
+    public int GetStack(Item item) => GetMeta(item).stack;
     public void Consume(Item item)
     {
         if (--GetMeta(item).stack <= 0)

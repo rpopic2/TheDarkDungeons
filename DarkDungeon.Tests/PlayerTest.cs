@@ -23,4 +23,20 @@ public class PlayerTest : IDisposable
         Program.ElaspeTurn();
         Assert.Equal(10, player.Inven.GetMeta(Creature.spiritStaff!)!.magicCharge);
     }
+    [Fact]
+    public void PlayerLevelUpTest()
+    {
+        Assert.Equal(1, player.Level);
+        player.exp.point += player.exp.point.Max;
+        Assert.Equal(2, player.Level);
+    }
+    [Fact]
+    public void HpScalesWithLevelPlayer()
+    {
+        Assert.Equal(1, player.Level);
+        player.exp.point += player.exp.point.Max;
+        Assert.Equal(2, player.Level);
+        int expectedHp = Status.LevelToBaseHp(player.Level) + player.Stat[StatName.Sol];
+        Assert.Equal(expectedHp, player.GetHp().Cur);
+    }
 }
