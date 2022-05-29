@@ -174,56 +174,6 @@ public static class IO
         pr(Map.Current);
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
     }
-    public static void ShowHelp()
-    {
-        Console.Clear();
-        pr("\n필수 키 도움말\n");
-        pr("\n 좌우 화살표 = 이동");
-        pr("\n q, w, e, r, t : 아이템 선택 (누르면 맨 아래에 선택지가 나옴)");
-        pr("\n . = 휴식 (행동은 기력을 소모함. 휴식으로 다시 채움)");
-        pr("\n---------------------------------------------------------------");
-
-        pr("\n알면 좋은 키 도움말\n");
-        pr("\n\n / = 내 정보 보기, i : 인벤토리, ? : 이 도움말 보기");
-        pr("\n x = 취소, spacebar = Ok, z = 상호작용");
-        pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
-
-        pr("=> 먹히지 않는 키가 있으면 모바일이나 숫자패드 단축키로 시도해 보십시오.", __.bottom | __.newline);
-        pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기, 다른 키를 눌러 돌아가기", __.bottom);
-        ConsoleKeyInfo consoleKeyInfo = rk();
-        if (consoleKeyInfo.KeyChar == 'm') ShowMobileHelp();
-        else if (consoleKeyInfo.KeyChar == '5') ShowNumpadHelp();
-        else Redraw();
-    }
-
-    private static void ShowNumpadHelp()
-    {
-        Console.Clear();
-        pr("숫자패드 키 도움말 (Num Lock 끄고 플레이)\n");
-        pr("\n 좌우 화살표(4, 6) = 좌우 이동");
-        pr("\n End(1) = 1번 아이템(혹은 선택지), PgDn(2) = 2번 아이템, Home(7) = 3번 아이템, PgUp(9) = 4번 아이템, + = 5번 아이템 / * : 인벤토리");
-        pr("\n DEL = 휴식");
-        pr("\n / = 내 정보 보기, 5(NumLock 켜고) : 이 도움말 보기");
-        pr("\n - = 취소, Enter = Ok, z = 상호작용");
-        pr("\n 0(NumLock 켜고) = 새로고침 (맵이 이상하면 누르기)");
-        rk();
-        Redraw();
-    }
-
-    public static void ShowMobileHelp()
-    {
-        Console.Clear();
-        pr("모바일 키 도움말\n");
-        pr("\n h, l = 좌우 이동");
-        pr("\n q = 1번 아이템(혹은 선택지), w = 2번 아이템, e = 3번 아이템, r = 4번 아이템, t = 5번 아이템 / i : 인벤토리");
-        pr("\n n = 휴식");
-        pr("\n m = 내 정보 보기, ? : 이 도움말 보기");
-        pr("\n x = 취소, spacebar = Ok 상호작용");
-        pr("\n 0 = 새로고침 (맵이 이상하면 누르기)");
-
-        rk();
-        Redraw();
-    }
     public static void ShowStats()
     {
         rk(s_player.ToString());

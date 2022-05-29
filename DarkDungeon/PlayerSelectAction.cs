@@ -69,7 +69,7 @@ public partial class Player
                 break;
             case '?':
             case '5':
-                IO.ShowHelp();
+                Help.ShowHelp();
                 break;
         }
     }
