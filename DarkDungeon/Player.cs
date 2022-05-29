@@ -6,6 +6,7 @@ public partial class Player : Creature
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public Exp exp => Stat.Exp;
+    public int ReqExp => Stat.Exp.point.Max;
     public Player(string name, int classIndex = 0) : base(name, level: 1, Status.BasicStatus, energy: BASICCAP, pos: new(0))
     {
         Map.OnNewMap += () => OnNewMap();
@@ -19,6 +20,16 @@ public partial class Player : Creature
     {
         _currentMap.AddToOnTurnPre(_turnPre);
         _currentMap.AddToOnTurnEnd(_turnEnd);
+    }
+
+    public void GainExp(int amount)
+    {
+        exp.point += amount;
+    }
+
+    private void OnLvUp(object? sender, EventArgs e)
+    {
+        SelectPickupStat();
     }
     public void SelectBehaviour(Item item)
     {
@@ -171,21 +182,6 @@ public partial class Player : Creature
             }
             PickAnItemFromCorpse(corpse, out bool cancel);
         }
-    }
-    private void OnLvUp(object? sender, EventArgs e)
-    {
-        //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
-        Stat.Level++;
-        exp.UpdateMax();
-        IO.pr($"{Level}레벨이 되었다.", __.emphasis);
-        SelectPickupStat();
-        SetHp(Status.LevelToBaseHp(Level) + Stat[StatName.Sol]);
-        Stat.Heal(GetHp().Max / 2);
-    }
-    private void SetHp(int v)
-    {
-        int increment = v - Stat.Hp.Cur;
-        Stat.Hp.IncreaseMax(increment);
     }
     public override string ToString() => base.ToString() + $"\nExp : {exp}";
     public override char ToChar() => IsAlive ? MapSymb.player : MapSymb.playerCorpse;

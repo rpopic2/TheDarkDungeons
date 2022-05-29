@@ -37,6 +37,7 @@ public abstract partial class Creature
 
     }
     public GamePoint GetHp() => Stat.Hp;
+    public int CurrentHp => Stat.Hp.Cur;
     protected Map _currentMap => Map.Current;
     public virtual Creature? CreatureAtFront => _currentMap.GetCreatureAt(Pos.Front(1));
     public void GainEnergy(int amount) => CurAction.GainEnergy(amount);

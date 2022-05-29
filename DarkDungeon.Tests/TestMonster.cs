@@ -4,7 +4,6 @@ public class TestMonster : Monster, ISpawnable
 {
     public static StatInfo TestMonStat = new(new(1, 1, 1), 3, 1);
     public static MonsterData TestMonData = new("TestMon", 't', 'T', TestMonStat, new Item[] { });
-    public int CurrentHp => GetHp().Cur;
     public TestMonster(Position spawnPoint, MonsterData? data = null) : base(TestMonData, spawnPoint)
     {
         _currentMap.UpdateFightable(this);
@@ -48,6 +47,5 @@ public class TestMonster : Monster, ISpawnable
     internal void LevelUp()
     {
         Stat.Level++;
-        SetHp(Status.LevelToBaseHp(Level));
     }
 }

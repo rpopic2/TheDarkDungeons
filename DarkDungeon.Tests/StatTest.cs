@@ -21,7 +21,8 @@ public class StatTest : IDisposable
     {
         TestMonster testMon = new(new(1));
         testMon.LevelUp();
-        Assert.Equal(Status.LevelToBaseHp(testMon.Level), testMon.CurrentHp);
+        int newHp = testMon.Stat.Level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE) + testMon.Stat[StatName.Sol];
+        Assert.Equal(newHp, testMon.CurrentHp);
     }
     [Fact]
     public void StatusGetLevel()
@@ -32,5 +33,13 @@ public class StatTest : IDisposable
     public void StatusGetExp()
     {
         Assert.Equal(0, player.Stat.Exp);
+    }
+    [Fact]
+    public void TestOnLvUp()
+    {
+        player.GainExp(player.ReqExp);
+        Assert.Equal(2, player.Level);
+        int newHp = player.Level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE) + player.Stat[StatName.Sol];
+        Assert.Equal(newHp, player.CurrentHp);
     }
 }

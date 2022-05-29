@@ -5,6 +5,7 @@ main 0.6.290522
 [ ] 시작떄 먹은 횃불 발동이 안됨.
 [ ] 시체가 방문 없앰
 [ ] exp -> stat
+[ ] exp nm ExperiencePoint : GamePoint
 
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 화살 이제 박히면 소모 안박히면 소모안함

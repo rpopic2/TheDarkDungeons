@@ -17,10 +17,8 @@ public class Status
         this[StatName.Lun] = lun;
         this[StatName.Con] = con;
         Exp = new(this);
+        Exp.point.OnOverflow += new EventHandler(OnLvUp);
     }
-
-    public static int LevelToBaseHp(int level) => level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE);
-
     public Status GetDifficultyStat()
     {
         int[] tempData = new int[STAT_COUNT];
@@ -52,6 +50,20 @@ public class Status
         if (min < MIN) min = MIN;
         if (max <= 0) return 0;
         else return rnd.Next(min, max);
+    }
+    private void OnLvUp(object? sender, EventArgs e)
+    {
+        Level++;
+        Exp.UpdateMax();
+        IO.pr($"{Level}레벨이 되었다.", __.emphasis);
+        int newHp = Level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE) + this[StatName.Sol];
+        Hp.Max = newHp;
+        Heal(Hp.Max / 2);
+    }
+    private void SetHp(int v)
+    {
+        int increment = v - Hp.Cur;
+        Hp.IncreaseMax(increment);
     }
     public void Damage(int value) => Hp -= value;
     public void Heal(int value) => Hp += value;
