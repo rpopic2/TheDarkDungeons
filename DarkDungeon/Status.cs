@@ -28,7 +28,7 @@ public class Status
         }
         return new(tempData[0], tempData[1], tempData[2]);
     }
-    protected int SolToHp() => 1 + this[StatName.Sol].RoundMult(0.8f);
+    protected int SolToHp() => Level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE) + this[StatName.Sol];
 
     public int this[StatName index]
     {
@@ -56,14 +56,9 @@ public class Status
         Level++;
         Exp.UpdateMax();
         IO.pr($"{Level}레벨이 되었다.", __.emphasis);
-        int newHp = Level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE) + this[StatName.Sol];
+        int newHp = SolToHp();
         Hp.Max = newHp;
         Heal(Hp.Max / 2);
-    }
-    private void SetHp(int v)
-    {
-        int increment = v - Hp.Cur;
-        Hp.IncreaseMax(increment);
     }
     public void Damage(int value) => Hp -= value;
     public void Heal(int value) => Hp += value;
