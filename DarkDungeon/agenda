@@ -1,4 +1,6 @@
-main 0.6.270522
+main 0.6.290522
+[X] 기본 추가체력은 레벨의존
+[X] StatTest.HpScalesWithLevel wip
 [X] 자유전직 되긴하는데 템고를때 맵이 왜보임
 [X] 직업 고를때 이미 스탯 찍혀있고 스탯 보여주기.
 [X] 자유전직 안됨
@@ -16,13 +18,12 @@ main 0.6.270522
 [ ] ISteppable 겹치기 가능하게
 [ ] 근접에서 원거리 쓰면 효과 떨어지게끔
 [ ] 시체 몇턴 뒤면 사라지게?
-[v] StatTest.HpScalesWithLevel wip
 
 [ ] 시작떄 먹은 횃불 발동이 안됨.
-[ ] 기본 추가체력은 레벨의존
 [ ] 시체가 방문 없앰
 [ ] 알면 좋은 키 도움말
 [ ] inven.getstack
+[ ] /key to examine things
 
 0.6
 [X] 무기 숙련도 최소뎀

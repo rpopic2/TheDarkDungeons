@@ -183,12 +183,13 @@ public static class IO
         pr("\n . = 휴식 (행동은 기력을 소모함. 휴식으로 다시 채움)");
         pr("\n---------------------------------------------------------------");
 
+        pr("\n알면 좋은 키 도움말\n");
         pr("\n\n / = 내 정보 보기, i : 인벤토리, ? : 이 도움말 보기");
         pr("\n x = 취소, spacebar = Ok, z = 상호작용");
         pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
 
         pr("=> 먹히지 않는 키가 있으면 모바일이나 숫자패드 단축키로 시도해 보십시오.", __.bottom | __.newline);
-        pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기", __.bottom);
+        pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기, 다른 키를 눌러 돌아가기", __.bottom);
         ConsoleKeyInfo consoleKeyInfo = rk();
         if (consoleKeyInfo.KeyChar == 'm') ShowMobileHelp();
         else if (consoleKeyInfo.KeyChar == '5') ShowNumpadHelp();
