@@ -156,7 +156,6 @@ public partial class Player : Creature
     public void SelectStartItem()
     {
         Corpse corpse = new("누군가", new(Player.instance, "시체"));
-        corpse.droplist.Content.Add(torch);
         corpse.droplist.Content.Add(sword);
         corpse.droplist.Content.Add(shield);
         corpse.droplist.Content.Add(dagger);
@@ -166,15 +165,14 @@ public partial class Player : Creature
         corpse.droplist.Content.Add(arrow);
         corpse.droplist.Content.Add(staff);
         corpse.droplist.Content.Add(magicBook);
-        while (Inven.Count < 3)
+        while (Inven.Count < 2)
         {
-            IO.sel(corpse.droplist, out int index, 0, "아이템 선택 : ");
+            IO.sel(corpse.droplist.Content.ToArray(), out int index, 0, "아이템 선택 : ");
             if (corpse.droplist[index] is Item item)
             {
                 Inven.Add(item);
                 corpse.droplist.Remove(item);
             }
-            PickAnItemFromCorpse(corpse, out bool cancel);
         }
     }
     public override string ToString() => base.ToString() + $"\nExp : {exp}";

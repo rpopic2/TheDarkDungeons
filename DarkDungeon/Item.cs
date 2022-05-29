@@ -40,7 +40,8 @@ public partial class Creature
         });
     public static readonly Item staff = new("지팡이", ItemType.Equip, new IBehaviour[] {
         new Skill("때리기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 지팡이로 앞을 떄렸다.", (i)=>i.Attack(1)),
-        new Charge("별빛부름", StatName.Con, DamageType.Magic, "은 신비한 별빛을 불러내어 지팡이를 휘감았다.", (i)=>{i.Charge(staff!);})
+        new Charge("별빛부름", StatName.Con, DamageType.Magic, "은 신비한 별빛을 불러내어 지팡이를 휘감았다.", (i)=>{i.Charge(staff!);}),
+        new Skill("마법 방어", StanceName.Defence, StatName.Con, DamageType.Magic, "은 마법진을 그려 적의 공격을 막았다.", (i)=>{})
         });
     public static readonly Item wand = new("완드", ItemType.Equip, new IBehaviour[] {
         new Skill("때리기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 지팡이로 앞을 떄렸다.", (i)=>i.Attack(1)),
