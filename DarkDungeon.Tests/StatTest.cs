@@ -21,7 +21,5 @@ public class StatTest : IDisposable
         TestMonster testMon = new(new(1));
         testMon.LevelUp();
         Assert.Equal(Status.LevelToBaseHp(testMon.Level), testMon.CurrentHp);
-
-    
     }
 }

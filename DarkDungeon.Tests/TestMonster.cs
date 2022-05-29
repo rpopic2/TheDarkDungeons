@@ -48,5 +48,6 @@ public class TestMonster : Monster, ISpawnable
     internal void LevelUp()
     {
         Level ++;
+        SetHp(Status.LevelToBaseHp(Level));
     }
 }
