@@ -17,7 +17,7 @@ public class Status
         this[StatName.Lun] = lun;
         this[StatName.Con] = con;
         Exp = new(this);
-        Exp.point.OnOverflow += new EventHandler(OnLvUp);
+        Exp.OnOverflow += new EventHandler(OnLvUp);
     }
     public Status GetDifficultyStat()
     {
@@ -64,6 +64,7 @@ public class Status
     public void Heal(int value) => Hp += value;
     public void AddSight(int value) => Sight += value;
     public void ResetSight() => Sight = BASIC_SIGHT;
+    public void GainExp(int value) => Exp = (ExperiencePoint)(Exp + value);
     public override string ToString()
     {
         return $"HP : {Hp}  ^r힘/체력 : {this[StatName.Sol]} ^g집중/민첩 : {this[StatName.Lun]} ^b마력/지능 : {this[StatName.Con]}^/";

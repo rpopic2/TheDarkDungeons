@@ -38,7 +38,7 @@ public class StatTest : IDisposable
     public void TestOnLvUp()
     {
         Assert.Equal(1, player.Level);
-        player.GainExp(player.ReqExp);
+        player.Stat.GainExp(player.ReqExp);
         Assert.Equal(2, player.Level);
         int newHp = player.Level.RoundMult(Rules.LEVEL_TO_BASE_HP_RATE) + player.Stat[StatName.Sol];
         Assert.Equal(newHp, player.GetHp().Max);

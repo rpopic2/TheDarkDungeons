@@ -65,7 +65,7 @@ public abstract class Monster : Creature
     {
         if (!IsAlive) return;
         base.OnDeath(sender, e);
-        player.exp.point += killExp;
+        player.Stat.GainExp(killExp);
     }
     public static bool DropOutOf(Random rnd, int outof) => rnd.Next(0, outof) == 0;
     public override char ToChar() => Pos.facing == Facing.Right ? fowardChar : backwardChar;

@@ -6,11 +6,11 @@ public partial class Player : Creature
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
     public ExperiencePoint exp => Stat.Exp;
-    public int ReqExp => Stat.Exp.point.Max;
+    public int ReqExp => Stat.Exp.Max;
     public Player(string name, int classIndex = 0) : base(name, level: 1, Status.BasicStatus, energy: BASICCAP, pos: new(0))
     {
         Map.OnNewMap += () => OnNewMap();
-        exp.point.OnOverflow += new EventHandler(OnLvUp);
+        exp.OnOverflow += new EventHandler(OnLvUp);
         if (classIndex == -1) SelectPickupStat(3);
         else Stat[(StatName)classIndex] += 3;
     }
@@ -21,12 +21,6 @@ public partial class Player : Creature
         _currentMap.AddToOnTurnPre(_turnPre);
         _currentMap.AddToOnTurnEnd(_turnEnd);
     }
-
-    public void GainExp(int amount)
-    {
-        exp.point += amount;
-    }
-
     private void OnLvUp(object? sender, EventArgs e)
     {
         SelectPickupStat();
