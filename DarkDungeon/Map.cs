@@ -7,7 +7,7 @@ public class Map
     private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
     private static Random s_rnd = new Random();
     ///<summary>is 1 by default</summary>
-    public static int Depth {get; private set;} = 1;
+    public static int Depth { get; private set; } = 1;
     public readonly int Length;
     public readonly bool DoSpawnMobs;
     private readonly string _pushDown;
@@ -58,7 +58,7 @@ public class Map
         if (portal is null) return;
         if (portal is RandomPortal)
         {
-            bool spawnPit = s_rnd.Next(0, 3) == 0;
+            bool spawnPit = s_rnd.Next(0, 50 - Turn) == 0;
             portal = spawnPit ? new Pit() : new Door();
         }
         int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
@@ -173,7 +173,7 @@ public class Map
     }
     public static void NewMap()
     {
-        if(Player._instance is not null && s_player.UnderFoot is Pit) Depth++;
+        if (Player._instance is not null && s_player.UnderFoot is Pit) Depth++;
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;

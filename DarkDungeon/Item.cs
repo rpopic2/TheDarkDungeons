@@ -96,7 +96,7 @@ public partial class Creature
             }})
     });
     private const int TORCH_BRIGHTNESS = 2;
-    private const int TORCH_DURATION = 30;
+    private const int TORCH_DURATION = 50;
     public static readonly Item torch = new("횃불", ItemType.Consume, new IBehaviour[]{
         new Skill("휘두르기", StanceName.Offence, StatName.Sol, DamageType.Normal, "횃불을 휘둘렀다.", (i)=>i.Attack(1)),
         new WearEffect("밝음", StanceName.None, "횃불이 활활 타올라 앞을 비추고 있다.", (p)=>{p.Stat.AddSight(TORCH_BRIGHTNESS);p.Inven.GetMeta(torch!)!.stack=TORCH_DURATION;}, (p)=>p.Stat.ResetSight()),
