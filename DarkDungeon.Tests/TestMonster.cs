@@ -19,7 +19,7 @@ public class TestMonster : Monster, ISpawnable
 
     protected override void OnTarget()
     {
-         
+
     }
     protected override void OnNothing() { }
 
@@ -47,7 +47,7 @@ public class TestMonster : Monster, ISpawnable
 
     internal void LevelUp()
     {
-        Level ++;
+        Stat.Level++;
         SetHp(Status.LevelToBaseHp(Level));
     }
 }

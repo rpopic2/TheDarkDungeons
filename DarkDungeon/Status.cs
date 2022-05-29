@@ -8,6 +8,7 @@ public class Status
     private readonly int[] _data = new int[STAT_COUNT];
     public GamePoint Hp { get; private set; }
     public int Sight { get; private set; } = BASIC_SIGHT;
+    public int Level = 1;
     public Status(int sol, int lun, int con)
     {
         Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);

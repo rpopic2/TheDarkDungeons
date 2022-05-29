@@ -23,4 +23,9 @@ public class StatTest : IDisposable
         testMon.LevelUp();
         Assert.Equal(Status.LevelToBaseHp(testMon.Level), testMon.CurrentHp);
     }
+    [Fact]
+    public void StatusGetLevel()
+    {
+        Assert.Equal(1, player.Stat.Level);
+    }
 }

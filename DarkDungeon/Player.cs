@@ -176,7 +176,7 @@ public partial class Player : Creature
     private void OnLvUp(object? sender, EventArgs e)
     {
         //1레벨마다 1솔씩, 5레벨마다 1캡씩, 1레벨마다 1체력씩
-        Level++;
+        Stat.Level++;
         exp.UpdateMax();
         IO.pr($"{Level}레벨이 되었다.", __.emphasis);
         SelectPickupStat();

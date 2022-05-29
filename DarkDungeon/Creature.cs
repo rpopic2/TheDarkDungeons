@@ -1,7 +1,7 @@
 public abstract partial class Creature
 {
     public readonly string Name;
-    public int Level { get; protected set; }
+    public int Level => Stat.Level;
     public readonly Status Stat;
     public bool IsAlive { get; private set; } = true;
     public Position Pos { get; protected set; }
@@ -21,8 +21,8 @@ public abstract partial class Creature
     public Creature(string name, int level, Status stat, int energy, Position pos)
     {
         Name = name;
-        Level = level;
         Stat = stat;
+        Stat.Level = level;
         Pos = pos;
         Inven = new(this, " .(휴식)");
         CurAction = new(this, energy);
