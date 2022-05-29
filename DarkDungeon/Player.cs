@@ -122,12 +122,12 @@ public partial class Player : Creature
         else if (UnderFoot is Corpse corpse) PickupCorpse(corpse);
         else if (UnderFoot is Pit portal)
         {
-            IO.pr($"{Name}은 구멍 속으로 떨어졌다!");
+            IO.rk($"{Name}은 구멍 속으로 떨어졌다!");
             _currentMap.DoLoadNewMap = true;
         }
         else if (UnderFoot is Door door)
         {
-            IO.pr($"{Name}은 이쪽 길로 가기로 했다.");
+            IO.rk($"{Name}은 이쪽 길로 가기로 했다.");
             _currentMap.DoLoadNewMap = true;
         }
 
