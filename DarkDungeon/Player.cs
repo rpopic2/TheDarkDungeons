@@ -5,11 +5,10 @@ public partial class Player : Creature
     private static readonly string[] _STATPROMPT = new string[] { "^r (힘/체력)^/", "^g (정밀/민첩)^/", "^b (마력/지능)^/" };
     public static Player? _instance;
     public static Player instance { get => _instance ?? throw new Exception("Player was not initialised"); }
-    public Exp exp { get; init; }
+    public Exp exp => Stat.Exp;
     public Player(string name, int classIndex = 0) : base(name, level: 1, Status.BasicStatus, energy: BASICCAP, pos: new(0))
     {
         Map.OnNewMap += () => OnNewMap();
-        exp = new Exp(this);
         exp.point.OnOverflow += new EventHandler(OnLvUp);
         if (classIndex == -1) SelectPickupStat(3);
         else Stat[(StatName)classIndex] += 3;

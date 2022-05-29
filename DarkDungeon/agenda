@@ -1,9 +1,10 @@
 main 0.6.290522
+[X] level -> stat?
 [X] inven.getstack
 [X] 알면 좋은 키 도움말
 [ ] 시작떄 먹은 횃불 발동이 안됨.
 [ ] 시체가 방문 없앰
-[ ] exp and level -> stat?
+[ ] exp -> stat
 
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 화살 이제 박히면 소모 안박히면 소모안함

@@ -28,4 +28,9 @@ public class StatTest : IDisposable
     {
         Assert.Equal(1, player.Stat.Level);
     }
+    [Fact]
+    public void StatusGetExp()
+    {
+        Assert.Equal(0, player.Stat.Exp);
+    }
 }
