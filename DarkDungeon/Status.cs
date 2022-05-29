@@ -9,7 +9,7 @@ public class Status
     public GamePoint Hp { get; private set; }
     public int Sight { get; private set; } = BASIC_SIGHT;
     public int Level = 1;
-    public Exp Exp;
+    public ExperiencePoint Exp;
     public Status(int sol, int lun, int con)
     {
         Hp = new GamePoint(SolToHp(), GamePointOption.Reserving);

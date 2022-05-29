@@ -1,11 +1,11 @@
-public class Exp
+public class ExperiencePoint
 {
     private const float lvCurve = 1.25f;
     private const int lvMultiplier = 7;
     private const float lvIncrement = lvCurve * lvMultiplier;
     private Status owner;
     public GamePoint point;
-    public Exp(Status owner)
+    public ExperiencePoint(Status owner)
     {
         this.owner = owner;
         point = new GamePoint(1, GamePointOption.Stacking);
@@ -20,5 +20,5 @@ public class Exp
     {
         return point.ToString();
     }
-    public static implicit operator int(Exp exp) => exp.point.Cur;
+    public static implicit operator int(ExperiencePoint exp) => exp.point.Cur;
 }
