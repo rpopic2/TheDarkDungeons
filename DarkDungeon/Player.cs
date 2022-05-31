@@ -145,7 +145,11 @@ public partial class Player : Creature
     {
         IO.sel(corpse.droplist, out int index, 0, "주울 아이템 선택 : ");
         cancel = index == -1;
-        if (cancel) return;
+        if (cancel)
+        {
+            IO.del();
+            return;
+        }
         if (corpse.droplist[index] is Item item)
         {
             int stack = corpse.droplist.GetMeta(item)?.stack ?? 1;
