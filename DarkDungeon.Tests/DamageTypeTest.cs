@@ -29,7 +29,7 @@ public class DamageTypeTest : IDisposable
     {
         player.Inven.Add(Creature.sword);
         testMon.GiveItem(Creature.sword);
-        player.CurAction.Set(Creature.sword, 0, BASE_DMG);//Slash dmg
+        player.SetAction(Creature.sword, 0, BASE_DMG);//Slash dmg
         testMon.SetAction(Creature.sword, 0);//Non-vul
 
         Program.ElaspeTurn();
@@ -43,7 +43,7 @@ public class DamageTypeTest : IDisposable
     {
         player.Inven.Add(Creature.sword);
         testMon.GiveItem(Creature.sword);
-        player.CurAction.Set(Creature.sword, 0, BASE_DMG);//slash dmg
+        player.SetAction(Creature.sword, 0, BASE_DMG);//slash dmg
         testMon.SetAction(Creature.basicActions, 1);//vul
 
         Program.ElaspeTurn();
@@ -53,9 +53,9 @@ public class DamageTypeTest : IDisposable
     private void SetupDamageTest(Item item1, int skill1, Item item2, int skill2)
     {
         player.Inven.Add(item1);
-        player.CurAction.Set(item1, skill1, BASE_DMG);//slash dmg
+        player.SetAction(item1, skill1, BASE_DMG);//slash dmg
         testMon.GiveItem(item2);
-        testMon.CurAction.Set(item2, skill2, BASE_DEF);//slash def 5
+        testMon.SetAction(item2, skill2, BASE_DEF);//slash def 5
         Program.ElaspeTurn();
     }
     private void AssertEffective()

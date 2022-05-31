@@ -23,7 +23,7 @@ public class CombatTest : IDisposable
     {
         player.PickupItem(Creature.dagger);
         TestMonster testMon = new(new(1, Facing.Right));
-        player.CurAction.Set(player.Inven[0]!, Creature.dagger.skills[0], 3);
+        player.SetAction(player.Inven[0]!, 0, 3);
         Program.OnTurn?.Invoke();
         Assert.NotEqual(0, player.Inven.GetMeta(Creature.dagger)!.CurExp);
     }
@@ -32,13 +32,13 @@ public class CombatTest : IDisposable
     {
         player!.PickupItem(Creature.dagger);
 
-        player.CurAction.Set(player.Inven[0]!, Creature.dagger.skills[1], 10);
+        player.SetAction(player.Inven[0]!, 1, 10);
 
         Shaman shaman = new(new(2));
         Program.OnTurn?.Invoke();
         Assert.False(shaman.IsAlive);
 
-        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 2, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, 2, (int)Facing.Right);
         Program.OnTurn?.Invoke();
         Assert.NotNull(player.UnderFoot);
 
@@ -58,7 +58,7 @@ public class CombatTest : IDisposable
     public void SetDamageByCurActionSet(int damage)
     {
         player!.PickupItem(Creature.sword);
-        player.CurAction.Set(Creature.sword, Creature.sword.skills[0], damage);
+        player.SetAction(Creature.sword, 0, damage);
         TestMonster testMon = new(new(1, Facing.Right));
         testMon.GiveItem(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
@@ -73,7 +73,7 @@ public class CombatTest : IDisposable
 
         testMon.GiveItem(Creature.spiritStaff);
 
-        player.CurAction.Set(Creature.basicActions, 1);
+        player.SetAction(Creature.basicActions, 1);
         testMon.SetAction(Creature.spiritStaff, 1, 10);
         Program.ElaspeTurn();
 
@@ -91,11 +91,11 @@ public class CombatTest : IDisposable
         player.Inven.Add(Creature.wand);
         testMon.GiveItem(Creature.spiritStaff);
 
-        player.CurAction.Set(Creature.basicActions, 1);
+        player.SetAction(Creature.basicActions, 1);
         testMon.SetAction(Creature.spiritStaff, 1, 10);
         Program.ElaspeTurn();
 
-        player.CurAction.Set(Creature.basicActions, 1);
+        player.SetAction(Creature.basicActions, 1);
         testMon.SetAction(Creature.spiritStaff, 0, 10);
         Program.ElaspeTurn();
 
@@ -111,11 +111,11 @@ public class CombatTest : IDisposable
         player.Inven.Add(Creature.wand);
         testMon.GiveItem(Creature.spiritStaff);
 
-        player.CurAction.Set(Creature.basicActions, 1);
+        player.SetAction(Creature.basicActions, 1);
         testMon.SetAction(Creature.spiritStaff, 1, 10);
         Program.ElaspeTurn();
 
-        player.CurAction.Set(Creature.wand, 1, 10);
+        player.SetAction(Creature.wand, 1, 10);
         testMon.SetAction(Creature.spiritStaff, 0, 10);
         Program.ElaspeTurn();
 

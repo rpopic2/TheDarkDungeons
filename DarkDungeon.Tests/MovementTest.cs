@@ -59,14 +59,14 @@ public class MovementTest: IDisposable
     [Fact]
     public void TestPlayerMovement()
     {
-        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, 1, (int)Facing.Right);
         Program.OnTurn?.Invoke();
         Assert.Equal(1, player.Pos.x);
     }
     [Fact]
     public void CheckDidPlayerMoveLastTurn()
     {
-        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, 1, (int)Facing.Right);
         Assert.False(player.DidMoveLastTurn);
         Program.OnTurn?.Invoke();
         Assert.True(player.DidMoveLastTurn);

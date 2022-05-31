@@ -19,7 +19,7 @@ public class EnergyTest : IDisposable
     [Fact]
     public void ConsumeEnergyTest()
     {
-        player.CurAction.Set(Creature.sword, Creature.sword.skills[0]);
+        player.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
         Assert.NotEqual(player.Energy.Max, player.Energy.Cur);
     }
@@ -28,7 +28,7 @@ public class EnergyTest : IDisposable
     public void DontConsumeIfIsNotIEnergyConsume()
     {
         Assert.Equal(player.Energy.Max, player.Energy.Cur);
-        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, 1, (int)Facing.Right);
         Program.OnTurn?.Invoke();
         Assert.Equal(player.Energy.Max, player.Energy.Cur);
     }
@@ -39,11 +39,11 @@ public class EnergyTest : IDisposable
         ConsumeEnergyTest();
         Assert.Equal(2, player.Energy.Cur);
 
-        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, 1, (int)Facing.Right);
         Program.OnTurn?.Invoke();
         Assert.Equal(2, player.Energy.Cur);
 
-        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, 1, (int)Facing.Right);
         Program.OnTurn?.Invoke();
         Assert.Equal(3, player.Energy.Cur);
     }

@@ -26,13 +26,6 @@ public class TestMonster : Monster, ISpawnable
     {
         Inven.Add(item);
     }
-
-    public void SetAction(Item item, int skillIndex, int amount) => CurAction.Set(item, item.skills[skillIndex], amount);
-    public void SetAction(Item item, int skillIndex)
-    {
-        CurAction.Set(item, item.skills[skillIndex]);
-    }
-
     internal void SetHp(int v)
     {
         int increment = v - Stat.Hp.Cur;

@@ -1,28 +1,18 @@
-main 0.6.290522
-[X] 시체가 방문 없앰
-[X] exp neeExperiencePoint : GamePoint
-[X] exp -> stat
-[X] level -> stat?
-[X] inven.getstack
-[X] 알면 좋은 키 도움말
-[ ] 시작떄 먹은 횃불 발동이 안됨.
+main 0.6.310522
+[ ] Make curaction private
+[ ] Make Energy a distinct class?
+[ ] shorthand of player moving?
 
+[ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
+[ ] TDD로 자유전직 새로 만들기.
 [ ] 화살 쏘는 몬스터 하나 만들기
 [ ] 화살 이제 박히면 소모 안박히면 소모안함
-[ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
 [ ] Add fire tick damage
 [ ] ㄴneed to refactor status effects first
 [ ] ISteppable 겹치기 가능하게
-[ ] 시체 몇턴 뒤면 사라지게?
-
 [ ] /key to examine things
-[ ] shorthand of player moving?
+[ ] 겜 끌때 끄는 키 만들기(그래서 쉘 돌아왔을때 안보이는거 없어지게)
 
 0.6
 [X] 무기 숙련도 최소뎀
 [X] 10개 몹과 보스전
-
-[ ] print를 여러 줄을 한번 호출로 뽑으면 더 빠를까?
-[ ] hi-score
-[ ] 겜 끌때 끄는 키 만들기(그래서 쉘 돌아왔을때 안보이는거 없어지게)
-[ ] Make Energy a distinct class?

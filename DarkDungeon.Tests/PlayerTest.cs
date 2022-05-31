@@ -19,7 +19,7 @@ public class PlayerTest : IDisposable
     public void TestPlayerCharge()
     {
         player.Inven.Add(Creature.spiritStaff);
-        player.CurAction.Set(Creature.spiritStaff, 1, 10);
+        player.SetAction(Creature.spiritStaff, 1, 10);
         Program.ElaspeTurn();
         Assert.Equal(10, player.Inven.GetMeta(Creature.spiritStaff!)!.magicCharge);
     }

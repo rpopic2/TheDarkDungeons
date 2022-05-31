@@ -27,7 +27,7 @@ public class TestMonsterTest : IDisposable
     {
         testMon.GiveItem(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
-        Assert.Equal(Creature.sword.skills[0], testMon.CurAction.CurrentBehav);
+        Assert.Equal(Creature.sword.skills[0], testMon.CurrentBehaviour);
     }
     [Fact]
     public void TestMonPreformSetAction()

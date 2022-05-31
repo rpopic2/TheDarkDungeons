@@ -30,12 +30,12 @@ public class InventoryTest : IDisposable
     public void PickupCorpseItemNonInteractive()
     {
         player!.Inven.Add(Creature.dagger);
-        player!.CurAction.Set(Creature.dagger, 0, 5);
+        player!.SetAction(Creature.dagger, 0, 5);
         TestMonster testMon = new(new(1, Facing.Right));
         testMon.GiveItem(Creature.arrow);
         Program.OnTurn?.Invoke();
 
-        player.CurAction.Set(Creature.basicActions, Creature.basicActions.skills[0], 1, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, 1, (int)Facing.Right);
         Program.OnTurn?.Invoke();
 
         Corpse corpse = (Corpse)player.UnderFoot!;

@@ -85,11 +85,11 @@ public class MapTest : IDisposable
     {
         Assert.Equal(Map.START_DEPTH, Map.Depth);
         int portalIndex = Array.FindIndex(map.Steppables, (p) => p is Pit);
-        player.CurAction.Set(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
         Program.ElaspeTurn();
 
         Assert.True(player.UnderFoot is Pit);
-        player.CurAction.Set(Creature.basicActions, 2);
+        player.SetAction(Creature.basicActions, 2);
         Program.ElaspeTurn();
 
         Assert.Equal(Map.START_DEPTH + 1, Map.Depth);
@@ -102,11 +102,11 @@ public class MapTest : IDisposable
         Assert.Equal(Map.START_DEPTH, Map.Depth);
         int portalIndex = Array.FindIndex(map.Steppables, (p) => p is Door);
 
-        player.CurAction.Set(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
+        player.SetAction(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
         Program.ElaspeTurn();
 
         Assert.True(player.UnderFoot is Door);
-        player.CurAction.Set(Creature.basicActions, 2);
+        player.SetAction(Creature.basicActions, 2);
         Program.ElaspeTurn();
 
         Assert.NotEqual(current, Map.Current);

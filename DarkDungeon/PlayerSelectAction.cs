@@ -6,7 +6,7 @@ public partial class Player
         do
         {
             Selection();
-        } while (CurAction.CurrentBehav is null);
+        } while (CurrentBehaviour is null);
 
     }
     private void Selection()
