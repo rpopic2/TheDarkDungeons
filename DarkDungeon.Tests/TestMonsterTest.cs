@@ -61,9 +61,9 @@ public class TestMonsterTest : IDisposable
     [Fact]
     public void TestLvUp()
     {
-        Assert.Equal(0, testMon.Level);
+        Assert.Equal(Map.Depth, testMon.Level);
         testMon.LevelUp();
-        Assert.Equal(1, testMon.Level);
+        Assert.Equal(Map.Depth + 1, testMon.Level);
     }
     
 }
