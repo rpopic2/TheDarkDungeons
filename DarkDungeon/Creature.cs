@@ -48,14 +48,12 @@ public abstract partial class Creature
     {
         if (CurAction.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
-        if (behaviour is IEnergyConsume energyConsume) SelectSkill(item, energyConsume);
-        else if (behaviour is Consume consume) SelectConsume(item, consume);
-        else if (behaviour is Passive || behaviour is WearEffect)
+        if (behaviour is Passive || behaviour is WearEffect)
         {
             IO.rk(behaviour.OnUseOutput);
             IO.Redraw();
         }
-        else throw new Exception("등록되지 않은 행동 종류입니다.");
+        else SetSkill(item, behaviour);
     }
     //requirements : stance 정하기, rk로 프린트하기.
     ///<summary>[0] : 이동(Fightable f, int amout, int(Facing) facing) | [1] : 숨고르기(Fightable f, int(TokenType) tokenType, int discardIndex) | [2] : 상호작용
@@ -70,18 +68,17 @@ public abstract partial class Creature
             CurAction.Set(basicActions, nonToken, x, y);
         }
     }
-    private void SelectSkill(Item item, IEnergyConsume behav)
+    private void SetSkill(Item item, IBehaviour behaviour)
     {
-        int mastery = Inven.GetMeta(item)!.Mastery;
-        int amount = Stat.GetRandom(behav.StatDepend, mastery);
-        CurAction.Set(item, behav, amount);
+        int amount = 0;
+        if (behaviour is IEnergyConsume energyConsume)
+        {
+            int mastery = Inven.GetMeta(item)!.Mastery;
+            amount = Stat.GetRandom(energyConsume.StatDepend, mastery);
+        }
+        if (behaviour is Consume) Inven.Consume(item);
+        CurAction.Set(item, behaviour, amount);
         PrintSkillSelct();
-    }
-    private void SelectConsume(Item item, Consume consume)
-    {
-        CurAction.Set(item, consume);
-        IO.rk($"{Name} {consume.OnUseOutput}");
-        Inven.Consume(item);
     }
     private void PrintSkillSelct()
     {
