@@ -32,7 +32,7 @@ public class CombatTest : IDisposable
     {
         player!.PickupItem(Creature.dagger);
 
-        player.CurAction.Set(player.Inven[0]!, Creature.dagger.skills[1]);
+        player.CurAction.Set(player.Inven[0]!, Creature.dagger.skills[1], 10);
 
         Shaman shaman = new(new(2));
         Program.OnTurn?.Invoke();
