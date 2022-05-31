@@ -8,7 +8,7 @@ public abstract partial class Creature
     public Position Pos { get; protected set; }
 
     private CurrentAction CurAction { get; init; }
-    public GamePoint Energy => CurAction.Energy;
+    public Energy Energy { get => CurAction.Energy; }
     public IBehaviour? CurrentBehaviour => CurAction.CurrentBehav;
 
     public Inventory Inven { get; private set; }
@@ -197,7 +197,7 @@ public abstract partial class Creature
             _currentMap.UpdateFightable(this);
             if (Energy.Cur != Energy.Max && DidMoveLastTurn)
             {
-                CurAction.GainEnergy();
+                Energy.Gain();
             }
             DidMoveLastTurn = true;
         }

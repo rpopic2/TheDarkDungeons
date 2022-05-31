@@ -47,7 +47,6 @@ public class CurrentAction
         Amount = default;
         Amount2 = default;
     }
-    public void GainEnergy() => Energy.Gain();
     public void SetStun(int value) => Stun += value;
     public void SetPoison(int value) => Poison += value;
     public void ProcessStun()

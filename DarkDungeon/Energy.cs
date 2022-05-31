@@ -1,8 +1,6 @@
 public class Energy : GamePoint
 {
-    public Energy(int max) : base(max, GamePointOption.Reserving)
-    {
-    }
+    public Energy(int max) : base(max, GamePointOption.Reserving) { }
     public void Gain()
     {
         Cur++;
