@@ -1,5 +1,6 @@
 public class Map
 {
+    public const int START_DEPTH = 1;
     private const int BOSS_DEPTH = 5;
     public static int Turn { get; private set; }
     private static int Spawnrate = 11;
@@ -7,7 +8,7 @@ public class Map
     private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
     private static Random s_rnd = new Random();
     ///<summary>is 1 by default</summary>
-    public static int Depth { get; private set; } = 1;
+    public static int Depth { get; private set; } = START_DEPTH;
     public readonly int Length;
     public readonly bool DoSpawnMobs;
     private readonly string _pushDown;

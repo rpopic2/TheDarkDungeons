@@ -70,7 +70,7 @@ public class MapTest : IDisposable
     [Fact]
     public void PlayerInteractPit()
     {
-        Assert.Equal(0, Map.Depth);
+        Assert.Equal(Map.START_DEPTH, Map.Depth);
         int portalIndex = Array.FindIndex(map.Steppables, (p) => p is Pit);
         player.CurAction.Set(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
         Program.ElaspeTurn();
@@ -79,14 +79,14 @@ public class MapTest : IDisposable
         player.CurAction.Set(Creature.basicActions, 2);
         Program.ElaspeTurn();
 
-        Assert.Equal(1, Map.Depth);
+        Assert.Equal(Map.START_DEPTH + 1, Map.Depth);
     }
     [Fact]
     public void PlayerInteractDoor()
     {
         _map = new(3, false, new Door());
         Map current = Map.Current;
-        Assert.Equal(0, Map.Depth);
+        Assert.Equal(Map.START_DEPTH, Map.Depth);
         int portalIndex = Array.FindIndex(map.Steppables, (p) => p is Door);
 
         player.CurAction.Set(Creature.basicActions, 0, portalIndex, (int)Facing.Right);
@@ -97,6 +97,6 @@ public class MapTest : IDisposable
         Program.ElaspeTurn();
 
         Assert.NotEqual(current, Map.Current);
-        Assert.Equal(0, Map.Depth);
+        Assert.Equal(Map.START_DEPTH, Map.Depth);
     }
 }
