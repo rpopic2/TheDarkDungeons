@@ -61,7 +61,7 @@ public class MapTest : IDisposable
         Assert.False(containsPit);
     }
     [Fact]
-    public void TurnInCurrentDepthResetsOnNewMap()
+    public void TurnInCurrentDepthResetsOnNewDepth()
     {
         Assert.Equal(Map.START_DEPTH, Map.Depth);
         Assert.Equal(0, Map.TurnInCurrentDepth);
