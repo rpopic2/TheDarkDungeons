@@ -65,7 +65,7 @@ public abstract partial class Creature
         }
         if (behaviour is Consume) Inven.Consume(item);
         CurAction.Set(item, behaviour, amount);
-        PrintSkillSelct();
+        PrintOnUseOutput();
     }
     //requirements : stance 정하기, rk로 프린트하기.
     ///<summary>[0] : 이동(Fightable f, int amout, int(Facing) facing) | [1] : 숨고르기(Fightable f, int(TokenType) tokenType, int discardIndex) | [2] : 상호작용
@@ -80,7 +80,7 @@ public abstract partial class Creature
             CurAction.Set(basicActions, nonToken, x, y);
         }
     }
-    private void PrintSkillSelct()
+    private void PrintOnUseOutput()
     {
         string useOutput = $"{Name} {CurAction.CurrentBehav?.OnUseOutput} ({CurAction.Amount})";
         int mcharge = Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge;

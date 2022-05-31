@@ -11,6 +11,15 @@ public class Map
     public static int Depth { get; private set; } = START_DEPTH;
     public readonly int Length;
     public readonly bool DoSpawnMobs;
+    public static int TurnInCurrentDepth { get; private set; }
+    public int PitChanceMax
+    {
+        get
+        {
+            if (TurnInCurrentDepth == 0) return -1;
+            return (int)MathF.Max(0, 50 - TurnInCurrentDepth);
+        }
+    }
     private readonly string _pushDown;
     private readonly char[] _empty;
     private readonly char[] _tiles;
@@ -59,9 +68,16 @@ public class Map
         if (portal is null) return;
         if (portal is RandomPortal)
         {
-            int rndMax = (int)MathF.Max(0, 50 - Turn);
-            bool spawnPit = s_rnd.Next(0, rndMax) == 0;
-            portal = spawnPit ? new Pit() : new Door();
+            int pitChanceMax = PitChanceMax;
+            if (pitChanceMax == -1)
+            {
+                portal = new Door();
+            }
+            else
+            {
+                bool spawnPit = s_rnd.Next(0, pitChanceMax) == 0;
+                portal = spawnPit ? new Pit() : new Door();
+            }
         }
         int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
         _steppables![portalIndex] = portal;
@@ -76,7 +92,6 @@ public class Map
 #pragma warning disable CS8601
     public void RemoveFromOnTurnPre(Action action) => _onTurnPre -= action;
     public void RemoveFromOnTurnEnd(Action action) => _onTurnEnd -= action;
-
     private void OnTurnElapse()
     {
         _onTurnPre.Invoke();
@@ -87,6 +102,7 @@ public class Map
         ReplaceToCorpse();
         if (DoSpawnMobs && Turn % Spawnrate == 0) SpawnRandom();
         Turn++;
+        TurnInCurrentDepth++;
         if (Current.DoLoadNewMap) NewMap();
         IO.Redraw();
     }
@@ -175,7 +191,11 @@ public class Map
     }
     public static void NewMap()
     {
-        if (Player._instance is not null && s_player.UnderFoot is Pit) Depth++;
+        if (Player._instance is not null && s_player.UnderFoot is Pit)
+        {
+            TurnInCurrentDepth = 0;
+            Depth++;
+        }
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
@@ -223,7 +243,12 @@ public class Map
             _steppables[index] = null;
         }
     }
-    public static void ResetMapTurn() => Turn = 0;
+    public static void ResetMapTurn()
+    {
+        Turn = 0;
+        Depth = START_DEPTH;
+        TurnInCurrentDepth = 0;
+    }
 
     public override string ToString()
     {

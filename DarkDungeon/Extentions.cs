@@ -24,7 +24,7 @@ public static class Extensions
     public static string ToFString(this Array value)
     {
         string printResult = string.Empty;
-        if(value.Length <= 0) printResult += "아무것도 없다.";
+        if (value.Length <= 0) printResult += "아무것도 없다.";
         for (int i = 0; i < value.Length; i++)
         {
             printResult += value.GetValue(i)?.ToString()?.AppendKeyName(i);
@@ -33,7 +33,7 @@ public static class Extensions
     }
     public static string AppendKeyName(this string value, int index)
     {
-        if(index >= IO.ITEMKEYS1.Length) return string.Empty;
+        if (index >= IO.ITEMKEYS1.Length) return string.Empty;
         return $"{IO.ITEMKEYS1[index]}{value} ";
     }
     public static int ToVul(this int damage)
