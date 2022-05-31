@@ -16,6 +16,7 @@ public class MapTest : IDisposable
     public void Dispose()
     {
         _map = null;
+        Map.ResetMapTurn();
         _player = null;
     }
     [Fact]
@@ -37,6 +38,18 @@ public class MapTest : IDisposable
     {
         _map = new(5, false, new RandomPortal());
         bool containsPortal = Array.Exists(map.Steppables, (s) => s is IPortal);
+        Assert.True(containsPortal);
+    }
+    [Theory]
+    [InlineData(1)]
+    [InlineData(50)]
+    [InlineData(80)]
+    public void PitChanceIncreaseAsTurnElapses(int turn)
+    {
+        for (int i = 0; i < turn; i++) Program.ElaspeTurn();
+        _map = new(5, false, new RandomPortal());
+        bool containsPortal = Array.Exists(map.Steppables, (s) => s is IPortal);
+        Assert.Equal(turn, Map.Turn);
         Assert.True(containsPortal);
     }
     [Fact]

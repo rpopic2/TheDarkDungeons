@@ -59,7 +59,8 @@ public class Map
         if (portal is null) return;
         if (portal is RandomPortal)
         {
-            bool spawnPit = s_rnd.Next(0, 50 - Turn) == 0;
+            int rndMax = (int)MathF.Max(0, 50 - Turn);
+            bool spawnPit = s_rnd.Next(0, rndMax) == 0;
             portal = spawnPit ? new Pit() : new Door();
         }
         int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
@@ -222,6 +223,7 @@ public class Map
             _steppables[index] = null;
         }
     }
+    public static void ResetMapTurn() => Turn = 0;
 
     public override string ToString()
     {
