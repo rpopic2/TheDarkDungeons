@@ -42,7 +42,6 @@ public abstract partial class Creature
     public int CurrentHp => Stat.Hp.Cur;
     protected Map _currentMap => Map.Current;
     public virtual Creature? CreatureAtFront => _currentMap.GetCreatureAt(Pos.Front(1));
-    public void GainEnergy(int amount) => CurAction.GainEnergy(amount);
     public abstract void LetSelectBehaviour();
     public void SetAction(Item item, int skillIndex, int amount = 0, int amount2 = 0) => CurAction.Set(item, item.skills[skillIndex], amount, amount2);
     public void SetAction(Item item, int skillIndex)
@@ -198,7 +197,7 @@ public abstract partial class Creature
             _currentMap.UpdateFightable(this);
             if (Energy.Cur != Energy.Max && DidMoveLastTurn)
             {
-                CurAction.GainEnergy(1);
+                CurAction.GainEnergy();
             }
             DidMoveLastTurn = true;
         }

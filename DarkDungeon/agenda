@@ -1,6 +1,6 @@
 main 0.6.310522
-[ ] Make curaction private
-[ ] Make Energy a distinct class?
+[X] Make Energy a distinct class?
+[X] Make curaction private
 [ ] shorthand of player moving?
 
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.

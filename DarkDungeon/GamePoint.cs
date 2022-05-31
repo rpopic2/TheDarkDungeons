@@ -9,7 +9,7 @@ public class GamePoint
     public int Cur
     {
         get => cur;
-        private set
+        protected set
         {
             if (value >= Max)
             {

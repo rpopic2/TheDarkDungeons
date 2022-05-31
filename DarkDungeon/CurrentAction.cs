@@ -7,11 +7,11 @@ public class CurrentAction
     public int Stun { get; private set; }
     public int Poison { get; private set; }
     private Creature _owner;
-    public GamePoint Energy { get; private set; }
+    public Energy Energy { get; private set; }
     public CurrentAction(Creature owner, int energy)
     {
         _owner = owner;
-        Energy = new(energy, GamePointOption.Reserving);
+        Energy = new(energy);
     }
     public void Set(Item item, int index, int amount = default, int amount2 = default)
     {
@@ -26,7 +26,7 @@ public class CurrentAction
         }
         if (behaviour is IEnergyConsume)
         {
-            ConsumeEnergy(out bool success);
+            Energy.Consume(out bool success);
             if (!success) return;
         }
         this.CurrentItem = item;
@@ -47,6 +47,7 @@ public class CurrentAction
         Amount = default;
         Amount2 = default;
     }
+    public void GainEnergy() => Energy.Gain();
     public void SetStun(int value) => Stun += value;
     public void SetPoison(int value) => Poison += value;
     public void ProcessStun()
@@ -60,18 +61,6 @@ public class CurrentAction
     {
         _owner.Stat.Damage(1);
         Poison--;
-    }
-    public void GainEnergy(int amount) => Energy += amount;
-    private void ConsumeEnergy(out bool success)
-    {
-        if (Energy.Cur <= 0)
-        {
-            IO.rk("기력이 없습니다.");
-            success = false;
-            return;
-        }
-        Energy -= 1;
-        success = true;
     }
     public override string ToString()
     {
