@@ -44,10 +44,6 @@ public abstract partial class Creature
     public virtual Creature? CreatureAtFront => _currentMap.GetCreatureAt(Pos.Front(1));
     public abstract void LetSelectBehaviour();
     public void SetAction(Item item, int skillIndex, int amount = 0, int amount2 = 0) => CurAction.Set(item, item.skills[skillIndex], amount, amount2);
-    public void SetAction(Item item, int skillIndex)
-    {
-        CurAction.Set(item, item.skills[skillIndex]);
-    }
     protected void SelectBehaviour(Item item, int index)
     {
         if (CurAction.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
