@@ -55,6 +55,18 @@ public abstract partial class Creature
         }
         else SetSkill(item, behaviour);
     }
+    private void SetSkill(Item item, IBehaviour behaviour)
+    {
+        int amount = 0;
+        if (behaviour is IEnergyConsume energyConsume)
+        {
+            int mastery = Inven.GetMeta(item)!.Mastery;
+            amount = Stat.GetRandom(energyConsume.StatDepend, mastery);
+        }
+        if (behaviour is Consume) Inven.Consume(item);
+        CurAction.Set(item, behaviour, amount);
+        PrintSkillSelct();
+    }
     //requirements : stance 정하기, rk로 프린트하기.
     ///<summary>[0] : 이동(Fightable f, int amout, int(Facing) facing) | [1] : 숨고르기(Fightable f, int(TokenType) tokenType, int discardIndex) | [2] : 상호작용
     ///</summary>
@@ -67,18 +79,6 @@ public abstract partial class Creature
             if (output != string.Empty) IO.rk(Name + output);
             CurAction.Set(basicActions, nonToken, x, y);
         }
-    }
-    private void SetSkill(Item item, IBehaviour behaviour)
-    {
-        int amount = 0;
-        if (behaviour is IEnergyConsume energyConsume)
-        {
-            int mastery = Inven.GetMeta(item)!.Mastery;
-            amount = Stat.GetRandom(energyConsume.StatDepend, mastery);
-        }
-        if (behaviour is Consume) Inven.Consume(item);
-        CurAction.Set(item, behaviour, amount);
-        PrintSkillSelct();
     }
     private void PrintSkillSelct()
     {
