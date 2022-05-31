@@ -38,7 +38,7 @@ public class Program
     ClassSelect:
         int classIndex = 0;
         string[] classes = new string[] { "^r (전사)^/", "^g (암살자)^/", "^b (마법사)^/" };
-        IO.sel(classes, out classIndex, 0, "(x로 자유전직) ");
+        IO.sel(classes, out classIndex, 0/*, "(x로 자유전직) "*/);
         string className = classes.ElementAtOrDefault(classIndex) ?? "자유전직";
     Confirm:
         string classDesc = GetClassDesc(classIndex);
