@@ -2,6 +2,7 @@ main 0.6.310522
 [X] Make Energy a distinct class?
 [X] Make curaction private
 [ ] Make all items into sepereatd classes. Easy to call skills.
+[ ] Creature.SelectSkill, SelectConsume merge
 
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
 [ ] TDD로 자유전직 새로 만들기.
