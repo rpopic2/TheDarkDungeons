@@ -100,6 +100,7 @@ public class Inventory : ICollection<Item?>
         else return null;
     }
     public int GetStack(Item item) => GetMeta(item).stack;
+    public int GetMagicCharge(Item item) => GetMeta(item).magicCharge;
     public void Consume(Item item)
     {
         if (--GetMeta(item).stack <= 0)

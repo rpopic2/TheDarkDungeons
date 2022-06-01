@@ -50,6 +50,8 @@ public class CombatTest : IDisposable
         player.PickupItem(item!, metaData2!);
 
         Assert.Equal(1, metaData2!.CurExp);
+
+        Assert.Equal(1, player.Inven.GetMeta(Creature.dagger)!.CurExp);
     }
     [Theory]
     [InlineData(0)]
