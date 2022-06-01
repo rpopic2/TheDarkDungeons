@@ -206,7 +206,7 @@ public class Map
             Program.OnTurn = null;
         }
         Current = new Map(newLength, true, new RandomPortal(), Current?._corpseToPass);
-        if (Player._instance is not null && Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
+        if (Player._instance is not null && Map.TurnInCurrentDepth == 0 && Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
     private void Render()
     {
