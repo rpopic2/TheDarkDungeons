@@ -11,6 +11,7 @@ public struct Position
     }
     public int Front(int value) => (this + new Position(value, facing)).x;
     public int Back(int value) => (this + new Position(value, facing.Flip())).x;
+    public int Distance(Position pos) => (int)MathF.Abs(pos.x - x);
     public static Position operator +(Position a, Position b)
     {
         if (a.facing != b.facing) b.x--;

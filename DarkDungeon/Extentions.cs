@@ -11,7 +11,6 @@ public static class Extensions
             return true;
         }
     }
-    public static int Distance(this Position pos1, Position pos2) => (int)MathF.Abs(pos2.x - pos1.x);
 
     public static Facing Flip(this Facing facing)
         => facing == Facing.Right ? Facing.Left : Facing.Right;
