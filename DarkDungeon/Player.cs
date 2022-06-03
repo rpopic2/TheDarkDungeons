@@ -150,10 +150,10 @@ public partial class Player : Creature
             IO.del();
             return;
         }
-        if (corpse.droplist[index] is Item item)
+        corpse.GetItemAndMeta(index, out Item? item, out ItemMetaData? metaData);
+        if (item is Item)
         {
-            int stack = corpse.droplist.GetMeta(item)?.stack ?? 1;
-            bool pickedUp = PickupItem(item, stack);
+            bool pickedUp = PickupItem(item, metaData!);
             if (pickedUp) corpse.droplist.Remove(item);
         }
     }
