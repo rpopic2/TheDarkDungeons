@@ -4,11 +4,12 @@ main 0.6.010622
 [X] 공중에 휘두르면 마법차지 소모를 안함.
 [X] 광신도 충전후 무한 베기 버그? 붙었다가 뒷점프 하니까 발동. 심지어 나랑 안붙어있는데도 처맞음..
 [X] 깊이 2에 도달하였다가 깊이 2에서 문들어가도 뜸.
+[ ] /key to examine things
+
 [ ] Make all items into sepereatd classes. Easy to call skills.
 [ ] ㄴstart with basicactions
 [ ] 몹이랑 딱붙어있을떄 몹이 뒤돌고있으면 안뒤돌아봄. -> why not working?
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
-
 [ ] paging.
 [ ] GetMeta떄문에 튕기는 경우 개많음.. 개선 필요할듯.
 [ ] TDD로 자유전직 새로 만들기.
@@ -17,7 +18,6 @@ main 0.6.010622
 [ ] Add fire tick damage
 [ ] ㄴneed to refactor status effects first
 [ ] ISteppable 겹치기 가능하게
-[ ] /key to examine things
 
 0.6
 [X] 무기 숙련도 최소뎀

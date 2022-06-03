@@ -43,12 +43,6 @@ public partial class Player
             case ConsoleKey.Enter: //상호작용
                 if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
                 break;
-            case ConsoleKey.C:
-                if(info.Modifiers == ConsoleModifiers.Control){
-                    IO.pr("Exiting game.");
-                    Environment.Exit(1);
-                }
-                break;
             default:
                 DefaultSwitch(info);
                 break;
