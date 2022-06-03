@@ -19,6 +19,7 @@ public class EnergyTest : IDisposable
     [Fact]
     public void ConsumeEnergyTest()
     {
+        player.Inven.Add(Creature.sword);
         player.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
         Assert.NotEqual(player.Energy.Max, player.Energy.Cur);
