@@ -50,4 +50,39 @@ public static class Help
         IO.rk();
         IO.Redraw();
     }
+    private static Dictionary<char, string> s_examineDict = new Dictionary<char, string>{
+        {'/', "정보 보기"},
+        {MapSymb.corpse, "시체"},
+        {MapSymb.playerCorpse, "당신의 시체"},
+        {MapSymb.Empty, "아무것도 없는 바닥"},
+        {MapSymb.pit, "구멍(아래층으로 내려간다)"},
+        {MapSymb.door, "갈림길(다음 맵으로 넘어간다)"},
+        {MapSymb.player, "당신의 위치"},
+        {Bat.data.backwardChar, "박쥐"},
+        {Bat.data.fowardChar, "박쥐"},
+        {'i', "인벤토리"},
+        {'h', "좌로 이동"},
+        {'l', "우로 이동"},
+        {'z', "상호작용"},
+        {'x', "취소"},
+        {' ', "확인"},
+        {'>', "광신도"},
+        {'<', "광신도"},
+        {'S', "뱀"},
+        {'2', "뱀"},
+        {'{', "정령술사"},
+        {'}', "정령술사"},
+        {'Я', "쥐"},
+        {'R', "쥐"},
+        {'í', "조용한 기사(보스)"},
+        {'ì', "조용한 기사(보스)"},
+    };
+    public static void ShowHelpPrompt()
+    {
+        ConsoleKeyInfo info = IO.rk("?를 눌러 게임 도움말 보기 / 궁금한 글자를 키보드에서 눌러 검색");
+        char key = info.KeyChar;
+        if (key == '?') ShowHelp();
+        else IO.rk($"{key} : {s_examineDict.GetValueOrDefault(key, "찾을 수 없습니다")}");
+        IO.Redraw();
+    }
 }

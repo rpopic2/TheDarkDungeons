@@ -63,13 +63,12 @@ public partial class Player
             case '*':
                 IO.DrawInventory();
                 break;
-            case '/':
-            case 'm':
+            case 'u':
                 IO.ShowStats();
                 break;
             case '?':
             case '5':
-                Help.ShowHelp();
+                Help.ShowHelpPrompt();
                 break;
         }
     }

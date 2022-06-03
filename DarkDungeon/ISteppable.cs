@@ -18,7 +18,7 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
 public record struct Pit() : ISteppable, IPortal
 {
     public string name { get; set; } = "구멍";
-    public char ToChar() => MapSymb.portal;
+    public char ToChar() => MapSymb.pit;
 }
 public record struct Door() : ISteppable, IPortal
 {
