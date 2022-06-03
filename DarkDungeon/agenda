@@ -6,6 +6,7 @@ main 0.6.010622
 [X] 광신도 충전후 무한 베기 버그? 붙었다가 뒷점프 하니까 발동. 심지어 나랑 안붙어있는데도 처맞음..
 [X] 깊이 2에 도달하였다가 깊이 2에서 문들어가도 뜸.
 
+[ ] Player.PickUpItem에서 아직도 stack을 받는게 있음.
 [ ] / key and qwert prints its properties
 [ ] 몹 도움말 만들기 노가다 마저하기.
 [ ] Make all items into sepereatd classes. Easy to call skills.
