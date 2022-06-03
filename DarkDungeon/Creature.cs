@@ -93,14 +93,15 @@ public abstract partial class Creature
         DamageType damageType = default;
         if (CurAction.CurrentBehav is Skill skill) damageType = skill.damageType;
         Creature? mov = _currentMap.RayCast(Pos, range);
+        ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!)!;
         if (mov is Creature hit)
         {
-            ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!)!;
             _lastHit = hit;
             AttackMagicCharge(metaData);
             hit.Dodge(CurAction.Amount, damageType, this, metaData);
             metaData.GainExp();
         }
+        metaData.magicCharge = 0;
 
         void AttackMagicCharge(ItemMetaData metaData)
         {
