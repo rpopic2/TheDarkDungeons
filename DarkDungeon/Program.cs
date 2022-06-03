@@ -6,6 +6,7 @@ public class Program
     public static Action? OnTurn;
     public static void Main()
     {
+        Console.CancelKeyPress += (e, e2) => {Environment.Exit(1);};
         Program instance = new Program();
         do
         {
