@@ -54,7 +54,7 @@ public static class Help
         {'/', "정보 보기"},
         {MapSymb.corpse, "시체"},
         {MapSymb.playerCorpse, "당신의 시체"},
-        {MapSymb.Empty, "아무것도 없는 바닥"},
+        {MapSymb.road, "아무것도 없는 바닥"},
         {MapSymb.pit, "구멍(아래층으로 내려간다)"},
         {MapSymb.door, "갈림길(다음 맵으로 넘어간다)"},
         {MapSymb.player, "당신의 위치"},
@@ -64,7 +64,6 @@ public static class Help
         {'h', "좌로 이동"},
         {'l', "우로 이동"},
         {'z', "상호작용"},
-        {'x', "취소"},
         {' ', "확인"},
         {'>', "광신도"},
         {'<', "광신도"},
@@ -79,7 +78,7 @@ public static class Help
     };
     public static void ShowHelpPrompt()
     {
-        ConsoleKeyInfo info = IO.rk("?를 눌러 게임 도움말 보기 / 궁금한 글자를 키보드에서 눌러 검색");
+        ConsoleKeyInfo info = IO.rk("?를 한번 더 눌러 게임 도움말 보기 / 궁금한 글자를 키보드에서 눌러 검색");
         char key = info.KeyChar;
         if (key == '?') ShowHelp();
         else IO.rk($"{key} : {s_examineDict.GetValueOrDefault(key, "찾을 수 없습니다")}");

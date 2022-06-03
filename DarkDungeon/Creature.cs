@@ -121,7 +121,6 @@ public abstract partial class Creature
             Attack(range);
             ItemMetaData metaData = Inven.GetMeta(item)!;
             Inven.Consume(item);
-            _lastHit?.Inven.Add(item!, metaData);
         }
         else
         {

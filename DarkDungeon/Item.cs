@@ -56,7 +56,10 @@ public partial class Creature
     });
     public static readonly Item dagger = new("단검", ItemType.Equip, new Skill[] {
         new("휘두르기", StanceName.Offence,  StatName.Sol, DamageType.Slash, "은 단검을 휘둘렀다.", (i)=>i.Attack(1)),
-        new("투검", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>i.Throw(3, dagger!))
+        new("투검", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>{
+                i.Throw(3, dagger!);
+                i._lastHit?.Inven.Add(dagger!, i.Inven.GetMeta(dagger));
+})
     });
     public static readonly Item bow = new("활", ItemType.Equip, new Skill[] {
         new("쏘기", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});

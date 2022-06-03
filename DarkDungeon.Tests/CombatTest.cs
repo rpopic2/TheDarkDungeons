@@ -30,7 +30,7 @@ public class CombatTest : IDisposable
     [Fact]
     public void PreserveThrowableWeaponExps()
     {
-        player!.PickupItem(Creature.dagger);
+        player!.PickupItem(Creature.dagger, new());
 
         player.SetAction(player.Inven[0]!, 1, 10);
 
