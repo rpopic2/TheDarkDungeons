@@ -55,10 +55,11 @@ public abstract class Monster : Creature
         if (target is not Creature || !this.IsEnemy(target)) this._target = null;
         else this._target = target;
     }
-    protected void FollowTarget()
+    protected void FollowTarget(bool runaway = false)
     {
         if (_target is null) return;
         Facing newFacing = Pos.LookAt(_target.Pos.x);
+        if(runaway) newFacing = newFacing.Flip();
         SelectBasicBehaviour(0, 1, (int)newFacing); //move
     }
     protected override void OnDeath(object? sender, EventArgs e)

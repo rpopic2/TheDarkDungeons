@@ -8,6 +8,12 @@ public class ItemMetaData
     public int Mastery { get; private set; } = 0;
     private int reqExp = REQEXP_BASE;
     private int curExp = 0;
+
+    public ItemMetaData(int stack = 1)
+    {
+        this.stack = stack;
+    }
+
     public int CurExp { get => curExp; }
     public void GainExp()
     {

@@ -1,9 +1,7 @@
 main 0.6.040622
-[ ] Player.PickUpItem에서 아직도 stack을 받는게 있음.
+[X] 몹 도움말 만들기 노가다 마저하기.
+[X] Player.PickUpItem에서 아직도 stack을 받는게 있음.
 [ ] / key and qwert prints its properties
-[ ] 몹 도움말 만들기 노가다 마저하기.
-[ ] Make all items into sepereatd classes. Easy to call skills.
-[ ] ㄴstart with basicactions
 [ ] 몹이랑 딱붙어있을떄 몹이 뒤돌고있으면 안뒤돌아봄. -> why not working?
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
 [ ] paging.
@@ -14,6 +12,8 @@ main 0.6.040622
 [ ] Add fire tick damage
 [ ] ㄴneed to refactor status effects first
 [ ] ISteppable 겹치기 가능하게
+[ ] Make all items into sepereatd classes. Easy to call skills.
+[ ] ㄴstart with basicactions
 
 0.6
 [X] 무기 숙련도 최소뎀

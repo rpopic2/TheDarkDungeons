@@ -27,4 +27,16 @@ public class MonsterTestTest : IDisposable
         Program.ElaspeTurn();
         Assert.NotEqual(0, testMon.Inven.GetMagicCharge(Creature.holySword));
     }
+    [Fact]
+    public void MarksmanTest()
+    {
+        Marksman marksman = new(new(2, Facing.Left));
+        map.UpdateFightable(marksman);
+        Assert.Equal(5, marksman.Inven.GetStack(Creature.arrow));
+        // marksman.SetAction(Creature.bow, 0, 5);
+        Program.ElaspeTurn();
+        Program.ElaspeTurn();
+        Assert.Equal(4, marksman.Inven.GetStack(Creature.arrow));
+        Assert.NotEqual(player.GetHp().Max, player.GetHp().Cur);
+    }
 }

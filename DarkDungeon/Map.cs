@@ -5,7 +5,7 @@ public class Map
     public static int Turn { get; private set; }
     private static int Spawnrate = 11;
     public static Map Current = default!;
-    private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Rat(default) };
+    private static ISpawnable[] s_monsterData = { new Bat(default), new Shaman(default), new Lunatic(default), new Snake(default), new Marksman(default), new Rat(default) };
     private static Random s_rnd = new Random();
     ///<summary>is 1 by default</summary>
     public static int Depth { get; private set; } = START_DEPTH;
