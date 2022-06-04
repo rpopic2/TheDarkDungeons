@@ -50,7 +50,7 @@ public static class Help
         IO.rk();
         IO.Redraw();
     }
-    private static Dictionary<char, string> s_examineDict = new Dictionary<char, string>{
+    public static readonly Dictionary<char, string> s_examineDict = new Dictionary<char, string>{
         {'/', "정보 보기"},
         {MapSymb.corpse, "시체"},
         {MapSymb.playerCorpse, "당신의 시체"},
@@ -65,16 +65,16 @@ public static class Help
         {'l', "우로 이동"},
         {'z', "상호작용"},
         {' ', "확인"},
-        {'>', "광신도"},
-        {'<', "광신도"},
-        {'S', "뱀"},
-        {'2', "뱀"},
-        {'{', "정령술사"},
-        {'}', "정령술사"},
-        {'Я', "쥐"},
-        {'R', "쥐"},
-        {'í', "조용한 기사(보스)"},
-        {'ì', "조용한 기사(보스)"},
+        {Lunatic.data.fowardChar, "광신도"},
+        {Lunatic.data.backwardChar, "광신도"},
+        {Snake.data.fowardChar, "뱀"},
+        {Snake.data.backwardChar, "뱀"},
+        {Shaman.data.fowardChar, "정령술사"},
+        {Shaman.data.backwardChar, "정령술사"},
+        {Rat.data.backwardChar, "쥐"},
+        {Rat.data.fowardChar, "쥐"},
+        {QuietKnight.data.backwardChar, "조용한 기사(보스)"},
+        {QuietKnight.data.backwardChar, "조용한 기사(보스)"},
     };
     public static void ShowHelpPrompt()
     {

@@ -1,7 +1,7 @@
 public class Rat : Monster, ISpawnable
 {
     private static StatInfo stat = new(new(1, 2, 1), 4, 3);
-    private static MonsterData data = new("거대 쥐", 'R', 'Я', stat, new Item[] { ratItem });
+    public static readonly MonsterData data = new("거대 쥐", 'R', 'Я', stat, new Item[] { ratItem });
     public Rat(Position spawnPoint) : base(data, spawnPoint)
     {
         Stat.AddSight(3);
