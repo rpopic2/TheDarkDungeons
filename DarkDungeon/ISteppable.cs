@@ -5,7 +5,7 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
     {
         foreach (Item? item in newOne.droplist)
         {
-            if(item is not null) old.droplist.AddT(item);
+            if(item is not null) old.droplist.Add(item);
         }
         old.name += $", {newOne.name}";
         return old;

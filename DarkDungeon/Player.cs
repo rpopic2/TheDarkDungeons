@@ -166,7 +166,7 @@ public partial class Player : Creature
             IO.sel(corpse.droplist.Content.ToArray(), out int index, 0, "아이템 선택 : ");
             if (corpse.droplist[index] is Item item)
             {
-                Inven.AddT(item);
+                Inven.Add(item);
                 corpse.droplist.Remove(item);
             }
         }

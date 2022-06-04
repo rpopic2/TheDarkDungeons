@@ -14,7 +14,7 @@ public abstract class Monster : Creature
         backwardChar = data.backwardChar;
         foreach (var newItem in data.startItem)
         {
-            Inven.AddT(newItem);
+            Inven.Add(newItem);
         }
     }
     protected int DistanceToTarget => _target?.Pos.Distance(Pos) ?? 0;
