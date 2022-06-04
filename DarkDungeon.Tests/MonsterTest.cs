@@ -34,10 +34,8 @@ public class MonsterTestTest : IDisposable
         map.UpdateFightable(player);
         map.UpdateFightable(marksman);
         player.Inven.Add(Creature.torch);
-        // Assert.Null(map.ToString());
         Assert.Equal(5, marksman.Inven.GetStack(Creature.arrow));
         Assert.Contains(Creature.arrow, marksman.Inven);
-        // marksman.SetAction(Creature.bow, 0, 5);
         Program.ElaspeTurn();
         Program.ElaspeTurn();
         Assert.Equal(4, marksman.Inven.GetStack(Creature.arrow));
