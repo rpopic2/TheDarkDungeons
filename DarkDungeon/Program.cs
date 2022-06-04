@@ -102,8 +102,8 @@ public class Program
             case 1:
                 playerInven.Add(Creature.dagger);
                 playerInven.Add(Creature.bow);
-                playerInven.Add(Creature.arrow);
-                playerInven.Add(Creature.arrow);
+                ItemMetaData metaData = new(10);
+                playerInven.Add(Creature.arrow, metaData);
                 playerInven.Add(Creature.torch);
                 playerInven.Add(Creature.assBareHand);
                 break;

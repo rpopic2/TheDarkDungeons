@@ -1,6 +1,7 @@
 main 0.6.040622
 [X] 몹 도움말 만들기 노가다 마저하기.
 [X] Player.PickUpItem에서 아직도 stack을 받는게 있음.
+[ ]  new item system
 [ ] / key and qwert prints its properties
 [ ] 몹이랑 딱붙어있을떄 몹이 뒤돌고있으면 안뒤돌아봄. -> why not working?
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
