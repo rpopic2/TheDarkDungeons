@@ -59,20 +59,12 @@ public partial class Player : Creature
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
-    public bool PickupItem(Item item, ItemMetaData metaData)
+    public bool PickupItem(Item item, ItemMetaData? metaData = null)
     {
+        if(metaData is null) metaData = new();
         IO.pr($"\n아이템을 얻었다. {item.Name}");
         Inven.Add(item, metaData, out bool success);
         IO.Redraw();
-        return success;
-    }
-    public bool PickupItem(Item item, int stack = 1, bool redraw = true)
-    {
-        IO.pr($"\n아이템을 얻었다. {item.Name}");
-        ItemMetaData metaData = new();
-        metaData.stack = stack;
-        Inven.Add(item, metaData, out bool success);
-        if (redraw) IO.Redraw();
         return success;
     }
     private int SelectIndexOfItem(string message)
@@ -174,7 +166,7 @@ public partial class Player : Creature
             IO.sel(corpse.droplist.Content.ToArray(), out int index, 0, "아이템 선택 : ");
             if (corpse.droplist[index] is Item item)
             {
-                Inven.Add(item);
+                Inven.AddT(item);
                 corpse.droplist.Remove(item);
             }
         }

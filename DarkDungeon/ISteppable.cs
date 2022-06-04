@@ -3,7 +3,10 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
     public char ToChar() => MapSymb.corpse;
     public static Corpse operator +(Corpse old, Corpse newOne)
     {
-        old.droplist.Content.AddRange(newOne.droplist);
+        foreach (Item? item in newOne.droplist)
+        {
+            if(item is not null) old.droplist.AddT(item);
+        }
         old.name += $", {newOne.name}";
         return old;
     }

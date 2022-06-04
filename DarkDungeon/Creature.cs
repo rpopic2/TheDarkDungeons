@@ -113,13 +113,14 @@ public abstract partial class Creature
             }
         }
     }
-    private void Throw(int range, Item item)
+    private void Throw(int range, Item item, bool itemPreservesOnEnemy = false)
     {
         if (Inven.Contains(item))
         {
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
             ItemMetaData metaData = Inven.GetMeta(item)!;
+            if(itemPreservesOnEnemy) _lastHit?.Inven.Add(item, metaData);
             Inven.Consume(item);
         }
         else
