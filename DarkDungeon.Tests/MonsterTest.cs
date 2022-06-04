@@ -31,8 +31,12 @@ public class MonsterTestTest : IDisposable
     public void MarksmanTest()
     {
         Marksman marksman = new(new(2, Facing.Left));
+        map.UpdateFightable(player);
         map.UpdateFightable(marksman);
+        player.Inven.Add(Creature.torch);
+        // Assert.Null(map.ToString());
         Assert.Equal(5, marksman.Inven.GetStack(Creature.arrow));
+        Assert.Contains(Creature.arrow, marksman.Inven);
         // marksman.SetAction(Creature.bow, 0, 5);
         Program.ElaspeTurn();
         Program.ElaspeTurn();

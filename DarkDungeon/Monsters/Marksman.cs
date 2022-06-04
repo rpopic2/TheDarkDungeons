@@ -3,6 +3,7 @@ public class Marksman : Monster, ISpawnable
     public static readonly MonsterData data = new("그림자 궁사", ']', '[', new(new(sol: 1, lun: 3, con: 1), energy: 3, killExp: 5), new Item[] { Creature.bow });
     public Marksman(Position spawnPoint) : base(data, spawnPoint)
     {
+        Stat.AddSight(3);
         ItemMetaData metaData = new(5);
         Inven.Add(Creature.arrow, metaData);
     }
