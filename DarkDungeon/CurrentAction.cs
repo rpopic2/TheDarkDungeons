@@ -34,7 +34,7 @@ public class CurrentAction
         this.Amount = amount;
         this.Amount2 = amount2;
         bool isPrepend = behaviour.Stance == StanceName.Charge;
-        Map.Current.AddToOnTurn(_owner.OnTurn, isPrepend);
+        Map.Current.OnTurn(_owner.OnTurn, isPrepend);
     }
     public void AddAmount(int value)
     {

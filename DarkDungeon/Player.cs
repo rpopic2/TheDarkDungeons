@@ -24,11 +24,14 @@ public partial class Player : Creature
     {
         return _item.OfType<T>().Count();
     }
-    public T? GetItem<T>() where T : IItem
+    public T? GetItemOrDefault<T>() where T : IItem
     {
         return _item.OfType<T>().FirstOrDefault();
     }
-
+    public T GetItem<T>() where T : IItem
+    {
+        return _item.OfType<T>().FirstOrDefault()!;
+    }
     public void GiveItem(IItem item)
     {
         _item.Add(item);

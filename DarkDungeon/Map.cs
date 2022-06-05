@@ -82,7 +82,7 @@ public class Map
         int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
         _steppables![portalIndex] = portal;
     }
-    public void AddToOnTurn(Action action, bool isPrepend)
+    public void OnTurn(Action action, bool isPrepend = false)
     {
         if (isPrepend) _onTurn = action + _onTurn;
         else _onTurn += action;

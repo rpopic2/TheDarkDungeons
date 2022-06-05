@@ -26,7 +26,7 @@ public class PlayerTest : IDisposable
     [Fact]
     public void TestNewOnTurn()
     {
-        map.AddToOnTurn(() => player.Stat.Damage(1), false);
+        map!.OnTurn(() => player.Stat.Damage(1), false);
         Assert.Equal(player.MaxHp, player.CurrentHp);
         Program.ElaspeTurn();
         Assert.NotEqual(player.MaxHp, player.CurrentHp);
