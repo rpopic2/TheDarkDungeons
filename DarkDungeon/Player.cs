@@ -20,6 +20,10 @@ public partial class Player : Creature
     {
         return _item.OfType<T>().Any();
     }
+    public int StackOfItem<T>()
+    {
+        return _item.OfType<T>().Count();
+    }
 
     public void GiveItem(IItem item)
     {
@@ -33,6 +37,8 @@ public partial class Player : Creature
         _currentMap.AddToOnTurnPre(_turnPre);
         _currentMap.AddToOnTurnEnd(_turnEnd);
     }
+
+
     private void OnLvUp(object? sender, EventArgs e)
     {
         SelectPickupStat();

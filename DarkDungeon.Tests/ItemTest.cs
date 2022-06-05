@@ -36,12 +36,14 @@ public class ItemTest: IDisposable
         Assert.True(player.HasItem<ShadowBow>());
         Assert.True(player.HasItem<Bolt>());
     }
-    // [Fact]
-    // public void ItemStacks()
-    // {
-    //     player.GiveItem(new Bolt());
-    //     player.GiveItem(new Bolt());
-    //     bool hasTwoBolts = player.HasItem<Bolt>(2);
-    //     Assert.True(hasTwoBolts);
-    // }
+    [Fact]
+    public void ItemStacks()
+    {
+        player.GiveItem(new Bolt());
+        player.GiveItem(new Bolt());
+        player.GiveItem(new ShadowBow());
+        int stackOfBolt = player.StackOfItem<Bolt>();
+        Assert.Equal(2, stackOfBolt);
+        Assert.Equal(1, player.StackOfItem<ShadowBow>());
+    }
 }
