@@ -1,8 +1,9 @@
 new-item-system 0.6.050622
 [x] refactor shadowdagger and ShadowBow
-[ ] possibly merge Player.HasItem and StackOfItem
+[?] possibly merge Player.HasItem and StackOfItem
 [ ] item consists of skills?
 [ ] do push up _RANGE?
+[ ] items printing output messages
 
 main
 [ ] / key and qwert prints its properties

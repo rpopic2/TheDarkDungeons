@@ -5,4 +5,8 @@ public class ShadowDagger : ItemNew
     {
         AttackRange(_RANGE, StatName.Sol);
     }
+    protected override void _Throw()
+    {
+        AttackRange(3, StatName.Lun);
+    }
 }

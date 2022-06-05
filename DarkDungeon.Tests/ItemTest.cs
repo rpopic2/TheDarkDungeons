@@ -55,9 +55,9 @@ public class ItemTest : IDisposable
         Assert.False(player.HasItem<ShadowBow>());
     }
     [Fact]
-    public void RemoveItemNotInInvenDoesNotThrowError()
+    public void RemoveItemDoesNotThrowError()
     {
-        player.RemoveItem<Bolt>();
+        player.RemoveItem<Bolt>();//trying to remove when bolt does not exist in inventory.
     }
     [Fact]
     public void ShootShadowBow()
@@ -93,5 +93,15 @@ public class ItemTest : IDisposable
         Program.ElaspeTurn();
         Assert.False(player.Energy.IsMax);
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
+    }
+    [Fact]
+    public void ShadowDaggerTestThrow()
+    {
+        TestMonster testMon = new(new(3));
+        player.GiveItem(new ShadowDagger());
+        player.GetItem<ShadowDagger>().Throw();
+        Program.ElaspeTurn();
+        Assert.False(player.Energy.IsMax);
+        Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
     }
 }
