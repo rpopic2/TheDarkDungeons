@@ -29,6 +29,12 @@ public class ItemTest : IDisposable
         Assert.True(hasShadowBow);
     }
     [Fact]
+    public void GiveMultipleItem()
+    {
+        player.GiveItem(new Bolt(), 2);
+        Assert.Equal(2, player.GetStackOfItem<Bolt>());
+    }
+    [Fact]
     public void HasMultipleItems()
     {
         Assert.False(player.HasItem<ShadowBow>());

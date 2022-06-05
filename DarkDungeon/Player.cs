@@ -32,9 +32,9 @@ public partial class Player : Creature
     {
         return _item.OfType<T>().FirstOrDefault()!;
     }
-    public void GiveItem(IItem item)
+    public void GiveItem(IItem item, int stack = 1)
     {
-        _item.Add(item);
+        for (int i = 0; i < stack; i++) _item.Add(item);
     }
     public void RemoveItem<T>() where T : IItem
     {

@@ -5,6 +5,7 @@ new-item-system 0.6.050622
 [ ] do push up _RANGE?
 [ ] items printing output messages
 [ ] UseSkill method in ItemNew that +=s to onturn
+[ ] properly returns 0 stakc
 
 main
 [ ] / key and qwert prints its properties
