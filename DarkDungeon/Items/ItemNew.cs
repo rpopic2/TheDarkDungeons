@@ -12,4 +12,5 @@ public abstract class ItemNew : IItem
         }
     }
     protected void ConsumeEnergy() => owner?.Energy.Consume();
+    protected void ConsumeItem<T>() where T : IItem => owner?.RemoveItem<T>();
 }
