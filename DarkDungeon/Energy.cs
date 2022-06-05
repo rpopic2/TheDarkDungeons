@@ -5,6 +5,7 @@ public class Energy : GamePoint
     {
         Cur++;
     }
+    public void Consume()=>Consume(out _);
     public void Consume(out bool success)
     {
         if (Cur <= 0)

@@ -8,7 +8,7 @@ public class ItemTest : IDisposable
     Player player => _player!;
     public ItemTest()
     {
-        _map = new(3, false, null);
+        _map = new(4, false, null);
         _player = Player._instance = new Player("test");
         _map.UpdateFightable(_player);
     }
@@ -71,6 +71,27 @@ public class ItemTest : IDisposable
 
         Program.ElaspeTurn();
         Assert.Equal(1, player.GetStackOfItem<Bolt>());//consumes bolt
+        Assert.False(player.Energy.IsMax);
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
+    }
+    [Fact]
+    public void ShadowDaggerTest()
+    {
+        TestMonster testMon = new(new(1));
+        player.GiveItem(new ShadowDagger());
+        player.GetItem<ShadowDagger>().Pierce();
+        Program.ElaspeTurn();
+        Assert.False(player.Energy.IsMax);
+        Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
+    }
+    [Fact]
+    public void ShadowDaggerTestOutOfRange()
+    {
+        TestMonster testMon = new(new(2));
+        player.GiveItem(new ShadowDagger());
+        player.GetItem<ShadowDagger>().Pierce();
+        Program.ElaspeTurn();
+        Assert.False(player.Energy.IsMax);
+        Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
     }
 }
