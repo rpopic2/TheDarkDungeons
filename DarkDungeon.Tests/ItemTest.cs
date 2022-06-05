@@ -53,6 +53,7 @@ public class ItemTest : IDisposable
         int stackOfBolt = player.GetStackOfItem<Bolt>();
         Assert.Equal(2, stackOfBolt);
         Assert.Equal(1, player.GetStackOfItem<ShadowBow>());
+        Assert.Equal(0, player.GetStackOfItem<ShadowDagger>());
     }
     [Fact]
     public void RemoveItem()
