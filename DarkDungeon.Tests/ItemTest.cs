@@ -65,8 +65,9 @@ public class ItemTest : IDisposable
         TestMonster testMon = new(new(2));
         player.GiveItem(new ShadowBow());
         player.GiveItem(new Bolt());
-        Program.OnTurnAction += player.GetItem<ShadowBow>().Throw;
+        player.GetItem<ShadowBow>().Throw();
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
+
         Program.ElaspeTurn();
         Assert.False(player.HasItem<Bolt>());//consumes bolt
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);

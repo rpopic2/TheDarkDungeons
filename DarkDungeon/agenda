@@ -1,6 +1,7 @@
 main 0.6.050622
 [ ]  new item system
 [ ] possibly merge Player.HasItem and StackOfItem
+[ ] item consists of skills?
 
 [ ] / key and qwert prints its properties
 [ ] 몹이랑 딱붙어있을떄 몹이 뒤돌고있으면 안뒤돌아봄. -> why not working?
