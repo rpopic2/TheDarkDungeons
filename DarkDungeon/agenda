@@ -1,11 +1,10 @@
 new-item-system 0.6.050622
+[x] properly returns 0 stakc
 [x] refactor shadowdagger and ShadowBow
 [?] possibly merge Player.HasItem and StackOfItem
 [ ] item consists of skills?
 [ ] do push up _RANGE?
 [ ] items printing output messages
-[ ] UseSkill method in ItemNew that +=s to onturn
-[ ] properly returns 0 stakc
 
 main
 [ ] / key and qwert prints its properties

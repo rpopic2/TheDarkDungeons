@@ -115,19 +115,13 @@ public class ItemTest : IDisposable
         Program.ElaspeTurn();
         Assert.Equal(tempCur, testMon.CurrentHp);
     }
-    // [Fact]
-    // public void ShadowDaggerTestBackstep()
-    // {
-    //     TestMonster testMon = new(new(3));
-    //     player.GiveItem(new ShadowDagger());
-    //     player.GetItem<ShadowDagger>().Magic();
-    //     Program.ElaspeTurn();
-    //     Assert.Equal(new Position(4, Facing.Left), player.Pos);
-    // }
     [Fact]
-    public void TestItemUseSkill()
+    public void ShadowDaggerTestBackstep()//->PositionTest.Shadowstep
     {
+        TestMonster testMon = new(new(3, Facing.Left));
         player.GiveItem(new ShadowDagger());
-        // OnTurn += player.GetItem<ShadowDagger>().Throw;
+        OnTurn += player.GetItem<ShadowDagger>().Shadowstep;
+        Program.ElaspeTurn();
+        Assert.Equal(new Position(4, Facing.Left), player.Pos);
     }
 }

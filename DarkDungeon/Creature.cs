@@ -5,7 +5,7 @@ public abstract partial class Creature
     public readonly Status Stat;
     public int Sight => Stat.Sight;
     public bool IsAlive { get; private set; } = true;
-    public Position Pos { get; protected set; }
+    public Position Pos { get; set; }
 
     private CurrentAction CurAction { get; init; }
     public Energy Energy { get => CurAction.Energy; }
