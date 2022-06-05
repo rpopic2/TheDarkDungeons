@@ -15,6 +15,7 @@ public class ShadowDagger : ItemNew
         Creature? hit = Map.Current.RayCast(s_player.Pos, 3);
         if (hit is Creature hitCreature)
         {
+            s_player.Energy.Consume();
             Position targetPos = hit.Pos;
             s_player.Pos = new(targetPos.Back(2), targetPos.facing);
         }
