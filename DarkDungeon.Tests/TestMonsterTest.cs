@@ -19,20 +19,20 @@ public class TestMonsterTest : IDisposable
     [Fact]
     public void TestMonsterGiveItem()
     {
-        testMon.GiveItem(Creature.sword);
+        testMon.GiveItemOld(Creature.sword);
         Assert.Equal(Creature.sword, testMon!.Inven[0]);
     }
     [Fact]
     public void TestMonSetAction()
     {
-        testMon.GiveItem(Creature.sword);
+        testMon.GiveItemOld(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
         Assert.Equal(Creature.sword.skills[0], testMon.CurrentBehaviour);
     }
     [Fact]
     public void TestMonPreformSetAction()
     {
-        testMon.GiveItem(Creature.sword);
+        testMon.GiveItemOld(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
         Assert.Equal(testMon.Energy.Max - 1, testMon.Energy.Cur);

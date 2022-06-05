@@ -62,7 +62,7 @@ public class CombatTest : IDisposable
         player!.PickupItem(Creature.sword);
         player.SetAction(Creature.sword, 0, damage);
         TestMonster testMon = new(new(1, Facing.Right));
-        testMon.GiveItem(Creature.sword);
+        testMon.GiveItemOld(Creature.sword);
         testMon.SetAction(Creature.sword, 0);
         Program.OnTurn?.Invoke();
         Assert.Equal(testMon.GetHp().Max - damage, testMon.GetHp().Cur);
@@ -73,7 +73,7 @@ public class CombatTest : IDisposable
         TestMonster testMon = new(new(1, Facing.Left));
         testMon.SetStat(StatName.Con, 10);
 
-        testMon.GiveItem(Creature.spiritStaff);
+        testMon.GiveItemOld(Creature.spiritStaff);
 
         player.SetAction(Creature.basicActions, 1);
         testMon.SetAction(Creature.spiritStaff, 1, 10);
@@ -91,7 +91,7 @@ public class CombatTest : IDisposable
         testMon.SetStat(StatName.Con, 10);
 
         player.Inven.Add(Creature.wand);
-        testMon.GiveItem(Creature.spiritStaff);
+        testMon.GiveItemOld(Creature.spiritStaff);
 
         player.SetAction(Creature.basicActions, 1);
         testMon.SetAction(Creature.spiritStaff, 1, 10);
@@ -111,7 +111,7 @@ public class CombatTest : IDisposable
         testMon.SetStat(StatName.Con, 10);
 
         player.Inven.Add(Creature.wand);
-        testMon.GiveItem(Creature.spiritStaff);
+        testMon.GiveItemOld(Creature.spiritStaff);
 
         player.SetAction(Creature.basicActions, 1);
         testMon.SetAction(Creature.spiritStaff, 1, 10);

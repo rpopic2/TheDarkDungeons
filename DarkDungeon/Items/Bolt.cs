@@ -1,3 +1,3 @@
-public class Bolt : IItem
+public class Bolt : ItemNew
 {
 }

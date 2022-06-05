@@ -134,4 +134,13 @@ public class ItemTest : IDisposable
         Assert.Equal(new(), player.Pos);
         Assert.True(player.Energy.IsMax);
     }
+    [Fact]
+    public void MonsterHasItem()
+    {
+        TestMonster testMon = new(new(2, Facing.Left));
+        testMon.GiveItem(new ShadowDagger());
+        OnTurn += testMon.GetItem<ShadowDagger>().Throw;
+        Program.ElaspeTurn();
+        Assert.NotEqual(player.MaxHp, player.CurrentHp);
+    }
 }

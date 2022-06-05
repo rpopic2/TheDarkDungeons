@@ -22,7 +22,7 @@ public class TestMonster : Monster, ISpawnable
     }
     protected override void OnNothing() { }
 
-    public void GiveItem(Item item)
+    public void GiveItemOld(Item item)
     {
         Inven.Add(item);
     }

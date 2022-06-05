@@ -28,7 +28,7 @@ public class DamageTypeTest : IDisposable
     public void SlashToNonVul()
     {
         player.Inven.Add(Creature.sword);
-        testMon.GiveItem(Creature.sword);
+        testMon.GiveItemOld(Creature.sword);
         player.SetAction(Creature.sword, 0, BASE_DMG);//Slash dmg
         testMon.SetAction(Creature.sword, 0);//Non-vul
 
@@ -42,7 +42,7 @@ public class DamageTypeTest : IDisposable
     public void SlashToVul()
     {
         player.Inven.Add(Creature.sword);
-        testMon.GiveItem(Creature.sword);
+        testMon.GiveItemOld(Creature.sword);
         player.SetAction(Creature.sword, 0, BASE_DMG);//slash dmg
         testMon.SetAction(Creature.basicActions, 1);//vul
 
@@ -54,7 +54,7 @@ public class DamageTypeTest : IDisposable
     {
         player.Inven.Add(item1);
         player.SetAction(item1, skill1, BASE_DMG);//slash dmg
-        testMon.GiveItem(item2);
+        testMon.GiveItemOld(item2);
         testMon.SetAction(item2, skill2, BASE_DEF);//slash def 5
         Program.ElaspeTurn();
     }

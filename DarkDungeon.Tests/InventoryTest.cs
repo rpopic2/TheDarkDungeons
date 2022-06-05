@@ -32,7 +32,7 @@ public class InventoryTest : IDisposable
         player!.Inven.Add(Creature.dagger);
         player!.SetAction(Creature.dagger, 0, 5);
         TestMonster testMon = new(new(1, Facing.Right));
-        testMon.GiveItem(Creature.arrow);
+        testMon.GiveItemOld(Creature.arrow);
         Program.OnTurn?.Invoke();
 
         player.SetAction(Creature.basicActions, 0, 1, (int)Facing.Right);

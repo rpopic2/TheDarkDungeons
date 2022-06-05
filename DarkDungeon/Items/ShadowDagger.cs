@@ -12,12 +12,13 @@ public class ShadowDagger : ItemNew
     }
     public void Shadowstep()
     {
-        Creature? hit = Map.Current.RayCast(s_player.Pos, 3);
+        if(owner is null) return;
+        Creature? hit = Map.Current.RayCast(owner.Pos, 3);
         if (hit is Creature hitCreature)
         {
             ConsumeEnergy();
             Position targetPos = hit.Pos;
-            s_player.Pos = new(targetPos.Back(2), targetPos.facing);
+            owner.Pos = new(targetPos.Back(2), targetPos.facing);
         }
     }
 }

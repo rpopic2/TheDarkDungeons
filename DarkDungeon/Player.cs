@@ -15,34 +15,6 @@ public partial class Player : Creature
         else Stat[(StatName)classIndex] += 3;
     }
 
-    private List<IItem> _item = new();
-    public bool HasItem<T>() where T : IItem
-    {
-        return _item.OfType<T>().Any();
-    }
-    public int GetStackOfItem<T>() where T : IItem
-    {
-        return _item.OfType<T>().Count();
-    }
-    public T? GetItemOrDefault<T>() where T : IItem
-    {
-        return _item.OfType<T>().FirstOrDefault();
-    }
-    public T GetItem<T>() where T : IItem
-    {
-        return _item.OfType<T>().FirstOrDefault()!;
-    }
-    public void GiveItem(IItem item, int stack = 1)
-    {
-        for (int i = 0; i < stack; i++) _item.Add(item);
-    }
-    public void RemoveItem<T>() where T : IItem
-    {
-        IItem? targetItem = GetItem<T>();
-        if (targetItem is not null) _item.Remove(targetItem);
-    }
-
-
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
 
     private void OnNewMap()

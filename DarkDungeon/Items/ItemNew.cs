@@ -1,14 +1,15 @@
 public abstract class ItemNew : IItem
 {
-    protected static Player s_player => Player.instance;
+    public Creature? owner { get; set; }
     protected void AttackRange(int range, StatName statDepend)
     {
-        int damage = s_player.Stat.GetRandom(statDepend);
-        Creature? hit = Map.Current.RayCast(s_player.Pos, range);
+        if(owner is null)return;
+        int damage = owner.Stat.GetRandom(statDepend);
+        Creature? hit = Map.Current.RayCast(owner.Pos, range);
         if (hit is Creature hitCreature)
         {
             hitCreature.Stat.Damage(damage);
         }
     }
-    protected void ConsumeEnergy() => s_player.Energy.Consume();
+    protected void ConsumeEnergy() => owner?.Energy.Consume();
 }
