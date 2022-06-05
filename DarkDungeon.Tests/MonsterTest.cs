@@ -27,18 +27,18 @@ public class MonsterTestTest : IDisposable
         Program.ElaspeTurn();
         Assert.NotEqual(0, testMon.Inven.GetMagicCharge(Creature.holySword));
     }
-    [Fact]
-    public void MarksmanTest()
-    {
-        Marksman marksman = new(new(2, Facing.Left));
-        map.UpdateFightable(player);
-        map.UpdateFightable(marksman);
-        player.Inven.Add(Creature.torch);
-        Assert.Equal(5, marksman.Inven.GetStack(Creature.arrow));
-        Assert.Contains(Creature.arrow, marksman.Inven);
-        Program.ElaspeTurn();
-        Program.ElaspeTurn();
-        Assert.Equal(4, marksman.Inven.GetStack(Creature.arrow));
-        Assert.NotEqual(player.GetHp().Max, player.GetHp().Cur);
-    }
+    // [Fact]
+    // public void MarksmanTest()
+    // {
+    //     Marksman marksman = new(new(2, Facing.Left));
+    //     map.UpdateFightable(player);
+    //     map.UpdateFightable(marksman);
+    //     player.Inven.Add(Creature.torch);
+    //     Assert.Equal(5, marksman.Inven.GetStack(Creature.arrow));
+    //     Assert.Contains(Creature.arrow, marksman.Inven);
+    //     Program.ElaspeTurn();
+    //     Program.ElaspeTurn();
+    //     Assert.Equal(4, marksman.Inven.GetStack(Creature.arrow));
+    //     Assert.NotEqual(player.GetHp().Max, player.GetHp().Cur);
+    // }
 }
