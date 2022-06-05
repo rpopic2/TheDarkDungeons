@@ -1,4 +1,4 @@
-public class ShadowBow
+public class ShadowBow : IItem
 {
     
 }

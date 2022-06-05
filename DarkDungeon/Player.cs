@@ -14,6 +14,18 @@ public partial class Player : Creature
         if (classIndex == -1) SelectPickupStat(3);
         else Stat[(StatName)classIndex] += 3;
     }
+
+    private List<IItem?> _item = new();
+    public bool HasItem<T>() where T : IItem
+    {
+        return _item.OfType<T>().Any();
+    }
+
+    public void GiveItem(IItem item)
+    {
+        _item.Add(item);
+    }
+
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
 
     private void OnNewMap()
@@ -61,7 +73,7 @@ public partial class Player : Creature
     }
     public bool PickupItem(Item item, ItemMetaData? metaData = null)
     {
-        if(metaData is null) metaData = new();
+        if (metaData is null) metaData = new();
         IO.pr($"\n아이템을 얻었다. {item.Name}");
         Inven.Add(item, metaData, out bool success);
         IO.Redraw();
