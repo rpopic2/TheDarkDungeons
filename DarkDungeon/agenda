@@ -5,6 +5,7 @@ new-item-system 0.6.050622
 [ ] item consists of skills?
 [ ] do push up _RANGE?
 [ ] items printing output messages
+[ ] player.item functions->creature.itemfuncs
 
 main
 [ ] / key and qwert prints its properties

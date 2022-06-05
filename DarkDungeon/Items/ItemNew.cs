@@ -10,4 +10,5 @@ public abstract class ItemNew : IItem
             hitCreature.Stat.Damage(damage);
         }
     }
+    protected void ConsumeEnergy() => s_player.Energy.Consume();
 }
