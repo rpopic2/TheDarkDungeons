@@ -13,7 +13,7 @@ public class ShadowDagger : ItemNew
     public void Shadowstep()
     {
         if(owner is null) return;
-        Creature? hit = Map.Current.RayCast(owner.Pos, 3);
+        Creature? hit = RayCast(3);
         if (hit is Creature hitCreature)
         {
             ConsumeEnergy();
