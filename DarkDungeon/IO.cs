@@ -9,8 +9,6 @@ public static class IO
     private static Player s_player { get => Player.instance; }
     static IO()
     {
-        int delstringLength = Console.WindowWidth - 1;
-        DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
         foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
         {
             if (assembly.FullName?.StartsWith("xunit") ?? false)
@@ -19,6 +17,8 @@ public static class IO
                 return;
             }
         }
+        int delstringLength = Console.WindowWidth - 1;
+        DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
         Console.WriteLine();
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
         try
