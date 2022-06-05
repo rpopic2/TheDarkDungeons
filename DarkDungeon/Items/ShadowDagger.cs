@@ -2,10 +2,12 @@ public class ShadowDagger : ItemNew
 {
     public void Pierce()
     {
+        s_player.Energy.Consume();
         AttackRange(1, StatName.Sol);
     }
     public void Throw()
     {
+        s_player.Energy.Consume();
         AttackRange(3, StatName.Lun);
     }
     public void Shadowstep()
