@@ -15,20 +15,30 @@ public partial class Player : Creature
         else Stat[(StatName)classIndex] += 3;
     }
 
-    private List<IItem?> _item = new();
+    private List<IItem> _item = new();
     public bool HasItem<T>() where T : IItem
     {
         return _item.OfType<T>().Any();
     }
-    public int StackOfItem<T>()
+    public int StackOfItem<T>() where T : IItem
     {
         return _item.OfType<T>().Count();
+    }
+    public T? GetItem<T>() where T : IItem
+    {
+        return _item.OfType<T>().FirstOrDefault();
     }
 
     public void GiveItem(IItem item)
     {
         _item.Add(item);
     }
+    public void RemoveItem<T>() where T : IItem
+    {
+        IItem? targetItem = GetItem<T>();
+        if (targetItem is not null) _item.Remove(targetItem);
+    }
+
 
     public ISteppable? UnderFoot => _currentMap.GetSteppable(Pos.x);
 
@@ -43,6 +53,7 @@ public partial class Player : Creature
     {
         SelectPickupStat();
     }
+
     public void SelectBehaviour(Item item)
     {
         IO.del(__.bottom);

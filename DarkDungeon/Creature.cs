@@ -17,6 +17,7 @@ public abstract partial class Creature
     public Action<Creature> passives = (p) => { };
     protected Action _turnPre = delegate { };
     protected Action _turnEnd = delegate { };
+    public Action OnTurnAction = delegate { };
 
     public bool DidMoveLastTurn { get; private set; }
 
@@ -40,6 +41,7 @@ public abstract partial class Creature
     }
     public GamePoint GetHp() => Stat.Hp;
     public int CurrentHp => Stat.Hp.Cur;
+    public int MaxHp => Stat.Hp.Max;
     protected Map _currentMap => Map.Current;
     public virtual Creature? CreatureAtFront => _currentMap.GetCreatureAt(Pos.Front(1));
     public abstract void LetSelectBehaviour();
@@ -120,7 +122,7 @@ public abstract partial class Creature
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
             ItemMetaData metaData = Inven.GetMeta(item)!;
-            if(itemPreservesOnEnemy) _lastHit?.Inven.Add(item, metaData);
+            if (itemPreservesOnEnemy) _lastHit?.Inven.Add(item, metaData);
             Inven.Consume(item);
         }
         else
@@ -227,6 +229,7 @@ public abstract partial class Creature
         if (CurAction.CurrentBehav is not IBehaviour behav) throw new Exception($"턴이 흘렀는데도 {Name}이 아무 행동도 선택하지 않았습니다.");
         if (behav is NonTokenSkill nonTokenSkill) nonTokenSkill.NonTokenBehav.Invoke(this, CurAction.Amount, CurAction.Amount2);
         else behav.Behaviour.Invoke(this);
+        OnTurnAction.Invoke();
     }
     protected virtual void OnTurnEnd()
     {

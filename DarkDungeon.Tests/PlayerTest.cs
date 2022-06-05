@@ -23,4 +23,12 @@ public class PlayerTest : IDisposable
         Program.ElaspeTurn();
         Assert.Equal(10, player.Inven.GetMeta(Creature.spiritStaff!)!.magicCharge);
     }
+    [Fact]
+    public void TestNewOnTurn()
+    {
+        map.AddToOnTurn(() => player.Stat.Damage(1), false);
+        Assert.Equal(player.MaxHp, player.CurrentHp);
+        Program.ElaspeTurn();
+        Assert.NotEqual(player.MaxHp, player.CurrentHp);
+    }
 }
