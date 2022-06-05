@@ -1,9 +1,10 @@
-main 0.6.050622
-[ ]  new item system
+new-item-system 0.6.050622
+[x] refactor shadowdagger and ShadowBow
 [ ] possibly merge Player.HasItem and StackOfItem
 [ ] item consists of skills?
-[ ] refactor shadowdagger and ShadowBow
+[ ] do push up _RANGE?
 
+main
 [ ] / key and qwert prints its properties
 [ ] 몹이랑 딱붙어있을떄 몹이 뒤돌고있으면 안뒤돌아봄. -> why not working?
 [ ] 숙련도 무기별이 아니라 스탯별로 변경하기.
