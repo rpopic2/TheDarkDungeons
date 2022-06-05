@@ -20,7 +20,7 @@ public partial class Player : Creature
     {
         return _item.OfType<T>().Any();
     }
-    public int StackOfItem<T>() where T : IItem
+    public int GetStackOfItem<T>() where T : IItem
     {
         return _item.OfType<T>().Count();
     }

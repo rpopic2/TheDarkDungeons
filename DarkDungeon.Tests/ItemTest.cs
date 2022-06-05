@@ -43,9 +43,9 @@ public class ItemTest : IDisposable
         player.GiveItem(new Bolt());
         player.GiveItem(new Bolt());
         player.GiveItem(new ShadowBow());
-        int stackOfBolt = player.StackOfItem<Bolt>();
+        int stackOfBolt = player.GetStackOfItem<Bolt>();
         Assert.Equal(2, stackOfBolt);
-        Assert.Equal(1, player.StackOfItem<ShadowBow>());
+        Assert.Equal(1, player.GetStackOfItem<ShadowBow>());
     }
     [Fact]
     public void RemoveItem()
@@ -65,11 +65,12 @@ public class ItemTest : IDisposable
         TestMonster testMon = new(new(2));
         player.GiveItem(new ShadowBow());
         player.GiveItem(new Bolt());
+        player.GiveItem(new Bolt());
         player.GetItem<ShadowBow>().Throw();
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
 
         Program.ElaspeTurn();
-        Assert.False(player.HasItem<Bolt>());//consumes bolt
+        Assert.Equal(1, player.GetStackOfItem<Bolt>());//consumes bolt
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
     }
 }
