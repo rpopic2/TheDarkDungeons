@@ -5,6 +5,9 @@ new-item-system 0.6.050622
 [?] possibly merge Player.HasItem and StackOfItem
 [?] item consists of skills class?
 [ ] items printing output messages
+[ ] Showing off new inven.
+[ ] tostring in newitem
+[ ] how to show bare hand?
 
 main
 [ ] / key and qwert prints its properties

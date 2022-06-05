@@ -143,4 +143,10 @@ public class ItemTest : IDisposable
         Program.ElaspeTurn();
         Assert.NotEqual(player.MaxHp, player.CurrentHp);
     }
+    [Fact]
+    public void NewInvenToString()
+    {
+        Assert.Equal("아무것도 없다.", player.InvenToString);
+        player.GiveItem(new ShadowDagger());
+    }
 }

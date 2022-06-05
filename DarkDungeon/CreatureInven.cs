@@ -30,4 +30,11 @@ public partial class Creature
         IItem? targetItem = GetItem<T>();
         if (targetItem is not null) _items.Remove(targetItem);
     }
+    public string InvenToString
+    {
+        get
+        {
+            return _items.ToFString();
+        }
+    }
 }
