@@ -4,6 +4,6 @@ public class ShadowBow : ItemNew
     protected override void _Throw()
     {
         s_player.RemoveItem<Bolt>();
-        AttackRange(_RANGE);
+        AttackRange(_RANGE, StatName.Lun);
     }
 }

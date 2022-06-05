@@ -5,10 +5,10 @@ public abstract class ItemNew : IItem
     protected virtual void _Throw() {}
     public void Pierce() => Program.OnTurnAction += _Pierce;
     public void Throw() => Program.OnTurnAction += _Throw;
-    protected void AttackRange(int range)
+    protected void AttackRange(int range, StatName statDepend)
     {
         s_player.Energy.Consume();
-        int damage = s_player.Stat.GetRandom(StatName.Sol);
+        int damage = s_player.Stat.GetRandom(statDepend);
         Creature? hit = Map.Current.RayCast(s_player.Pos, range);
         if (hit is Creature hitCreature)
         {
