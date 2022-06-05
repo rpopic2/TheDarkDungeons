@@ -1,9 +1,8 @@
 public class ShadowBow : ItemNew
 {
-    private const int _RANGE = 3;
-    protected override void _Throw()
+    public void Throw()
     {
         s_player.RemoveItem<Bolt>();
-        AttackRange(_RANGE, StatName.Lun);
+        AttackRange(3, StatName.Lun);
     }
 }

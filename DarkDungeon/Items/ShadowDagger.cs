@@ -1,10 +1,10 @@
 public class ShadowDagger : ItemNew
 {
-    protected override void _Pierce()
+    public void Pierce()
     {
         AttackRange(1, StatName.Sol);
     }
-    protected override void _Throw()
+    public void Throw()
     {
         AttackRange(3, StatName.Lun);
     }

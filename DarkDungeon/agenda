@@ -4,6 +4,7 @@ new-item-system 0.6.050622
 [ ] item consists of skills?
 [ ] do push up _RANGE?
 [ ] items printing output messages
+[ ] UseSkill method in ItemNew that +=s to onturn
 
 main
 [ ] / key and qwert prints its properties

@@ -2,6 +2,7 @@ using System;
 using Xunit;
 public class ItemTest : IDisposable
 {
+    private static Action? OnTurn { get => Program.OnTurnAction; set => Program.OnTurnAction = value; }
     Map? _map;
     Player? _player;
     Map map => _map!;
@@ -66,7 +67,7 @@ public class ItemTest : IDisposable
         player.GiveItem(new ShadowBow());
         player.GiveItem(new Bolt());
         player.GiveItem(new Bolt());
-        player.GetItem<ShadowBow>().Throw();
+        OnTurn += player.GetItem<ShadowBow>().Throw;
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
 
         Program.ElaspeTurn();
@@ -79,7 +80,7 @@ public class ItemTest : IDisposable
     {
         TestMonster testMon = new(new(1));
         player.GiveItem(new ShadowDagger());
-        player.GetItem<ShadowDagger>().Pierce();
+        OnTurn += player.GetItem<ShadowDagger>().Pierce;
         Program.ElaspeTurn();
         Assert.False(player.Energy.IsMax);
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
@@ -89,7 +90,7 @@ public class ItemTest : IDisposable
     {
         TestMonster testMon = new(new(2));
         player.GiveItem(new ShadowDagger());
-        player.GetItem<ShadowDagger>().Pierce();
+        OnTurn += player.GetItem<ShadowDagger>().Pierce;
         Program.ElaspeTurn();
         Assert.False(player.Energy.IsMax);
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
@@ -99,9 +100,27 @@ public class ItemTest : IDisposable
     {
         TestMonster testMon = new(new(3));
         player.GiveItem(new ShadowDagger());
-        player.GetItem<ShadowDagger>().Throw();
+        OnTurn += player.GetItem<ShadowDagger>().Throw;
         Program.ElaspeTurn();
         Assert.False(player.Energy.IsMax);
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
+        int tempCur = testMon.CurrentHp;
+        Program.ElaspeTurn();
+        Assert.Equal(tempCur, testMon.CurrentHp);
+    }
+    // [Fact]
+    // public void ShadowDaggerTestBackstep()
+    // {
+    //     TestMonster testMon = new(new(3));
+    //     player.GiveItem(new ShadowDagger());
+    //     player.GetItem<ShadowDagger>().Magic();
+    //     Program.ElaspeTurn();
+    //     Assert.Equal(new Position(4, Facing.Left), player.Pos);
+    // }
+    [Fact]
+    public void TestItemUseSkill()
+    {
+        player.GiveItem(new ShadowDagger());
+        // OnTurn += player.GetItem<ShadowDagger>().Throw;
     }
 }
