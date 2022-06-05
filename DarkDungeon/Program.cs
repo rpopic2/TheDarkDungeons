@@ -4,14 +4,16 @@ public class Program
     public const string VERSION = "0.6.040622";
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
+    public static Action? OnTurnAction;
     public static void Main()
     {
-        if(!IO.IsInteractive) return;
-        Console.CancelKeyPress += (e, e2) => {Environment.Exit(1);};
+        if (!IO.IsInteractive) return;
+        Console.CancelKeyPress += (e, e2) => { Environment.Exit(1); };
         Program instance = new Program();
         do
         {
             OnTurn?.Invoke();
+            OnTurnAction?.Invoke();
         } while (s_player.IsAlive);
         IO.pr(s_player.ToString());
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
@@ -26,7 +28,12 @@ public class Program
         IO.Redraw();
         IO.pr("\n?을 눌러 도움말 표시.");
     }
-    public static void ElaspeTurn() => OnTurn?.Invoke();
+    public static void ElaspeTurn()
+    {
+        OnTurn?.Invoke();
+        OnTurnAction?.Invoke();
+        OnTurnAction = default;
+    }
     private void CreatePlayer()
     {
         string name = ChooseName();

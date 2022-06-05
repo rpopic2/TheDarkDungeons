@@ -26,9 +26,20 @@ public class PlayerTest : IDisposable
     [Fact]
     public void TestNewOnTurn()
     {
-        map!.OnTurn(() => player.Stat.Damage(1), false);
+        // map!.OnTurn(() => player.Stat.Damage(1), false);
+        Program.OnTurnAction += () => player.Stat.Damage(1);
         Assert.Equal(player.MaxHp, player.CurrentHp);
         Program.ElaspeTurn();
-        Assert.NotEqual(player.MaxHp, player.CurrentHp);
+        Assert.Equal(player.MaxHp - 1, player.CurrentHp);
+    }
+    [Fact]
+    public void ResetsOnTurnProperly()
+    {
+        Program.OnTurnAction += () => player.Stat.Damage(1);
+        Assert.Equal(player.MaxHp, player.CurrentHp);
+        Program.ElaspeTurn();
+        Assert.Equal(player.MaxHp - 1, player.CurrentHp);
+        Program.ElaspeTurn();
+        Assert.Equal(player.MaxHp - 1, player.CurrentHp);
     }
 }
