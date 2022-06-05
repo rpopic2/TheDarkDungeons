@@ -123,5 +123,15 @@ public class ItemTest : IDisposable
         OnTurn += player.GetItem<ShadowDagger>().Shadowstep;
         Program.ElaspeTurn();
         Assert.Equal(new Position(4, Facing.Left), player.Pos);
+        Assert.False(player.Energy.IsMax);
+    }
+    [Fact]
+    public void ShadowstepNoEnergyConsumeOnNoTarget()//->PositionTest.Shadowstep
+    {
+        player.GiveItem(new ShadowDagger());
+        OnTurn += player.GetItem<ShadowDagger>().Shadowstep;
+        Program.ElaspeTurn();
+        Assert.Equal(new(), player.Pos);
+        Assert.True(player.Energy.IsMax);
     }
 }
