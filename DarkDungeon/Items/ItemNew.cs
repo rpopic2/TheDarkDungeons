@@ -19,14 +19,13 @@ public abstract class ItemNew
     }
     protected void ConsumeEnergy() => owner?.Energy.Consume();
     protected void ConsumeItem<T>() where T : IStackable => owner?.RemoveItemStack<T>(1);
-    // override object.Equals
+
     public override bool Equals(object? obj)
     {
         if (obj is null || GetType() != obj.GetType()) return false;
         return Equals((ItemNew)obj);
     }
     public bool Equals(ItemNew item) => item.Name == Name;
-    // override object.GetHashCode
     public override int GetHashCode() => HashCode.Combine(Name);
     public override string ToString()
     {

@@ -1,26 +1,8 @@
 using System;
 using Xunit;
 using Item;
-public class ItemTest : IDisposable
+public class ItemTest : TestTemplate
 {
-    private static Action? OnTurn { get => Program.OnTurnAction; set => Program.OnTurnAction = value; }
-    Map? _map;
-    Player? _player;
-    Map map => _map!;
-    Player player => _player!;
-    public ItemTest()
-    {
-        _map = new(4, false, null);
-        _player = Player._instance = new Player("test");
-        _map.UpdateFightable(_player);
-    }
-    public void Dispose()
-    {
-        _map = null;
-        _player = Player._instance = null;
-        Map.ResetMapTurn();
-        Program.OnTurn = null;
-    }
     [Fact]
     public void GiveItemTest()
     {

@@ -2,8 +2,8 @@ using System;
 public class TestTemplate : IDisposable
 {
     protected static Action? OnTurn { get => Program.OnTurnAction; set => Program.OnTurnAction = value; }
-    protected Map? _map;
-    protected Player? _player;
+    private Map? _map;
+    private Player? _player;
     protected Map map => _map!;
     protected Player player => _player!;
     public TestTemplate()

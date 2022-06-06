@@ -1,8 +1,11 @@
 new-item-system 0.6.050622
-[ ] items printing output messages
-[ ] using new items by user input.
-[ ] namespace for items
+[x] namespace for items
+[ ] printing list of skills in item
+[ ] itemnew to item
 
+[ ] using new items by user input.
+[ ] items printing output messages
+[ ] IStackable은 애초에 인터페이스말고 슈퍼클래스가 필요할듯. 생성자도 위로 올려야되고.
 main
 [ ] / key and qwert prints its properties
 [ ] 몹이랑 딱붙어있을떄 몹이 뒤돌고있으면 안뒤돌아봄. -> why not working?
