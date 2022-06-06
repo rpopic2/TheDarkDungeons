@@ -191,8 +191,8 @@ public class ItemTest : IDisposable
     public void InvenToStringStackedItems()
     {
         player.GiveItem(new Bolt());
-        Assert.Equal("(q|석궁 볼트)(w|맨손)", player.InvenToString);
-        // player.GiveItem(new Bolt());
-        // Assert.Equal("(q|석궁 볼트x2)(w|맨손)", player.InvenToString);
+        Assert.Equal("(q|석궁 볼트x1)(w|맨손)", player.InvenToString);
+        player.GiveItem(new Bolt());
+        Assert.Equal("(q|석궁 볼트x2)(w|맨손)", player.InvenToString);
     }
 }

@@ -59,6 +59,7 @@ public partial class Creature
         if (item is not null)
         {
             name = item.ToString();
+            if(item is IStackable stackable) name += $"x{(int)stackable.stack}";
         }
         else name = BareHand.BareHandName;
         return $"({IO.ITEMKEYS1[index]}|{name})";
