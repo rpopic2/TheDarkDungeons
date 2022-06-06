@@ -1,7 +1,7 @@
 public static class IO2
 {
     private static Player s_player => Player.instance;
-    private static ItemNew? selectedItem;
+    private static ItemBase? selectedItem;
     public static void Press(char v)
     {
         int index = IO.ITEMKEYS1.IndexOf(v);

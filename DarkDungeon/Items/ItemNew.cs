@@ -1,4 +1,4 @@
-public abstract class ItemNew
+public abstract class ItemBase
 {
     public abstract string Name { get; }
     public Creature? Owner { get; set; }
@@ -24,9 +24,9 @@ public abstract class ItemNew
     public override bool Equals(object? obj)
     {
         if (obj is null || GetType() != obj.GetType()) return false;
-        return Equals((ItemNew)obj);
+        return Equals((ItemBase)obj);
     }
-    public bool Equals(ItemNew item) => item.Name == Name;
+    public bool Equals(ItemBase item) => item.Name == Name;
     public override int GetHashCode() => HashCode.Combine(Name);
     public override string ToString()
     {

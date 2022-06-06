@@ -1,8 +1,7 @@
 namespace Item;
-public class ShadowDagger : ItemNew
+public class ShadowDagger : ItemBase
 {
     public override string Name => "그림자 단검";
-
     public override List<Action> Skills { get; init; }
 
     public ShadowDagger()

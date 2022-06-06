@@ -1,5 +1,5 @@
 namespace Item;
-public class ShadowBow : ItemNew
+public class ShadowBow : ItemBase
 {
     public ShadowBow()
     {
