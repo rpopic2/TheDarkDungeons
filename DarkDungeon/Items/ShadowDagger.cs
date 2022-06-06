@@ -3,6 +3,12 @@ public class ShadowDagger : ItemNew
 {
     public override string Name => "그림자 단검";
 
+    public ShadowDagger()
+    {
+        Skills.Add(Pierce);
+        Skills.Add(Throw);
+    }
+
     public void Pierce()
     {
         ConsumeEnergy();
@@ -29,4 +35,5 @@ public class ShadowDagger : ItemNew
     {
         return $"{Name} | (q|찌르기)(w|던지기)";
     }
+
 }

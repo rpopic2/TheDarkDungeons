@@ -204,13 +204,21 @@ public class ItemTest : TestTemplate
     public void SkillToString()
     {
         TestMonster testMon = new(new(1, Facing.Left));
-        ShadowDagger dagger =new();
+        ShadowDagger dagger = new();
         player.GiveItem(dagger);
 
         IO2.Press('q');
+        Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
         IO2.Press('q');
 
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
+    }
+    [Fact]
+    public void GetSkillByIndex()
+    {
+        ShadowDagger dagger = new();
+        Assert.Equal(dagger.Pierce, dagger.GetSkillAt(0));
+        Assert.Equal(dagger.Throw, dagger.GetSkillAt(1));
     }
     // [Fact]
     // public void SelectItemFromInven()

@@ -2,6 +2,7 @@ public abstract class ItemNew
 {
     public abstract string Name { get; }
     public Creature? owner { get; set; }
+    public List<Action> Skills = new() { };
     protected void AttackRange(int range, StatName statDepend)
     {
         if (owner is null) return;
@@ -32,5 +33,9 @@ public abstract class ItemNew
         string name = Name;
         if (this is IStackable stackable) name += $"x{(int)stackable.Stack}";
         return name;
+    }
+    public Action GetSkillAt(int index)
+    {
+        return Skills[index];
     }
 }
