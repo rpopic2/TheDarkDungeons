@@ -48,9 +48,9 @@ public partial class Creature
 {
     public readonly static ItemOld mutedSword = new("무음의 검", ItemType.Equip, new IBehaviour[]
      {
-            new Skill("소리 없는 칼날", StanceName.Offence, StatName.Sol, DamageType.Slash, ".....", (i)=>i.Attack(2) ),
-            new Charge("칼 들어올리기", StatName.Sol, DamageType.Magic, ".....!!!", (i)=>{i.Charge(mutedSword!);}), new Skill("내려치기", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!.....", (i)=>i.Attack(2) ),
-new Skill("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!!!!", (i)=>{i.Dash(new Position(4, i.Pos.facing));i.Attack(4);i._lastHit?.CurAction.SetStun(1);})
+            new SkillOld("소리 없는 칼날", StanceName.Offence, StatName.Sol, DamageType.Slash, ".....", (i)=>i.Attack(2) ),
+            new Charge("칼 들어올리기", StatName.Sol, DamageType.Magic, ".....!!!", (i)=>{i.Charge(mutedSword!);}), new SkillOld("내려치기", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!.....", (i)=>i.Attack(2) ),
+new SkillOld("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!!!!", (i)=>{i.Dash(new Position(4, i.Pos.facing));i.Attack(4);i._lastHit?.CurAction.SetStun(1);})
 
 
      });

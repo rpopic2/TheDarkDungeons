@@ -93,7 +93,7 @@ public abstract partial class Creature
     private void Attack(int range)
     {
         DamageType damageType = default;
-        if (CurAction.CurrentBehav is Skill skill) damageType = skill.damageType;
+        if (CurAction.CurrentBehav is SkillOld skill) damageType = skill.damageType;
         Creature? mov = _currentMap.RayCast(Pos, range);
         ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!)!;
         if (mov is Creature hit)
@@ -150,7 +150,7 @@ public abstract partial class Creature
     private void CalcDamageType(ref int damage, DamageType damageType, Creature attacker)
     {
         DamageType defenceType = default;
-        if (CurAction.CurrentBehav is Skill skill) defenceType = skill.damageType;
+        if (CurAction.CurrentBehav is SkillOld skill) defenceType = skill.damageType;
         if (damageType == defenceType) EffectiveDefence(ref damage);
         else if (damageType == DamageType.Slash && defenceType == DamageType.Magic) UneffectiveDefence(ref damage);
         else if (damageType == DamageType.Thrust && defenceType == DamageType.Slash) UneffectiveDefence(ref damage);
