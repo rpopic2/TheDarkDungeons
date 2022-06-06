@@ -35,7 +35,7 @@ public partial class Creature
         }
         else
         {
-            item.owner = this;
+            item.Owner = this;
             _items.Add(item);
         }
     }

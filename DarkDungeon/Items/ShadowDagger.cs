@@ -3,10 +3,11 @@ public class ShadowDagger : ItemNew
 {
     public override string Name => "그림자 단검";
 
+    public override List<Action> Skills { get; init; }
+
     public ShadowDagger()
     {
-        Skills.Add(Pierce);
-        Skills.Add(Throw);
+        Skills = new() { Pierce, Throw };
     }
 
     public void Pierce()
@@ -21,13 +22,13 @@ public class ShadowDagger : ItemNew
     }
     public void Shadowstep()
     {
-        if (owner is null) return;
+        if (Owner is null) return;
         Creature? hit = RayCast(3);
         if (hit is Creature hitCreature)
         {
             ConsumeEnergy();
             Position targetPos = hit.Pos;
-            owner.Pos = new(targetPos.Back(2), targetPos.facing);
+            Owner.Pos = new(targetPos.Back(2), targetPos.facing);
         }
     }
 

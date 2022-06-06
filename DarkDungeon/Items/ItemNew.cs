@@ -1,12 +1,12 @@
 public abstract class ItemNew
 {
     public abstract string Name { get; }
-    public Creature? owner { get; set; }
-    public List<Action> Skills = new() { };
+    public Creature? Owner { get; set; }
+    public abstract List<Action> Skills { get; init; }
     protected void AttackRange(int range, StatName statDepend)
     {
-        if (owner is null) return;
-        int damage = owner.Stat.GetRandom(statDepend);
+        if (Owner is null) return;
+        int damage = Owner.Stat.GetRandom(statDepend);
         Creature? hit = RayCast(range);
         if (hit is Creature hitCreature)
         {
@@ -15,11 +15,11 @@ public abstract class ItemNew
     }
     protected Creature? RayCast(int range)
     {
-        if (owner is null) return null;
-        return Map.Current.RayCast(owner.Pos, range);
+        if (Owner is null) return null;
+        return Map.Current.RayCast(Owner.Pos, range);
     }
-    protected void ConsumeEnergy() => owner?.Energy.Consume();
-    protected void ConsumeItem<T>() where T : IStackable => owner?.RemoveItemStack<T>(1);
+    protected void ConsumeEnergy() => Owner?.Energy.Consume();
+    protected void ConsumeItem<T>() where T : IStackable => Owner?.RemoveItemStack<T>(1);
 
     public override bool Equals(object? obj)
     {
