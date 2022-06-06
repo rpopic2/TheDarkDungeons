@@ -183,7 +183,7 @@ public static class IO
     {
         Console.Clear();
         Inventory Inven = s_player.Inven;
-        foreach (Item item in Inven.OfType<Item>())
+        foreach (ItemOld item in Inven.OfType<ItemOld>())
         {
             ItemMetaData metaData = Inven.GetMeta(item)!;
             pr($"{item.Name} | 종류 : {item.itemType} {metaData} ");

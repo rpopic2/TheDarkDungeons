@@ -46,7 +46,7 @@ public class CombatTest : IDisposable
         ItemMetaData metaData = corpse.droplist.GetMeta(Creature.dagger)!;
         // Assert.Equal(1, metaData.CurExp);
 
-        corpse.GetItemAndMeta(2, out Item? item, out ItemMetaData? metaData2);
+        corpse.GetItemAndMeta(2, out ItemOld? item, out ItemMetaData? metaData2);
         player.PickupItem(item!, metaData2!);
 
         Assert.Equal(1, metaData2!.CurExp);

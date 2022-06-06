@@ -1,4 +1,4 @@
-public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, Item[] startItem);
+public record MonsterData(string name, char fowardChar, char backwardChar, StatInfo stat, ItemOld[] startItem);
 public abstract class Monster : Creature
 {
     private int killExp;

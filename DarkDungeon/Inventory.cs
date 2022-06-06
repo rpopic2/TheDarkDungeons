@@ -1,12 +1,12 @@
 using System.Collections;
 
-public class Inventory : ICollection<Item?>
+public class Inventory : ICollection<ItemOld?>
 {
     public Creature owner;
     public const int INVENSIZE = 5;
-    private List<Item?> content;
-    public ref readonly List<Item?> Content => ref content;
-    private Dictionary<Item, ItemMetaData> metaDatas;
+    private List<ItemOld?> content;
+    public ref readonly List<ItemOld?> Content => ref content;
+    private Dictionary<ItemOld, ItemMetaData> metaDatas;
     private ItemMetaData bareHandMetaData = new();
     public readonly string name;
 
@@ -17,15 +17,15 @@ public class Inventory : ICollection<Item?>
         content = new(INVENSIZE);
         metaDatas = new(INVENSIZE);
     }
-    public Item? GetFirst()
+    public ItemOld? GetFirst()
         => content.First(card => card != null);
     public int Count => content.Count(item => item != null);
 
-    public bool IsReadOnly => ((ICollection<Item?>)content).IsReadOnly;
+    public bool IsReadOnly => ((ICollection<ItemOld?>)content).IsReadOnly;
 
-    public void Add(Item? value, ItemMetaData metaData, out bool added)
+    public void Add(ItemOld? value, ItemMetaData metaData, out bool added)
     {
-        if (value is not Item item) throw new Exception("Trying to put non-Item objext into Inventory.");
+        if (value is not ItemOld item) throw new Exception("Trying to put non-Item objext into Inventory.");
         if (item.itemType == ItemType.Consume && content.IndexOf(item) != -1)
         {
             GetMeta(item)!.stack += metaData.stack;
@@ -33,12 +33,12 @@ public class Inventory : ICollection<Item?>
         }
         else added = Store(item, metaData);
     }
-    public void Add(Item item, ItemMetaData metaData)
+    public void Add(ItemOld item, ItemMetaData metaData)
     {
         Store(item, metaData);
     }
-    public void Add(Item? value) => Add(value, new(), out _);
-    private bool Store(Item item, ItemMetaData metaData)
+    public void Add(ItemOld? value) => Add(value, new(), out _);
+    private bool Store(ItemOld item, ItemMetaData metaData)
     {
         if (Count >= INVENSIZE && owner is Player p)
         {
@@ -55,15 +55,15 @@ public class Inventory : ICollection<Item?>
         }
         return true;
     }
-    private void Wear(Item item)
+    private void Wear(ItemOld item)
     {
         item.ForEach<WearEffect>((w) => w.Behaviour.Invoke(owner));
     }
-    private void TakeOff(Item item)
+    private void TakeOff(ItemOld item)
     {
         item.ForEach<WearEffect>((w) => w.OnTakeOff.Invoke(owner));
     }
-    private void RegisterPassives(Item item)
+    private void RegisterPassives(ItemOld item)
     {
         item.ForEach<Passive>((p) =>
         {
@@ -76,12 +76,12 @@ public class Inventory : ICollection<Item?>
             return invocationList.Contains(passive.Behaviour);
         }
     }
-    private void UnregisterPassives(Item item)
+    private void UnregisterPassives(ItemOld item)
     {
 #pragma warning disable
         item.ForEach<Passive>(p => owner.passives -= p.Behaviour);
     }
-    public void Remove(Item item)
+    public void Remove(ItemOld item)
     {
         TakeOff(item);
         UnregisterPassives(item);
@@ -89,19 +89,19 @@ public class Inventory : ICollection<Item?>
         content.Remove(item);
         metaDatas.Remove(item);
     }
-    public Item? this[int index]
+    public ItemOld? this[int index]
     {
         get => content[index];
     }
-    public ItemMetaData? GetMeta(Item item)
+    public ItemMetaData? GetMeta(ItemOld item)
     {
         if (item == Creature.bareHand) return bareHandMetaData;
         if(metaDatas.ContainsKey(item)) return metaDatas[item];
         else return null;
     }
-    public int GetStack(Item item) => GetMeta(item).stack;
-    public int GetMagicCharge(Item item) => GetMeta(item).magicCharge;
-    public void Consume(Item item)
+    public int GetStack(ItemOld item) => GetMeta(item).stack;
+    public int GetMagicCharge(ItemOld item) => GetMeta(item).magicCharge;
+    public void Consume(ItemOld item)
     {
         if (--GetMeta(item).stack <= 0)
         {
@@ -116,7 +116,7 @@ public class Inventory : ICollection<Item?>
         {
             string itemName = string.Empty;
             if (i >= Count) itemName = "(맨손)";
-            else if (content[i] is Item item)
+            else if (content[i] is ItemOld item)
             {
                 itemName = item.ToString();
                 int stack = GetMeta(item)?.stack ?? 0;
@@ -129,27 +129,27 @@ public class Inventory : ICollection<Item?>
 
     public void Clear()
     {
-        ((ICollection<Item?>)content).Clear();
+        ((ICollection<ItemOld?>)content).Clear();
     }
 
-    public bool Contains(Item? item)
+    public bool Contains(ItemOld? item)
     { 
-        return ((ICollection<Item?>)content).Contains(item);
+        return ((ICollection<ItemOld?>)content).Contains(item);
     }
 
-    public void CopyTo(Item?[] array, int arrayIndex)
+    public void CopyTo(ItemOld?[] array, int arrayIndex)
     {
-        ((ICollection<Item?>)content).CopyTo(array, arrayIndex);
+        ((ICollection<ItemOld?>)content).CopyTo(array, arrayIndex);
     }
 
-    bool ICollection<Item?>.Remove(Item? item)
+    bool ICollection<ItemOld?>.Remove(ItemOld? item)
     {
-        return ((ICollection<Item?>)content).Remove(item);
+        return ((ICollection<ItemOld?>)content).Remove(item);
     }
 
-    public IEnumerator<Item?> GetEnumerator()
+    public IEnumerator<ItemOld?> GetEnumerator()
     {
-        return ((IEnumerable<Item?>)content).GetEnumerator();
+        return ((IEnumerable<ItemOld?>)content).GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()

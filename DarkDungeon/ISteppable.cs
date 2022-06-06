@@ -3,7 +3,7 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
     public char ToChar() => MapSymb.corpse;
     public static Corpse operator +(Corpse old, Corpse newOne)
     {
-        foreach (Item? item in newOne.droplist)
+        foreach (ItemOld? item in newOne.droplist)
         {
             if(item is not null) old.droplist.Add(item);
         }
@@ -11,7 +11,7 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
         return old;
     }
 
-    public void GetItemAndMeta(int index, out Item? item, out ItemMetaData? metaData)
+    public void GetItemAndMeta(int index, out ItemOld? item, out ItemMetaData? metaData)
     {
         item = droplist.ElementAtOrDefault(index);
         if(item is not null) metaData = droplist.GetMeta(item);

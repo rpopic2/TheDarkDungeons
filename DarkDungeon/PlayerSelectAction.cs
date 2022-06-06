@@ -84,7 +84,7 @@ public partial class Player
             SelectBehaviour(bareHand);
             return;
         }
-        else if (Inven[i] is Item item)
+        else if (Inven[i] is ItemOld item)
         {
             SelectBehaviour(item);
             return;

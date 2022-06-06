@@ -45,8 +45,8 @@ public abstract partial class Creature
     protected Map _currentMap => Map.Current;
     public virtual Creature? CreatureAtFront => _currentMap.GetCreatureAt(Pos.Front(1));
     public abstract void LetSelectBehaviour();
-    public void SetAction(Item item, int skillIndex, int amount = 0, int amount2 = 0) => CurAction.Set(item, item.skills[skillIndex], amount, amount2);
-    protected void SelectBehaviour(Item item, int index)
+    public void SetAction(ItemOld item, int skillIndex, int amount = 0, int amount2 = 0) => CurAction.Set(item, item.skills[skillIndex], amount, amount2);
+    protected void SelectBehaviour(ItemOld item, int index)
     {
         if (CurAction.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
@@ -57,7 +57,7 @@ public abstract partial class Creature
         }
         else SetSkill(item, behaviour);
     }
-    private void SetSkill(Item item, IBehaviour behaviour)
+    private void SetSkill(ItemOld item, IBehaviour behaviour)
     {
         int amount = 0;
         if (behaviour is IEnergyConsume energyConsume)
@@ -115,7 +115,7 @@ public abstract partial class Creature
             }
         }
     }
-    private void Throw(int range, Item item, bool itemPreservesOnEnemy = false)
+    private void Throw(int range, ItemOld item, bool itemPreservesOnEnemy = false)
     {
         if (Inven.Contains(item))
         {
@@ -173,13 +173,13 @@ public abstract partial class Creature
             damage = damage.ToVul();
         }
     }
-    protected virtual void Charge(Item? item = null)
+    protected virtual void Charge(ItemOld? item = null)
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge += CurAction.Amount;
         else Inven.GetMeta(item)!.magicCharge += CurAction.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");
     }
-    protected virtual void PoisonItem(Item? item = null)
+    protected virtual void PoisonItem(ItemOld? item = null)
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.poison++;
         else Inven.GetMeta(item)!.poison++;
