@@ -12,6 +12,18 @@ public class ItemTest : TestTemplate
         Assert.True(hasShadowBow);
     }
     [Fact]
+    public void GetItemAtTest()
+    {
+        ShadowBow bow = new();
+        player.GiveItem(bow);
+        Assert.Same(bow, player.GetItemAt(0));
+        player.GiveItem(new Bolt());
+        player.GiveItem(new Bolt());
+        Assert.Equal(new Bolt(), player.GetItemAt(1));
+        Assert.Equal(new BareHand(), player.GetItemAt(2));
+
+    }
+    [Fact]
     public void HasMultipleItems()
     {
         Assert.False(player.HasItem<ShadowBow>());
@@ -191,7 +203,14 @@ public class ItemTest : TestTemplate
     [Fact]
     public void SkillToString()
     {
-        
+        TestMonster testMon = new(new(1, Facing.Left));
+        ShadowDagger dagger =new();
+        player.GiveItem(dagger);
+
+        IO2.Press('q');
+        IO2.Press('q');
+
+        Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
     }
     // [Fact]
     // public void SelectItemFromInven()

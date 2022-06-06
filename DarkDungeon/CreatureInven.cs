@@ -1,6 +1,7 @@
 public partial class Creature
 {
     private List<ItemNew> _items = new();
+    public readonly Item.BareHand BareHand = new();
     public bool HasItem<T>() where T : ItemNew
     {
         return _items.OfType<T>().Any();
@@ -19,6 +20,11 @@ public partial class Creature
     public T GetItem<T>() where T : ItemNew
     {
         return _items.OfType<T>().FirstOrDefault()!;
+    }
+    public ItemNew? GetItemAt(int index)
+    {
+        if(index >= _items.Count) return BareHand;
+        return _items[index];
     }
     public void GiveItem(ItemNew item)
     {
@@ -55,7 +61,7 @@ public partial class Creature
     private string IndexToString(int index)
     {
         string? name = _items.ElementAtOrDefault(index)?.ToString();
-        if (name is null) name = Item.BareHand.BareHandName;
+        if (name is null) name = BareHand.Name;
         return $"({IO.ITEMKEYS1[index]}|{name})";
     }
 }
