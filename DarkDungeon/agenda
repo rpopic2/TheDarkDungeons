@@ -2,6 +2,7 @@ new-item-system 0.6.050622
 [x] namespace for items
 [x] itemnew to item
 [ ] printing list of skills in item
+[ ] invenTOString to method
 
 [ ] using new items by user input.
 [ ] items printing output messages
