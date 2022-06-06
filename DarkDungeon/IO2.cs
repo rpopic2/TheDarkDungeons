@@ -6,7 +6,7 @@ public static class IO2
     {
         int index = IO.ITEMKEYS1.IndexOf(v);
         if (index == -1) return;
-        IO.pr(s_player.InvenToString);
+        IO.pr(s_player.InvenToString());
         if (SelectedItem is null) SelectedItem = s_player.GetItemAt(index);
         else
         {

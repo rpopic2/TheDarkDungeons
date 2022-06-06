@@ -52,14 +52,11 @@ public partial class Creature
             _items.Remove(targetItem);
         }
     }
-    public string InvenToString
+    public string InvenToString()
     {
-        get
-        {
-            string result = string.Empty;
-            for (int i = 0; i < _items.Count + 1; i++) result += IndexToString(i);
-            return result;
-        }
+        string result = string.Empty;
+        for (int i = 0; i < _items.Count + 1; i++) result += IndexToString(i);
+        return result;
     }
     private string IndexToString(int index)
     {

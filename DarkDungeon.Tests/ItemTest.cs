@@ -181,19 +181,19 @@ public class ItemTest : TestTemplate
     [Fact]
     public void NewInvenToString()
     {
-        Assert.Equal("(q|맨손)", player.InvenToString);
+        Assert.Equal("(q|맨손)", player.InvenToString());
         player.GiveItem(new ShadowDagger());
-        Assert.Equal("(q|그림자 단검)(w|맨손)", player.InvenToString);
+        Assert.Equal("(q|그림자 단검)(w|맨손)", player.InvenToString());
         player.GiveItem(new Bolt());
-        Assert.Equal("(q|그림자 단검)(w|석궁 볼트x1)(e|맨손)", player.InvenToString);
+        Assert.Equal("(q|그림자 단검)(w|석궁 볼트x1)(e|맨손)", player.InvenToString());
     }
     [Fact]
     public void InvenToStringStackedItems()
     {
         player.GiveItem(new Bolt());
-        Assert.Equal("(q|석궁 볼트x1)(w|맨손)", player.InvenToString);
+        Assert.Equal("(q|석궁 볼트x1)(w|맨손)", player.InvenToString());
         player.GiveItem(new Bolt());
-        Assert.Equal("(q|석궁 볼트x2)(w|맨손)", player.InvenToString);
+        Assert.Equal("(q|석궁 볼트x2)(w|맨손)", player.InvenToString());
     }
     [Fact]
     public void PrintSkillList()
