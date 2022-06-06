@@ -19,8 +19,5 @@ public abstract class ItemNew : IItem
     }
     protected void ConsumeEnergy() => owner?.Energy.Consume();
     protected void ConsumeItem<T>() where T : IItem => owner?.RemoveItem<T>();
-    public override string ToString()
-    {
-        return $"{Name}";
-    }
+    public override string ToString() => Name;
 }

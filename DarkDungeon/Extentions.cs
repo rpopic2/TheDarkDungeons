@@ -45,11 +45,6 @@ public static class Extensions
         if (index >= IO.ITEMKEYS1.Length) return string.Empty;
         return $"{IO.ITEMKEYS1[index]}{value} ";
     }
-    public static string InsertKeyName(this string value, int index)
-    {
-        if (index >= IO.ITEMKEYS1.Length) return string.Empty;
-        return $"({IO.ITEMKEYS1[index]}|{value})";
-    }
     public static int ToVul(this int damage)
     {
         int result = (int)MathF.Round(damage * Rules.vulMulp);
