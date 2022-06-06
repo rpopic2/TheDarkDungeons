@@ -165,7 +165,7 @@ public static class IO
         string? energyTip = default;
         if (s_player.Energy.IsInjured) energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
         if (energyTip != default) pr(energyTip, __.bottom | __.newline);
-        pr($"턴 : {Map.Turn}  깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
+        pr($"깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
         string myHpEnergy = $"Hp : {s_player.GetHp()}    기력 : {s_player.Energy}";
         Creature? frontCreature = s_player.CreatureAtFront;
         string enemyHpEnergy = frontCreature is null ? string.Empty : $"| 상대 Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy}";
