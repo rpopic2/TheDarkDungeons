@@ -17,8 +17,9 @@ public class ShadowDagger : ItemBase
     public void Throw()
     {
         ConsumeEnergy();
-        AttackRange(3, StatName.Lun);
         RemoveItem<ShadowDagger>();
+        Creature? hit = AttackRange(3, StatName.Lun);
+        hit?.GiveItem(this);
     }
     public void Shadowstep()
     {

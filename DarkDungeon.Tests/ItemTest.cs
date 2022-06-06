@@ -145,7 +145,7 @@ public class ItemTest : TestTemplate
         Program.ElaspeTurn();
         Assert.Equal(tempCur, testMon.CurrentHp);
         Assert.False(player.HasItem<ShadowDagger>());
-        // Assert.True(testMon.HasItem<ShadowDagger>());
+        Assert.True(testMon.HasItem<ShadowDagger>());
     }
     [Fact]
     public void ShadowDaggerTestBackstep()//->PositionTest.Shadowstep

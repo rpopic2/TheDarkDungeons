@@ -3,15 +3,16 @@ public abstract class ItemBase
     public abstract string Name { get; }
     public Creature? Owner { get; set; }
     public abstract List<Action> Skills { get; init; }
-    protected void AttackRange(int range, StatName statDepend)
+    protected Creature? AttackRange(int range, StatName statDepend)
     {
-        if (Owner is null) return;
+        if (Owner is null) return null;
         int damage = Owner.Stat.GetRandom(statDepend);
         Creature? hit = RayCast(range);
         if (hit is Creature hitCreature)
         {
             hitCreature.Stat.Damage(damage);
         }
+        return hit;
     }
     protected Creature? RayCast(int range)
     {

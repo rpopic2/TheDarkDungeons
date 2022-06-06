@@ -23,7 +23,7 @@ public partial class Creature
     }
     public ItemBase GetItemAt(int index)
     {
-        if(index >= _items.Count) return BareHand;
+        if (index >= _items.Count) return BareHand;
         return _items[index];
     }
     public void GiveItem(ItemBase item)
@@ -47,7 +47,10 @@ public partial class Creature
     public void RemoveItem<T>() where T : ItemBase
     {
         ItemBase? targetItem = GetItem<T>();
-        if (targetItem is not null) _items.Remove(targetItem);
+        if (targetItem is not null)
+        {
+            _items.Remove(targetItem);
+        }
     }
     public string InvenToString
     {
