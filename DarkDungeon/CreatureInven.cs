@@ -11,8 +11,10 @@ public partial class Creature
     }
     public int GetStackOfItem(ItemNew item)
     {
-        return 2;
-        // return _items.GroupBy(i=>i.);
+        var query = from i in _items
+                    where i.Name == item.Name
+                    select i;
+        return query.Count();
     }
 
     public T? GetItemOrDefault<T>() where T : ItemNew
