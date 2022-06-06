@@ -1,7 +1,7 @@
 public class Lunatic : Monster, ISpawnable
 {
     private static StatInfo stat = new(stat: new(1, 1, 3), energy: 4, killExp: 3);
-    public static readonly MonsterData data = new(name: "광신도", '>', '<', stat, new ItemOld[] { Creature.holySword, Creature.tearOfLun });
+    public static readonly MonsterData data = new(name: "광신도", '>', '<', stat, new ItemOld[] { Creature.holySword, Creature.tearOfLun, Creature.torch });
 
     public Lunatic(Position spawnPoint) : base(data, spawnPoint) { }
 
