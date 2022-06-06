@@ -1,6 +1,6 @@
 public partial class Creature
 {
-    private List<IItem> _items = new() { new BareHand() };
+    private List<IItem> _items = new();
     public bool HasItem<T>() where T : IItem
     {
         return _items.OfType<T>().Any();
@@ -35,12 +35,16 @@ public partial class Creature
         get
         {
             string result = string.Empty;
-            for (int i = 0; i < _items.Count; i++) result += GetKeyInsertedName(i);
+            for (int i = 0; i < _items.Count + 1; i++) result += IndexToString(i);
             return result;
         }
     }
-    private string GetKeyInsertedName(int index)
+    private string IndexToString(int index)
     {
-        return $"({IO.ITEMKEYS1[index]}|{_items[index].ToString()})";
+        string? name;
+        IItem? item = _items.ElementAtOrDefault(index);
+        if(item is not null) name = item.ToString();
+        else name = BareHand.BareHandName;
+        return $"({IO.ITEMKEYS1[index]}|{name})";
     }
 }

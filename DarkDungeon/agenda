@@ -9,6 +9,7 @@ new-item-system 0.6.050622
 [ ] tostring in newitem
 [ ] how to show bare hand?
 [ ] 맨손 버릴수있는데?
+[ ] remove IItem
 
 main
 [ ] / key and qwert prints its properties

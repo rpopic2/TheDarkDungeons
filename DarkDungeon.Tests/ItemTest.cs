@@ -147,10 +147,10 @@ public class ItemTest : IDisposable
     public void NewInvenToString()
     {
         Assert.Equal("(q|맨손)", player.InvenToString);
-        // player.GiveItem(new ShadowDagger());
-        // Assert.Equal("(q|그림자 단검) (w|맨손)", player.InvenToString);
-        // player.GiveItem(new Bolt());
-        // Assert.Equal("q(그림자 단검) w(석궁 볼트) ", player.InvenToString);
+        player.GiveItem(new ShadowDagger());
+        Assert.Equal("(q|그림자 단검)(w|맨손)", player.InvenToString);
+        player.GiveItem(new Bolt());
+        Assert.Equal("(q|그림자 단검)(w|석궁 볼트)(e|맨손)", player.InvenToString);
         // player.GiveItem(new Bolt());
         // Assert.Equal("q(그림자 단검) w(석궁 볼트x2) ", player.InvenToString);
     }
