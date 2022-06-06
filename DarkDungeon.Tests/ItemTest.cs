@@ -65,6 +65,26 @@ public class ItemTest : IDisposable
         Assert.Equal(2, stack);
     }
     [Fact]
+    public void StackOfIStackable()
+    {
+        Bolt bolt = new(2);
+        Assert.Equal(2, bolt.Stack);
+        player.GiveItem(bolt);
+        Assert.Equal(2, player.GetStack<Bolt>());
+    }
+    [Fact]
+    public void StackOfNotIStackable()
+    {
+        player.GiveItem(new ShadowBow());
+        Assert.Equal(1, player.GetStack<ShadowBow>());
+    }
+    [Fact]
+    public void StackOfNonExistingItem()
+    {
+        Assert.Equal(0, player.GetStack<ShadowBow>());
+        Assert.Equal(0, player.GetStack<Bolt>());
+    }
+    [Fact]
     public void RemoveItem()
     {
         player.GiveItem(new ShadowBow());
@@ -76,6 +96,9 @@ public class ItemTest : IDisposable
     {
         player.RemoveItem<Bolt>();//trying to remove when bolt does not exist in inventory.
     }
+    ///
+    /// Item specific tests
+    ///
     [Fact]
     public void ShootShadowBow()
     {

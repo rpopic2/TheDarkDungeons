@@ -16,6 +16,13 @@ public partial class Creature
                     select i;
         return query.Count();
     }
+    public int GetStack<T>() where T : ItemNew
+    {
+        ItemNew item = GetItem<T>();
+        if(item is IStackable stackable) return stackable.Stack;
+        else if (item is not null) return 1;
+        else return 0;
+    }
 
     public T? GetItemOrDefault<T>() where T : ItemNew
     {
