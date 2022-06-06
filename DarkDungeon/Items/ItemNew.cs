@@ -18,7 +18,7 @@ public abstract class ItemNew
         return Map.Current.RayCast(owner.Pos, range);
     }
     protected void ConsumeEnergy() => owner?.Energy.Consume();
-    protected void ConsumeItem<T>() where T : IStackable => owner?.RemoveItem<T>(1);
+    protected void ConsumeItem<T>() where T : IStackable => owner?.RemoveItemStack<T>(1);
     // override object.Equals
     public override bool Equals(object? obj)
     {

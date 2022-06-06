@@ -77,7 +77,7 @@ public class ItemTest : IDisposable
     public void RemoveItemStack()
     {
         player.GiveItem(new Bolt(3));
-        player.RemoveItem<Bolt>(1);
+        player.RemoveItemStack<Bolt>(1);
         Assert.Equal(2, player.GetStack<Bolt>());
         player.RemoveItem<Bolt>();
         Assert.Equal(0, player.GetStack<Bolt>());
