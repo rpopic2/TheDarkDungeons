@@ -1,4 +1,5 @@
 new-item-system 0.6.050622
+[x] remove IItem
 [x] player.item functions->creature.itemfuncs
 [x] properly returns 0 stakc
 [x] refactor shadowdagger and ShadowBow
@@ -9,8 +10,8 @@ new-item-system 0.6.050622
 [ ] tostring in newitem
 [ ] how to show bare hand?
 [ ] 맨손 버릴수있는데?
-[ ] remove IItem
 [ ] equality of item? currently it`s set to its name.
+[ ] removeitem with stacks
 
 main
 [ ] / key and qwert prints its properties

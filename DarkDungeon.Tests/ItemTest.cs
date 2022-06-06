@@ -29,12 +29,6 @@ public class ItemTest : IDisposable
         Assert.True(hasShadowBow);
     }
     [Fact]
-    public void GiveMultipleItem()
-    {
-        player.GiveItem(new Bolt(), 2);
-        Assert.Equal(2, player.GetStackOfItem<Bolt>());
-    }
-    [Fact]
     public void HasMultipleItems()
     {
         Assert.False(player.HasItem<ShadowBow>());
@@ -49,20 +43,8 @@ public class ItemTest : IDisposable
     {
         player.GiveItem(new Bolt());
         player.GiveItem(new Bolt());
-        player.GiveItem(new ShadowBow());
-        int stackOfBolt = player.GetStackOfItem<Bolt>();
+        int stackOfBolt = player.GetStack<Bolt>();
         Assert.Equal(2, stackOfBolt);
-        Assert.Equal(1, player.GetStackOfItem<ShadowBow>());
-        Assert.Equal(0, player.GetStackOfItem<ShadowDagger>());
-    }
-    [Fact]
-    public void GetStackByItem()
-    {
-        player.GiveItem(new Bolt());
-        Bolt bolt = new();
-        player.GiveItem(bolt);
-        int stack = player.GetStackOfItem(bolt);
-        Assert.Equal(2, stack);
     }
     [Fact]
     public void StackOfIStackable()
@@ -110,7 +92,7 @@ public class ItemTest : IDisposable
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
 
         Program.ElaspeTurn();
-        Assert.Equal(1, player.GetStackOfItem<Bolt>());//consumes bolt
+        Assert.Equal(1, player.GetStack<Bolt>());//consumes bolt
         Assert.False(player.Energy.IsMax);
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
     }

@@ -5,25 +5,13 @@ public partial class Creature
     {
         return _items.OfType<T>().Any();
     }
-    public int GetStackOfItem<T>() where T : ItemNew
-    {
-        return _items.OfType<T>().Count();
-    }
-    public int GetStackOfItem(ItemNew item)
-    {
-        var query = from i in _items
-                    where i.Name == item.Name
-                    select i;
-        return query.Count();
-    }
     public int GetStack<T>() where T : ItemNew
     {
         ItemNew item = GetItem<T>();
-        if(item is IStackable stackable) return stackable.Stack;
+        if (item is IStackable stackable) return stackable.Stack;
         else if (item is not null) return 1;
         else return 0;
     }
-
     public T? GetItemOrDefault<T>() where T : ItemNew
     {
         return _items.OfType<T>().FirstOrDefault();
@@ -32,9 +20,14 @@ public partial class Creature
     {
         return _items.OfType<T>().FirstOrDefault()!;
     }
-    public void GiveItem(ItemNew item, int stack = 1)
+    public void GiveItem(ItemNew item)
     {
-        for (int i = 0; i < stack; i++)
+        int indexOfItem = _items.IndexOf(item);
+        if (item is IStackable && indexOfItem != -1)
+        {
+            ((IStackable)_items[indexOfItem]).Stack++;
+        }
+        else
         {
             item.owner = this;
             _items.Add(item);
@@ -43,7 +36,8 @@ public partial class Creature
     public void RemoveItem<T>() where T : ItemNew
     {
         ItemNew? targetItem = GetItem<T>();
-        if (targetItem is not null) _items.Remove(targetItem);
+        if (targetItem is IStackable stackable) stackable.Stack--;
+        else if (targetItem is not null) _items.Remove(targetItem);
     }
     public string InvenToString
     {
