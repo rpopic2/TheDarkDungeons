@@ -21,7 +21,7 @@ public partial class Creature
     {
         return _items.OfType<T>().FirstOrDefault()!;
     }
-    public ItemNew? GetItemAt(int index)
+    public ItemNew GetItemAt(int index)
     {
         if(index >= _items.Count) return BareHand;
         return _items[index];
