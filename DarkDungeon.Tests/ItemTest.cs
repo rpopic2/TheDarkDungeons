@@ -56,6 +56,15 @@ public class ItemTest : IDisposable
         Assert.Equal(0, player.GetStackOfItem<ShadowDagger>());
     }
     [Fact]
+    public void GetStackByItem()
+    {
+        player.GiveItem(new Bolt());
+        Bolt bolt = new();
+        player.GiveItem(bolt);
+        int stack = player.GetStackOfItem(bolt);
+        Assert.Equal(2, stack);
+    }
+    [Fact]
     public void RemoveItem()
     {
         player.GiveItem(new ShadowBow());
@@ -151,7 +160,13 @@ public class ItemTest : IDisposable
         Assert.Equal("(q|그림자 단검)(w|맨손)", player.InvenToString);
         player.GiveItem(new Bolt());
         Assert.Equal("(q|그림자 단검)(w|석궁 볼트)(e|맨손)", player.InvenToString);
+    }
+    [Fact]
+    public void InvenToStringStackedItems()
+    {
+        player.GiveItem(new Bolt());
+        Assert.Equal("(q|석궁 볼트)(w|맨손)", player.InvenToString);
         // player.GiveItem(new Bolt());
-        // Assert.Equal("q(그림자 단검) w(석궁 볼트x2) ", player.InvenToString);
+        // Assert.Equal("(q|석궁 볼트x2)(w|맨손)", player.InvenToString);
     }
 }

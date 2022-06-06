@@ -1,4 +1,4 @@
-public abstract class ItemNew : IItem
+public abstract class ItemNew
 {
     public abstract string Name { get; }
     public Creature? owner { get; set; }
@@ -18,6 +18,6 @@ public abstract class ItemNew : IItem
         return Map.Current.RayCast(owner.Pos, range);
     }
     protected void ConsumeEnergy() => owner?.Energy.Consume();
-    protected void ConsumeItem<T>() where T : IItem => owner?.RemoveItem<T>();
+    protected void ConsumeItem<T>() where T : ItemNew => owner?.RemoveItem<T>();
     public override string ToString() => Name;
 }

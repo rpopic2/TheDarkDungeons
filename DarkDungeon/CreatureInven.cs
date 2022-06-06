@@ -1,19 +1,25 @@
 public partial class Creature
 {
-    private List<IItem> _items = new();
-    public bool HasItem<T>() where T : IItem
+    private List<ItemNew> _items = new();
+    public bool HasItem<T>() where T : ItemNew
     {
         return _items.OfType<T>().Any();
     }
-    public int GetStackOfItem<T>() where T : IItem
+    public int GetStackOfItem<T>() where T : ItemNew
     {
         return _items.OfType<T>().Count();
     }
-    public T? GetItemOrDefault<T>() where T : IItem
+    public int GetStackOfItem(ItemNew item)
+    {
+        return 2;
+        // return _items.GroupBy(i=>i.);
+    }
+
+    public T? GetItemOrDefault<T>() where T : ItemNew
     {
         return _items.OfType<T>().FirstOrDefault();
     }
-    public T GetItem<T>() where T : IItem
+    public T GetItem<T>() where T : ItemNew
     {
         return _items.OfType<T>().FirstOrDefault()!;
     }
@@ -25,9 +31,9 @@ public partial class Creature
             _items.Add(item);
         }
     }
-    public void RemoveItem<T>() where T : IItem
+    public void RemoveItem<T>() where T : ItemNew
     {
-        IItem? targetItem = GetItem<T>();
+        ItemNew? targetItem = GetItem<T>();
         if (targetItem is not null) _items.Remove(targetItem);
     }
     public string InvenToString
@@ -42,8 +48,11 @@ public partial class Creature
     private string IndexToString(int index)
     {
         string? name;
-        IItem? item = _items.ElementAtOrDefault(index);
-        if(item is not null) name = item.ToString();
+        ItemNew? item = _items.ElementAtOrDefault(index);
+        if (item is not null)
+        {
+            name = item.ToString();
+        }
         else name = BareHand.BareHandName;
         return $"({IO.ITEMKEYS1[index]}|{name})";
     }
