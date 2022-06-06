@@ -62,7 +62,7 @@ public class ItemTest : IDisposable
     public void StackOfIStackable()
     {
         Bolt bolt = new(2);
-        Assert.Equal(2, (int)bolt.stack);
+        Assert.Equal(2, (int)bolt.Stack);
         player.GiveItem(bolt);
         Assert.Equal(2, player.GetStack<Bolt>());
     }
@@ -185,7 +185,7 @@ public class ItemTest : IDisposable
         player.GiveItem(new ShadowDagger());
         Assert.Equal("(q|그림자 단검)(w|맨손)", player.InvenToString);
         player.GiveItem(new Bolt());
-        Assert.Equal("(q|그림자 단검)(w|석궁 볼트)(e|맨손)", player.InvenToString);
+        Assert.Equal("(q|그림자 단검)(w|석궁 볼트x1)(e|맨손)", player.InvenToString);
     }
     [Fact]
     public void InvenToStringStackedItems()
