@@ -47,6 +47,18 @@ public class ItemTest : IDisposable
         Assert.Equal(2, stackOfBolt);
     }
     [Fact]
+    public void StackCannotBeLessThanOne()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Bolt(0));
+    }
+    [Fact]
+    public void StackStruct()
+    {
+        Stack stack = 2;
+        Assert.Equal(2, stack);
+        Assert.Throws<ArgumentOutOfRangeException>(() => stack = 0);
+    }
+    [Fact]
     public void StackOfIStackable()
     {
         Bolt bolt = new(2);
