@@ -178,6 +178,9 @@ public class ItemTest : IDisposable
         Program.ElaspeTurn();
         Assert.NotEqual(player.MaxHp, player.CurrentHp);
     }
+    ///
+    /// Printing Inventory.
+    ///
     [Fact]
     public void NewInvenToString()
     {
@@ -195,4 +198,26 @@ public class ItemTest : IDisposable
         player.GiveItem(new Bolt());
         Assert.Equal("(q|석궁 볼트x2)(w|맨손)", player.InvenToString);
     }
+    [Fact]
+    public void PrintSkillList()
+    {
+        ShadowDagger dagger = new();
+        Assert.Equal("그림자 단검 | (q|찌르기)(w|던지기)", dagger.ToSkillString());
+        //wip
+    }
+    [Fact]
+    public void SkillToString()
+    {
+        
+    }
+    // [Fact]
+    // public void SelectItemFromInven()
+    // {
+    //     Assert.Equal("(q|맨손)", Output.LastWrite);
+    //     player.GiveItem(new ShadowDagger());
+    //     Assert.Equal("(q|그림자 단검)(w|맨손)", Output.LastWrite);
+    //     // Output.Press('q');
+    //     // Assert.Equal("", Output.LastWrite);
+    //     //wip
+    // }
 }

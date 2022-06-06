@@ -14,7 +14,7 @@ public class ShadowDagger : ItemNew
     }
     public void Shadowstep()
     {
-        if(owner is null) return;
+        if (owner is null) return;
         Creature? hit = RayCast(3);
         if (hit is Creature hitCreature)
         {
@@ -22,5 +22,10 @@ public class ShadowDagger : ItemNew
             Position targetPos = hit.Pos;
             owner.Pos = new(targetPos.Back(2), targetPos.facing);
         }
+    }
+
+    public IEnumerable<char> ToSkillString()
+    {
+        return $"{Name} | (q|찌르기)(w|던지기)";
     }
 }

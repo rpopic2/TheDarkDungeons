@@ -1,4 +1,5 @@
 new-item-system 0.6.050622
+[x] Showing off new inven.
 [x] how to show bare hand?
 [x] tostring in newitem
 [x] removeitem with stacks
@@ -11,7 +12,8 @@ new-item-system 0.6.050622
 [?] item consists of skills class?
 [?] equality of item? currently it`s set to its name.
 [ ] items printing output messages
-[ ] Showing off new inven.
+[ ] using new items by user input.
+[ ] namespace for items
 
 main
 [ ] / key and qwert prints its properties
