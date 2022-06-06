@@ -1,16 +1,62 @@
 # TheDarkDungeons
-The Dark Dungeons RPG
+The Dark Dungeons Roguelike Dungeon Crawler
 
-A hardcore roguelike dungeon crawler.
-It is said that deep in dungeon under the 'Temple of the La', the secret of this universe is sealed. The player seeks for the secret, exploring deeper and deeper into the dungeon. Player confronts monsters, traps, or tresures while he progresses deeper into the dungeon. At the bottom of the dungeon, the player faces the shocking reality of this universe...
+Help ver.1.0
 
-- Conrol your destiny with cards. Your dice rolls become card which you can save it for later. 
-- Select your class. Warrior for crushing enemies, Assassin for assassinating enemies without noticing, Mage for manipulating enemies and time.
+전설에 의하면 이 던전 깊은 곳에는 진실의 보석이 있다고 전해집니다. 이 보석을 가진 자는 무궁한 힘과 돈을 얻고 사물의 진짜 모습을 볼 수 있는 능력을 가지게 된다고 합니다. 수많은 사람이 이 보석을 차지하기 위해 던전에 들어갔고, 수많은 왕국이 이 던전이 있는 지역을 점령하려 피를 흘렸고, 점령한 왕국에서 수많은 능력자들을 보냈지만, 던전에서 보석을 찾고 살아 돌아온 이는 아무도 없었습니다. 누군가는 보석을 찾았지만 얻자 마자 미쳐 버렸다고 말하고, 누군가는 이 보석이 정말로 있는게 아니라고 말합니다. 당신은 이 보석을 찾기 위해 던전으로 떠납니다. 던전 안에서 이 보석을 찾는 여러 탐험가들과 여러 몬스터들과 마주하게 됩니다. 그 속에서 당신은 어떠한 선택을 하게 될까요?
 
-h, l to move sideways
-j for down, k for climbing up
-. to rest
-/ to print information
-i to open inventory
-q, w, e, r, t to choose what’s on the screen
-tab or x to use bare hand
+키 설명
+좌우 화살표 : 좌우 이동.
+@는 당신의 위치를 나타냅니다. 그 앞의 . . (점)은 당신의 시야이며 아무것도 없다는 것을 나타냅니다. 
+좌우 화살표를 누를 때마다 좌우로 한 칸씩 움직입니다.
+뒤돌게 되면 반대로 움직이는 것이 아닌 제자리에서 뒤돌게 됩니다.
+
+@ . .
+(오른쪽 키 누르면)
+  @ . .
+(왼쪽 키 누르면)
+. @
+
+
+맵에는 수직 갱도나 구멍 같이 아래로 움직일 수 있는 구멍이 존재합니다. 이 구멍을 타고 내려가 맵의 맨 아래에 도달하게 되면 당신이 찾고 있는 것들이 있을지도 모릅니다. 맨 밑의 층에 도달하는 것이 당신의 목적입니다.
+@ , .
+위 쉼표는 수직 갱도를 의미하며 아래 층으로 내려갑니다.
+
+층
+아래층으로 내려갈수록 몬스터는 강해지고 그만큼 돌아오는 보상도 커지고, 훨씬 흥미로운 몬스터, 보물상자, 상자, 함정들이 기다리고 있습니다. 너무 일찍 아랫층에 도달하게 되면 강한 몬스터들에게 되려 죽을 수 있으니 천천히 내려가기 바랍니다.
+
+qwert : 아이템
+화면 아랫줄에 들고 있는 아이템이 표시됩니다. 최대 5개를 들 수 있으며, qwert 다섯 개의 키를 이용해 선택합니다. 아이템을 선택하면 화면 맨 아래에 아이템으로 할 수 있는 행동이 나열됩니다. 그 중에서 행동을 선택하면, 해당 행동이 바로 시전됩니다.
+
+기력
+이동을 제외한 모든 행동은 기력을 소모합니다. 화면 아래쪽에 당신과 적의 체력과 기력이 표시됩니다.
+기력을 모두 소모하면 이동을 제외하고 아무런 행동도 할 수 없습니다.
+
+행동
+검의 베기와 같은 행동은 사거리를 가집니다. 검은 근접 무기이므로 한 칸 앞의 적에게 영향을 미치며 활을 쏘거나 마법 같은 원거리 무기는 최대 세 칸 앞의 적에게 피해를 입힐 수 있습니다.
+@ . . d (3칸 앞의 적)
+@ . d (2칸 앞의 적)
+@ d (한칸 앞의 적)
+
+. (점) : 휴식
+. 키를 누르면 그 턴에 휴식합니다. 휴식하면 기력을 1 회복하며, 턴이 흐릅니다. 전투 중이 아닐 때 이동해도 기력을 회복합니다.
+휴식 중이거나 이동 중일떄는 약점 노출 상태로 추가 피해를 받습니다.
+
+?, /
+?를 누르면 간단 키 도움말을 볼 수 있습니다. ?를 한번 더 누르면 이 도움말이 표시됩니다.
+/를 누르면 검색할 수 있습니다. 원하는 글자, 예를 들어 b를 누르면 b는 박쥐라는 것을 알려줍니다.
+
+심화 내용 :
+각 행동(아이템 선택 후 할 수 있는 행동)을 자세히 보면 각각 괄호의 모양이 다르고 색이 다른 것을 확인할 수 있습니다. 
+
+스탯
+모든 생명체는 스탯을 가집니다. 힘(체력), 집중(민첩), 마력(지능)이 그것입니다.
+글씨의 색은 해당 행동이 어떤 스탯에 의존하는지를 나타냅니다.
+힘은 빨강, 민첩은 초록, 지능은 파란색으로 나타납니다. 검은색(혹은 환경에 따라 흰색)은 아무 스탯에도 의존하지 않습니다.
+
+피해 종류
+행동의 괄호는 피해 종류를 나타냅니다. 피해 종류는 일반, 베기, 찌르기, 마법 총 4가지 피해가 있습니다. 마찬가지로 막기 종류에도 같은 4가지가 존재합니다.
+일반 피해는 아무 피해와도 상호작용하지 않습니다.
+같은 피해끼리는 막을 때 효과가 좋습니다. 예를 들어 베기 피해는 베기 막기로 막으면 효율적입니다.
+베기는 마법 방어에 효율적이고, 찌르기는 베기 막기에 효율적이고, 마법 피해는 회피(찌르기 막기)에 효율적입니다.
+이외의 피해는 모두 일반적으로 적용됩니다.
