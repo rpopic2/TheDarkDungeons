@@ -8,7 +8,7 @@ public partial class Creature
     public int GetStack<T>() where T : ItemNew
     {
         ItemNew item = GetItem<T>();
-        if (item is IStackable stackable) return stackable.Stack;
+        if (item is IStackable stackable) return stackable.stack;
         else if (item is not null) return 1;
         else return 0;
     }
@@ -25,7 +25,7 @@ public partial class Creature
         int indexOfItem = _items.IndexOf(item);
         if (item is IStackable && indexOfItem != -1)
         {
-            ((IStackable)_items[indexOfItem]).Stack++;
+            ((IStackable)_items[indexOfItem]).stack++;
         }
         else
         {
@@ -36,7 +36,7 @@ public partial class Creature
     public void RemoveItemStack<T>(int stackToRemove) where T : IStackable
     {
         IStackable? targetItem = _items.OfType<IStackable>().FirstOrDefault()!;
-        if (targetItem is not null) targetItem.Stack -= stackToRemove;
+        if (targetItem is not null) targetItem.stack -= stackToRemove;
     }
     public void RemoveItem<T>() where T : ItemNew
     {

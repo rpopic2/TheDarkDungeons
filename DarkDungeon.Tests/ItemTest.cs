@@ -55,14 +55,14 @@ public class ItemTest : IDisposable
     public void StackStruct()
     {
         Stack stack = 2;
-        Assert.Equal(2, stack);
+        Assert.Equal(2, (int)stack);
         Assert.Throws<ArgumentOutOfRangeException>(() => stack = 0);
     }
     [Fact]
     public void StackOfIStackable()
     {
         Bolt bolt = new(2);
-        Assert.Equal(2, bolt.Stack);
+        Assert.Equal(2, (int)bolt.stack);
         player.GiveItem(bolt);
         Assert.Equal(2, player.GetStack<Bolt>());
     }

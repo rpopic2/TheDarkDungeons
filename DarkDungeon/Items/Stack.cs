@@ -9,4 +9,5 @@ public struct Stack
     private int _value;
 
     public static implicit operator Stack(int v) => new Stack(v);
+    public static implicit operator int(Stack v) => v._value;
 }

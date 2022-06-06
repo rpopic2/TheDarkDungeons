@@ -1,4 +1,4 @@
 public interface IStackable
 {
-    int Stack {get;set;}
+    Stack stack {get;set;}
 }
