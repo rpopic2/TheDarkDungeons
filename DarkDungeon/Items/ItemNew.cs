@@ -20,6 +20,7 @@ public abstract class ItemBase
     }
     protected void ConsumeEnergy() => Owner?.Energy.Consume();
     protected void ConsumeItem<T>() where T : IStackable => Owner?.RemoveItemStack<T>(1);
+    protected void RemoveItem<T>() where T : ItemBase => Owner?.RemoveItem<T>();
 
     public override bool Equals(object? obj)
     {

@@ -144,6 +144,8 @@ public class ItemTest : TestTemplate
         int tempCur = testMon.CurrentHp;
         Program.ElaspeTurn();
         Assert.Equal(tempCur, testMon.CurrentHp);
+        Assert.False(player.HasItem<ShadowDagger>());
+        // Assert.True(testMon.HasItem<ShadowDagger>());
     }
     [Fact]
     public void ShadowDaggerTestBackstep()//->PositionTest.Shadowstep
@@ -201,17 +203,20 @@ public class ItemTest : TestTemplate
         //wip
     }
     [Fact]
-    public void SkillToString()
+    public void UseSkillByInput()
     {
         TestMonster testMon = new(new(1, Facing.Left));
         ShadowDagger dagger = new();
         player.GiveItem(dagger);
 
         IO2.Press('q');
+        Assert.Equal(dagger, IO2.SelectedItem);
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
         IO2.Press('q');
 
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
+        Assert.Null(IO2.SelectedItem);
+
     }
     [Fact]
     public void GetSkillByIndex()

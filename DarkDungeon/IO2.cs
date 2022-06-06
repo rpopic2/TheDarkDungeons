@@ -1,15 +1,16 @@
 public static class IO2
 {
     private static Player s_player => Player.instance;
-    private static ItemBase? selectedItem;
+    public static ItemBase? SelectedItem;
     public static void Press(char v)
     {
         int index = IO.ITEMKEYS1.IndexOf(v);
-        if (selectedItem is null) selectedItem = s_player.GetItemAt(index);
+        if (SelectedItem is null) SelectedItem = s_player.GetItemAt(index);
         else
         {
-            Program.OnTurn += selectedItem.Skills[index];
+            Program.OnTurn += SelectedItem.Skills[index];
             Program.ElaspeTurn();
+            SelectedItem = null;
         }
     }
 }

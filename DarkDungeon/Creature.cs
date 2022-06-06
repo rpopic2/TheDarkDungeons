@@ -12,7 +12,7 @@ public abstract partial class Creature
     public IBehaviour? CurrentBehaviour => CurAction.CurrentBehav;
 
     public Inventory Inven { get; private set; }
-    private Creature? _lastHit { get; set; }
+    public Creature? LastHit { get; private set; }
     protected Creature? _lastAttacker { get; set; }
     public Action<Creature> passives = (p) => { };
     protected Action _turnPre = delegate { };
@@ -98,7 +98,7 @@ public abstract partial class Creature
         ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!)!;
         if (mov is Creature hit)
         {
-            _lastHit = hit;
+            LastHit = hit;
             AttackMagicCharge(metaData);
             hit.Dodge(CurAction.Amount, damageType, this, metaData);
             metaData.GainExp();
@@ -122,7 +122,7 @@ public abstract partial class Creature
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
             ItemMetaData metaData = Inven.GetMeta(item)!;
-            if (itemPreservesOnEnemy) _lastHit?.Inven.Add(item, metaData);
+            if (itemPreservesOnEnemy) LastHit?.Inven.Add(item, metaData);
             Inven.Consume(item);
         }
         else

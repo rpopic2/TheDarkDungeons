@@ -18,6 +18,7 @@ public class ShadowDagger : ItemBase
     {
         ConsumeEnergy();
         AttackRange(3, StatName.Lun);
+        RemoveItem<ShadowDagger>();
     }
     public void Shadowstep()
     {
