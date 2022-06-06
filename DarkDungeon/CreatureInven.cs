@@ -54,14 +54,8 @@ public partial class Creature
     }
     private string IndexToString(int index)
     {
-        string? name;
-        ItemNew? item = _items.ElementAtOrDefault(index);
-        if (item is not null)
-        {
-            name = item.ToString();
-            if (item is IStackable stackable) name += $"x{(int)stackable.Stack}";
-        }
-        else name = BareHand.BareHandName;
+        string? name = _items.ElementAtOrDefault(index)?.ToString();
+        if (name is null) name = BareHand.BareHandName;
         return $"({IO.ITEMKEYS1[index]}|{name})";
     }
 }

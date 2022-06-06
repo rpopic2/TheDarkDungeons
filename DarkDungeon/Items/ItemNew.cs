@@ -28,5 +28,10 @@ public abstract class ItemNew
     public bool Equals(ItemNew item) => item.Name == Name;
     // override object.GetHashCode
     public override int GetHashCode() => HashCode.Combine(Name);
-    public override string ToString() => Name;
+    public override string ToString()
+    {
+        string name = Name;
+        if (this is IStackable stackable) name += $"x{(int)stackable.Stack}";
+        return name;
+    }
 }
