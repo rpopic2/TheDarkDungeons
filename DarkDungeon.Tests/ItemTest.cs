@@ -148,5 +148,6 @@ public class ItemTest : IDisposable
     {
         Assert.Equal("아무것도 없다.", player.InvenToString);
         player.GiveItem(new ShadowDagger());
+        Assert.Equal("q(그림자 단검) ", player.InvenToString);
     }
 }

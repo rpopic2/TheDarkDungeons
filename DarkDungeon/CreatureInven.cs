@@ -34,7 +34,7 @@ public partial class Creature
     {
         get
         {
-            return _items.ToFString();
+            return _items.ToInvenString();
         }
     }
 }

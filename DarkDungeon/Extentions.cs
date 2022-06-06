@@ -20,10 +20,10 @@ public static class Extensions
     => (int)MathF.Round(@base * mult);
     public static int FloorMult(this int @base, float mult)
     => (int)MathF.Floor(@base * mult);
-    public static string ToFString<T>(this List<T> value)
+    public static string ToInvenString<T>(this List<T> value)
     {
         string printResult = string.Empty;
-        if (value.Count <= 0) printResult += "아무것도 없다.";
+        if (value.Count <= 0) printResult = "아무것도 없다.";
         for (int i = 0; i < value.Count; i++)
         {
             printResult += value[i]?.ToString()?.AppendKeyName(i);

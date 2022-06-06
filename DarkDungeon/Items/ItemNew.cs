@@ -1,5 +1,6 @@
 public abstract class ItemNew : IItem
 {
+    public abstract string Name { get; }
     public Creature? owner { get; set; }
     protected void AttackRange(int range, StatName statDepend)
     {
@@ -13,9 +14,13 @@ public abstract class ItemNew : IItem
     }
     protected Creature? RayCast(int range)
     {
-        if(owner is null) return null;
+        if (owner is null) return null;
         return Map.Current.RayCast(owner.Pos, range);
     }
     protected void ConsumeEnergy() => owner?.Energy.Consume();
     protected void ConsumeItem<T>() where T : IItem => owner?.RemoveItem<T>();
+    public override string ToString()
+    {
+        return $"({Name})";
+    }
 }

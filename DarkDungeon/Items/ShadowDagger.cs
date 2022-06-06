@@ -1,5 +1,7 @@
 public class ShadowDagger : ItemNew
 {
+    public override string Name => "그림자 단검";
+
     public void Pierce()
     {
         ConsumeEnergy();
