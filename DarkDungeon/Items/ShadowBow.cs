@@ -1,3 +1,4 @@
+namespace Item;
 public class ShadowBow : ItemNew
 {
     public override string Name => "그림자 활";

@@ -55,7 +55,7 @@ public partial class Creature
     private string IndexToString(int index)
     {
         string? name = _items.ElementAtOrDefault(index)?.ToString();
-        if (name is null) name = BareHand.BareHandName;
+        if (name is null) name = Item.BareHand.BareHandName;
         return $"({IO.ITEMKEYS1[index]}|{name})";
     }
 }

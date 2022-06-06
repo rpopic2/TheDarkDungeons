@@ -1,5 +1,6 @@
 using System;
 using Xunit;
+using Item;
 public class ItemTest : IDisposable
 {
     private static Action? OnTurn { get => Program.OnTurnAction; set => Program.OnTurnAction = value; }

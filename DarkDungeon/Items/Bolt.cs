@@ -1,3 +1,4 @@
+namespace Item;
 public class Bolt : ItemNew, IStackable
 {
     public Bolt(int stack = 1)

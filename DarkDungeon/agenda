@@ -1,16 +1,4 @@
 new-item-system 0.6.050622
-[x] Showing off new inven.
-[x] how to show bare hand?
-[x] tostring in newitem
-[x] removeitem with stacks
-[x] statck cannot be less than 1
-[x] remove IItem
-[x] player.item functions->creature.itemfuncs
-[x] properly returns 0 stakc
-[x] refactor shadowdagger and ShadowBow
-[?] possibly merge Player.HasItem and StackOfItem
-[?] item consists of skills class?
-[?] equality of item? currently it`s set to its name.
 [ ] items printing output messages
 [ ] using new items by user input.
 [ ] namespace for items
