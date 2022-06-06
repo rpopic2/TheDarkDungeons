@@ -21,6 +21,6 @@ public abstract class ItemNew : IItem
     protected void ConsumeItem<T>() where T : IItem => owner?.RemoveItem<T>();
     public override string ToString()
     {
-        return $"({Name})";
+        return $"{Name}";
     }
 }

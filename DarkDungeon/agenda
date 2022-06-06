@@ -8,6 +8,7 @@ new-item-system 0.6.050622
 [ ] Showing off new inven.
 [ ] tostring in newitem
 [ ] how to show bare hand?
+[ ] 맨손 버릴수있는데?
 
 main
 [ ] / key and qwert prints its properties
