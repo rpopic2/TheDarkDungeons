@@ -168,7 +168,7 @@ public static class IO
         pr($"깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
         string myHpEnergy = $"Hp : {s_player.GetHp()}    기력 : {s_player.Energy}";
         Creature? frontCreature = s_player.CreatureAtFront;
-        string enemyHpEnergy = frontCreature is null ? string.Empty : $"상대 Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy}";
+        string enemyHpEnergy = frontCreature is null ? string.Empty : $"Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy} (상대)";
         pr($"{myHpEnergy}", __.bottom | __.newline);
         pr($"{enemyHpEnergy}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
