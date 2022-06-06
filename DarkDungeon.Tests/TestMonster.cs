@@ -3,7 +3,7 @@ using System;
 public class TestMonster : Monster, ISpawnable
 {
     public static StatInfo TestMonStat = new(new(1, 1, 1), 3, 1);
-    public static MonsterData TestMonData = new("TestMon", 't', 'T', TestMonStat, new Item[] { });
+    public static MonsterData TestMonData = new("TestMon", 't', 'T', TestMonStat, new ItemOld[] { });
     public TestMonster(Position spawnPoint, MonsterData? data = null) : base(TestMonData, spawnPoint)
     {
         _currentMap.UpdateFightable(this);
@@ -22,7 +22,7 @@ public class TestMonster : Monster, ISpawnable
     }
     protected override void OnNothing() { }
 
-    public void GiveItemOld(Item item)
+    public void GiveItemOld(ItemOld item)
     {
         Inven.Add(item);
     }

@@ -1,7 +1,7 @@
 public class Bat : Monster, ISpawnable
 {
     private static StatInfo stat = new(stat: new(1, 3, 2), energy: 3, killExp: 4);
-    public readonly static MonsterData data = new(name: "박쥐", 'b', 'd', stat, new Item[] { Creature.batItem });
+    public readonly static MonsterData data = new(name: "박쥐", 'b', 'd', stat, new ItemOld[] { Creature.batItem });
     public Monster Instantiate(Position spawnPoint) => new Bat(spawnPoint);
     private bool isAngry;
 

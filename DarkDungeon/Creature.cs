@@ -12,7 +12,7 @@ public abstract partial class Creature
     public IBehaviour? CurrentBehaviour => CurAction.CurrentBehav;
 
     public Inventory Inven { get; private set; }
-    private Creature? _lastHit { get; set; }
+    public Creature? LastHit { get; private set; }
     protected Creature? _lastAttacker { get; set; }
     public Action<Creature> passives = (p) => { };
     protected Action _turnPre = delegate { };
@@ -45,8 +45,8 @@ public abstract partial class Creature
     protected Map _currentMap => Map.Current;
     public virtual Creature? CreatureAtFront => _currentMap.GetCreatureAt(Pos.Front(1));
     public abstract void LetSelectBehaviour();
-    public void SetAction(Item item, int skillIndex, int amount = 0, int amount2 = 0) => CurAction.Set(item, item.skills[skillIndex], amount, amount2);
-    protected void SelectBehaviour(Item item, int index)
+    public void SetAction(ItemOld item, int skillIndex, int amount = 0, int amount2 = 0) => CurAction.Set(item, item.skills[skillIndex], amount, amount2);
+    protected void SelectBehaviour(ItemOld item, int index)
     {
         if (CurAction.CurrentBehav != null) throw new Exception("스탠스가 None이 아닌데 새 동작을 선택했습니다. 한 턴에 두 동작을 할 수 없습니다.");
         IBehaviour behaviour = item.skills[index];
@@ -57,7 +57,7 @@ public abstract partial class Creature
         }
         else SetSkill(item, behaviour);
     }
-    private void SetSkill(Item item, IBehaviour behaviour)
+    private void SetSkill(ItemOld item, IBehaviour behaviour)
     {
         int amount = 0;
         if (behaviour is IEnergyConsume energyConsume)
@@ -93,12 +93,12 @@ public abstract partial class Creature
     private void Attack(int range)
     {
         DamageType damageType = default;
-        if (CurAction.CurrentBehav is Skill skill) damageType = skill.damageType;
+        if (CurAction.CurrentBehav is SkillOld skill) damageType = skill.damageType;
         Creature? mov = _currentMap.RayCast(Pos, range);
         ItemMetaData metaData = Inven.GetMeta(CurAction.CurrentItem!)!;
         if (mov is Creature hit)
         {
-            _lastHit = hit;
+            LastHit = hit;
             AttackMagicCharge(metaData);
             hit.Dodge(CurAction.Amount, damageType, this, metaData);
             metaData.GainExp();
@@ -115,14 +115,14 @@ public abstract partial class Creature
             }
         }
     }
-    private void Throw(int range, Item item, bool itemPreservesOnEnemy = false)
+    private void Throw(int range, ItemOld item, bool itemPreservesOnEnemy = false)
     {
         if (Inven.Contains(item))
         {
             IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
             ItemMetaData metaData = Inven.GetMeta(item)!;
-            if (itemPreservesOnEnemy) _lastHit?.Inven.Add(item, metaData);
+            if (itemPreservesOnEnemy) LastHit?.Inven.Add(item, metaData);
             Inven.Consume(item);
         }
         else
@@ -150,7 +150,7 @@ public abstract partial class Creature
     private void CalcDamageType(ref int damage, DamageType damageType, Creature attacker)
     {
         DamageType defenceType = default;
-        if (CurAction.CurrentBehav is Skill skill) defenceType = skill.damageType;
+        if (CurAction.CurrentBehav is SkillOld skill) defenceType = skill.damageType;
         if (damageType == defenceType) EffectiveDefence(ref damage);
         else if (damageType == DamageType.Slash && defenceType == DamageType.Magic) UneffectiveDefence(ref damage);
         else if (damageType == DamageType.Thrust && defenceType == DamageType.Slash) UneffectiveDefence(ref damage);
@@ -173,13 +173,13 @@ public abstract partial class Creature
             damage = damage.ToVul();
         }
     }
-    protected virtual void Charge(Item? item = null)
+    protected virtual void Charge(ItemOld? item = null)
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge += CurAction.Amount;
         else Inven.GetMeta(item)!.magicCharge += CurAction.Amount;
         IO.rk($"{item}에 마법부여를 하였다.");
     }
-    protected virtual void PoisonItem(Item? item = null)
+    protected virtual void PoisonItem(ItemOld? item = null)
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.poison++;
         else Inven.GetMeta(item)!.poison++;

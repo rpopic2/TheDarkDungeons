@@ -39,7 +39,7 @@ public class InventoryTest : IDisposable
         Program.OnTurn?.Invoke();
 
         Corpse corpse = (Corpse)player.UnderFoot!;
-        corpse.GetItemAndMeta(0, out Item? item, out ItemMetaData? metaData);
+        corpse.GetItemAndMeta(0, out ItemOld? item, out ItemMetaData? metaData);
         Assert.DoesNotContain(item, player.Inven);
         if (item is null || metaData is null) throw new NullReferenceException();
         player.PickupItem(item, metaData);

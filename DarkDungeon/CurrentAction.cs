@@ -2,7 +2,7 @@ public class CurrentAction
 {
     public int Amount { get; private set; }
     public int Amount2 { get; private set; }
-    public Item? CurrentItem { get; private set; }
+    public ItemOld? CurrentItem { get; private set; }
     public IBehaviour? CurrentBehav { get; private set; }
     public int Stun { get; private set; }
     public int Poison { get; private set; }
@@ -13,11 +13,11 @@ public class CurrentAction
         _owner = owner;
         Energy = new(energy);
     }
-    public void Set(Item item, int index, int amount = default, int amount2 = default)
+    public void Set(ItemOld item, int index, int amount = default, int amount2 = default)
     {
         Set(item, item.skills[index], amount, amount2);
     }
-    public void Set(Item item, IBehaviour behaviour, int amount = default, int amount2 = default)
+    public void Set(ItemOld item, IBehaviour behaviour, int amount = default, int amount2 = default)
     {
         if (Stun > 0)
         {

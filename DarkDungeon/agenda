@@ -1,14 +1,12 @@
 new-item-system 0.6.050622
-[x] player.item functions->creature.itemfuncs
-[x] properly returns 0 stakc
-[x] refactor shadowdagger and ShadowBow
-[?] possibly merge Player.HasItem and StackOfItem
-[?] item consists of skills class?
-[ ] items printing output messages
-[ ] Showing off new inven.
-[ ] tostring in newitem
-[ ] how to show bare hand?
+[x] namespace for items
+[x] itemnew to item
+[x] invenTOString to method
+[ ] printing list of skills in item
 
+[ ] using new items by user input.
+[ ] items printing output messages
+[ ] IStackable은 애초에 인터페이스말고 슈퍼클래스가 필요할듯. 생성자도 위로 올려야되고.
 main
 [ ] / key and qwert prints its properties
 [ ] 몹이랑 딱붙어있을떄 몹이 뒤돌고있으면 안뒤돌아봄. -> why not working?

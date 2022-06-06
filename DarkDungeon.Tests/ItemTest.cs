@@ -1,25 +1,8 @@
 using System;
 using Xunit;
-public class ItemTest : IDisposable
+using Item;
+public class ItemTest : TestTemplate
 {
-    private static Action? OnTurn { get => Program.OnTurnAction; set => Program.OnTurnAction = value; }
-    Map? _map;
-    Player? _player;
-    Map map => _map!;
-    Player player => _player!;
-    public ItemTest()
-    {
-        _map = new(4, false, null);
-        _player = Player._instance = new Player("test");
-        _map.UpdateFightable(_player);
-    }
-    public void Dispose()
-    {
-        _map = null;
-        _player = Player._instance = null;
-        Map.ResetMapTurn();
-        Program.OnTurn = null;
-    }
     [Fact]
     public void GiveItemTest()
     {
@@ -29,10 +12,16 @@ public class ItemTest : IDisposable
         Assert.True(hasShadowBow);
     }
     [Fact]
-    public void GiveMultipleItem()
+    public void GetItemAtTest()
     {
-        player.GiveItem(new Bolt(), 2);
-        Assert.Equal(2, player.GetStackOfItem<Bolt>());
+        ShadowBow bow = new();
+        player.GiveItem(bow);
+        Assert.Same(bow, player.GetItemAt(0));
+        player.GiveItem(new Bolt());
+        player.GiveItem(new Bolt());
+        Assert.Equal(new Bolt(), player.GetItemAt(1));
+        Assert.Equal(new BareHand(), player.GetItemAt(2));
+
     }
     [Fact]
     public void HasMultipleItems()
@@ -49,11 +38,40 @@ public class ItemTest : IDisposable
     {
         player.GiveItem(new Bolt());
         player.GiveItem(new Bolt());
-        player.GiveItem(new ShadowBow());
-        int stackOfBolt = player.GetStackOfItem<Bolt>();
+        int stackOfBolt = player.GetStack<Bolt>();
         Assert.Equal(2, stackOfBolt);
-        Assert.Equal(1, player.GetStackOfItem<ShadowBow>());
-        Assert.Equal(0, player.GetStackOfItem<ShadowDagger>());
+    }
+    [Fact]
+    public void StackCannotBeLessThanOne()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Bolt(0));
+    }
+    [Fact]
+    public void StackStruct()
+    {
+        Stack stack = 2;
+        Assert.Equal(2, (int)stack);
+        Assert.Throws<ArgumentOutOfRangeException>(() => stack = 0);
+    }
+    [Fact]
+    public void StackOfIStackable()
+    {
+        Bolt bolt = new(2);
+        Assert.Equal(2, (int)bolt.Stack);
+        player.GiveItem(bolt);
+        Assert.Equal(2, player.GetStack<Bolt>());
+    }
+    [Fact]
+    public void StackOfNotIStackable()
+    {
+        player.GiveItem(new ShadowBow());
+        Assert.Equal(1, player.GetStack<ShadowBow>());
+    }
+    [Fact]
+    public void StackOfNonExistingItem()
+    {
+        Assert.Equal(0, player.GetStack<ShadowBow>());
+        Assert.Equal(0, player.GetStack<Bolt>());
     }
     [Fact]
     public void RemoveItem()
@@ -63,10 +81,22 @@ public class ItemTest : IDisposable
         Assert.False(player.HasItem<ShadowBow>());
     }
     [Fact]
+    public void RemoveItemStack()
+    {
+        player.GiveItem(new Bolt(3));
+        player.RemoveItemStack<Bolt>(1);
+        Assert.Equal(2, player.GetStack<Bolt>());
+        player.RemoveItem<Bolt>();
+        Assert.Equal(0, player.GetStack<Bolt>());
+    }
+    [Fact]
     public void RemoveItemDoesNotThrowError()
     {
         player.RemoveItem<Bolt>();//trying to remove when bolt does not exist in inventory.
     }
+    ///
+    /// Item specific tests
+    ///
     [Fact]
     public void ShootShadowBow()
     {
@@ -78,7 +108,7 @@ public class ItemTest : IDisposable
         Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
 
         Program.ElaspeTurn();
-        Assert.Equal(1, player.GetStackOfItem<Bolt>());//consumes bolt
+        Assert.Equal(1, player.GetStack<Bolt>());//consumes bolt
         Assert.False(player.Energy.IsMax);
         Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
     }
@@ -114,6 +144,8 @@ public class ItemTest : IDisposable
         int tempCur = testMon.CurrentHp;
         Program.ElaspeTurn();
         Assert.Equal(tempCur, testMon.CurrentHp);
+        Assert.False(player.HasItem<ShadowDagger>());
+        Assert.True(testMon.HasItem<ShadowDagger>());
     }
     [Fact]
     public void ShadowDaggerTestBackstep()//->PositionTest.Shadowstep
@@ -143,10 +175,64 @@ public class ItemTest : IDisposable
         Program.ElaspeTurn();
         Assert.NotEqual(player.MaxHp, player.CurrentHp);
     }
+    ///
+    /// Printing Inventory.
+    ///
     [Fact]
     public void NewInvenToString()
     {
-        Assert.Equal("아무것도 없다.", player.InvenToString);
+        Assert.Equal("(q|맨손)", player.InvenToString());
         player.GiveItem(new ShadowDagger());
+        Assert.Equal("(q|그림자 단검)(w|맨손)", player.InvenToString());
+        player.GiveItem(new Bolt());
+        Assert.Equal("(q|그림자 단검)(w|석궁 볼트x1)(e|맨손)", player.InvenToString());
     }
+    [Fact]
+    public void InvenToStringStackedItems()
+    {
+        player.GiveItem(new Bolt());
+        Assert.Equal("(q|석궁 볼트x1)(w|맨손)", player.InvenToString());
+        player.GiveItem(new Bolt());
+        Assert.Equal("(q|석궁 볼트x2)(w|맨손)", player.InvenToString());
+    }
+    [Fact]
+    public void PrintSkillList()
+    {
+        ShadowDagger dagger = new();
+        Assert.Equal("그림자 단검 | (q|찌르기)(w|던지기)", dagger.ToSkillString());
+        //wip
+    }
+    [Fact]
+    public void UseSkillByInput()
+    {
+        TestMonster testMon = new(new(1, Facing.Left));
+        ShadowDagger dagger = new();
+        player.GiveItem(dagger);
+
+        IO2.Press('q');
+        Assert.Equal(dagger, IO2.SelectedItem);
+        Assert.Equal(testMon.MaxHp, testMon.CurrentHp);
+        IO2.Press('q');
+
+        Assert.NotEqual(testMon.MaxHp, testMon.CurrentHp);
+        Assert.Null(IO2.SelectedItem);
+
+    }
+    [Fact]
+    public void GetSkillByIndex()
+    {
+        ShadowDagger dagger = new();
+        Assert.Equal(dagger.Pierce, dagger.GetSkillAt(0));
+        Assert.Equal(dagger.Throw, dagger.GetSkillAt(1));
+    }
+    // [Fact]
+    // public void SelectItemFromInven()
+    // {
+    //     Assert.Equal("(q|맨손)", Output.LastWrite);
+    //     player.GiveItem(new ShadowDagger());
+    //     Assert.Equal("(q|그림자 단검)(w|맨손)", Output.LastWrite);
+    //     // Output.Press('q');
+    //     // Assert.Equal("", Output.LastWrite);
+    //     //wip
+    // }
 }

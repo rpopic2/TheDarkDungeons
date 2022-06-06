@@ -1,7 +1,7 @@
 public class QuietKnight : Monster, ISpawnable
 {
     private static StatInfo stat = new(new(4, 2, 2), 5, 10);
-    public static readonly MonsterData data = new("조용한 기사", 'ì', 'í', stat, new Item[] { mutedSword });
+    public static readonly MonsterData data = new("조용한 기사", 'ì', 'í', stat, new ItemOld[] { mutedSword });
     private int[][] patterns = new int[][]{
         new int[] { 0, 0, 0 },
         new int[] { 1, 2 },
@@ -46,11 +46,11 @@ public class QuietKnight : Monster, ISpawnable
 }
 public partial class Creature
 {
-    public readonly static Item mutedSword = new("무음의 검", ItemType.Equip, new IBehaviour[]
+    public readonly static ItemOld mutedSword = new("무음의 검", ItemType.Equip, new IBehaviour[]
      {
-            new Skill("소리 없는 칼날", StanceName.Offence, StatName.Sol, DamageType.Slash, ".....", (i)=>i.Attack(2) ),
-            new Charge("칼 들어올리기", StatName.Sol, DamageType.Magic, ".....!!!", (i)=>{i.Charge(mutedSword!);}), new Skill("내려치기", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!.....", (i)=>i.Attack(2) ),
-new Skill("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!!!!", (i)=>{i.Dash(new Position(4, i.Pos.facing));i.Attack(4);i._lastHit?.CurAction.SetStun(1);})
+            new SkillOld("소리 없는 칼날", StanceName.Offence, StatName.Sol, DamageType.Slash, ".....", (i)=>i.Attack(2) ),
+            new Charge("칼 들어올리기", StatName.Sol, DamageType.Magic, ".....!!!", (i)=>{i.Charge(mutedSword!);}), new SkillOld("내려치기", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!.....", (i)=>i.Attack(2) ),
+new SkillOld("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!!!!", (i)=>{i.Dash(new Position(4, i.Pos.facing));i.Attack(4);i.LastHit?.CurAction.SetStun(1);})
 
 
      });

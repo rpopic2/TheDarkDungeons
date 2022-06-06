@@ -165,11 +165,12 @@ public static class IO
         string? energyTip = default;
         if (s_player.Energy.IsInjured) energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
         if (energyTip != default) pr(energyTip, __.bottom | __.newline);
-        pr($"턴 : {Map.Turn}  깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
+        pr($"깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
         string myHpEnergy = $"Hp : {s_player.GetHp()}    기력 : {s_player.Energy}";
         Creature? frontCreature = s_player.CreatureAtFront;
-        string enemyHpEnergy = frontCreature is null ? string.Empty : $"| 상대 Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy}";
-        pr($"{myHpEnergy} {enemyHpEnergy}", __.bottom | __.newline);
+        string enemyHpEnergy = frontCreature is null ? string.Empty : $"Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy} (상대)";
+        pr($"{myHpEnergy}", __.bottom | __.newline);
+        pr($"{enemyHpEnergy}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         pr(Map.Current);
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
@@ -183,7 +184,7 @@ public static class IO
     {
         Console.Clear();
         Inventory Inven = s_player.Inven;
-        foreach (Item item in Inven.OfType<Item>())
+        foreach (ItemOld item in Inven.OfType<ItemOld>())
         {
             ItemMetaData metaData = Inven.GetMeta(item)!;
             pr($"{item.Name} | 종류 : {item.itemType} {metaData} ");

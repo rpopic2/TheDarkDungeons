@@ -74,7 +74,7 @@ public static class Help
         {Rat.data.backwardChar, "쥐"},
         {Rat.data.fowardChar, "쥐"},
         {QuietKnight.data.backwardChar, "조용한 기사(보스)"},
-        {QuietKnight.data.backwardChar, "조용한 기사(보스)"},
+        {QuietKnight.data.fowardChar, "조용한 기사(보스)"},
     };
     public static void ShowHelpPrompt()
     {

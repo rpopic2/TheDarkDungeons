@@ -50,7 +50,7 @@ public class DamageTypeTest : IDisposable
         int expectedHp = MON_MAXHP - BASE_DMG.ToVul();
         Assert.Equal(expectedHp, testMon.GetHp().Cur);
     }
-    private void SetupDamageTest(Item item1, int skill1, Item item2, int skill2)
+    private void SetupDamageTest(ItemOld item1, int skill1, ItemOld item2, int skill2)
     {
         player.Inven.Add(item1);
         player.SetAction(item1, skill1, BASE_DMG);//slash dmg

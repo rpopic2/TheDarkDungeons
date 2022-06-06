@@ -29,7 +29,7 @@ public partial class Player : Creature
         SelectPickupStat();
     }
 
-    public void SelectBehaviour(Item item)
+    public void SelectBehaviour(ItemOld item)
     {
         IO.del(__.bottom);
         IO.selOnce(item.skills, out int index, __.bottom, $"{item.Name}으로 무엇을 할까 : ");
@@ -63,7 +63,7 @@ public partial class Player : Creature
         } while (index == -1);
         Stat[(StatName)index] += 1;
     }
-    public bool PickupItem(Item item, ItemMetaData? metaData = null)
+    public bool PickupItem(ItemOld item, ItemMetaData? metaData = null)
     {
         if (metaData is null) metaData = new();
         IO.pr($"\n아이템을 얻었다. {item.Name}");
@@ -81,7 +81,7 @@ public partial class Player : Creature
     Start:
         int index = SelectIndexOfItem("버릴 아이템을 선택해 주십시오 : ");
         if (index <= -1) return false;
-        Item selected = Inven[index]!;
+        ItemOld selected = Inven[index]!;
     Confirm:
         ConsoleKey key = IO.rk($"{selected.Name}이 버려집니다. 계속하시겠습니까?").Key;
         if (key.IsOK())
@@ -92,7 +92,7 @@ public partial class Player : Creature
         else if (key.IsCancel()) goto Start;
         else goto Confirm;
     }
-    protected override void Charge(Item? item = null)
+    protected override void Charge(ItemOld? item = null)
     {
         if (item is not null)
         {
@@ -102,15 +102,15 @@ public partial class Player : Creature
         IO.pr("마법부여할 대상을 선택해 주십시오.");
         IO.sel(Inven, out int index);
         IO.del();
-        if (Inven[index] is Item item2) Charge(item2);
+        if (Inven[index] is ItemOld item2) Charge(item2);
     }
-    protected override void PoisonItem(Item? item = null)
+    protected override void PoisonItem(ItemOld? item = null)
     {
         IO.pr("독을 바를 대상을 선택해 주십시오.");
         IO.sel(Inven, out int index);
         IO.del();
         if (index == -1) return;
-        if (Inven[index] is Item item2) base.PoisonItem(item2);
+        if (Inven[index] is ItemOld item2) base.PoisonItem(item2);
     }
     protected override void Interact()
     {
@@ -146,8 +146,8 @@ public partial class Player : Creature
             IO.del();
             return;
         }
-        corpse.GetItemAndMeta(index, out Item? item, out ItemMetaData? metaData);
-        if (item is Item)
+        corpse.GetItemAndMeta(index, out ItemOld? item, out ItemMetaData? metaData);
+        if (item is ItemOld)
         {
             bool pickedUp = PickupItem(item, metaData!);
             if (pickedUp) corpse.droplist.Remove(item);
@@ -168,7 +168,7 @@ public partial class Player : Creature
         while (Inven.Count < 2)
         {
             IO.sel(corpse.droplist.Content.ToArray(), out int index, 0, "아이템 선택 : ");
-            if (corpse.droplist[index] is Item item)
+            if (corpse.droplist[index] is ItemOld item)
             {
                 Inven.Add(item);
                 corpse.droplist.Remove(item);

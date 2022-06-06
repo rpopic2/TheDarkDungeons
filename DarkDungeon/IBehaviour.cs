@@ -1,4 +1,4 @@
-public record Skill(string Name, StanceName Stance, StatName StatDepend, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour, IEnergyConsume
+public record SkillOld(string Name, StanceName Stance, StatName StatDepend, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour, IEnergyConsume
 {
     public static readonly string[] parenthesis = { "  ", "[]", "()", "<>", "{}" };
     public override string ToString()
@@ -23,7 +23,7 @@ public record Charge(string Name, StatName StatDepend, DamageType damageType, st
     public StanceName Stance { get; init; } = StanceName.Charge;
     public override string ToString()
     {
-        string result = Skill.parenthesis[(int)damageType];
+        string result = SkillOld.parenthesis[(int)damageType];
         string tempName = Name.Insert(0, GetColor());
         tempName += "^/";
         result = result.Insert(1, tempName);
