@@ -33,11 +33,15 @@ public partial class Creature
             _items.Add(item);
         }
     }
+    public void RemoveItem<T>(int stackToRemove) where T : IStackable
+    {
+        IStackable? targetItem = _items.OfType<IStackable>().FirstOrDefault()!;
+        if (targetItem is not null) targetItem.Stack -= stackToRemove;
+    }
     public void RemoveItem<T>() where T : ItemNew
     {
         ItemNew? targetItem = GetItem<T>();
-        if (targetItem is IStackable stackable) stackable.Stack--;
-        else if (targetItem is not null) _items.Remove(targetItem);
+        if (targetItem is not null) _items.Remove(targetItem);
     }
     public string InvenToString
     {

@@ -12,6 +12,7 @@ new-item-system 0.6.050622
 [ ] 맨손 버릴수있는데?
 [ ] equality of item? currently it`s set to its name.
 [ ] removeitem with stacks
+[ ] statck cannot be less than 1
 
 main
 [ ] / key and qwert prints its properties

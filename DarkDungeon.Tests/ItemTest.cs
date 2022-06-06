@@ -74,6 +74,15 @@ public class ItemTest : IDisposable
         Assert.False(player.HasItem<ShadowBow>());
     }
     [Fact]
+    public void RemoveItemStack()
+    {
+        player.GiveItem(new Bolt(3));
+        player.RemoveItem<Bolt>(1);
+        Assert.Equal(2, player.GetStack<Bolt>());
+        player.RemoveItem<Bolt>();
+        Assert.Equal(0, player.GetStack<Bolt>());
+    }
+    [Fact]
     public void RemoveItemDoesNotThrowError()
     {
         player.RemoveItem<Bolt>();//trying to remove when bolt does not exist in inventory.
