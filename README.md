@@ -1,7 +1,7 @@
 # TheDarkDungeons
 The Dark Dungeons 
 
-Roguelike Dungeon Crawler
+Classic Roguelike Dungeon crawler on CLI.
 
 
 [Help](/DarkDungeon/help.txt)
