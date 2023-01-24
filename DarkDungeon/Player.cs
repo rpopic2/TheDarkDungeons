@@ -79,7 +79,7 @@ public partial class Player : Creature
     public bool DiscardItem()
     {
     Start:
-        int index = SelectIndexOfItem("버릴 아이템을 선택해 주십시오 : ");
+        int index = SelectIndexOfItem("버릴 아이템을 선택해 주십시오 (x로 취소) : ");
         if (index <= -1) return false;
         ItemOld selected = Inven[index]!;
     Confirm:
@@ -139,7 +139,7 @@ public partial class Player : Creature
     }
     private void PickAnItemFromCorpse(Corpse corpse, out bool cancel)
     {
-        IO.sel(corpse.droplist, out int index, 0, "주울 아이템 선택 : ");
+        IO.sel(corpse.droplist, out int index, 0, "주울 아이템 선택 (x로 취소) : ");
         cancel = index == -1;
         if (cancel)
         {

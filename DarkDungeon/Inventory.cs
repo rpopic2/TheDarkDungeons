@@ -93,10 +93,10 @@ public class Inventory : ICollection<ItemOld?>
     {
         get => content[index];
     }
-    public ItemMetaData? GetMeta(ItemOld item)
+    public ItemMetaData? GetMeta(ItemOld? item)
     {
         if (item == Creature.bareHand) return bareHandMetaData;
-        if(metaDatas.ContainsKey(item)) return metaDatas[item];
+        if (item is not null && metaDatas.ContainsKey(item)) return metaDatas[item];
         else return null;
     }
     public int GetStack(ItemOld item) => GetMeta(item).stack;

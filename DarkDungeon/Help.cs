@@ -15,6 +15,7 @@ public static class Help
         IO.pr("\n ctrl + L = 새로고침 (맵이 이상하면 누르기)");
 
         IO.pr("=> 먹히지 않는 키가 있으면 모바일이나 숫자패드 단축키로 시도해 보십시오.", __.bottom | __.newline);
+        IO.pr("화면을 키우면 잘린 글씨를 볼 수 있습니다.", __.bottom | __.newline);
         IO.pr("여기에서 m : 모바일 단축키 보기, 5 : 숫자패드 단축키 보기, 다른 키를 눌러 돌아가기", __.bottom);
         ConsoleKeyInfo consoleKeyInfo = IO.rk();
         if (consoleKeyInfo.KeyChar == 'm') ShowMobileHelp();
@@ -65,20 +66,20 @@ public static class Help
         {'l', "우로 이동"},
         {'z', "상호작용"},
         {' ', "확인"},
-        {Lunatic.data.fowardChar, "광신도"},
-        {Lunatic.data.backwardChar, "광신도"},
-        {Snake.data.fowardChar, "뱀"},
-        {Snake.data.backwardChar, "뱀"},
-        {Shaman.data.fowardChar, "정령술사"},
-        {Shaman.data.backwardChar, "정령술사"},
-        {Rat.data.backwardChar, "쥐"},
-        {Rat.data.fowardChar, "쥐"},
+        {Lunatic.data.fowardChar, "광신도(몬스터)"},
+        {Lunatic.data.backwardChar, "광신도(몬스터)"},
+        {Snake.data.fowardChar, "뱀(몬스터)"},
+        {Snake.data.backwardChar, "뱀(몬스터)"},
+        {Shaman.data.fowardChar, "정령술사(몬스터)"},
+        {Shaman.data.backwardChar, "정령술사(몬스터)"},
+        {Rat.data.backwardChar, "쥐(몬스터)"},
+        {Rat.data.fowardChar, "쥐(몬스터)"},
         {QuietKnight.data.backwardChar, "조용한 기사(보스)"},
         {QuietKnight.data.fowardChar, "조용한 기사(보스)"},
     };
     public static void ShowHelpPrompt()
     {
-        ConsoleKeyInfo info = IO.rk("?를 한번 더 눌러 게임 도움말 보기 / 궁금한 글자를 키보드에서 눌러 검색");
+        ConsoleKeyInfo info = IO.rk("?를 한번 더 눌러 게임 도움말을 보거나, 화면에 보이는 글자를 입력해 검색");
         char key = info.KeyChar;
         if (key == '?') ShowHelp();
         else IO.rk($"{key} : {s_examineDict.GetValueOrDefault(key, "찾을 수 없습니다")}");
