@@ -1,12 +1,14 @@
 namespace DarkDungeon;
 public static class IO
 {
-    public static bool IsInteractive = true;
+    public static bool IsInteractive = CSIO.IsInteractive;
     private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
     public static readonly ConsoleKey[] ITEMKEYS_PAD = new ConsoleKey[] { ConsoleKey.End, ConsoleKey.PageDown, ConsoleKey.Home, ConsoleKey.PageUp, ConsoleKey.OemPlus };
     private static readonly string DELSTRING = " ";
     private static Player s_player { get => Player.instance; }
+    private static IIO s_io;
+    public static IIO IIO { get => s_io; set => s_io = value; }
     static IO()
     {
         foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -19,17 +21,6 @@ public static class IO
         }
         int delstringLength = Console.WindowWidth - 1;
         DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
-        Console.WriteLine();
-        IO.pr("The Dungeon of the Mine " + Program.VERSION);
-        try
-        {
-            ConsoleKeyInfo info = IO.rk("Press any key to start...");
-            if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
-        }
-        catch (InvalidOperationException)
-        {
-            IO.IsInteractive = false;
-        }
     }
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
@@ -47,16 +38,20 @@ public static class IO
         if (stringValue.Contains("^"))
         {
             pr_Color(stringValue, flag);
-            if (!flag.HasFlag(__.bottom)) Console.WriteLine();
+            if (!flag.HasFlag(__.bottom)) pr(string.Empty);
             else Console.SetCursorPosition(x, y);
             return;
         }
         else if (flag.HasFlag(__.bottom))
         {
-            Console.Write(stringValue);
+            pr(stringValue, false);
             Console.SetCursorPosition(x, y);
         }
-        else Console.WriteLine(stringValue);
+        else pr(stringValue);
+    }
+    private static void pr(string value, bool newline = true)
+    {
+        s_io.pr(value, newline);
     }
     private static void pr_Color(string value, __ flags)
     {
@@ -69,12 +64,16 @@ public static class IO
             else if (item.StartsWith("/")) Console.ResetColor();
             else if (!item.StartsWith('c'))
             {
-                Console.Write(item);
+                pr(item, false);
                 continue;
             }
-            Console.Write(item.Substring(1));
+            pr(item.Substring(1), false);
         }
         Console.ResetColor();
+    }
+    public static string rl()
+    {
+        return s_io.rl();
     }
     ///<summary>Console.ReadKey. Intercept is true.</summary>
 
@@ -87,8 +86,7 @@ public static class IO
     }
     public static ConsoleKeyInfo rk()
     {
-        if (IsInteractive) return Console.ReadKey(true);
-        else return new ConsoleKeyInfo('q', ConsoleKey.Q, false, false, false);
+        return s_io.rk();
     }
     public static void sel(object value, out int index, __ flags = 0, string title = "선택 : ")
     => sel(value, flags, out index, out _, out _, out _, title);
@@ -150,7 +148,7 @@ public static class IO
         int x = Console.CursorLeft;
         int y = Console.CursorTop;
         Console.CursorTop = x + Console.WindowHeight - 1;
-        Console.Write(DELSTRING);
+        pr(DELSTRING, false);
         Console.SetCursorPosition(x, y);
     }
     public static void del(int lines)

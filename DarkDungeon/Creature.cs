@@ -8,7 +8,7 @@ public abstract partial class Creature
     public Position Pos { get; set; }
 
     private CurrentAction CurAction { get; init; }
-    public Energy Energy { get => CurAction.Energy; }
+    public Energy Energy { get => CurAction.Energy; protected set => CurAction.Energy = value; }
     public IBehaviour? CurrentBehaviour => CurAction.CurrentBehav;
 
     public Inventory Inven { get; private set; }

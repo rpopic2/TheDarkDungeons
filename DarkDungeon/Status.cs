@@ -1,6 +1,6 @@
 public class Status
 {
-    public static Status BasicStatus => new(1, 1, 0);
+    public static Status BasicStatus => new(sol: 1, lun: 1, con: 0);
     public const int MIN = 1;
     public const int BASIC_SIGHT = 1;
     public const int STAT_COUNT = 3;

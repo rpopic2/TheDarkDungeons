@@ -1,6 +1,6 @@
 public class QuietKnight : Monster, ISpawnable
 {
-    private static StatInfo stat = new(new(4, 2, 2), 5, 10);
+    private static StatInfo stat = new(new(sol: 4, lun: 2, con: 2), energy: 5, killExp: 10);
     public static readonly MonsterData data = new("조용한 기사", 'ì', 'í', stat, new ItemOld[] { mutedSword });
     private int[][] patterns = new int[][]{
         new int[] { 0, 0, 0 },

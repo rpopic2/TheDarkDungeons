@@ -7,7 +7,7 @@ public class CurrentAction
     public int Stun { get; private set; }
     public int Poison { get; private set; }
     private Creature _owner;
-    public Energy Energy { get; private set; }
+    public Energy Energy { get; set; }
     public CurrentAction(Creature owner, int energy)
     {
         _owner = owner;

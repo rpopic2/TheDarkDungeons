@@ -1,14 +1,30 @@
 global using IO = DarkDungeon.IO;
 public class Program
 {
-    public const string VERSION = "0.6.040622";
+    public const string VERSION = "0.6.1-240123";
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
     public static Action? OnTurnAction;
-    public static void Main()
+    public static GameSocket gameSocket;
+
+    public static async Task Main()
     {
+        gameSocket = new GameSocket();
+        await gameSocket.New();
+        IO.IIO = gameSocket;
+        IO.pr(string.Empty);
+        IO.pr("The Dungeon of the Mine " + Program.VERSION);
+        try
+        {
+            ConsoleKeyInfo info = IO.rk("Press any key to start...");
+            if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
+        }
+        catch (InvalidOperationException)
+        {
+            IO.IsInteractive = false;
+        }
         if (!IO.IsInteractive) return;
-        Console.CancelKeyPress += (e, e2) => { Environment.Exit(1); };
+        Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
         Program instance = new Program();
         do
         {
@@ -21,6 +37,7 @@ public class Program
     }
     public Program()
     {
+        //return;
         Map.NewMap();
         CreatePlayer();
         Console.Clear();
@@ -72,7 +89,7 @@ public class Program
         do
         {
             IO.pr("캐릭터의 이름은?...");
-            name = Console.ReadLine() ?? "Michael";
+            name = IO.rl() ?? "Michael";
             IO.del(2);
         } while (name == string.Empty);
         return name;
