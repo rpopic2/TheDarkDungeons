@@ -155,10 +155,11 @@ public static class IO
     {
         for (int i = 0; i < lines; i++) del();
     }
+    public static void clr() => s_io.clr();
     public static void Redraw()
     {
         if (!IsInteractive) return;
-        Console.Clear();
+        clr();
         //pr("History");
         string? energyTip = default;
         if (s_player.Energy.IsInjured) energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
@@ -180,7 +181,7 @@ public static class IO
     }
     public static void DrawInventory()
     {
-        Console.Clear();
+        clr();
         Inventory Inven = s_player.Inven;
         foreach (ItemOld item in Inven.OfType<ItemOld>())
         {

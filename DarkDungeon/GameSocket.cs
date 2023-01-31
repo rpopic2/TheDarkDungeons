@@ -39,11 +39,16 @@ public class GameSocket : IIO
             Console.WriteLine("Connection closed by client.");
             Environment.Exit(1);
         }
-        Console.WriteLine($"Received: {buffer[0]}");
+        Console.WriteLine($"Received: {Encoding.UTF8.GetString(buffer, 0, 1)}");
         return new((char)buffer[0], (ConsoleKey)buffer[0], false, false, false);
     }
     public string rl()
     {
         return "Unity";
+    }
+    public void clr()
+    {
+        Console.WriteLine("Clearing screen...");
+        s_client?.Send(Encoding.UTF8.GetBytes("\x1b[2J"));
     }
 }

@@ -17,4 +17,8 @@ public class CSIO : IIO
         if (IsInteractive) return Console.ReadLine() ?? "null";
         else return "NonInteractive";
     }
+    public void clr()
+    {
+        Console.Clear();
+    }
 }
