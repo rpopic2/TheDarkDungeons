@@ -7,11 +7,16 @@ public class Program
     public static Action? OnTurnAction;
     public static GameSocket gameSocket;
 
-    public static async Task Main()
+    public static async Task Main(string[] args)
     {
-        gameSocket = new GameSocket();
-        await gameSocket.New();
-        IO.IIO = gameSocket;
+        if (args.Length > 0 && args[0] == "server")
+        {
+            gameSocket = new GameSocket();
+            await gameSocket.New();
+            IO.IIO = gameSocket;
+        }
+        else IO.IIO = new CSIO();
+
         IO.pr(string.Empty);
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
         try
