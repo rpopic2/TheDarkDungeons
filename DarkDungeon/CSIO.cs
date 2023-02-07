@@ -21,4 +21,5 @@ public class CSIO : IIO
     {
         Console.Clear();
     }
+    public void eot(){}
 }

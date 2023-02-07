@@ -1,11 +1,14 @@
 global using IO = DarkDungeon.IO;
 public class Program
 {
-    public const string VERSION = "0.6.1-010223";
+    public const string VERSION = "0.6.1-070223";
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
     public static Action? OnTurnAction;
     public static GameSocket gameSocket;
+
+    //tmp
+    public const string EOT = "<EOT>";
 
     public static async Task Main(string[] args)
     {
@@ -21,7 +24,8 @@ public class Program
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
         try
         {
-            ConsoleKeyInfo info = IO.rk("Press any key to start...");
+            IO.pr("Pres any key to start...");
+            ConsoleKeyInfo info = IO.rk();
             if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
         }
         catch (InvalidOperationException)

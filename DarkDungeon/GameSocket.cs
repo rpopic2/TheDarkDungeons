@@ -4,11 +4,10 @@ using System.Text;
 
 public class GameSocket : IIO
 {
-    private Socket? s_listener;
+    private const string EOM = "<EOM>";
     private Socket? s_client;
     ~GameSocket() 
     {
-        s_listener?.Close();
         s_client?.Close();
         Console.WriteLine("Closing connection.");
     }
@@ -20,13 +19,20 @@ public class GameSocket : IIO
         socket.Bind(ipEndPoint);
         socket.Listen();
         s_client = await socket.AcceptAsync();
+        s_client.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
         Console.WriteLine("Connection created!");
     }
 
     public void pr(string value, bool newline = true)
     {
         if (newline) value += "\n";
+        if (value != "<EOT>") value += EOM;
+        Console.WriteLine($"Sending: {value}");
         s_client?.Send(Encoding.UTF8.GetBytes(value));
+    }
+    public void eot()
+    {
+        s_client?.Send(Encoding.UTF8.GetBytes("<EOT>"));
     }
 
     public ConsoleKeyInfo rk()
@@ -49,6 +55,6 @@ public class GameSocket : IIO
     public void clr()
     {
         Console.WriteLine("Clearing screen...");
-        s_client?.Send(Encoding.UTF8.GetBytes("\x1b[2J"));
+        s_client?.Send(Encoding.UTF8.GetBytes(@"\x1b[2J"));
     }
 }

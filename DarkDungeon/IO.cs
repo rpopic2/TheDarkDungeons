@@ -22,6 +22,7 @@ public static class IO
         int delstringLength = Console.WindowWidth - 1;
         DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
     }
+    public static void eot() => s_io.eot();
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object value, __ flag = 0, string title = "")
