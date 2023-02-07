@@ -58,7 +58,8 @@ public class Status
         IO.pr($"{Level}레벨이 되었다.", __.emphasis);
         int newHp = SolToHp();
         Hp.Max = newHp;
-        Heal(Hp.Max / 2);
+        //Heal(Hp.Max / 2);
+        Heal(Hp.Max);
     }
     public void Damage(int value) => Hp -= value;
     public void Heal(int value) => Hp += value;
