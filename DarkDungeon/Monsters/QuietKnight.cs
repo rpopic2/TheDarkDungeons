@@ -1,6 +1,6 @@
 public class QuietKnight : Monster, ISpawnable
 {
-    private static StatInfo stat = new(new(sol: 4, lun: 2, con: 2), energy: 5, killExp: 10);
+    private static StatInfo stat = new(new(sol: 3, lun: 2, con: 2), energy: 4, killExp: 50);
     public static readonly MonsterData data = new("조용한 기사", 'ì', 'í', stat, new ItemOld[] { mutedSword });
     private int[][] patterns = new int[][]{
         new int[] { 0, 0, 0 },
@@ -11,7 +11,7 @@ public class QuietKnight : Monster, ISpawnable
 
     public QuietKnight(Position spawnPoint) : base(data, spawnPoint)
     {
-        Stat.AddSight(4);
+        Stat.AddSight(3);
         queue = new(AddPattern(0, 1));
     }
     private int[] AddPattern(int x, int y)

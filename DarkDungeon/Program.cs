@@ -1,7 +1,7 @@
 global using IO = DarkDungeon.IO;
 public class Program
 {
-    public const string VERSION = "0.6.1-240123";
+    public const string VERSION = "0.6.1-010223";
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
     public static Action? OnTurnAction;

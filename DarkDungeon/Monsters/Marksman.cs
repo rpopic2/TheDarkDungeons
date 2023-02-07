@@ -1,6 +1,6 @@
 public class Marksman : Monster, ISpawnable
 {
-    public static readonly MonsterData data = new("그림자 궁사", ']', '[', new(new(sol: 1, lun: 3, con: 1), energy: 3, killExp: 5), new ItemOld[] { Creature.bow });
+    public static readonly MonsterData data = new("그림자 궁사", ']', '[', new(new(sol: 0, lun: 2, con: 1), energy: 3, killExp: 5), new ItemOld[] { Creature.bow, Creature.torch });
     public Marksman(Position spawnPoint) : base(data, spawnPoint)
     {
         Stat.AddSight(3);

@@ -85,7 +85,7 @@ public abstract partial class Creature
     private void PrintOnUseOutput()
     {
         string useOutput = $"{Name} {CurAction.CurrentBehav?.OnUseOutput} ({CurAction.Amount})";
-        int mcharge = Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge;
+        int mcharge = Inven.GetMeta(CurAction.CurrentItem!)?.magicCharge ?? 0;
         if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
         IO.rk(useOutput);
     }

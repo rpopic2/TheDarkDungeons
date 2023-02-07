@@ -1,7 +1,7 @@
 public class Shaman : Monster, ISpawnable
 {
-    private static StatInfo stat = new(stat: new(0, 1, 1), energy: 4, killExp: 4);
-    public readonly static MonsterData data = new(name: "정령술사", '}', '{', stat, new ItemOld[] { spiritStaff, torch });
+    private static StatInfo stat = new(stat: new(sol:1, lun:1, con:3), energy: 4, killExp: 4);
+    public readonly static MonsterData data = new(name: "정령술사", '}', '{', stat, new ItemOld[] { spiritStaff, torch, tearOfLun });
 
     public Shaman(Position spawnPoint) : base(data, spawnPoint) { }
     

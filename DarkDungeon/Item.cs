@@ -32,7 +32,7 @@ public partial class Creature
     public static readonly ItemOld assBareHand = bareHand with { Name = "암살자의 손", skills = new IBehaviour[] { bareHand.skills[0], bareHand.skills[1], sommersault } };
     public static readonly ItemOld sword = new("검", ItemType.Equip, new SkillOld[] {
         new("베기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Attack(1)),
-        new("칼로막기", StanceName.Defence, StatName.Sol, DamageType.Slash, "은 칼로 막기 자세를 취했다.", (i)=>{})
+        new("칼로막기", StanceName.Defence, StatName.Sol, DamageType.Normal, "은 칼로 막기 자세를 취했다.", (i)=>{})
         });
     public static readonly ItemOld holySword = new("광란의 신성검", ItemType.Equip, new IBehaviour[] {
         new SkillOld("베기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 칼을 휘둘러 앞을 베었다.", (i)=>i.Attack(1)),
