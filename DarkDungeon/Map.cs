@@ -1,6 +1,6 @@
 public class Map
 {
-    public const int START_DEPTH = 4;
+    public const int START_DEPTH = 1;
     private const int BOSS_DEPTH = 5;
     public static int Turn { get; private set; }
     private static int Spawnrate = 11;

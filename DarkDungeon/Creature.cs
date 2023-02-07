@@ -92,6 +92,7 @@ public abstract partial class Creature
 
     private void Attack(int range, int addDamage = 0)
     {
+        if (IsAlive == false) return;
         DamageType damageType = default;
         if (CurAction.CurrentBehav is SkillOld skill) damageType = skill.damageType;
         Creature? mov = _currentMap.RayCast(Pos, range);
