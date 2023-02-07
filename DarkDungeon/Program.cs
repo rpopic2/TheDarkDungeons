@@ -126,6 +126,7 @@ public class Program
     private void AddStartItems(int classIndex)
     {
         Inventory playerInven = s_player.Inven;
+        playerInven.Add(Creature.tearOfLun, new(2));
         switch (classIndex)
         {
             case 0:

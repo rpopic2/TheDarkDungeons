@@ -13,7 +13,6 @@ public partial class Player
     {
         ConsoleKeyInfo info = IO.rk();
         ConsoleKey key = info.Key;
-        Console.WriteLine("Selection");
         if (key.IsCancel())
         {
             DiscardItem();
@@ -26,8 +25,12 @@ public partial class Player
                 ChooseMove(Facing.Right);
                 break;
             case ConsoleKey.L:
-                if (info.Modifiers == ConsoleModifiers.Control) IO.Redraw();
-                break;
+                if (info.Modifiers == ConsoleModifiers.Control)
+                {
+                    IO.Redraw();
+                    break;
+                }
+                else goto default;
             case ConsoleKey.NumPad0:
             case ConsoleKey.D0:
                 IO.Redraw();
@@ -51,7 +54,6 @@ public partial class Player
         bool found = IO.chk(key.KeyChar, Inventory.INVENSIZE, out int i);
         if (!found) IO.chkp(key.Key, Inventory.INVENSIZE, out i);
         if (found) ChooseIndex(i);
-        Console.WriteLine("DefaultSwitch");
 
         switch (key.KeyChar)
         {

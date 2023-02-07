@@ -33,7 +33,11 @@ public abstract class Monster : Creature
     {
         int randomFace = Stat.rnd.Next(2);
         if (!Map.Current.IsEnd(Pos.x)) SelectBasicBehaviour(0, 1, randomFace);
-        else SelectBasicBehaviour(0, 1, 1);// = Move(new(1, Facing.Left));
+        else
+        {
+            if (Pos.x == 0) SelectBasicBehaviour(0, 1, 0);// = Move(new(1, Facing.Right));
+            else SelectBasicBehaviour(0, 1, 1);// = Move(new(1, Facing.Left));
+        }
     }
     protected void _SelectSkill(int item, int skill)
     {
