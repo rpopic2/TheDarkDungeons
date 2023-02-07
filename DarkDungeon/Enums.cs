@@ -31,5 +31,5 @@ public enum __
 }
 public enum DamageType
 {
-    None, Normal, Slash, Thrust, Magic
+    None, Normal, Slash, Throw, Thrust, Magic
 }

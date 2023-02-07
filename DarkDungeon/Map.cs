@@ -1,13 +1,17 @@
 public class Map
 {
-    public const int START_DEPTH = 1;
+    public const int START_DEPTH = 4;
     private const int BOSS_DEPTH = 5;
     public static int Turn { get; private set; }
     private static int Spawnrate = 11;
     public static Map Current = default!;
     private static ISpawnable[] s_monsterData =
     {
-        new Bat(default), new Shaman(default), new Snake(default), new Marksman(default), new Rat(default), new Lunatic(default)
+        new Bat(default), new Shaman(default), new Snake(default), new Rat(default), new Marksman(default), new Lunatic(default)
+    };
+    private static ISpawnable[] s_bossData =
+    {
+        new QuietKnight(default)
     };
     private static Random s_rnd = new Random();
     ///<summary>is 1 by default</summary>
@@ -57,7 +61,8 @@ public class Map
         if (Depth == BOSS_DEPTH)
         {
             this.DoSpawnMobs = false;
-            Spawn(new QuietKnight(default));
+            Spawn(s_bossData[0]);
+            IO.pr("조용한 기사가 등장했다.");
         }
         OnNewMap.Invoke();
     }
@@ -137,10 +142,12 @@ public class Map
         {
             if (_creaturesByPos[i] is null) spawnables.Add(i);
         }
-        int playerX = s_player.Pos.x;
-        spawnables.Remove(playerX);
-        spawnables.Remove(playerX - 1);
-        spawnables.Remove(playerX + 1);
+        if (Player._instance is not null) {
+            int playerX = s_player.Pos.x;
+            spawnables.Remove(playerX);
+            spawnables.Remove(playerX - 1);
+            spawnables.Remove(playerX + 1);
+        }
         return spawnables;
     }
     public void UpdateFightable(Creature mov)
@@ -178,6 +185,11 @@ public class Map
         }
     }
     public Creature? GetCreatureAt(int index) => _creaturesByPos.ElementAtOrDefault(index);
+    public void SpawnPortal(Position pos)
+    {
+        IPortal portal = new Pit();
+        _steppables[pos.x] = portal;
+    }
     public Creature? RayCast(Position origin, int range)
     {
         Creature? f;
@@ -218,7 +230,7 @@ public class Map
         renderVisible(Tiles);
         renderVisible(_steppables);
         renderVisible(_creaturesByPos);
-        //RenderAllMobs();//debug
+        RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
 
         void renderVisible<T>(T[] target)
@@ -234,10 +246,11 @@ public class Map
                 else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");
             }
         }
-        // void RenderAllMobs()
-        // {
-        //     for (int i = 0; i < Length; i++) if (FightablePositions[i] is Monster m) _rendered[i] = m.ToChar();
-        // }
+        //function for debugging
+        void RenderAllMobs()
+        {
+            for (int i = 0; i < Length; i++) if (_creaturesByPos[i] is Monster m) _rendered[i] = m.ToChar();
+        }
     }
     public void OnCorpsePickUp(Corpse corpse)
     {

@@ -18,6 +18,7 @@ public class ItemMetaData
     public void GainExp()
     {
         curExp++;
+        IO.pr($"경험치 {curExp}/{reqExp}");
         if (curExp >= reqExp)
         {
             curExp -= reqExp;
@@ -28,7 +29,7 @@ public class ItemMetaData
     }
     public override string ToString()
     {
-        return $"숙련도:{Mastery}, 경험치:{curExp}/{reqExp}";
+        return $"갯수:{stack}, 숙련도:{Mastery}, 숙련도 경험치:{curExp}/{reqExp}, 마법 충전량:{magicCharge}, 독:{poison}";
     }
 
 }

@@ -90,7 +90,7 @@ public abstract partial class Creature
         IO.rk(useOutput);
     }
 
-    private void Attack(int range)
+    private void Attack(int range, int addDamage = 0)
     {
         DamageType damageType = default;
         if (CurAction.CurrentBehav is SkillOld skill) damageType = skill.damageType;
@@ -99,8 +99,12 @@ public abstract partial class Creature
         if (mov is Creature hit)
         {
             LastHit = hit;
-            AttackMagicCharge(metaData);
-            hit.Dodge(CurAction.Amount, damageType, this, metaData);
+            var magicCharge = metaData.magicCharge;
+            if (magicCharge > 0) {
+                AttackMagicCharge(metaData);
+                damageType = DamageType.Magic;
+            }
+            hit.Dodge(CurAction.Amount + addDamage, damageType, this, metaData);
             metaData.GainExp();
         }
         metaData.magicCharge = 0;
@@ -155,6 +159,10 @@ public abstract partial class Creature
         else if (damageType == DamageType.Slash && defenceType == DamageType.Magic) UneffectiveDefence(ref damage);
         else if (damageType == DamageType.Thrust && defenceType == DamageType.Slash) UneffectiveDefence(ref damage);
         else if (damageType == DamageType.Magic && defenceType == DamageType.Thrust) UneffectiveDefence(ref damage);
+        else if (damageType == DamageType.Throw) {
+            if (defenceType == DamageType.Slash) UneffectiveDefence(ref damage);
+            else if (defenceType == DamageType.Thrust) EffectiveDefence(ref damage);
+        }
 
         damage -= CurAction.Amount;
         void EffectiveDefence(ref int damage)

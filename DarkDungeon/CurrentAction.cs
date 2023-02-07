@@ -30,6 +30,11 @@ public class CurrentAction
             if (!success) return;
         }
         this.CurrentItem = item;
+        if (behaviour is SkillOld)
+        {
+            ItemMetaData? metaData = _owner.Inven.GetMeta(CurrentItem);
+            if (metaData is not null) metaData.GainExp();
+        }
         this.CurrentBehav = behaviour;
         this.Amount = amount;
         this.Amount2 = amount2;

@@ -24,7 +24,7 @@ public class Program
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
         try
         {
-            IO.pr("Pres any key to start...");
+            IO.pr("Press any key to start...");
             ConsoleKeyInfo info = IO.rk();
             if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
         }
@@ -126,7 +126,6 @@ public class Program
     private void AddStartItems(int classIndex)
     {
         Inventory playerInven = s_player.Inven;
-        playerInven.Add(Creature.tearOfLun, new(2));
         switch (classIndex)
         {
             case 0:

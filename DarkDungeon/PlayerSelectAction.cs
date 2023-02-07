@@ -67,7 +67,7 @@ public partial class Player
             case 'h':
                 ChooseMove(Facing.Left);
                 break;
-            case ','://rest
+            case '.'://rest
             case 'n':
                 SelectBasicBehaviour(1, 0, -1);
                 break;

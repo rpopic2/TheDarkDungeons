@@ -184,15 +184,16 @@ public static class IO
     {
         clr();
         Inventory Inven = s_player.Inven;
+        pr_Color(s_player.Stat.ToString(), 0);
+        pr("\n");
         foreach (ItemOld item in Inven.OfType<ItemOld>())
         {
             ItemMetaData metaData = Inven.GetMeta(item)!;
-            pr($"{item.Name} | 종류 : {item.itemType} {metaData} ");
-            foreach (IBehaviour behav in item.skills)
+            pr($"{item.ToString()} | 종류 : {metaData} ");
+            /*foreach (IBehaviour behav in item.skills)
             {
                 pr($"\t{behav.ToString()} {behav.Stance}");
-            }
-            pr("\n");
+            }*/
         }
         rk();
         Redraw();

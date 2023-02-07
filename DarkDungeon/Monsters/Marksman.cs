@@ -3,7 +3,7 @@ public class Marksman : Monster, ISpawnable
     public static readonly MonsterData data = new("그림자 궁사", ']', '[', new(new(sol: 0, lun: 2, con: 1), energy: 3, killExp: 5), new ItemOld[] { Creature.bow, Creature.torch });
     public Marksman(Position spawnPoint) : base(data, spawnPoint)
     {
-        Stat.AddSight(3);
+        Stat.AddSight(-1); //횃불로 올라가서 다시 줄여줌
         ItemMetaData metaData = new(5);
         Inven.Add(Creature.arrow, metaData);
     }
@@ -17,7 +17,8 @@ public class Marksman : Monster, ISpawnable
 
     protected override void OnNothing()
     {
-        //은신 해야됨
+        BasicMovement();
+        //가만히 있는걸로 바꾸기?
     }
 
     protected override void OnTarget()

@@ -56,12 +56,17 @@ public partial class Creature
     });
     public static readonly ItemOld dagger = new("단검", ItemType.Equip, new SkillOld[] {
         new("휘두르기", StanceName.Offence,  StatName.Sol, DamageType.Slash, "은 단검을 휘둘렀다.", (i)=>i.Attack(1)),
-        new("투검", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 적을 향해 단검을 던졌다.", (i)=>{
+        new("투검", StanceName.Offence, StatName.Lun, DamageType.Throw, "은 적을 향해 단검을 던졌다.", (i)=>{
                 i.Throw(3, dagger!, true);
 })
     });
+
+    public static readonly ItemOld strawShoes = new("짚신", ItemType.Equip, new SkillOld[] {
+        new("뛰기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 짚신을 신고 뛰었다.", (i)=>i.Attack(10, 1000)),
+            });
+
     public static readonly ItemOld bow = new("활", ItemType.Equip, new SkillOld[] {
-        new("쏘기", StanceName.Offence, StatName.Lun, DamageType.Thrust, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});
+        new("쏘기", StanceName.Offence, StatName.Lun, DamageType.Throw, "은 활시위를 당겼다가 놓았다.", (i)=>i.Throw(3, arrow!))});
     public static readonly ItemOld shield = new("방패", ItemType.Equip, new SkillOld[]{
         new("방패밀기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 방패를 앞으로 세게 밀쳤다.", (i)=>i.Attack(1)),
         new("방패막기", StanceName.Defence, StatName.Sol, DamageType.Slash, "은 방패로 공격을 막았다.", (i)=>i.CurAction.AddAmount(2))
