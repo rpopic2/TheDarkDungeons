@@ -230,7 +230,7 @@ public class Map
         renderVisible(Tiles);
         renderVisible(_steppables);
         renderVisible(_creaturesByPos);
-        RenderAllMobs();//debug
+        //RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
 
         void renderVisible<T>(T[] target)

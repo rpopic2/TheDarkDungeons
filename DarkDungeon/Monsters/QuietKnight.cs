@@ -55,9 +55,7 @@ public partial class Creature
      {
             new SkillOld("소리 없는 칼날", StanceName.Offence, StatName.Sol, DamageType.Slash, ".....", (i)=>i.Attack(2) ),
             new Charge("칼 들어올리기", StatName.Sol, DamageType.Magic, ".....!!!(조용한 기사가 칼을 힘껏 들어올렸다!)", (i)=>{i.Charge(mutedSword!);}), new SkillOld("내려치기", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!.....(조용한 기사는 칼을 휘둘렀고, 검은 소리 없이 허공을 갈랐다.)", (i)=>i.Attack(2) ),
-new SkillOld("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!!!!(조용한 기사가 소리 없이 달려온다!)", (i)=>{i.Dash(new Position(4, i.Pos.facing));i.Attack(4);i.LastHit?.CurAction.SetStun(1);})
-
-
+new SkillOld("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "!!!!!!(조용한 기사가 소리 없이 달려온다!)", (i)=>{i.Dash(new Position(3, i.Pos.facing));i.LastHit?.CurAction.SetStun(1);})
      });
 
 }
