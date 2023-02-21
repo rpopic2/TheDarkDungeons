@@ -4,7 +4,6 @@ using System.Text;
 
 public class GameSocket : IIO
 {
-    private const string EOM = "<EOM>";
     private const string RK = "<rk>";
     private const string CLR = "<clr>";
     private Socket? s_client;
@@ -36,10 +35,6 @@ public class GameSocket : IIO
         Console.WriteLine($"Sending: {value.Length}: {value}");
         s_client?.Send(BitConverter.GetBytes(msglen));
         s_client?.Send(Encoding.UTF8.GetBytes(value));
-    }
-    public void eot()
-    {
-        s_client?.Send(Encoding.UTF8.GetBytes("<EOT>"));
     }
 
     public ConsoleKeyInfo rk()

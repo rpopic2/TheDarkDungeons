@@ -8,6 +8,7 @@ public static class IO
     private static readonly string DELSTRING = " ";
     private static Player s_player { get => Player.instance; }
     private static IIO s_io;
+#nullable disable
     public static IIO IIO { get => s_io; set => s_io = value; }
     static IO()
     {
@@ -22,7 +23,7 @@ public static class IO
         int delstringLength = Console.WindowWidth - 1;
         DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
     }
-    public static void eot() => s_io.eot();
+#nullable restore
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object value, __ flag = 0, string title = "")
@@ -78,6 +79,7 @@ public static class IO
     }
     ///<summary>Console.ReadKey. Intercept is true.</summary>
 
+    [Obsolete("Use rk() instead.")]
     public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "")
     {
         pr(print, flags, title);
@@ -111,9 +113,11 @@ public static class IO
             if (value is Array a) max = a.Length;
             else if (value is Inventory inv) max = inv.Count;
         }
-        keyInfo = rk(value, flags, title);
+        pr(value, flags, title);
+        keyInfo = rk();
         mod = keyInfo.Modifiers;
-        cancel = keyInfo.Key.IsCancel();
+        cancel = keyInfo.Key.IsCancel() || keyInfo.KeyChar == 'x';
+        Console.WriteLine("cancel: " + cancel);
         found = chk(keyInfo.KeyChar, max, out index);
         if (index == -1) found = IO.chkp(keyInfo.Key, max, out index);
         if (cancel) return false;

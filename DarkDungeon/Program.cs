@@ -5,7 +5,6 @@ public class Program
     private static Player s_player { get => Player.instance; }
     public static Action? OnTurn;
     public static Action? OnTurnAction;
-    public static GameSocket gameSocket;
 
     //tmp
     public const string EOT = "<EOT>";
@@ -14,7 +13,7 @@ public class Program
     {
         if (args.Length > 0 && args[0] == "server")
         {
-            gameSocket = new GameSocket();
+            var gameSocket = new GameSocket();
             await gameSocket.New();
             IO.IIO = gameSocket;
         }
@@ -50,7 +49,8 @@ public class Program
         Map.NewMap();
         CreatePlayer();
         IO.clr();
-        IO.rk($"{s_player.Name}은 횃불에 의지한 채 동굴 속으로 걸어 들어갔다.");
+        IO.pr($"{s_player.Name}은 횃불에 의지한 채 동굴 속으로 걸어 들어갔다.");
+        IO.rk();
         IO.Redraw();
         IO.pr("\n?을 눌러 도움말 표시.");
     }
@@ -81,8 +81,9 @@ public class Program
         Status stat = Status.BasicStatus;
         if (classIndex != -1) stat[(StatName)classIndex] += 3;
         IO.pr($"기본 스탯 : {stat}");
-        ConsoleKeyInfo keyInfo = IO.rk("스페이스바 : 확인, x : 취소");
-        if (keyInfo.Key.IsCancel())
+        IO.pr("스페이스바 : 확인, x : 취소");
+        ConsoleKeyInfo keyInfo = IO.rk();
+        if (keyInfo.Key.IsCancel() || keyInfo.KeyChar == 'x')
         {
             IO.del(2);
             goto ClassSelect;
