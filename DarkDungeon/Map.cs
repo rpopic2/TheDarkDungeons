@@ -267,9 +267,17 @@ public class Map
         TurnInCurrentDepth = 0;
     }
 
+    public string Rendered
+    {
+        get
+        {
+            Render();
+            return new string(_rendered);
+        }
+    }
+
     public override string ToString()
     {
-        Render();
-        return _pushDown + string.Join(" ", _rendered);
+        return _pushDown + string.Join(" ", Rendered);
     }
 }

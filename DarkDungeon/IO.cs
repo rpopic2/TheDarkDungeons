@@ -176,7 +176,7 @@ public static class IO
         pr($"{myHpEnergy}", __.bottom | __.newline);
         pr($"{enemyHpEnergy}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
-        pr(Map.Current);
+        s_io.pr_map();
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
     }
     public static void ShowStats()

@@ -34,8 +34,11 @@ public class Program
         if (!IO.IsInteractive) return;
         Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
         Program instance = new Program();
+
+        // main loop
         do
         {
+            // also see Map.OnTurnElapsed()
             OnTurn?.Invoke();
             OnTurnAction?.Invoke();
         } while (s_player.IsAlive);

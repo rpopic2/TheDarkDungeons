@@ -36,6 +36,11 @@ public class GameSocket : IIO
         s_client?.Send(BitConverter.GetBytes(msglen));
         s_client?.Send(Encoding.UTF8.GetBytes(value));
     }
+    public void pr_map()
+    {
+        var facing = (int)Player.instance.Pos.facing;
+        pr($"<map>{facing}{Map.Current.Rendered}", false);
+    }
 
     public ConsoleKeyInfo rk()
     {

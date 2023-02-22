@@ -2,10 +2,6 @@ public enum GamePointOption
 {
     Stacking, Reserving
 }
-public enum Facing
-{
-    Right, Left
-}
 public enum StanceName
 {
     None, Offence, Defence, Charge

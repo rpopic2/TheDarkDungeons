@@ -1,3 +1,8 @@
+public enum Facing
+{
+    Right, Left
+}
+
 public struct Position
 {
     public static readonly Position MOVELEFT = new(1, Facing.Left);

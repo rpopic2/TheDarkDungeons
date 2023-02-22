@@ -6,6 +6,10 @@ public class CSIO : IIO
         if (newline) Console.WriteLine(value);
         else Console.Write(value);
     }
+    public void pr_map()
+    {
+        pr(Map.Current.ToString(), false);
+    }
     public ConsoleKeyInfo rk()
     {
         if (IsInteractive) return Console.ReadKey(true);
@@ -21,5 +25,4 @@ public class CSIO : IIO
     {
         Console.Clear();
     }
-    public void eot(){}
 }
