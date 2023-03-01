@@ -4,6 +4,7 @@ using System.Text;
 
 public class GameSocket : IIO
 {
+    private static Player s_player => Player.instance;
     private const string RK = "<rk>";
     private const string CLR = "<clr>";
     private Socket? s_client;
@@ -40,6 +41,16 @@ public class GameSocket : IIO
     {
         var facing = (int)Player.instance.Pos.facing;
         pr($"<map>{facing}{Map.Current.Rendered}", false);
+    }
+
+    public void pr_depth_lv()
+    {
+        pr($"<depth>{Map.Depth}<level>{s_player.Level}<exp>{s_player.exp}");
+    }
+
+    public void pr_hp_energy()
+    {
+        pr($"<hp>{s_player.GetHp()}<energy>{s_player.Energy}");
     }
 
     public ConsoleKeyInfo rk()

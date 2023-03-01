@@ -28,51 +28,17 @@ public static class IO
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object value, __ flag = 0, string title = "")
     {
-        if (!IsInteractive) return;
-        int x = Console.CursorLeft;
-        int y = Console.CursorTop;
-        string stringValue = title;
-        if (value is Array arrayValue) stringValue += arrayValue.ToFString();
-        else stringValue += value.ToString() ?? string.Empty;
-        if (flag.HasFlag(__.emphasis)) stringValue = EMPHASIS + stringValue;
-        if (flag.HasFlag(__.newline)) stringValue += "\n";
-        if (flag.HasFlag(__.bottom)) Console.CursorTop = x + Console.WindowHeight - 1;
-        if (stringValue.Contains("^"))
-        {
-            pr_Color(stringValue, flag);
-            if (!flag.HasFlag(__.bottom)) pr(string.Empty);
-            else Console.SetCursorPosition(x, y);
-            return;
-        }
-        else if (flag.HasFlag(__.bottom))
-        {
-            pr(stringValue, false);
-            Console.SetCursorPosition(x, y);
-        }
-        else pr(stringValue);
+        if (value is Array arrayValue) value = arrayValue.ToFString();
+        if (s_io is CSIO) CSIO.pr(value, flag, title);
+        else if (s_io is GameSocket) s_io.pr(title + value.ToString(), flag.HasFlag(__.newline));
     }
+
     private static void pr(string value, bool newline = true)
     {
         s_io.pr(value, newline);
     }
-    private static void pr_Color(string value, __ flags)
-    {
-        string[] splits = value.Split('^', StringSplitOptions.RemoveEmptyEntries);
-        foreach (string item in splits)
-        {
-            if (item.StartsWith("b")) Console.ForegroundColor = ConsoleColor.Blue;
-            else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
-            else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
-            else if (item.StartsWith("/")) Console.ResetColor();
-            else if (!item.StartsWith('c'))
-            {
-                pr(item, false);
-                continue;
-            }
-            pr(item.Substring(1), false);
-        }
-        Console.ResetColor();
-    }
+
+    ///<summary>read line.</summary>
     public static string rl()
     {
         return s_io.rl();
@@ -169,11 +135,10 @@ public static class IO
         string? energyTip = default;
         if (s_player.Energy.IsInjured) energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
         if (energyTip != default) pr(energyTip, __.bottom | __.newline);
-        pr($"깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
-        string myHpEnergy = $"Hp : {s_player.GetHp()}    기력 : {s_player.Energy}";
+        s_io.pr_depth_lv();
         Creature? frontCreature = s_player.CreatureAtFront;
         string enemyHpEnergy = frontCreature is null ? string.Empty : $"Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy} (상대)";
-        pr($"{myHpEnergy}", __.bottom | __.newline);
+        s_io.pr_hp_energy();
         pr($"{enemyHpEnergy}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         s_io.pr_map();
@@ -188,7 +153,7 @@ public static class IO
     {
         clr();
         Inventory Inven = s_player.Inven;
-        pr_Color(s_player.Stat.ToString(), 0);
+        pr("^" + s_player.Stat.ToString(), 0);
         pr("\n");
         foreach (ItemOld item in Inven.OfType<ItemOld>())
         {

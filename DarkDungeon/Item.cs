@@ -74,7 +74,7 @@ public partial class Creature
     public static readonly ItemOld arrow = new("화살", ItemType.Consume, new IBehaviour[] { });
     public static readonly ItemOld batItem = new("박쥐의 날개", ItemType.Equip, new SkillOld[] {
         new("들이박기", StanceName.Offence, StatName.Lun, DamageType.Normal, "는 갑자기 당신의 얼굴로 날아들어 부딪혔다!", (i)=>{i.Attack(1); i.Stat.Damage(1);}),
-        new("구르기", StanceName.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})
+        new("피하기", StanceName.Defence, StatName.Lun, DamageType.Thrust, "는 가벼운 날개짓으로 옆으로 피했다.", (i)=>{})
         });
     public static readonly ItemOld snakeItem = new("뱀의 이빨", ItemType.Equip, new IBehaviour[] {
         new Charge("독니", StatName.None, DamageType.Normal, "의 하악 소리가 울려퍼지며 위협적인 이빨을 드러냈다. 독이 흐르는 듯 하다.", (i)=>i.PoisonItem(snakeItem!)),
