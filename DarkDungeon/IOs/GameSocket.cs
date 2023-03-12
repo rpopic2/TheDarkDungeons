@@ -53,6 +53,12 @@ public class GameSocket : IIO
         pr($"<hp>{s_player.GetHp()}<energy>{s_player.Energy}");
     }
 
+    public void pr_monster_hp_energy(Creature? frontCreature) {
+        if (frontCreature == null)
+            return;
+        pr($"<mhp>{frontCreature.GetHp()}<menergy>{frontCreature.Energy}");
+    }
+
     public ConsoleKeyInfo rk()
     {
         pr(RK, false);

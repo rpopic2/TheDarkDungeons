@@ -3,7 +3,7 @@ public class CSIO : IIO
     private static Player s_player => Player.instance;
     public static bool IsInteractive = true;
     private const string EMPHASIS = "=> ";
-    
+
     public void pr(string value, bool newline) {
         _pr(value, newline);
     }
@@ -72,6 +72,11 @@ public class CSIO : IIO
     {
         string myHpEnergy = $"Hp : {s_player.GetHp()}    기력 : {s_player.Energy}";
         pr($"{myHpEnergy}", __.bottom | __.newline);
+    }
+
+    public void pr_monster_hp_energy(Creature? frontCreature) {
+        string enemyHpEnergy = frontCreature is null ? string.Empty : $"Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy} (상대)";
+        pr($"{enemyHpEnergy}", __.bottom | __.newline);
     }
 
     public string rl()

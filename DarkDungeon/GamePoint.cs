@@ -66,7 +66,7 @@ public class GamePoint
     public override string ToString()
     {
         string temp = $"{Cur}/{Max}";
-        if (Option == GamePointOption.Reserving && IsInjured) temp = $"^r{Cur}/{Max}^/";
+        //if (Option == GamePointOption.Reserving && IsInjured) temp = $"^r{Cur}/{Max}^/";
         return temp;
     }
 }

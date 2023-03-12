@@ -137,9 +137,8 @@ public static class IO
         if (energyTip != default) pr(energyTip, __.bottom | __.newline);
         s_io.pr_depth_lv();
         Creature? frontCreature = s_player.CreatureAtFront;
-        string enemyHpEnergy = frontCreature is null ? string.Empty : $"Hp : {frontCreature.GetHp()}    기력 : {frontCreature.Energy} (상대)";
+        s_io.pr_monster_hp_energy(frontCreature);
         s_io.pr_hp_energy();
-        pr($"{enemyHpEnergy}", __.bottom | __.newline);
         pr(s_player.Inven, __.bottom);
         s_io.pr_map();
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
