@@ -116,7 +116,7 @@ public class Map {
         else
             _onTurn += action;
     }
-    
+
     public void AddToOnTurnPre(Action action)
         => _onTurnPre += action;
 
@@ -129,7 +129,7 @@ public class Map {
 
     public void RemoveFromOnTurnEnd(Action action)
         => _onTurnEnd -= action;
-    
+
     private void OnTurnElapse() {
         _onTurnPre.Invoke();
         _onTurn.Invoke();
@@ -235,7 +235,7 @@ public class Map {
         }
         return null;
     }
-    
+
     public bool IsEnd(int index) {
         if (index <= 0 || index >= Length - 1)
             return true;
@@ -263,7 +263,7 @@ public class Map {
     private static void NewDepth() {
         TurnInCurrentDepth = 0;
         Depth += 1;
-        List<List<int>> corridorMatrix = new();
+        Depth depth = new();
     }
 
     private void Render() {

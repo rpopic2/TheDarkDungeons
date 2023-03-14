@@ -45,7 +45,7 @@ public static class IO
     }
     ///<summary>Console.ReadKey. Intercept is true.</summary>
 
-    [Obsolete("Use rk() instead.")]
+    //[Obsolete("Use rk() instead.")]
     public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "")
     {
         pr(print, flags, title);

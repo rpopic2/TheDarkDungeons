@@ -9,10 +9,8 @@ public class Program
     //tmp
     public const string EOT = "<EOT>";
 
-    public static async Task Main(string[] args)
-    {
-        if (args.Length > 0 && args[0] == "server")
-        {
+    public static async Task Main(string[] args) {
+        if (args.Length > 0 && args[0] == "server") {
             var gameSocket = new GameSocket();
             await gameSocket.New();
             IO.IIO = gameSocket;
@@ -21,23 +19,24 @@ public class Program
 
         IO.pr(string.Empty);
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
-        try
-        {
+
+        try {
             IO.pr("Press any key to start...");
             ConsoleKeyInfo info = IO.rk();
-            if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) IO.IsInteractive = false;
+            if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D)
+                IO.IsInteractive = false;
         }
-        catch (InvalidOperationException)
-        {
+
+        catch (InvalidOperationException) {
             IO.IsInteractive = false;
         }
-        if (!IO.IsInteractive) return;
+        if (!IO.IsInteractive)
+            return;
         Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
         Program instance = new Program();
 
         // main loop
-        do
-        {
+        do {
             // also see Map.OnTurnElapsed()
             OnTurn?.Invoke();
             OnTurnAction?.Invoke();
@@ -48,7 +47,7 @@ public class Program
     }
     public Program()
     {
-        //return;
+        Depth depth = new();
         Map.NewMap();
         CreatePlayer();
         IO.clr();
