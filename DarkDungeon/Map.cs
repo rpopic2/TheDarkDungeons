@@ -1,32 +1,45 @@
-public class Map
-{
-    public const int START_DEPTH = 1;
+public class Map {
     private const int BOSS_DEPTH = 5;
-    public static int Turn { get; private set; }
+
+    public static int Turn {
+        get;
+        private set;
+    }
+
     private static int Spawnrate = 11;
     public static Map Current = default!;
-    private static ISpawnable[] s_monsterData =
-    {
+
+    private static ISpawnable[] s_monsterData = {
         new Bat(default), new Shaman(default), new Snake(default), new Rat(default), new Marksman(default), new Lunatic(default)
     };
-    private static ISpawnable[] s_bossData =
-    {
+
+    private static ISpawnable[] s_bossData = {
         new QuietKnight(default)
     };
     private static Random s_rnd = new Random();
+
+    public const int START_DEPTH = 1;
     ///<summary>is 1 by default</summary>
-    public static int Depth { get; private set; } = START_DEPTH;
+    public static int Depth {
+        get;
+        private set;
+    } = START_DEPTH;
+
     public readonly int Length;
     public readonly bool DoSpawnMobs;
-    public static int TurnInCurrentDepth { get; private set; }
-    public int PitChanceMax
-    {
-        get
-        {
+
+    public static int TurnInCurrentDepth {
+        get;
+        private set;
+    }
+
+    public int PitChanceMax {
+        get {
             if (TurnInCurrentDepth == 0) return -1;
             return (int)MathF.Max(0, 50 - TurnInCurrentDepth);
         }
     }
+
     private readonly string _pushDown;
     private readonly char[] _empty;
     private readonly char[] _tiles;
@@ -40,8 +53,8 @@ public class Map
     private Action _onTurnPre = () => { };
     private Action _onTurn = () => { };
     private Action _onTurnEnd = () => { };
-    public Map(int length, bool spawnMobs = true, IPortal? portal = null, Corpse? corpseFromPrev = null)
-    {
+
+    public Map(int length, bool spawnMobs = true, IPortal? portal = null, Corpse? corpseFromPrev = null) {
         Current = this;
         Program.OnTurn = () => OnTurnElapse();
         this.Length = length;
@@ -58,31 +71,37 @@ public class Map
         _creaturesByPos = new Creature[length];
 
         SetupSteppables(portal, corpseFromPrev);
-        if (Depth == BOSS_DEPTH)
-        {
+        if (Depth == BOSS_DEPTH) {
             this.DoSpawnMobs = false;
             Spawn(s_bossData[0]);
             IO.pr("조용한 기사가 등장했다.");
         }
         OnNewMap.Invoke();
     }
-    private static Player s_player { get => Player.instance; }
-    public ref readonly char[] Tiles => ref _tiles;
-    public ref readonly ISteppable?[] Steppables => ref _steppables;
-    public ISteppable? GetSteppable(int index) => _steppables[index];
-    private void SetupSteppables(IPortal? portal, Corpse? corpseFromPrev)
-    {
-        if (corpseFromPrev is Corpse corpse) _steppables[s_player.Pos.x] = corpse;
-        if (portal is null) return;
-        if (portal is RandomPortal)
-        {
+
+    private static Player s_player {
+        get => Player.instance;
+    }
+    
+    public ref readonly char[] Tiles
+        => ref _tiles;
+
+    public ref readonly ISteppable?[] Steppables
+        => ref _steppables;
+
+    public ISteppable? GetSteppable(int index)
+        => _steppables[index];
+
+    private void SetupSteppables(IPortal? portal, Corpse? corpseFromPrev) {
+        if (corpseFromPrev is Corpse corpse)
+            _steppables[s_player.Pos.x] = corpse;
+        if (portal is null)
+            return;
+        if (portal is RandomPortal) {
             int pitChanceMax = PitChanceMax;
-            if (pitChanceMax == -1)
-            {
+            if (pitChanceMax == -1) {
                 portal = new Door();
-            }
-            else
-            {
+            } else {
                 bool spawnPit = s_rnd.Next(0, pitChanceMax) == 0;
                 portal = spawnPit ? new Pit() : new Door();
             }
@@ -90,18 +109,28 @@ public class Map
         int portalIndex = Depth != 1 ? s_rnd.Next(0, Length - 1) : s_rnd.Next(2, Length - 1);
         _steppables![portalIndex] = portal;
     }
-    public void OnTurn(Action action, bool isPrepend = false)
-    {
-        if (isPrepend) _onTurn = action + _onTurn;
-        else _onTurn += action;
+
+    public void OnTurn(Action action, bool isPrepend = false) {
+        if (isPrepend)
+            _onTurn = action + _onTurn;
+        else
+            _onTurn += action;
     }
-    public void AddToOnTurnPre(Action action) => _onTurnPre += action;
-    public void AddToOnTurnEnd(Action action) => _onTurnEnd += action;
+    
+    public void AddToOnTurnPre(Action action)
+        => _onTurnPre += action;
+
+    public void AddToOnTurnEnd(Action action)
+        => _onTurnEnd += action;
+
 #pragma warning disable CS8601
-    public void RemoveFromOnTurnPre(Action action) => _onTurnPre -= action;
-    public void RemoveFromOnTurnEnd(Action action) => _onTurnEnd -= action;
-    private void OnTurnElapse()
-    {
+    public void RemoveFromOnTurnPre(Action action)
+        => _onTurnPre -= action;
+
+    public void RemoveFromOnTurnEnd(Action action)
+        => _onTurnEnd -= action;
+    
+    private void OnTurnElapse() {
         _onTurnPre.Invoke();
         _onTurn.Invoke();
         _onTurnEnd.Invoke();//update target and reset stance, onturnend
@@ -114,17 +143,18 @@ public class Map
         if (Current.DoLoadNewMap) NewMap();
         IO.Redraw();
     }
-    public Monster? SpawnRandom()
-    {
-        if (Depth == BOSS_DEPTH) return null;
+
+    public Monster? SpawnRandom() {
+        if (Depth == BOSS_DEPTH)
+            return null;
         int max = Math.Min(Depth + 1, s_monsterData.Length);
         int min = Math.Max(0, max - 2);
         int randomIndex = s_rnd.Next(min, max);
         ISpawnable data = s_monsterData[randomIndex];
         return Spawn(data);
     }
-    private Monster? Spawn(ISpawnable prefab)
-    {
+
+    private Monster? Spawn(ISpawnable prefab) {
         List<int> spawnableIndices = GetSpawnableIndices();
         if (spawnableIndices.Count <= 0) return null;
         int randomPos = s_rnd.Next(0, spawnableIndices.Count);
@@ -135,12 +165,12 @@ public class Map
         UpdateFightable(mov);
         return mov;
     }
-    private List<int> GetSpawnableIndices()
-    {
+
+    private List<int> GetSpawnableIndices() {
         List<int> spawnables = new List<int>(Length);
-        for (int i = 0; i < Length; i++)
-        {
-            if (_creaturesByPos[i] is null) spawnables.Add(i);
+        for (int i = 0; i < Length; i++) {
+            if (_creaturesByPos[i] is null)
+                spawnables.Add(i);
         }
         if (Player._instance is not null) {
             int playerX = s_player.Pos.x;
@@ -150,82 +180,93 @@ public class Map
         }
         return spawnables;
     }
-    public void UpdateFightable(Creature mov)
-    {
+    public void UpdateFightable(Creature mov) {
         Position pos = mov.Pos;
-        if (mov is Creature fight && !fight.IsAlive)
-        {
-            if (_tempDeadCreatures.Contains(fight)) return;
+        if (mov is Creature fight && !fight.IsAlive) {
+            if (_tempDeadCreatures.Contains(fight))
+                return;
             _tempDeadCreatures.Add(fight);
             _creaturesByPos[pos.x] = null;
             return;
         }
         int oldIndex = Array.IndexOf(_creaturesByPos, mov);
-        if (oldIndex != -1) _creaturesByPos[oldIndex] = null;
+        if (oldIndex != -1)
+            _creaturesByPos[oldIndex] = null;
         _creaturesByPos[pos.x] = mov;
     }
-    private void ReplaceToCorpse()
-    {
-        if (_tempDeadCreatures.Count <= 0) return;
-        foreach (var item in _tempDeadCreatures)
-        {
+
+    private void ReplaceToCorpse() {
+        if (_tempDeadCreatures.Count <= 0)
+            return;
+        foreach (var item in _tempDeadCreatures) {
             CreateCorpse(item);
         }
         _tempDeadCreatures.Clear();
 
-        void CreateCorpse(Creature fight)
-        {
+        void CreateCorpse(Creature fight) {
             int pos = fight.Pos.x;
             ISteppable? old = _steppables[pos];
             Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven);
-            if (Monster.DropOutOf(fight.Stat.rnd, 5)) temp.droplist.Add(Creature.boneOfTheDeceased);
-            if (old is Corpse cor) _steppables[pos] = cor + temp;
-            else if (old is IPortal) _corpseToPass = temp;
-            else _steppables[pos] = temp;
+            if (Monster.DropOutOf(fight.Stat.rnd, 5))
+                temp.droplist.Add(Creature.boneOfTheDeceased);
+            if (old is Corpse cor)
+                _steppables[pos] = cor + temp;
+            else if (old is IPortal)
+                _corpseToPass = temp;
+            else
+                _steppables[pos] = temp;
         }
     }
-    public Creature? GetCreatureAt(int index) => _creaturesByPos.ElementAtOrDefault(index);
-    public void SpawnPortal(Position pos)
-    {
+
+    public Creature? GetCreatureAt(int index)
+        => _creaturesByPos.ElementAtOrDefault(index);
+
+    public void SpawnPortal(Position pos) {
         IPortal portal = new Pit();
         _steppables[pos.x] = portal;
     }
-    public Creature? RayCast(Position origin, int range)
-    {
+
+    public Creature? RayCast(Position origin, int range) {
         Creature? f;
-        for (int i = 0; i < range; i++)
-        {
+        for (int i = 0; i < range; i++) {
             f = GetCreatureAt(origin.Front(i + 1));
-            if (f is Creature) return f;
+            if (f is Creature)
+                return f;
         }
         return null;
     }
-    public bool IsEnd(int index)
-    {
-        if (index <= 0 || index >= Length - 1) return true;
+    
+    public bool IsEnd(int index) {
+        if (index <= 0 || index >= Length - 1)
+            return true;
         return false;
     }
-    public static void NewMap()
-    {
-        if (Player._instance is not null && s_player.UnderFoot is Pit)
-        {
-            TurnInCurrentDepth = 0;
-            Depth++;
+
+    public static void NewMap() {
+        if (Player._instance is not null && s_player.UnderFoot is Pit) {
+            NewDepth();
         }
         int addMapWidth = Depth.FloorMult(Rules.MapWidthByLevel);
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
-        if (newLength > Rules.MapLengthMax) newLength = Rules.MapLengthMax;
-        if (Current is not null && newLength < Current.Length)
-        {
+        if (newLength > Rules.MapLengthMax)
+            newLength = Rules.MapLengthMax;
+        if (Current is not null && newLength < Current.Length) {
             newLength = Current.Length;
             Program.OnTurn -= () => Current.OnTurnElapse();
             Program.OnTurn = null;
         }
         Current = new Map(newLength, true, new RandomPortal(), Current?._corpseToPass);
-        if (Player._instance is not null && Map.TurnInCurrentDepth == 0 && Depth > 1) IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
+        if (Player._instance is not null && Map.TurnInCurrentDepth == 0 && Depth > 1)
+            IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
     }
-    private void Render()
-    {
+
+    private static void NewDepth() {
+        TurnInCurrentDepth = 0;
+        Depth += 1;
+        List<List<int>> corridorMatrix = new();
+    }
+
+    private void Render() {
         _empty.CopyTo(_rendered, 0);
         renderVisible(Tiles);
         renderVisible(_steppables);
@@ -233,51 +274,52 @@ public class Map
         //RenderAllMobs();//debug
         _rendered[s_player.Pos.x] = s_player.ToChar();
 
-        void renderVisible<T>(T[] target)
-        {
-            for (int i = 0; i < s_player.Sight; i++)
-            {
+        void renderVisible<T>(T[] target) {
+            for (int i = 0; i < s_player.Sight; i++) {
                 int targetTile = s_player.Pos.Front(i + 1);
                 bool success = target.TryGet(targetTile, out T? obj);
-                if (!success) continue;
-                if (obj is Creature mov) _rendered[targetTile] = mov.ToChar();
-                else if (obj is char chr) _rendered[targetTile] = chr;
-                else if (obj is ISteppable cor) _rendered[targetTile] = cor.ToChar();
-                else if (obj is not null) throw new Exception("등록되지 않은 맵 오브젝트입니다.");
+                if (!success)
+                    continue;
+                if (obj is Creature mov)
+                    _rendered[targetTile] = mov.ToChar();
+                else if (obj is char chr)
+                    _rendered[targetTile] = chr;
+                else if (obj is ISteppable cor)
+                    _rendered[targetTile] = cor.ToChar();
+                else if (obj is not null)
+                    throw new Exception("등록되지 않은 맵 오브젝트입니다.");
             }
         }
+
         //function for debugging
-        void RenderAllMobs()
-        {
-            for (int i = 0; i < Length; i++) if (_creaturesByPos[i] is Monster m) _rendered[i] = m.ToChar();
+        void RenderAllMobs() {
+            for (int i = 0; i < Length; i++) {
+                if (_creaturesByPos[i] is Monster m)
+                    _rendered[i] = m.ToChar();
+            }
         }
     }
-    public void OnCorpsePickUp(Corpse corpse)
-    {
-        if (corpse.droplist.Count() <= 0)
-        {
+
+    public void OnCorpsePickUp(Corpse corpse) {
+        if (corpse.droplist.Count() <= 0) {
             int index = Array.IndexOf(_steppables, corpse);
             _steppables[index] = null;
         }
     }
-    public static void ResetMapTurn()
-    {
+
+    public static void ResetMapTurn() {
         Turn = 0;
         Depth = START_DEPTH;
         TurnInCurrentDepth = 0;
     }
 
-    public string Rendered
-    {
-        get
-        {
+    public string Rendered {
+        get {
             Render();
             return new string(_rendered);
         }
     }
 
     public override string ToString()
-    {
-        return _pushDown + string.Join(" ", Rendered);
-    }
+        => _pushDown + string.Join(" ", Rendered);
 }
