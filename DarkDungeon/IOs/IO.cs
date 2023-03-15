@@ -2,7 +2,6 @@ namespace DarkDungeon;
 public static class IO
 {
     public static bool IsInteractive = CSIO.IsInteractive;
-    private const string EMPHASIS = "=> ";
     public const string ITEMKEYS1 = "qwert";
     public static readonly ConsoleKey[] ITEMKEYS_PAD = new ConsoleKey[] { ConsoleKey.End, ConsoleKey.PageDown, ConsoleKey.Home, ConsoleKey.PageUp, ConsoleKey.OemPlus };
     private static readonly string DELSTRING = " ";
@@ -26,11 +25,24 @@ public static class IO
 #nullable restore
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
-    public static void pr(object value, __ flag = 0, string title = "")
+    public static void pr(object value, __ flag = 0, string title = "", bool newline = true)
     {
         if (value is Array arrayValue) value = arrayValue.ToFString();
-        if (s_io is CSIO) CSIO.pr(value, flag, title);
-        else if (s_io is GameSocket) s_io.pr(title + value.ToString(), flag.HasFlag(__.newline));
+        if (s_io is CSIO) CSIO.pr(value, flag, title, newline);
+        else if (s_io is GameSocket) s_io.pr(title + value.ToString(), newline);
+    }
+
+    public static void CheckInteractive() {
+        try {
+            IO.pr("Press any key to start...");
+            ConsoleKeyInfo info = IO.rk();
+            if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) {
+                IO.IsInteractive = false;
+            }
+        }
+        catch (InvalidOperationException) {
+            IO.IsInteractive = false;
+        }
     }
 
     private static void pr(string value, bool newline = true)

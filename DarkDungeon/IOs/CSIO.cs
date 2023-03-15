@@ -12,7 +12,7 @@ public class CSIO : IIO
         if (newline) Console.WriteLine(value);
         else Console.Write(value);
     }
-    public static void pr(object value, __ flag = 0, string title = "") {
+    public static void pr(object value, __ flag = 0, string title = "", bool newline = true) {
         if (!IsInteractive)
             return;
         int x = Console.CursorLeft;
@@ -25,7 +25,7 @@ public class CSIO : IIO
         if (flag.HasFlag(__.bottom))
             Console.CursorTop = x + Console.WindowHeight - 1;
 
-        var hasNewLine = flag.HasFlag(__.newline);
+        var hasNewLine = newline;
         if (stringValue.Contains("^")) {
             pr_Color(stringValue, flag);
             if (!flag.HasFlag(__.bottom)) {
@@ -36,10 +36,10 @@ public class CSIO : IIO
                 return;
             }
         } else if (flag.HasFlag(__.bottom)) {
-            _pr(stringValue, false);
+            _pr(stringValue, hasNewLine);
             Console.SetCursorPosition(x, y);
         } else {
-            _pr(stringValue, false);
+            _pr(stringValue, hasNewLine);
         }
     }
     private static void pr_Color(string value, __ flags)
