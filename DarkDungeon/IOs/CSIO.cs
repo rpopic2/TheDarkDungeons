@@ -85,6 +85,10 @@ public class CSIO : IIO
         pr($"{enemyHpEnergy}", __.bottom | __.newline);
     }
 
+    public void pr_inventory() {
+        pr(s_player.Inven, __.bottom);
+    }
+
     public string rl()
     {
         if (IsInteractive) return Console.ReadLine() ?? "null";

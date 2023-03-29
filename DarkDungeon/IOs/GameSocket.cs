@@ -59,6 +59,10 @@ public class GameSocket : IIO
         pr($"<mhp>{frontCreature.GetHp()}<menergy>{frontCreature.Energy}");
     }
 
+    public void pr_inventory() {
+        pr($"<items>{s_player.Inven.ToNetString()}");
+    }
+
     public ConsoleKeyInfo rk()
     {
         pr(RK, false);

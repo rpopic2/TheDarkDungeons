@@ -124,7 +124,28 @@ public class Inventory : ICollection<ItemOld?>
             }
             result += itemName.AppendKeyName(i);
         }
-        return result + "|" + name;
+        return result + "| " + name;
+    }
+
+    /// <summary>
+    /// Sends inventory data to the client.
+    /// It differes with ToString() in that it does not include parantheses around item names.
+    /// </summary>
+    public string ToNetString() {
+        string result = "";
+        for (int i = 0; i < INVENSIZE; i++)
+        {
+            string itemName = string.Empty;
+            if (i >= Count) itemName = "맨손";
+            else if (content[i] is ItemOld item)
+            {
+                itemName = item.Name;
+                int stack = GetMeta(item)?.stack ?? 0;
+                if (stack > 1) itemName = $"{stack}x{itemName}";
+            }
+            result += $"{itemName},";
+        }
+        return result + "휴식";
     }
 
     public void Clear()

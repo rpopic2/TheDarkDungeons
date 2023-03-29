@@ -151,7 +151,7 @@ public static class IO
         Creature? frontCreature = s_player.CreatureAtFront;
         s_io.pr_monster_hp_energy(frontCreature);
         s_io.pr_hp_energy();
-        pr(s_player.Inven, __.bottom);
+        s_io.pr_inventory();
         s_io.pr_map();
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
     }

@@ -27,7 +27,7 @@ public abstract partial class Creature
         Stat = stat;
         Stat.Level = level;
         Pos = pos;
-        Inven = new(this, " .(휴식)");
+        Inven = new(this, ".(휴식)");
         CurAction = new(this, energy);
         GetHp().OnOverflow += new(OnDeath);
         GetHp().OnIncrease += new(OnHeal);
