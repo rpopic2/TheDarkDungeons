@@ -49,55 +49,51 @@ public partial class Player
                 break;
         }
     }
-    private void DefaultSwitch(ConsoleKeyInfo key)
-    {
+    private void DefaultSwitch(ConsoleKeyInfo key) {
         bool found = IO.chk(key.KeyChar, Inventory.INVENSIZE, out int i);
         if (!found) IO.chkp(key.Key, Inventory.INVENSIZE, out i);
         if (found) ChooseIndex(i);
 
-        switch (key.KeyChar)
-        {
-            case 'z':
-                if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
-                break;
-            //movements hl
-            case 'l':
-                ChooseMove(Facing.Right);
-                break;
-            case 'h':
-                ChooseMove(Facing.Left);
-                break;
-            case '.'://rest
-            case 'n':
-                SelectBasicBehaviour(1, 0, -1);
-                break;
-            case 'i':
-            case '*':
-                IO.DrawInventory();
-                break;
-            case 'u':
-                IO.ShowStats();
-                break;
-            case '?':
-            case '5':
-                Help.ShowHelpPrompt();
-                break;
+        switch (key.KeyChar) {
+        case 'z':
+            if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
+            break;
+        //movements hl
+        case 'l':
+            ChooseMove(Facing.Right);
+            break;
+        case 'h':
+            ChooseMove(Facing.Left);
+            break;
+        case '.'://rest
+        case 'n':
+            SelectBasicBehaviour(1, 0, -1);
+            break;
+        case 'i':
+        case '*':
+            IO.DrawInventory();
+            break;
+        case 'u':
+            IO.ShowStats();
+            break;
+        case '?':
+        case '5':
+            Help.ShowHelpPrompt();
+            break;
         }
     }
-    private void ChooseMove(Facing facing)
-    {
+    private void ChooseMove(Facing facing) {
         Position newDir = facing == Facing.Left ? Position.MOVELEFT : Position.MOVERIGHT;
-        if (CanMove(newDir)) SelectBasicBehaviour(0, newDir.x, (int)newDir.facing);
+        if (CanMove(newDir))
+            SelectBasicBehaviour(0, newDir.x, (int)newDir.facing);
     }
-    private void ChooseIndex(int i)
-    {
-        if (i >= Inven.Count)
-        {
+
+    private void ChooseIndex(int i) {
+        if (i >= Inven.Count) {
             SelectBehaviour(bareHand);
             return;
         }
-        else if (Inven[i] is ItemOld item)
-        {
+        else if (Inven[i] is ItemOld item) {
             SelectBehaviour(item);
             return;
         }

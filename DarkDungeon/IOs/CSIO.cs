@@ -7,11 +7,12 @@ public class CSIO : IIO
     public void pr(string value, bool newline) {
         _pr(value, newline);
     }
-    private static void _pr(string value, bool newline)
-    {
+
+    private static void _pr(string value, bool newline) {
         if (newline) Console.WriteLine(value);
         else Console.Write(value);
     }
+
     public static void pr(object value, __ flag = 0, string title = "", bool newline = true) {
         if (!IsInteractive)
             return;
@@ -42,17 +43,15 @@ public class CSIO : IIO
             _pr(stringValue, hasNewLine);
         }
     }
-    private static void pr_Color(string value, __ flags)
-    {
+
+    private static void pr_Color(string value, __ flags) {
         string[] splits = value.Split('^', StringSplitOptions.RemoveEmptyEntries);
-        foreach (string item in splits)
-        {
+        foreach (string item in splits) {
             if (item.StartsWith("b")) Console.ForegroundColor = ConsoleColor.Blue;
             else if (item.StartsWith("g")) Console.ForegroundColor = ConsoleColor.Green;
             else if (item.StartsWith("r")) Console.ForegroundColor = ConsoleColor.Red;
             else if (item.StartsWith("/")) Console.ResetColor();
-            else if (!item.StartsWith('c'))
-            {
+            else if (!item.StartsWith('c')) {
                 _pr(item, false);
                 continue;
             }
@@ -61,21 +60,20 @@ public class CSIO : IIO
         Console.ResetColor();
     }
 
-    public void pr_map()
-    {
+    public void pr_map() {
         pr(Map.Current.ToString(), false);
     }
-    public ConsoleKeyInfo rk()
-    {
+
+    public ConsoleKeyInfo rk() {
         if (IsInteractive) return Console.ReadKey(true);
         else return new ConsoleKeyInfo('q', ConsoleKey.Q, false, false, false);
     }
-    public void pr_depth_lv()
-    {
+
+    public void pr_depth_lv() {
         pr($"깊이 : {Map.Depth}\t레벨 : {s_player.Level} ({s_player.exp})", __.bottom | __.newline);
     }
-    public void pr_hp_energy()
-    {
+
+    public void pr_hp_energy() {
         string myHpEnergy = $"Hp : {s_player.GetHp()}    기력 : {s_player.Energy}";
         pr($"{myHpEnergy}", __.bottom | __.newline);
     }
@@ -89,13 +87,13 @@ public class CSIO : IIO
         pr(s_player.Inven, __.bottom);
     }
 
-    public string rl()
-    {
+    public string rl() {
         if (IsInteractive) return Console.ReadLine() ?? "null";
         else return "NonInteractive";
     }
-    public void clr()
-    {
+
+    public void clr() {
         Console.Clear();
     }
 }
+

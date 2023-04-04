@@ -2,21 +2,19 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 
-public class GameSocket : IIO
-{
+public class GameSocket : IIO {
     private static Player s_player => Player.instance;
     private const string RK = "<rk>";
     private const string CLR = "<clr>";
     private Socket? s_client;
-    ~GameSocket() 
-    {
+
+    ~GameSocket() {
         s_client?.Close();
         Console.WriteLine("Closing connection.");
     }
-    public async Task New()
-    {
-        Console.WriteLine("Creating connection...");
 
+    public async Task New() {
+        Console.WriteLine("Creating connection...");
         using Socket socket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         var ipEndPoint = new IPEndPoint(IPAddress.Any, 8080);
         socket.Bind(ipEndPoint);
@@ -24,32 +22,30 @@ public class GameSocket : IIO
 
         s_client = await socket.AcceptAsync();
         s_client.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
-
         Console.WriteLine("Connection created!");
     }
 
-    public void pr(string value, bool newline = true)
-    {
-        if (value == string.Empty) newline = true;
-        if (newline) value += "\n";
+    public void pr(string value, bool newline = true) {
+        if (value == string.Empty)
+            newline = true;
+        if (newline)
+            value += "\n";
         var msglen = Encoding.UTF8.GetByteCount(value);
         Console.WriteLine($"Sending: {value.Length}: {value}");
         s_client?.Send(BitConverter.GetBytes(msglen));
         s_client?.Send(Encoding.UTF8.GetBytes(value));
     }
-    public void pr_map()
-    {
+
+    public void pr_map() {
         var facing = (int)Player.instance.Pos.facing;
         pr($"<map>{facing}{Map.Current.Rendered}", false);
     }
 
-    public void pr_depth_lv()
-    {
+    public void pr_depth_lv() {
         pr($"<depth>{Map.Depth}<level>{s_player.Level}<exp>{s_player.exp}");
     }
 
-    public void pr_hp_energy()
-    {
+    public void pr_hp_energy() {
         pr($"<hp>{s_player.GetHp()}<energy>{s_player.Energy}");
     }
 
@@ -63,26 +59,29 @@ public class GameSocket : IIO
         pr($"<items>{s_player.Inven.ToNetString()}");
     }
 
-    public ConsoleKeyInfo rk()
-    {
+    public void pr_skill(IBehaviour[] skills) {
+        var stringified = string.Join(',', skills.Select(s => s.Name));
+        pr($"<skills>{stringified}");
+    }
+
+    public ConsoleKeyInfo rk() {
         pr(RK, false);
         var buffer = new byte[1];
         Console.WriteLine("Waiting for input...");
         var bytes_read = s_client?.Receive(buffer, 1, SocketFlags.None);
-        if (bytes_read == 0)
-        {
+        if (bytes_read == 0) {
             Console.WriteLine("Connection closed by client.");
             Environment.Exit(1);
         }
         Console.WriteLine($"Received: {Encoding.UTF8.GetString(buffer, 0, 1)}");
         return new((char)buffer[0], (ConsoleKey)buffer[0], false, false, false);
     }
-    public string rl()
-    {
+
+    public string rl() {
         return "Unity";
     }
-    public void clr()
-    {
+
+    public void clr() {
         Console.WriteLine("Clearing screen...");
         pr(CLR, false);
     }

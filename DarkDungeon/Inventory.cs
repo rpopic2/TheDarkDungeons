@@ -133,15 +133,15 @@ public class Inventory : ICollection<ItemOld?>
     /// </summary>
     public string ToNetString() {
         string result = "";
-        for (int i = 0; i < INVENSIZE; i++)
-        {
+        for (int i = 0; i < INVENSIZE; i++) {
             string itemName = string.Empty;
-            if (i >= Count) itemName = "맨손";
-            else if (content[i] is ItemOld item)
-            {
+            if (i >= Count) {
+                itemName = "맨손";
+            } else if (content[i] is ItemOld item) {
                 itemName = item.Name;
                 int stack = GetMeta(item)?.stack ?? 0;
-                if (stack > 1) itemName = $"{stack}x{itemName}";
+                if (stack > 1)
+                    itemName = $"{stack}x{itemName}";
             }
             result += $"{itemName},";
         }
