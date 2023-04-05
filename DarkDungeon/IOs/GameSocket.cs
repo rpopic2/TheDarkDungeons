@@ -50,9 +50,11 @@ public class GameSocket : IIO {
     }
 
     public void pr_monster_hp_energy(Creature? frontCreature) {
-        if (frontCreature == null)
+        if (frontCreature == null) {
+            pr("<nom>");
             return;
-        pr($"<mhp>{frontCreature.GetHp()}<menergy>{frontCreature.Energy}");
+        }
+        pr($"<mpos>{frontCreature.Pos.x}<mhp>{frontCreature.GetHp()}<menergy>{frontCreature.Energy}");
     }
 
     public void pr_inventory() {
