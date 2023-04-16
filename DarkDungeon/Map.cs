@@ -92,10 +92,12 @@ public class Map {
         _onTurn = delegate { };
 
         ReplaceToCorpse();
-        if (DoSpawnMobs && Turn % s_spawnrate == 0) SpawnRandom();
+        if (DoSpawnMobs && Turn % s_spawnrate == 0)
+            SpawnRandom();
         Turn++;
         TurnInCurrentDepth++;
-        if (Current.DoLoadNewMap) NewMap();
+        if (Current.DoLoadNewMap)
+            NewMap();
         IO.Redraw();
     }
 
@@ -114,16 +116,16 @@ public class Map {
     void ReplaceToCorpse() {
         if (_tempDeadCreatures.Count <= 0)
             return;
-        foreach (var item in _tempDeadCreatures) {
-            CreateCorpse(item);
+        foreach (Creature creature in _tempDeadCreatures) {
+            CreateCorpse(creature);
         }
         _tempDeadCreatures.Clear();
 
-        void CreateCorpse(Creature fight) {
-            int pos = fight.Pos.x;
+        void CreateCorpse(Creature creature) {
+            int pos = creature.Pos.x;
             ISteppable? old = _steppables[pos];
-            Corpse temp = new Corpse(fight.Name + "의 시체", fight.Inven);
-            if (Monster.DropOutOf(fight.Stat.rnd, 5))
+            Corpse temp = new Corpse(creature.ToChar(), creature.Name + "의 시체", creature.Inven);
+            if (Monster.DropOutOf(creature.Stat.rnd, 5))
                 temp.droplist.Add(Creature.boneOfTheDeceased);
             if (old is Corpse cor)
                 _steppables[pos] = cor + temp;
@@ -156,6 +158,10 @@ public class Map {
                     _rendered[targetTile] = cor.ToChar();
                 else if (obj is not null)
                     throw new Exception("등록되지 않은 맵 오브젝트입니다.");
+
+                if (IO.IIO is GameSocket gs && obj is Corpse corpse) {
+                    gs.pr_corpse(targetTile, corpse);
+                }
             }
         }
 

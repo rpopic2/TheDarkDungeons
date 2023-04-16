@@ -87,6 +87,9 @@ public abstract partial class Creature
         string useOutput = $"{Name} {CurAction.CurrentBehav?.OnUseOutput} ({CurAction.Amount})";
         int mcharge = Inven.GetMeta(CurAction.CurrentItem!)?.magicCharge ?? 0;
         if (mcharge > 0) useOutput += ($"+^b({mcharge})^/");
+        if (IO.IIO is GameSocket gs) {
+            gs.pr_current_behaviour(Pos, CurAction);
+        }
         IO.rk(useOutput);
     }
 

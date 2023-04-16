@@ -164,7 +164,7 @@ public partial class Player : Creature {
     }
 
     public void SelectStartItem() {
-        Corpse corpse = new("누군가", new(Player.instance, "시체"));
+        Corpse corpse = new('@', "누군가", new(Player.instance, "시체"));
         corpse.droplist.Content.Add(sword);
         corpse.droplist.Content.Add(shield);
         corpse.droplist.Content.Add(dagger);

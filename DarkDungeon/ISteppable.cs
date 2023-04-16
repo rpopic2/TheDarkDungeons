@@ -1,6 +1,5 @@
-public record struct Corpse(string name, Inventory droplist) : ISteppable
+public record struct Corpse(char was, string name, Inventory droplist) : ISteppable
 {
-    public char ToChar() => MapSymb.corpse;
     public static Corpse operator +(Corpse old, Corpse newOne)
     {
         foreach (ItemOld? item in newOne.droplist)
@@ -17,6 +16,8 @@ public record struct Corpse(string name, Inventory droplist) : ISteppable
         if(item is not null) metaData = droplist.GetMeta(item);
         else metaData = null;
     }
+
+    public char ToChar() => MapSymb.corpse;
 }
 public record struct Pit() : ISteppable, IPortal
 {

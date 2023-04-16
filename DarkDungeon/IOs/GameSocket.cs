@@ -66,6 +66,10 @@ public class GameSocket : IIO {
         pr($"<skills>{stringified}");
     }
 
+    public void pr_corpse(int pos, Corpse corpse) {
+        pr($"<corpse>{pos},{corpse.was}");
+    }
+
     public ConsoleKeyInfo rk() {
         pr(RK, false);
         var buffer = new byte[1];
@@ -86,5 +90,9 @@ public class GameSocket : IIO {
     public void clr() {
         Console.WriteLine("Clearing screen...");
         pr(CLR, false);
+    }
+
+    public void pr_current_behaviour(Position pos, CurrentAction action) {
+        pr($"<stance>{action.CurrentBehav?.Stance},{pos.x}");
     }
 }
