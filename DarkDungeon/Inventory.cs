@@ -91,7 +91,11 @@ public class Inventory : ICollection<ItemOld?>
     }
     public ItemOld? this[int index]
     {
-        get => content[index];
+        get
+        {
+            if (index >= Count) return null;
+            else return content[index];
+        }
     }
     public ItemMetaData? GetMeta(ItemOld? item)
     {

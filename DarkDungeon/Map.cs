@@ -26,7 +26,7 @@ public class Map {
 
 
     static ISpawnable[] s_monsterData = {
-        new Bat(default), new Shaman(default), new Snake(default), new Rat(default), new Marksman(default), new Lunatic(default)
+        new Bat(default), new Shaman(default), new Rat(default), new Snake(default), new Marksman(default), new Lunatic(default)
     };
 
     static ISpawnable[] s_bossData = {

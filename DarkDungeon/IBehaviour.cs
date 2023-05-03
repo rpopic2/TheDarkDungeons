@@ -1,6 +1,6 @@
 public record SkillOld(string Name, StanceName Stance, StatName StatDepend, DamageType damageType, string OnUseOutput, Action<Creature> Behaviour) : IBehaviour, IEnergyConsume
 {
-    public static readonly string[] parenthesis = { "  ", "[]", "()", "<>", "{}" };
+    public static readonly string[] parenthesis = { "  ", "[]", "()", "<>", "<>", "{}" };
     public override string ToString()
     {
         string result = parenthesis[(int)damageType];

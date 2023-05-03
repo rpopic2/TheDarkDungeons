@@ -46,7 +46,7 @@ public class GameSocket : IIO {
     }
 
     public void pr_hp_energy() {
-        pr($"<hp>{s_player.GetHp()}<energy>{s_player.Energy}");
+        pr($"<hp>{s_player.GetHp()}<energy>{s_player.Energy}<sight>{s_player.Stat.Sight}");
     }
 
     public void pr_monster_hp_energy(Creature? frontCreature) {
