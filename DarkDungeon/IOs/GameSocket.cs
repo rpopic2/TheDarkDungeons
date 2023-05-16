@@ -99,4 +99,8 @@ public class GameSocket : IIO {
     public void pr_current_behaviour(Position pos, CurrentAction action) {
         pr($"<stance>{action.CurrentBehav?.Stance},{pos.x}");
     }
+
+    public void pr_player_death() {
+        pr("<pdeath>");
+    }
 }

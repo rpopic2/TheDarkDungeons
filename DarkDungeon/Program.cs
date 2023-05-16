@@ -33,6 +33,9 @@ public class Program
             Map.Current.OnTurnElapse();
         } while (s_player.IsAlive);
 
+        if (IO.IIO is GameSocket gs) {
+            gs.pr_player_death();
+        }
         IO.pr(s_player.ToString());
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
         IO.rk();
