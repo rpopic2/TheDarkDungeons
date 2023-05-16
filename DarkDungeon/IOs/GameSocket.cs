@@ -70,6 +70,10 @@ public class GameSocket : IIO {
         pr($"<corpse>{pos},{corpse.was}");
     }
 
+    public void pr_loot(Inventory droplist) {
+        pr($"<loot>{droplist.ToNetString()}");
+    }
+
     public ConsoleKeyInfo rk() {
         pr(RK, false);
         var buffer = new byte[1];

@@ -149,6 +149,9 @@ public partial class Player : Creature {
     }
 
     private void PickAnItemFromCorpse(Corpse corpse, out bool cancel) {
+        if (IO.IIO is GameSocket gs) {
+            gs.pr_loot(corpse.droplist);
+        }
         IO.sel(corpse.droplist, out int index, 0, "주울 아이템 선택 (x로 취소) : ");
         cancel = index == -1;
         if (cancel) {
