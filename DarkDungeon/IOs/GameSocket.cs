@@ -96,8 +96,12 @@ public class GameSocket : IIO {
         pr(CLR, false);
     }
 
+    /// <summary>
+    /// Send the player's current behaviour information.
+    /// position, stance, item name
+    /// </summary>
     public void pr_current_behaviour(Position pos, CurrentAction action) {
-        pr($"<stance>{action.CurrentBehav?.Stance},{pos.x}");
+        pr($"<cur_behav>{pos.x},{action.CurrentBehav?.Stance},{action.CurrentItem?.Name},{action.CurrentBehav?.Name}");
     }
 
     public void pr_player_death() {
