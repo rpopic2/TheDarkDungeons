@@ -5,22 +5,30 @@ public class Program
     static Player s_player => Player.instance;
 
     static async Task Main(string[] args) {
+        GameSocket? gs = null;
         if (args.Length > 0 && args[0] == "server") {
             var gameSocket = new GameSocket();
             await gameSocket.New();
             IO.IIO = gameSocket;
+            gs = gameSocket;
         }
         else IO.IIO = new CSIO();
+
         Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
 
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
+
+
+        gs?.pr("<press_any_key>");
 
         IO.CheckInteractive();
         if (!IO.IsInteractive)
             return;
 
         Map.NewMap();
+        gs?.pr("<char_select>");
         PlayerCreation.CreatePlayerPrompt();
+        gs?.pr("<game_start>");
 
         IO.clr();
         IO.pr($"{s_player.Name}은 횃불에 의지한 채 숲속으로 걸어 들어갔다.");
@@ -33,13 +41,10 @@ public class Program
             Map.Current.OnTurnElapse();
         } while (s_player.IsAlive);
 
-        if (IO.IIO is GameSocket gs) {
-            gs.pr_player_death();
-        }
+        gs?.pr_player_death();
+
         IO.pr(s_player.ToString());
         IO.pr($"{s_player.Name}은 여기에 잠들었다...");
         IO.rk();
     }
-
-
 }
