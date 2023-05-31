@@ -245,8 +245,12 @@ public class Map {
             newLength = Current.Length;
         }
         Current = new Map(newLength, true, new RandomPortal(), Current?._corpseToPass);
-        if (Player._instance is not null && Map.TurnInCurrentDepth == 0 && Depth > 1)
+        if (IO.IIO is GameSocket so) {
+            so.pr($"<map_len>{Current.Length}");
+        }
+        if (Player._instance is not null && Map.TurnInCurrentDepth == 0 && Depth > 1) {
             IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
+        }
     }
 
 
