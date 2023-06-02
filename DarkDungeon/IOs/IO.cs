@@ -67,21 +67,21 @@ public static class IO
         return s_io.rk();
     }
 
-    public static void sel(object value, out int index, __ flags = 0, string title = "선택 : ")
-    => sel(value, flags, out index, out _, out _, out _, title);
+    public static void sel(object value, out int index, __ flags = 0, bool dopr = true, string title = "선택 : ")
+    => sel(value, flags, out index, out _, out _, out _, dopr, title);
 
-    public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ") {
+    public static void sel(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, bool dopr = true, string title = "선택 : ") {
         bool found;
         do {
-            found = selOnce(value, flags, out index, out cancel, out mod, out keyInfo, title);
+            found = selOnce(value, flags, out index, out cancel, out mod, out keyInfo, dopr, title);
             if (cancel) return;
         } while (!found);
     }
 
-    public static bool selOnce(object value, out int index, __ flags = 0, string title = "선택 :")
-        => selOnce(value, flags, out index, out _, out _, out _, title);
+    public static bool selOnce(object value, out int index, __ flags = 0, bool dopr = true, string title = "선택 :")
+        => selOnce(value, flags, out index, out _, out _, out _, dopr, title);
 
-    public static bool selOnce(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, string title = "선택 : ") {
+    public static bool selOnce(object value, __ flags, out int index, out bool cancel, out ConsoleModifiers mod, out ConsoleKeyInfo keyInfo, bool dopr = true, string title = "선택 : ") {
         bool found;
         int max = Inventory.INVENSIZE;
         if (!flags.HasFlag(__.fullinven)) {
@@ -90,7 +90,8 @@ public static class IO
             else if (value is Inventory inv)
                 max = inv.Count;
         }
-        pr(value, flags, title);
+        if (dopr)
+            pr(value, flags, title);
         keyInfo = rk();
         mod = keyInfo.Modifiers;
         cancel = keyInfo.Key.IsCancel() || keyInfo.KeyChar == 'x';

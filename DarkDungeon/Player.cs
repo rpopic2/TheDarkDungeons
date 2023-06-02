@@ -37,10 +37,14 @@ public partial class Player : Creature {
 
     public void SelectBehaviour(ItemOld item) {
         IO.del(__.bottom);
+        object? skills = "";
         if (IO.IIO is GameSocket gs) {
             gs.pr_skill(item.skills);
+        } else {
+            skills = item.skills;
         }
-        IO.selOnce(item.skills, out int index, __.bottom, $"{item.Name}으로 무엇을 할까 : ");
+        var text = $"{item.Name}으로 무엇을 할까? (x로 취소) ";
+        IO.selOnce(skills, out int index, __.bottom, true, text);
         if (index == -1) {
             IO.Redraw();
             return;
@@ -79,7 +83,7 @@ public partial class Player : Creature {
     }
 
     private int SelectIndexOfItem(string message) {
-        IO.sel(Inven, out int index, 0, message);
+        IO.sel(Inven, out int index, 0, true, message);
         return index;
     }
 
@@ -152,7 +156,7 @@ public partial class Player : Creature {
         if (IO.IIO is GameSocket gs) {
             gs.pr_loot(corpse.droplist);
         }
-        IO.sel(corpse.droplist, out int index, 0, "주울 아이템 선택 (x로 취소) : ");
+        IO.sel(corpse.droplist, out int index, 0, true, "주울 아이템 선택 (x로 취소) : ");
         cancel = index == -1;
         if (cancel) {
             IO.del();
@@ -178,7 +182,7 @@ public partial class Player : Creature {
         corpse.droplist.Content.Add(staff);
         corpse.droplist.Content.Add(magicBook);
         while (Inven.Count < 2) {
-            IO.sel(corpse.droplist.Content.ToArray(), out int index, 0, "아이템 선택 : ");
+            IO.sel(corpse.droplist.Content.ToArray(), out int index, 0, true, "아이템 선택 : ");
             if (corpse.droplist[index] is ItemOld item) {
                 Inven.Add(item);
                 corpse.droplist.Remove(item);

@@ -55,7 +55,7 @@ public partial class Player
         if (found) ChooseIndex(i);
 
         switch (key.KeyChar) {
-        case 'z':
+        case 'z': case '>': case ',':
             if (UnderFoot is not null) SelectBasicBehaviour(2, 0, 0);
             break;
         //movements hl

@@ -28,13 +28,13 @@ public class Program
         Map.NewMap();
         gs?.pr("<char_select>");
         PlayerCreation.CreatePlayerPrompt();
-        gs?.pr("<game_start>");
 
         IO.clr();
         IO.pr($"{s_player.Name}은 횃불에 의지한 채 숲속으로 걸어 들어갔다.");
         IO.rk();
         IO.Redraw();
-        IO.pr("\n?을 눌러 도움말 표시.");
+        gs?.pr("<game_start>");
+        IO.pr("?을 눌러 도움말 표시.");
 
         // main loop
         do {
