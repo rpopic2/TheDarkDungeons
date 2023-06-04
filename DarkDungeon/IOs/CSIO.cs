@@ -23,24 +23,25 @@ public class CSIO : IIO
 
         if (flag.HasFlag(__.emphasis))
             stringValue = EMPHASIS + stringValue;
-        if (flag.HasFlag(__.bottom))
-            Console.CursorTop = x + Console.WindowHeight - 1;
+        if (flag.HasFlag(__.bottom)) {
+            Console.CursorLeft = 0;
+            Console.CursorTop += Console.WindowHeight - 1;
+        }
 
-        var hasNewLine = newline;
         if (stringValue.Contains("^")) {
             pr_Color(stringValue, flag);
             if (!flag.HasFlag(__.bottom)) {
-                _pr(string.Empty, hasNewLine);
+                _pr(string.Empty, newline);
             }
             else {
                 Console.SetCursorPosition(x, y);
                 return;
             }
         } else if (flag.HasFlag(__.bottom)) {
-            _pr(stringValue, hasNewLine);
+            _pr(stringValue, newline);
             Console.SetCursorPosition(x, y);
         } else {
-            _pr(stringValue, hasNewLine);
+            _pr(stringValue, newline);
         }
     }
 
@@ -61,7 +62,7 @@ public class CSIO : IIO
     }
 
     public void pr_map() {
-        pr(Map.Current.ToString(), false);
+        pr(Map.Current.ToString(), true);
     }
 
     public ConsoleKeyInfo rk() {

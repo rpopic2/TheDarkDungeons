@@ -53,8 +53,8 @@ public static class IO
     public static string rl() {
         return s_io.rl();
     }
-    ///<summary>Console.ReadKey. Intercept is true.</summary>
 
+    ///<summary>Console.ReadKey. Intercept is true.</summary>
     //[Obsolete("Use rk() instead.")]
     public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "") {
         pr(print, flags, title);

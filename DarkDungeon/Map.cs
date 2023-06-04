@@ -98,6 +98,7 @@ public class Map {
         TurnInCurrentDepth++;
         if (Current.DoLoadNewMap)
             NewMap();
+        IO.rk();
         IO.Redraw();
     }
 

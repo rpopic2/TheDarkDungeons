@@ -36,7 +36,6 @@ public partial class Player : Creature {
     }
 
     public void SelectBehaviour(ItemOld item) {
-        IO.del(__.bottom);
         object? skills = "";
         if (IO.IIO is GameSocket gs) {
             gs.pr_skill(item.skills);

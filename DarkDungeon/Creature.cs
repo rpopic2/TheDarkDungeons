@@ -52,7 +52,7 @@ public abstract partial class Creature
         IBehaviour behaviour = item.skills[index];
         if (behaviour is Passive || behaviour is WearEffect)
         {
-            IO.rk(behaviour.OnUseOutput);
+            IO.pr(behaviour.OnUseOutput);
             IO.Redraw();
         }
         else SetSkill(item, behaviour);
@@ -78,7 +78,7 @@ public abstract partial class Creature
         if (behaviour is NonTokenSkill nonToken)
         {
             string output = behaviour.OnUseOutput;
-            if (output != string.Empty) IO.rk(Name + output);
+            if (output != string.Empty) IO.pr(Name + output);
             CurAction.Set(basicActions, nonToken, x, y);
         }
     }
@@ -90,7 +90,7 @@ public abstract partial class Creature
         if (IO.IIO is GameSocket gs) {
             gs.pr_current_behaviour(Pos, CurAction);
         }
-        IO.rk(useOutput);
+        IO.pr(useOutput);
     }
 
     private void Attack(int range, int addDamage = 0)
@@ -136,7 +136,7 @@ public abstract partial class Creature
         else
         {
             CurAction.Reset();
-            IO.rk($"{item.Name}이 없다!");
+            IO.pr($"{item.Name}이 없다!");
         }
     }
     private void Dodge(int damage, DamageType damageType, Creature attacker, ItemMetaData metaData)
@@ -151,7 +151,7 @@ public abstract partial class Creature
             damage = damage.ToVul();
         }
 
-        if (damage <= 0) IO.rk($"{Name}은 아무런 피해도 받지 않았다.");
+        if (damage <= 0) IO.pr($"{Name}은 아무런 피해도 받지 않았다.");
         else if (metaData.poison-- > 0) CurAction.SetPoison(2);
         Stat.Damage(damage);
     }
@@ -189,13 +189,13 @@ public abstract partial class Creature
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge += CurAction.Amount;
         else Inven.GetMeta(item)!.magicCharge += CurAction.Amount;
-        IO.rk($"{item}에 마법부여를 하였다.");
+        IO.pr($"{item}에 마법부여를 하였다.");
     }
     protected virtual void PoisonItem(ItemOld? item = null)
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.poison++;
         else Inven.GetMeta(item)!.poison++;
-        IO.rk($"{item}은 독으로 젖어 있다.");
+        IO.pr($"{item}은 독으로 젖어 있다.");
     }
     protected void Move(Position value)
     {
@@ -263,10 +263,10 @@ public abstract partial class Creature
         _currentMap.RemoveFromOnTurnPre(_turnPre);
         _currentMap.RemoveFromOnTurnEnd(_turnEnd);
     }
-    private void OnHeal(object? sender, PointArgs e) => IO.rk($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
+    private void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
     private void OnDamaged(object? sender, PointArgs e)
     {
-        if (e.Amount > 0) IO.rk($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
+        if (e.Amount > 0) IO.pr($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
     public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t기력 : {CurAction.Energy}\t{Stat}";
