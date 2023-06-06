@@ -9,9 +9,10 @@ public static class IO
     private static readonly string DELSTRING = " ";
     private static Player s_player { get => Player.instance; }
     private static IIO s_io;
-#nullable disable
     public static IIO IIO { get => s_io; set => s_io = value; }
+    public static GameSocket? gs;
 
+#nullable disable
     static IO()
     {
         foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {

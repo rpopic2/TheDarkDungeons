@@ -23,6 +23,7 @@ public static class PlayerCreation {
         Status stat = Status.BasicStatus;
         if (classIndex != -1) stat[(StatName)classIndex] += 3;
         IO.pr($"기본 스탯 : {stat}");
+        IO.gs?.pr($"<class_info>{className}:{classDesc}:{stat}");
         IO.pr("스페이스바 : 확인, x : 취소");
         ConsoleKeyInfo keyInfo = IO.rk();
         if (keyInfo.Key.IsCancel() || keyInfo.KeyChar == 'x')

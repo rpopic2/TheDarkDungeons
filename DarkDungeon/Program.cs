@@ -10,6 +10,7 @@ public class Program
             var gameSocket = new GameSocket();
             await gameSocket.New();
             IO.IIO = gameSocket;
+            IO.gs = gameSocket;
             gs = gameSocket;
         }
         else IO.IIO = new CSIO();
@@ -31,6 +32,9 @@ public class Program
 
         IO.clr();
         IO.pr($"{s_player.Name}은 횃불에 의지한 채 숲속으로 걸어 들어갔다.");
+        if (gs is not null)
+            IO.Redraw();
+        gs?.pr("<game_intro>");
         IO.rk();
         IO.Redraw();
         gs?.pr("<game_start>");
