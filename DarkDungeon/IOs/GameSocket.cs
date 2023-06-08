@@ -71,6 +71,10 @@ public class GameSocket : IIO {
         pr($"<skills>{stringified}");
     }
 
+    public void pr_underfoot(char was) {
+        pr($"<underfoot>{was}");
+    }
+
     public void pr_corpse(int pos, Corpse corpse) {
         pr($"<corpse>{pos},{corpse.was}");
     }
@@ -94,6 +98,10 @@ public class GameSocket : IIO {
 
     public string rl() {
         return "Unity";
+    }
+
+    public void del() {
+        pr("<del>");
     }
 
     public void clr() {

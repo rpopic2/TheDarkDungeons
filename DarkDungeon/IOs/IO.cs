@@ -21,8 +21,6 @@ public static class IO
                 return;
             }
         }
-        int delstringLength = Console.WindowWidth - 1;
-        DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
     }
 
 #nullable restore
@@ -71,7 +69,7 @@ public static class IO
     public static ConsoleKeyInfo rk(object print, __ flags = 0, string title = "") {
         pr(print, flags, title);
         ConsoleKeyInfo info = rk();
-        del(flags);
+        del();
         return info;
     }
 
@@ -133,23 +131,9 @@ public static class IO
         return index != -1 && index <= max - 1;
     }
 
-    public static void del(__ flags = 0) {
-        if (!IsInteractive)
-            return;
-        if (flags.HasFlag(__.bottom)) {
-            s_del_bottom();
-            return;
-        }
-        if (Console.CursorTop == 0)
-            return;
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
-        pr(DELSTRING, flags);
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
-    }
-
-    public static void del(int lines) {
-        for (int i = 0; i < lines; i++)
-            del();
+    public static void del(int lines = 1) {
+        for (int i = 0; i < lines; ++i)
+            s_io.del();
     }
 
     public static void clr()
@@ -174,8 +158,12 @@ public static class IO
         s_io.pr_hp_energy();
         s_io.pr_inventory();
         s_io.pr_map();
-        if (s_player.UnderFoot is ISteppable step)
+        if (s_player.UnderFoot is ISteppable step) {
             pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
+            if (gs is not null && step is Corpse c) {
+                gs.pr_underfoot(c.was);
+            }
+        }
     }
 
     public static void PrintTurnHistory() {
@@ -217,7 +205,6 @@ public static class IO
 // private:
 
     const int _messageBoxHeight = 4;
-    static readonly string DELSTRING = " ";
 
     static Player s_player { get => Player.instance; }
     static IIO s_io;
@@ -225,14 +212,6 @@ public static class IO
 
     static void pr(string value, bool newline = true) {
         s_io.pr(value, newline);
-    }
-
-    static void s_del_bottom() {
-        int x = Console.CursorLeft;
-        int y = Console.CursorTop;
-        Console.CursorTop = x + Console.WindowHeight - 1;
-        pr(DELSTRING, false);
-        Console.SetCursorPosition(x, y);
     }
 }
 

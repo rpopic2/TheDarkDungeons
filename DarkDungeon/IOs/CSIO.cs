@@ -3,6 +3,12 @@ public class CSIO : IIO
     private static Player s_player => Player.instance;
     public static bool IsInteractive = true;
     private const string EMPHASIS = "=> ";
+    static readonly string DELSTRING = " ";
+
+    static CSIO() {
+        int delstringLength = Console.WindowWidth - 1;
+        DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
+    }
 
     public void pr(string value, bool newline) {
         _pr(value, newline);
@@ -96,5 +102,29 @@ public class CSIO : IIO
     public void clr() {
         Console.Clear();
     }
+
+    public void del() {
+        if (!IsInteractive)
+            return;
+        //if (flags.HasFlag(__.bottom)) {
+            //s_del_bottom();
+            //return;
+        //}
+        if (Console.CursorTop == 0)
+            return;
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        pr(DELSTRING);
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+
+    }
+
+    public void s_del_bottom() {
+        int x = Console.CursorLeft;
+        int y = Console.CursorTop;
+        Console.CursorTop = x + Console.WindowHeight - 1;
+        pr(DELSTRING, false);
+        Console.SetCursorPosition(x, y);
+    }
+
 }
 

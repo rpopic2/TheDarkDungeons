@@ -9,4 +9,5 @@ public interface IIO
     public void pr_monster_hp_energy(Creature? frontCreature);
     public string rl();
     public void clr();
+    public void del();
 }

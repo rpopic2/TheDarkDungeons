@@ -47,7 +47,7 @@ public partial class Creature
         new SkillOld("때리기", StanceName.Offence, StatName.Sol, DamageType.Normal, "은 지팡이로 앞을 떄렸다.", (i)=>i.Attack(1)),
         new SkillOld("마법 방어", StanceName.Defence, StatName.Con, DamageType.Magic, "은 마법진을 그려 적의 공격을 막았다.", (i)=>{})
         });
-    public static readonly ItemOld spiritStaff = new("정령 깃든 지팡이", ItemType.Equip, new IBehaviour[] {
+    public static readonly ItemOld spiritStaff = new("정령 깃든 나뭇가지", ItemType.Equip, new IBehaviour[] {
         new SkillOld("휘두르기", StanceName.Offence, StatName.Lun, DamageType.Normal, "은 지팡이를 휘둘렀다.", (i)=>i.Attack(4)),
         new Charge("정령부름", StatName.Con, DamageType.Magic, "은 정령을 불러내었고 그 힘이 지팡이에 깃들었다.", (i)=>{i.Charge(spiritStaff!);})
         });
