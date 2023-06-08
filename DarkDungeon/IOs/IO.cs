@@ -1,22 +1,20 @@
-using System.Text;
-
 namespace DarkDungeon;
+
 public static class IO
 {
-    public static bool IsInteractive = CSIO.IsInteractive;
+// public:
+
     public const string ITEMKEYS1 = "qwert";
     public static readonly ConsoleKey[] ITEMKEYS_PAD = new ConsoleKey[] {
         ConsoleKey.End, ConsoleKey.PageDown, ConsoleKey.Home, ConsoleKey.PageUp, ConsoleKey.OemPlus
     };
-    private static readonly string DELSTRING = " ";
-    private static Player s_player { get => Player.instance; }
-    private static IIO s_io;
+
+    public static bool IsInteractive = CSIO.IsInteractive;
     public static IIO IIO { get => s_io; set => s_io = value; }
     public static GameSocket? gs;
 
 #nullable disable
-    static IO()
-    {
+    static IO() {
         foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
             if (assembly.FullName?.StartsWith("xunit") ?? false) {
                 IO.IsInteractive = false;
@@ -26,21 +24,29 @@ public static class IO
         int delstringLength = Console.WindowWidth - 1;
         DELSTRING = new String(' ', (int)MathF.Max(0, delstringLength));
     }
+
 #nullable restore
     ///<summary>Print.
     ///Equals to Console.WriteLine(x);</summary>
     public static void pr(object value, __ flag = 0, string title = "", bool newline = true) {
-        if (value is Array arrayValue) value = arrayValue.ToFString();
-        if (s_io is CSIO) CSIO.pr(value, flag, title, newline);
-        else if (s_io is GameSocket) s_io.pr(title + value.ToString(), newline);
+        if (value is Array arrayValue)
+            value = arrayValue.ToFString();
+
+        if (s_io is CSIO)
+            CSIO.pr(value, flag, title, newline);
+        else if (s_io is GameSocket)
+            s_io.pr(title + value.ToString(), newline);
     }
 
     public static void mes(object value, __ flag = 0, string title = "", bool newline = true) {
         pr(value, flag, title, newline);
+        var s = value.ToString();
+        if (s is null)
+            return;
         if (newline)
-            _history.AppendLine(value.ToString());
+            _history.Add(s);
         else
-            _history.Append(value.ToString());
+            _history.Append(s);
     }
 
     public static void CheckInteractive() {
@@ -50,14 +56,9 @@ public static class IO
             if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) {
                 IO.IsInteractive = false;
             }
-        }
-        catch (InvalidOperationException) {
+        } catch (InvalidOperationException) {
             IO.IsInteractive = false;
         }
-    }
-
-    private static void pr(string value, bool newline = true) {
-        s_io.pr(value, newline);
     }
 
     ///<summary>read line.</summary>
@@ -122,7 +123,8 @@ public static class IO
     public static bool chk(Char i, int max, out int index) {
         index = ITEMKEYS1.IndexOf(i);
         bool found = index != -1 && index <= max - 1;
-        if (!found) index = -1;
+        if (!found)
+            index = -1;
         return found;
     }
 
@@ -132,52 +134,62 @@ public static class IO
     }
 
     public static void del(__ flags = 0) {
-        if (!IsInteractive) return;
+        if (!IsInteractive)
+            return;
         if (flags.HasFlag(__.bottom)) {
             s_del_bottom();
             return;
         }
-        if (Console.CursorTop == 0) return;
+        if (Console.CursorTop == 0)
+            return;
         Console.SetCursorPosition(0, Console.CursorTop - 1);
         pr(DELSTRING, flags);
         Console.SetCursorPosition(0, Console.CursorTop - 1);
     }
 
-    private static void s_del_bottom() {
-        int x = Console.CursorLeft;
-        int y = Console.CursorTop;
-        Console.CursorTop = x + Console.WindowHeight - 1;
-        pr(DELSTRING, false);
-        Console.SetCursorPosition(x, y);
-    }
-
     public static void del(int lines) {
-        for (int i = 0; i < lines; i++) del();
+        for (int i = 0; i < lines; i++)
+            del();
     }
 
-    public static void clr() => s_io.clr();
-
-    static StringBuilder _history = new();
+    public static void clr()
+        => s_io.clr();
 
     public static void OnTurnEnd() {
         _history.Clear();
     }
 
     public static void Redraw() {
-        if (!IsInteractive) return;
+        if (!IsInteractive)
+            return;
         clr();
         string? energyTip = default;
-        if (s_player.Energy.IsMin) energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
-        if (energyTip != default) pr(energyTip, __.bottom | __.newline);
+        if (s_player.Energy.IsMin)
+            energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
+        if (energyTip != default)
+            pr(energyTip, __.bottom | __.newline);
         s_io.pr_depth_lv();
         Creature? frontCreature = s_player.CreatureAtFront;
         s_io.pr_monster_hp_energy(frontCreature);
         s_io.pr_hp_energy();
         s_io.pr_inventory();
         s_io.pr_map();
-        if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
-        if (_history.Length > 0)
-            pr(_history);
+        if (s_player.UnderFoot is ISteppable step)
+            pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
+    }
+
+    public static void PrintTurnHistory() {
+        var count = _history.Count;
+        if (count <= 0) 
+            return;
+
+        for (int i = 0; i < count; i++) {
+            if (i != 0 && i % _messageBoxHeight == 0) {
+                rk(true);
+                del(_messageBoxHeight);
+            }
+            pr(_history[i]);
+        }
     }
 
     public static void ShowStats() {
@@ -200,6 +212,27 @@ public static class IO
         }
         rk();
         Redraw();
+    }
+
+// private:
+
+    const int _messageBoxHeight = 4;
+    static readonly string DELSTRING = " ";
+
+    static Player s_player { get => Player.instance; }
+    static IIO s_io;
+    static List<string> _history = new();
+
+    static void pr(string value, bool newline = true) {
+        s_io.pr(value, newline);
+    }
+
+    static void s_del_bottom() {
+        int x = Console.CursorLeft;
+        int y = Console.CursorTop;
+        Console.CursorTop = x + Console.WindowHeight - 1;
+        pr(DELSTRING, false);
+        Console.SetCursorPosition(x, y);
     }
 }
 

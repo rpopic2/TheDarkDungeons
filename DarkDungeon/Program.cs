@@ -1,7 +1,7 @@
 global using IO = DarkDungeon.IO;
 public class Program
 {
-    const string VERSION = "0.6.3-150323";
+    const string VERSION = "0.6.4-150608";
     static Player s_player => Player.instance;
 
     static async Task Main(string[] args) {
@@ -16,10 +16,8 @@ public class Program
         else IO.IIO = new CSIO();
 
         Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
-
+        IO.clr();
         IO.pr("The Dungeon of the Mine " + Program.VERSION);
-
-
         gs?.pr("<press_any_key>");
 
         IO.CheckInteractive();
@@ -44,6 +42,7 @@ public class Program
         do {
             Map.Current.OnTurnElapse();
             IO.Redraw();
+            IO.PrintTurnHistory();
             IO.OnTurnEnd();
         } while (s_player.IsAlive);
 

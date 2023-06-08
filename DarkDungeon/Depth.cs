@@ -2,7 +2,6 @@ public record struct Coord(int X, int Y);
 
 public class DepthGraph {
 // private:
-
     const int _ROW = 3;
     const int _COLUMN = 3;
 
@@ -98,7 +97,7 @@ public class DepthGraph {
                 var next = Random.Shared.Next(viable_directions.Count);
                 var (new_row, new_column) = viable_directions[next];
 
-                Console.WriteLine($"Passages connected: ({i}, {j}) and ({new_row}, {new_column})");
+                //Console.WriteLine($"Passages connected: ({i}, {j}) and ({new_row}, {new_column})");
                 Passage new_passage = _passageMatrix[new_row][new_column];
                 passage.ConnectPassage(new_passage);
             }

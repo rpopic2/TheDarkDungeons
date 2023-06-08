@@ -78,7 +78,7 @@ public abstract partial class Creature
         if (behaviour is NonTokenSkill nonToken)
         {
             string output = behaviour.OnUseOutput;
-            if (output != string.Empty) IO.pr(Name + output);
+            if (output != string.Empty) IO.mes(Name + output);
             CurAction.Set(basicActions, nonToken, x, y);
         }
     }
