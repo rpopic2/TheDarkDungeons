@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace DarkDungeon;
 public static class IO
 {
@@ -33,10 +35,18 @@ public static class IO
         else if (s_io is GameSocket) s_io.pr(title + value.ToString(), newline);
     }
 
+    public static void mes(object value, __ flag = 0, string title = "", bool newline = true) {
+        pr(value, flag, title, newline);
+        if (newline)
+            _history.AppendLine(value.ToString());
+        else
+            _history.Append(value.ToString());
+    }
+
     public static void CheckInteractive() {
         try {
             IO.pr("Press any key to start...");
-            ConsoleKeyInfo info = IO.rk();
+            ConsoleKeyInfo info = IO.rk(false);
             if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) {
                 IO.IsInteractive = false;
             }
@@ -64,8 +74,13 @@ public static class IO
         return info;
     }
 
-    public static ConsoleKeyInfo rk() {
-        return s_io.rk();
+    public static ConsoleKeyInfo rk(bool printMore = true) {
+        if (printMore)
+            pr("-더보기-");
+        var result = s_io.rk();
+        if (printMore)
+            del();
+        return result;
     }
 
     public static void sel(object value, out int index, __ flags = 0, bool dopr = true, string title = "선택 : ")
@@ -93,7 +108,7 @@ public static class IO
         }
         if (dopr)
             pr(value, flags, title);
-        keyInfo = rk();
+        keyInfo = rk(false);
         mod = keyInfo.Modifiers;
         cancel = keyInfo.Key.IsCancel() || keyInfo.KeyChar == 'x';
         found = chk(keyInfo.KeyChar, max, out index);
@@ -142,12 +157,17 @@ public static class IO
 
     public static void clr() => s_io.clr();
 
+    static StringBuilder _history = new();
+
+    public static void OnTurnEnd() {
+        _history.Clear();
+    }
+
     public static void Redraw() {
         if (!IsInteractive) return;
         clr();
-        //pr("History");
         string? energyTip = default;
-        if (s_player.Energy.IsInjured) energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
+        if (s_player.Energy.IsMin) energyTip = "기력이 떨어진 상태다. 휴식하는게 좋겠다";
         if (energyTip != default) pr(energyTip, __.bottom | __.newline);
         s_io.pr_depth_lv();
         Creature? frontCreature = s_player.CreatureAtFront;
@@ -156,6 +176,8 @@ public static class IO
         s_io.pr_inventory();
         s_io.pr_map();
         if (s_player.UnderFoot is ISteppable step) pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
+        if (_history.Length > 0)
+            pr(_history);
     }
 
     public static void ShowStats() {

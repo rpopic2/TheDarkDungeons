@@ -11,7 +11,7 @@ public partial class Player
     }
     private void Selection()
     {
-        ConsoleKeyInfo info = IO.rk();
+        ConsoleKeyInfo info = IO.rk(false);
         ConsoleKey key = info.Key;
         if (key.IsCancel())
         {

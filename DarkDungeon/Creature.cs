@@ -90,7 +90,7 @@ public abstract partial class Creature
         if (IO.IIO is GameSocket gs) {
             gs.pr_current_behaviour(Pos, CurAction);
         }
-        IO.pr(useOutput);
+        IO.mes(useOutput);
     }
 
     private void Attack(int range, int addDamage = 0)
@@ -127,7 +127,7 @@ public abstract partial class Creature
     {
         if (Inven.Contains(item))
         {
-            IO.pr($"{item.Name}이 바람을 가르며 날아갔다.");
+            IO.mes($"{item.Name}이 바람을 가르며 날아갔다.");
             Attack(range);
             ItemMetaData metaData = Inven.GetMeta(item)!;
             if (itemPreservesOnEnemy) LastHit?.Inven.Add(item, metaData);
@@ -136,7 +136,7 @@ public abstract partial class Creature
         else
         {
             CurAction.Reset();
-            IO.pr($"{item.Name}이 없다!");
+            IO.mes($"{item.Name}이 없다!");
         }
     }
     private void Dodge(int damage, DamageType damageType, Creature attacker, ItemMetaData metaData)
@@ -147,11 +147,11 @@ public abstract partial class Creature
         if (stance == StanceName.Defence) CalcDamageType(ref damage, damageType, attacker);
         else if (stance == StanceName.Charge)
         {
-            IO.pr($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
+            IO.mes($"{Name}은 약점이 드러나 있었다! ({damage})x{Rules.vulMulp}");
             damage = damage.ToVul();
         }
 
-        if (damage <= 0) IO.pr($"{Name}은 아무런 피해도 받지 않았다.");
+        if (damage <= 0) IO.mes($"{Name}은 아무런 피해도 받지 않았다.");
         else if (metaData.poison-- > 0) CurAction.SetPoison(2);
         Stat.Damage(damage);
     }
@@ -171,17 +171,17 @@ public abstract partial class Creature
         damage -= CurAction.Amount;
         void EffectiveDefence(ref int damage)
         {
-            IO.pr($"{Name}의 {CurAction.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
+            IO.mes($"{Name}의 {CurAction.CurrentBehav?.Name}은 적의 공격을 효과적으로 막아냈다. 원래 피해 : {damage}");
             damage = damage.ToUnVul();
             if (damageType != DamageType.Thrust && damage <= CurAction.Amount)
             {
-                IO.pr($"그리고 패리로 적을 스턴 상태에 빠뜨렸다!");
+                IO.mes($"그리고 패리로 적을 스턴 상태에 빠뜨렸다!");
                 attacker.CurAction.SetStun(1);
             }
         }
         void UneffectiveDefence(ref int damage)
         {
-            IO.pr($"{Name}의 {CurAction.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
+            IO.mes($"{Name}의 {CurAction.CurrentBehav?.Name}은 별로 효과적인 막기가 아니었다! 원래 피해 : {damage}");
             damage = damage.ToVul();
         }
     }
@@ -189,13 +189,13 @@ public abstract partial class Creature
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.magicCharge += CurAction.Amount;
         else Inven.GetMeta(item)!.magicCharge += CurAction.Amount;
-        IO.pr($"{item}에 마법부여를 하였다.");
+        IO.mes($"{item}에 마법부여를 하였다.");
     }
     protected virtual void PoisonItem(ItemOld? item = null)
     {
         if (item is null) Inven.GetMeta(CurAction.CurrentItem!)!.poison++;
         else Inven.GetMeta(item)!.poison++;
-        IO.pr($"{item}은 독으로 젖어 있다.");
+        IO.mes($"{item}은 독으로 젖어 있다.");
     }
     protected void Move(Position value)
     {
@@ -248,7 +248,7 @@ public abstract partial class Creature
         passives.Invoke(this);
         if (CurAction.Poison > 0)
         {
-            IO.pr($"{Name}은 중독 상태이다!", __.emphasis);
+            IO.mes($"{Name}은 중독 상태이다!", __.emphasis);
             CurAction.ProcessPoison();
         }
         CurAction.Reset();
@@ -257,16 +257,16 @@ public abstract partial class Creature
     {
         if (!IsAlive) return;
         IsAlive = false;
-        IO.pr($"{Name}가 죽었다.", __.newline);
+        IO.mes($"{Name}가 죽었다.", __.newline);
         Map.Current.UpdateFightable(this);
 #pragma warning disable CS8601
         _currentMap.RemoveFromOnTurnPre(_turnPre);
         _currentMap.RemoveFromOnTurnEnd(_turnEnd);
     }
-    private void OnHeal(object? sender, PointArgs e) => IO.pr($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
+    private void OnHeal(object? sender, PointArgs e) => IO.mes($"{Name}은 {e.Amount}의 hp를 회복했다. {GetHp()}", __.emphasis);
     private void OnDamaged(object? sender, PointArgs e)
     {
-        if (e.Amount > 0) IO.pr($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
+        if (e.Amount > 0) IO.mes($"{Name}은 {e.Amount}의 피해를 입었다. {GetHp()}", __.emphasis);
     }
     public virtual char ToChar() => Name.ToLower()[0];
     public override string ToString() => $"이름 : {Name}\t레벨 : {Level}\nHp : {GetHp()}\t기력 : {CurAction.Energy}\t{Stat}";

@@ -98,8 +98,6 @@ public class Map {
         TurnInCurrentDepth++;
         if (Current.DoLoadNewMap)
             NewMap();
-        IO.rk();
-        IO.Redraw();
     }
 
     Monster? Spawn(ISpawnable prefab) {
@@ -247,9 +245,10 @@ public class Map {
         }
         Current = new Map(newLength, true, new RandomPortal(), Current?._corpseToPass);
         if (IO.IIO is GameSocket so) {
-            so.pr($"<map_len>{Current.Length}");
+            so.pr_new_map(Current.Length);
         }
         if (Player._instance is not null && Map.TurnInCurrentDepth == 0 && Depth > 1) {
+            IO.gs?.pr_map();
             IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
         }
     }

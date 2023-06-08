@@ -25,7 +25,7 @@ public static class PlayerCreation {
         IO.pr($"기본 스탯 : {stat}");
         IO.gs?.pr($"<class_info>{className}:{classDesc}:{stat}");
         IO.pr("스페이스바 : 확인, x : 취소");
-        ConsoleKeyInfo keyInfo = IO.rk();
+        ConsoleKeyInfo keyInfo = IO.rk(false);
         if (keyInfo.Key.IsCancel() || keyInfo.KeyChar == 'x')
         {
             IO.del(2);

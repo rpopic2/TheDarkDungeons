@@ -35,7 +35,7 @@ public class Program
         if (gs is not null)
             IO.Redraw();
         gs?.pr("<game_intro>");
-        IO.rk();
+        IO.rk(false);
         IO.Redraw();
         gs?.pr("<game_start>");
         IO.pr("?을 눌러 도움말 표시.");
@@ -43,6 +43,8 @@ public class Program
         // main loop
         do {
             Map.Current.OnTurnElapse();
+            IO.Redraw();
+            IO.OnTurnEnd();
         } while (s_player.IsAlive);
 
         gs?.pr_player_death();

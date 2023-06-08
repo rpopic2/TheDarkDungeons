@@ -36,6 +36,10 @@ public class GameSocket : IIO {
         s_client?.Send(Encoding.UTF8.GetBytes(value));
     }
 
+    public void pr_new_map(int len) {
+        pr($"<new_map>{len}");
+    }
+
     public void pr_map() {
         var facing = (int)Player.instance.Pos.facing;
         pr($"<map>{facing}{Map.Current.Rendered}", false);
@@ -55,6 +59,7 @@ public class GameSocket : IIO {
             return;
         }
         pr($"<mpos>{frontCreature.Pos.x}<mhp>{frontCreature.GetHp()}<menergy>{frontCreature.Energy}");
+        pr($"<mname>{frontCreature.Name}<mchar>{frontCreature.ToChar()}");
     }
 
     public void pr_inventory() {
