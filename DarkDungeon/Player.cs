@@ -66,7 +66,7 @@ public partial class Player : Creature {
             for (int i = 0; i < _STATPROMPT.Length; i++) {
                 selection[i] = $"{_STATPROMPT[i]} : {Stat[(StatName)i]} / ";
             }
-            IO.sel(selection, out index);
+            IO.sel(selection, out index, 0, true, "레벨업!: ");
         } while (index == -1);
         Stat[(StatName)index] += 1;
         Energy = new(3 + Level / 5);

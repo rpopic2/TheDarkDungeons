@@ -37,7 +37,6 @@ public static class IO
     }
 
     public static void mes(object value, __ flag = 0, string title = "", bool newline = true) {
-        pr(value, flag, title, newline);
         var s = value.ToString();
         if (s is null)
             return;
