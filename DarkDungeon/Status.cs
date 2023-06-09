@@ -55,7 +55,7 @@ public class Status
     {
         Level++;
         Exp.UpdateMax();
-        IO.pr($"{Level}레벨이 되었다.", __.emphasis);
+        IO.mes($"{Level}레벨이 되었다.", __.emphasis);
         int newHp = SolToHp();
         Hp.Max = newHp;
         //Heal(Hp.Max / 2);

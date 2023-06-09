@@ -83,7 +83,7 @@ public partial class Creature
     public static SkillOld bite = new SkillOld("물기", StanceName.Offence, StatName.Sol, DamageType.Slash, "은 그 커다란 이빨로 적을 깨물었다!", (i) => i.Attack(1));
 
     public static readonly ItemOld ratItem = new("쥐의 이빨", ItemType.Equip, new IBehaviour[]{
-            bite, new SkillOld("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "는 찍찍 소리를 내며 거대한 이빨을 드러내고 있다. 쥐가 달려든다!", (i)=>{i.Dash(new Position(2, i.Pos.facing));i.Attack(2);i.LastHit?.CurAction.SetStun(1);})
+            bite, new SkillOld("돌진", StanceName.Offence, StatName.Sol, DamageType.Normal, "는 찍찍 소리를 내며 거대한 이빨을 드러내고 있다. 쥐가 달려든다!", (i)=>{i.Dash(new Position(2, i.Pos.facing));i.LastHit?.CurAction.SetStun(1);})
             });
     public static readonly ItemOld poison = new("독", ItemType.Consume, new IBehaviour[] {
         new Charge("독 바르기", StatName.None, DamageType.Normal, "은 독을 무기에 바르기로 했다.", (f)=>{f.PoisonItem(); f.Inven.Consume(poison!);})
