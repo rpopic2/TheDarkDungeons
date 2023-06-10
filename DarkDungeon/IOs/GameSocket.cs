@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 
 public class GameSocket : IIO {
-    private static Player s_player => Player.instance;
+    private static Player s_player => Player.Me;
     private const string RK = "<rk>";
     private const string CLR = "<clr>";
     private Socket? s_client;
@@ -13,16 +13,19 @@ public class GameSocket : IIO {
         Console.WriteLine("Closing connection.");
     }
 
-    public async Task New() {
+    public async static Task<GameSocket> New() {
         Console.WriteLine("Creating connection...");
         using Socket socket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         var ipEndPoint = new IPEndPoint(IPAddress.Any, 8080);
         socket.Bind(ipEndPoint);
         socket.Listen();
 
-        s_client = await socket.AcceptAsync();
-        s_client.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
+        var gs = new GameSocket();
+
+        gs.s_client = await socket.AcceptAsync();
+        gs.s_client.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
         Console.WriteLine("Connection created!");
+        return gs;
     }
 
     public void pr(string value, bool newline = true) {
@@ -41,7 +44,7 @@ public class GameSocket : IIO {
     }
 
     public void pr_map() {
-        var facing = (int)Player.instance.Pos.facing;
+        var facing = (int)Player.Me.Pos.facing;
         pr($"<map>{facing}{Map.Current.Rendered}", false);
     }
 

@@ -11,7 +11,22 @@ public static class IO
 
     public static bool IsInteractive = CSIO.IsInteractive;
     public static IIO IIO { get => s_io; set => s_io = value; }
-    public static GameSocket? gs;
+    public static GameSocket? ServerSocket;
+
+    public static async Task<Result> InitIO(bool isServer) {
+        if (!isServer) {
+            IO.IIO = new CSIO();
+            IO.clr();
+        }
+        else if (isServer) {
+            IO.ServerSocket = await GameSocket.New();
+            IO.IIO = IO.ServerSocket;
+        }
+        Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
+
+        return CheckInteractive();
+    }
+
 
 #nullable disable
     static IO() {
@@ -46,8 +61,9 @@ public static class IO
             _history.Append(s);
     }
 
-    public static void CheckInteractive() {
+    static Result CheckInteractive() {
         try {
+            IO.pr("The Dungeon of the Mine " + Program.VERSION);
             IO.pr("Press any key to start...");
             ConsoleKeyInfo info = IO.rk(false);
             if (info.Modifiers == ConsoleModifiers.Control && info.Key == ConsoleKey.D) {
@@ -56,6 +72,10 @@ public static class IO
         } catch (InvalidOperationException) {
             IO.IsInteractive = false;
         }
+        if (IO.IsInteractive)
+            return Result.Success;
+        else
+            return Result.Failure;
     }
 
     ///<summary>read line.</summary>
@@ -81,6 +101,9 @@ public static class IO
         return result;
     }
 
+    /// <summary>
+    /// -1 is not found or canceled.
+    /// </summary>
     public static void sel(object value, out int index, __ flags = 0, bool dopr = true, string title = "선택 : ")
     => sel(value, flags, out index, out _, out _, out _, dopr, title);
 
@@ -159,8 +182,8 @@ public static class IO
         s_io.pr_map();
         if (s_player.UnderFoot is ISteppable step) {
             pr(step.name + " 위에 서 있다. (z를 눌러 상호작용)");
-            if (gs is not null && step is Corpse c) {
-                gs.pr_underfoot(c.was);
+            if (ServerSocket is not null && step is Corpse c) {
+                ServerSocket.pr_underfoot(c.was);
             }
         }
     }
@@ -203,9 +226,9 @@ public static class IO
 
 // private:
 
-    const int _messageBoxHeight = 4;
+    const int _messageBoxHeight = 8;
 
-    static Player s_player { get => Player.instance; }
+    static Player s_player { get => Player.Me; }
     static IIO s_io;
     static List<string> _history = new();
 

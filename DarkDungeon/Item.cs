@@ -98,7 +98,7 @@ public partial class Creature
                 f.Inven.Consume(boneOfTheDeceased!);
                 f.IsAlive = true;
                 f.Stat.Heal(f.GetHp().Max);
-                Map.NewMap();
+                Map.New();
                 IO.rk($"{f.Name}은 망자의 뼈로 부활하였다.");
             }})
     });

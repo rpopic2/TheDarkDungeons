@@ -1,55 +1,56 @@
 global using IO = DarkDungeon.IO;
-public class Program
+public static class Program
 {
-    const string VERSION = "0.6.4-150608";
-    static Player s_player => Player.instance;
+    public const string VERSION = "0.6.4-150608";
+
+    static Player s_player => Player.Me;
 
     static async Task Main(string[] args) {
-        GameSocket? gs = null;
-        if (args.Length > 0 && args[0] == "server") {
-            var gameSocket = new GameSocket();
-            await gameSocket.New();
-            IO.IIO = gameSocket;
-            IO.gs = gameSocket;
-            gs = gameSocket;
-        }
-        else IO.IIO = new CSIO();
-
-        Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
-        IO.clr();
-        IO.pr("The Dungeon of the Mine " + Program.VERSION);
-        gs?.pr("<press_any_key>");
-
-        IO.CheckInteractive();
-        if (!IO.IsInteractive)
+        var isServer = args.Length > 0 && args[0] == "server";
+        var result = await IO.InitIO(isServer);
+        IO.ServerSocket?.pr("<press_any_key>");
+        if (result == Result.Failure)
             return;
 
-        Map.NewMap();
-        gs?.pr("<char_select>");
-        PlayerCreation.CreatePlayerPrompt();
+        Map.New();
+        Player.Me = PlayerCreator.New();
 
         IO.clr();
         IO.pr($"{s_player.Name}은 횃불에 의지한 채 숲속으로 걸어 들어갔다.");
-        if (gs is not null)
+        if (IO.ServerSocket is not null)
             IO.Redraw();
-        gs?.pr("<game_intro>");
+        IO.ServerSocket?.pr("<game_intro>");
         IO.rk(false);
         IO.Redraw();
-        gs?.pr("<game_start>");
+        IO.ServerSocket?.pr("<game_start>");
+
         IO.pr("?을 눌러 도움말 표시.");
 
-        // main loop
+        MainLoop();
+
+        IO.ServerSocket?.pr_player_death();
+        IO.pr(s_player.ToString());
+        IO.pr($"{s_player.Name}은 여기에 잠들었다...");
+        IO.rk();
+    }
+
+    static void MainLoop() {
         do {
             Map.Current.OnTurnElapse();
             IO.Redraw();
             IO.PrintTurnHistory();
             IO.OnTurnEnd();
         } while (s_player.IsAlive);
+    }
 
-        gs?.pr_player_death();
-
-        IO.pr(s_player.ToString());
-        IO.pr($"{s_player.Name}은 여기에 잠들었다...");
-        IO.rk();
+    enum IOType {
+        Console,
+        Server,
     }
 }
+
+public enum Result {
+    Success,
+    Failure,
+}
+

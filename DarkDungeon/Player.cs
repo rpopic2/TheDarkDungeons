@@ -5,21 +5,18 @@ public partial class Player : Creature {
         "^r (힘/체력)^/", "^g (정밀/민첩)^/", "^b (마력/지능)^/"
     };
     public static Player? _instance;
-    public static Player instance {
+    public static Player Me {
         get => _instance ?? throw new Exception("Player was not initialised");
+        set => _instance = value;
     }
     public ExperiencePoint exp => Stat.Exp;
     public int ReqExp => Stat.Exp.Max;
 
-    public Player(string name, int classIndex = 0)
+    public Player(string name)
         : base(name, level: 1, Status.BasicStatus, energy: BASICCAP, pos: new(0)) {
         Map.OnNewMap += ()
             => OnNewMap();
         exp.OnOverflow += new EventHandler(OnLvUp);
-        if (classIndex == -1)
-            SelectPickupStat(3);
-        else
-            Stat[(StatName)classIndex] += 3;
     }
 
     public ISteppable? UnderFoot
@@ -169,25 +166,6 @@ public partial class Player : Creature {
         }
     }
 
-    public void SelectStartItem() {
-        Corpse corpse = new('@', "누군가", new(Player.instance, "시체"));
-        corpse.droplist.Content.Add(sword);
-        corpse.droplist.Content.Add(shield);
-        corpse.droplist.Content.Add(dagger);
-        corpse.droplist.Content.Add(bow);
-        ItemMetaData arrowMeta = new();
-        arrowMeta.stack = 3;
-        corpse.droplist.Content.Add(arrow);
-        corpse.droplist.Content.Add(staff);
-        corpse.droplist.Content.Add(magicBook);
-        while (Inven.Count < 2) {
-            IO.sel(corpse.droplist.Content.ToArray(), out int index, 0, true, "아이템 선택 : ");
-            if (corpse.droplist[index] is ItemOld item) {
-                Inven.Add(item);
-                corpse.droplist.Remove(item);
-            }
-        }
-    }
     public override string ToString() => base.ToString() + $"\nExp : {exp}";
     public override char ToChar() => IsAlive ? MapSymb.player : MapSymb.playerCorpse;
 }

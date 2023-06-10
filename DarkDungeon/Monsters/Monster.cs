@@ -2,7 +2,7 @@ public record MonsterData(string name, char fowardChar, char backwardChar, StatI
 public abstract class Monster : Creature
 {
     private int killExp;
-    protected static Player player { get => Player.instance; }
+    protected static Player player { get => Player.Me; }
     private char fowardChar, backwardChar;
     protected Creature? _target;
     public Monster(MonsterData data, Position spawnPoint)

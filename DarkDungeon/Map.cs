@@ -34,16 +34,16 @@ public class Map {
     };
 
     static Player s_player {
-        get => Player.instance;
+        get => Player.Me;
     }
 
     static void NewDepth() {
         TurnInCurrentDepth = 0;
         Depth += 1;
-        DepthGraph depth = new();
     }
 
     Map(int length, bool spawnMobs = true, IPortal? portal = null, Corpse? corpseFromPrev = null) {
+        _depthGraph = new();
         Current = this;
         this.Length = length;
         this.DoSpawnMobs = spawnMobs;
@@ -97,7 +97,7 @@ public class Map {
         Turn++;
         TurnInCurrentDepth++;
         if (Current.DoLoadNewMap)
-            NewMap();
+            New();
     }
 
     Monster? Spawn(ISpawnable prefab) {
@@ -232,7 +232,7 @@ public class Map {
         TurnInCurrentDepth = 0;
     }
 
-    public static void NewMap() {
+    public static void New() {
         if (Player._instance is not null && s_player.UnderFoot is Pit) 
             NewDepth();
 
@@ -240,15 +240,13 @@ public class Map {
         int newLength = s_rnd.Next(Rules.MapLengthMin, Rules.MapLengthMin + addMapWidth);
         newLength = Math.Max(newLength, Rules.MapLengthMin);
 
-        if (Current is not null && newLength < Current.Length) {
+        if (Current is not null && newLength < Current.Length)
             newLength = Current.Length;
-        }
+
         Current = new Map(newLength, true, new RandomPortal(), Current?._corpseToPass);
-        if (IO.IIO is GameSocket so) {
-            so.pr_new_map(Current.Length);
-        }
+        IO.ServerSocket?.pr_new_map(Current.Length);
         if (Player._instance is not null && Map.TurnInCurrentDepth == 0 && Depth > 1) {
-            IO.gs?.pr_map();
+            IO.ServerSocket?.pr_map();
             IO.rk($"{s_player.Name}은 깊이 {Depth}에 도달했다.");
         }
     }

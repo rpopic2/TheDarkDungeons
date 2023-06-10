@@ -1,6 +1,6 @@
 public class CSIO : IIO
 {
-    private static Player s_player => Player.instance;
+    private static Player s_player => Player.Me;
     public static bool IsInteractive = true;
     private const string EMPHASIS = "=> ";
     static readonly string DELSTRING = " ";
