@@ -8,7 +8,6 @@ public static class Program
     static async Task Main(string[] args) {
         var isServer = args.Length > 0 && args[0] == "server";
         var result = await IO.InitIO(isServer);
-        IO.ServerSocket?.pr("<press_any_key>");
         if (result == Result.Failure)
             return;
 

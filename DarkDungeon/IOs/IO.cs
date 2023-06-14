@@ -21,6 +21,7 @@ public static class IO
         else if (isServer) {
             IO.ServerSocket = await GameSocket.New();
             IO.IIO = IO.ServerSocket;
+            IO.ServerSocket.pr("<press_any_key>");
         }
         Console.CancelKeyPress += (_, _) => { Environment.Exit(1); };
 
