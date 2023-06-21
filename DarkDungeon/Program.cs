@@ -15,10 +15,9 @@ public static class Program
         Player.Me = PlayerCreator.New();
 
         IO.clr();
-        IO.pr($"{s_player.Name}은 횃불에 의지한 채 숲속으로 걸어 들어갔다.");
+        IO.IIO.pr_intro($"{s_player.Name}은 횃불에 의지한 채 숲속으로 걸어 들어갔다.");
         if (IO.ServerSocket is not null)
             IO.Redraw();
-        IO.ServerSocket?.pr("<game_intro>");
         IO.rk(false);
         IO.Redraw();
         IO.ServerSocket?.pr("<game_start>");

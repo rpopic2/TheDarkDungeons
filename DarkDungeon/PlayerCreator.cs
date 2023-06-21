@@ -1,9 +1,16 @@
+using System.Text;
+
 public static class PlayerCreator
 {
     public static Player New() {
-        IO.ServerSocket?.pr("<char_select>");
         string name = ChooseNamePrompt();
-        IO.pr($"{name}의 직업은?...");
+        const string PROMPT = "의 직업은?...";
+        StringBuilder prompt = new();
+        if (IO.ServerSocket is not null)
+            prompt.Append("<char_select>");
+        prompt.Append(name);
+        prompt.Append(PROMPT);
+        IO.pr(prompt.ToString());
         var classIndex = ChooseClassPrompt();
         var player = new Player(name);
         AddStartItems(player, classIndex);

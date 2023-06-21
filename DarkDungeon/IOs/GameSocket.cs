@@ -33,10 +33,18 @@ public class GameSocket : IIO {
             newline = true;
         if (newline)
             value += "\n";
-        var msglen = Encoding.UTF8.GetByteCount(value);
         Console.WriteLine($"Sending: {value.Length}: {value}");
+        SafeSend(value);
+    }
+
+    void SafeSend(string value) {
+        var msglen = Encoding.UTF8.GetByteCount(value);
         s_client?.Send(BitConverter.GetBytes(msglen));
         s_client?.Send(Encoding.UTF8.GetBytes(value));
+    }
+
+    public void pr_intro(string value) {
+        pr($"<game_intro>{value}");
     }
 
     public void pr_new_map(int len) {
@@ -99,8 +107,31 @@ public class GameSocket : IIO {
         return new((char)buffer[0], (ConsoleKey)buffer[0], false, false, false);
     }
 
+
     public string rl() {
-        return "Unity";
+        pr("<rl>");
+        var prefix = SafeRead(PREFIX_SIZE);
+        var msglen = BitConverter.ToInt32(prefix);
+
+        var buffer = SafeRead(msglen);
+        var str = Encoding.UTF8.GetString(buffer);
+        Console.WriteLine("[Client][rl] " + str);
+        return str;
+    }
+
+    const int PREFIX_SIZE = sizeof(int);
+    const int BUF_SIZE = 4096;
+    byte[] _readBuffer = new byte[BUF_SIZE];
+
+    Span<byte> SafeRead(int bytes_expected) {
+        var bytes_recieved = 0;
+        do {
+            bytes_recieved += s_client?.Receive(_readBuffer, bytes_expected, SocketFlags.None) ?? 0;
+            if (bytes_recieved == 0) {
+                throw new Exception("Connection closed");
+            }
+        } while (bytes_recieved < bytes_expected);
+        return _readBuffer.AsSpan(0, bytes_expected);
     }
 
     public void del() {

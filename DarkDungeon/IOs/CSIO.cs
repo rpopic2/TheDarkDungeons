@@ -67,6 +67,10 @@ public class CSIO : IIO
         Console.ResetColor();
     }
 
+    public void pr_intro(string value) 
+        => pr(value);
+
+
     public void pr_map() {
         pr(Map.Current.ToString(), true);
     }
