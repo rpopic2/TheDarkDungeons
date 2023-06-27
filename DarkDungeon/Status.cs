@@ -55,10 +55,9 @@ public class Status
     {
         Level++;
         Exp.UpdateMax();
-        IO.mes($"{Level}레벨이 되었다.", __.emphasis);
+        IO.IIO.pr_lvup($"{Level}레벨이 되었다.");
         int newHp = SolToHp();
         Hp.Max = newHp;
-        //Heal(Hp.Max / 2);
         Heal(Hp.Max);
     }
     public void Damage(int value) => Hp -= value;

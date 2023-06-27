@@ -67,6 +67,7 @@ public partial class Player : Creature {
         } while (index == -1);
         Stat[(StatName)index] += 1;
         Energy = new(3 + Level / 5);
+        IO.ServerSocket?.pr("<nolvup>");
     }
 
     public bool PickupItem(ItemOld item, ItemMetaData? metaData = null) {

@@ -98,6 +98,9 @@ public class CSIO : IIO
         pr(s_player.Inven, __.bottom);
     }
 
+    public void pr_lvup(string value)
+        => IO.mes(value, __.emphasis);
+
     public string rl() {
         if (IsInteractive) return Console.ReadLine() ?? "null";
         else return "NonInteractive";

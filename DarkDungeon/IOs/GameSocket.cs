@@ -94,6 +94,10 @@ public class GameSocket : IIO {
         pr($"<loot>{droplist.ToNetString()}");
     }
 
+    public void pr_lvup(string value) {
+        pr($"<lvup>{value}");
+    }
+
     public ConsoleKeyInfo rk() {
         pr(RK, false);
         var buffer = new byte[1];

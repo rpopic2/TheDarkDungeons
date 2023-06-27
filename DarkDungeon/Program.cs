@@ -40,11 +40,6 @@ public static class Program
             IO.OnTurnEnd();
         } while (s_player.IsAlive);
     }
-
-    enum IOType {
-        Console,
-        Server,
-    }
 }
 
 public enum Result {
