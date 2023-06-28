@@ -52,22 +52,36 @@ public class CurrentAction
         Amount = default;
         Amount2 = default;
     }
-    public void SetStun(int value) => Stun += value;
-    public void SetPoison(int value) => Poison += value;
-    public void ProcessStun()
-    {
+
+    public void SetStun(int value) {
+        Stun += value;
+        IO.ServerSocket?.pr_status_effect("stun", true, _owner.Pos.x);
+    }
+
+    public void SetPoison(int value) {
+        Poison += value;
+        IO.ServerSocket?.pr_status_effect("pois", true, _owner.Pos.x);
+    }
+
+    public void ProcessStun() {
         Reset();
         IO.rk($"{_owner.Name}은 스턴 상태이다!");
         CurrentBehav = Creature.Stun;
         Stun--;
+        if (Stun <= 0) {
+            IO.ServerSocket?.pr_status_effect("stun", false, _owner.Pos.x);
+        }
     }
-    public void ProcessPoison()
-    {
+
+    public void ProcessPoison() {
         _owner.Stat.Damage(1);
         Poison--;
+        if (Poison <= 0) {
+            IO.ServerSocket?.pr_status_effect("pois", false, _owner.Pos.x);
+        }
     }
-    public override string ToString()
-    {
+
+    public override string ToString() {
         return $"{CurrentItem?.Name}, {Amount}, {Amount2}";
     }
 }

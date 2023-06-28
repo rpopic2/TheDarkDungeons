@@ -158,4 +158,19 @@ public class GameSocket : IIO {
     public void pr_player_death() {
         pr("<pdeath>");
     }
+
+    // status effects
+    List<string> _statusEffectBuffer = new();
+
+    public void pr_status_effect(string effect, bool active, int pos) {
+        var no = active ? string.Empty : "no";
+        _statusEffectBuffer.Add($"<s_{no}{effect}>{pos}");
+    }
+
+    public void flush_status_effects() {
+        foreach (var s in _statusEffectBuffer) {
+            pr(s);
+        }
+        _statusEffectBuffer.Clear();
+    }
 }

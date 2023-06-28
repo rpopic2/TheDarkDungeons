@@ -187,6 +187,7 @@ public static class IO
                 ServerSocket.pr_underfoot(c.was);
             }
         }
+        ServerSocket?.flush_status_effects();
     }
 
     public static void PrintTurnHistory() {

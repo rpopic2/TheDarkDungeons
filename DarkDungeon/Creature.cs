@@ -7,7 +7,7 @@ public abstract partial class Creature
     public bool IsAlive { get; private set; } = true;
     public Position Pos { get; set; }
 
-    private CurrentAction CurAction { get; init; }
+    public CurrentAction CurAction { get; init; }
     public Energy Energy { get => CurAction.Energy; protected set => CurAction.Energy = value; }
     public IBehaviour? CurrentBehaviour => CurAction.CurrentBehav;
 
