@@ -132,6 +132,7 @@ public class Map {
                 _corpseToPass = temp;
             else
                 _steppables[pos] = temp;
+            IO.ServerSocket?.pr_corpse(pos, temp);
         }
     }
 
@@ -157,10 +158,6 @@ public class Map {
                     _rendered[targetTile] = cor.ToChar();
                 else if (obj is not null)
                     throw new Exception("등록되지 않은 맵 오브젝트입니다.");
-
-                if (IO.IIO is GameSocket gs && obj is Corpse corpse) {
-                    gs.pr_corpse(targetTile, corpse);
-                }
             }
         }
 
