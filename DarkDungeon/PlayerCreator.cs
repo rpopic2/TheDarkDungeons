@@ -45,7 +45,7 @@ public static class PlayerCreator
         if (classType != Class.Free)
             stat[(StatName)classType] += 3;
         IO.pr($"기본 스탯 : {stat}");
-        IO.ServerSocket?.pr($"<class_info>{className}:{classDesc}:{stat}");
+        IO.ServerSocket?.pr($"<class_info>{className}:{classDesc}:{stat.ToNetString()}");
         IO.pr("스페이스바 : 확인, x : 취소");
         var keyInfo = IO.rk(false);
         if (keyInfo.Key.IsCancel() || keyInfo.KeyChar == 'x') {

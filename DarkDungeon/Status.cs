@@ -69,4 +69,8 @@ public class Status
     {
         return $"HP : {Hp}  ^r힘/체력 : {this[StatName.Sol]} ^g집중/민첩 : {this[StatName.Lun]} ^b마력/지능 : {this[StatName.Con]}^/";
     }
+
+    public string ToNetString() {
+        return $"{Hp.Cur},{Hp.Max},{this[StatName.Sol]},{this[StatName.Lun]},{this[StatName.Con]}";
+    }
 }
